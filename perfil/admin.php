@@ -146,7 +146,7 @@ case "estatistica":
 					</thead>
 					<tbody>
 <tr>
-<td>Usuários ativos no último mês</td>
+<td>Usuários ativos nos últimos 30 dias</td>
 <td>
 <?php 
 	$trinta_dias = date('Y-m-d H:i:s', strtotime("-30 days"));
@@ -160,7 +160,7 @@ case "estatistica":
 </tr>
 
 <tr>
-<td>Eventos enviados</td>
+<td>Total de eventos enviados</td>
 <td>
     <?php
 	$con = bancoMysqli();
@@ -197,6 +197,24 @@ $media_eventos  = (int)($num_eventos/$dias);
 </tr>
 
 <tr>
+<td>Eventos enviados neste mês</td>
+<td>
+    <?php
+	$primeiro_dia = mktime(0, 0, 0, date('m') , 1 , date('Y'));
+	//$data_fim = mktime(23, 59, 59, date('m'), date("t"), date('Y'));
+	$primeiro_dia_sql = date('Y/m/d h:i:s',$primeiro_dia);
+	
+	$con = bancoMysqli();
+	$sql_eventos_mes = "SELECT * FROM ig_evento WHERE publicado ='1' AND dataEnvio > '$primeiro_dia_sql'";
+	$query_eventos_mes = mysqli_query($con,$sql_eventos_mes);
+	$num_eventos_mes = mysqli_num_rows($query_eventos_mes);
+	?>
+<?php echo $num_eventos_mes; ?>
+</td>
+</tr>
+<tr>
+
+<tr>
 <td>Pedidos de contratação </td>
 <td>
 
@@ -205,7 +223,7 @@ $media_eventos  = (int)($num_eventos/$dias);
 </tr>
 
 <tr>
-<td>Média de eventos enviados por dia</td>
+<td>Média de pedidos enviados por dia</td>
 <td>
  <?php
 $data_inicial = '04/01/2016';
