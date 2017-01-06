@@ -114,31 +114,56 @@ function mtel(v){
 	  $(function() {
     $( "#datepicker01" ).datepicker({ 
       changeMonth: true,
-      changeYear: true
+      changeYear: true,
+	  minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
     });
   });
   $(function() {
     $( "#datepicker02" ).datepicker({ 
       changeMonth: true,
-      changeYear: true
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
     });
   });
   $(function() {
     $( "#datepicker03" ).datepicker({ 
       changeMonth: true,
-      changeYear: true
+      changeYear: true,
+	  minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
     });
   });
   $(function() {
     $( "#datepicker04" ).datepicker({ 
       changeMonth: true,
-      changeYear: true
+      changeYear: true,
+	  minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
     });
   });
   $(function() {
     $( "#datepicker05" ).datepicker({ 
       changeMonth: true,
-      changeYear: true
+      changeYear: true,
+	  minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
     });
   });
 	//funções para mostrar/esconder
