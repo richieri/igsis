@@ -39,10 +39,19 @@ if(isset($_POST['apagar'])){
 	if($query_apagar){
 		$mensagem = "Integrante apagado com sucesso!";	
 	}else{
-		$mensagem = "Erro ao apagar integrante. Tente novamente.";	
-		
+		$mensagem = "Erro ao apagar integrante. Tente novamente.";			
 	}	
+}
 
+if(isset($_POST['editar'])){
+	$id = $_POST['editar'];
+	$sql_editar = "UPDATE igsis_grupos SET nomeCompleto = '$nome', rg = '$rg', cpf = '$cpf'  WHERE idGrupos = '$id'";
+	$query_editar = mysqli_query($con,$sql_editar);
+	if($query_editar){
+		$mensagem = "Integrante editado com sucesso!";	
+	}else{
+		$mensagem = "Erro ao editar integrante. Tente novamente.";			
+	}	
 }
 
 $sql_grupos = "SELECT * FROM igsis_grupos WHERE idPedido = '$idPedido' and publicado = '1'";
@@ -75,6 +84,7 @@ $num = mysqli_num_rows($query_grupos);
 							<td>RG</td>
 							<td>CPF</td>
 							<td></td>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -85,6 +95,12 @@ $num = mysqli_num_rows($query_grupos);
 					<td><?php echo $grupo['nomeCompleto'] ?></td>
 					<td><?php echo $grupo['rg'] ?></td>
 					<td><?php echo $grupo['cpf'] ?></td>
+					<td class='list_description'>
+					
+					<form method='POST' action='?perfil=contratos&p=frm_grupos'>
+					<input type="hidden" name="editar" value="<?php echo $grupo['idGrupos'] ?>" />
+					<input type ='submit' class='btn btn-theme btn-block' value='editar'></td></form>
+					
 					<td class='list_description'>
 					<form method='POST' action='?perfil=contratos&p=frm_grupos'>
 					<input type="hidden" name="apagar" value="<?php echo $grupo['idGrupos'] ?>" />
@@ -183,6 +199,60 @@ case "inserir";
 			
 
 	  	</div>
-	  </section>  
+	  </section>
+
+<?php 
+
+break;
+case "editar";
+
+?>
+	  <section id="contact" class="home-section bg-white">
+	  	<div class="container">
+			  <div class="form-group">
+            
+					<h3>CADASTRO DE INTEGRANTE DE GRUPO</h3>
+			  </div>
+
+	  		<div class="row">
+	  			<div class="col-md-offset-1 col-md-10">
+
+				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_grupos&action=listar" method="post">
+				  
+                  <div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Nome completo: *</strong><br/>
+					  <input type="text" class="form-control" id="RepresentanteLegal" name="nome" value="$nome" >
+					</div>
+				  </div>
+                  
+                  <div class="form-group">
+					<div class="col-md-offset-2 col-md-6"><strong>RG: *</strong><br/>
+					  <input type="text" class="form-control" id="RG" name="rg" placeholder="RG" value="$rg">
+					</div>
+					<div class="col-md-6"><strong>CPF: *</strong><br/>
+					  <input type="text" class="form-control" id="cpf" name="cpf"  placeholder="CPF" value="$cpf">
+					</div>
+				  </div>
+                  
+                
+                  
+                  <!-- Botão Gravar -->	
+				  <div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+					
+					 <input type="submit" name="editar" value="CADASTRAR" class="btn btn-theme btn-lg btn-block">
+					</div>
+                    
+				  </div>
+				</form>
+	
+	  			</div>
+			
+				
+	  		</div>
+			
+
+	  	</div>
+	  </section>  	  
 
 <?php } ?>

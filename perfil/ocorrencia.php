@@ -37,11 +37,11 @@
 
 				<form class="form-horizontal" role="form">
 				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><label>Data início *</label><input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="Name">
+					<div class="col-md-offset-2 col-md-6"><label>Data início *</label><input type="text" name="dataInicio" class="form-control" id="datepicker10" placeholder="Name">
 					</div>
 				  
 					<div class=" col-md-6"><label>Data encerramento</label>
-					  <input type="text" name="dataFinal" class="form-control" id="datepicker02" placeholder="Email">
+					  <input type="text" name="dataFinal" class="form-control" id="datepicker11" placeholder="Email">
 					</div>
 				  </div>
 				  <div class="form-group">

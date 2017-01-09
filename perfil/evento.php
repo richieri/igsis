@@ -1728,10 +1728,10 @@ $(function(){
 <script type="text/javascript">
 $(document).ready(function (){
     validate();
-    $('#datepicker02').change(validate);
+    $('#datepicker11').change(validate);
 });
 function validate(){
-    if ($('#datepicker02').val().length > 0) {
+    if ($('#datepicker11').val().length > 0) {
         $("#diasemana01").prop("disabled", false);
         $("#diasemana02").prop("disabled", false);
         $("#diasemana03").prop("disabled", false);
@@ -1794,11 +1794,11 @@ function habilitar(){
                 <div class="form-group">
                 	<div class="col-md-offset-2 col-md-6">
                			 <label>Data início *</label>
-                		<input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="">
+                		<input type="text" name="dataInicio" class="form-control" id="datepicker10" placeholder="">
                		 </div>
                 	<div class=" col-md-6">
                 		<label>Data encerramento</label>
-                		<input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" placeholder="só preencha se for temporada">
+                		<input type="text" name="dataFinal" class="form-control" id="datepicker11" onblur="validate()" placeholder="só preencha se for temporada">
                		</div>
                 </div>
                 <div class="form-group">
@@ -1947,10 +1947,10 @@ $(function(){
 <script type="text/javascript">
 $(document).ready(function (){
     validate();
-    $('#datepicker02').change(validate);
+    $('#datepicker11').change(validate);
 });
 function validate(){
-    if ($('#datepicker02').val().length > 0) {
+    if ($('#datepicker11').val().length > 0) {
         $("#diasemana01").prop("disabled", false);
         $("#diasemana02").prop("disabled", false);
         $("#diasemana03").prop("disabled", false);
@@ -2011,11 +2011,11 @@ function habilitar(){
                 <div class="form-group">
                 	<div class="col-md-offset-2 col-md-6">
                			 <label>Data início *</label>
-                		<input type="text" name="dataInicio" class="form-control" id="datepicker01" value="<?php echo exibirDataBr($ocor['dataInicio']) ?>" placeholder="">
+                		<input type="text" name="dataInicio" class="form-control" id="datepicker10" value="<?php echo exibirDataBr($ocor['dataInicio']) ?>" placeholder="">
                		 </div>
                 	<div class=" col-md-6">
                 		<label>Data encerramento</label>
-                		<input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" value="<?php if($ocor['dataFinal'] != '0000-00-00'){echo exibirDataBr($ocor['dataFinal']);} ?>"placeholder="só preencha se for temporada">
+                		<input type="text" name="dataFinal" class="form-control" id="datepicker11" onblur="validate()" value="<?php if($ocor['dataFinal'] != '0000-00-00'){echo exibirDataBr($ocor['dataFinal']);} ?>"placeholder="só preencha se for temporada">
                		</div>
                 </div>
                 <div class="form-group">
@@ -2146,11 +2146,11 @@ function habilitar(){
                 <div class="form-group">
                 	<div class="col-md-offset-2 col-md-6">
                			 <label>Data início *</label>
-                		<input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="">
+                		<input type="text" name="dataInicio" class="form-control" id="datepicker10" placeholder="">
                		 </div>
                 	<div class=" col-md-6">
                 		<label>Data encerramento</label>
-                		<input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" placeholder="só preencha se for temporada">
+                		<input type="text" name="dataFinal" class="form-control" id="datepicker11" onblur="validate()" placeholder="só preencha se for temporada">
                		</div>
                 </div>
                 <div class="form-group">

@@ -114,39 +114,36 @@ function mtel(v){
 	  $(function() {
     $( "#datepicker01" ).datepicker({ 
       changeMonth: true,
-      changeYear: true,
-	  minDate: 0,
-      addSliderAccess: true,
-      sliderAccessArgs: {
-        touchonly: false
-      }
+      changeYear: true
     });
   });
   $(function() {
     $( "#datepicker02" ).datepicker({ 
       changeMonth: true,
-      changeYear: true,
-      minDate: 0,
-      addSliderAccess: true,
-      sliderAccessArgs: {
-        touchonly: false
-      }
+      changeYear: true
     });
   });
   $(function() {
     $( "#datepicker03" ).datepicker({ 
       changeMonth: true,
-      changeYear: true,
-	  minDate: 0,
-      addSliderAccess: true,
-      sliderAccessArgs: {
-        touchonly: false
-      }
+      changeYear: true
     });
   });
   $(function() {
     $( "#datepicker04" ).datepicker({ 
       changeMonth: true,
+      changeYear: true
+    });
+  });
+  $(function() {
+    $( "#datepicker05" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+  $(function() {
+    $( "#datepicker10" ).datepicker({ 
+      changeMonth: true,
       changeYear: true,
 	  minDate: 0,
       addSliderAccess: true,
@@ -156,10 +153,10 @@ function mtel(v){
     });
   });
   $(function() {
-    $( "#datepicker05" ).datepicker({ 
+    $( "#datepicker11" ).datepicker({ 
       changeMonth: true,
       changeYear: true,
-	  minDate: 0,
+      minDate: 0,
       addSliderAccess: true,
       sliderAccessArgs: {
         touchonly: false
