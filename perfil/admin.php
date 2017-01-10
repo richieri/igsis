@@ -6,7 +6,6 @@ if(isset($_GET['p'])){
 	$p = 'inicial';
 }
 
-
 // Cria uma função que retorna o timestamp de uma data no formato DD/MM/AAAA
 function geraTimestamp($data) {
 $partes = explode('/', $data);
@@ -17,29 +16,30 @@ require "../funcoes/funcoesAdministrador.php"; //chamar funcoes do administrador
 require "../funcoes/funcoesSiscontrat.php"; //chamar funcoes do administrador
 
 ?>
-<!--    				<a href="?perfil=administrador&atualizar=agenda" class="btn btn-theme btn-lg btn-block">Atualizar agenda</a> -->
 	<div class="menu-area">
 			<div id="dl-menu" class="dl-menuwrapper">
 						<button class="dl-trigger">Open Menu</button>
 						<ul class="dl-menu">
-							<li>
-								<a href="?perfil=admin&p=visaogeral">Usuários ativos</a>
-							</li>
-   							<li><a href="?perfil=admin&p=estatistica"> Estatística</a></li>
+							<li><a href="?perfil=admin&p=visaogeral">Usuários ativos</a></li>
+   							<li><a href="?perfil=admin&p=estatistica"> Estatísticas</a></li>
                             <li><a href="?perfil=admin&p=reabertura"> Reabrir eventos enviados</a></li>
-   							<li><a href="?perfil=admin&p=scripts"> Scripts</a></li>
+
+   							<li><a href="?perfil=admin&p=scripts"> Scripts</a>
+							<ul class="dl-submenu">
+								<li><a href="?perfil=admin&p=scripts&atualizar=agenda">Atualizar agenda</a></li>
+								<li><a href="?perfil=admin&p=scripts&status=1">Atualizar status</a></li>
+								<li><a href="?perfil=admin&p=scripts&inst_agenda=1">Atualizar Instituições/Agenda</a><li>
+                                <li><a href="?perfil=admin&p=scripts&limpar_base=1">Limpar base de eventos</a></li>
+                                <li><a href="?perfil=admin&p=scripts&empenho=1">Atualizar status N.E.</a></li>
+                                <li><a href="?perfil=admin&p=scripts&formacao=1">Importar Base PF Formação</a></li>
+                                <li><a href="?perfil=admin&p=scripts&contabilidade=1">Verificar tabela contabilidade</a></li>
+							</ul>
+							</li>
 							<li><a href="?perfil=admin&p=email">E-mail para solicitação de reenvio</a></li>
    							<li><a href="?perfil=admin&p=contratos">Contratos</a></li>
-							<li><a href="?secao=perfil">Carregar módulo</a></li>
+							<li><a href="?secao=perfil">Carregar Módulos</a></li>
 							<li><a href="?secao=ajuda">Ajuda</a></li>
                             <li><a href="../include/logoff.php">Sair</a></li>
-							<!--<li>
-								<a href="#">Sub Menu</a>
-								<ul class="dl-submenu">
-									<li><a href="#">Sub menu</a></li>
-									<li><a href="#">Sub menu</a></li>
-								</ul>
-							</li>-->
 						</ul>
 					</div><!-- /dl-menuwrapper -->
 	</div>	
@@ -53,23 +53,13 @@ case "inicial":
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h2>Administrador do Sistema</h2>
-	                <h5>Escolha uma opção</h5>
-                </div>
-            </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=admin&p=visaogeral" class="btn btn-theme btn-lg btn-block">Usuários ativos</a>
-   	            <a href="?perfil=admin&p=estatistica" class="btn btn-theme btn-lg btn-block">Estatísticas do Sistema</a>
-                <a href="?perfil=admin&p=reabertura" class="btn btn-theme btn-lg btn-block">Reabrir eventos enviados</a>
-                <a href="?perfil=admin&p=scripts" class="btn btn-theme btn-lg btn-block">Scripts</a>
-				<a href="?perfil=admin&p=email" class="btn btn-theme btn-lg btn-block">E-mail para solicitação de reenvio</a>
-                <a href="?perfil=admin&p=sof" class="btn btn-theme btn-lg btn-block">Integração SOF / IGSIS</a>
-
-	            <!--<a href="?perfil=busca&p=pedidos" class="btn btn-theme btn-lg btn-block">Pedidos de contratação</a>-->
-
-            </div>
-          </div>
+                <h3>Bem-vindo(a) à IGSIS!</h3>
+                     <p>&nbsp;</p>
+                     <h2>Módulo Administrador Geral</h2>
+                     <p>&nbsp;</p>
+					 <h6>Esse módulo possibilita gerenciar e realizar manutenções no sistema.</h6>
+			   </div>		 
+           </div>
         </div>
     </div>
 </section>  
@@ -137,12 +127,6 @@ case "estatistica":
            
            <table class='table table-condensed'>
 					<thead>	
-                    <!--				
-					<tr class='list_menu'> 
-							<td></td>
-							<td></td>
-
-						 </tr>	-->
 					</thead>
 					<tbody>
 <tr>
@@ -209,6 +193,7 @@ $media_eventos  = (int)($num_eventos/$dias);
 	$query_eventos_mes = mysqli_query($con,$sql_eventos_mes);
 	$num_eventos_mes = mysqli_num_rows($query_eventos_mes);
 	?>
+	
 <?php echo $num_eventos_mes; ?>
 </td>
 </tr>
@@ -837,29 +822,6 @@ if(isset($_FILES['arquivo'])){
 				
 			}
 			
-			/*
-			if($row == 2){	
-			echo "<br /><br /><br />";
-			echo $rowData[0][0]."0<br />";  
-			echo $rowData[0][1]."1<br />";  
-			echo $rowData[0][2]."2<br />";  
-			echo $rowData[0][3]."3<br />";  
-			echo $rowData[0][4]."4<br />";  
-			echo $rowData[0][5]."5<br />";  
-			echo $rowData[0][6]."6<br />";  
-			echo $rowData[0][7]."7<br />";  
-			echo $rowData[0][8]."8<br />";  
-			echo $rowData[0][9]."9<br />";  
-			echo $rowData[0][10]."10<br />";  
-			echo $rowData[0][11]."11<br />";  
-			echo $rowData[0][12]."12<br />";  
-			echo $rowData[0][13]."13<br />";  
-			echo $rowData[0][14]."14<br />";  
-			echo $rowData[0][15]."15<br />";  
- 
-
-			}
-			*/
 				
 			if($row > 2){ // Insere na tabela igsis_6354
 			$dataEmpenho = exibirDataMysql(substr($rowData[0][0],0,10));  
@@ -1216,9 +1178,6 @@ if(isset($_GET['formacao'])){ //script de importação da base de pessoas físic
 	}
 
 	}
-	
-
-
 
 	
 }
@@ -1415,20 +1374,6 @@ if(isset($_GET['contabilidade'])){
                     
                 </div>
             </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-                <a href="?perfil=admin&p=scripts&atualizar=agenda" class="btn btn-theme btn-lg btn-block">Atualizar agenda</a>
-                <a href="?perfil=admin&p=scripts&status=1" class="btn btn-theme btn-lg btn-block">Atualizar status</a>
-              <a href="?perfil=admin&p=scripts&inst_agenda=1" class="btn btn-theme btn-lg btn-block">Atualizar Instituições/Agenda</a>
-               <a href="?perfil=admin&p=scripts&limpar_base=1" class="btn btn-theme btn-lg btn-block">Limpar base de eventos</a>
-              <a href="?perfil=admin&p=scripts&empenho=1" class="btn btn-theme btn-lg btn-block">Atualizar status N.E.</a>
-              <a href="?perfil=admin&p=scripts&formacao=1" class="btn btn-theme btn-lg btn-block">Importar Base PF Formação</a>
-              <a href="?perfil=admin&p=scripts&contabilidade=1" class="btn btn-theme btn-lg btn-block">Verificar tabela contabilidade</a>
-
-	            <!--<a href="?perfil=busca&p=pedidos" class="btn btn-theme btn-lg btn-block">Pedidos de contratação</a>-->
-
-            </div>
-          </div>
           <?php if(isset($texto)){ ?>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-8">

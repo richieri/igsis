@@ -48,25 +48,15 @@ if($verifica == 1){
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h3>Comunicação</h3>
-	                <h4>Escolha uma opção</h4>
+                <h3>Bem-vindo(a) à IGSIS!</h3>
+                     <p>&nbsp;</p>
+                     <h2>Módulo Comunicação</h2>
+                     <p>&nbsp;</p>
+					 <h6>Esse módulo Esse módulo tem a função de gerenciar a comunicação da instituição e preparar as informações a serem enviadas para o SPCultura.</h6>
                 </div>
             </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	          
-				<?php if($_SESSION['idInstituicao'] == 5){ ?>
-	            <a href="?perfil=comunicacao&p=sem" class="btn btn-theme btn-lg btn-block">Eventos não editados e não revisados</a>
-				<?php } ?>
-	            <a href="?perfil=comunicacao&p=editados" class="btn btn-theme btn-lg btn-block">Eventos editados</a>
-	            <a href="?perfil=comunicacao&p=revisados" class="btn btn-theme btn-lg btn-block">Eventos revisados</a>
-  <a href="?perfil=comunicacao&p=all" class="btn btn-theme btn-lg btn-block">Todos os eventos</a>
-  <a href="?perfil=comunicacao&p=agenda" class="btn btn-theme btn-lg btn-block">Agenda</a>
-  <a href="?perfil=comunicacao&p=chamados" class="btn btn-theme btn-lg btn-block">Lista de chamados</a>
-  <a href="?perfil=comunicacao&p=docs" class="btn btn-theme btn-lg btn-block">Gerar docs</a>
-   <a href="?perfil=comunicacao&p=foto" class="btn btn-theme btn-lg btn-block">Fotos/imagens de divulgação</a>
-  
-            </div>
+
           </div>
         </div>
     </div>

@@ -39,10 +39,9 @@
  							<li><a href="#">Outras Opções</a> 
     
                                     <ul class="dl-submenu">
-                                        <li><a href="?perfil=evento">Voltar </a></li>
 										<li><a href="?secao=perfil">Carregar Módulos</a></li>
-                                       <li><a href="?perfil=inicio">Voltar a Página Inicial</a></li>
-                                        <li><a href="../include/logoff.php">Sair do Sistema</a></li>
+																				<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-evento/">Ajuda</a></li>
+                                        <li><a href="../include/logoff.php">Sair</a></li>
                                     </ul>
                                 </li>
                        </ul>

@@ -50,15 +50,11 @@ case "inicio":
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-                <div class="text-hide">
-	                <h4>Escolha uma opção</h4>
-                </div>
-            </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=chamado&p=inserir" class="btn btn-theme btn-lg btn-block">Abrir um chamado</a>
-	            <a href="?perfil=chamado&p=acompanhar" class="btn btn-theme btn-lg btn-block">Acompanhar um chamado</a>
-  	            <a href="?perfil=chamado&p=arqeventos" class="btn btn-theme btn-lg btn-block">Enviar arquivos para evento</a>
+                <h3>Bem-vindo(a) à IGSIS!</h3>
+                     <p>&nbsp;</p>
+                     <h2>Módulo Chamados e Alterações</h2>
+                     <p>&nbsp;</p>
+					 <h6>Esse módulo possibilita que o usuário registre suas solicitações sobre alterações, problemas com o sistema, e também suas dúvidas.</h6>
             </div>
           </div>
         </div>

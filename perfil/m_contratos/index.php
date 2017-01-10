@@ -9,8 +9,8 @@
 					 <h3>Bem-vindo(a) à IGSIS!</h3>
                      <p>&nbsp;</p>
                      <h2>Módulo Contratos</h2>
-                     <p>&nbsp;</p
-					 <p>Esse módulo tem a função de gerenciar a produção de contratos artísticos da instituição, como proposta, pedido de reserva de empenho e emissão de recibos de entrega das notas de empenho.</p>
+                     <p>&nbsp;</p>
+					 <h6>Esse módulo tem a função de gerenciar a produção de contratos artísticos da instituição, como propostas, declarações, pedidos de reserva de empenho entre outros documentos necessários para a contratação do artista.</h6>
 				</div>
 			</div>
 		</div>
