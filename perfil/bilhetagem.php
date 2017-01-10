@@ -49,16 +49,13 @@ require "../funcoes/funcoesProducao.php";
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h3>Bilhetagem</h3>
-	                <h4>Escolha uma opção</h4>
+                 <h3>Bem-vindo(a) à IGSIS!</h3>
+                     <p>&nbsp;</p>
+                     <h2>Módulo Bilhetagem</h2>
+                     <p>&nbsp;</p>
+					 <h6>Esse módulo fornece informações para confecção de bilhete e ingressos.</h6>
                 </div>
             </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=bilhetagem&p=all" class="btn btn-theme btn-lg btn-block">Todos os eventos</a>
-
-            </div>
-          </div>
         </div>
     </div>
 </section>  

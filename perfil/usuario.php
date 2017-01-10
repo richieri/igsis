@@ -2,19 +2,13 @@
 			<div id="dl-menu" class="dl-menuwrapper">
 						<button class="dl-trigger">Open Menu</button>
 						<ul class="dl-menu">
-							<li>
-								<a href="?secao=inicio">Início</a>
-							</li>
 							<li><a href="?perfil=usuario&p=dados">Dados da conta</a></li>
 							<li><a href="?perfil=usuario&p=senha">Mudança de senha</a></li>
-                            <li><a href="../include/logoff.php">Sair do sistema</a></li>
-							<!--<li>
-								<a href="#">Sub Menu</a>
-								<ul class="dl-submenu">
-									<li><a href="#">Sub menu</a></li>
-									<li><a href="#">Sub menu</a></li>
-								</ul>
-							</li>-->
+							                            <li><a href="?secao=perfil">Carregar Módulos</a></li>
+                            <li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-configuracoes-de-conta/">Ajuda</a></li>
+
+                            <li><a href="../include/logoff.php">Sair</a></li>
+
 						</ul>
 					</div><!-- /dl-menuwrapper -->
 	</div>	
@@ -34,17 +28,13 @@ case 'inicio':
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h2>Configuração de conta</h2>
-	                <h5>Escolha uma opção</h5>
+ <h3>Bem-vindo(a) à IGSIS!</h3>
+                     <p>&nbsp;</p>
+                     <h2>Módulo Configuração de Conta</h2>
+                     <p>&nbsp;</p>
+					 <h6>Neste módulo é possível que os usuários mantenham seus dados cadastrais atualizados e altere sua senha.</h6>
                 </div>
             </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=usuario&p=senha" class="btn btn-theme btn-lg btn-block">Mudança de senha</a>
-	            <a href="?perfil=usuario&p=dados" class="btn btn-theme btn-lg btn-block">Dados da conta</a>
-  	            
-            </div>
-          </div>
         </div>
     </div>
 </section>   

@@ -22,10 +22,9 @@
                    
   	            <li><a href="?perfil=comunicacao&p=agenda" > Agenda</a></li>   
 <li><a href="?perfil=comunicacao&p=chamados" > Lista de chamados</a></li>  				
-							<li><a href="#">+ opções</a>   
-                             <ul class="dl-submenu">
-                                        <li selected><a href="?perfil=evento&p=basica">Início</a></li>
+   
                                         <li><a href="?secao=perfil">Carregar módulo</a></li>
+										                                        <li selected><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-comunicacao/">Ajuda</a></li>
                                         <li><a href="../include/logoff.php">Sair</a></li>
                                     </ul>
                             </li>   

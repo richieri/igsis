@@ -2,20 +2,13 @@
 					<div id="dl-menu" class="dl-menuwrapper">
 						<button class="dl-trigger">Open Menu</button>
 						<ul class="dl-menu">
-							<li><a href="?secao=inicio">Início</a></li>
-							<li><a href="?secao=perfil">Perfil de acesso</a></li>
-<?//Menu Administrativo!?> <li><a href="#lista"> Perfil Administrativo Local </a>
-							<ul class="dl-submenu">
-							<li><a href="?perfil=administrador&p=users"> Listar Usuários</a></li>
-							<li><a href="?perfil=administrador&p=espacos"> Listar Espaço</a></li>
-							<li><a href="?perfil=administrador&p=listaprojetoespecial"> Listar Projeto Especial</a></li>
+                            <li><a href="?perfil=administrador&p=users"> Listar Usuários</a></li>
+							<li><a href="?perfil=administrador&p=espacos"> Listar Espaços</a></li>
+							<li><a href="?perfil=administrador&p=listaprojetoespecial"> Listar Projetos Especiais</a></li>
 							<li><a href="?perfil=administrador&p=eventos"> Listar Eventos</a></li>
-						<!--	<li><a href="?perfil=administrador&p=logsLocais"> Logs Locais</a></li> !-->
 							<li><a href="?perfil=administrador&p=alteracoes"> Alterações</a></li>
-
-							</li> </ul> <!-- Fim Menu administrativo!--> 
-							<li><a href="?perfil=usuario">Gerenciar conta</a></li>
-							<li><a href="?secao=ajuda">Ajuda</a></li>
+							<li><a href="?secao=perfil">Carregar Módulos</a></li>
+							<li><a href="http://www.centrocultural.cc/igsis/manual/">Ajuda</a></li>
                             <li><a href="../include/logoff.php">Sair</a></li>
 							
 						</ul>
@@ -51,21 +44,13 @@ case "inicio":
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-	                <h4>Escolha uma opção</h4>
-					<p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
-                </div>
+                 <h3>Bem-vindo(a) à IGSIS!</h3>
+                     <p>&nbsp;</p>
+                     <h2>Módulo Administrador Local</h2>
+                     <p>&nbsp;</p>
+					 <h6>Esse módulo possibilita gerenciar espaços, usuários, projetos especiais e realizar manutenções no sistema.</h6>
+				</div>	 
             </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=administrador&p=users" class="btn btn-theme btn-lg btn-block">Listar usuários</a>
-				<a href="?perfil=administrador&p=espacos" class="btn btn-theme btn-lg btn-block">Listar Espaços</a>
-				<a href="?perfil=administrador&p=eventos" class="btn btn-theme btn-lg btn-block">Listar Eventos</a>
-				<a href="?perfil=administrador&p=listaprojetoespecial" class="btn btn-theme btn-lg btn-block">Listar Projeto especial</a>
-			<!--	<a href="?perfil=administrador&p=logsLocais" class="btn btn-theme btn-lg btn-block">Logs Locais</a> 
-	<a href="?perfil=administrador&p=reabertura" class="btn btn-theme btn-lg btn-block">Reabrir pedidos enviados</a> !-->
-				<a href="?perfil=administrador&p=alteracoes" class="btn btn-theme btn-lg btn-block">Chamados</a>
-  	        </div>
-          </div>
         </div>
     </div>
 	</section>  

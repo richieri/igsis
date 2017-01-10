@@ -44,7 +44,7 @@ $usuario = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
         <li><a href="<?php echo $pasta ?>frm_chamados">Chamados</a></li>
   		<li style="color:white;">-------------------------</li>
         <li><a href="index.php?secao=perfil">Carregar módulos</a></li>
-		<li><a href="<?php echo $pasta ?>ajuda">Ajuda</a></li>
+		<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-contratos/">Ajuda</a></li>
 		<li><a href="../index.php">Sair</a></li>
 			</ul>
   </div>
