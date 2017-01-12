@@ -12,6 +12,8 @@ $link6=$http."rlt_recibo_pagamento_2rep_pj.php";
 $link7=$http."rlt_declaracao_simples_pj.php";
 $link8=$http."rlt_recibo_pagamento_parcelado_1rep_pj.php";
 $link9=$http."rlt_recibo_pagamento_parcelado_2rep_pj.php";
+$link10=$http."rlt_recibo_documentacao_pj.php";
+
 $data = date('Y-m-d H:i:s');
 
 
@@ -27,37 +29,27 @@ if(isset($_POST['atualizar'])){ // atualiza o pedido
 	if(mysqli_query($con,$sql_atualiza_pedido)){
 			$mensagem = "
 			<div class='form-group'>
-    		  <div class='col-md-offset-2 col-md-8'><hr/></div>
+    		  <div class='col-md-offset-2 col-md-10'><hr/></div>
 			</div><br/>
 			<h5>Qual documento deseja gerar?</h5>
-			<div class='col-md-offset-1 col-md-10'>
-			<div class='form-group'>
-    		  <div class='col-md-offset-2 col-md-2'><h6>01<br/>Representante</h6></div>
-			  <div class='col-md-2'>
-				<a href='$link1?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Integral</a><br/></div>
-			  <div class='col-md-2'>
-				<a href='$link3?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Parcelado</a><br/></div>
-			  <div class='col-md-2'>
-				<a href='$link5?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Recibo</a><br/></div>
-				<div class='col-md-2'>
-				<a href='$link7?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Declaração</a><br/></div>
-			</div>
-			
-			<div class='form-group'>
-    		  <div class='col-md-offset-2 col-md-8'><br/></div>
-			</div>
-			
-			<div class='form-group'>
-    		  <div class='col-md-offset-2 col-md-2'><h6>02<br/>Representantes</h6></div>
-			  <div class='col-md-2'>
-				<a href='$link2?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Integral</a><br/></div>
-			  <div class='col-md-2'>
-				<a href='$link4?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Parcelado</a><br/></div>
-			  <div class='col-md-2'>
-				<a href='$link6?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Recibo</a><br/></div>
-				<div class='col-md-2'>
-				<a href='$link7?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Declaração</a><br/></div>
-			</div>
+			<table class='table table-condensed'>
+				<tr>
+					<td class='list_description'><strong>01 Representante</strong></td>
+					<td class='list_description'><a href='$link1?id=$id_ped' target='_blank'>Integral</a></td>
+					<td class='list_description'><a href='$link3?id=$id_ped'  target='_blank'>Parcelado</a></td>
+					<td class='list_description'><a href='$link5?id=$id_ped' target='_blank'>Recibo</a></td>
+					<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração</a></td>
+					<td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Documentação</a></td>
+				</tr>
+				<tr>
+					<td class='list_description'><strong>02 Representantes</strong></td>
+					<td class='list_description'><a href='$link2?id=$id_ped' target='_blank'>Integral</a></td>
+					<td class='list_description'><a href='$link4?id=$id_ped'  target='_blank'>Parcelado</a></td>
+					<td class='list_description'><a href='$link6?id=$id_ped' target='_blank'>Recibo</a></td>
+					<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração</a></td>
+					<td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Documentação</a></td>
+				</tr>
+			</table>
 			
 			
 			<div class='form-group'>
@@ -153,6 +145,7 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 							<td colspan="2">PAGAMENTO</td>
 							<td colspan="2">RECIBO</td>
 							<td colspan="2">DECLARAÇÃO</td>
+							<td colspan="2">DOCUMENTAÇÃO</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -169,6 +162,9 @@ for($i = 1; $i < count($parcelamento); $i++)
 	echo '<td class="list_description"><a target="_blank" href='.$link9.'?id='.$id_ped.'&parcela='.$i.'>2 Representantes</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>1 Representante</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>2 Representantes</a></td>';
+
+	echo '<td class="list_description"><a target="_blank" href='.$link10.'?id='.$id_ped.'>1  Representante</a></td>';
+	echo '<td class="list_description"><a target="_blank" href='.$link10.'?id='.$id_ped.'>2  Representantes</a></td>';
 } ?>	
 
 					</tbody>

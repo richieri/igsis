@@ -7,6 +7,8 @@ $link1=$http."rlt_pagamento_integral_pf.php";
 $link2=$http."rlt_pagamento_parcelado_pf.php?id=".$id_ped."";
 $link3=$http."rlt_recibo_pagamento_pf.php?id=".$id_ped."";
 $link4=$http."rlt_recibo_pagamento_parcelado_pf.php?id=".$id_ped."";
+$link5=$http."rlt_recibo_documentacao_pf.php?id=".$id_ped."";
+
 $data = date('Y-m-d H:i:s');
 
 	$con = bancoMysqli();
@@ -25,6 +27,12 @@ if(isset($_POST['atualizar'])){ // atualiza o pedido
 				<a href='$link1?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Pagamento Integral</a></div>
 			  <div class='col-md-6'>
 				<a href='$link3?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Recibo de Pagamento</a><br/></div>
+			</div>
+			
+			<div class='form-group'>
+    		  <div class='col-md-offset-2 col-md-8'>
+			    <a href='$link5?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Recibo de Documentação</a>
+			  </div>
 			</div>
 			
 			<div class='form-group'>
@@ -114,6 +122,7 @@ $parcelamento = retornaParcelaPagamento($id_ped);
                             <td>Data</td>
 							<td></td>
 							<td></td>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -125,7 +134,8 @@ for($i = 1; $i < count($parcelamento); $i++)
 	echo '<td class="list_description">R$ '.$parcelamento[$i]['valor'].'</td> ';
 	echo '<td class="list_description">'.$parcelamento[$i]['pagamento'].'</td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link2.'&parcela='.$i.'>Pagamento</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Recibo</a></td></tr>';
+	echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Recibo</a></td>';
+	echo '<td class="list_description"><a target="_blank" href='.$link5.'?id='.$id_ped.' >Documentação</a></td></tr>';
 } ?>	
 
 					</tbody>
