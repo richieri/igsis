@@ -17,24 +17,7 @@ case 'inicio':
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">
-        <!--    
-			<div class="col-md-offset-2 col-md-8">
-                <div class="text-hide">
-	                <h4>Escolha uma opção</h4>
-                </div>
-            </div>
         
-		<div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=evento&p=basica&inserir=novo" class="btn btn-theme btn-lg btn-block">Inserir um novo evento</a>
-	            <a href="?perfil=evento&p=carregar" class="btn btn-theme btn-lg btn-block">Carregar um evento gravado</a>
-  	            <a href="?perfil=evento&p=enviados" class="btn btn-theme btn-lg btn-block">Acompanhar andamento de eventos enviados</a>
-   	            <a href="?perfil=evento&p=pedidos" class="btn btn-theme btn-lg btn-block">Acompanhar andamento de pedidos de contratação</a>
-   	            <a href="?perfil=propostas" class="btn btn-theme btn-lg btn-block">Pesquisar propostas enviadas por formulário online</a>      
-  	            <a href="http://www.centrocultural.cc/smcproducao/" target = "_blank" class="btn btn-theme btn-lg btn-block">Informações de produção / riders / mapas de luz</a>            
-            </div>
-        </div>
-		  -->
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
 				<h5>Seus últimos eventos inseridos</h5>

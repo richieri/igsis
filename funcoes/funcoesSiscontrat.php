@@ -138,6 +138,7 @@ function siscontrat($idPedido){
 			$assinatura = recuperaDados("sis_assinatura",$pedido['instituicao'],"idInstituicao");
 			$penalidades = recuperaPenalidades($pedido['idPenalidade']);
 			$verba = recuperaVerba($pedido['idPenalidade']);
+			$ingresso = recuperaDados("ig_ocorrencia", $pedido['idEvento'], "idEvento");
 			
 			$viradaOcorrencia = viradaOcorrencia($pedido['idEvento']);
 			
@@ -234,7 +235,8 @@ function siscontrat($idPedido){
 			"retencoesIRRF" => $pedido['retencoesIRRF'],
 			"notaFiscal" => $pedido['notaFiscal'],
 			"descricaoNF" => $pedido['descricaoNF'],
-			"aprovacaoFinanca" => $pedido['aprovacaoFinanca']
+			"aprovacaoFinanca" => $pedido['aprovacaoFinanca'],
+			"ingresso" => $ingresso['valorIngresso']
 			);
 		
 		
