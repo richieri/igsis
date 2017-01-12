@@ -43,6 +43,9 @@ $link33 = $http."rlt_proposta_exposicao_edital_pj.php"."?id=".$id_ped."&penal=22
 $link34 = $http."rlt_proposta_mediacao_edital_pj.php"."?id=".$id_ped."&penal=24";
 $link35 = $http."rlt_proposta_contadores_edital_pj.php"."?id=".$id_ped."&penal=26";
 $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal=28";
+$link37 = $http."rlt_ordemservico_pj_assinatura.php";
+$link38 = $http."rlt_termo_doacao_pj_assinatura.php";
+
 
 	 $last_id = mysqli_insert_id($conexao);
 	 echo "
@@ -131,13 +134,18 @@ $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal
 		</tr>
 		
 		<tr>
-			<td><a href='$link8?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
-			<td><a href='$link23?id=$id_ped' target='_blank'><strong>Ordem de Serviço</strong></a></td>
+		<td><a href='$link23?id=$id_ped' target='_blank'><strong>Ordem de Serviço</strong></a></td>
+	    <td><a href='$link37?id=$id_ped' target='_blank'><strong>Ordem de Serviço - Assinatura</strong></a></td>
 		</tr>
 		<tr>
 			<td><a href='$link26?id=$id_ped' target='_blank'><strong>Termo de Doação</strong></a></td>
-			<td><a href='$link27?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
-		</tr>		
+			<td><a href='$link38?id=$id_ped' target='_blank'><strong>Termo de Doação - Assinatura</strong></a></td>
+		</tr>	
+
+	    <tr>
+		<td><a href='$link8?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
+		<td><a href='$link27?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
+		</tr>	
 		
 		
 		<tr><td class='list_description'><br/></td></tr>

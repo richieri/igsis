@@ -49,6 +49,9 @@ $link39 = $http."rlt_proposta_mediacao_edital_pf.php"."?id=".$id_ped."&penal=25"
 $link40 = $http."rlt_proposta_contadores_edital_pf.php"."?id=".$id_ped."&penal=26";
 $link41 = $http."rlt_proposta_galadeballet_edital_pf.php"."?id=".$id_ped."&penal=29";
 $link42 = $http."rlt_pedido_reserva_oficinaseditalcasa_pf.php";
+$link43 = $http."rlt_termo_doacao_pf_assinatura.php";
+$link44 = $http."rlt_ordemservico_pf_assinatura.php";
+
 
 
  
@@ -150,11 +153,16 @@ $link42 = $http."rlt_pedido_reserva_oficinaseditalcasa_pf.php";
 		</tr>
 		<tr>
 			<td><a href='$link19?id=$id_ped' target='_blank'><strong>Ordem de serviço</strong></a></td>
-			<td><a href='$link26?id=$id_ped' target='_blank'><strong>Termo de Doação de Obra de Arte</strong></a></td>
+		    <td><a href='$link44?id=$id_ped' target='_blank'><strong>Ordem de serviço - Assinatura</strong></a></td>
 		</tr>
 		<tr>
 			<td><a href='$link27?id=$id_ped' target='_blank'><strong>Termo de Doação de Serviço</strong></a></td>
-			<td><a href='$link28?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
+			<td><a href='$link43?id=$id_ped' target='_blank'><strong>Termo Doação de Serviço - Assinatura</strong></a></td>
+		</tr>
+		
+		<tr>
+		<td><a href='$link28?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
+		<td><a href='$link26?id=$id_ped' target='_blank'><strong>Termo de Doação de Obra de Arte</strong></a></td>
 		</tr>
 		
 		<tr><td class='list_description'><br/></td></tr>
