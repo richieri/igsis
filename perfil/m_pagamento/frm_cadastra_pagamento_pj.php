@@ -13,6 +13,7 @@ $link7=$http."rlt_declaracao_simples_pj.php";
 $link8=$http."rlt_recibo_pagamento_parcelado_1rep_pj.php";
 $link9=$http."rlt_recibo_pagamento_parcelado_2rep_pj.php";
 $link10=$http."rlt_recibo_documentacao_pj.php";
+$link11=$http."rlt_ateste_confirmacao_pj.php";
 
 $data = date('Y-m-d H:i:s');
 

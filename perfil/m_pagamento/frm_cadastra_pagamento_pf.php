@@ -8,6 +8,7 @@ $link2=$http."rlt_pagamento_parcelado_pf.php?id=".$id_ped."";
 $link3=$http."rlt_recibo_pagamento_pf.php?id=".$id_ped."";
 $link4=$http."rlt_recibo_pagamento_parcelado_pf.php?id=".$id_ped."";
 $link5=$http."rlt_recibo_documentacao_pf.php?id=".$id_ped."";
+$link6=$http."rlt_ateste_confirmacao_pf.php?id=".$id_ped."";
 
 $data = date('Y-m-d H:i:s');
 
