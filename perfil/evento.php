@@ -102,6 +102,8 @@ if(isset($_POST['atualizar'])){
  
 	$linksCom = addslashes($_POST['linksCom']); 
 	$autor = addslashes($_POST['autor']);
+	$autor = addslashes($_POST['autor']);
+    $nomeGrupo = addslashes($_POST['nomeGrupo']);
 	$fichaTecnica = addslashes($_POST['fichaTecnica']); 
 	$faixaEtaria = $_POST['faixaEtaria'];
 	$ig_modalidade_IdModalidade = $_POST['ig_modalidade_IdModalidade'];
@@ -126,6 +128,7 @@ if(isset($_POST['atualizar'])){
 	`ig_tipo_evento_idTipoEvento` = '$ig_tipo_evento_idTipoEvento',
 	`subEvento` = '$subEvento',
 		`autor` = '$autor', 
+	`nomeGrupo` = '$nomeGrupo', 
 	`fichaTecnica` = '$fichaTecnica', 
 	`faixaEtaria` = '$faixaEtaria', 
 		`sinopse` = '$sinopse', 
@@ -248,6 +251,15 @@ if($campo['subEvento'] == 1){
             		<textarea name="autor" class="form-control" rows="10" placeholder="artista, banda, coletivo, companhia, palestrantes, etc"><?php echo $campo["autor"] ?></textarea>
             	</div> 
             </div>
+			
+       		 <div class="form-group">
+            	<div class="col-md-offset-2 col-md-8">
+            		<label>Nome do Grupo</label>
+            		<input type="text" name="nomeGrupo" class="form-control" maxlength="30" id="inputSubject" value="<?php echo $campo['nomeGrupo'] ?>"/>
+            	</div> 
+            </div>
+			
+			
        		 <div class="form-group">
             	<div class="col-md-offset-2 col-md-8">
             		<label>Ficha técnica completa*</label>
