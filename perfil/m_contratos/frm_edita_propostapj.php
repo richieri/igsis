@@ -97,6 +97,24 @@ if(isset($_POST['idContrato'])){
 }
 
 
+/* Atualiza Grupo */
+if(isset($_POST['atualizaGrupo'])){ // atualiza o grupo
+	$con = bancoMysqli();
+	$idEvento = $_GET['idEvento'];
+	$nomeGrupo = $_POST['nomeGrupo'];
+		$sql_atualiza_grupo = "UPDATE ig_evento SET
+		nomeGrupo = '$nomeGrupo'
+		WHERE idEvento = '$idEvento'";
+		$query_atualiza_grupo = mysqli_query($con,$sql_atualiza_grupo);
+		if($query_atualiza_grupo){
+			$mensagem = "Grupo atualizado com sucesso. <br/> <br>";	 
+		}else{
+			$mensagem = "Erro(1) ao atualizar grupo.";	
+		}
+}
+
+
+
 if(isset($_POST['atualizar'])){ // atualiza o pedido
 	$con = bancoMysqli();
 	$ped = $_GET['id_ped'];
@@ -125,8 +143,7 @@ if($_POST['atualizar'] > '1'){
 		$idEvento = $recupera['idEvento'];
 		$sql_atualiza_evento = "UPDATE ig_evento SET
 		idResponsavel = '$fiscal',
-		suplente = '$suplente',
-		nomeGrupo = '$nomeGrupo'
+		suplente = '$suplente'
 		WHERE idEvento = '$idEvento'";
 		$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
 		if($query_atualiza_evento){
@@ -172,8 +189,7 @@ if($_POST['atualizar'] > '1'){
 		$idEvento = $recupera['idEvento'];
 		$sql_atualiza_evento = "UPDATE ig_evento SET
 		idResponsavel = '$fiscal',
-		suplente = '$suplente',
-		nomeGrupo = '$nomeGrupo'
+		suplente = '$suplente'
 		WHERE idEvento = '$idEvento'";
 		$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
 		if($query_atualiza_evento){
@@ -381,15 +397,24 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 				  <div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><br /></div>
 				  </div>
-            <form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
-
+				  
+<!-- Atualiza Grupo -->			  
+		<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>&idEvento=<?php echo $pedido['idEvento']; ?>" method="post">
+		    
 			<div class="form-group">
-            	<div class="col-md-offset-2 col-md-8">
+            	<div class="col-md-offset-2 col-md-5">
             		<label>Nome do Grupo</label>
-            		<input type="text" name="nomeGrupo" class="form-control"  value="<?php echo $pedido['nomeGrupo'] ?>"/>
-            	</div> 
+					<input type="text" name="nomeGrupo" id="nomeGrupo" class="form-control" value="<?php echo $evento['nomeGrupo'] ?>" >
+            	</div>
+				<div class="col-md-3"><br/>
+                     <input type="hidden" name="atualizaGrupo" value="<?php echo $pedido['idEvento']; ?>" />
+					 <input type="submit" class="btn btn-theme  btn-block" value="Atualizar Grupo">
+				</div>				
             </div>
-                     				  <div class="form-group">
+			
+		</form>
+				
+                <div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><br /></div>
 				  </div>
 				  
@@ -416,6 +441,8 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 					</div>
 				  </div>
 				  
+				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
+  
                <!--                    <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Valor:</strong><br/>
 					  <input type='text' name="Valor" class='form-control' id='valor' value='<?php echo dinheiroParaBr($linha_tabelas['ValorGlobal']);?>'>
