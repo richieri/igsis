@@ -204,6 +204,7 @@ function siscontrat($idPedido){
 			"Justificativa" => $justificativa,
 			"ParecerTecnico" => $pedido['parecerArtistico'],
 			"DataCadastro" => $evento['dataEnvio'],
+			"nomeGrupo" => $evento['nomeGrupo'],
 			"Fiscal" => $fiscal['nomeCompleto'] ,
 			"Suplente" => $suplente['nomeCompleto'],
 			"Observacao"=> $pedido['observacao'], //verificar
