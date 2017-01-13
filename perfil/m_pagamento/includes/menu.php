@@ -14,8 +14,8 @@ $pasta = "?perfil=pagamento&p=";
 		<li><a href="<?php echo $pasta ?>frm_listapedidocontratacaopf_cadastrane_vocacional">N.E. Formação</a></li>
 		<li><a href="<?php echo $pasta ?>frm_concluir_processo">Concluir Processos IGSIS</a></li>
 		<li style="color:white;">-------------------------</li>		
-		<li><a href="index.php?secao=perfil">Carregar módulos</a></li>
-		<li><a href="http://centrocultural.cc/igsis/manual" target="_blank">Ajuda</a></li>
+		<li><a href="index.php?secao=perfil">Carregar Módulos</a></li>
+		<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-pagamento/" target="_blank">Ajuda</a></li>
 		<li><a href="../index.php">Sair</a></li>
 			</ul>
   </div>

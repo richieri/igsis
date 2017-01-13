@@ -15,20 +15,17 @@ case 'inicio':
 <?php include "../include/menuOcupacao.php"; ?>
 
 <section id="contact" class="home-section bg-white">
-    <div class="container">
+     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-	                <h4>Escolha uma opção</h4>
-                </div>
-            </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=ocupacao&p=basica&inserir=novo" class="btn btn-theme btn-lg btn-block">Inserir um novo evento</a>
-	            <a href="?perfil=ocupacao&p=carregar" class="btn btn-theme btn-lg btn-block">Carregar um evento</a>
-                <a href="http://www.centrocultural.cc/smcproducao/" target = "_blank" class="btn btn-theme btn-lg btn-block">Informações de produção / riders / mapas de luz</a>            
-            </div>
-          </div>
+					<h3>Bem-vindo(a) à IGSIS!</h3>
+                    <p>&nbsp;</p>
+                    <h2>Módulo Eventos Internos /  Ocupação</h2>
+                    <p>&nbsp;</p>
+					<h6>Nesse módulo é possível inserir e gerenciar eventos internos / ocupação de espaços sem necessidade de contratação artística, carregar um evento interno, e consultar informações de produção, riders e mapas de luz.</h6>
+			   </div>		 
+           </div>
         </div>
     </div>
 </section>    

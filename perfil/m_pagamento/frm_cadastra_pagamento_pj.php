@@ -41,6 +41,7 @@ if(isset($_POST['atualizar'])){ // atualiza o pedido
 					<td class='list_description'><a href='$link5?id=$id_ped' target='_blank'>Recibo</a></td>
 					<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração</a></td>
 					<td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Documentação</a></td>
+					<td class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Ateste de Confirmação</a></td>
 				</tr>
 				<tr>
 					<td class='list_description'><strong>02 Representantes</strong></td>
@@ -49,6 +50,7 @@ if(isset($_POST['atualizar'])){ // atualiza o pedido
 					<td class='list_description'><a href='$link6?id=$id_ped' target='_blank'>Recibo</a></td>
 					<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração</a></td>
 					<td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Documentação</a></td>
+					<td class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Ateste de Confirmação</a></td>
 				</tr>
 			</table>
 			
@@ -137,35 +139,36 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 		<div class="col-md-offset-1 col-md-20">
             
 				<div class="table-responsive list_info">
-				<table class="table table-condensed">
+				
+<table class="table table-condensed">
 					<thead>
 						<tr class="list_menu">
 							<td>Nº Parcela</td>
 							<td>Valor</td>
                             <td>Data</td>
-							<td colspan="2">PAGAMENTO</td>
-							<td colspan="2">RECIBO</td>
-							<td colspan="2">DECLARAÇÃO</td>
-							<td colspan="2">DOCUMENTAÇÃO</td>
+							<td>1 Representante</td>
+							<td>2 Representantes</td>
 						</tr>
 					</thead>
-					<tbody>
-					
+					<tbody>	
+
 <?php				
 for($i = 1; $i < count($parcelamento); $i++)
  {
 	echo '<tr><td class="list_description">'.$i.'</td> ';
 	echo '<td class="list_description">R$ '.$parcelamento[$i]['valor'].'</td> ';
 	echo '<td class="list_description">'.$parcelamento[$i]['pagamento'].'</td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link3.'?id='.$id_ped.'&parcela='.$i.'>1 Representante</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link4.'?id='.$id_ped.'&parcela='.$i.'>2 Representantes</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link8.'?id='.$id_ped.'&parcela='.$i.'>1 Representante</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link9.'?id='.$id_ped.'&parcela='.$i.'>2 Representantes</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>1 Representante</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>2 Representantes</a></td>';
-
-	echo '<td class="list_description"><a target="_blank" href='.$link10.'?id='.$id_ped.'>1  Representante</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link10.'?id='.$id_ped.'>2  Representantes</a></td>';
+	echo '<td class="list_description"><a target="_blank" href='.$link3.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>
+										<a target="_blank" href='.$link8.'?id='.$id_ped.'&parcela='.$i.'>Recibo</a><br/>
+										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
+										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
+										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a></td>';
+										
+	echo '<td class="list_description"><a target="_blank" href='.$link4.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>
+										<a target="_blank" href='.$link9.'?id='.$id_ped.'&parcela='.$i.'>Recibo</a><br/>
+										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
+										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
+										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a></td>';
 } ?>	
 
 					</tbody>

@@ -41,22 +41,17 @@ case "inicio":
 ?>
 
 <section id="contact" class="home-section bg-white">
-    <div class="container">
+        <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h1>Solicitação de serviços internos</h1>
-	                <h4>Escolha uma opção</h4>
-                </div>
-            </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=servicos&p=registros" class="btn btn-theme btn-lg btn-block">Registros</a>
-	            <a href="?perfil=servicos&p=grafico" class="btn btn-theme btn-lg btn-block">Projeto Gráfico</a>
-	            <a href="?perfil=servicos&p=digacervo" class="btn btn-theme btn-lg btn-block">Digitalização de acervo</a>
-                
-            </div>
-          </div>
+					<h3>Bem-vindo(a) à IGSIS!</h3>
+                    <p>&nbsp;</p>
+                    <h2>Módulo Serviços</h2>
+                    <p>&nbsp;</p>
+					<h6>Este módulo é voltado aos usuários que lidam com fotografia da área de Comunicação. Através dele é possível listar os registros, projetos gráficos e a digitalização do acervo</h6>
+			   </div>		 
+           </div>
         </div>
     </div>
 </section>    

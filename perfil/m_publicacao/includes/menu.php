@@ -11,8 +11,8 @@ $pasta = "?perfil=publicacao&p=";
 		<li><a href="<?php echo $pasta ?>frm_busca_publicacao">Buscar Evento</a></li>
 		<li><a href="<?php echo $pasta ?>frm_busca_formacao">Buscar Formação</a></li>
 		<li style="color:white;">-------------------------</li>		
-		<li><a href="index.php?secao=perfil">Carregar módulos</a></li>
-		<li><a href="#">Ajuda</a></li>
+		<li><a href="index.php?secao=perfil">Carregar Módulos</a></li>
+		<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-publicacao/">Ajuda</a></li>
 		<li><a href="../index.php">Sair</a></li>
 			</ul>
   </div>

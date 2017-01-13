@@ -31,8 +31,11 @@ if(isset($_POST['atualizar'])){ // atualiza o pedido
 			</div>
 			
 			<div class='form-group'>
-    		  <div class='col-md-offset-2 col-md-8'>
+    		  <div class='col-md-offset-2 col-md-6'>
 			    <a href='$link5?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Recibo de Documentação</a>
+			  </div>
+			  <div class='col-md-6'>
+				<a href='$link6?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Ateste de Confirmação</a>
 			  </div>
 			</div>
 			
@@ -124,6 +127,7 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 							<td></td>
 							<td></td>
 							<td></td>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -136,7 +140,8 @@ for($i = 1; $i < count($parcelamento); $i++)
 	echo '<td class="list_description">'.$parcelamento[$i]['pagamento'].'</td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link2.'&parcela='.$i.'>Pagamento</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Recibo</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link5.'?id='.$id_ped.' >Documentação</a></td></tr>';
+	echo '<td class="list_description"><a target="_blank" href='.$link5.'?id='.$id_ped.' >Documentação</a></td>';
+	echo '<td class="list_description"><a target="_blank" href='.$link6.'?id='.$id_ped.' >Ateste de Confirmação</a></td></tr>';
 } ?>	
 
 					</tbody>

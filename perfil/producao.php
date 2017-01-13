@@ -5,17 +5,10 @@
 							<li>
 								<a href="?perfil=producao&p=lista">Lista de eventos</a></li>
 								<li><a href="?perfil=producao&p=chamados">Lista de chamados</a></li>
-							
-							<li><a href="?secao=perfil">Perfil de acesso</a></li>
-							<li><a href="?secao=ajuda">Ajuda</a></li>
+							<li style="color:white;">-------------------------</li>
+						    <li><a href="?secao=perfil">Carregar Módulos</a></li>
+						    <li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-producao/">Ajuda</a></li>
                             <li><a href="../include/logoff.php">Sair</a></li>
-							<!--<li>
-								<a href="#">Sub Menu</a>
-								<ul class="dl-submenu">
-									<li><a href="#">Sub menu</a></li>
-									<li><a href="#">Sub menu</a></li>
-								</ul>
-							</li>-->
 						</ul>
 					</div><!-- /dl-menuwrapper -->
 	</div>	
@@ -38,20 +31,17 @@ switch($p)
 ?>
 
 <section id="contact" class="home-section bg-white">
-    <div class="container">
+        <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-	                <h4>Escolha uma opção</h4>
-                </div>
-            </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=producao&p=lista" class="btn btn-theme btn-lg btn-block">Listar os eventos da instituição</a>
-	            <a href="?perfil=producao&p=chamados" class="btn btn-theme btn-lg btn-block">Listar últimos chamados da instituição</a>
-
-            </div>
-          </div>
+					<h3>Bem-vindo(a) à IGSIS!</h3>
+                    <p>&nbsp;</p>
+                    <h2>Módulo Produção</h2>
+                    <p>&nbsp;</p>
+					<h6>Através desse módulo o usuário poderá listar os eventos da instituição, visualizar detalhes pertinentes à produção e listar os últimos chamados de sua instituição.</h6>
+			   </div>		 
+           </div>
         </div>
     </div>
 </section>   

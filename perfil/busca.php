@@ -29,19 +29,13 @@ case 'inicio':
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h2>Buscas e pesquisas</h2>
-	                <h5>Escolha uma opção</h5>
-                </div>
-            </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=busca&p=eventos" class="btn btn-theme btn-lg btn-block">Eventos</a>
-	            <!--<a href="?perfil=busca&p=pedidos" class="btn btn-theme btn-lg btn-block">Pedidos de contratação</a>-->
-	            <a href="?perfil=busca&p=pessoa" class="btn btn-theme btn-lg btn-block">Pessoa física / Pessoa Jurídica</a>                
-  	            <a href="?perfil=busca&p=igsis" class="btn btn-theme btn-lg btn-block">Instituições, usuários e espaços</a>
-				<a href="?perfil=busca_pedido" class="btn btn-theme btn-lg btn-block">Pedidos de contratação</a>
-            </div>
-          </div>
+					<h3>Bem-vindo(a) à IGSIS!</h3>
+                    <p>&nbsp;</p>
+                    <h2>Módulo Pesquisas e Buscas</h2>
+                    <p>&nbsp;</p>
+					<h6>Através desse módulo é possível pesquisar dados sobre eventos, detalhes e status de pedidos de contratação, pessoas físicas e jurídicas, instituições, usuários e espaços participantes da IGSIS.</h6>
+			   </div>		 
+           </div>
         </div>
     </div>
 </section>    
