@@ -28,6 +28,22 @@ if(isset($_POST['idContrato'])){
 }
 
 
+/* Atualiza Grupo */
+if(isset($_POST['atualizaGrupo'])){ // atualiza o grupo
+	$con = bancoMysqli();
+	$idEvento = $_GET['idEvento'];
+	$nomeGrupo = $_POST['nomeGrupo'];
+		$sql_atualiza_grupo = "UPDATE ig_evento SET
+		nomeGrupo = '$nomeGrupo'
+		WHERE idEvento = '$idEvento'";
+		$query_atualiza_grupo = mysqli_query($con,$sql_atualiza_grupo);
+		if($query_atualiza_grupo){
+			$mensagem = "Grupo atualizado com sucesso. <br/> <br>";	 
+		}else{
+			$mensagem = "Erro(1) ao atualizar grupo.";	
+		}
+}
+
 
 if(isset($_POST['atualizar'])){ // atualiza o pedido
 	$con = bancoMysqli();
@@ -273,6 +289,23 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				  <div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><br /></div>
 				  </div>
+				  
+<!-- Atualiza Grupo -->			  
+		<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>&idEvento=<?php echo $pedido['idEvento']; ?>" method="post">
+		    
+			<div class="form-group">
+            	<div class="col-md-offset-2 col-md-5">
+            		<label>Nome do Grupo</label>
+					<input type="text" name="nomeGrupo" id="nomeGrupo" class="form-control" value="<?php echo $evento['nomeGrupo'] ?>" >
+            	</div>
+				<div class="col-md-3"><br/>
+                     <input type="hidden" name="atualizaGrupo" value="<?php echo $pedido['idEvento']; ?>" />
+					 <input type="submit" class="btn btn-theme  btn-block" value="Atualizar Grupo">
+				</div>				
+            </div>
+			
+		</form>				  
+				  
                                       				
                   <div class="form-group">                  
 					<div class="col-md-offset-2 col-md-8" align="left"><strong>Objeto:</strong> <?php echo $linha_tabelas['Objeto'];?><br/><br/>
