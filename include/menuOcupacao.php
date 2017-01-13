@@ -4,10 +4,8 @@
 						<ul class="dl-menu">
 							<li><a href="?perfil=ocupacao&p=basica&inserir=novo">Inserir um evento</a> </li>
 							<li><a href="?perfil=ocupacao&p=carregar">Carregar um evento</a></li>
-                            <li><a href="#">+ opções</a>   
-                             <ul class="dl-submenu">
-                                        <li selected><a href="?perfil=ocupacao&p=basica">Início</a></li>
-                                        <li><a href="?secao=perfil">Carregar módulo</a></li>
+                                        <li><a href="?secao=perfil">Carregar Módulos</a></li>
+										<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-eventos-internosocupacao/">Ajuda</a></li>
                                         <li><a href="../include/logoff.php">Sair</a></li>
                                     </ul>
                             </li>   

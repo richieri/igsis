@@ -15,10 +15,9 @@
  							<li><a href="#">Outras opções</a> 
     
                                     <ul class="dl-submenu">
-                                        <li><a href="?perfil=ocupacao">Voltar </a></li>
-										<li><a href="?secao=perfil">Carregar módulos</a></li>
-                                       <li><a href="?perfil=inicio">Voltar a página inicial</a></li>
-                                        <li><a href="../include/logoff.php">Sair do sistema</a></li>
+										<li><a href="?secao=perfil">Carregar Módulos</a></li>
+                                       <li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-eventos-internosocupacao/">Ajuda</a></li>
+                                        <li><a href="../include/logoff.php">Sair</a></li>
                                     </ul>
                                 </li>
                        </ul>
