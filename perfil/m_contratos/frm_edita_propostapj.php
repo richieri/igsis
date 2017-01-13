@@ -125,7 +125,8 @@ if($_POST['atualizar'] > '1'){
 		$idEvento = $recupera['idEvento'];
 		$sql_atualiza_evento = "UPDATE ig_evento SET
 		idResponsavel = '$fiscal',
-		suplente = '$suplente'
+		suplente = '$suplente',
+		nomeGrupo = '$nomeGrupo'
 		WHERE idEvento = '$idEvento'";
 		$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
 		if($query_atualiza_evento){
@@ -171,7 +172,8 @@ if($_POST['atualizar'] > '1'){
 		$idEvento = $recupera['idEvento'];
 		$sql_atualiza_evento = "UPDATE ig_evento SET
 		idResponsavel = '$fiscal',
-		suplente = '$suplente'
+		suplente = '$suplente',
+		nomeGrupo = '$nomeGrupo'
 		WHERE idEvento = '$idEvento'";
 		$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
 		if($query_atualiza_evento){
@@ -379,7 +381,18 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 				  <div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><br /></div>
 				  </div>
-                                      				
+            <form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
+
+			<div class="form-group">
+            	<div class="col-md-offset-2 col-md-8">
+            		<label>Nome do Grupo</label>
+            		<input type="text" name="nomeGrupo" class="form-control"  value="<?php echo $pedido['nomeGrupo'] ?>"/>
+            	</div> 
+            </div>
+                     				  <div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><br /></div>
+				  </div>
+				  
                   <div class="form-group">                  
 					<div class="col-md-offset-2 col-md-8" align="left"><strong>Objeto:</strong> <?php echo $pedido['Objeto']; ?><br/><br/>
 					</div>
@@ -403,7 +416,6 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 					</div>
 				  </div>
 				  
-                  <form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
                <!--                    <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Valor:</strong><br/>
 					  <input type='text' name="Valor" class='form-control' id='valor' value='<?php echo dinheiroParaBr($linha_tabelas['ValorGlobal']);?>'>
