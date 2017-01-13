@@ -56,7 +56,7 @@ for($i = 0; $i < $ocor['numero']; $i++)
 	$dia = $ocor[$i]['data'];
 	$hour = $ocor[$i]['hora'];
 	$lugar = $ocor[$i]['espaco'];
-	$tudo = $tudo . $ocor[$i]['espaco']."<br>" . $ocor[$i]['data']. " às ". $ocor[$i]['hora']."<br>"."<br>";
+	$tudo = $tudo . $ocor[$i]['espaco']."<br>" . $ocor[$i]['data']. " Ã s ". $ocor[$i]['hora']."<br>"."<br>";
 	}
   
  ?>
