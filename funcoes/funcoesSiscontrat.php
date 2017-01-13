@@ -83,7 +83,7 @@ function siscontratLista($tipoPessoa,$instituicao,$num_registro,$pagina,$ordem,$
 			"Setor" => $instituicao['instituicao']  ,
 			"TipoPessoa" => $pedido['tipoPessoa'],
 			"CategoriaContratacao" => $evento['ig_modalidade_IdModalidade'] , //precisa ver se retorna o id
-			"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'] ,
+			"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeGrupo']." - ".$evento['nomeEvento'] ,
 			"Local" => substr($local,1) , //retira a virgula no começo da string
 			"LocalJuridico" => substr($local,1) , //retira a virgula no começo da string
 			"ValorGlobal" => $valorTotal,
@@ -178,7 +178,7 @@ function siscontrat($idPedido){
 				//$carga = "";
 				$justificativa = $cargo['justificativa'];
 			}else{
-				$objeto = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+				$objeto = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeGrupo']." - ".$evento['nomeEvento'];
 				$loc = substr($local,1);
 				$loc_jur = substr($local_juridico,1);
 				$periodo = retornaPeriodo($pedido['idEvento']);
@@ -275,7 +275,7 @@ function siscontratFormacao($idPedido){
 			"Setor" => $instituicao['instituicao']  ,
 			"TipoPessoa" => $pedido['tipoPessoa'],
 			"CategoriaContratacao" => $evento['ig_modalidade_IdModalidade'] , //precisa ver se retorna o id
-			"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'] ,
+			"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeGrupo']." - ".$evento['nomeEvento'] ,
 			"Local" => substr($local,1) , //retira a virgula no começo da string
 			"ValorGlobal" => $pedido['valor'],
 			"ValorIndividual" => $pedido['valorIndividual'],
@@ -677,7 +677,7 @@ function siscontratListaEvento($tipoPessoa,$instituicao,$num_registro,$pagina,$o
 			"Setor" => $instituicao['instituicao']  ,
 			"TipoPessoa" => $pedido['tipoPessoa'],
 			"CategoriaContratacao" => $evento['ig_modalidade_IdModalidade'] , //precisa ver se retorna o id
-			"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'] ,
+			"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeGrupo']." - ".$evento['nomeEvento'] ,
 			"Local" => substr($local,1) , //retira a virgula no começo da string
 			"ValorGlobal" => $pedido['valor'],
 			"ValorIndividual" => $pedido['valorIndividual'],
@@ -1191,7 +1191,7 @@ function lista_prazo($tipoPessoa,$num_registro,$pagina,$ordem){
 		    "idPedido" => $pedido['idPedidoContratacao'],
 			"idEvento" => $pedido['idEvento'], 
 			"TipoPessoa" => $pedido['tipoPessoa'],
-			"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'] ,
+			"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeGrupo']." - ".$evento['nomeEvento'] ,
 			"Local" => substr($local,1) , //retira a virgula no começo da string
 			"LocalJuridico" => substr($local,1) , //retira a virgula no começo da string
 			"Periodo" => $periodo, 
