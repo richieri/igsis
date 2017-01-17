@@ -1,7 +1,7 @@
 ﻿<?php
 
-   @ini_set('display_errors', '1');
-	error_reporting(E_ALL); 
+@ini_set('display_errors', '1');
+error_reporting(E_ALL); 
 
 require_once "../../funcoes/funcoesConecta.php";
 $path = "../../uploadsdocs/";
@@ -13,20 +13,16 @@ $tipo = $_GET['tipo'];
 $sql = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '$tipo' AND publicado = '1'";
 $query = mysqli_query($con,$sql);
 $data = date('YmdHis');
-//$nome_arquivo = $data."_igsis.zip";
 $nome_arquivo = $data.".zip";
 
 
-//ob_start();
-
-
- // Criando o objeto
+// Criando o objeto
 $z = new ZipArchive();
 
 // Criando o pacote chamado "teste.zip"
 $criou = $z->open($nome_arquivo, ZipArchive::CREATE);
-if ($criou === true) {
-
+if ($criou === true) 
+{
     // Criando um diretorio chamado "teste" dentro do pacote
     //$z->addEmptyDir('teste');
 
@@ -37,7 +33,8 @@ if ($criou === true) {
     //$z->addFromString('teste/outro.txt', 'Outro arquivo');
 
     // Copiando um arquivo do HD para o diretorio "teste" do pacote
-	while($arquivo = mysqli_fetch_array($query)){
+	while($arquivo = mysqli_fetch_array($query))
+	{
 		$file = $path.$arquivo['arquivo'];
 		$file2 = $arquivo['arquivo'];
     	$z->addFile($file, $file2);
@@ -48,27 +45,29 @@ if ($criou === true) {
     // Salvando o arquivo
     $z->close();
 	
-	
-	//SETANDO OS HEADERS NECESSARIOS
-// Enviando para o cliente fazer download
-// Configuramos os headers que serão enviados para o browser
-header('Content-Description: File Transfer');
-header('Content-Disposition: attachment; filename="'.$nome_arquivo.'"');
-header('Content-Type: application/octet-stream');
-header('Content-Transfer-Encoding: binary');
-header('Content-Length: ' . filesize($nome_arquivo));
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-header('Expires: 0');
-// Envia o arquivo para o cliente
-//echo $nome_arquivo;
-ob_end_clean(); //essas duas linhas antes do readfile
-flush();
 
-readfile($nome_arquivo);
+	//SETANDO OS HEADERS NECESSARIOS
+	// Enviando para o cliente fazer download
+	// Configuramos os headers que serão enviados para o browser
+	header('Content-Description: File Transfer');
+	header('Content-Disposition: attachment; filename="'.$nome_arquivo.'"');
+	header('Content-Type: application/octet-stream');
+	header('Content-Transfer-Encoding: binary');
+	header('Content-Length: ' . filesize($nome_arquivo));
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	header('Expires: 0');
+	// Envia o arquivo para o cliente
+	//echo $nome_arquivo;
+	ob_end_clean(); //essas duas linhas antes do readfile
+	flush();
+
+	readfile($nome_arquivo);
 	
 	//ABRINDO O ARQUIVO 
-} else {
+} 
+else 
+{
     echo 'Erro: '.$criou;
 }
 ?>

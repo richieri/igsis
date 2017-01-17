@@ -14,225 +14,113 @@ $nome_arquivo = $data.".zip";
 
 $zip = new ZipArchive();
  
-if( $zip->open( $nome_arquivo , ZipArchive::CREATE )  === true){
+if( $zip->open( $nome_arquivo , ZipArchive::CREATE )  === true)
+{
      
    $idPedido = $_GET['idPedido'];
+	// arquivos do pedido
+	$sql = "SELECT * FROM igsis_arquivos_pedidos WHERE idPedido = '$idPedido' AND publicado = '1'";
+	$query = mysqli_query($con,$sql);
 
+	if(isset($_GET['all']))
+	{
+	// arquivos da pessoa
+	$pedido = recuperaDados("igsis_pedido_contratacao",$idPedido,"idPedidoContratacao");
+	$idPessoa = $pedido['idPessoa'];
+	$tipo = $pedido['tipoPessoa'];
+	$sql_pessoa = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '$tipo' AND publicado = '1'";
+	$query_pessoa = mysqli_query($con,$sql_pessoa);
 
+	//se existir um executante
+		if($pedido['IdExecutante'] != "" OR $pedido['IdExecutante'] != NULL)
+		{
+			$idExec = $pedido['IdExecutante'];
+			$sql_exec = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idExec' AND idTipoPessoa = '1' AND publicado = '1'";
+			$query_exec = mysqli_query($con,$sql_exec);		
+		}
 
-// arquivos do pedido
-$sql = "SELECT * FROM igsis_arquivos_pedidos WHERE idPedido = '$idPedido' AND publicado = '1'";
-$query = mysqli_query($con,$sql);
+		if($pedido['idRepresentante01'] != 0 OR $pedido['idRepresentante01'] != NULL)
+		{
+			$idRep01 =  $pedido['idRepresentante01'];
+			$sql_rep01 = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idRep01' AND idTipoPessoa = '3' AND publicado = '1'";
+			$query_rep01 = mysqli_query($con,$sql_rep01);		
+		}
 
-if(isset($_GET['all'])){
-// arquivos da pessoa
-$pedido = recuperaDados("igsis_pedido_contratacao",$idPedido,"idPedidoContratacao");
-$idPessoa = $pedido['idPessoa'];
-$tipo = $pedido['tipoPessoa'];
-$sql_pessoa = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '$tipo' AND publicado = '1'";
-$query_pessoa = mysqli_query($con,$sql_pessoa);
-
-//se existir um executante
-	if($pedido['IdExecutante'] != "" OR $pedido['IdExecutante'] != NULL){
-		$idExec = $pedido['IdExecutante'];
-		$sql_exec = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idExec' AND idTipoPessoa = '1' AND publicado = '1'";
-		$query_exec = mysqli_query($con,$sql_exec);
-	
+		if($pedido['idRepresentante02'] != 0 OR $pedido['idRepresentante02'] != NULL)
+		{ 
+			$idRep02 = $pedido['idRepresentante02'];
+			$sql_rep02 = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idRep02' AND idTipoPessoa = '3' AND publicado = '1'";
+			$query_rep02 = mysqli_query($con,$sql_rep02);		
+		}
 	}
+		// Criando um diretorio chamado "teste" dentro do pacote
+		//$z->addEmptyDir('teste');
 
-	if($pedido['idRepresentante01'] != 0 OR $pedido['idRepresentante01'] != NULL){
-		$idRep01 =  $pedido['idRepresentante01'];
-		$sql_rep01 = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idRep01' AND idTipoPessoa = '3' AND publicado = '1'";
-		$query_rep01 = mysqli_query($con,$sql_rep01);
-	
-	}
+		// Criando um TXT dentro do diretorio "teste" a partir do valor de uma string
+		//$z->addFromString('teste/texto.txt', 'Conteúdo do arquivo de Texto');
 
-	if($pedido['idRepresentante02'] != 0 OR $pedido['idRepresentante02'] != NULL){ 
-		$idRep02 = $pedido['idRepresentante02'];
-		$sql_rep02 = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idRep02' AND idTipoPessoa = '3' AND publicado = '1'";
-		$query_rep02 = mysqli_query($con,$sql_rep02);
-	
-	}
+		// Criando outro TXT dentro do diretorio "teste"
+		//$z->addFromString('teste/outro.txt', 'Outro arquivo');
 
-
-}
-    // Criando um diretorio chamado "teste" dentro do pacote
-    //$z->addEmptyDir('teste');
-
-    // Criando um TXT dentro do diretorio "teste" a partir do valor de uma string
-    //$z->addFromString('teste/texto.txt', 'Conteúdo do arquivo de Texto');
-
-    // Criando outro TXT dentro do diretorio "teste"
-    //$z->addFromString('teste/outro.txt', 'Outro arquivo');
-
-    // Copiando um arquivo do HD para o diretorio "teste" do pacote
-	while($arquivo = mysqli_fetch_array($query)){
+		// Copiando um arquivo do HD para o diretorio "teste" do pacote
+	while($arquivo = mysqli_fetch_array($query))
+	{
 		$file = $path.$arquivo['arquivo'];
 		$file2 = $arquivo['arquivo'];
-    	$zip->addFile($file, "pedido/".$file2);
-		//$z->renameName($file2, substr($file2,15));
+		$zip->addFile($file, "pedido/".$file2);
 	}
-if(isset($_GET['all'])){	
-	while($arquivo = mysqli_fetch_array($query_pessoa)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$zip->addFile($file, "pessoa/".$file2);
-		//$z->renameName($file2, substr($file2,15));
+	if(isset($_GET['all']))
+	{	
+		while($arquivo = mysqli_fetch_array($query_pessoa))
+		{
+			$file = $path.$arquivo['arquivo'];
+			$file2 = $arquivo['arquivo'];
+			$zip->addFile($file, "pessoa/".$file2);
+		}
 	}
-}
 
-if($pedido['IdExecutante'] != "" OR $pedido['IdExecutante'] != NULL){
-	while($arquivo = mysqli_fetch_array($query_exec)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$zip->addFile($file, "executante/".$file2);
-		//$z->renameName($file2, substr($file2,15));
+	if($pedido['IdExecutante'] != "" OR $pedido['IdExecutante'] != NULL)
+	{
+		while($arquivo = mysqli_fetch_array($query_exec))
+		{
+			$file = $path.$arquivo['arquivo'];
+			$file2 = $arquivo['arquivo'];
+			$zip->addFile($file, "executante/".$file2);
+		}
 	}
-}
 
-
-	if($pedido['idRepresentante01'] != 0 OR $pedido['idRepresentante01'] != NULL){
-	while($arquivo = mysqli_fetch_array($query_rep01)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$zip->addFile($file, "rep01/".$file2);
-		//$z->renameName($file2, substr($file2,15));
-	}
-	}
-	if($pedido['idRepresentante02'] != 0 OR $pedido['idRepresentante02'] != NULL){
-	while($arquivo = mysqli_fetch_array($query_rep02)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$zip->addFile($file, "rep02/".$file2);
-		//$z->renameName($file2, substr($file2,15));
+	if($pedido['idRepresentante01'] != 0 OR $pedido['idRepresentante01'] != NULL)
+	{
+		while($arquivo = mysqli_fetch_array($query_rep01))
+		{
+			$file = $path.$arquivo['arquivo'];
+			$file2 = $arquivo['arquivo'];
+			$zip->addFile($file, "rep01/".$file2);
+			//$z->renameName($file2, substr($file2,15));
+		}
 	}
 	
-}
+	if($pedido['idRepresentante02'] != 0 OR $pedido['idRepresentante02'] != NULL)
+	{
+		while($arquivo = mysqli_fetch_array($query_rep02))
+		{
+			$file = $path.$arquivo['arquivo'];
+			$file2 = $arquivo['arquivo'];
+			$zip->addFile($file, "rep02/".$file2);
+		}
+		
+	}
+	// Apagando o segundo TXT
+	//$z->deleteName('teste/outro.txt');
 
-    // Apagando o segundo TXT
-    //$z->deleteName('teste/outro.txt');
-
-    // Salvando o arquivo
+	// Salvando o arquivo
 	//*/
-    //$z->close();
+	//$z->close();
 
-     
-        
-    $zip->close();
+	$zip->close();
 }
-
-//ob_start();
-
-/*
- // Criando o objeto
-$z = new ZipArchive();
-
-// Criando o pacote chamado "teste.zip"
-$criou = $z->open($nome_arquivo, ZipArchive::CREATE);
-if ($criou === true) {
-/*
-$idPedido = $_GET['idPedido'];
-
-
-
-// arquivos do pedido
-$sql = "SELECT * FROM igsis_arquivos_pedidos WHERE idPedido = '$idPedido' AND publicado = '1'";
-$query = mysqli_query($con,$sql);
-
-if(isset($_GET['all'])){
-// arquivos da pessoa
-$pedido = recuperaDados("igsis_pedido_contratacao",$idPedido,"idPedidoContratacao");
-$idPessoa = $pedido['idPessoa'];
-$tipo = $pedido['tipoPessoa'];
-$sql_pessoa = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '$tipo' AND publicado = '1'";
-$query_pessoa = mysqli_query($con,$sql_pessoa);
-
-//se existir um executante
-	if($pedido['IdExecutante'] != "" OR $pedido['IdExecutante'] != NULL){
-		$idExec = $pedido['IdExecutante'];
-		$sql_exec = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idExec' AND idTipoPessoa = '1' AND publicado = '1'";
-		$query_exec = mysqli_query($con,$sql_exec);
 	
-	}
-
-	if($pedido['idRepresentante01'] != 0 OR $pedido['idRepresentante01'] != NULL){
-		$idRep01 =  $pedido['idRepresentante01'];
-		$sql_rep01 = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idRep01' AND idTipoPessoa = '3' AND publicado = '1'";
-		$query_rep01 = mysqli_query($con,$sql_rep01);
-	
-	}
-
-	if($pedido['idRepresentante02'] != 0 OR $pedido['idRepresentante02'] != NULL){ 
-		$idRep02 = $pedido['idRepresentante02'];
-		$sql_rep02 = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = '$idRep02' AND idTipoPessoa = '3' AND publicado = '1'";
-		$query_rep02 = mysqli_query($con,$sql_rep02);
-	
-	}
-
-
-}
-    // Criando um diretorio chamado "teste" dentro do pacote
-    //$z->addEmptyDir('teste');
-
-    // Criando um TXT dentro do diretorio "teste" a partir do valor de uma string
-    //$z->addFromString('teste/texto.txt', 'Conteúdo do arquivo de Texto');
-
-    // Criando outro TXT dentro do diretorio "teste"
-    //$z->addFromString('teste/outro.txt', 'Outro arquivo');
-
-    // Copiando um arquivo do HD para o diretorio "teste" do pacote
-	while($arquivo = mysqli_fetch_array($query)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$z->addFile($file, $file2);
-		//$z->renameName($file2, substr($file2,15));
-	}
-if(isset($_GET['all'])){	
-	while($arquivo = mysqli_fetch_array($query_pessoa)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$z->addFile($file, $file2);
-		//$z->renameName($file2, substr($file2,15));
-	}
-}
-
-if($pedido['IdExecutante'] != "" OR $pedido['IdExecutante'] != NULL){
-	while($arquivo = mysqli_fetch_array($query_exec)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$z->addFile($file, $file2);
-		//$z->renameName($file2, substr($file2,15));
-	}
-}
-
-
-	if($pedido['idRepresentante01'] != 0 OR $pedido['idRepresentante01'] != NULL){
-	while($arquivo = mysqli_fetch_array($query_rep01)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$z->addFile($file, $file2);
-		//$z->renameName($file2, substr($file2,15));
-	}
-	}
-	if($pedido['idRepresentante02'] != 0 OR $pedido['idRepresentante02'] != NULL){
-	while($arquivo = mysqli_fetch_array($query_rep02)){
-		$file = $path.$arquivo['arquivo'];
-		$file2 = $arquivo['arquivo'];
-    	$z->addFile($file, $file2);
-		//$z->renameName($file2, substr($file2,15));
-	}
-	
-}
-
-    // Apagando o segundo TXT
-    //$z->deleteName('teste/outro.txt');
-
-    // Salvando o arquivo
-	*/
-    //$z->close();
-	
-	
-	//SETANDO OS HEADERS NECESSARIOS
+//SETANDO OS HEADERS NECESSARIOS
 // Enviando para o cliente fazer download
 // Configuramos os headers que serão enviados para o browser
 
@@ -252,6 +140,6 @@ flush();
 
 readfile($nome_arquivo);
 	
-	//ABRINDO O ARQUIVO 
+//ABRINDO O ARQUIVO 
 
 ?>
