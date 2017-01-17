@@ -62,15 +62,15 @@
         </div>
     </div>
 </section>  
-		<?php
-			break; 
+	<?php
+		break; 
 		case "email":
 			$con = bancoMysqli();
 			$sql = "SELECT DISTINCT idEvento, ig_log_reabertura.data FROM igsis_agenda 
 			INNER JOIN ig_log_reabertura ON idEveForm = idEvento
 			WHERE idEvento NOT IN ( SELECT idEvento FROM ig_evento WHERE ( dataEnvio IS NOT NULL ) OR ( dataEnvio IS NULL AND ocupacao = 1))";
 			$query = mysqli_query($con,$sql);
-		?>
+	?>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -93,10 +93,10 @@
 		</div>
 	</div>
 </section>  
-		<?php
-			break; //FIM EMAIL
+	<?php
+		break; //FIM EMAIL
 		case "estatistica":
-		?>
+	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8">		
@@ -326,10 +326,10 @@
 </section>
 
 
-		<?php
-			break; 
+	<?php
+		break; 
 		case "visaogeral":
-		?>
+	?>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -374,8 +374,8 @@
 		</div>
 	</div>
 </section>  
-		<?php	
-			break; // FIM EVENTOS
+	<?php	
+		break; // FIM EVENTOS
 		case "reabertura": // VISUALIZAR REABERTURA DE IGSIS
 			if(isset($_POST['apagar']))
 			{
@@ -455,7 +455,7 @@
 				$order = " ORDER BY idEvento DESC ";	
 				$mensagem .= "<br /> Ordenados pelo últimos números de Evento";	
 			}
-		?>
+	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8">		
@@ -536,12 +536,12 @@
 		</div>
 	</div>
 </section>
-		<?php 
-			break;
+	<?php 
+		break;
 		case "contratos":
 			if(!isset($_POST['id_ped']))
 			{
-		?>
+	?>
 
 <!-- Contact -->
 <section id="contact" class="home-section bg-white">
@@ -656,7 +656,7 @@
 </section>  
 		<?php 
 			}
-			break;
+		break;
 		case "sof":
 			if(isset($_FILES['arquivo']))
 			{
@@ -840,8 +840,8 @@
 </section>  
 
 
-		<?php
-			break;
+	<?php
+		break;
 		case "scripts":
 			if(isset($_GET['atualizar']))
 			{
@@ -891,19 +891,19 @@
 							case "Proposta":
 								$idStatus = "5";
 								$texto .= "O status do pedido $idPedido é Proposta.<br />";
-								break;
+							break;
 							case "Análise do Pedido":
 								$idStatus = "3";
 								$texto .= "O status do pedido $idPedido é Análise.<br />";
-								break;
+							break;
 							case "Pedido":
 								$idStatus = "1";
 								$texto .= "O status do pedido $idPedido é Pedido.<br />";
-								break;
+							break;
 							case "Concluído":
 								$idStatus = "11";
 								$texto .= "O status do pedido $idPedido é Concluído.<br />";
-								break;
+							break;
 						}
 						$sql_atualiza = "UPDATE igsis_pedido_contratacao SET estado = '$idStatus' WHERE idPedidoContratacao = '$idPedido'";
 						$query_atualiza = mysqli_query($con, $sql_atualiza);
@@ -1015,31 +1015,31 @@
 					{
 						case "SOLTEIRA":
 							$est = 3;
-							break;
+						break;
 						case "DIVORCIADO(A)":
 							$est = 2;
-							break;
+						break;
 						case "SOLTEIRO(A)":
 							$est = 3;
-							break;
+						break;
 						case "DIVORCIADO":
 							$est = 2;
-							break;
+						break;
 						case "CASADA":
 							$est = 1;
-							break;
+						break;
 						case "CASADO":
 							$est = 1;
-							break;
+						break;
 						case "VIUVA":
 							$est = 4;
-							break;
+						break;
 						case "OUTRO":
 							$est = 5;
-							break;
+						break;
 						case "DIVORCIADA":
 							$est = 2;
-							break;
+						break;
 						default:
 							$est = 5;
 					}
@@ -1200,7 +1200,7 @@
 					Aproveite para fazer um backup geral do banco.<br />";	
 				}
 			}
-		?>
+	?>
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">

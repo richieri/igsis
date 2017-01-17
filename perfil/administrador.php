@@ -18,8 +18,6 @@
 	//include para painel administração
 	require "../funcoes/funcoesAdministrador.php"; //chamar funcoes do administrador
 	require "../funcoes/funcoesSiscontrat.php"; //chamar funcoes do administrador
-?>
-<?php
 	@ini_set('display_errors', '1');
 	error_reporting(E_ALL);
 	$con = bancoMysqli();
@@ -50,9 +48,9 @@
         </div>
     </div>
 </section>  
-		<?php
-			// LISTA DE USUARIOS 
-			break;
+	<?php
+		// LISTA DE USUARIOS 
+		break;
 		case "users":
 			if(isset($_POST['apagar']))
 			{
@@ -70,7 +68,7 @@
 					$mensagem = "Erro ao apagar o usuário...";	
 				}		
 			}	
-		?> 
+	?> 
 <section id="list_items" class="home-section bg-white">
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8">		
@@ -94,55 +92,55 @@
 		</div>
 	</div>
 </section> 
-		<?php	
-			break; // FIM LISTA USUARIOS
+	<?php	
+		break; // FIM LISTA USUARIOS
 		case "novoUser": // INSERIR NOVO USUARIO 
-	if(isset($_POST['carregar']))
-	{
-		$_SESSION['idUsuario'] = $_POST['carregar'];
-	}
-	if(isset($_POST['atualizar']))
-	{
-		$nomeCompleto = $_POST['nomeCompleto'];
-		$rf = $_POST['rf'];
-		$usuario = $_POST['usuario'];
-		$existe = verificaExiste("ig_usuario","nomeUsuario",$usuario,"0");
-		//$senha = MD5($_POST['senha']);
-		$senha = MD5 ('igsis2015');
-		$instituicao = $_POST['instituicao'];
-		$local = $_POST['local'];
-		$telefone = $_POST['telefone'];
-		$perfil = $_POST['papelusuario'];
-		$email = $_POST['email'];
-		$existe = verificaExiste("ig_usuario","email",$usuario,"0");
-		$publicado = "1";
-		if(isset($_POST['receberEmail']))
-		{
-			$receberEmail =	1;
-		}
-		else
-		{
-			$receberEmail =	0;
-		}	
-		if($existe['numero'] == 0)
-		{
-			$sql_inserir = "INSERT INTO `ig_usuario` (`idUsuario`, `ig_papelusuario_idPapelUsuario`, `senha`, `receberNotificacao`, `nomeUsuario`, `email`, `nomeCompleto`, `idInstituicao`, `telefone`, `publicado`, `rf`, `local`) VALUES (NULL, '$perfil', '$senha', '$receberEmail', '$usuario', '$email', '$nomeCompleto', '$instituicao', '$telefone', '$publicado', '$rf', '$local')";
-			$query_inserir = mysqli_query($con,$sql_inserir);
-			if($query_inserir)
+			if(isset($_POST['carregar']))
 			{
-				$mensagem = "Usuário inserido com sucesso";
+				$_SESSION['idUsuario'] = $_POST['carregar'];
 			}
-			else
+			if(isset($_POST['atualizar']))
 			{
-				$mensagem = "Erro ao inserir. Tente novamente.";
+				$nomeCompleto = $_POST['nomeCompleto'];
+				$rf = $_POST['rf'];
+				$usuario = $_POST['usuario'];
+				$existe = verificaExiste("ig_usuario","nomeUsuario",$usuario,"0");
+				//$senha = MD5($_POST['senha']);
+				$senha = MD5 ('igsis2015');
+				$instituicao = $_POST['instituicao'];
+				$local = $_POST['local'];
+				$telefone = $_POST['telefone'];
+				$perfil = $_POST['papelusuario'];
+				$email = $_POST['email'];
+				$existe = verificaExiste("ig_usuario","email",$usuario,"0");
+				$publicado = "1";
+				if(isset($_POST['receberEmail']))
+				{
+					$receberEmail =	1;
+				}
+				else
+				{
+					$receberEmail =	0;
+				}	
+				if($existe['numero'] == 0)
+				{
+					$sql_inserir = "INSERT INTO `ig_usuario` (`idUsuario`, `ig_papelusuario_idPapelUsuario`, `senha`, `receberNotificacao`, `nomeUsuario`, `email`, `nomeCompleto`, `idInstituicao`, `telefone`, `publicado`, `rf`, `local`) VALUES (NULL, '$perfil', '$senha', '$receberEmail', '$usuario', '$email', '$nomeCompleto', '$instituicao', '$telefone', '$publicado', '$rf', '$local')";
+					$query_inserir = mysqli_query($con,$sql_inserir);
+					if($query_inserir)
+					{
+						$mensagem = "Usuário inserido com sucesso";
+					}
+					else
+					{
+						$mensagem = "Erro ao inserir. Tente novamente.";
+					}
+				}
+				else
+				{
+					$mensagem = "Usuário ou email já existente. Tente novamente.";
+				}
 			}
-		}
-		else
-		{
-			$mensagem = "Usuário ou email já existente. Tente novamente.";
-		}
-	}
-		?>
+	?>
 <section id="inserirUser" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -220,8 +218,8 @@
 		</div>
 	</div>
 </section>   
-		<?php	
-			break; // FIM INSERIR USUARIO
+	<?php	
+		break; // FIM INSERIR USUARIO
 		case "editarUser": // ATUALIZAR /EDITAR USUARIO 
 			if (isset ($_POST ['resetSenha']))
 			{
@@ -290,7 +288,7 @@
 				}
 			} 
 			$recuperaUsuario = recuperaDados("ig_usuario",$_POST['editarUser'],"idUsuario"); 
-		?>
+	?>
 <section id="inserirUser" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -377,8 +375,8 @@
 		</div>    
 	</div>
 </section>   
-		<?php
-			break; // FIM LISTA USUARIOS / INSERIR / ATUALIZAR
+	<?php
+		break; // FIM LISTA USUARIOS / INSERIR / ATUALIZAR
 		case "novoEspaco": // INSERIR NOVO ESPACO 
 			if(isset($_POST['cadastrar']))
 			{
@@ -415,7 +413,7 @@
 					}
 				}					 
 			}
-		?>    
+	?>    
 <section id="inserirUser" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -462,8 +460,8 @@
 		</div>
     </div>  <!-- // FIM DE INSERIR ESPACOS !-->
 </section>
-		<?php
-			break; // FIM ADICIONAR NOVO ESPACO
+	<?php
+		break; // FIM ADICIONAR NOVO ESPACO
 		case "espacos": 
 			if(isset($_POST['apagar']))
 			{
@@ -480,7 +478,7 @@
 					$mensagem = "Erro ao apagar o evento...";	
 				}
 			}// EDITAR / APAGAR ESPACOS
-		?>
+	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8">		
@@ -501,8 +499,8 @@
 		</div>
 	</div>	
 </section> <!--/#list_items-->
-		<?php
-			break; // FIM LISTA ESPACOS / INSERIR / ATUALIZAR
+	<?php
+		break; // FIM LISTA ESPACOS / INSERIR / ATUALIZAR
 		case "novoProjetoEspecial": // INSERIR NOVO PROJETO ESPECIAL 
 			if(isset($_POST['cadastrar']))
 			{
@@ -539,7 +537,7 @@
 					}
 				}					 
 			}
-		?>
+	?>
 <section id="inserirUser" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -587,8 +585,8 @@
     </div>
 <!-- // FIM DE INSERIR !-->
 </section>	
-		<?php
-			break; // FIM ADICIONAR NOVO PROJETO ESPECIAL
+	<?php
+		break; // FIM ADICIONAR NOVO PROJETO ESPECIAL
 		case "listaprojetoespecial": 
 			if(isset($_POST['apagar']))
 			{
@@ -605,7 +603,7 @@
 					$mensagem = "Erro ao apagar o projeto especial...";	
 				}
 			}// EDITAR / APAGAR PROJETO ESPECIAL
-		?>
+	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8">		
@@ -626,8 +624,8 @@
 		</div>
 	</div>
 </section> <!--/#list_items-->
-		<?php	
-			break; // FIM PROJETO ESPECIAL
+	<?php	
+		break; // FIM PROJETO ESPECIAL
 		case "eventos": // LISTAR NOVOS EVENTOS
 			if(isset($_POST['apagar']))
 			{
@@ -643,7 +641,7 @@
 					$mensagem = "Erro ao apagar o evento...";	
 				}
 			}
-		?>
+	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -660,10 +658,10 @@
 		</div>
 	</div>
 </section> <!--/#list_items-->	
-		<?php	
-			break; // FIM EVENTOS
+	<?php	
+		break; // FIM EVENTOS
 		case "logsLocais": // VISUALIZAR LOGS DE USUARIO
-		?>
+	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -680,8 +678,8 @@
 		</div>
 	</div>
 </section> <!--/#list_items-->		
-		<?php
-			break; // FIM LOGS
+	<?php
+		break; // FIM LOGS
 		case "formularioalteracoes": // inicio dos formularios de alterações	
 			if(isset($_POST['carregar']))
 			{
@@ -714,7 +712,7 @@
 			$recuperaChamado = recuperaDados("igsis_chamado", $_POST['carregaChamado'],"idChamado");
 			$recuperaUser = recuperaDados("ig_usuario",$recuperaChamado['idUsuario'],"idUsuario");
 			$recuperaEvento = recuperaDados("ig_evento",$recuperaChamado['idEvento'],"idEvento");
-		?>
+	?>
 <section id="chamado" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -808,10 +806,10 @@
 		</div>
 	</div>	
 </section>
-		<?php	
-			break; // FIM FORM ALTERÇÕES
+	<?php	
+		break; // FIM FORM ALTERÇÕES
 		case "alteracoes": // INICIO DE ALTERAÇÕES
-		?>
+	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -829,10 +827,10 @@
 		</div>
 	</div>
 </section> <!--/#list_items-->
-		<?php 
-			break;
+	<?php 
+		break;
 		case "alteracoesfinalizadas": // INICIO DE ALTERAÇÕES FINALIZADAS
-		?>
+	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -851,5 +849,5 @@
 	</div>
 </section> <!--/#list_items-->
 		<?php
-			break;
+		break;
 	} //fim da switch ?>

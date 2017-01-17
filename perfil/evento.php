@@ -136,15 +136,6 @@
 				`publicado` = 1,
 				`statusEvento` = 'Em elaboração'
 				WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
-				/*
-				$sql_atualizar = "UPDATE ig_evento SET
-				ig_modalidade_IdModadlidade = '$ig_modalidade_IdModadlidade',
-				projetoEspecial = '$projetoEspecial',
-				nomeEvento = '$nomeEvento',
-				projeto = '$projeto',
-				ig_tipo_evento_idTipoEvento = '$ig_tipo_evento_idTipoEvento'
-				WHERE idEvento = ".$_SESSION['idEvento'].";";
-				*/
 				$con = bancoMysqli();
 				if(mysqli_query($con,$sql_atualizar))
 				{
@@ -1356,13 +1347,9 @@ include "../include/menuEvento.php";
 			if( isset( $_POST['enviar'] ) )
 			{
 				$pathToSave = '../uploads/';
-				// A variavel $_FILES é uma variável do PHP, e é ela a responsável
-				// por tratar arquivos que sejam enviados em um formulário
-				// Nesse caso agora, a nossa variável $_FILES é um array com 3 dimensoes
-				// e teremos de trata-lo, para realizar o upload dos arquivos
-				// Quando é definido o nome de um campo no form html, terminado por []
-				// ele é tratado como se fosse um array, e por isso podemos ter varios
-				// campos com o mesmo nome
+				// A variavel $_FILES é uma variável do PHP, e é ela a responsável por tratar arquivos que sejam enviados em um formulário
+				// Nesse caso agora, a nossa variável $_FILES é um array com 3 dimensoes e teremos de trata-lo, para realizar o upload dos arquivos
+				// Quando é definido o nome de um campo no form html, terminado por [] ele é tratado como se fosse um array, e por isso podemos ter varios campos com o mesmo nome
 				$i = 0;
 				$msg = array( );
 				$arquivos = array( array( ) );
@@ -1382,8 +1369,7 @@ include "../include/menuEvento.php";
 							// $arquivo[1]["name"]
 							// $arquivo[2]["name"]
 							// $arquivo[3]["name"]
-							// Dessa forma, fica mais facil trabalharmos o array depois, para salvar
-							// o arquivo
+							// Dessa forma, fica mais facil trabalharmos o array depois, para salvar o arquivo
 							$arquivos[$i][$key] = $info[$key][$i];
 						}
 					}
@@ -2281,7 +2267,8 @@ include "../include/menuEvento.php";
 				case "inserir": 
 					$novo = 1;
 					if(isset($_POST['inserir']))
-					{ //insere
+					{
+						//insere
 						$ig_sub_evento_titulo = addslashes($_POST['ig_sub_evento_titulo']);
 						$ig_sub_evento_idTipo  = $_POST['ig_sub_evento_idTipo'];
 						$ig_sub_evento_descricao  = addslashes($_POST['ig_sub_evento_descricao']);
