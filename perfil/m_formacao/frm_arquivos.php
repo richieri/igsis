@@ -3,19 +3,12 @@ $con = bancoMysqli();
 $idPessoa = $_REQUEST['idPessoa'];
 $tipoPessoa = $_REQUEST['tipoPessoa'];
 
-
-
 if(isset($_POST['fisica'])OR ($_GET['tipoPessoa'] == 1)){
 	$form = "<form method='POST' action='?perfil=formacao&p=frm_edita_pf&id_pf=$idPessoa' />
 				<input type='hidden' name='fisica' value='1'>
 ";
 	$p = "fisica";
-
 }
-
-
-
-
 
 if(isset($_POST["enviar"])){
 
@@ -48,11 +41,8 @@ while($arq = mysqli_fetch_array($query_arquivos)){
 		  
 	  }
 	}
-	
 }
-
 }
-
 
 if(isset($_POST['apagar'])){
 	$idArquivo = $_POST['apagar'];
@@ -70,89 +60,84 @@ $campo = recuperaPessoa($_REQUEST['idPessoa'],$_REQUEST['tipoPessoa']);
 ?>
 <?php include 'includes/menu.php';?>
 
-    
-    	 <section id="enviar" class="home-section bg-white">
-		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-                                        <h2><?php echo $campo["nome"] ?>  </h2>
-                                        
-					 <h3>Envio de Arquivos</h3>
-                     <p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
-<p>Nesta página, você envia documentos digitalizados. O tamanho máximo do arquivo deve ser 50MB.</p>
+<section id="list_items" class="home-section bg-white">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="section-heading">
+					<h3><?php echo $campo["nome"] ?>  </h3>              
+					<h4>Arquivos anexados</h4>
+					<p><strong>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</p></strong>
+				</div>
+			<div class="table-responsive list_info">
+				<?php listaArquivosPessoaSiscontratFormacao($idPessoa,$tipoPessoa,"",$p,"formacao"); ?>
+			</div>
+			</div>
+		</div>  
+	</div>
 
+	<div class="form-group">
+			<div class="col-md-offset-2 col-md-8"><br />
+			</div>
+	<div />
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="section-heading">
+					<h4>Envio de Arquivos</h4>
+					<p><?php if(isset($mensagem)){echo $mensagem;} ?></p>	
+					<p>Nesta página, você envia documentos digitalizados. O tamanho máximo do arquivo deve ser 50MB.</p>
 
 <br />
-<div class = "center">
-<form method="POST" action="?<?php echo $_SERVER['QUERY_STRING'] ?>" enctype="multipart/form-data">
-<table>
+
+	<div class = "center">
+		<form method="POST" action="?<?php echo $_SERVER['QUERY_STRING'] ?>" enctype="multipart/form-data">
+		
+	<table>
 <tr>
 <td width="50%"><td>
 </tr>
+
 <?php 
-$sql_arquivos = "SELECT * FROM sis_formacao_upload";
-$query_arquivos = mysqli_query($con,$sql_arquivos);
-while($arq = mysqli_fetch_array($query_arquivos)){ ?>
+	$sql_arquivos = "SELECT * FROM sis_formacao_upload";
+	$query_arquivos = mysqli_query($con,$sql_arquivos);
+	while($arq = mysqli_fetch_array($query_arquivos)){ ?>
 
-<tr>
-<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-</tr>
-<?php } ?>
-
-  </table>
-    <br>
+	<tr>
+	<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+	</tr>
+	
+<?php } 
+?>
+	</table>
+	
+    <br />
+	
     <input type="hidden" name="idPessoa" value="<?php echo $idPessoa; ?>"  />
     <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-    <?php if(isset($_POST['volta'])){
-		echo 	"<input type='hidden' name='volta' value='".$_POST['volta']."' />";
-	
-	} ?>
+		<?php if(isset($_POST['volta'])){
+			echo 	"<input type='hidden' name='volta' value='".$_POST['volta']."' />";
+		} ?>
 	<input type='hidden' name='<?php echo $p; ?>' value='1' />
     <input type="hidden" name="enviar" value="1"  />
     <input type="submit" class="btn btn-theme btn-lg btn-block" value='Enviar'>
-</form>
-</div>
+		</form>
+	</div>
+	
 <br />
-<div class="center">
 
-
-
+	<div class="center">
 <?php echo $form ?>	
-
     <input type="hidden" name="idPessoa" value="<?php echo $idPessoa; ?>"  />
     <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-    
-    <input type="submit" class="btn btn-theme btn-block" value='Voltar ao Cadastro de Pessoa'>
-</form>
-</div>
+	<input type="submit" class="btn btn-theme btn-block" value='Voltar ao Cadastro de Pessoa'>
+	</div>
+	
 <br />
- 
-
-
-
-					</div>
-				  </div>
-                  
-			  </div>
-			  
-		</div>
-	</section>
-
-	<section id="list_items" class="home-section bg-white">
-		<div class="container">
-      			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
- <h2>Arquivos anexados</h2>
-<h5>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</h5>
-					</div>
-			<div class="table-responsive list_info">
-                         <?php listaArquivosPessoaSiscontratFormacao($idPessoa,$tipoPessoa,"",$p,"formacao"); ?>
+				</div>
 			</div>
-				  </div>
-			  </div>  
-
-
 		</div>
-	</section>
+	</div>
+</section>
+
