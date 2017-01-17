@@ -1,32 +1,28 @@
 ﻿<?php
-
 $con = bancoMysqli();
 if(isset($_GET['pag'])){
 	$p = $_GET['pag'];
-}else{
+	}else{
 	$p = 'inicial';	
 }
 //$nomeEvento = recuperaEvento($_SESSION['idEvento']);
-
 ?>
+
 <?php include "includes/menu_administrativo.php"; ?>
 
-
 <?php switch($p){
-
 /* =========== INICIAL ===========*/
 case 'inicial':
 ?>
+
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3> Acesso Administrativo</h3>
-<p>  </p>
 <p>Aqui você acessa a parte administrativa do módulo Formação.</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+
 <?php /* =========== INICIAL ===========*/ break; ?>
-
-
 
 <?php
 /* =========== INÍCIO CADASTRA CARGO ===========*/
@@ -47,7 +43,8 @@ case 'add_cargo':
 			$mensagem = "Erro ao cadastrar.";	
 		}		   
    }
-?>    
+?>   
+ 
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
@@ -108,64 +105,60 @@ case 'list_cargo':
    }
 ?> 
 
-	<section id="list_items">
-		<div class="container">
-             <div class="col-md-offset-2 col-md-8">
-                <br />
-                <h2>CARGO</h2>
-                    <p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
-    				<br/>
-                </div>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Id</td>
-							<td>Cargo</td>
-                            <td>Coordenador/<br>Articulador</td>
-							<td>Justificativa</td>
-  							<td></td>
-						</tr>
-					</thead>
-					<tbody>
+<section id="list_items">
+	<div class="container">
+		<div class="col-md-offset-2 col-md-8">
+			<br />
+				<h2>CARGO</h2>
+				<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
+			<br/>
+		</div>
+		
+	<div class="table-responsive list_info">
+		<table class="table table-condensed">
+			<thead>
+				<tr class="list_menu">
+				<td>Id</td>
+				<td>Cargo</td>
+				<td>Coordenador/<br>Articulador</td>
+				<td>Justificativa</td>
+				<td></td>
+				</tr>
+			</thead>
+			
+<tbody>
 <?php
-$sql = "SELECT * FROM sis_formacao_cargo" ;
-$query = mysqli_query($con,$sql);
-while($cargo = mysqli_fetch_array($query)){
+	$sql = "SELECT * FROM sis_formacao_cargo" ;
+	$query = mysqli_query($con,$sql);
+	while($cargo = mysqli_fetch_array($query)){
 ?>
 
 <tr>
 <form action="?perfil=formacao&p=administrativo&pag=list_cargo" method="post">
-<td><?php echo $cargo['Id_Cargo']; ?></td>
-<td><input type="text" name="cargo" class="form-control" value="<?php echo $cargo['Cargo']; ?>"/></td>
-<td> <select class="form-control" name="coordenador" id="Status">
-                	<option value='0'<?php if($cargo['coordenador'] == 0){echo " selected ";} ?>>Não</option>
-					<option value='1'<?php if($cargo['coordenador'] == 1){echo " selected ";} ?>>Sim</option>
-					 </select></td>
-
-					 <td><textarea name="justificativa" class="form-control" rows="2"><?php echo $cargo['justificativa']; ?></textarea></td>
-					 
-<td>
-<input type="hidden" name="atualizar" value="<?php echo $cargo['Id_Cargo']; ?>" />
-<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
+	<td><?php echo $cargo['Id_Cargo']; ?></td>
+	<td><input type="text" name="cargo" class="form-control" value="<?php echo $cargo['Cargo']; ?>"/></td>
+	<td><select class="form-control" name="coordenador" id="Status">
+		<option value='0'<?php if($cargo['coordenador'] == 0){echo " selected ";} ?>>Não</option>
+		<option value='1'<?php if($cargo['coordenador'] == 1){echo " selected ";} ?>>Sim</option>
+		</select></td>
+	<td><textarea name="justificativa" class="form-control" rows="2"><?php echo $cargo['justificativa']; ?></textarea></td>				 
+	<td>
+		<input type="hidden" name="atualizar" value="<?php echo $cargo['Id_Cargo']; ?>" />
+		<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'>
+	</td>
 </form>
-
 </tr>
 	
-    <?php } ?>
-					
-					</tbody>
-				</table>
+<?php } 
+?>	
+				
+</tbody>
+		</table>
+	</div>
+	</div>           		
+</section>
 
-			</div>
-
-            </div>            
-		</div>
-	</section>
 <?php /* =========== FIM CARGO ===========*/ break; ?>
-
-
-
 
 <?php 
 /* =========== INÍCIO COORDENADORIA ===========*/
@@ -204,16 +197,16 @@ case 'add_coordenadoria':
 					</div>
 				</div>
 					
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="add_coordenadoria" />
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-					</div>
-				</div>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<input type="hidden" name="add_coordenadoria" />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+		</div>
+	</div>
 			</form>
 		</div>		
 	</div>
-</div>
+	</div>
 </section> 
 
 <?php 
@@ -242,49 +235,45 @@ case 'list_coordenadoria':
                 <br />
                 <h2>COORDENADORIA</h2>
                     <p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
-    				<br/>
-                </div>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Id</td>
-							<td colspan="2">Coordenadoria</td>
-  							<td></td>
-						</tr>
-					</thead>
-					<tbody>
+    			<br/>
+			</div>
+			
+	<div class="table-responsive list_info">
+		<table class="table table-condensed">
+			<thead>
+				<tr class="list_menu">
+					<td>Id</td>
+					<td colspan="2">Coordenadoria</td>
+  					<td></td>
+				</tr>
+			</thead>
+			
+<tbody>
 <?php
-$sql = "SELECT * FROM sis_formacao_coordenadoria" ;
-$query = mysqli_query($con,$sql);
-while($coordenadoria = mysqli_fetch_array($query)){
+	$sql = "SELECT * FROM sis_formacao_coordenadoria" ;
+	$query = mysqli_query($con,$sql);
+	while($coordenadoria = mysqli_fetch_array($query)){
 ?>
 
 <tr>
-<form action="?perfil=formacao&p=administrativo&pag=list_coordenadoria" method="post">
-<td><?php echo $coordenadoria['idCoordenadoria']; ?></td>
-<td><input type="text" name="coordenadoria" class="form-control" value="<?php echo $coordenadoria['Coordenadoria']; ?>"/></td>
-<td>
-<input type="hidden" name="atualizar" value="<?php echo $coordenadoria['idCoordenadoria']; ?>" />
-<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
-</form>
+	<form action="?perfil=formacao&p=administrativo&pag=list_coordenadoria" method="post">
+		<td><?php echo $coordenadoria['idCoordenadoria']; ?></td>
+		<td><input type="text" name="coordenadoria" class="form-control" value="<?php echo $coordenadoria['Coordenadoria']; ?>"/></td>
 
+	<td>
+		<input type="hidden" name="atualizar" value="<?php echo $coordenadoria['idCoordenadoria']; ?>" />
+		<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
+	</form>
 </tr>
 	
-    <?php } ?>
-					
-					</tbody>
-				</table>
-
-			</div>
-
-            </div>            
-		</div>
+<?php } ?>				
+</tbody>
+		</table>
+	</div>
+        </div>            
 	</section>
+	
 <?php /* =========== FIM COORDENADORIA ===========*/ break; ?>
-
-
-
 
 <?php 
 /* =========== INÍCIO EQUIPAMENTO ===========*/
@@ -366,130 +355,140 @@ $(function(){
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
 		</div>
+		
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10">
 			<form class="form-horizontal" role="form" action="#" method="post">
 			
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Instituição</strong>
-                		<select class="form-control" name="instituicao1" id="instituicao1" >
-                		<option>Selecione</option>
-                		<?php geraOpcao("ig_instituicao","","") ?>
-                		</select>
-					</div>
-					<div class="col-md-6"><strong>Equipamento*:</strong><br/>
-                		<select class="form-control" name="Equipamento" id="Equipamento" ></select><br/>
-					</div>
-				  </div>
-				  
-				  <div class="form-group">
-					<div class="col-md-offset-4 col-md-4"><strong>Território: *</strong><br/>
-						<select class="form-control" id="IdTerritorio" name="IdTerritorio">
-						<option>Selecione</option>
-						<?php geraOpcao("sis_formacao_territorio","","") ?>
-						</select><br/>
-					</div>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Instituição</strong>
+			<select class="form-control" name="instituicao1" id="instituicao1" >
+			<option>Selecione</option>
+			<?php geraOpcao("ig_instituicao","","") ?>
+			</select>
+		</div>
 					
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Região:</strong>
-                    	<select class="form-control" id="IdRegiao" name="IdRegiao"> 
-						<option>Selecione</option>
-						<?php geraOpcao("sis_formacao_regiao","","") ?>
-					 	</select>
-					</div>
-					<div class="col-md-6"><strong>Subprefeitura:</strong>
-                    	<select class="form-control" id="IdSubprefeitura" name="IdSubprefeitura"> 
-						<option>Selecione</option>
-						<?php geraOpcao("sis_formacao_subprefeitura","","") ?>
-					 	</select>
-					</div>
-				</div>
-                
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 do Equipamento: *</strong>
-                    	<input type="text" class="form-control" id="Telefone1" name="Telefone1" />
-					</div>
-                    <div class="col-md-6"><strong>Telefone #2 do Equipamento:</strong>
-                    	<input type="text" class="form-control" id="Telefone2" name="Telefone2" />
-					</div>
-				</div>
-                
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>E-mail do Equipamento:</strong><br/>
-					  <input type="text" class="form-control" id="Email" name="Email">
-					</div>
-					<div class="col-md-offset col-md-6"><strong>Localização:</strong>
-                    	<input type="text" class="form-control" id="LinkAcessoMapa" name="LinkAcessoMapa" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<div class="col-md-offset-5 col-md-2"><strong>CEP: *</strong>
-                    	<input type="text" class="form-control" id="CEP" name="IdEndereco" />
-					</div>
-				</div>
-                
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Endereço *:</strong><br/>
-					  <input type="text" class="form-control" id="Endereco" name="Endereco">
-					</div>
-					<div class="col-md-6"><strong>Bairro: *</strong><br/>
-						<input type="text" class="form-control" id="Bairro" name="Bairro" />  
-					</div>
-				</div>
-                
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
-					  <input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero">
-					</div>				  
-					<div class=" col-md-6"><strong>Complemento:</strong><br/>
-					  <input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento">
-					</div>
-				</div>
-                
-                
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Cidade: *</strong><br/>
-						<input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade">
-					</div>
-                    <div class="col-md-6"><strong>Estado: *</strong><br/>
-					  <input type="text" class="form-control" id="Estado" name="Estado" placeholder="Estado">
-					</div>
-                </div>
-                                                
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Nome do Responsável: *</strong>
-                    	<input type="text" class="form-control" id="Contato" name="Contato"/>
-					</div>
-					<div class="col-md-6"><strong>Email do Responsável:</strong>
-                    	<input type="text" class="form-control" id="EmailResponsavel" name="EmailResponsavel" />
-					</div>
-				</div>
-                
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 do Responsável: *</strong>
-                    	<input type="text" class="form-control" id="Tel1Responsavel" name="Telefone1Responsavel" />
-					</div>
-                    <div class="col-md-6"><strong>Telefone #2 do Responsável:</strong>
-                    	<input type="text" class="form-control" id="Tel2Responsavel" name="Telefone2Responsavel" />
-					</div>
-				</div>
-				
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
-					 <textarea name="Observacao" class="form-control" rows="5"></textarea>
-					</div>
-				</div>
-					
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="submit" class="btn btn-theme btn-lg btn-block" name="add_equipamento" value="Gravar">
-					</div>
-				</div>
-			</form>
-		</div>		
+	<div class="col-md-6"><strong>Equipamento*:</strong><br/>
+    	<select class="form-control" name="Equipamento" id="Equipamento" ></select><br/>
 	</div>
-</div>
+	</div>
+				  
+	<div class="form-group">
+		<div class="col-md-offset-4 col-md-4"><strong>Território: *</strong><br/>
+			<select class="form-control" id="IdTerritorio" name="IdTerritorio">
+			<option>Selecione</option>
+			<?php geraOpcao("sis_formacao_territorio","","") ?>
+			</select>
+			<br/>
+		</div>
+		
+	<div class="form-group">
+			<div class="col-md-offset-2 col-md-6"><strong>Região:</strong>
+				<select class="form-control" id="IdRegiao" name="IdRegiao"> 
+					<option>Selecione</option>
+					<?php geraOpcao("sis_formacao_regiao","","") ?>
+				</select>
+			</div>
+			
+		<div class="col-md-6"><strong>Subprefeitura:</strong>
+			<select class="form-control" id="IdSubprefeitura" name="IdSubprefeitura"> 
+				<option>Selecione</option>
+				<?php geraOpcao("sis_formacao_subprefeitura","","") ?>
+			</select>
+		</div>
+	</div>
+                
+    <div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 do Equipamento: *</strong>
+			<input type="text" class="form-control" id="Telefone1" name="Telefone1" />
+		</div>
+		
+		<div class="col-md-6"><strong>Telefone #2 do Equipamento:</strong>
+			<input type="text" class="form-control" id="Telefone2" name="Telefone2" />
+		</div>
+	</div>
+                
+    <div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>E-mail do Equipamento:</strong><br/>
+		  <input type="text" class="form-control" id="Email" name="Email">
+		</div>
+		
+		<div class="col-md-offset col-md-6"><strong>Localização:</strong>
+			<input type="text" class="form-control" id="LinkAcessoMapa" name="LinkAcessoMapa" />
+		</div>
+	</div>
+				
+	<div class="form-group">
+		<div class="col-md-offset-5 col-md-2"><strong>CEP: *</strong>
+			<input type="text" class="form-control" id="CEP" name="IdEndereco" />
+		</div>
+	</div>
+                
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Endereço *:</strong><br/>
+		  <input type="text" class="form-control" id="Endereco" name="Endereco">
+		</div>
+		
+		<div class="col-md-6"><strong>Bairro: *</strong><br/>
+			<input type="text" class="form-control" id="Bairro" name="Bairro" />  
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
+		  <input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero">
+		</div>	
+		
+		<div class=" col-md-6"><strong>Complemento:</strong><br/>
+		  <input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento">
+		</div>
+	</div>     
+                
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Cidade: *</strong><br/>
+			<input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade">
+		</div>
+		
+		<div class="col-md-6"><strong>Estado: *</strong><br/>
+		  <input type="text" class="form-control" id="Estado" name="Estado" placeholder="Estado">
+		</div>
+	</div>
+									
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Nome do Responsável: *</strong>
+			<input type="text" class="form-control" id="Contato" name="Contato"/>
+		</div>
+		
+		<div class="col-md-6"><strong>Email do Responsável:</strong>
+			<input type="text" class="form-control" id="EmailResponsavel" name="EmailResponsavel" />
+		</div>
+	</div>
+                
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 do Responsável: *</strong>
+			<input type="text" class="form-control" id="Tel1Responsavel" name="Telefone1Responsavel" />
+		</div>
+		
+		<div class="col-md-6"><strong>Telefone #2 do Responsável:</strong>
+			<input type="text" class="form-control" id="Tel2Responsavel" name="Telefone2Responsavel" />
+		</div>
+	</div>
+				
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
+		 <textarea name="Observacao" class="form-control" rows="5"></textarea>
+		</div>
+	</div>
+		
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<input type="submit" class="btn btn-theme btn-lg btn-block" name="add_equipamento" value="Gravar">
+		</div>
+	</div>
+		</form>
+	</div>		
+	</div>
+	</div>
 </section>
 
 <?php
@@ -531,20 +530,20 @@ if(isset($_POST['atualizar'])){
 
 ?> 
 
-	<section id="list_items">
-		<div class="container">
-			 <div class="sub-title">EQUIPAMENTO</div>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Equipamento</td>
-							<td>Território</td>
-                            <td>Região</td>
-                            <td>Telefone1 Equipamento</td>
-						</tr>
-					</thead>
-					<tbody>
+<section id="list_items">
+	<div class="container">
+		 <div class="sub-title">EQUIPAMENTO</div>
+		<div class="table-responsive list_info">
+			<table class="table table-condensed">
+				<thead>
+					<tr class="list_menu">
+						<td>Equipamento</td>
+						<td>Território</td>
+						<td>Região</td>
+						<td>Telefone1 Equipamento</td>
+					</tr>
+				</thead>
+				<tbody>
 	
 <?php
 
@@ -715,10 +714,8 @@ $base_pay = $row[0];
 </div>
 </section>
 
-
-
-
 <?php /* =========== FIM EQUIPAMENTO ===========*/ break?>
+
 <?php 
 /* =========== INÍCIO LINGUAGEM ===========*/
 case 'add_linguagem':
@@ -738,6 +735,7 @@ if(isset($_POST['add_linguagem'])){
 		}		   
    }
 ?>
+
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
@@ -746,6 +744,7 @@ if(isset($_POST['add_linguagem'])){
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
 		</div>
+		
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10">
 			<form class="form-horizontal" role="form" action="#" method="post">
@@ -764,7 +763,7 @@ if(isset($_POST['add_linguagem'])){
 			</form>
 		</div>		
 	</div>
-</div>
+	</div>
 </section> 
 
 <?php 
@@ -788,24 +787,27 @@ case 'list_linguagem':
    }
 ?> 
 
-	<section id="list_items">
-		<div class="container">
-             <div class="col-md-offset-2 col-md-8">
-                <br />
-                <h2>LINGUAGEM</h2>
-                    <p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
-    				<br/>
-                </div>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Id</td>
-							<td colspan="2">Linguagem</td>
-  							<td></td>
-						</tr>
-					</thead>
-					<tbody>
+<section id="list_items">
+	<div class="container">
+		<div class="col-md-offset-2 col-md-8">
+			<br />
+			<h2>LINGUAGEM</h2>
+				<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
+			<br/>
+		</div>
+		
+	<div class="table-responsive list_info">
+		<table class="table table-condensed">
+			<thead>
+				<tr class="list_menu">
+					<td>Id</td>
+					<td colspan="2">Linguagem</td>
+					<td></td>
+				</tr>
+			</thead>
+			
+<tbody>
+
 <?php
 $sql = "SELECT * FROM sis_formacao_linguagem" ;
 $query = mysqli_query($con,$sql);
@@ -813,30 +815,25 @@ while($linguagem = mysqli_fetch_array($query)){
 ?>
 
 <tr>
-<form action="?perfil=formacao&p=administrativo&pag=list_linguagem" method="post">
-<td><?php echo $linguagem['Id_Linguagem']; ?></td>
-<td><input type="text" name="linguagem" class="form-control" value="<?php echo $linguagem['Linguagem']; ?>"/></td>
-<td>
-<input type="hidden" name="atualizar" value="<?php echo $linguagem['Id_Linguagem']; ?>" />
-<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
-</form>
-
+	<form action="?perfil=formacao&p=administrativo&pag=list_linguagem" method="post">
+		<td><?php echo $linguagem['Id_Linguagem']; ?></td>
+		<td><input type="text" name="linguagem" class="form-control" value="<?php echo $linguagem['Linguagem']; ?>"/></td>
+	<td>
+		<input type="hidden" name="atualizar" value="<?php echo $linguagem['Id_Linguagem']; ?>" />
+		<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
+	</form>
 </tr>
 	
-    <?php } ?>
-					
-					</tbody>
-				</table>
+<?php } 
+?>
 
-			</div>
-
-            </div>            
-		</div>
-	</section>
+</tbody>
+		</table>
+	</div>
+    </div>            
+	</div>
+</section>
 <?php /* =========== FIM LINGUAGEM ===========*/ break; ?> 
-
-
-
 
 <?php 
 /* =========== INÍCIO PROJETO ===========*/
@@ -857,6 +854,7 @@ if(isset($_POST['add_projeto'])){
 		}		   
    }
 ?>
+
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
@@ -865,6 +863,7 @@ if(isset($_POST['add_projeto'])){
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
 		</div>
+		
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10">
 			<form class="form-horizontal" role="form" action="#" method="post">
@@ -874,16 +873,16 @@ if(isset($_POST['add_projeto'])){
 					</div>
 				</div>
 					
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="add_projeto" />
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-					</div>
-				</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<input type="hidden" name="add_projeto" />
+				<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+			</div>
+		</div>
 			</form>
 		</div>		
 	</div>
-</div>
+	</div>
 </section> 
 
 <?php 
@@ -906,55 +905,54 @@ case 'list_projeto':
 		}		   
    }
 ?> 
-	<section id="list_items">
-		<div class="container">
-             <div class="col-md-offset-2 col-md-8">
-                <br />
-                <h2>PROJETO</h2>
-                    <p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
-    				<br/>
-                </div>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Id</td>
-							<td colspan="2">Projeto</td>
-  							<td></td>
-						</tr>
-					</thead>
-					<tbody>
+
+<section id="list_items">
+	<div class="container">
+		<div class="col-md-offset-2 col-md-8">
+			<br />
+			<h2>PROJETO</h2>
+			<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
+			<br/>
+		</div>
+			
+	<div class="table-responsive list_info">
+		<table class="table table-condensed">
+			<thead>
+				<tr class="list_menu">
+					<td>Id</td>
+					<td colspan="2">Projeto</td>
+					<td></td>
+				</tr>
+			</thead>
+			
+<tbody>
+
 <?php
-$sql = "SELECT * FROM sis_formacao_projeto" ;
-$query = mysqli_query($con,$sql);
-while($projeto = mysqli_fetch_array($query)){
+	$sql = "SELECT * FROM sis_formacao_projeto" ;
+	$query = mysqli_query($con,$sql);
+	while($projeto = mysqli_fetch_array($query)){
 ?>
 
 <tr>
-<form action="?perfil=formacao&p=administrativo&pag=list_projeto" method="post">
-<td><?php echo $projeto['Id_Projeto']; ?></td>
-<td><input type="text" name="projeto" class="form-control" value="<?php echo $projeto['Projeto']; ?>"/></td>
-<td>
-<input type="hidden" name="atualizar" value="<?php echo $projeto['Id_Projeto']; ?>" />
-<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
-</form>
-
+	<form action="?perfil=formacao&p=administrativo&pag=list_projeto" method="post">
+			<td><?php echo $projeto['Id_Projeto']; ?></td>
+			<td><input type="text" name="projeto" class="form-control" value="<?php echo $projeto['Projeto']; ?>"/></td>
+			
+		<td><input type="hidden" name="atualizar" value="<?php echo $projeto['Id_Projeto']; ?>" />
+		<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
+	</form>
 </tr>
 	
-    <?php } ?>
-					
-					</tbody>
-				</table>
+<?php } ?>
 
-			</div>
+</tbody>
+		</table>
+	</div>
 
-            </div>            
-		</div>
-	</section>
+	</div>            
+</section>
+
 <?php /* =========== FIM PROJETO ===========*/ break; ?> 
-
-
-
 
 <?php 
 /* =========== INÍCIO SUBPREFEITURA ===========*/
@@ -975,33 +973,35 @@ if(isset($_POST['add_subprefeitura'])){
 		}		   
    }
 ?>
+
 <section id="contact" class="home-section bg-white">
 	<div class="container">
-		<div class="form-group">
-			<div class="sub-title">
-            	<h2>CADASTRO DE SUBPREFEITURA</h2>
-                <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+			<div class="form-group">
+				<div class="sub-title">
+					<h2>CADASTRO DE SUBPREFEITURA</h2>
+					<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+				</div>
 			</div>
+			
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form class="form-horizontal" role="form" action="#" method="post">
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Subprefeitura: *</strong>
+							<input type="text" class="form-control" id="Subprefeitura" name="Subprefeitura" placeholder="Subprefeitura"> 
+						</div>
+					</div>
+						
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="add_subprefeitura" />
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+						</div>
+					</div>
+				</form>
+			</div>		
 		</div>
-	<div class="row">
-		<div class="col-md-offset-1 col-md-10">
-			<form class="form-horizontal" role="form" action="#" method="post">
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Subprefeitura: *</strong>
-						<input type="text" class="form-control" id="Subprefeitura" name="Subprefeitura" placeholder="Subprefeitura"> 
-					</div>
-				</div>
-					
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="add_subprefeitura" />
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-					</div>
-				</div>
-			</form>
-		</div>		
 	</div>
-</div>
 </section> 
 
 <?php 
@@ -1025,24 +1025,27 @@ case 'list_subprefeitura':
    }
 ?> 
 
-	<section id="list_items">
-		<div class="container">
-             <div class="col-md-offset-2 col-md-8">
-                <br />
-                <h2>SUBPREFEITURA</h2>
-                    <p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
-    				<br/>
-                </div>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Id</td>
-							<td colspan="2">Subprefeitura</td>
-  							<td></td>
-						</tr>
-					</thead>
-					<tbody>
+<section id="list_items">
+	<div class="container">
+		<div class="col-md-offset-2 col-md-8">
+			<br />
+				<h2>SUBPREFEITURA</h2>
+				<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
+				<br/>
+		</div>
+		
+	<div class="table-responsive list_info">
+		<table class="table table-condensed">
+			<thead>
+				<tr class="list_menu">
+					<td>Id</td>
+					<td colspan="2">Subprefeitura</td>
+					<td></td>
+				</tr>
+			</thead>
+			
+<tbody>
+
 <?php
 $sql = "SELECT * FROM sis_formacao_subprefeitura" ;
 $query = mysqli_query($con,$sql);
@@ -1050,29 +1053,25 @@ while($subprefeitura = mysqli_fetch_array($query)){
 ?>
 
 <tr>
-<form action="?perfil=formacao&p=administrativo&pag=list_subprefeitura" method="post">
-<td><?php echo $subprefeitura['Id_Subprefeitura']; ?></td>
-<td><input type="text" name="subprefeitura" class="form-control" value="<?php echo $subprefeitura['Subprefeitura']; ?>"/></td>
-<td>
-<input type="hidden" name="atualizar" value="<?php echo $subprefeitura['Id_Subprefeitura']; ?>" />
-<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
-</form>
-
+	<form action="?perfil=formacao&p=administrativo&pag=list_subprefeitura" method="post">
+		<td><?php echo $subprefeitura['Id_Subprefeitura']; ?></td>
+		<td><input type="text" name="subprefeitura" class="form-control" value="<?php echo $subprefeitura['Subprefeitura']; ?>"/></td>
+	
+	<td>
+		<input type="hidden" name="atualizar" value="<?php echo $subprefeitura['Id_Subprefeitura']; ?>" />
+		<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
+	</form>
 </tr>
 	
-    <?php } ?>
-					
-					</tbody>
-				</table>
+<?php } ?>
+	
+</tbody>
+		</table>
+	</div>
+	</div>            
+</section>
 
-			</div>
-
-            </div>            
-		</div>
-	</section>
 <?php /* =========== FIM SUBPREFEITURA ===========*/ break; ?> 
-
-
 
 <?php 
 /* =========== INÍCIO EDITAL ===========*/
@@ -1107,52 +1106,56 @@ if(isset($_POST['add_edital'])){
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
 		</div>
-	<div class="row">
-		<div class="col-md-offset-1 col-md-10">
+		
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
 			<form class="form-horizontal" role="form" action="#" method="post">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Edital nº: *</strong>
 						<input type="text" class="form-control" id="edital" name="edital"> 
 					</div>
+					
 					<div class="col-md-6"><strong>Itens do Edital: *</strong>
 						<input type="text" class="form-control" id="itensEdital" name="itensEdital"> 
 					</div>
 				</div>
                 
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Itens do Credenciamento: *</strong>
-						<input type="text" class="form-control" id="itensCredenciamento" name="itensCredenciamento"> 
-					</div>
-					<div class="col-md-6"><strong>Data do resultado no D.O.: *</strong>
-						<input type="date" class="form-control" id="dataDO" name="dataDO">
-					</div>
-				</div>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Itens do Credenciamento: *</strong>
+			<input type="text" class="form-control" id="itensCredenciamento" name="itensCredenciamento"> 
+		</div>
+		
+		<div class="col-md-6"><strong>Data do resultado no D.O.: *</strong>
+			<input type="date" class="form-control" id="dataDO" name="dataDO">
+		</div>
+	</div>
                 
-                <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Período (meses): *</strong>
-						<input type="text" class="form-control" id="meses" name="meses"> 
-					</div>
-					<div class="col-md-6"><strong>Folha de Pesquisa: *</strong>
-						<input type="text" class="form-control" id="folhaPesquisa" name="folhaPesquisa"> 
-					</div>
-				</div>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Período (meses): *</strong>
+			<input type="text" class="form-control" id="meses" name="meses"> 
+		</div>
+		  
+		<div class="col-md-6"><strong>Folha de Pesquisa: *</strong>
+			<input type="text" class="form-control" id="folhaPesquisa" name="folhaPesquisa"> 
+		</div>
+	</div>
                 
-                 <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Proceso de pesquisa: *</strong>
-						<input type="text" class="form-control" id="processoPesquisa" name="processoPesquisa"> 
-					</div>
-				</div>
+    <div class="form-group">
+		<div class="col-md-offset-2 col-md-6"><strong>Proceso de pesquisa: *</strong>
+			<input type="text" class="form-control" id="processoPesquisa" name="processoPesquisa"> 
+		</div>
+	</div>
 					
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="add_edital" value="1" />
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-					</div>
-				</div>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<input type="hidden" name="add_edital" value="1" />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+		</div>
+	</div>
 			</form>
 		</div>		
 	</div>
-</div>
+	</div>
 </section> 
 
 <?php 
@@ -1175,26 +1178,29 @@ case 'list_edital':
    }*/
 ?> 
 
-	<section id="list_items">
-		<div class="container">
-             <div class="col-md-offset-2 col-md-8">
-                <br />
-                <h2>EDITAL</h2>
-                    <p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
-    				<br/>
-                </div>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Id</td>
-							<td>Edital</td>
-                            <td>Data D.O.</td>
-                            <td>Processo de Pesquisa</td>
-  							<td></td>
-						</tr>
-					</thead>
-					<tbody>
+<section id="list_items">
+	<div class="container">
+		<div class="col-md-offset-2 col-md-8">
+			<br />
+			<h2>EDITAL</h2>
+				<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
+			<br/>
+		</div>
+		
+	<div class="table-responsive list_info">
+		<table class="table table-condensed">
+			<thead>
+				<tr class="list_menu">
+					<td>Id</td>
+					<td>Edital</td>
+					<td>Data D.O.</td>
+					<td>Processo de Pesquisa</td>
+					<td></td>
+				</tr>
+			</thead>
+			
+<tbody>
+
 <?php
 $sql = "SELECT * FROM sis_formacao_edital" ;
 $query = mysqli_query($con,$sql);
@@ -1202,26 +1208,22 @@ while($edital = mysqli_fetch_array($query)){
 ?>
 
 <tr>
-<form action="?perfil=formacao&p=administrativo&pag=list_edital" method="post">
-<td><?php echo $edital['idFormacaoEdital']; ?></td>
-<td><input type="text" name="Edital" class="form-control" value="<?php echo $edital['edital']; ?>"/></td>
-<td>
-<input type="hidden" name="atualizar" value="<?php echo $edital['idFormacaoEdital']; ?>" />
-<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
-</form>
-
+	<form action="?perfil=formacao&p=administrativo&pag=list_edital" method="post">
+		<td><?php echo $edital['idFormacaoEdital']; ?></td>
+		<td><input type="text" name="Edital" class="form-control" value="<?php echo $edital['edital']; ?>"/></td>
+		
+		<td><input type="hidden" name="atualizar" value="<?php echo $edital['idFormacaoEdital']; ?>" />
+		<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
+	</form>
 </tr>
 	
-    <?php } ?>
-					
-					</tbody>
-				</table>
-
-			</div>
-
-            </div>            
-		</div>
-	</section>
+<?php } 
+?>	
+</tbody>
+		</table>
+	</div>
+	</div>            
+</section>
 
 <?php /* =========== FIM EDITAL ===========*/ break; ?> 
 

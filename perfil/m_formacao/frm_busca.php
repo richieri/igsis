@@ -20,80 +20,76 @@ $operador = $_POST['operador'];
 $juridico = $_POST['juridico'];
 
 if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $operador == 0 AND $juridico == 0){ ?>
-	 <section id="services" class="home-section bg-white">
-		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Busca por pedido</h2>
-                    <p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 
-					</div>
-				  </div>
-			  </div>
+<section id="services" class="home-section bg-white">
+	<div class="container">
+		<div class="row">
+		  <div class="col-md-offset-2 col-md-8">
+			<div class="section-heading">
+			 <h2>Busca por pedido</h2>
+			<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
+			</div>
+		  </div>
+		</div>
 			  
-	        <div class="row">
-            <div class="form-group">
-            	<div class="col-md-offset-2 col-md-8">
-            <h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-                      <form method="POST" action="?perfil=contratos&p=frm_busca" class="form-horizontal" role="form">
-            		<label>Código do Pedido</label>
-            		<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-            		<label>Objeto/Evento</label>
-            		<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
-
-     
-            			          
-    	        <label>Fiscal, suplente ou usuário que cadastrou o evento</label>
-					<select class="form-control" name="fiscal" id="inputSubject" >
-					<option value="0"></option>	
-					<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
-                    </select>
-                    <br />
-                     <label>Tipo de evento</label>
-                    <select class="form-control" name="tipo" id="inputSubject" >
-					<option value="0"></option>		                
-						<?php echo geraOpcao("ig_tipo_evento","","") ?>
-                    </select>	
-                    <br />
-                    <label>Instituição</label>
-                    <select class="form-control" name="instituicao" id="inputSubject" >
-                   <option value="0"></option>
-						<?php echo geraOpcao("ig_instituicao","","") ?>
-                    </select>		
-                    <br />
-                    <label>Status do pedido</label>
-                    <select class="form-control" name="estado" id="inputSubject" >
-                   <option value='0'></option>
-
-
-		<?php echo geraOpcao("sis_estado","","") ?>
-                    </select>	
-                    
-                    <label>Operador do Contrato</label>
-                    <select class="form-control" name="operador" id="inputSubject" >
-                   <option value='0'></option>
-	<?php  geraOpcaoContrato(""); ?>
-                    </select>	
-     <label>Tipo de Relação Jurídica</label>
-                    <select class="form-control" name="juridico" id="inputSubject" >
-                   <option value='0'></option>
-	<?php  geraOpcao("ig_modalidade","",""); ?>
-                    </select>	
+	<div class="row">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+				<form method="POST" action="?perfil=contratos&p=frm_busca" class="form-horizontal" role="form">
+					<label>Código do Pedido</label>
+					<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+						<label>Objeto/Evento</label>
+						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
+							<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
+							<select class="form-control" name="fiscal" id="inputSubject" >
+								<option value="0"></option>	
+								<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
+							</select>
+									<br />
+									<label>Tipo de evento</label>
+									<select class="form-control" name="tipo" id="inputSubject" >
+										<option value="0"></option>		                
+										<?php echo geraOpcao("ig_tipo_evento","","") ?>
+									</select>	
+										<br />
+											<label>Instituição</label>
+											<select class="form-control" name="instituicao" id="inputSubject" >
+												<option value="0"></option>
+												<?php echo geraOpcao("ig_instituicao","","") ?>
+											</select>		
+													<br />
+														<label>Status do pedido</label>
+														<select class="form-control" name="estado" id="inputSubject" >
+															<option value='0'></option>
+															<?php echo geraOpcao("sis_estado","","") ?>
+														</select>	
+																<label>Operador do Contrato</label>		
+																<select class="form-control" name="operador" id="inputSubject" >
+																	<option value='0'></option>
+																	<?php  geraOpcaoContrato(""); ?>
+																</select>	
+																			<label>Tipo de Relação Jurídica</label>
+																			<select class="form-control" name="juridico" id="inputSubject" >
+																				<option value='0'></option>
+																				<?php  geraOpcao("ig_modalidade","",""); ?>
+																			</select>	
 
 
-            	</div>
-             </div>
-				<br />             
-	            <div class="form-group">
-		            <div class="col-md-offset-2 col-md-8">
-                	<input type="hidden" name="pesquisar" value="1" />
-    		        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-                    </form>
-        	    	</div>
-        	    </div>
+            </div>
+		</div>
+				
+	<br />
+				
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<input type="hidden" name="pesquisar" value="1" />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+		</form>
+		</div>
+	</div>
+</section>
 
-	</section>
 <?php
 }else{
 $con = bancoMysqli();
@@ -254,40 +250,42 @@ if($id != "" AND $num_registro > 0){ // Foi inserido o número do pedido
 			}
 		}
 		$x['num'] = $i;
-		
 }
 } 
-
-
-
 $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 ?>
+
 <br />
 <br />
-	<section id="list_items">
-		<div class="container">
-			 <h3>Resultado da busca</3>
-             <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
-               <h5><a href="?perfil=contratos&p=frm_busca">Fazer outra busca</a></h5>
-			<div class="table-responsive list_info">
-			<?php if($x['num'] == 0){ ?>
-			
-			<?php }else{ ?>
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Codigo do Pedido</td>
-							<td>Proponente</td>
-							<td>Tipo</td>
-							<td>Objeto</td>
-							<td width="20%">Local</td>
-                            <td>Instituição</td>
-							<td>Periodo</td>
-							<td>Status</td>
-   							<td>Operador</td>
-						</tr>
-					</thead>
-					<tbody>
+
+<section id="list_items">
+	<div class="container">
+		<h3>Resultado da busca</3>
+		<h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
+		<h5><a href="?perfil=contratos&p=frm_busca">Fazer outra busca</a></h5>
+		<	div class="table-responsive list_info">
+		
+<?php if($x['num'] == 0){ ?>
+		
+<?php }else{ ?>
+
+<table class="table table-condensed">
+	<thead>
+		<tr class="list_menu">
+			<td>Codigo do Pedido</td>
+			<td>Proponente</td>
+			<td>Tipo</td>
+			<td>Objeto</td>
+			<td width="20%">Local</td>
+			<td>Instituição</td>
+			<td>Periodo</td>
+			<td>Status</td>
+			<td>Operador</td>
+		</tr>
+	</thead>
+	
+<tbody>
+
 <?php
 
 $data=date('Y');
@@ -317,95 +315,78 @@ for($h = 0; $h < $x['num']; $h++)
 
 	}
 ?>
-	
-					
-					</tbody>
-				</table>
-			<?php } ?>		
-		</div>
-			
-		</div>
-	</section>
 
+</tbody>
+</table>
+
+<?php } ?>		
+
+	</div>	
+	</div>
+</section>
 
 <?php
 }else{
 ?>
-	 <section id="services" class="home-section bg-white">
+
+	<section id="services" class="home-section bg-white">
 		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
 					 <h2>Busca por pedido</h2>
-                    
-
 					</div>
-				  </div>
-			  </div>
+				</div>
+			</div>
 			  
-	        <div class="row">
-            <div class="form-group">
-            	<div class="col-md-offset-2 col-md-8">
-            <h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-                        <form method="POST" action="?perfil=contratos&p=frm_busca" class="form-horizontal" role="form">
-            		<label>Código do Pedido</label>
-            		<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-            		<label>Objeto/Evento</label>
-            		<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
-
-     
-            			          
-    	        <label>Fiscal, suplente ou usuário que cadastrou o evento</label>
-					<select class="form-control" name="fiscal" id="inputSubject" >
-					<option value="0"></option>	
-					<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
-                    </select>
-                    <br />
-                     <label>Tipo de evento</label>
-                    <select class="form-control" name="tipo" id="inputSubject" >
-					<option value="0"></option>		                
-						<?php echo geraOpcao("ig_tipo_evento","","") ?>
-                    </select>	
-                    <br />
-                    <label>Instituição</label>
-                    <select class="form-control" name="instituicao" id="inputSubject" >
-                   <option value="0"></option>
-						<?php echo geraOpcao("ig_instituicao","","") ?>
-                    </select>	
-                    <br />
+	<div class="row">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<h5><?php if(isset($mensagem)){ echo $mensagem; } ?></h5>
+					<form method="POST" action="?perfil=contratos&p=frm_busca" class="form-horizontal" role="form">
+					<label>Código do Pedido</label>
+					<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+						<label>Objeto/Evento</label>
+						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
+							<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
+							<select class="form-control" name="fiscal" id="inputSubject" >
+								<option value="0"></option>	
+								<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
+							</select><br />
+									<label>Instituição</label>
+									<select class="form-control" name="instituicao" id="inputSubject" >
+									<option value="0"></option>
+										<?php echo geraOpcao("ig_instituicao","","") ?>
+									</select><br />
                                         <label>Status do pedido</label>
-                    <select class="form-control" name="estado" id="inputSubject" >
-                   <option value=""></option>
-		<?php echo geraOpcao("sis_estado","","") ?>
-                    </select>	<br />
-                    
-	                    <label>Operador do Contrato</label>
-                    <select class="form-control" name="operador" id="inputSubject" >
-                   <option value='0'></option>
-	<?php  geraOpcaoContrato(""); ?>
-                    </select>
-                    <br />	
-     <label>Tipo de Relação Jurídica</label>
-                    <select class="form-control" name="juridico" id="inputSubject" >
-                   <option value='0'></option>
-	<?php  geraOpcao("ig_modalidade","",""); ?>
-                    </select>	
+										<select class="form-control" name="estado" id="inputSubject" >
+										   <option value=""></option>
+											<?php echo geraOpcao("sis_estado","","") ?>
+										</select><br />
+													<label>Operador do Contrato</label>
+													<select class="form-control" name="operador" id="inputSubject" >
+														<option value='0'></option>
+														<?php  geraOpcaoContrato(""); ?>
+													</select><br />	
+																<label>Tipo de Relação Jurídica</label>
+																<select class="form-control" name="juridico" id="inputSubject" >
+																	<option value='0'></option>
+																	<?php  geraOpcao("ig_modalidade","",""); ?>
+																</select>	
 
-            	</div>
-             </div>
-             
-
-				<br />             
-	            <div class="form-group">
-		            <div class="col-md-offset-2 col-md-8">
-                	<input type="hidden" name="pesquisar" value="1" />
-    		        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-                    </form>
-        	    	</div>
-        	    </div>
-             </div>
-	</section>               
-
+            </div>
+        </div>
+			<br />     
+			
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+		<input type="hidden" name="pesquisar" value="1" />
+		<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+		</form>
+		</div>
+	</div>
+    </div>
+</section>               
 
 <?php } ?>
 
@@ -413,126 +394,116 @@ for($h = 0; $h < $x['num']; $h++)
 break;
 case 'periodo': //
 ?>
-<?php
 
+<?php
 
 	if($_POST['inicio'] == "" OR $_POST['final'] == ""){ ?>
 	 <section id="services" class="home-section bg-white">
 		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-					 <h2>Busca por pedido</h2>
+					<h2>Busca por pedido</h2>
                     <p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
-
 					</div>
-				  </div>
-			  </div>
+				</div>
+			</div>
 			  
-	        <div class="row">
-            <div class="form-group">
-            	<div class="col-md-offset-2 col-md-8">
-            <h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-                      <form method="POST" action="?perfil=contratos&p=frm_busca" class="form-horizontal" role="form">
-            		<label>Código do Pedido</label>
-            		<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-            		<label>Objeto/Evento</label>
-            		<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
-
-     
-            			          
-    	        <label>Fiscal, suplente ou usuário que cadastrou o evento</label>
-					<select class="form-control" name="fiscal" id="inputSubject" >
-					<option value="0"></option>	
-					<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
-                    </select>
-                    <br />
-                     <label>Tipo de evento</label>
-                    <select class="form-control" name="tipo" id="inputSubject" >
-					<option value="0"></option>		                
-						<?php echo geraOpcao("ig_tipo_evento","","") ?>
-                    </select>	
-                    <br />
-                    <label>Instituição</label>
-                    <select class="form-control" name="instituicao" id="inputSubject" >
-                   <option value="0"></option>
-						<?php echo geraOpcao("ig_instituicao","","") ?>
-                    </select>		
-                    <br />
-                    <label>Status do pedido</label>
-                    <select class="form-control" name="estado" id="inputSubject" >
-                   <option value='0'></option>
-
-
-		<?php echo geraOpcao("sis_estado","","") ?>
-                    </select>	
-                    
-                    <label>Operador do Contrato</label>
-                    <select class="form-control" name="operador" id="inputSubject" >
-                   <option value='0'></option>
-	<?php  geraOpcaoContrato(""); ?>
-                    </select>	
-     <label>Tipo de Relação Jurídica</label>
-                    <select class="form-control" name="juridico" id="inputSubject" >
-                   <option value='0'></option>
-	<?php  geraOpcao("ig_modalidade","",""); ?>
-                    </select>	
-
-
-            	</div>
-             </div>
-				<br />             
-	            <div class="form-group">
-		            <div class="col-md-offset-2 col-md-8">
-                	<input type="hidden" name="pesquisar" value="1" />
-    		        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-                    </form>
-        	    	</div>
-        	    </div>
-                
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Busca por periodo</h2>
-                                        <p>O sistema varre os pedidos de contratação e informa quais terão início no período da busca.<br />
-                    É preciso definir o início e o fim do período a se fazer a busca. <br /> Não funciona combinado com a busca acima.</p>
-
-
-					</div>
-				  </div>
-			  </div>
-			  
-	        <div class="row">
-            <div class="form-group">
-            	<div class="col-md-offset-2 col-md-8">
-            <h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-            <form method="POST" action="?perfil=contratos&p=frm_busca&b=periodo" class="form-horizontal" role="form">
-                <div class="form-group">
-                	<div class="col-md-offset-2 col-md-6">
-               			 <label>Data início *</label>
-                		<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
-               		 </div>
-                	<div class=" col-md-6">
-                		<label>Data encerramento *</label>
-                		<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
-               		</div>
-                </div>
-                            
-
-            	</div>
-             </div>
-				<br />             
-	            <div class="form-group">
-		            <div class="col-md-offset-2 col-md-8">
-                	<input type="hidden" name="periodo" value="1" />
-    		        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-                    </form>
-        	    	</div>
-        	    </div>
+	<div class="row">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+				<form method="POST" action="?perfil=contratos&p=frm_busca" class="form-horizontal" role="form">
+				<label>Código do Pedido</label>
+				<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+						<label>Objeto/Evento</label>
+						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />	          
+								<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
+								<select class="form-control" name="fiscal" id="inputSubject" >
+									<option value="0"></option>	
+									<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
+								</select><br />
+										<label>Tipo de evento</label>
+										<select class="form-control" name="tipo" id="inputSubject" >
+											<option value="0"></option>		                
+											<?php echo geraOpcao("ig_tipo_evento","","") ?>
+										</select><br />
+													<label>Instituição</label>
+													<select class="form-control" name="instituicao" id="inputSubject" >
+														<option value="0"></option>
+														<?php echo geraOpcao("ig_instituicao","","") ?>
+													</select><br />
+															<label>Status do pedido</label>
+															<select class="form-control" name="estado" id="inputSubject" >
+																<option value='0'></option>
+																<?php echo geraOpcao("sis_estado","","") ?>
+															</select><br />
+																	<label>Operador do Contrato</label>
+																	<select class="form-control" name="operador" id="inputSubject" >
+																		<option value='0'></option>
+																		<?php  geraOpcaoContrato(""); ?>
+																	</select><br />	
+																		<label>Tipo de Relação Jurídica</label>
+																		<select class="form-control" name="juridico" id="inputSubject" >
+																		   <option value='0'></option>
+																			<?php  geraOpcao("ig_modalidade","",""); ?>
+																		</select>	
 
 
             </div>
-	</section>
+        </div>
+		<br />   
+		
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<input type="hidden" name="pesquisar" value="1" />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+		</form>
+		</div>
+	</div>
+                
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8">
+		<div class="section-heading">
+		 <h2>Busca por periodo</h2>
+			<p>O sistema varre os pedidos de contratação e informa quais terão início no período da busca.<br />
+		É preciso definir o início e o fim do período a se fazer a busca. <br /> Não funciona combinado com a busca acima.</p>
+		</div>
+		</div>
+	</div>
+			  
+	<div class="row">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<h5><?php if(isset($mensagem)){ echo $mensagem; } ?></h5>
+					<form method="POST" action="?perfil=contratos&p=frm_busca&b=periodo" class="form-horizontal" role="form">
+					
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-6">
+			 <label>Data início *</label>
+				<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
+			 </div>
+			<div class=" col-md-6">
+				<label>Data encerramento *</label>
+				<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
+			</div>
+		</div>
+                            
+
+            </div>
+        </div>
+				<br />  
+				
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+			<input type="hidden" name="periodo" value="1" />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+			</form>
+			</div>
+		</div>
+    </div>
+</section>
+
 <?php
 		
 	}else{ // Caso as datas seja válidas
@@ -601,21 +572,20 @@ case 'periodo': //
 		}
 		}
 		$x['num'] = $i;
-		
 
-
-
-$mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
+		$mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 ?>
+
 <br />
 <br />
+
 	<section id="list_items">
 		<div class="container">
 			 <h3>Resultado da busca</3>
              <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
              <h5><a href="?perfil=contratos&p=frm_busca">Fazer outra busca</a></h5>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
+				<div class="table-responsive list_info">
+					<table class="table table-condensed">
 					<thead>
 						<tr class="list_menu">
 							<td>Codigo do Pedido</td>
@@ -629,7 +599,8 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
    							<td>Operador</td>
 						</tr>
 					</thead>
-					<tbody>
+					
+<tbody>
 <?php
 
 $data=date('Y');
@@ -653,23 +624,16 @@ for($h = 0; $h < $x['num']; $h++)
 
 	}
 ?>
-	
-					
-					</tbody>
-				</table>
+</tbody>
+			</table>
 			</div>
 		</div>
 	</section>
 
-
-	<?php
-}
-
-
-break;
-
-} // fim da switch
-
+<?php
+	}
+	break;
+	} // fim da switch
  ?>
 
 

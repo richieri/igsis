@@ -1,14 +1,11 @@
 <?php
-
 if(isset($_GET['id_ped'])){
 	$idPedidoContratacao = $_GET['id_ped'];
 }
 $con = bancoMysqli();
 
 if(isset($_POST['action'])){
-
 	switch($_POST['action']){
-
 	case "novo": //caso seja um novo pedido
 	$id_formacao = $_POST['idFormacao'];
 	$formacao = recuperaDados("sis_formacao",$_POST['idFormacao'],"Id_Formacao");
@@ -77,10 +74,7 @@ if(isset($_POST['action'])){
 					$mensagem .= "<br />Valor e parcelas atualizados";	
 				}else{
 					$mensagem .= "<br />Erro ao atualizar parcelas e valor";	
-				}
-		
-		
-			
+				}		
 	}else{
 		$mensagem = "Erro ao criar pedido";	
 	}
@@ -88,10 +82,8 @@ if(isset($_POST['action'])){
 	break;
 	
 	case "atualizar":
-	
 	$idPedidoContratacao = $_POST['idPedido'];
-	
-	$Observacao = addslashes($_POST['Observacao']);
+		$Observacao = addslashes($_POST['Observacao']);
 	$Suplente  = $_POST['Suplente']; 
 	$Fiscal  = $_POST['Fiscal'];
 	$Parecer  = addslashes($_POST['Parecer']);
@@ -122,19 +114,11 @@ if(isset($_POST['action'])){
 	}else{
 		$mensagem = "Erro ao atualizar pedido(II)";	
 	}
-
 	//suplente Suplente 
 	//fiscal Fiscal
-	
-	
-	
 	break;
-	
-	
 	}	
-
 }
-
 
 if(isset($_POST['enviar'])){
 	$dataEnvio = date('Y-m-d');
@@ -155,8 +139,6 @@ if(isset($_POST['enviar'])){
 	}
 	
 }
-
-
 
 $ano=date('Y');
 $id_ped = $idPedidoContratacao;
@@ -179,152 +161,137 @@ $periodo = retornaPeriodoVigencia($pedido['idPedidoContratacao'],$pedido['parcel
 $justif = $cargo['justificativa'];
 ?>
 
-
 <!-- MENU -->	
 
 <?php include 'includes/menu.php';?>
 		
-	  
-	 <!-- Contact -->
-	  <section id="contact" class="home-section bg-white">
-	  	<div class="container">
-			  <div class="form-group">
-					<h2>PEDIDO DE CONTRATAÇÃO DE PESSOA FÍSICA</h2>
-                    <h6><?php if(isset($mensagem)){ echo $mensagem; } ?></h6>
-                    <h6><?php if($_SESSION['perfil'] == '1' ){ echo $sql_pedido; } ?></h6>
-               </div>
-
-	  		<div class="row">
-	  			<div class="col-md-offset-1 col-md-10">
-                <form class="form-horizontal" role="form" action="#" method="post">
-
-				
-				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Código de Dados para Contratação:</strong><br/>
-					  <input  readonly name="Id_PedidoContratacaoPF"  type="text" class="form-control" id="Id_PedidoContratacaoPF" value="
-                      <?php
-					  	
-					   
-					  ?>
-                      ">
-					</div>
-                  </div>
-                    
-
-                  <!--
-				  <div class="form-group">                    
-                    <div class=" col-md-offset-2 col-md-6"><strong>Setor:</strong> 
-					  <input type="text"  class="form-control" value="">
-                    </div>
-                    <div class="col-md-6"><strong>Categoria da Contratação:</strong> 
-                    	<input type="text"  class="form-control" value="">
-                    </div>
-                  </div>
-                  -->
-				  
-                  <div class="form-group"> 
-					<div class="col-md-offset-2 col-md-8"><strong>Proponente:</strong><br/>
-					  <input type='text' readonly class='form-control' name='nome' id='nome' value="<?php echo $proponente['Nome']." (".$proponente['CPF'].")"; ?>">                    	
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Objeto:</strong><br/>
-					  <textarea readonly="readonly"  class="form-control" rows="5"><?php echo $objeto; ?> </textarea>
-					</div>
-				  </div>
-                  
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Local:</strong><br/>
-					 <textarea readonly="readonly"  class="form-control" rows="5"><?php echo $local; ?> </textarea>
-					</div>
-				  </div>
-             
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Período:</strong><br/>
-					   <input type='text' readonly name="Periodo" class='form-control' value="<?php echo $periodo ?>">
-					</div>
-					<div class="col-md-6"><strong>Carga Horária:</strong><br/>
-					   <input type='text' readonly name="CargaHoraria" class='form-control' value="<?php echo $carga ?>">
-					</div>
-				  </div>                 
-                 
-                  <form class="form-horizontal" role="form" action="#" method="post">
-                                
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Valor:</strong><br/>
-					  <input type='text' disabled name="valor_parcela" id='valor' class='form-control' value="<?php echo dinheiroParaBr($pedido['valor']) ?>" >
-					</div>	
-				  </div>
-				  		
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
-                      <textarea  disabled name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']); ?> 
-                      </textarea>
-					</div>
-				  </div>
-				
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Verba:</strong><br/>
-                    <input type='text' disabled name="valor_parcela" id='valor' class='form-control' value="<?php echo $verba['Verba'] ?>" >
-					  </div>
-				  </div>
-                 <form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_cadastra_pedidocontratacao_pf" method="post">
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Justificativa:</strong><br/>
-                      <textarea name="Justificativa" cols="40" rows="5"><?php echo $justif ?></textarea>
-					</div>
-				  </div>
-                  
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Fiscal:</strong>
-                       <select class="form-control" name="Fiscal" id="Fiscal">
-							<?php opcaoUsuario($_SESSION['idInstituicao'],$formacao['fiscal']); ?>
-					   </select>
-					</div>
-					<div class="col-md-6"><strong>Suplente:</strong>
-                       <select class="form-control" name="Suplente" id="Fiscal">
-							<?php opcaoUsuario($_SESSION['idInstituicao'],$formacao['suplente']); ?>
-					   </select>
-					</div>
-				  </div>
-                  
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
-					  <textarea name="Observacao" cols="40" rows="5"><?php echo $pedido['observacao'] ?></textarea>
-					</div>
-				  </div>
-                  
-				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-                    <input type="hidden" name="action" value="atualizar"  />
-                    <input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>"  />
-					 <input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-					</div>
-				  </div>
-				</form>
-				<?php if($pedido['estado'] == NULL OR $pedido['estado'] == "" ){ ?>
-                                <form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_cadastra_pedidocontratacao_pf&id_ped=<?php echo $idPedidoContratacao; ?>" method="post">
-                  				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-                    <input type="hidden" name="enviar"  />
-					 <input type="submit" class="btn btn-theme btn-lg btn-block" value="Enviar pedido para contratos">
-                     </form>
-    				</div>
-				  </div>
-				<?php }else{ ?>
-				
-                                
-                  				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-                     <a href="../pdf/rlt_proposta_formacao.php?id=<?php echo $pedido['idPedidoContratacao']; ?>&penal=20" class="btn btn-theme btn-lg btn-block" target="_blank">Gerar proposta</a>
-    				</div>
-				  </div>
-				<?php } ?>
-
-
-	  		</div>
+<section id="contact" class="home-section bg-white">
+	<div class="container">
+		<div class="form-group">
+			<h2>PEDIDO DE CONTRATAÇÃO DE PESSOA FÍSICA</h2>
+			<h6><?php if(isset($mensagem)){ echo $mensagem; } ?></h6>
+			<h6><?php if($_SESSION['perfil'] == '1' ){ echo $sql_pedido; } ?></h6>
 		</div>
+
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<form class="form-horizontal" role="form" action="#" method="post">
+				
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8"><strong>Código de Dados para Contratação:</strong><br/>
+			<input  readonly name="Id_PedidoContratacaoPF"  type="text" class="form-control" id="Id_PedidoContratacaoPF" value="
+                    
+<?php	   
+?>
+                      ">
+		</div>
+	</div>
+				  
+	<div class="form-group"> 
+		<div class="col-md-offset-2 col-md-8"><strong>Proponente:</strong><br/>
+			<input type='text' readonly class='form-control' name='nome' id='nome' value="<?php echo $proponente['Nome']." (".$proponente['CPF'].")"; ?>">                    	
+		</div>
+	</div>           
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Objeto:</strong><br/>
+						<textarea readonly="readonly"  class="form-control" rows="5"><?php echo $objeto; ?> </textarea>
+					</div>
+				</div>
+                  	<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Local:</strong><br/>
+							<textarea readonly="readonly"  class="form-control" rows="5"><?php echo $local; ?> </textarea>
+						</div>
+					</div>       
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-6"><strong>Período:</strong><br/>
+								<input type='text' readonly name="Periodo" class='form-control' value="<?php echo $periodo ?>">
+							</div>
+											<div class="col-md-6"><strong>Carga Horária:</strong><br/>
+											   <input type='text' readonly name="CargaHoraria" class='form-control' value="<?php echo $carga ?>">
+											</div>
+										</div>                 
+                 
+	<form class="form-horizontal" role="form" action="#" method="post">
+                                
+											<div class="form-group">
+												<div class="col-md-offset-2 col-md-8"><strong>Valor:</strong><br/>
+													<input type='text' disabled name="valor_parcela" id='valor' class='form-control' value="<?php echo dinheiroParaBr($pedido['valor']) ?>" >
+												</div>	
+											</div>
+				  		
+												<div class="form-group">
+													<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
+														<textarea  disabled name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']); ?> 
+														</textarea>
+													</div>
+												</div>
+				
+																	<div class="form-group">
+																		<div class="col-md-offset-2 col-md-8"><strong>Verba:</strong><br/>
+																			<input type='text' disabled name="valor_parcela" id='valor' class='form-control' value="<?php echo $verba['Verba'] ?>" >
+																		</div>
+																	</div>
+	
+	<form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_cadastra_pedidocontratacao_pf" method="post">
+	
+																			<div class="form-group">
+																				<div class="col-md-offset-2 col-md-8"><strong>Justificativa:</strong><br/>
+																					<textarea name="Justificativa" cols="40" rows="5"><?php echo $justif ?></textarea>
+																				</div>
+																			</div>
+                  
+																								<div class="form-group">
+																									<div class="col-md-offset-2 col-md-6"><strong>Fiscal:</strong>
+																										<select class="form-control" name="Fiscal" id="Fiscal">
+																											<?php opcaoUsuario($_SESSION['idInstituicao'],$formacao['fiscal']); ?>
+																										</select>
+																									</div>
+																															<div class="col-md-6"><strong>Suplente:</strong>
+																															   <select class="form-control" name="Suplente" id="Fiscal">
+																																	<?php opcaoUsuario($_SESSION['idInstituicao'],$formacao['suplente']); ?>
+																															   </select>
+																															</div>
+																								</div>
+                  
+																											  <div class="form-group">
+																												<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
+																												  <textarea name="Observacao" cols="40" rows="5"><?php echo $pedido['observacao'] ?></textarea>
+																												</div>
+																											  </div>
+                  
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<input type="hidden" name="action" value="atualizar"  />
+			<input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>"  />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+		</div>
+	</div>
+	</form>
+	
+<?php if($pedido['estado'] == NULL OR $pedido['estado'] == "" ){ ?>
+
+	<form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_cadastra_pedidocontratacao_pf&id_ped=<?php echo $idPedidoContratacao; ?>" method="post">
+	
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<input type="hidden" name="enviar"  />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Enviar pedido para contratos">
+	</form>
+		</div>
+	</div>
+	
+<?php }else{ ?>
+			                                
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<a href="../pdf/rlt_proposta_formacao.php?id=<?php echo $pedido['idPedidoContratacao']; ?>&penal=20" class="btn btn-theme btn-lg btn-block" target="_blank">Gerar proposta</a>
+		</div>
+	</div>
+	
+<?php } ?>
+
+		</div>
+	</div>
 			
-	 </div>
-	</section>  
+	</div>
+</section>  

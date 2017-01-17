@@ -21,16 +21,16 @@ require "../funcoes/funcoesComunicacao.php";
 
 	if(isset($_GET['order'])){
 		$order = $_GET['order'];
-	}else{
+		}else{
 		$order = "";
 	}
 	
 	if(isset($_GET['sentido'])){
 		$sentido = $_GET['sentido'];
 		if($sentido == "ASC"){
-			$invertido = "DESC";
+		$invertido = "DESC";
 		}else{
-			$invertido = "ASC";
+		$invertido = "ASC";
 		}
 	}
 ?>

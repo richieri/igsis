@@ -1,7 +1,7 @@
 
-    <section id="list_items">
-		<div class="container">
-			 <div class="sub-title"><h2>CADASTRO DE PESSOA FÍSICA</h2></div>
+<section id="list_items">
+	<div class="container">
+		 <div class="sub-title"><h2>CADASTRO DE PESSOA FÍSICA</h2></div>
 			<div class="table-responsive list_info">
 				<table class="table table-condensed">
 					<thead>
@@ -13,7 +13,7 @@
 							<td>Email</td>
 						</tr>
 					</thead>
-					<tbody>
+<tbody>
 
 <?php
 
@@ -51,6 +51,6 @@ if(isset($_POST['input'])){
 </tbody>
 				</table>
 			</div>
-		</div>
-	</section>
+	</div>
+</section>
 <!--fim_list-->
