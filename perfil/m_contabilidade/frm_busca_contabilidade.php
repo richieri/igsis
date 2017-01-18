@@ -43,8 +43,7 @@ case 'inicial':
 							<label>Código do Pedido</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
 							<label>Número do Processo</label>
-							<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />					
-							<label>Objeto/Evento</label>
+							<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />			<label>Objeto/Evento</label>
 							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
 							<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
 							<select class="form-control" name="fiscal" id="inputSubject" >
@@ -73,6 +72,7 @@ case 'inicial':
 							<label>Tipo de Relação Jurídica</label>
 							<select class="form-control" name="juridico" id="inputSubject" >
 							<option value='0'></option>
+						</h5>
 							
 <?php  geraOpcao("ig_modalidade","",""); ?>
 							</select>	
@@ -86,6 +86,8 @@ case 'inicial':
 				</form>
         	</div>
         </div>
+		</div>
+		</div>
 		</section>
 	
 <?php
@@ -389,6 +391,7 @@ case 'inicial':
 			<label>Tipo de Relação Jurídica</label>
         <select class="form-control" name="juridico" id="inputSubject" >
                 <option value='0'></option>
+					</h5>
 				
 <?php  geraOpcao("ig_modalidade","",""); ?>
         </select>	

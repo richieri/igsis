@@ -16,44 +16,53 @@ $processo = $_POST['NumeroProcesso'];
 $proponente = $_POST['proponente'];
 
 if($id == "" AND $estado == 0 AND $processo == 0 AND $proponente == "" )
-{ ?>
-	<section id="services" class="home-section bg-white">
-		<div class="container">
+{ 
+?>
+
+<section id="services" class="home-section bg-white">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
-			<div class="section-heading">
-				<h2>Busca Formação</h2>
-				<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
+				<div class="section-heading">
+					<h2>Busca Formação</h2>
+					<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
+				</div>
 			</div>
-		  </div>
-	    </div>
-		<div class="row">
-        <div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-            <h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-            <form method="POST" action="?perfil=formacao&p=frm_busca_pagamento" class="form-horizontal" role="form">
-            <label>Código do Pedido</label>
+		</div>
+		
+	<div class="row">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+			<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+			<form method="POST" action="?perfil=formacao&p=frm_busca_pagamento" class="form-horizontal" role="form">
+				<label>Código do Pedido</label>
 				<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-			<label>Número do Processo</label>
-				<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />
-			<label>Proponente</label>
-				<input type="text" name="proponente" class="form-control" id="palavras" placeholder="Insira o nome do proponente" ><br />
-    	    <label>Status do pedido</label>
-				<select class="form-control" name="estado" id="inputSubject" >
-				<option value='0'></option>
-				<?php echo geraOpcao("sis_estado","","") ?>
-				</select>	
-       	</div>
-        </div>
-		<br />             
-	    <div class="form-group">
+					<label>Número do Processo</label>
+					<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />
+						<label>Proponente</label>
+						<input type="text" name="proponente" class="form-control" id="palavras" placeholder="Insira o nome do proponente" ><br />
+							<label>Status do pedido</label>
+							<select class="form-control" name="estado" id="inputSubject" >
+								<option value='0'></option>
+								<?php echo geraOpcao("sis_estado","","") ?>
+							</select>	
+			</div>
+		</div>
+	</div>
+	</div>
+		
+	<br /> 
+	
+	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8">
-           	<input type="hidden" name="pesquisar" value="1" />
-    		<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-            </form>
-        </div>
-        </div>
-	</section>
+			<input type="hidden" name="pesquisar" value="1" />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+			
+			</form>
+		</div>
+	</div>
+</section>
+
 <?php
 }
 else
@@ -151,33 +160,37 @@ else
 	}
 } 
 
-
-
 $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 ?>
-<br />
-<br />
-	<section id="list_items">
-		<div class="container">
-			 <h3>Resultado da busca</3>
-             <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
-             <h5><a href="?perfil=formacao&p=frm_busca_pagamento">Fazer outra busca</a></h5>
-			<div class="table-responsive list_info">
-			<?php if($x['num'] == 0){ ?>
-			
-			<?php }else{ ?>
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Processo</td>
-							<td>Codigo do Pedido</td>
-							<td>Proponente</td>
-							<td>Status</td>
-						</tr>
-					</thead>
-					<tbody>
-<?php
 
+<br />
+<br />
+
+<section id="list_items">
+	<div class="container">
+		 <h3>Resultado da busca</3>
+		 <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
+		 <h5><a href="?perfil=formacao&p=frm_busca_pagamento">Fazer outra busca</a></h5>
+		 
+	<div class="table-responsive list_info">
+	
+<?php if($x['num'] == 0){ ?>
+			
+<?php }else{ ?>
+
+	<table class="table table-condensed">
+		<thead>
+			<tr class="list_menu">
+				<td>Processo</td>
+				<td>Codigo do Pedido</td>
+				<td>Proponente</td>
+				<td>Status</td>
+			</tr>
+		</thead>
+		
+<tbody>
+
+<?php
 $data=date('Y');
 for($h = 0; $h < $x['num']; $h++)
  {
@@ -192,67 +205,59 @@ for($h = 0; $h < $x['num']; $h++)
 	echo '<td class="list_description">'.$status['estado'].	  '</td> ';
 	}
 ?>
+						
+</tbody>
+	</table>
 	
-					
-					</tbody>
-				</table>
-			<?php } ?>		
-		</div>
-			
-		</div>
-	</section>
-
+<?php } ?>
+		
+	</div>	
+	</div>
+</section>
 
 <?php
 }else{
 ?>
-	 <section id="services" class="home-section bg-white">
-		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Busca Formação</h2>
-                    
 
-					</div>
-				  </div>
-			  </div>
+<section id="services" class="home-section bg-white">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="section-heading">
+					<h2>Busca Formação</h2>
+				</div>
+			</div>
+		</div>
 			  
-	        <div class="row">
-            <div class="form-group">
-            	<div class="col-md-offset-2 col-md-8">
-            <h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-                        <form method="POST" action="?perfil=formacao&p=frm_busca_pagamento" class="form-horizontal" role="form">
-            		<label>Código do Pedido</label>
-            		<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-					
-					<label>Número do Processo</label>
-            		<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira número do processo" ><br />
-					
-					<label>Proponente</label>
-					<input type="text" name="proponente" class="form-control" id="palavras" placeholder="Insira o nome do proponente" ><br />
- 
-					<label>Status do pedido</label>
-                    <select class="form-control" name="estado" id="inputSubject" >
-                   <option value=""></option>
-					<?php echo geraOpcao("sis_estado","","") ?>
-                    </select>	<br />
-
-            	</div>
-             </div>
+	<div class="row">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+					<form method="POST" action="?perfil=formacao&p=frm_busca_pagamento" class="form-horizontal" role="form">
+						<label>Código do Pedido</label>
+						<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+							<label>Número do Processo</label>
+							<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira número do processo" ><br />
+									<label>Proponente</label>
+									<input type="text" name="proponente" class="form-control" id="palavras" placeholder="Insira o nome do proponente" ><br />
+										<label>Status do pedido</label>
+										<select class="form-control" name="estado" id="inputSubject" >
+											<option value=""></option>
+											<?php echo geraOpcao("sis_estado","","") ?>
+										</select><br />
+			</div>
+		</div>
              
-
-				<br />             
-	            <div class="form-group">
-		            <div class="col-md-offset-2 col-md-8">
-                	<input type="hidden" name="pesquisar" value="1" />
-    		        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-                    </form>
-        	    	</div>
-        	    </div>
-             </div>
-	</section>               
-
+<br />             
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8">
+			<input type="hidden" name="pesquisar" value="1" />
+			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+					</form>
+		</div>
+	</div>
+	</div>
+</section>               
 
 <?php } ?>
 
@@ -260,10 +265,8 @@ for($h = 0; $h < $x['num']; $h++)
 break;
 case 'periodo': //
 ?>
+
 <?php
-
 break;
-
 } // fim da switch
-
  ?>

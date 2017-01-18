@@ -24,6 +24,7 @@
 				</div>
 			</div> 
 		</div>
+	</section> <!-- verificar -->
 			
 <?php
 switch($action){

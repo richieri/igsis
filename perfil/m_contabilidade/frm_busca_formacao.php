@@ -41,20 +41,20 @@ case 'inicial':
 						<label>Código do Pedido</label>
 						<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
 						<label>Número do Processo</label>
-						<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />           			          
-						<label>Status do pedido</label>
+						<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />				<label>Status do pedido</label>
 		<select class="form-control" name="estado" id="inputSubject" >
 			<option value='0'></option>
 				
 <?php echo geraOpcao("sis_estado","","") ?>
 		</select>	
 				</div>
-			</div><br />  
+			</div>
+		</div><br />  
 			
 	    <div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
 				<input type="hidden" name="pesquisar" value="1" />
-				<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+				<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar"/>
 				</form>
 			</div>
         </div>
@@ -221,7 +221,7 @@ else
 							<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira número do processo" ><br />
 							<label>Status do pedido</label>
 							<select class="form-control" name="estado" id="inputSubject" >
-							<option value=""></option>
+							<option value=""></option></h5>
 							
 <?php echo geraOpcao("sis_estado","","") ?>
 							</select>	<br />

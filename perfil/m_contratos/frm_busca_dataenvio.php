@@ -2,17 +2,16 @@
 
 <?php
 
-function dataTime($data){
+function dataTime($data)
+{
 	$x = explode("/",$data);
 	$dia = $x[0];
 	$mes = $x[1];
 	$ano = $x[2];
 
-$data_nova = mktime(0,0,0, $mes, $dia, $ano);	
-
-return $data_nova;
-
+	$data_nova = mktime(0,0,0, $mes, $dia, $ano);	
 	
+	return $data_nova;	
 }
 
 if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
@@ -65,7 +64,8 @@ else
 		{
 			$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
 			$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
-		}else
+		}
+		else
 		{
 			$valorTotal = $pedido['valor'];
 			$formaPagamento = $pedido['formaPagamento'];
@@ -96,20 +96,23 @@ else
 		}
 	}
 	$x['num'] = $i;
-
-$mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
+	$mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 ?>
 <br />
 <br />
-	<section id="list_items">
-		<div class="container">
-			 <h3>Resultado da busca</3>
-             <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
-             <h5><a href="?perfil=contratos&p=frm_busca_dataenvio">Fazer outra busca</a></h5>
-			<div class="table-responsive list_info">
-			<?php if($x['num'] == 0){ ?>
-			
-			<?php }else{ ?>
+<section id="list_items">
+	<div class="container">
+		<h3>Resultado da busca</3>
+		<h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
+		<h5><a href="?perfil=contratos&p=frm_busca_dataenvio">Fazer outra busca</a></h5>
+		<div class="table-responsive list_info">
+		<?php 
+			if($x['num'] == 0)
+			{ 
+			}
+			else
+			{ 
+		?>
 				<table class="table table-condensed">
 					<thead>
 						<tr class="list_menu">
@@ -119,81 +122,80 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 							<td>Tipo</td>
 							<td>Objeto</td>
 							<td>Data de Cadastro</td>
-                            <td>Instituição</td>
+							<td>Instituição</td>
 							<td>Periodo</td>
 							<td>Status</td>
-   							<td>Operador</td>
+							<td>Operador</td>
 						</tr>
 					</thead>
 					<tbody>
-<?php
-
-	$data=date('Y');
-	for($h = 0; $h < $x['num']; $h++)
-	{
-		$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
-		if($x[$h]['tipo'] == 'Física')
-		{
-			echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
-		}
-		else
-		{
-			echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";	
-		}
-		echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].		'</td>';
-		echo '<td class="list_description">'.$x[$h]['proponente'].					'</td> ';
-		echo '<td class="list_description">'.$x[$h]['tipo'].					'</td> ';
-		echo '<td class="list_description">'.$x[$h]['objeto'].						'</td> ';
-		echo '<td class="list_description">'.$x[$h]['dataEnvio'].				'</td> ';
-		echo '<td class="list_description">'.$x[$h]['instituicao'].				'</td> ';
-		echo '<td class="list_description">'.$x[$h]['periodo'].						'</td> ';
-		echo '<td class="list_description">'.$status['estado'].						'</td> ';
-		echo '<td class="list_description">'.$x[$h]['operador'].						'</td> </tr>';
-	}
-?>
+			<?php
+				$data=date('Y');
+				for($h = 0; $h < $x['num']; $h++)
+				{
+					$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
+					if($x[$h]['tipo'] == 'Física')
+					{
+						echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+					}
+					else
+					{
+						echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";	
+					}
+					echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].'</td>';
+					echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
+					echo '<td class="list_description">'.$x[$h]['tipo'].'</td> ';
+					echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
+					echo '<td class="list_description">'.$x[$h]['dataEnvio'].'</td> ';
+					echo '<td class="list_description">'.$x[$h]['instituicao'].'</td> ';
+					echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
+					echo '<td class="list_description">'.$status['estado'].'</td> ';
+					echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
+				}
+			?>
 					</tbody>
 				</table>
-			<?php } ?>		
+		<?php 
+			} 
+		?>		
 		</div>
 			
+	</div>
+</section>
+<section id="services" class="home-section bg-white">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="section-heading">
+					<h2>Busca por pedido</h2>
+                </div>
+			</div>
 		</div>
-	</section>
-	 <section id="services" class="home-section bg-white">
-		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Busca por pedido</h2>
-                    
-
-					</div>
-				  </div>
-			  </div>
-			  
-	        <div class="row">
+		<div class="row">
+			<form method="POST" action="?perfil=contratos&p=frm_busca_dataenvio" class="form-horizontal" role="form">
             <div class="form-group">
             	<div class="col-md-offset-2 col-md-8">
-            <h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-                        <form method="POST" action="?perfil=contratos&p=frm_busca_dataenvio" class="form-horizontal" role="form">
+					<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+                </div>				
                 <div class="form-group">
                 	<div class="col-md-offset-2 col-md-6">
-               			 <label>Data início *</label>
-                		<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
-               		 </div>
+               			<label>Data início *</label>
+							<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
+               		</div>
                 	<div class=" col-md-6">
                 		<label>Data encerramento *</label>
-                		<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
+							<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
                		</div>
                 </div>
-				
 				<br />             
 	            <div class="form-group">
 		            <div class="col-md-offset-2 col-md-8">
-                	<input type="hidden" name="pesquisar" value="1" />
-    		        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-                    </form>
+						<input type="hidden" name="pesquisar" value="1" />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">                    
         	    	</div>
         	    </div>
-             </div>
-	</section>               
-	</section>               
+            </div>
+			</form>
+		</div>	
+	</div>               
+</section>               
