@@ -20,6 +20,7 @@
 						</ul>
 					</li>
 					<li><a href="?perfil=admin&p=email">E-mail para solicitação de reenvio</a></li>
+					<li><a href="?perfil=admin&p=contratos">Contratos</a></li>
 				</ul>
 			</li>
 			<li><a href="?perfil=admin&p=visaogeral">Administrador Local</a>
