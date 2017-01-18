@@ -38,7 +38,7 @@ if($id == "" AND $evento == "" AND $fiscal == 0 AND $juridico == 0 AND $projeto 
             	<div class="col-md-offset-2 col-md-8">
 					<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
                     
-					<form method="POST" action="?perfil=gestao_eventos&p=frm_busca" class="form-horizontal" role="form">
+					<form method="POST" action="?perfil=gestao_prazos&p=frm_busca" class="form-horizontal" role="form">
 					
             		<label>Id do Evento</label>
             		<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Id do Evento" ><br />
@@ -152,7 +152,7 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 		<div class="container">
 			 <h3>Resultado da busca</3>
              <h5>Foram encontrados <?php echo $x['num']; ?> eventos.</h5>
-             <h5><a href="?perfil=gestao_eventos&p=frm_busca">Fazer outra busca</a></h5>
+             <h5><a href="?perfil=gestao_prazos&p=frm_busca">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
 			<?php if($x['num'] == 0){ ?>
 			
@@ -169,7 +169,7 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 					</thead>
 					<tbody>
 <?php
-$link="index.php?perfil=gestao_eventos&p=detalhe_evento&id_eve=";
+$link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
 
 $data=date('Y');
 for($h = 0; $h < $x['num']; $h++)
@@ -211,7 +211,7 @@ for($h = 0; $h < $x['num']; $h++)
             <div class="form-group">
             	<div class="col-md-offset-2 col-md-8">
 					<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-                    <form method="POST" action="?perfil=gestao_eventos&p=frm_busca" class="form-horizontal" role="form">
+                    <form method="POST" action="?perfil=gestao_prazos&p=frm_busca" class="form-horizontal" role="form">
             		<label>Id do Evento</label>
             		<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Id do Evento" ><br />
             		
