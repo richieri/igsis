@@ -1,14 +1,10 @@
 <?php
-
 $_SESSION['idPedido'] = "";
 $con = bancoMysqli();
 include 'includes/menu.php';
 ?>
-		
-	  	  
-
-	<script src="jquery/jquery-2.1.4.js"></script>
-	<script>
+<script src="jquery/jquery-2.1.4.js"></script>
+<script>
 	$(document).ready(function(){
 		$("#input").keydown(function(){
 			var input = $("#input").val();
@@ -22,14 +18,14 @@ include 'includes/menu.php';
 			});
 		});
 	});
-	</script>
- <section id="contact" class="home-section bg-white">
-	  	<div class="container">
-			  <div class="form-group">
-				 <div class="col-md-offset-2 col-md-8"><strong>Insira o Nome ou o CPF: </strong>
-				 <input type="text" id="input" />
-                 </div>
-			  </div>
+</script>
+<section id="contact" class="home-section bg-white">
+	<div class="container">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8"><strong>Insira o Nome ou o CPF: </strong>
+				<input type="text" id="input" />
+			</div>
 		</div>
-		<div id="resposta"></div>
+	</div>
+	<div id="resposta"></div>
 </section>
