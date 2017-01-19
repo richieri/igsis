@@ -183,6 +183,11 @@ $(function(){
 		</div>
 	</div>
 	
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8"><br/>
+		</div>
+	</div>
+	
 	<form class="form-horizontal" role="form" action="" method="post">	  
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-6"><strong>Ano:</strong>
@@ -348,7 +353,12 @@ $(function(){
 		</div>
 	</div>
 	<br />
-                  
+           
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-8"><br/>
+		</div>
+	</div>
+	
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 			<textarea name="obs" class="form-control" cols="40" rows="5"><?php echo $formacao['Observacao']; ?></textarea>

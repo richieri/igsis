@@ -15,9 +15,7 @@ if(isset($_POST['pesquisar'])){ // inicia a busca por Razao Social ou CNPJ
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
 				<div class="section-heading">
-					<h2>Contratados - Pessoa Física</h2>
-                                          
-<p></p>
+					<h2>Contratados - Pessoa Física</h2>                                         
 				</div>
 			</div>
 		</div>

@@ -578,12 +578,6 @@ case 'altera_equipamento':
 $id_eq=$_GET['Id_equipamento'];
 $recuperar = recuperaDados("sis_equipamento",$_GET['Id_equipamento'],"Id_Equipamento");
 $a = $recuperar['Equipamento'];
-/*
-$innerequipamento = mysqli_query($con,"SELECT ig_local.sala, sis_equipamento.Equipamento FROM ig_local INNER JOIN sis_equipamento ON ig_local.idLocal = sis_equipamento.Equipamento WHERE sis_equipamento.Equipamento = $a");
-
-$row = mysql_fetch_row($innerequipamento);
-$base_pay = $row[0];
-*/
 
 ?>
 
@@ -591,7 +585,7 @@ $base_pay = $row[0];
 	<div class="container">
 		<div class="form-group">
 			<div class="sub-title">
-            	<h2>ALTERAR DETALHES DO EQUIPAMENTO</h2>
+            	<h2>DETALHES DO EQUIPAMENTO</h2>
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
 		</div>
@@ -702,16 +696,11 @@ $base_pay = $row[0];
 					 <textarea name="Observacao" class="form-control" rows="5" > <?php echo $recuperar['Observacao']?>  </textarea>
 					</div>
 				</div>
-					
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="submit" class="btn btn-theme btn-lg btn-block" name="add_equipamento" value="Gravar">
-					</div>
-				</div>
+
 			</form>
 		</div>		
 	</div>
-</div>
+	</div>
 </section>
 
 <?php /* =========== FIM EQUIPAMENTO ===========*/ break?>

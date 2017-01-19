@@ -1,49 +1,49 @@
 	<div class="menu-area">
-			<div id="dl-menu" class="dl-menuwrapper">
-						<button class="dl-trigger">Open Menu</button>
-						<ul class="dl-menu">
-							<li>
-								<a href="?perfil=producao&p=lista">Lista de eventos</a></li>
-								<li><a href="?perfil=producao&p=chamados">Lista de chamados</a></li>
-							<li style="color:white;">-------------------------</li>
-						    <li><a href="?secao=perfil">Carregar Módulos</a></li>
-						    <li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-producao/">Ajuda</a></li>
-                            <li><a href="../include/logoff.php">Sair</a></li>
-						</ul>
-					</div><!-- /dl-menuwrapper -->
+		<div id="dl-menu" class="dl-menuwrapper">
+			<button class="dl-trigger">Open Menu</button>
+				<ul class="dl-menu">
+					<li>
+					<a href="?perfil=producao&p=lista">Lista de eventos</a></li>
+					<li><a href="?perfil=producao&p=chamados">Lista de chamados</a></li>
+					<li style="color:white;">-------------------------</li>
+					<li><a href="?secao=perfil">Carregar Módulos</a></li>
+					<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-producao/">Ajuda</a></li>
+					<li><a href="../include/logoff.php">Sair</a></li>
+				</ul>
+		</div>
 	</div>	
 
 <?php
-require "../funcoes/funcoesProducao.php";
+	require "../funcoes/funcoesProducao.php";
 
-$con = bancoMysqli();
-if(isset($_GET['p']))
-{
-	$p = $_GET['p'];	
-}
-else
-{
-	$p = "inicio";
-}
-switch($p)
-{
-	case "inicio":	
+	$con = bancoMysqli();
+	if(isset($_GET['p']))
+	{
+		$p = $_GET['p'];	
+	}
+	else
+	{
+		$p = "inicio";
+	}
+	switch($p)
+	{
+		case "inicio":	
 ?>
 
 <section id="contact" class="home-section bg-white">
-        <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                <div class="text-hide">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="text-hide">
 					<h3>Bem-vindo(a) à IGSIS!</h3>
-                    <p>&nbsp;</p>
-                    <h2>Módulo Produção</h2>
-                    <p>&nbsp;</p>
-					<h6>Através desse módulo o usuário poderá listar os eventos da instituição, visualizar detalhes pertinentes à produção e listar os últimos chamados de sua instituição.</h6>
-			   </div>		 
-           </div>
-        </div>
-    </div>
+					<p>&nbsp;</p>
+						<h2>Módulo Produção</h2>
+						<p>&nbsp;</p>
+						<h6>Através desse módulo o usuário poderá listar os eventos da instituição, visualizar detalhes pertinentes à produção e listar os últimos chamados de sua instituição.</h6>
+				</div>		 
+			</div>
+		</div>
+	</div>
 </section>   
 
 <?php 
@@ -96,46 +96,51 @@ break;
 			}	
 		}
 	}
-
 ?>
+
 <br />
 <br />
 <br />
 <br />
 
-	<section id="list_items">
-		<div class="container">
-             <div class="col-md-offset-2 col-md-8">
-                <div class="text-hide">
-                <h2>Eventos</h2>
-	                <h5>Por ordem decrescente de data de início</h5>
-					<?php
-					if($ordem == "dataEnvio")
-					{ ?>
-						<h5><a href="?perfil=producao&p=lista&order=dataInicio">Ordenar por período de realização</a></h5>
-					<?php 
-					}
-					else
-					{ ?>
-						<h5><a href="?perfil=producao&p=lista&order=dataEnvio">Ordenar por envio</a></h5>
-			  <?php } ?>	
-					</div>
-            </div>
-			<div class="table-responsive list_info">
-				<table class="table table-condensed"><script type=text/javascript language=JavaScript src=../js/find2.js> </script>
-					<thead>
-						<tr class="list_menu">
-							<td width="30%">Nome do Evento</td>
-							<td width="20%">Tipo</td>
-							<td width="20%">Local</td>
-							<td width="20%">Data/Periodo</td>
-   							<td>Status</td>
-						</tr>
+<section id="list_items">
+	<div class="container">
+		<div class="col-md-offset-2 col-md-8">
+			<div class="text-hide">
+			<h2>Eventos</h2>
+			<h5>Por ordem decrescente de data de início</h5>
 <?php
-
+	if($ordem == "dataEnvio")
+	{ 
+?>
+	<h5><a href="?perfil=producao&p=lista&order=dataInicio">Ordenar por período de realização</a></h5>
+<?php 
+	}
+	else
+	{ 
+?>
+	<h5><a href="?perfil=producao&p=lista&order=dataEnvio">Ordenar por envio</a></h5>
+<?php } 
+?>	
+			</div>
+		</div>
+		
+	<div class="table-responsive list_info">
+		<table class="table table-condensed"><script type=text/javascript language=JavaScript src=../js/find2.js> </script>
+			<thead>
+				<tr class="list_menu">
+					<td width="30%">Nome do Evento</td>
+					<td width="20%">Tipo</td>
+					<td width="20%">Local</td>
+					<td width="20%">Data/Periodo</td>
+					<td>Status</td>
+				</tr>
+				
+<tbody>
+				
+<?php
 	$ocorrencia = listaOcorrenciasInstituicao($_SESSION['idInstituicao'],$ordem);
-
-
+	
 	$data=date('Y');
 	if($ocorrencia['num'] > 0)
 	{
@@ -180,195 +185,204 @@ break;
 		}
 	}
 	var_dump($status);
-	?>	
-		
-						
-						</tbody>
-					</table> 	
+?>		
+	
+</tbody>
+		</table> 	
+	</div>
+	</div>
+</section>
+
+<?php
+	break;
+	case "chamados":
+?>
+
+<section id="list_items" class="home-section bg-white">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="section-heading">
+					<h2>Chamado</h2>
+					<h4></h4>
+					<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 				</div>
 			</div>
-		</section>
-	<?php
-break;
-case "chamados":
-?>
-	<section id="list_items" class="home-section bg-white">
-		<div class="container">
-      			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Chamado</h2>
-					<h4></h4>
-                    <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-                 </div>
-				  </div>
-			  </div>  
+		</div>  
+
+	<div class="table-responsive list_info">
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td width='10%'>ID</td>
+					<td>Chamado</td>
+					<td>Data do envio</td>
+					<td>Usuário</td>
+				</tr>
+			</thead>
 			
-			<div class="table-responsive list_info">
-                  <table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td width='10%'>ID</td>
-							<td>Chamado</td>
-							<td>Data do envio</td>
-							<td>Usuário</td>
-						</tr>
-					</thead>
-					<tbody>
-					<?php
-					$con = bancoMysqli();
-					$idInstituicao = $_SESSION['idInstituicao'];
-					$sql_busca = "SELECT * FROM igsis_chamado, ig_evento WHERE igsis_chamado.idEvento = ig_evento.idEvento AND idInstituicao = '$idInstituicao' ORDER BY idChamado DESC";
-					$query_busca = mysqli_query($con,$sql_busca);
-						while($chamado = mysqli_fetch_array($query_busca)){ 
-						$tipo = recuperaDados("igsis_tipo_chamado",$chamado['tipo'],"idTipoChamado");
-						$usuario = recuperaDados("ig_usuario",$chamado['idUsuario'],"idUsuario");
-						
-						?>
-						
-					<tr>
-					<td><?php echo $chamado['idChamado']; ?></td>
-					<td><a href="?perfil=chamado&p=detalhe&id=<?php echo $chamado['idChamado'] ?>" ><?php echo $tipo['chamado']." - ".$chamado['titulo']; ?>
-                    <?php
-					if($chamado['idEvento'] != NULL){
-							$evento = recuperaDados("ig_evento",$chamado['idEvento'],"idEvento");
-							echo "<br />".$evento['nomeEvento'];
-						}
-	                ?>
-                    </a></td>
-					<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
-					<td><?php echo $usuario['nomeCompleto'] ?></td>
-					</tr>					
-					<?php
-						}
-					?>
-					
-					
-					</tbody>
-					</table>
-				   
-			</div>
-		</div>
-	</section>
+<tbody>
+
 <?php
-break;
-case "detalhe": 
-if(isset($_GET['id_ped'])){
-$evento = recuperaDados("ig_evento",$_GET['id_ped'],"idEvento");
-}
+	$con = bancoMysqli();
+	$idInstituicao = $_SESSION['idInstituicao'];
+	$sql_busca = "SELECT * FROM igsis_chamado, ig_evento WHERE igsis_chamado.idEvento = ig_evento.idEvento AND idInstituicao = '$idInstituicao' ORDER BY idChamado DESC";
+	$query_busca = mysqli_query($con,$sql_busca);
+		while($chamado = mysqli_fetch_array($query_busca)){ 
+		$tipo = recuperaDados("igsis_tipo_chamado",$chamado['tipo'],"idTipoChamado");
+		$usuario = recuperaDados("ig_usuario",$chamado['idUsuario'],"idUsuario");					
+?>
+						
+	<tr>
+		<td><?php echo $chamado['idChamado']; ?></td>
+			<td><a href="?perfil=chamado&p=detalhe&id=<?php echo $chamado['idChamado'] ?>" ><?php echo $tipo['chamado']." - ".$chamado['titulo']; ?>
+<?php
+	if($chamado['idEvento'] != NULL){
+			$evento = recuperaDados("ig_evento",$chamado['idEvento'],"idEvento");
+			echo "<br />".$evento['nomeEvento'];
+		}
+?>
+			</a></td>
+	<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
+	<td><?php echo $usuario['nomeCompleto'] ?></td>
+	</tr>			
+	
+<?php
+						}
+?>
+					
+</tbody>
+		</table>	   
+	</div>
+	</div>
+</section>
+
+<?php
+	break;
+	case "detalhe": 
+	if(isset($_GET['id_ped'])){
+	$evento = recuperaDados("ig_evento",$_GET['id_ped'],"idEvento");
+	}
 
 
-if(isset($_GET['action'])){
-	$action = $_GET['action'];
-}else{
-	$action = "evento";
-}
+	if(isset($_GET['action'])){
+		$action = $_GET['action'];
+	}else{
+		$action = "evento";
+	}
 ?>
  	<section id="list_items" class="home-section bg-white">
 		<div class="container">
-      			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-					 <h2><?php echo $evento['nomeEvento'] ?></h2>
-					<h4></h4>
-                    <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-                 </div>
-				  </div>
-			  </div>  
+						<h2><?php echo $evento['nomeEvento'] ?></h2>
+						<h4></h4>
+						<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+					</div>
+				</div>
+			</div>  
 <?php
 $chamado = recuperaAlteracoesEvento($_GET['id_ped']);	
 switch($action){
 case "evento":
-
- ?>
-			  <h5>Dados do evento | <a href="?perfil=producao&p=detalhe&action=servicos&id_ped=<?php echo $_GET['id_ped']; ?>">Solicitação de serviços</a>  | <?php 
-					if($chamado['numero'] == '0'){
-						echo "Chamados [0]";
-					}else{
-						echo "<a href='?perfil=chamado&p=evento&id=".$_GET['id_ped']."' target='_blank'>Chamados [".$chamado['numero']."]</a>";	
-					}
-					
-					?> </h5>
-			<div class="table-responsive list_info" >
-            <h4></h4>
-            <p align="left">
-              <?php descricaoEvento($_GET['id_ped']); ?>
-                  </p>      
-            <h5>Ocorrências</h5>
-            <?php echo resumoOcorrencias($_GET['id_ped']); ?><br /><br />
-            <?php listaOcorrenciasTexto($_GET['id_ped']); ?>
-			<h5>Especificidades</h5>
-			<div class="left">
-            <?php descricaoEspecificidades($_GET['id_ped'],$evento['ig_tipo_evento_idTipoEvento']); ?>
-			</div>
-
-			<h5>Sub-eventos</h5>
-			<div class="left">
-            <?php listaSubEventosCom($_GET['id_ped'],$evento['ig_tipo_evento_idTipoEvento']); ?>
-			</div>
-
-            <h4></h4>
-            <div class="left">
-            <?php if($evento['ig_tipo_evento_idTipoEvento'] == 1){?>
-            <h5>Grade de filmes</h5>
-            <?php gradeFilmes($_GET['id_ped']); ?><br /><br />            
-            <?php } ?>
-            <h5>Previsão de serviços externos</h5>
-            <?php listaServicosExternos($_GET['id_ped']); ?><br /><br />
-
-			<h5>Serviços Internos</h5>
-			<?php listaServicosInternos($_GET['id_ped']) ?>
-			<br />
-			<h5>Arquivos Anexos</h5>
-			<?php listaArquivosDetalhe($_GET['id_ped']); ?>
-			<br />
-			</div>	
-</div>			
-			<?php
-break;
-case "pedidos":
-$pedido = listaPedidoContratacao($_GET['id_ped']);
 ?>
-			  <h5> <a href="?perfil=producao&p=detalhe&action=pedidos&id_ped=<?php echo $_GET['id_ped']; ?>">Dados do evento </a>|<a href="?perfil=producao&p=detalhe&action=servicos&id_ped=<?php echo $_GET['id_ped']; ?>">Solicitação de serviços</a> | Pedidos de contratação</h5>
-			  <div class="table-responsive list_info" >
+	<h5>Dados do evento | <a href="?perfil=producao&p=detalhe&action=servicos&id_ped=<?php echo $_GET['id_ped']; ?>">Solicitação de serviços</a>  | <?php 
+		if($chamado['numero'] == '0'){
+			echo "Chamados [0]";
+		}else{
+			echo "<a href='?perfil=chamado&p=evento&id=".$_GET['id_ped']."' target='_blank'>Chamados [".$chamado['numero']."]</a>";	
+		}
+		
+?> 	</h5>
+
+	<div class="table-responsive list_info" >
+		<h4></h4>
+		<p align="left">
+			<?php descricaoEvento($_GET['id_ped']); ?>
+		</p>   
+		
+	<h5>Ocorrências</h5>
+		<?php echo resumoOcorrencias($_GET['id_ped']); ?><br /><br />
+		<?php listaOcorrenciasTexto($_GET['id_ped']); ?>
+		
+	<h5>Especificidades</h5>
+		<div class="left">
+			<?php descricaoEspecificidades($_GET['id_ped'],$evento['ig_tipo_evento_idTipoEvento']); ?>
+		</div>
+
+	<h5>Sub-eventos</h5>
+		<div class="left">
+			<?php listaSubEventosCom($_GET['id_ped'],$evento['ig_tipo_evento_idTipoEvento']); ?>
+		</div>
+
+	<h4></h4>
+		<div class="left">
+			<?php if($evento['ig_tipo_evento_idTipoEvento'] == 1){?>
+				<h5>Grade de filmes</h5>
+				<?php gradeFilmes($_GET['id_ped']); ?><br /><br />            
+				<?php } ?>
+				
+	<h5>Previsão de serviços externos</h5>
+		<?php listaServicosExternos($_GET['id_ped']); ?><br /><br />
+
+	<h5>Serviços Internos</h5>
+		<?php listaServicosInternos($_GET['id_ped']) ?>
+<br />
+
+	<h5>Arquivos Anexos</h5>
+		<?php listaArquivosDetalhe($_GET['id_ped']); ?>
+<br />
+		</div>	
+	</div>	
+	
+<?php
+	break;
+	case "pedidos":
+	$pedido = listaPedidoContratacao($_GET['id_ped']);
+?>
+
+	<h5> <a href="?perfil=producao&p=detalhe&action=pedidos&id_ped=<?php echo $_GET['id_ped']; ?>">Dados do evento </a>|<a href="?perfil=producao&p=detalhe&action=servicos&id_ped=<?php echo $_GET['id_ped']; ?>">Solicitação de serviços</a> | Pedidos de contratação</h5>
+		<div class="table-responsive list_info" >
             <h4><?php echo $evento['nomeEvento'] ?></h4>
 
-			  <?php for($i = 0; $i < count($pedido); $i++){
-			$dados = siscontrat($pedido[$i]);
-			$pessoa = siscontratDocs($dados['IdProponente'],$dados['TipoPessoa']);
-			?>
-            <p align="left">
-			Nome ou Razão Social: <b><?php echo $pessoa['Nome'] ?></b><br />
-			Tipo de pessoa: <b><?php echo retornaTipoPessoa($dados['TipoPessoa']);?></b><br />
-			Dotação: <b><?php echo retornaVerba($dados['Verba']);?></b><br />
-			Valor:<b>R$ <?php echo dinheiroParaBr($dados['ValorGlobal']);?></b><br />		
-			 </p>      
+<?php 
+	for($i = 0; $i < count($pedido); $i++){
+	$dados = siscontrat($pedido[$i]);
+	$pessoa = siscontratDocs($dados['IdProponente'],$dados['TipoPessoa']);
+?>
+
+	<p align="left">
+	Nome ou Razão Social: <b><?php echo $pessoa['Nome'] ?></b><br />
+	Tipo de pessoa: <b><?php echo retornaTipoPessoa($dados['TipoPessoa']);?></b><br />
+	Dotação: <b><?php echo retornaVerba($dados['Verba']);?></b><br />
+	Valor:<b>R$ <?php echo dinheiroParaBr($dados['ValorGlobal']);?></b><br />		
+	</p>   
+	
 <?php } // fechamento do for ?>
-
  
-			<?php
-break;
-case "servicos":
-
+<?php
+	break;
+	case "servicos":
 ?>    
-			  <h5> <a href="?perfil=producao&p=detalhe&action=evento&id_ped=<?php echo $_GET['id_ped']; ?>">Dados do evento </a>| Solicitação de serviços  </h5>
-			<div class="table-responsive list_info" >
-            <h4><?php echo $evento['nomeEvento'] ?></h4>
-            <div class="left">
+  <h5> <a href="?perfil=producao&p=detalhe&action=evento&id_ped=<?php echo $_GET['id_ped']; ?>">Dados do evento </a>| Solicitação de serviços  </h5>
+	<div class="table-responsive list_info" >
+		<h4><?php echo $evento['nomeEvento'] ?></h4>
+			<div class="left">
             
             <h5>Previsão de serviços externos</h5>
-            <?php listaServicosExternos($_GET['id_ped']); ?><br /><br />
+				<?php listaServicosExternos($_GET['id_ped']); ?><br /><br />
 
 			<h5>Serviços Internos</h5>
-			<?php listaServicosInternos($_GET['id_ped']) ?>
-
+				<?php listaServicosInternos($_GET['id_ped']) ?>
             </div>
 <?php
-break;
- } // fecha a switch action ?>	
+	break;
+	 } // fecha a switch action 
+?>	
+ 
 <?php
-break;
+	break;
 ?>
-
 
 <?php } ?>
