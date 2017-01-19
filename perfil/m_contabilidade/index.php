@@ -1,4 +1,3 @@
-
 <?php include 'includes/menu.php';?>
 
 <section id="services" class="home-section bg-white">
@@ -10,7 +9,7 @@
                      <p>&nbsp;</p>
                      <h2>Módulo Contabilidade</h2>
                      <p>&nbsp;</p>
-					<h6>Esse módulo tem por objetivo gerar um modelo de documento prévio para o anexo de nota de empenho do SOF.</h6>
+					 <h6>Esse módulo tem por objetivo gerar um modelo de documento prévio para o anexo de nota de empenho do SOF.</h6>
 					</div>
 			</div>
 		</div>
