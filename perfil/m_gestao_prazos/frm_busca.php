@@ -136,7 +136,7 @@ else
 {
 		$filtro_fiscal = "";	
 }		
-		$sql_evento = "SELECT * FROM ig_evento WHERE ig_evento.publicado = '1' AND dataEnvio IS NULL AND ig_evento.idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) $filtro_evento $filtro_fiscal ORDER BY ig_evento.idEvento DESC";
+		$sql_evento = "SELECT * FROM ig_evento WHERE ig_evento.publicado = '1' AND dataEnvio IS NULL AND ig_evento.idEvento IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = '1') $filtro_evento $filtro_fiscal ORDER BY ig_evento.idEvento DESC";
 		$query_evento = mysqli_query($con,$sql_evento);
 		$i = 0;
 		
