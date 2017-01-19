@@ -35,6 +35,19 @@ case 'inicial':
 				</div>
 			</div>
 
+<<<<<<< HEAD
+		<div class="row">
+            <div class="form-group">
+            	<div class="col-md-offset-2 col-md-8">
+					<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+                    
+					<form method="POST" action="?perfil=gestao_prazos&p=frm_busca" class="form-horizontal" role="form">
+					
+            		<label>Id do Evento</label>
+            		<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Id do Evento" ><br />
+										
+					<?php if($_SESSION['perfil'] == 1){?>
+=======
 			<div class="row">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
@@ -44,6 +57,7 @@ case 'inicial':
 						<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Id do Evento" ><br />		
 						
 <?php if($_SESSION['perfil'] == 1){?>
+>>>>>>> 56cbc66f3b76929f8649d11ad03d3f062e259247
 					<label>Objeto/Evento</label>
             		<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
 					
@@ -168,9 +182,33 @@ else
 			 <h3>Resultado da busca</h3>
              <h5>Foram encontrados <?php echo $x['num']; ?> eventos.</h5>
              <h5><a href="?perfil=gestao_prazos&p=frm_busca">Fazer outra busca</a></h5>
+<<<<<<< HEAD
+			<div class="table-responsive list_info">
+			<?php if($x['num'] == 0){ ?>
+			
+			<?php }else{ ?>
+				<table class="table table-condensed">
+					<thead>
+						<tr class="list_menu">
+							<td>Id Evento</td>
+							<td>Objeto</td>
+							<td>Local</td>
+							<td>Periodo</td>
+                            <td>Fiscal</td>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+$link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
+
+$data=date('Y');
+for($h = 0; $h < $x['num']; $h++)
+ {
+=======
 		<div class="table-responsive list_info">
 			
 <?php if($x['num'] == 0){ ?>
+>>>>>>> 56cbc66f3b76929f8649d11ad03d3f062e259247
 		
 <?php }else{ ?>
 		<table class="table table-condensed">
