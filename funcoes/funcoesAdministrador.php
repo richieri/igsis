@@ -158,12 +158,12 @@ function listuserAdministrador($id){
 			echo "<td class='list_description'>".$local['sala']."</td>";
 			echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=administrador&p=editarUser'>
+			<form method='POST' action='?perfil=admin&p=editarUser'>
 			<input type='hidden' name='editarUser' value='".$campo['idUsuario']."' />
 			<input type ='submit' class='btn btn-theme btn-block' value='Editar usuário'></td></form>"	;
 			echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=administrador&p=users'>
+			<form method='POST' action='?perfil=admin&p=users'>
 			<input type='hidden' name='apagar' value='".$campo['idUsuario']."' />
 			<input type ='submit' class='btn btn-theme  btn-block' value='apagar usuário'></td></form>"	;
 			echo "</tr>";		
@@ -234,7 +234,7 @@ function espacoExistente ($idUsuario) {
 			echo "<td class='list_description'>".$campo['instituicao']."</td>";
 			echo "
 				<td class='list_description'>
-			<form method='POST' action='?perfil=administrador&p=espacos'>
+			<form method='POST' action='?perfil=admin&p=espacos'>
 			<input type='hidden' name='apagar' value='".$campo['idLocal']."' />
 			<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
 			echo "</tr>";		
@@ -267,7 +267,7 @@ function projetoEspecialExistente ($idUsuario) {
 			echo "<td class='list_description'>".$campo['projetoEspecial']."</td>";
 			echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=administrador&p=listaprojetoespecial'>
+			<form method='POST' action='?perfil=admin&p=listaprojetoespecial'>
 			<input type='hidden' name='apagar' value='".$campo['idProjetoEspecial']."' />
 			<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
 			echo "</tr>";		
@@ -308,7 +308,7 @@ function listaEventosAdministrador($idUsuario){
 			/* Botão APAGAR
 			echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=administrador&p=eventos'>
+			<form method='POST' action='?perfil=admin&p=eventos'>
 			<input type='hidden' name='apagar' value='".$campo['idEvento']."' />
 			<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
 			echo "</tr>";
@@ -383,7 +383,7 @@ left JOIN  igsis_tipo_chamado tip_cham
 		
 			echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=administrador&p=formularioalteracoes'>
+			<form method='POST' action='?perfil=admin&p=formularioalteracoes'>
 			<input type='hidden' name='carregaChamado' value='".$campo['idChamado']."' />
 			<input type ='submit' class='btn btn-theme btn-block' value='visualizar chamado'></td></form>"	;
 				echo "</tr>";		
@@ -438,7 +438,7 @@ left JOIN  igsis_tipo_chamado tip_cham
 		
 			echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=administrador&p=formularioalteracoes'>
+			<form method='POST' action='?perfil=admin&p=formularioalteracoes'>
 			<input type='hidden' name='carregaChamado' value='".$campo['idChamado']."' />
 			<input type ='submit' class='btn btn-theme btn-block' value='visualizar chamado'></td></form>"	;
 				echo "</tr>";		
