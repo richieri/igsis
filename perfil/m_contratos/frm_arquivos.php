@@ -3,7 +3,6 @@ $con = bancoMysqli();
 $idPessoa = $_REQUEST['idPessoa'];
 $tipoPessoa = $_REQUEST['tipoPessoa'];
 $id_ped = $_GET['id_ped'];
-$pagina = $_GET['pagina'];
 
 if(isset($_POST['executante']))
 { 

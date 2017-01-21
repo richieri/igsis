@@ -76,7 +76,7 @@ if(isset($_POST['atualizar']))
 							<div class="col-sm-2"><strong>Valor</strong><br/>
 								<input type='text'  name="valor<?php echo $i; ?>" id='valor' class='form-control valor' value="<?php echo dinheiroParaBr($parcela['valor']); ?>">
 							</div>
-							<div class="col-sm-2"><strong>Data do Kit de Pagamento:</strong><br/>
+							<div class="col-sm-2"><strong>Data Kit de Pagto:</strong><br/>
 								<input type='text' name="data<?php echo $i; ?>" id='datepicker1<?php echo $i; ?>' class='form-control datepicker' value="<?php echo exibirDataBr($parcela['vencimento']); ?>">
 							</div>
 							<div class="col-sm-3"><strong>Descrição:</strong><br/>
