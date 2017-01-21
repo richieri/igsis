@@ -89,7 +89,7 @@ if(isset($_POST['cadastraRepresentante']))
 		$mensagem = "Erro(2)";		
 	}
 }
-
+/* VERIFICAR PQ NÃO FUNCIONA
 if(isset($_POST['busca']))
 {
 	$cpf_validar = validaCPF($_POST['busca']);	
@@ -99,7 +99,7 @@ if(isset($_POST['busca']))
 		$mensagem = "CPF inválido. Tente novamente.";
 	}			
 }
-
+*/
 
 switch($pagina){
 

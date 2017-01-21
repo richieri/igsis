@@ -479,7 +479,7 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
 								<textarea readonly name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$ped['parcelas']); ?>                       
 								</textarea>
-							<p>&nbp;</p>
+							<p>&nbsp;</p>
 							</div>
 						</div>
 				<?php 

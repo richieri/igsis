@@ -96,7 +96,7 @@ if(isset($_POST['insereRepresentante']))
 	$query_atualiza_representante = mysqli_query($con,$sql_atualiza_representante);	
 	if($query_atualiza_representante)
 	{
-		$mensagem = "Representante legal $campo inserido com sucesso!";	
+		$mensagem = "Representante legal inserido com sucesso!";	
 	}
 }
 

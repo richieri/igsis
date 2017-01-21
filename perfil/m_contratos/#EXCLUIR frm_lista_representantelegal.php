@@ -1,5 +1,5 @@
-
 <?php
+include 'includes/menu.php';
 
 $conexao = bancoMysqli(); // conecta no banco
 
@@ -8,10 +8,7 @@ $linha_tabela_representante_legal = mysqli_fetch_assoc($consulta_tabela_represen
 
 $link="index.php?perfil=contratos&p=frm_edita_representantelegal";
 
-?>
-	
-<?php include 'includes/menu.php';?>
-		
+?>		
 	  	  
 	 <!-- inicio_list -->
 	<section id="list_items">

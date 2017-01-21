@@ -163,6 +163,94 @@ function mtel(v){
       }
     });
   });
+  $(function() {
+    $( "#datepicker12" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
+    });
+  });
+  $(function() {
+    $( "#datepicker13" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
+    });
+  });
+  $(function() {
+    $( "#datepicker14" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
+    });
+  });
+  $(function() {
+    $( "#datepicker15" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
+    });
+  });
+  $(function() {
+    $( "#datepicker16" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
+    });
+  });
+  $(function() {
+    $( "#datepicker17" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
+    });
+  });
+  $(function() {
+    $( "#datepicker18" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
+    });
+  });
+  $(function() {
+    $( "#datepicker19" ).datepicker({ 
+      changeMonth: true,
+      changeYear: true,
+      minDate: 0,
+      addSliderAccess: true,
+      sliderAccessArgs: {
+        touchonly: false
+      }
+    });
+  });
 	//funções para mostrar/esconder
 	$('#toggle1').click(function() {
 		$('.toggle1').slideToggle('slow');
