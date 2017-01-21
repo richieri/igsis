@@ -3,11 +3,10 @@
 $pasta = "?perfil=juridico&p=";
  ?>
 <!-- Menu -->
-	<div class="menu-area">
+<div class="menu-area">
 	<div id="dl-menu" class="dl-menuwrapper">
-	<button class="dl-trigger">Open Menu</button>
+		<button class="dl-trigger">Open Menu</button>
 		<ul class="dl-menu">
-			
 			<li><a href="<?php echo $pasta ?>frm_busca_juridico">Buscar Evento</a></li>
 			<li><a href="<?php echo $pasta ?>frm_busca_formacao">Buscar Formação</a></li>
 			<li>------------------------------</li>
@@ -16,5 +15,5 @@ $pasta = "?perfil=juridico&p=";
 			<li><a href="../index.php">Sair</a></li>
 		</ul>
 	</div>
-	</div>	
+</div>	
 <!-- Menu -->
