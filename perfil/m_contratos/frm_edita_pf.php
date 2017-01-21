@@ -3,9 +3,11 @@ include 'includes/menu.php';
 
 $con = bancoMysqli();
 $ultimo = $_GET['id_pf']; //recupera o id da pessoa
+$id_ped = $_GET['id_ped'];
 
 if(isset($_POST['idPedido']))
 {
+	$id_ped = $_GET['id_ped'];
 	$id_pedido = $_POST['idPedido']; //recupera o id do pedido
 	$mensagem = $id_pedido;
 }
@@ -264,7 +266,7 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 				<!-- Botão para verificar arquivos da pessoa -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_arquivos&idPessoa=<?php echo $ultimo; ?>&tipoPessoa=1" method="post">
+					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_arquivos&idPessoa=<?php echo $ultimo; ?>&tipoPessoa=1&id_ped=<?php echo $id_ped ?>" method="post">
 						<input type="hidden" name="cadastrarFisica" value="<?php echo $fisica['Id_PessoaFisica'] ?>" />
 						<input type="hidden" name="fisica" value="<?php echo $fisica['Id_PessoaFisica'] ?>" />
 						<?php 
@@ -285,6 +287,12 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 						{ 
 					?>
 							<a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
+					<?php 
+						} 
+						elseif($id_ped <> "")
+						{ 
+					?>
+							<a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
 					<?php 
 						} 
 					?>

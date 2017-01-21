@@ -261,7 +261,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-					<form class="form-horizontal" role="form" action="<?php echo "?perfil=contratos&p=frm_edita_pf&id_pf=".$linha_tabelas['IdProponente']; ?>" method="post">
+					<form class="form-horizontal" role="form" action="<?php echo "?perfil=contratos&p=frm_edita_pf&id_pf=".$linha_tabelas['IdProponente']."&id_ped=".$id_ped; ?>" method="post">
 						<input type="hidden" name="idPedido" value="<?php echo $id_ped; ?>" />
 						<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir proponente">
                     </form>

@@ -2,16 +2,18 @@
 $con = bancoMysqli();
 $idPessoa = $_REQUEST['idPessoa'];
 $tipoPessoa = $_REQUEST['tipoPessoa'];
+$id_ped = $_GET['id_ped'];
+$pagina = $_GET['pagina'];
 
 if(isset($_POST['executante']))
 { 
-	$form = "<form method='POST' action='?perfil=contratos&p=frm_edita_executante&id_pf=$idPessoa' />
+	$form = "<form method='POST' action='?perfil=contratos&p=frm_edita_executante&id_pf=$idPessoa&id_ped=$id_ped' />
 			 <input type='hidden' name='executante' value='1'>";
 	$p = "executante";	
 }
 
 
-if((isset($_POST['representante']) OR $_GET['tipoPessoa'] == 3))
+elseif((isset($_POST['representante']) OR $_GET['tipoPessoa'] == 3))
 {
 	$form = "<form method='POST' action='?".$_POST['volta']."' />
 			 <input type='hidden' name='representante' value='1'>";
@@ -19,16 +21,16 @@ if((isset($_POST['representante']) OR $_GET['tipoPessoa'] == 3))
 }
 
 
-if(isset($_POST['fisica'])OR ($_GET['tipoPessoa'] == 1))
+elseif(isset($_POST['fisica'])OR ($_GET['tipoPessoa'] == 1))
 {
-	$form = "<form method='POST' action='?perfil=contratos&p=frm_edita_pf&id_pf=$idPessoa' />
+	$form = "<form method='POST' action='?perfil=contratos&p=frm_edita_pf&id_pf=$idPessoa&id_ped=$id_ped' />
 			 <input type='hidden' name='fisica' value='1'>";
 	$p = "fisica";
 }
 
-if(isset($_POST['juridica']) OR ($_GET['tipoPessoa'] == 2))
+elseif(isset($_POST['juridica']) OR ($_GET['tipoPessoa'] == 2))
 {
-	$form = "<form method='POST' action='?perfil=contratos&p=frm_edita_pj&id_pj=$idPessoa' />
+	$form = "<form method='POST' action='?perfil=contratos&p=frm_edita_pj&id_pj=$idPessoa&id_ped=$id_ped' />
 			 <input type='hidden' name='juridica' value='1'>";
 	$p = "juridica";
 }
@@ -178,43 +180,14 @@ include 'includes/menu.php';
 					<div class="center">
 						<?php echo $form ?>
 						<div class="form-group">
-							<div class="col-md-offset-1 col-md-7">						
+							<div class="col-md-offset-2 col-md-8">						
 								<input type="hidden" name="idPessoa" value="<?php echo $idPessoa; ?>"  />
 								<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />    
 								<input type="submit" class="btn btn-theme btn-block" value='Voltar ao Cadastro de Pessoa'>	
 							</div>
-				<?php 
-					if($_SESSION['idPedido'] != "")
-					{ 
-				?>
-					
-					<?php 
-						if($_GET['tipoPessoa'] == 1)
-						{
-					?>
-							<form method="POST" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $_SESSION['idPedido']; ?>" >
-					<?php 
-						}
-						else
-						{ 
-					?>
-							<form method="POST" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $_SESSION['idPedido']; ?>" >
-					<?php 
-						} 
-					?>
-								<div class="col-md-6">
-									<input type="hidden" name="idPessoa" value="<?php echo $idPessoa; ?>"  />
-									<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-									<input type="submit" class="btn btn-theme btn-block" value='Voltar ao Pedido'>
-								</div>							
-							</form>
+				
 						</div>	
 					</div>
-				<?php 
-					} 
-				?>
-
-
 				</div>
 			</div>		
 		</div>

@@ -3,6 +3,7 @@ include 'includes/menu.php';
 
 $ultimo = $_GET['id_pj']; //recupera o id da pessoa
 $con = bancoMysqli();
+$id_ped = $_GET['id_ped'];
 
 if(isset($_POST['idPedido']))
 {
@@ -298,7 +299,7 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
                 <!-- Botão para verificar arquivos da pessoa -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_arquivos&idPessoa=<?php echo $ultimo; ?>&tipoPessoa=2" method="post">
+					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_arquivos&idPessoa=<?php echo $ultimo; ?>&tipoPessoa=2&id_ped=<?php echo $id_ped ?>" method="post">
 						<input type="hidden" name="editaJuridica" value="<?php echo $pj['Id_PessoaJuridica'] ?>" />
 						<input type="hidden" name="Juridica" value="<?php echo $pj['Id_PessoaJuridica'] ?>" />
 						<?php 
@@ -320,7 +321,13 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 					?>
 							<br/><a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
 					<?php 
-						} 
+						}
+						elseif($id_ped <> "")
+						{ 
+					?>
+							<a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
+					<?php 
+						}  
 					?>
 					</div>
 				</div>

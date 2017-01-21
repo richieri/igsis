@@ -4,6 +4,7 @@ include 'includes/menu.php';
 
 $con = bancoMysqli(); // conecta no banco
 $ultimo = $_GET['id_pf']; //recupera o id da pessoa
+$id_ped = $_GET['id_ped'];
 
 if(isset($_POST['idPedido']))
 {
@@ -497,24 +498,17 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
                 <!-- BOTÃO ANEXOS DA PESSOA -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_arquivos&idPessoa=<?php echo $ultimo; ?>&tipoPessoa=1" method="post">
+					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_arquivos&idPessoa=<?php echo $ultimo; ?>&tipoPessoa=1&id_ped=<?php echo $id_ped ?>" method="post">
 						<input type="hidden" name="cadastrarFisica" value="<?php echo $fisica['Id_PessoaFisica'] ?>" />
-						<?php 
-							if(isset($id_pedido))
-							{ 
-						?>
-								<input type="hidden" name="idPedido" value="<?php echo $id_pedido ?>" />
-								<input type="hidden" name="executante" value="1" />
-						<?php 
-							} 
-						?>
+						<input type="hidden" name="idPedido" value="<?php echo $id_pedido ?>" />
+						<input type="hidden" name="executante" value="1" />
 						<input type="hidden" name="Sucesso" id="Sucesso" />
 						<input type="submit" value="Anexos" class="btn btn-theme btn-block">
 					</form>
 					</div>
                
 					<div class="col-md-6">
-						<a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $_SESSION['idPedido']; ?>"><input type="submit" value="Voltar ao Pedido" class="btn btn-theme btn-block"></a> 
+						<a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped ?>"><input type="submit" value="Voltar ao Pedido" class="btn btn-theme btn-block"></a> 
 					</div>
 				</div>
                   

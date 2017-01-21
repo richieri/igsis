@@ -110,7 +110,7 @@ case "busca":
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
 				<div class="section-heading">
-					<h2>REPRESENTANTE LEGAL #01 </h2>
+					<h2>REPRESENTANTE LEGAL</h2>
 					<p><strong><?php if(isset($mensagem)){echo $mensagem;} ?></strong></p>
                     <p><strong>Você está inserindo representante legal </strong></p>
 					<p></p>

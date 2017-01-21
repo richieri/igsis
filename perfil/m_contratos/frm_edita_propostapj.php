@@ -340,7 +340,7 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-					<form class="form-horizontal" role="form"  method="post" action="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $ped['idPessoa']; ?>">
+					<form class="form-horizontal" role="form"  method="post" action="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $ped['idPessoa']; ?>&id_ped=<?php echo $id_ped ?>">
 						<input type="hidden" name="idPedido" value="<?php echo $id_ped; ?>" />
 						<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir proponente">
                     </form>
@@ -353,7 +353,7 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 
                 <div class="form-group"> 
 					<div class="col-md-offset-2 col-md-8"><strong>Líder do Grupo:</strong><br/>
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_executante&id_pf=<?php echo $pedido['IdExecutante']?>"  method="post">
+					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_executante&id_pf=<?php echo $pedido['IdExecutante']?>&id_ped=<?php echo $id_ped ?>"  method="post">
 						<input type='text' readonly class='form-control' name='Executante' id='Executante' value="<?php echo $executante['Nome'] ?>">
 					</div>
                 </div>  
