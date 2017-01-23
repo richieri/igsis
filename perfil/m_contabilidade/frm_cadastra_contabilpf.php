@@ -6,22 +6,24 @@
 		$link1=$http."rlt_anexo_nota_empenho_pf.php";
 		$data = date('Y-m-d H:i:s');
 		$con = bancoMysqli();
-	if(isset($_POST['atualizar'])){ // atualiza o pedido
+	if(isset($_POST['atualizar']))
+	{ // atualiza o pedido
 		$ped = $_GET['id_ped'];
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET estado = 9, DataContabilidade = '$data' WHERE idPedidoContratacao = '$id_ped'";
-	if(mysqli_query($con,$sql_atualiza_pedido)){
-		$mensagem = "
-		<div class='form-group'>
-    		 <div class='col-md-offset-2 col-md-8'>
-				<a href='$link1?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Gerar Word</a></div>
-	</div><br/><br/>
-	";	
-}
-	else
-{
-		$mensagem = "Erro ao atualizar! Tente novamente.";
-}
-}
+		
+		if(mysqli_query($con,$sql_atualiza_pedido))
+		{
+			$mensagem = "
+			<div class='form-group'>
+				<div class='col-md-offset-2 col-md-8'>
+					<a href='$link1?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Gerar Word</a></div>
+			</div><br/><br/>";	
+		}
+			else
+			{
+				$mensagem = "Erro ao atualizar! Tente novamente.";
+			}
+	}
 
 		$ano=date('Y');
 		$id_ped = $_GET['id_ped'];	
@@ -36,7 +38,7 @@
 	<section id="contact" class="home-section bg-white">
 		<div class="container">
 			<div class="form-group"><h2>ANEXO NOTA DE EMPENHO DE PESSOA FÍSICA</h2>
-				<h4><?php if(isset($mensagem)){ echo $mensagem; } ?></h4>
+				 <h4><?php if(isset($mensagem)){ echo $mensagem; } ?></h4>
 			</div>
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">

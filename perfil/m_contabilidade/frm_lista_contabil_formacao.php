@@ -29,7 +29,7 @@
 		$data=date('Y');
 		$query_enviados = mysqli_query($con,$sql_enviados);
 	while($pedido = mysqli_fetch_array($query_enviados))
-{
+	{
 		$linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 		$ped = siscontrat($pedido['idPedidoContratacao']);	 
 			echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
@@ -41,7 +41,7 @@
 			echo '<td class="list_description">'.retornaEstado($ped['Status']).						'</td>'; 
 			echo "</tr>";
 
-}
+	}
 
 ?>
 	
