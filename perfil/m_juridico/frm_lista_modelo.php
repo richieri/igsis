@@ -35,20 +35,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao"
 			
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-				<?php
-					if($pedido['tipoPessoa'] == 1)
-							{
-					?>
-								<a href="?perfil=juridico&p=frm_edita_juridico_pf&id_ped=<?php echo $id_ped ?>" class="btn btn-theme btn-lg btn-block">Editar</a>
-						<?php
-							}
-							else
-							{
-						?>
-								<a href="?perfil=juridico&p=frm_edita_juridico_pj&id_ped=<?php echo $id_ped ?>" class="btn btn-theme btn-lg btn-block">Editar</a>
-						<?php	
-							}
-						?>
+					<a href="?perfil=juridico&p=frm_edita_juridico&id_ped=<?php echo $id_ped ?>" class="btn btn-theme btn-lg btn-block">Editar</a>	
 				</div>
 			</div>
         </div>

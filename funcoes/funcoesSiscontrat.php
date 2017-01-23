@@ -237,7 +237,8 @@ function siscontrat($idPedido){
 			"notaFiscal" => $pedido['notaFiscal'],
 			"descricaoNF" => $pedido['descricaoNF'],
 			"aprovacaoFinanca" => $pedido['aprovacaoFinanca'],
-			"ingresso" => $ingresso['valorIngresso']
+			"ingresso" => $ingresso['valorIngresso'],
+			"tipoPessoa" => $pedido['tipoPessoa']
 			);
 		
 		

@@ -40,7 +40,7 @@ if(isset($_POST['pesquisar']))
 							<form method="POST" action="?perfil=juridico&p=frm_busca_formacao" class="form-horizontal" role="form">
 							<label>Código do Pedido</label>
 								<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-							<label>Número do Processo</label> Digite o ano para ver todos
+							<label>Número do Processo</label> 
 								<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Para ver todos, digite apenas o ano atual. Exemplo: 2017"><br />           			          
 							<label>Status do pedido</label>
 								<select class="form-control" name="estado" id="inputSubject" >
@@ -177,7 +177,7 @@ if(isset($_POST['pesquisar']))
 							for($h = 0; $h < $x['num']; $h++)
 							{
 								$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado"); 
-								echo "<tr><td class='lista'> <a href='?perfil=juridico&p=frm_lista_modelo_pf&id_ped=".$x[$h]['id']."'>".$x[$h]['NumeroProcesso']."</a></td>";
+								echo "<tr><td class='lista'> <a href='?perfil=juridico&p=frm_lista_modelo&id_ped=".$x[$h]['id']."'>".$x[$h]['NumeroProcesso']."</a></td>";
 								echo '<td class="list_description">'.$x[$h]['id'].		  '</td>';
 								echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
 								echo '<td class="list_description">'.$status['estado'].	  '</td> ';

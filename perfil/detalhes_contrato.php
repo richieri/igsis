@@ -11,7 +11,7 @@ $pedido = siscontrat($id_ped);
 $idEvento = $pedido['idEvento'];
 $pessoa = siscontratDocs($pedido['IdProponente'],$pedido['TipoPessoa']);
 $evento = recuperaDados('ig_evento',$idEvento,'idEvento');
-
+$chamado = recuperaAlteracoesEvento($idEvento);	
 ?>
 
 	  
@@ -82,6 +82,18 @@ $evento = recuperaDados('ig_evento',$idEvento,'idEvento');
 				<?php }else{ ?>
 					<h5> Não há pedidos de contratação. </h5>
 				<?php } ?>
+				<br />
+				<h5>
+				<?php 
+					if($chamado['numero'] == '0')
+					{
+						echo "Chamados [0]";
+					}else
+					{
+						echo "<a href='?perfil=chamado&p=evento&id=".$idEvento."' target='_blank'>Chamados [".$chamado['numero']."]</a>";	
+					}						
+				?>
+				</h5>
 			</div>
 		</div>
 		</div>

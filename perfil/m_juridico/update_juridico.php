@@ -29,7 +29,28 @@ if(mysqli_stmt_execute($stmt))
 {
 	echo $pedido['tipoPessoa'];
 	$last_id = mysqli_insert_id($conexao);
-	if ($pedido['tipoPessoa'] == 1)
+	if ($pedido['tipoPessoa'] == 2)
+	{
+		echo "
+			<p>&nbsp;</p><h4><center>Dados Inseridos com sucesso!</h4><br>
+			<br><br><h6>Qual modelo de documento deseja gerar?</h6><br>
+			<div class='row'>
+				<div class='col-md-offset-1 col-md-10'>
+				<form class='form-horizontal' role='form'>
+					<div class='form-group'>
+						<div class='col-md-offset-2 col-md-6'>
+							<a href='$link5?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Despacho</a>
+						</div>
+						<div class='col-md-6'>
+							<a href='$link6?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Manifestação Jurídica</a>
+						</div>
+					</div>
+				</form>
+				</div>
+			</div><br/><br /></center>
+		";
+	}
+	else
 	{
 		echo "
 			<p>&nbsp;</p><h4><center>Dados Inseridos com sucesso!</h4><br>
@@ -48,27 +69,6 @@ if(mysqli_stmt_execute($stmt))
 					<div class='form-group'>
 						<div class='col-md-offset-2 col-md-6'>
 							<a href='$link3?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Manifestação Jurídica</a>
-						</div>
-					</div>
-				</form>
-				</div>
-			</div><br/><br /></center>
-		";
-	}
-	else
-	{
-		echo "
-			<p>&nbsp;</p><h4><center>Dados Inseridos com sucesso!</h4><br>
-			<br><br><h6>Qual modelo de documento deseja gerar?</h6><br>
-			<div class='row'>
-				<div class='col-md-offset-1 col-md-10'>
-				<form class='form-horizontal' role='form'>
-					<div class='form-group'>
-						<div class='col-md-offset-2 col-md-6'>
-							<a href='$link5?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Despacho</a>
-						</div>
-						<div class='col-md-6'>
-							<a href='$link6?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Manifestação Jurídica</a>
 						</div>
 					</div>
 				</form>
