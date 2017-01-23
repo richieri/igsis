@@ -20,7 +20,7 @@ include 'includes/menu.php';
 	$stmt = mysqli_prepare($conexao,$sql_atualiza_pedido);
 
 	if(mysqli_stmt_execute($stmt))
-{		 
+	{		 
 		echo "<br><br><br><br><h4>Qual modelo de documento deseja imprimir?</h4><br>
 			<form class='form-horizontal' role='form'>
 			
@@ -32,7 +32,6 @@ include 'includes/menu.php';
 		</div>
 	</div>
 	<br /></center>";
-
-}
+	}
 
 ?>

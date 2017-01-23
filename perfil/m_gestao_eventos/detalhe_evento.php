@@ -54,8 +54,8 @@ case "servicos":
 		<div class="container">
 			<h5><a href="?perfil=gestao_eventos&p=detalhe_evento&pag=inicial&id_eve=<?php echo $idEvento;?>">Dados do evento</a> | 
 				Solicitação de serviços | 
-			<a href="?perfil=gestao_eventos&p=detalhe_evento&pag=pedidos&id_eve=<?php echo $idEvento;?>">Pedidos de contratação</a> |  
-			<a href="?perfil=gestao_eventos&p=detalhe_evento&pag=pendencias&id_eve=<?php echo $idEvento;?>">Pendências</a>
+				<a href="?perfil=gestao_eventos&p=detalhe_evento&pag=pedidos&id_eve=<?php echo $idEvento;?>">Pedidos de contratação</a> |  
+				<a href="?perfil=gestao_eventos&p=detalhe_evento&pag=pendencias&id_eve=<?php echo $idEvento;?>">Pendências</a>
 			</h5>
 		<div class="table-responsive list_info" >    
 			<h4><?php echo $evento['nomeEvento'] ?></h4>
@@ -67,6 +67,7 @@ case "servicos":
 			
 <?php listaServicosInternos($idEvento) ?>
         </div>
+		</div>
 		</div>
 	</section>
 	
@@ -106,10 +107,13 @@ case "pedidos":
 <?php 
 		} // fechamento do for 
 
-		}else{ ?>
-	<h5> Não há pedidos de contratação. </h5>
+	}
+		else
+		{
+?>
+			<h5> Não há pedidos de contratação. </h5>
 <?php 
-	}	
+		}	
 ?>
 		</div>
 	</section>

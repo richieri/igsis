@@ -25,7 +25,7 @@
 <?php
 	$data=date('Y');
 	for($i = 0; $i < count($linha_tabela_lista); $i++)
-{
+	{
 		$linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$linha_tabela_lista[$i]['IdProponente'],"Id_PessoaFisica");	 
 			echo "<tr><td class='lista'> <a href='".$link.$linha_tabela_lista[$i]['idPedido']."'>".$linha_tabela_lista[$i]['idPedido']."</a></td>";
 			echo '<td class="list_description">'.$linha_tabela_lista[$i]['NumeroProcesso'].'</td>';
@@ -33,7 +33,7 @@
 			echo '<td class="list_description">'.$linha_tabela_lista[$i]['Objeto'].'</td> ';
 			echo '<td class="list_description">'.$linha_tabela_lista[$i]['Local'].'</td> ';
 			echo '<td class="list_description">'.$linha_tabela_lista[$i]['Periodo'].'</td> </tr>';
-}
+	}
 
 ?>					
 					</tbody>

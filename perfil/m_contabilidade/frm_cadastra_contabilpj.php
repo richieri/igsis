@@ -7,35 +7,34 @@
 		$con = bancoMysqli();
 	
 	if(isset($_POST['atualizar']))
-{ // atualiza o pedido
+	{ // atualiza o pedido
 		$ped = $_GET['id_ped'];
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
 		estado = 9,
 		DataContabilidade = '$data'
 		WHERE idPedidoContratacao = '$id_ped'";
-	if(mysqli_query($con,$sql_atualiza_pedido))
-{
-		$mensagem = "
+		if(mysqli_query($con,$sql_atualiza_pedido))
+		{
+			$mensagem = "
 				<div class='form-group'>
 					<div class='col-md-offset-2 col-md-8'>
 						<a href='$link1?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Gerar Word</a></div>
-	</div><br/><br/>
-	";	
-}
-	else
-{
-		$mensagem = "Erro ao atualizar! Tente novamente.";
-}		
-}
-		$ano=date('Y');
-		$id_ped = $_GET['id_ped'];	
-		$pedido = siscontrat($id_ped);
-		$pj = siscontratDocs($pedido['IdProponente'],2);
-		$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento");
-		$executante = siscontratDocs($pedido['IdExecutante'],1);
-		$ped = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
-		$res01 = siscontratDocs($ped['idRepresentante01'],3);
-		$res02 = siscontratDocs($ped['idRepresentante02'],3);
+				</div><br/><br/>";	
+		}
+			else
+			{
+				$mensagem = "Erro ao atualizar! Tente novamente.";
+			}		
+	}
+			$ano=date('Y');
+			$id_ped = $_GET['id_ped'];	
+			$pedido = siscontrat($id_ped);
+			$pj = siscontratDocs($pedido['IdProponente'],2);
+			$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento");
+			$executante = siscontratDocs($pedido['IdExecutante'],1);
+			$ped = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
+			$res01 = siscontratDocs($ped['idRepresentante01'],3);
+			$res02 = siscontratDocs($ped['idRepresentante02'],3);
 ?>
 
 <!-- MENU -->	

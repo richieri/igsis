@@ -1,17 +1,17 @@
 ﻿<?php
 
 	if(isset($_GET['id_ped']))
-{
+	{
 		$evento = recuperaDados("ig_evento",$_GET['id_ped'],"idEvento");
-}
+	}
 	if(isset($_GET['action']))
-{
+	{
 		$action = $_GET['action'];
-}
+	}
 	else
-{
+	{
 		$action = "evento";
-}
+	}
 ?>
  	<section id="list_items" class="home-section bg-white">
 		<div class="container">
@@ -59,8 +59,9 @@ case "pedidos":
 			<h4><?php echo $evento['nomeEvento'] ?></h4>
 		</div>
 
-<?php for($i = 0; $i < count($pedido); $i++)
-{
+<?php 
+	for($i = 0; $i < count($pedido); $i++)
+	{
 		$dados = siscontrat($pedido[$i]);
 		$pessoa = siscontratDocs($dados['IdProponente'],$dados['TipoPessoa']);
 ?>
@@ -71,7 +72,7 @@ case "pedidos":
 			Valor:<b>R$ <?php echo dinheiroParaBr($dados['ValorGlobal']);?></b><br />		
 		</p>      
 <?php 
-} // fechamento do for 
+	} // fechamento do for 
 ?>
  
 <?php
@@ -108,26 +109,26 @@ require_once("../funcoes/funcoesSiscontrat.php");
             
 <?php //print_r($evento);
 	if($campos['total'] > 0)
-{
-	echo "Há campos obrigatórios não preenchidos.";	
-}
+	{
+		echo "Há campos obrigatórios não preenchidos.";	
+	}
 	else
-{
-	echo "Todos os campos obrigatórios foram preenchidos";
-}
+	{
+		echo "Todos os campos obrigatórios foram preenchidos";
+	}
 
 ?>
 </p><p>
 
 <?php //print_r($evento);
 	if($ocorrencia > 0)
-{
-	echo "Há ocorrências cadastradas.";	
-}
+	{
+		echo "Há ocorrências cadastradas.";	
+	}
 	else
-{
-	echo "Não há ocorrências cadastradas.";
-}
+	{
+		echo "Não há ocorrências cadastradas.";
+	}
 
 ?></p><p>
 
