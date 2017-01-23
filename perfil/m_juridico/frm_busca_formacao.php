@@ -1,5 +1,7 @@
 ﻿<?php include 'includes/menu.php';
 
+$ano=date('Y');
+
 if(isset($_GET['b']))
 {
 	$b = $_GET['b'];	
@@ -26,7 +28,7 @@ if(isset($_POST['pesquisar']))
 				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="section-heading">
-							<h2>Busca Formação</h2>
+							<h2>Busca Formação - <?php echo $ano ?></h2>
 							<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 						</div>
 					</div>
@@ -36,15 +38,15 @@ if(isset($_POST['pesquisar']))
 						<div class="col-md-offset-2 col-md-8">
 							<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
 							<form method="POST" action="?perfil=juridico&p=frm_busca_formacao" class="form-horizontal" role="form">
-								<label>Código do Pedido</label>
-									<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-								<label>Número do Processo</label>
-									<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />           			          
-								<label>Status do pedido</label>
-									<select class="form-control" name="estado" id="inputSubject" >
-										<option value='0'></option>
-										<?php echo geraOpcao("sis_estado","","") ?>
-									</select>	
+							<label>Código do Pedido</label>
+								<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+							<label>Número do Processo</label> Digite o ano para ver todos
+								<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Para ver todos, digite apenas o ano atual. Exemplo: 2017"><br />           			          
+							<label>Status do pedido</label>
+								<select class="form-control" name="estado" id="inputSubject" >
+									<option value='0'></option>
+									<?php echo geraOpcao("sis_estado","","") ?>
+								</select>	
 						</div>
 					</div><br />             
 					<div class="form-group">
@@ -112,13 +114,12 @@ if(isset($_POST['pesquisar']))
 			{
 				$filtro_processo = " AND igsis_pedido_contratacao.NumeroProcesso LIKE '%$processo%'  ";	
 			}
-			$sql_evento = "SELECT * FROM sis_formacao,igsis_pedido_contratacao WHERE sis_formacao.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND sis_formacao.idPedidoContratacao = igsis_pedido_contratacao.idPedidoContratacao $filtro_processo $filtro_status ORDER BY igsis_pedido_contratacao.idPedidoContratacao DESC";
+			$sql_evento = "SELECT * FROM sis_formacao,igsis_pedido_contratacao WHERE sis_formacao.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND sis_formacao.idPedidoContratacao = igsis_pedido_contratacao.idPedidoContratacao AND sis_formacao.Ano = '".$ano."' $filtro_processo $filtro_status ORDER BY igsis_pedido_contratacao.idPedidoContratacao DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
 			$i = 0;
 			while($evento = mysqli_fetch_array($query_evento))
 			{
-				$sql_existe = "SELECT sis_formacao.idPedidoContratacao FROM igsis_pedido_contratacao, sis_formacao WHERE sis_formacao.idPedidoContratacao = igsis_pedido_contratacao.idPedidoContratacao AND igsis_pedido_contratacao.publicado = '1' $filtro_status ";
-				//$query_existe = mysqli_query($con, $sql_existe);
+				$sql_existe = "SELECT sis_formacao.idPedidoContratacao FROM igsis_pedido_contratacao, sis_formacao WHERE sis_formacao.idPedidoContratacao = igsis_pedido_contratacao.idPedidoContratacao AND igsis_pedido_contratacao.publicado = '1' AND sis_formacao.Ano = '".$ano."' $filtro_status ";
 				if(mysqli_num_rows($query_evento) > 0)
 				{
 					$pedido = recuperaDados("igsis_pedido_contratacao",$evento['idPedidoContratacao'],"idPedidoContratacao");
@@ -148,15 +149,19 @@ if(isset($_POST['pesquisar']))
 	?>
 	<br />
 	<br />
-		<section id="list_items">
-			<div class="container">
-				 <h3>Resultado da busca</3>
-				 <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
-				 <h5><a href="?perfil=juridico&p=frm_busca_formacao">Fazer outra busca</a></h5>
-				<div class="table-responsive list_info">
-				<?php if($x['num'] == 0){ ?>
-				
-				<?php }else{ ?>
+	<section id="list_items">
+		<div class="container">
+			<h3>Resultado da busca</3>
+			<h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
+			<h5><a href="?perfil=juridico&p=frm_busca_formacao">Fazer outra busca</a></h5>
+			<div class="table-responsive list_info">
+			<?php 
+				if($x['num'] == 0)
+				{ 
+				}
+				else
+				{ 
+			?>
 					<table class="table table-condensed">
 						<thead>
 							<tr class="list_menu">
@@ -167,91 +172,68 @@ if(isset($_POST['pesquisar']))
 							</tr>
 						</thead>
 						<tbody>
-	<?php
-
-	$data=date('Y');
-	for($h = 0; $h < $x['num']; $h++)
-	 {
-		 //$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-		 $status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
-		 //$ped = siscontrat($pedido['idPedidoContratacao']);	 
-
-		echo "<tr><td class='lista'> <a href='?perfil=juridico&p=frm_lista_modelo_pf&id_ped=".$x[$h]['id']."'>".$x[$h]['NumeroProcesso']."</a></td>";
-		
-		echo '<td class="list_description">'.$x[$h]['id'].		  '</td>';
-		echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
-		echo '<td class="list_description">'.$status['estado'].	  '</td> ';
-		}
-	?>
-		
-						
+						<?php
+							$data=date('Y');
+							for($h = 0; $h < $x['num']; $h++)
+							{
+								$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado"); 
+								echo "<tr><td class='lista'> <a href='?perfil=juridico&p=frm_lista_modelo_pf&id_ped=".$x[$h]['id']."'>".$x[$h]['NumeroProcesso']."</a></td>";
+								echo '<td class="list_description">'.$x[$h]['id'].		  '</td>';
+								echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
+								echo '<td class="list_description">'.$status['estado'].	  '</td> ';
+							}
+						?>
 						</tbody>
 					</table>
-				<?php } ?>		
+			<?php 
+				} 
+			?>		
 			</div>
-				
-			</div>
-		</section>
-
-
+		</div>
+	</section>
 	<?php
-}else{
+}
+else
+{
 ?>
-	 <section id="services" class="home-section bg-white">
+	<section id="services" class="home-section bg-white">
 		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-					 <h2>Busca Formação</h2>
-                    
-
+						<h2>Busca Formação - <?php echo $ano ?></h2>
 					</div>
-				  </div>
-			  </div>
-			  
+				</div>
+			</div>  
 	        <div class="row">
-            <div class="form-group">
-            	<div class="col-md-offset-2 col-md-8">
-            <h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
                         <form method="POST" action="?perfil=juridico&p=frm_busca_formacao" class="form-horizontal" role="form">
-            		<label>Código do Pedido</label>
-            		<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-					
-					<label>Número do Processo</label>
-            		<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira número do processo" ><br />
- 
-					<label>Status do pedido</label>
-                    <select class="form-control" name="estado" id="inputSubject" >
-                   <option value=""></option>
-					<?php echo geraOpcao("sis_estado","","") ?>
-                    </select>	<br />
-
-            	</div>
-             </div>
-             
-
-				<br />             
+						<label>Código do Pedido</label>
+						<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+						<label>Número do Processo</label>
+						<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Para ver todos, digite apenas o ano atual. Exemplo: 2017"><br />		 
+						<label>Status do pedido</label>
+						<select class="form-control" name="estado" id="inputSubject" >
+							<option value=""></option>
+							<?php echo geraOpcao("sis_estado","","") ?>
+						</select><br />
+					</div>
+				</div><br />             
 	            <div class="form-group">
 		            <div class="col-md-offset-2 col-md-8">
-                	<input type="hidden" name="pesquisar" value="1" />
-    		        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-                    </form>
+						<input type="hidden" name="pesquisar" value="1" />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+						</form>
         	    	</div>
         	    </div>
-             </div>
+            </div>
+		</div>	
 	</section>               
-
-
-<?php } ?>
-
-<?php
-break;
-case 'periodo': //
-?>
-<?php
+<?php 
+} 
 
 break;
-
 } // fim da switch
-
  ?>
