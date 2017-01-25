@@ -48,26 +48,19 @@ if(isset($_POST['pesquisar']))
 							
 							<label>Nome do Evento</label>
 							<input type="text" name="nomeEvento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
-						<?php 
-							if($_SESSION['perfil'] == 1)
-							{
-						?>
-								<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
-								<select class="form-control" name="fiscal" id="inputSubject" >
-									<option value="0"></option>	
-									<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
-								</select>
-								<br />	
-								
-								<label>Tipo de Projeto</label>
-								<select class="form-control" name="projeto" id="inputSubject" >
-									<option value='0'></option>
-									<?php  geraOpcaoOrdem("ig_projeto_especial","projetoEspecial"); ?>
-								</select>	
-						<?php 		
-							}				
-						?>
 							
+							<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
+							<select class="form-control" name="fiscal" id="inputSubject" >
+								<option value="0"></option>	
+								<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
+							</select>
+							<br />	
+								
+							<label>Tipo de Projeto</label>
+							<select class="form-control" name="projeto" id="inputSubject" >
+								<option value='0'></option>
+								<?php  geraOpcaoOrdem("ig_projeto_especial","projetoEspecial"); ?>
+							</select>
 						</div>
 					</div><br />  
 				</div>			
@@ -138,7 +131,7 @@ if(isset($_POST['pesquisar']))
 			$usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
 			$localUsr = $usr['local'];
 			$sql_evento = "
-				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND statusEvento = 'Aguardando' AND dataEnvio IS NULL AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1 AND estado IS NULL) )AND local IN ($localUsr) $filtro_nomeEvento $filtro_fiscal $filtro_projeto ORDER BY dataInicio DESC";
+				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND statusEvento = 'Aguardando' AND dataEnvio IS NULL $filtro_fiscal $filtro_projeto AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1 AND estado IS NULL) )AND local IN ($localUsr) $filtro_nomeEvento  ORDER BY dataInicio DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
 			
 			$i = 0;
@@ -163,13 +156,22 @@ if(isset($_POST['pesquisar']))
 			$x['num'] = $i;
 		}				
 	}
-	$mensagem = "Foram encontradas ".$x['num']." eventos.";
+	$mensagem ="Total de eventos encontrados: ".$x['num'].".";
 ?>
 	<br /><br />
 	<section id="list_items">
 		<div class="container">
 			<h3>Resultado da busca</h3>
-			<h5>Foram encontrados <?php echo $x['num']; ?> eventos.</h5>
+			<?php
+			if ($x['num'] == 1)
+			{
+				echo "<h5>Foi encontrado ".$x['num']." evento</h5>";
+			}
+			else
+			{
+				echo "<h5>Foram encontrados ".$x['num']." eventos</h5>";
+			}
+			?>
 			<h5><a href="?perfil=gestao_eventos&p=frm_busca">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
 			<?php 
@@ -195,7 +197,7 @@ if(isset($_POST['pesquisar']))
 					$data=date('Y');
 					for($h = 0; $h < $x['num']; $h++)
 					{		
-						echo "<tr><td class='list_description'> <a href='".$link.$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+						echo "<tr><td class='list_description'> <a target=_blank href='".$link.$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
 						echo '<td class="list_description">'.$x[$h]['objeto'].'</td>';
 						echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
