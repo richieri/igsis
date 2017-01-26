@@ -192,8 +192,8 @@ $(function(){
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-6"><strong>Ano:</strong>
 				<select class="form-control" name="ano" id="Status">
-                	<option value='2016'<?php if($formacao['Ano'] == 2016){echo " selected ";} ?>>2016</option>
-					<option value='2017'<?php if($formacao['Ano'] == 2017){echo " selected ";} ?>>2017</option>
+                	<option value='2017'<?php if($formacao['Ano'] == 2017){echo " selected ";} ?>>2017</option>
+					<option value='2016'<?php if($formacao['Ano'] == 2016){echo " selected ";} ?>>2016</option>
 				</select><br/>
 			</div>
 			

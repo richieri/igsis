@@ -2586,7 +2586,19 @@ if(isset($_POST['atualizar'])){
 <?php 
 break;
 case "edicaoPessoa":
+?>
+<script>
+function valida(){
+   var campo = document.getElementById("Email");
+   if(campo.value == ""){
+       alert("Preencha os campos obrigatórios!");
+       return false;
+   } 
+   return true;
+}
+</script>
 
+<?php
 if(isset($_POST['cadastraRepresentante'])){
 	$n = $_SESSION['numero'];
 	if($n == 1){
@@ -2773,6 +2785,7 @@ if(isset($_POST['insereRepresentante'])){
 	case 1:
 	$fisica = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 	 ?>
+	 
 	  <section id="contact" class="home-section bg-white">
 	  	<div class="container">
 			  <div class="form-group">
@@ -2783,7 +2796,7 @@ if(isset($_POST['insereRepresentante'])){
 	  		<div class="row">
 	  			<div class="col-md-offset-1 col-md-10">
 
-				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPessoa" method="post">
+				<form class="form-horizontal" role="form" onsubmit="return valida()" action="?perfil=contratados&p=edicaoPessoa" method="post">
 				  
 			 
                   <div class="form-group">
@@ -3032,7 +3045,7 @@ if(isset($_POST['insereRepresentante'])){
 				</div>
                 </div>
 
-				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPessoa" method="post">
+				<form class="form-horizontal" role="form" onsubmit="return valida()" action="?perfil=contratados&p=edicaoPessoa" method="post">
 				  
 			  
 				  <div class="form-group">

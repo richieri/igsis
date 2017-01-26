@@ -1,13 +1,11 @@
 <?php
-// não precisa chamar a funcao porque o index contrato já chama.
+include 'includes/menu.php';
+
 $linha_tabela_lista = siscontratLista(4,$_SESSION['idInstituicao'],100,1,"DESC",1); //esse gera uma array com os pedidos
 
 $link="index.php?perfil=formacao&p=frm_edita_pedidocontratacaopf&id_ped=";
 ?>
-	
-<?php include 'includes/menu.php';?>	
 	  	  
-<!-- inicio_list -->
 <section id="list_items">
 	<div class="container">
 		<div class="sub-title">PEDIDO DE CONTRATAÇÃO DE PESSOA FÍSICA</div>
@@ -45,6 +43,3 @@ for($i = 0; $i < count($linha_tabela_lista); $i++)
 				</table>
 	</div>
 </section>
-<!--fim_list-->
-
-

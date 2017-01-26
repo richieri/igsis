@@ -154,6 +154,24 @@ if(isset($_POST['insereJuridica'])){ //insere pessoa jurídica
 	$idEvento = $_SESSION['idEvento'];
 	$sql_verifica_cnpj = "SELECT * FROM igsis_pedido_contratacao WHERE idPessoa = '$idPessoa' AND tipoPessoa = '2' AND publicado = '1' AND idEvento = '$idEvento' ";
 	$query_verifica_cnpj = mysqli_query($con,$sql_verifica_cnpj);
+	
+		$sql_insere_cnpj = "INSERT INTO igsis_pedido_contratacao (idPessoa, tipoPessoa, publicado, idEvento, instituicao) VALUES ('$idPessoa','2','1','$idEvento','$idInstituicao')";
+		$query_insere_cnpj = mysqli_query($con,$sql_insere_cnpj);
+		if($query_insere_cnpj){
+			$mensagem = "Pedido inserido com sucesso!";
+		}else{
+			$mensagem = "Erro ao criar pedido. Tente novamente.";
+	}
+}
+
+/*
+if(isset($_POST['insereJuridica'])){ //insere pessoa jurídica
+	$idInstituicao = $_SESSION['idInstituicao'];
+	$idPessoa = $_POST['insereJuridica'];
+	$idEvento = $_SESSION['idEvento'];
+	$sql_verifica_cnpj = "SELECT * FROM igsis_pedido_contratacao WHERE idPessoa = '$idPessoa' AND tipoPessoa = '2' AND publicado = '1' AND idEvento = '$idEvento' ";
+	$query_verifica_cnpj = mysqli_query($con,$sql_verifica_cnpj);
+	
 	$num_rows = mysqli_num_rows($query_verifica_cnpj);
 
 	if($num_rows > 0){
@@ -169,6 +187,7 @@ if(isset($_POST['insereJuridica'])){ //insere pessoa jurídica
 		 	
 	}
 }
+*/
 
 if(isset($_POST['apagarPedido'])){	
 	$idPedidoContratacao = $_POST['idPedidoContratacao'];
@@ -212,9 +231,8 @@ if(isset($_POST['apagarPedido'])){
 						<td>Tipo de Pessoa</td>
 						<td>CPF/CNPJ</td>
    						<td>Valor</td>
-   							<td width="10%">
-							<td width="10%">
-  							<td width="10%">
+							<td width="10%"></td>
+  							<td width="10%"></td>
 							<td width="10%"></td>
 						</tr>
 					</thead>
@@ -228,14 +246,7 @@ if(isset($_POST['apagarPedido'])){
 						echo "<td class='list_description'>".$recuperaPessoa['numero']."</td>";
 						echo "<td class='list_description'>".dinheiroParaBr($descricao['valor'])."</td>";
 						
-						echo "
-						<td class='list_description'>
-						<form method='POST' action='?perfil=contratados&p=arquivos'>
-						<input type='hidden' name='idPessoa' value='".$descricao['idPessoa']."'>
-						<input type='hidden' name='tipoPessoa' value='".$descricao['tipoPessoa']."'>
-
-						<input type ='submit' class='btn btn-theme btn-sm btn-block' value='anexos'></td></form>"	; //botão de edição
-						
+	
 						echo "
 						<td class='list_description'>
 						<form method='POST' action='?perfil=contratados&p=edicaoPessoa'>
@@ -408,16 +419,16 @@ if(isset($_POST['pesquisar'])){ // inicia a busca por Razao Social ou CNPJ
 				  
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone">
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321"">
 					</div>				  
 					<div class=" col-md-6"><strong>Telefone:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone2" name="Telefone2" placeholder="Telefone" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321"" >
 					</div>
 				  </div>
 				  
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone3" name="Telefone3" placeholder="Telefone">
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321">
 					</div>				  
 					<div class=" col-md-6"><strong>E-mail:</strong><br/>
 					  <input type="text" class="form-control" id="Email" name="Email" placeholder="E-mail">
@@ -670,16 +681,16 @@ if(isset($_POST['pesquisar'])){ // inicia a busca por Razao Social ou CNPJ
 
 					<div class=" col-md-6"><strong>Telefone #1 *:</strong><br/>
 
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321" >
 					</div>
 
 				  </div>
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone #2:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone2" placeholder="Telefone" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321" >
 					</div>				  
 					<div class="col-md-6"><strong>Telefone #3:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone2" name="Telefone3" placeholder="Telefone" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321" >
 					</div>
 				  </div>
 
@@ -713,7 +724,7 @@ if(isset($_POST['pesquisar'])){ // inicia a busca por Razao Social ou CNPJ
 					<div class="col-md-offset-2 col-md-8">
                     <input type="hidden" name="cadastrarFisica" value="1" />
                     <input type="hidden" name="Sucesso" id="Sucesso" />
-					 <input type="image" alt="GRAVAR" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 					</div>
 				  </div>
 				</form>
@@ -911,7 +922,7 @@ $empresa = siscontratDocs($_SESSION['idJuridico'],2);
                     
                     <input type="hidden" name="numero" value="<?php echo $_SESSION['numero'] ?>" />
                     
-					 <input type="image" name="enviar" alt="atualizar" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" name="enviar" value="atualizar" class="btn btn-theme btn-lg btn-block">
 					</div>
                     
 				  </div>
@@ -923,13 +934,13 @@ $empresa = siscontratDocs($_SESSION['idJuridico'],2);
                                         
                     <input type="hidden" name="numero" value="<?php echo $_SESSION['numero'] ?>" />
                     
-					 <input type="image" name="enviar" alt="Voltar" value="submit" class="btn btn-theme btn-block">
+					 <input type="submit" name="enviar" value="Voltar" class="btn btn-theme btn-block">
                      </form>
 					</div>
 					<div class="col-md-6">
                     <form class="form-horizontal" role="form" action="?perfil=contratados&p=representante&action=edita" method="post">
 					 <input type="hidden" name="idPessoa" value="0" />
-					 <input type="image" name="enviar" alt="Inserir outro representante" value="submit" class="btn btn-theme btn-block">
+					 <input type="submit" name="enviar" value="Inserir outro representante" class="btn btn-theme btn-block">
                      </form>
 					</div>
 				  </div>    
@@ -1056,7 +1067,7 @@ case "busca":
 					<div class="col-md-offset-2 col-md-8">
                     <input type="hidden" name="cadastraRepresentante" value="1" />
                     <input type="hidden" name="idPessoajuridica" value="1" />
-					 <input type="image" name="enviar" alt="CADASTRAR" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" name="enviar" value="CADASTRAR" class="btn btn-theme btn-lg btn-block">
 					</div>
                     
 				  </div>
@@ -1102,7 +1113,7 @@ if(isset($_POST['insereExecutante'])){ //insere IdExecutante
 	WHERE `idPedidoContratacao` = '$idPedido';";
 	$query_atualiza_executante = mysqli_query($con,$sql_atualiza_executante);	
 	if($query_atualiza_executante){
-		$mensagem = "Executante inserido com sucesso!";	
+		$mensagem = "Líder do Grupo inserido com sucesso!";	
 	}
 }
 
@@ -1163,7 +1174,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_SESSION['idPedido'],"idPedi
 $executante = siscontratDocs($pedido['IdExecutante'],1);
 ?>
 	 <!-- Contact -->
-	  <section id="contact" class="home-section bg-white">
+	<section id="contact" class="home-section bg-white">
 	  	<div class="container">
 			  <div class="form-group">
 					<h2>PEDIDO DE CONTRATAÇÃO <?php if($pedido['tipoPessoa'] == 1){echo "PESSOA FÍSICA";}else{echo "PESSOA JURÍDICA";} ?> </h2>
@@ -1204,7 +1215,7 @@ $executante = siscontratDocs($pedido['IdExecutante'],1);
                 </div> 
 
                   <div class="form-group"> 
-					<div class="col-md-offset-2 col-md-8"><strong>Executante:</strong><br/>
+					<div class="col-md-offset-2 col-md-8"><strong>Líder do Grupo:</strong><br/>
 		  <form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoExecutante&id_pf=<?php echo $pedido['IdExecutante']?>"  method="post">
 					  <input type='text' readonly class='form-control' name='Executante' id='Executante' value="<?php echo $executante['Nome'] ?>">                    	
                     </div>
@@ -1214,9 +1225,9 @@ $executante = siscontratDocs($pedido['IdExecutante'],1);
 
                       <input type="hidden" name="idPedido" value="<?php echo $_SESSION['idPedido']; ?>" />
                      <?php if($pedido['IdExecutante'] == NULL OR $pedido['IdExecutante'] == ""){ ?>
-					 <input type="submit" class="btn btn-theme btn-med btn-block" value="Inserir executante">
+					 <input type="submit" class="btn btn-theme btn-med btn-block" value="Inserir Líder do Grupo">
                      <?php }else{ ?>
-					 <input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir executante">
+					 <input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir Líder do Grupo">
                      <?php } ?>
                      </form>
 					</div>
@@ -1286,22 +1297,21 @@ $executante = siscontratDocs($pedido['IdExecutante'],1);
 				<?php } ?>   				  
                   <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Parcelas (antes de editar as parcelas, é preciso salvar o pedido)</strong><br/>
-					  	 <select class="form-control" id="parcelas" name="parcelas" >
-						<option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
-						<option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
-						<option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
-						<option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
-						<option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
-						<option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
-						<option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
-						<option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
-						<option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
-						<option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
-						<option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
-						<option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
-						<option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
-
-					  </select>
+					  	<select class="form-control" id="parcelas" name="parcelas" >
+							<option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
+							<option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
+							<option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
+							<option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
+							<option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
+							<option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
+							<option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
+							<option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
+							<option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
+							<option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
+							<option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
+							<option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
+							<option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
+					    </select>
                       
 					</div>	
                     </div>
@@ -1317,10 +1327,22 @@ $executante = siscontratDocs($pedido['IdExecutante'],1);
 				  </div>
 			<?php } ?>
                   <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Verba:</strong><br/>
+				  <?php 
+					$idverba = $pedido['idVerba'];
+					$recupera_verba = recuperaDados("sis_verba",$pedido['idVerba'],"Id_Verba");
+					$campo_verba = $recupera_verba['Verba'];
+				  ?>
+					<div class="col-md-offset-2 col-md-8"><strong>Verba: <font color="blue"><?php echo $campo_verba; ?> (atual)</font>
+											
+					</strong> <br/>
 					  	 <select class="form-control" id="verba" name="verba" >
-					   <?php
+					    <?php
+						geraVerbaUsuario($_SESSION['idUsuario'],$pedido['idVerba']);
+						?>  
+					   
+					   <?php /*
 						geraOpcaoOrder("sis_verba",$pedido['idVerba'],"");
+						*/
 						?>  
 					  </select>
 					</div>		
@@ -1369,25 +1391,32 @@ $executante = siscontratDocs($pedido['IdExecutante'],1);
 					<div class="col-md-offset-2 col-md-8">
                     <input type="hidden" name="atualizar" value="<?php echo $pedido['parcelas']; ?>" />
                     <input type="hidden" name="idPedidoContratacao" value="<?php echo $_SESSION['idPedido']; ?>" />
-					 <input type="image" alt="GRAVAR" name="GRAVAR" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" name="GRAVAR" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 					</div>
                     
 				  </div>
 				</form>
-				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-                    <a href="?perfil=contratados" value="VOLTAR" class="btn btn-theme btn-lg btn-block">VOLTAR para area de pedidos de contratação</a>
+				
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-6">
+					<form method='POST' action='?perfil=contratados&p=arqped'>
+						<input type="hidden" name="idPedido" value="<?php echo $_SESSION['idPedido']; ?>" >
+						<input type="submit" name="" value="ANEXAR ARQUIVOS" class="btn btn-theme btn-lg btn-block">
+					</form>
+					</div>
+					
+					<div class="col-md-6">
+						<a href="?perfil=contratados" value="VOLTAR" class="btn btn-theme btn-lg btn-block">VOLTAR para pedidos</a>
 					</div>
                     
-				  </div>	
-	  			</div>
+				  
+				</div>	 
 			
 				
-	  		</div>
 			
 
 	  	</div>
-	  </section>  
+	</section>  
 <?php 
 break;
 case "edicaoExecutante":
@@ -1427,7 +1456,7 @@ case "busca":
 			  <div class="row">
 				  <div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-					 <h2>Executante - Pessoa Física</h2>
+					 <h2>Líder do Grupo - Pessoa Física</h2>
                     <p>Você está inserindo pessoas físicas para serem contratadas para o evento <strong><?php  //echo $nomeEvento['nomeEvento']; ?></strong></p>
 
 <p></p>
@@ -1628,16 +1657,16 @@ case "pesquisar":
 
 					<div class=" col-md-6"><strong>Telefone #1 *:</strong><br/>
 
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321" >
 					</div>
 
 				  </div>
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone #2:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone2" placeholder="Telefone" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321" >
 					</div>				  
 					<div class="col-md-6"><strong>Telefone #3:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone2" name="Telefone3" placeholder="Telefone" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321" >
 					</div>
 				  </div>
 
@@ -1762,12 +1791,12 @@ case "editar":
 
 $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 ?>
-	  <section id="contact" class="home-section bg-white">
+	<section id="contact" class="home-section bg-white">
 	  	<div class="container">
 			  <div class="form-group">
-					<h3>CADASTRO DE EXECUTANTE (PESSOA FÍSICA)</h3>
+					<h3>CADASTRO DE LÍDER DO GRUPO (PESSOA FÍSICA)</h3>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-                                        </div>
+                </div>
 
 	  		<div class="row">
 	  			<div class="col-md-offset-1 col-md-10">
@@ -1819,7 +1848,7 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 					  </select>
 					</div>				  
 					<div class=" col-md-6"><strong>Data de nascimento:</strong><br/>
- <input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento" value="<?php echo exibirDataBr($fisica['DataNascimento']); ?>">
+						<input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento" value="<?php echo exibirDataBr($fisica['DataNascimento']); ?>">
 					</div>
 				  </div>
 				  
@@ -1867,16 +1896,16 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 
 					<div class=" col-md-6"><strong>Telefone #1 *:</strong><br/>
 
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone" value="<?php echo $fisica['Telefone1']; ?>">
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone1']; ?>">
 					</div>
 
 				  </div>
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone #2:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone2" placeholder="Telefone" value="<?php echo $fisica['Telefone2']; ?>">
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone2']; ?>">
 					</div>				  
 					<div class="col-md-6"><strong>Telefone #3:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone2" name="Telefone3" placeholder="Telefone"value="<?php echo $fisica['Telefone3']; ?>" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone3']; ?>" >
 					</div>
 				  </div>
 
@@ -1918,46 +1947,36 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 				  </div>
 				</form>
 
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-		           <form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPedido" method="post">
-      <input type="hidden" name="idPedido" value="<?php echo $_SESSION['idPedido']; ?>">
-      <input type="submit" value="Voltar ao Pedido" class="btn btn-theme btn-block"></a> 
+                <div class="form-group">
+					<div class="col-md-offset-2 col-md-6">
+		            <form class="form-horizontal" role="form" action="?perfil=contratados&p=arqexec" method="post">
+						<input type="hidden" name="cadastrarFisica" value="<?php echo $fisica['Id_PessoaFisica'] ?>" />
+						<input type="hidden" name="idPedido" value="<?php echo $id_pedido ?>" />
+						<input type="submit" value="Anexos" class="btn btn-theme btn-block">
+					</form>					
+					</div>
+					<!-- Botão para verificar 					da pessoa -->
+					<div class="col-md-6">
+					<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPedido" method="post">
+						<input type="hidden" name="idPedido" value="<?php echo $_SESSION['idPedido']; ?>">
+						<input type="submit" value="Voltar ao Pedido" class="btn btn-theme btn-block"></a> 
 					</form>
 					</div>
-				  </div>
+				</div>
                   
-                  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-                  	  <br />
-					</div>
-				  </div>		
-
-                <!-- Botão para verificar arquivos da pessoa -->
-			  <div class="form-group">
-               	<div class="col-md-offset-2 col-md-8">
-                <form class="form-horizontal" role="form" action="?perfil=contratados&p=arqexec" method="post">
-                    <input type="hidden" name="cadastrarFisica" value="<?php echo $fisica['Id_PessoaFisica'] ?>" />
-					<input type="hidden" name="idPedido" value="<?php echo $id_pedido ?>" />
- 					<input type="submit" value="Anexos" class="btn btn-theme btn-block">
-				</form>
-					</div>
-                </div>
-          
                 <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-                  	  <br />
-					</div>
-				  </div>	
-    <?php if(isset($id_pedido)){ ?>
+					<div class="col-md-offset-2 col-md-8"><br /></div>
+				</div>	
+    
+			
+			<?php if(isset($id_pedido)){ ?>
                           
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-                    
-                     <a href="?perfil=contratados&p=edicaoExecutante&id_pf="><input type="submit" value="Mudar o executante" class="btn btn-theme btn-block"></a>
+						<a href="?perfil=contratados&p=edicaoExecutante&id_pf="><input type="submit" value="Mudar o líder do grupo" class="btn btn-theme btn-block"></a>
 					</div>
 				</div>
-                   <?php } ?>
+            <?php } ?>
 
   
 	  			</div>
@@ -1967,7 +1986,7 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 			
 
 	  	</div>
-	  </section>  
+	</section>  
 <?php
 break;
 } // fecha a switch
@@ -1984,7 +2003,7 @@ $idPedido = $_POST["idPedido"];
 if(isset($_POST["enviar"])){
 
 
-$sql_arquivos = "SELECT * FROM igsis_upload_docs";
+$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '1'";
 $query_arquivos = mysqli_query($con,$sql_arquivos);
 while($arq = mysqli_fetch_array($query_arquivos)){ 
 	$y = $arq['idTipoDoc'];
@@ -2054,7 +2073,7 @@ $campo = recuperaPessoa($idPessoa,1);
 <td width="50%"><td>
 </tr>
 <?php 
-$sql_arquivos = "SELECT * FROM igsis_upload_docs ";
+$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '1' ";
 $query_arquivos = mysqli_query($con,$sql_arquivos);
 while($arq = mysqli_fetch_array($query_arquivos)){ ?>
 
@@ -2165,21 +2184,21 @@ $num = mysqli_num_rows($query_grupos);
 
 	<section id="list_items" class="home-section bg-white">
 		<div class="container">
-      			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-					 <h2>Grupos</h2>
+					<h2>Grupos</h2>
 					<h4>Integrantes de grupos</h4>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-                 </div>
-				  </div>
-			  </div>  
+					</div>
+				</div>				
+			 </div>  
 	
 			<?php
 			if($num > 0){ 
 			 ?>
 			<div class="table-responsive list_info">
-                  <table class='table table-condensed'>
+                <table class='table table-condensed'>
 					<thead>
 						<tr class='list_menu'>
 							<td width='40%'>Nome Completo</td>
@@ -2193,55 +2212,52 @@ $num = mysqli_num_rows($query_grupos);
 					while($grupo = mysqli_fetch_array($query_grupos)){ 
 					?>	
 					<tr>
-					<td><?php echo $grupo['nomeCompleto'] ?></td>
-					<td><?php echo $grupo['rg'] ?></td>
-					<td><?php echo $grupo['cpf'] ?></td>
-					<td class='list_description'>
-					<form method='POST' action='?perfil=contratados&p=edicaoGrupo'>
-					<input type="hidden" name="apagar" value="<?php echo $grupo['idGrupos'] ?>" />
-					<input type="hidden" name="idPedido" value="<?php echo $idPedido; ?>" >					
-
-					<input type ='submit' class='btn btn-theme btn-block' value='apagar'></td></form>
+						<td><?php echo $grupo['nomeCompleto'] ?></td>
+						<td><?php echo $grupo['rg'] ?></td>
+						<td><?php echo $grupo['cpf'] ?></td>
+						<td class='list_description'>
+							<form method='POST' action='?perfil=contratados&p=edicaoGrupo'>
+							<input type="hidden" name="apagar" value="<?php echo $grupo['idGrupos'] ?>" />
+							<input type="hidden" name="idPedido" value="<?php echo $idPedido; ?>" >	
+							<input type ='submit' class='btn btn-theme btn-block' value='apagar'></td></form>
 					</tr>					
 					<?php
 						}
 					?>
-					
-					
 					</tbody>
 					</table>
 			<?php 
 			}else{
-			?>
-                   	<div class="col-md-offset-2 col-md-8">
+			?>				
+                <div class="col-md-offset-2 col-md-8">
             		<h3>Não há integrantes de grupos inseridos. <br />
-                   			
             	</div> 
 
 			<?php 
 			}
 			?>
+			
+			<div class="col-md-offset-2 col-md-8"><br/></div>
 
-
-            <div class="col-md-offset-2 col-md-8">
-  			<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo&action=inserir"  method="post">
-			<input type="hidden" name="idPedidoContratacao" value="<?php echo $idPedido; ?>" >
-			<input type ='submit' class='btn btn-theme btn-block' value='Inserir integrante'></td></form>
-			</form>		
-            	        <?php 
-			$pedido = recuperaDados("igsis_pedido_contratacao",$idPedido,"idPedidoContratacao");
-			?>
-			<br />
-			<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPedido"  method="post">
-			<input type="hidden" name="idPedidoContratacao" value="<?php echo $idPedido; ?>" >
-			<input type ='submit' class='btn btn-theme btn-block' value='Voltar ao Pedido de Contratação'></td></form>
-			</form>		
-                
-	       
-	         </div>
-          </div>
-				   
+            <div class="col-md-offset-2 col-md-6">
+				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo&action=inserir"  method="post">
+				<input type="hidden" name="idPedidoContratacao" value="<?php echo $idPedido; ?>" >
+				<input type ='submit' class='btn btn-theme btn-block' value='Inserir novo integrante'></td></form>
+				</form>	
+			</div>				
+			
+			<?php $pedido = recuperaDados("igsis_pedido_contratacao",$idPedido,"idPedidoContratacao"); ?>
+			
+			<div class="col-md-4">
+				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPedido"  method="post">
+				<input type="hidden" name="idPedidoContratacao" value="<?php echo $idPedido; ?>" >
+				<input type ='submit' class='btn btn-theme btn-block' value='Voltar ao Pedido de Contratação'></td></form>
+				</form>
+	        </div>
+			
 			</div>
+				   
+		</div>
 		</div>
 	</section>
 
@@ -2388,7 +2404,7 @@ if(isset($_POST['atualizar'])){
 					  <input type='text'  name="valor<?php echo $i; ?>" id='valor' class='form-control valor' value="<?php echo dinheiroParaBr($parcela['valor']); ?>">
 					</div>
                     
-                    <div class="col-xs-6 col-sm-3"><strong>Data:</strong><br/>
+                    <div class="col-xs-6 col-sm-3"><strong>Data do Kit de Pagamento:</strong><br/>
 					  <input type='text' name="data<?php echo $i; ?>" id='' class='form-control datepicker' value="<?php 
 					  if($parcela['vencimento'] == '0000-00-00 00:00:00' OR $parcela['vencimento'] == NULL){ 
 					  echo date('d/m/Y');
@@ -2418,7 +2434,7 @@ if(isset($_POST['atualizar'])){
 					<div class="col-md-offset-2 col-md-8">
                     <input type="hidden" name="atualizar" value="1" />
                     <input type="hidden" name="idPedidoContratacao" value="<?php echo $_SESSION['idPedido']; ?>" />
-					 <input type="image" alt="GRAVAR" name="GRAVAR" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" alt="" name="GRAVAR" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 					</div>
                     
 				  </div>
@@ -2547,7 +2563,7 @@ if(isset($_POST['atualizar'])){
 					<div class="col-md-offset-2 col-md-8">
                     <input type="hidden" name="atualizar" value="1" />
                     <input type="hidden" name="idPedidoContratacao" value="<?php echo $_SESSION['idPedido']; ?>" />
-					 <input type="image" alt="GRAVAR" name="GRAVAR" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" name="GRAVAR" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 					</div>
                     
 				  </div>
@@ -2570,7 +2586,19 @@ if(isset($_POST['atualizar'])){
 <?php 
 break;
 case "edicaoPessoa":
+?>
+<script>
+function valida(){
+   var campo = document.getElementById("Email");
+   if(campo.value == ""){
+       alert("Preencha os campos obrigatórios!");
+       return false;
+   } 
+   return true;
+}
+</script>
 
+<?php
 if(isset($_POST['cadastraRepresentante'])){
 	$n = $_SESSION['numero'];
 	if($n == 1){
@@ -2757,6 +2785,7 @@ if(isset($_POST['insereRepresentante'])){
 	case 1:
 	$fisica = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 	 ?>
+	 
 	  <section id="contact" class="home-section bg-white">
 	  	<div class="container">
 			  <div class="form-group">
@@ -2767,7 +2796,7 @@ if(isset($_POST['insereRepresentante'])){
 	  		<div class="row">
 	  			<div class="col-md-offset-1 col-md-10">
 
-				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPessoa" method="post">
+				<form class="form-horizontal" role="form" onsubmit="return valida()" action="?perfil=contratados&p=edicaoPessoa" method="post">
 				  
 			 
                   <div class="form-group">
@@ -2862,16 +2891,16 @@ if(isset($_POST['insereRepresentante'])){
 
 					<div class=" col-md-6"><strong>Telefone #1 *:</strong><br/>
 
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone" value="<?php echo $fisica['Telefone1']; ?>">
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone1']; ?>">
 					</div>
 
 				  </div>
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone #2:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone2" placeholder="Telefone" value="<?php echo $fisica['Telefone2']; ?>">
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone2']; ?>">
 					</div>				  
 					<div class="col-md-6"><strong>Telefone #3:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone2" name="Telefone3" placeholder="Telefone"value="<?php echo $fisica['Telefone3']; ?>" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone3']; ?>" >
 					</div>
 				  </div>
 
@@ -2930,10 +2959,19 @@ if(isset($_POST['insereRepresentante'])){
                     <input type="hidden" name="cadastrarFisica" value="<?php echo $fisica['Id_PessoaFisica'] ?>" />
                    <input type="hidden" name="idPedidoContratacao" value="<?php echo $_POST['idPedidoContratacao'] ?>" />
                     <input type="hidden" name="Sucesso" id="Sucesso" />
-					 <input type="image" alt="GRAVAR" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 					</div>
 				  </div>
 				</form>
+				  <div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+ 						<form method='POST' action='?perfil=contratados&p=arquivos'>
+						<input type='hidden' name='idPessoa' value='<?php echo $fisica['Id_PessoaFisica'] ?>'>
+						<input type='hidden' name='tipoPessoa' value='1'>
+					 <input type="submit" value="Anexar arquivos" class="btn btn-theme btn-lg btn-block">
+						</form>
+					</div>
+				  </div>
 	
     
 	  			</div>
@@ -3061,16 +3099,16 @@ if(isset($_POST['insereRepresentante'])){
 				  
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone" value="<?php echo $juridica['Telefone1']; ?>">
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $juridica['Telefone1']; ?>">
 					</div>				  
 					<div class=" col-md-6"><strong>Telefone:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone2" name="Telefone2" placeholder="Telefone" value="<?php echo $juridica['Telefone2']; ?>" >
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $juridica['Telefone2']; ?>" >
 					</div>
 				  </div>
 				  
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone:</strong><br/>
-					  <input type="text" class="form-control" id="Telefone3" name="Telefone3" placeholder="Telefone" value="<?php echo $juridica['Telefone3']; ?>">
+					  <input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $juridica['Telefone3']; ?>">
 					</div>				  
 					<div class=" col-md-6"><strong>E-mail:</strong><br/>
 					  <input type="text" class="form-control" id="Email" name="Email" placeholder="E-mail" value="<?php echo $juridica['Email']; ?>">
@@ -3126,10 +3164,25 @@ if(isset($_POST['insereRepresentante'])){
 					<div class="col-md-offset-2 col-md-8">
                      <input type="hidden" name="editaJuridica" value="<?php echo $juridica['Id_PessoaJuridica'] ?>" />
                      
-					 <input type="image" alt="GRAVAR" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 					</div>
 				  </div>
 				</form>
+					<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<br />
+				</div>
+				</div>
+					<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+ 						<form method='POST' action='?perfil=contratados&p=arquivos'>
+						<input type='hidden' name='idPessoa' value='<?php echo $juridica['Id_PessoaJuridica'] ?>'>
+						<input type='hidden' name='tipoPessoa' value='2'>
+					 <input type="submit" value="Anexar arquivos" class="btn btn-theme btn-lg btn-block">
+						</form>
+					</div>
+				  </div>
+	
 	
 	  			</div>
 			
@@ -3187,7 +3240,7 @@ if(isset($_POST['insereRepresentante'])){
 				  <div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
                     <input type="hidden" name="cadastrarRepresentante" value="1" />
-					 <input type="image" name="enviar" alt="CADASTRAR" value="submit" class="btn btn-theme btn-lg btn-block">
+					 <input type="submit" name="enviar" value="CADASTRAR" class="btn btn-theme btn-lg btn-block">
 					</div>
                     
 				  </div>
@@ -3223,7 +3276,7 @@ $mensagem = $idPessoa." - ".$tipoPessoa;
 
 if(isset($_POST["enviar"])){
 
-$sql_arquivos = "SELECT * FROM igsis_upload_docs";
+$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa'";
 $query_arquivos = mysqli_query($con,$sql_arquivos);
 while($arq = mysqli_fetch_array($query_arquivos)){ 
 	$y = $arq['idTipoDoc'];
@@ -3292,7 +3345,7 @@ $campo = recuperaPessoa($_REQUEST['idPessoa'],$_REQUEST['tipoPessoa']);
 <td width="50%"><td>
 </tr>
 <?php 
-$sql_arquivos = "SELECT * FROM igsis_upload_docs";
+$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa'";
 $query_arquivos = mysqli_query($con,$sql_arquivos);
 while($arq = mysqli_fetch_array($query_arquivos)){ ?>
 
@@ -3341,5 +3394,129 @@ while($arq = mysqli_fetch_array($query_arquivos)){ ?>
 
 <?php
 break;
+
+case "arqped":
+$idPedido = $_REQUEST['idPedido'];
+include "../funcoes/funcoesSiscontrat.php";
+$pedido = siscontrat($idPedido);
+
+
+if(isset($_POST["enviar"])){
+
+$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '3'";
+$query_arquivos = mysqli_query($con,$sql_arquivos);
+while($arq = mysqli_fetch_array($query_arquivos)){ 
+	$y = $arq['idTipoDoc'];
+	$x = $arq['sigla'];
+	$nome_arquivo = $_FILES['arquivo']['name'][$x];
+	if($nome_arquivo != ""){
+	$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+    //$ext = strtolower(substr($nome_arquivo[$i],-4)); //Pegando extensão do arquivo
+      $new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+	  $hoje = date("Y-m-d H:i:s");
+      $dir = '../uploadsdocs/'; //Diretório para uploads
+	  
+      if(move_uploaded_file($nome_temporario, $dir.$new_name)){
+		  
+		$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pedidos` (`idArquivosPedidos`, `idPedido`, `arquivo`, `data`, `publicado`, `tipo`) 
+		VALUES (NULL, '$idPedido', '$new_name', '$hoje', '1', '$y')";
+		$query = mysqli_query($con,$sql_insere_arquivo);
+		if($query){
+		$mensagem = "Arquivo recebido com sucesso";
+		}else{
+		$mensagem = "Erro ao gravar no banco";
+		}
+		
+		}else{
+		 $mensagem = "Erro no upload"; 
+		  
+	  }
+	}
+	
+}
+
+}
+
+
+if(isset($_POST['apagar'])){
+	$idArquivo = $_POST['apagar'];
+	$sql_apagar_arquivo = "UPDATE igsis_arquivos_pedidos SET publicado = 0 WHERE idArquivosPedidos = '$idArquivo'";
+	if(mysqli_query($con,$sql_apagar_arquivo)){
+		$arq = recuperaDados("igsis_arquivos_pedidos",$idArquivo,"idArquivosPedidos");
+		$mensagem =	"Arquivo ".$arq['arquivo']."apagado com sucesso!";
+		gravarLog($sql_apagar_arquivo);
+	}else{
+		$mensagem = "Erro ao apagar o arquivo. Tente novamente!";
+	}
+}
+?>
+    
+    	 <section id="enviar" class="home-section bg-white">
+		<div class="container">
+			  <div class="row">
+				  <div class="col-md-offset-2 col-md-8">
+					<div class="section-heading">
+                                        <h2><?php echo $pedido["Objeto"] ?>  </h2>
+                                        
+					 <h3>Envio de Arquivos</h3>
+                     <p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
+<p>Nesta página, você envia documentos digitalizados. O tamanho máximo do arquivo deve ser 60MB.</p>
+
+
+<br />
+<div class = "center">
+<form method="POST" action="?perfil=contratados&p=arqped" enctype="multipart/form-data">
+<table>
+<tr>
+<td width="50%"><td>
+</tr>
+<?php 
+$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '3'";
+$query_arquivos = mysqli_query($con,$sql_arquivos);
+while($arq = mysqli_fetch_array($query_arquivos)){ ?>
+
+<tr>
+<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+</tr>
+	
+<?php } ?>
+
+  </table>
+    <br>
+    <input type="hidden" name="idPedido" value="<?php echo $idPedido ?>"  />
+    <input type="hidden" name="enviar" value="1"  />
+    <input type="submit" class="btn btn-theme btn-lg btn-block" value='Enviar'>
+</form>
+</div>
+
+
+					</div>
+				  </div>
+                  
+			  </div>
+			  
+		</div>
+	</section>
+
+	<section id="list_items" class="home-section bg-white">
+		<div class="container">
+      			  <div class="row">
+				  <div class="col-md-offset-2 col-md-8">
+					<div class="section-heading">
+ <h2>Arquivos anexados</h2>
+<h5>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</h5>
+					</div>
+			<div class="table-responsive list_info">
+                         <?php listaArquivosPedidoEvento($idPedido); ?>
+			</div>
+				  </div>
+			  </div>  
+
+
+		</div>
+	</section>
+	<?php 
+break;
+
 
 } //fim da switch ?>
