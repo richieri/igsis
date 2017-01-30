@@ -154,7 +154,7 @@ switch($b)
 	
 <section id="list_items">
 	<div class="container">
-		 <h3>Resultado da busca</3>
+		 <h3>Resultado da busca</h3>
 		 <h5>Foram encontrados <?php if($pedido['tipoPessoa'] == 4)
 									 { 
 										echo $x['num'];
@@ -165,16 +165,18 @@ switch($b)
 									 }	 ?> pedidos de contratação.</h5>
 		 <h5><a href="?perfil=formacao&p=frm_concluir_formacao">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
-				<?php if($x['num'] == 0){ ?>
+				<?php 
+				if($x['num'] == 0)
+				{ ?>
 				<?php }else{ ?>
 				
 				<table class="table table-condensed">
 					<thead>
 						<tr class="list_menu">
 							<td>Processo</td>
-							<td>Codigo do Pedido</td>
-							<td>Proponente</td>
-							<td>Status</td>
+								<td>Codigo do Pedido</td>
+									<td>Proponente</td>
+										<td>Status</td>
 						</tr>
 					</thead>
 					
