@@ -1,65 +1,65 @@
 <?php
-//include para comunicação
-require "../funcoes/funcoesComunicacao.php";
-
-//verifica se o usuário tem acesso a página
+	//include para comunicação
+	require "../funcoes/funcoesComunicacao.php";
+	//verifica se o usuário tem acesso a página
 	$verifica = verificaAcesso($_SESSION['idUsuario'],$_GET['perfil']); 
-		if($verifica == 1){
-			if(isset($_GET['p'])){
+	if($verifica == 1)
+	{
+		if(isset($_GET['p']))
+		{
 			$p = $_GET['p'];	
-			}else{
-			$p = "inicial";
-			}
-	$idInstituicao = $_SESSION['idInstituicao'];
-?>
-
-<?php include "../include/menuCom.php"; ?>
-<?php
-	switch($p){
-	
-	case "inicial":
-
-	if(isset($_GET['order'])){
-		$order = $_GET['order'];
-		}else{
-		$order = "";
-	}
-	
-	if(isset($_GET['sentido'])){
-		$sentido = $_GET['sentido'];
-		if($sentido == "ASC"){
-		$invertido = "DESC";
-		}else{
-		$invertido = "ASC";
 		}
-	}
+		else
+		{
+			$p = "inicial";
+		}
+		$idInstituicao = $_SESSION['idInstituicao'];
+		include "../include/menuCom.php";
+		switch($p)
+		{
+			case "inicial":
+				if(isset($_GET['order']))
+				{
+					$order = $_GET['order'];
+				}
+				else
+				{
+					$order = "";
+				}
+				if(isset($_GET['sentido']))
+				{
+					$sentido = $_GET['sentido'];
+					if($sentido == "ASC")
+					{
+						$invertido = "DESC";
+					}
+					else
+					{
+						$invertido = "ASC";
+					}
+				}
 ?>
-	
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h3>Bem-vindo(a) à IGSIS!</h3>
-                     <p>&nbsp;</p>
-                     <h2>Módulo Comunicação</h2>
-                     <p>&nbsp;</p>
-					 <h6>Esse módulo Esse módulo tem a função de gerenciar a comunicação da instituição e preparar as informações a serem enviadas para o SPCultura.</h6>
+					<h3>Bem-vindo(a) à IGSIS!</h3>
+                    <p>&nbsp;</p>
+                    <h2>Módulo Comunicação</h2>
+                    <p>&nbsp;</p>
+					<h6>Esse módulo Esse módulo tem a função de gerenciar a comunicação da instituição e preparar as informações a serem enviadas para o SPCultura.</h6>
                 </div>
             </div>
-
         </div>
     </div>
-</section>  
-
-<?php	
-break;
-case "all":
-?>
-
-
+</section>
+		<?php
+			break;
+			case "all":
+		?>
 <section id="list_items" class="home-section bg-white">
-		<div class="container">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
 				<div class="section-heading">
@@ -69,61 +69,55 @@ case "all":
                 </div>
 			</div>
 		</div> 		
-			
 		<div class="table-responsive list_info">
-        <table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-				<td width='10%'>Numero IG</td>
-				<td>Nome de Evento</td>
-				<td>Enviador por</td>
-				<td>Data/Início</td>
-				</tr>
-			</thead>
-			
-	<tbody>
-
-<?php
-	$con = bancoMysqli();
-	$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
-	$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-		while($evento = mysqli_fetch_array($query_busca_dic)){ 
-		$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
-		$nome = recuperaUsuario($event['idUsuario']);
-		$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
-?>
-						
-	<tr>
-		<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-			<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a> [<?php 
-				if($chamado['numero'] == '0'){
-				echo "0";
-				}else{
-				echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
-			}
-	
-?>] 		</td>
-			<td><?php echo $nome['nomeCompleto'] ?></td>
-			<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
-	</tr>					
-	
-<?php
-		}
-?>
-					
-					
-	</tbody>
-		</table>
-				   
+			<table class='table table-condensed'>
+				<thead>
+					<tr class='list_menu'>
+						<td width='10%'>Numero IG</td>
+						<td>Nome de Evento</td>
+						<td>Enviador por</td>
+						<td>Data/Início</td>
+					</tr>
+				</thead>		
+				<tbody>
+			<?php
+				$con = bancoMysqli();
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
+				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+				while($evento = mysqli_fetch_array($query_busca_dic))
+				{ 
+					$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
+					$nome = recuperaUsuario($event['idUsuario']);
+					$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
+			?>			
+					<tr>
+						<td><?php echo $evento['ig_evento_idEvento'] ?></td>
+						<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a> [<?php 
+					if($chamado['numero'] == '0')
+					{
+						echo "0";
+					}
+					else
+					{
+						echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
+					}
+?>]
+						</td>
+						<td><?php echo $nome['nomeCompleto'] ?></td>
+						<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
+					</tr>
+			<?php
+				}
+			?>
+				</tbody>
+			</table>
 		</div>
-		</div>
-</section>
-		
-<?php
-	break;
-	case "editados": 
-?>
-
+	</div>
+</section>		
+		<?php
+			break;
+			case "editados": 
+		?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -134,60 +128,56 @@ case "all":
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
                 </div>
 			</div>
-		</div>  
-			
+		</div>  	
 		<div class="table-responsive list_info">
-        <table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-					<td width='10%'>Numero IG</td>
-					<td>Nome de Evento</td>
-					<td>Enviador por</td>
-					<td>Data/Início</td>
-				</tr>
-			</thead>
-			
-	<tbody>
-<?php
-	$con = bancoMysqli();
-	$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE editado = '1' AND (revisado = '0' OR revisado = NULL) AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
-	$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-		while($evento = mysqli_fetch_array($query_busca_dic)){ 
-		$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
-		$nome = recuperaUsuario($event['idUsuario']);
-		$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
-?>
-		
-<tr>
-	<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-		<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
-		if($chamado['numero'] == '0'){
-		echo "0";
-		}else{
-		echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
-		}
-?>]		</td>
-					
-	<td><?php echo $nome['nomeCompleto'] ?></td>
-	<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
-</tr>					
-
-<?php
-						}
-?>
-										
-	</tbody>
-		</table>
+			<table class='table table-condensed'>
+				<thead>
+					<tr class='list_menu'>
+						<td width='10%'>Numero IG</td>
+						<td>Nome de Evento</td>
+						<td>Enviador por</td>
+						<td>Data/Início</td>
+					</tr>
+				</thead>
+				<tbody>
+			<?php
+				$con = bancoMysqli();
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE editado = '1' AND (revisado = '0' OR revisado = NULL) AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
+				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+				while($evento = mysqli_fetch_array($query_busca_dic))
+				{ 
+					$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
+					$nome = recuperaUsuario($event['idUsuario']);
+					$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
+			?>	
+					<tr>
+						<td><?php echo $evento['ig_evento_idEvento'] ?></td>
+						<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
+					if($chamado['numero'] == '0')
+					{
+						echo "0";
+					}
+					else
+					{
+						echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
+					}
+?>]						</td>				
+						<td><?php echo $nome['nomeCompleto'] ?></td>
+						<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
+					</tr>					
+			<?php
+				}
+			?>									
+				</tbody>
+			</table>
 				   
 		</div>
 	</div>
 </section>
-
-<?php
-	break;
-	case "sem": 
-?>
-
+		<?php
+			break;
+			case "sem": 
+		?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -198,60 +188,56 @@ case "all":
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 				</div>
 			</div>
-		</div>  
-			
-	<div class="table-responsive list_info">
-		<table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-					<td width='10%'>Numero IG</td>
-					<td>Nome de Evento</td>
-					<td>Enviador por</td>
-					<td>Data/Início</td>
-				</tr>
-			</thead>
-			
-	<tbody>
-<?php
-	$con = bancoMysqli();
-	$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND (editado = '0' OR editado IS NULL) AND (revisado = '0' OR revisado IS NULL) ORDER BY idCom DESC";
-	$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-		while($evento = mysqli_fetch_array($query_busca_dic)){ 
-		$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
-		$nome = recuperaUsuario($event['idUsuario']);
-		$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);						
-?>
-						
-	<tr>
-		<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-			<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
-				if($chamado['numero'] == '0'){
-				echo "0";
-				}else{
-				echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
+		</div>  	
+		<div class="table-responsive list_info">
+			<table class='table table-condensed'>
+				<thead>
+					<tr class='list_menu'>
+						<td width='10%'>Numero IG</td>
+						<td>Nome de Evento</td>
+						<td>Enviador por</td>
+						<td>Data/Início</td>
+					</tr>
+				</thead>
+				<tbody>
+			<?php
+				$con = bancoMysqli();
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND (editado = '0' OR editado IS NULL) AND (revisado = '0' OR revisado IS NULL) ORDER BY idCom DESC";
+				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+				while($evento = mysqli_fetch_array($query_busca_dic))
+				{ 
+					$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
+					$nome = recuperaUsuario($event['idUsuario']);
+					$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);						
+			?>				
+					<tr>
+						<td><?php echo $evento['ig_evento_idEvento'] ?></td>
+						<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
+					if($chamado['numero'] == '0')
+					{
+						echo "0";
+					}
+					else
+					{
+						echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
+					}
+?>]
+						</td>
+						<td><?php echo $nome['nomeCompleto'] ?></td>
+						<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
+					</tr>	
+			<?php
 				}
-?>] 		</td>
-
-		<td><?php echo $nome['nomeCompleto'] ?></td>
-		<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
-	</tr>	
-	
-<?php
-						}
-?>
-					
-	</tbody>
-		</table>
-				   
-	</div>
+			?>			
+				</tbody>
+			</table>		   
+		</div>
 	</div>
 </section>
-
-<?php
-	break;
-	case "revisados": 
-?>
-
+		<?php
+			break;
+			case "revisados": 
+		?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
       	<div class="row">
@@ -262,60 +248,56 @@ case "all":
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
                 </div>
 			</div>
-		</div>  
-			
-	<div class="table-responsive list_info">
-        <table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-					<td width='10%'>Numero IG</td>
-					<td>Nome de Evento</td>
-					<td>Enviador por</td>
-					<td>Data/Início</td>
-				</tr>
-			</thead>
-			
-	<tbody>
-<?php
-	$con = bancoMysqli();
-	$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE revisado = '1'  AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
-	$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-		while($evento = mysqli_fetch_array($query_busca_dic)){ 
-		$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
-		$nome = recuperaUsuario($event['idUsuario']);
-		$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
-?>
-						
-	<tr>
-	<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-		<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
-			if($chamado['numero'] == '0'){
-				echo "0";
-			}else{
-				echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
-			}
-					
-?>] 	</td>
-		<td><?php echo $nome['nomeCompleto'] ?></td>
-		<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
-	</tr>		
-	
-<?php
-						}
-?>
-					
-	</tbody>
-		</table>
-				   
-	</div>
+		</div>  	
+		<div class="table-responsive list_info">
+			<table class='table table-condensed'>
+				<thead>
+					<tr class='list_menu'>
+						<td width='10%'>Numero IG</td>
+						<td>Nome de Evento</td>
+						<td>Enviador por</td>
+						<td>Data/Início</td>
+					</tr>
+				</thead>
+				<tbody>
+			<?php
+				$con = bancoMysqli();
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE revisado = '1'  AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
+				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+				while($evento = mysqli_fetch_array($query_busca_dic))
+				{ 
+					$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
+					$nome = recuperaUsuario($event['idUsuario']);
+					$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
+			?>			
+					<tr>
+						<td><?php echo $evento['ig_evento_idEvento'] ?></td>
+						<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
+					if($chamado['numero'] == '0')
+					{
+						echo "0";
+					}
+					else
+					{
+						echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
+					}		
+?>]
+						</td>
+						<td><?php echo $nome['nomeCompleto'] ?></td>
+						<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
+					</tr>
+			<?php
+				}
+			?>				
+				</tbody>
+			</table>			   
+		</div>
 	</div>
 </section>
-
-<?php
-	break;
-	case "docs":
-?>
-	
+		<?php
+			break;
+			case "docs":
+		?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -327,67 +309,66 @@ case "all":
 				</div>
 			</div>
 		</div> 
-		
-    <form method="" action="../pdf/rlt_gera_revista.php" target="_blank" class="form-horizontal" role="form">
-        <div class="form-group">
-		
-            <div class="col-md-offset-2 col-md-6">
-				<label>Data início *</label>
-                <input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="">
+		<form method="" action="../pdf/rlt_gera_revista.php" target="_blank" class="form-horizontal" role="form">
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-6">
+					<label>Data início *</label>
+					<input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="">
+				</div>	
+				<div class=" col-md-6">
+					<label>Data encerramento *</label>
+					<input type="text" name="dataFinal" class="form-control" id="datepicker02"  placeholder="">
+				</div>
 			</div>
-                	
-			<div class=" col-md-6">
-                <label>Data encerramento *</label>
-                <input type="text" name="dataFinal" class="form-control" id="datepicker02"  placeholder="">
-            </div>
-			
-        </div>
-		
-        <div class="form-group">
-			<div class="col-md-offset-2 col-md-8">
-                <br />
-                <input type="submit" class="btn btn-theme btn-lg btn-block" value="GERAR">
-                <br />
-	</form>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<br />
+					<input type="submit" class="btn btn-theme btn-lg btn-block" value="GERAR">
+					<br />
+				</div>
 			</div>
-        </div>
-
-	<div class="table-responsive list_info">
-				   
+		</form>
 	</div>
+	<div class="table-responsive list_info">			   
 	</div>
-	</section>
-
-<?php
-	break;
-	case "agenda": 
-	if(isset($_POST['inicio']) AND $_POST['inicio'] != ""){
-		if($_POST['final'] == ""){
-			$mensagem = "É preciso informar a data final do filtro";	
-		}else{
-			$inicio = exibirDataMysql($_POST['inicio']);
-			$final = exibirDataMysql($_POST['final']);
-			if($_POST['inicio'] > $_POST['final']){
-				$mensagem = "A data final do filtro deve ser maior que a data inicio";		
-			}else{
-				$data_inicio = exibirDataMysql($_POST['inicio']);
-				$data_final = exibirDataMysql($_POST['final']);
-				$mensagem = "Filtro aplicado: eventos entre ".$_POST['inicio']." e ".$_POST['final'];
-			}
-		
-		}	
-	}else{
-		$mes = date("m");      // Mês desejado, pode ser por ser obtido por POST, GET, etc.
-		$ano = date("Y"); // Ano atual
-		$dia = date("t", mktime(0,0,0,$mes,'01',$ano)); // Mágica, plim!
-		$data_inicio = "$ano-$mes-01";
-		$data_final = "$ano-$mes-$dia";
-		$nome_mes = retornaMes($mes);	
-		$mensagem = "Filtro aplicado: eventos de $nome_mes de $ano.";
-	
-	}
-?>
-
+</section>
+		<?php
+			break;
+			case "agenda": 
+				if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
+				{
+					if($_POST['final'] == "")
+					{
+						$mensagem = "É preciso informar a data final do filtro";	
+					}
+					else
+					{
+						$inicio = exibirDataMysql($_POST['inicio']);
+						$final = exibirDataMysql($_POST['final']);
+						if($_POST['inicio'] > $_POST['final'])
+						{
+							$mensagem = "A data final do filtro deve ser maior que a data inicio";		
+						}
+						else
+						{
+							$data_inicio = exibirDataMysql($_POST['inicio']);
+							$data_final = exibirDataMysql($_POST['final']);
+							$mensagem = "Filtro aplicado: eventos entre ".$_POST['inicio']." e ".$_POST['final'];
+						}
+					
+					}	
+				}
+				else
+				{
+					$mes = date("m");      // Mês desejado, pode ser por ser obtido por POST, GET, etc.
+					$ano = date("Y"); // Ano atual
+					$dia = date("t", mktime(0,0,0,$mes,'01',$ano)); // Mágica, plim!
+					$data_inicio = "$ano-$mes-01";
+					$data_final = "$ano-$mes-$dia";
+					$nome_mes = retornaMes($mes);	
+					$mensagem = "Filtro aplicado: eventos de $nome_mes de $ano.";
+				}
+		?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -399,103 +380,103 @@ case "all":
 				</div>
 			</div>
 		</div>  
-<form method="POST" action="?perfil=comunicacao&p=agenda" class="form-horizontal" role="form">
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-6">
-			<label>Data início *</label>
-			<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
-		</div>
-		
-		<div class=" col-md-6">
-		<label>Data encerramento *</label>
-			<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
-		</div>
-	</div>
-		
-    <div class="form-group">
-		<div class="col-md-offset-2 col-md-8">
-            <br />
-				<input type="submit" class="btn btn-theme btn-lg btn-block" value="Filtrar">
-            <br >	
-	</form>
-        </div>
-    </div>
-	
-	<div class="table-responsive list_info">
-        <table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-					<td width='10%'>Numero IG</td>
-					<td>Nome de Evento</td>
-					<td>Enviador por</td>
-					<td>Data/Início</td>
-				</tr>
-			</thead>
-			
-	<tbody>
-<?php					
-$con = bancoMysqli();
-$loc = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
-$local = $loc['local'];
-$sql_busca_dic = "SELECT DISTINCT idEvento FROM igsis_agenda WHERE idLocal IN($local) AND data <= '$data_final' AND data >= '$data_inicio' ORDER BY idTipo"; 
-  
-$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-	while($evento = mysqli_fetch_array($query_busca_dic)){ 
-	$event = recuperaDados("ig_evento",$evento['idEvento'],"idEvento");
-	$nome = recuperaUsuario($event['idUsuario']);
-	$chamado = recuperaAlteracoesEvento($evento['idEvento']);						
-	if($event['dataEnvio'] != NULL AND $event['idInstituicao'] == $_SESSION['idInstituicao']){ // só as enviadas
-?>
-						
-	<tr>
-	<td><?php echo retornaProtoEvento($evento['idEvento']) ?></td>
-		<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['idEvento']  ?>"><?php echo $event['nomeEvento'] ?></a>  [<?php 
-	    	if($chamado['numero'] == '0'){
-			echo "0";
-			}else{
-			echo "<a href='?perfil=chamado&p=evento&id=".$evento['idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
-			}
-?>] 	</td>
-	<td><?php echo $nome['nomeCompleto'] ?></td>
-	<td><?php echo retornaPeriodo($event['idEvento']) ?></td>
-	</tr>		
-	
-<?php
+		<form method="POST" action="?perfil=comunicacao&p=agenda" class="form-horizontal" role="form">
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-6">
+					<label>Data início *</label>
+					<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
+				</div>
+				<div class=" col-md-6">
+					<label>Data encerramento *</label>
+					<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<br />
+					<input type="submit" class="btn btn-theme btn-lg btn-block" value="Filtrar">
+					<br >
+				</div>
+			</div>					
+		</form>
+		<div class="table-responsive list_info">
+			<table class='table table-condensed'>
+				<thead>
+					<tr class='list_menu'>
+						<td width='10%'>Numero IG</td>
+						<td>Nome de Evento</td>
+						<td>Enviador por</td>
+						<td>Data/Início</td>
+					</tr>
+				</thead>
+				<tbody>
+			<?php					
+				$con = bancoMysqli();
+				$loc = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
+				$local = $loc['local'];
+				$sql_busca_dic = "SELECT DISTINCT idEvento FROM igsis_agenda WHERE idLocal IN($local) AND data <= '$data_final' AND data >= '$data_inicio' ORDER BY idTipo";
+				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+				while($evento = mysqli_fetch_array($query_busca_dic))
+				{ 
+					$event = recuperaDados("ig_evento",$evento['idEvento'],"idEvento");
+					$nome = recuperaUsuario($event['idUsuario']);
+					$chamado = recuperaAlteracoesEvento($evento['idEvento']);						
+					if($event['dataEnvio'] != NULL AND $event['idInstituicao'] == $_SESSION['idInstituicao'])
+					{
+						// só as enviadas
+			?>			
+					<tr>
+						<td><?php echo retornaProtoEvento($evento['idEvento']) ?></td>
+						<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['idEvento']  ?>"><?php echo $event['nomeEvento'] ?></a>  [<?php 
+						if($chamado['numero'] == '0')
+						{
+							echo "0";
 						}
+						else
+						{
+							echo "<a href='?perfil=chamado&p=evento&id=".$evento['idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
 						}
-?>
-								
-	</tbody>
-		</table>
-				   
-	</div>
+?>]
+						</td>
+						<td><?php echo $nome['nomeCompleto'] ?></td>
+						<td><?php echo retornaPeriodo($event['idEvento']) ?></td>
+					</tr>
+				<?php
+					}
+				}
+				?>							
+				</tbody>
+			</table>		   
+		</div>
 	</div>
 </section>
-
-<?php 
-break;
-case "foto":
-if(isset($_GET['foto'])){	
-
-	/*
-	0 - não aprovado
-	1 - aprovado
-	2 - todos
-	*/
-	
-	if($_GET['foto'] == 0){
-		$mensagem = "Eventos sem fotos, com problemas técnicos ou não aprovadas";		
-		$foto = " AND (foto = ".$_GET['foto']." OR foto = NULL) ";
-	}else{
-		$mensagem = "Eventos com fotos aprovadas";
-		$foto = " AND (foto = ".$_GET['foto'].") "; 
-	}
-		}else{
-		$foto = "";
-		$mensagem = "Todos os eventos.";
-}
-?>
-
+		<?php 
+			break;
+			case "foto":
+				if(isset($_GET['foto']))
+				{
+					/*
+					0 - não aprovado
+					1 - aprovado
+					2 - todos
+					*/
+					if($_GET['foto'] == 0)
+					{
+						$mensagem = "Eventos sem fotos, com problemas técnicos ou não aprovadas";		
+						$foto = " AND (foto = ".$_GET['foto']." OR foto = NULL) ";
+					}
+					else
+					{
+						$mensagem = "Eventos com fotos aprovadas";
+						$foto = " AND (foto = ".$_GET['foto'].") "; 
+					}
+				}
+				else
+				{
+					$foto = "";
+					$mensagem = "Todos os eventos.";
+				}
+		?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -507,33 +488,31 @@ if(isset($_GET['foto'])){
                 </div>
 			</div>
 		</div>  
-
-	<div class="table-responsive list_info">
-		<p><a href="?perfil=comunicacao&p=foto&foto=0">Filtrar por fotos pendentes</a></p>
-		<p><a href="?perfil=comunicacao&p=foto&foto=1">Filtrar por fotos aprovadas</a></p>
-		<p><a href="?perfil=comunicacao&p=foto">Todos os eventos</a></p>
-			<table class='table table-condensed'>
-				<thead>
-					<tr class='list_menu'>
-						<td width='10%'>Numero IG</td>
-						<td>Nome de Evento</td>
-						<td>Enviador por</td>
-						<td>Data/Início</td>
-						<td>Foto/imagem divulgação</td>
-					</tr>
-				</thead>
-				
-<tbody>
-<?php
-	$con = bancoMysqli();
-	$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' $foto ORDER BY idCom DESC";
-	$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-		while($evento = mysqli_fetch_array($query_busca_dic)){ 
-		$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
-		$nome = recuperaUsuario($event['idUsuario']);
-		$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
-?>
-	
+		<div class="table-responsive list_info">
+			<p><a href="?perfil=comunicacao&p=foto&foto=0">Filtrar por fotos pendentes</a></p>
+			<p><a href="?perfil=comunicacao&p=foto&foto=1">Filtrar por fotos aprovadas</a></p>
+			<p><a href="?perfil=comunicacao&p=foto">Todos os eventos</a></p>
+				<table class='table table-condensed'>
+					<thead>
+						<tr class='list_menu'>
+							<td width='10%'>Numero IG</td>
+							<td>Nome de Evento</td>
+							<td>Enviador por</td>
+							<td>Data/Início</td>
+							<td>Foto/imagem divulgação</td>
+						</tr>
+					</thead>
+					<tbody>
+			<?php
+				$con = bancoMysqli();
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' $foto ORDER BY idCom DESC";
+				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+				while($evento = mysqli_fetch_array($query_busca_dic))
+				{ 
+					$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
+					$nome = recuperaUsuario($event['idUsuario']);
+					$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
+			?>
 	<tr>
 		<td><?php echo $evento['ig_evento_idEvento'] ?></td>
 			<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
