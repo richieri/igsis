@@ -701,7 +701,7 @@ $a = $recuperar['Equipamento'];
 	</div>
 </section>
 
-<?php /* =========== FIM EQUIPAMENTO ===========*/ break
+<?php /* =========== FIM EQUIPAMENTO ===========*/ break;
 
  
 /* =========== INÍCIO LINGUAGEM ===========*/

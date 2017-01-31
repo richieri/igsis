@@ -5,7 +5,7 @@ $con = bancoMysqli();
 $idPessoa = $_REQUEST['idPessoa'];
 $tipoPessoa = $_REQUEST['tipoPessoa'];
 
-if(isset($_POST['fisica']) OR ($_GET['tipoPessoa'] == 1))
+if(isset($_POST['fisica']) OR ($_GET['tipoPessoa'] == 4))
 {
 	$form = "<form method='POST' action='?perfil=formacao&p=frm_edita_pf&id_pf=$idPessoa' />
 				<input type='hidden' name='fisica' value='1'>";
@@ -94,51 +94,47 @@ $campo = recuperaPessoa($_REQUEST['idPessoa'],$_REQUEST['tipoPessoa']);
 					<p><?php if(isset($mensagem)){echo $mensagem;} ?></p>	
 					<p>Nesta página, você envia documentos digitalizados. O tamanho máximo do arquivo deve ser 50MB.</p>
 					<br />
-
-	<div class = "center">
-		<form method="POST" action="?<?php echo $_SERVER['QUERY_STRING'] ?>" enctype="multipart/form-data">
-		
-	<table>
-<tr>
-<td width="50%"><td>
-</tr>
-
-<?php 
-	$sql_arquivos = "SELECT * FROM sis_formacao_upload";
-	$query_arquivos = mysqli_query($con,$sql_arquivos);
-	while($arq = mysqli_fetch_array($query_arquivos)){ ?>
-
-	<tr>
-	<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
-	</tr>
-	
-<?php } 
-?>
-	</table>
-	
-    <br />
-	
-    <input type="hidden" name="idPessoa" value="<?php echo $idPessoa; ?>"  />
-    <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-		<?php if(isset($_POST['volta'])){
-			echo 	"<input type='hidden' name='volta' value='".$_POST['volta']."' />";
-		} ?>
-	<input type='hidden' name='<?php echo $p; ?>' value='1' />
-    <input type="hidden" name="enviar" value="1"  />
-    <input type="submit" class="btn btn-theme btn-lg btn-block" value='Enviar'>
-		</form>
-	</div>
-	
-<br />
-
-	<div class="center">
-<?php echo $form ?>	
-    <input type="hidden" name="idPessoa" value="<?php echo $idPessoa; ?>"  />
-    <input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
-	<input type="submit" class="btn btn-theme btn-block" value='Voltar ao Cadastro de Pessoa'>
-	</div>
-	
-<br />
+					<div class = "center">
+						<form method="POST" action="?<?php echo $_SERVER['QUERY_STRING'] ?>" enctype="multipart/form-data">
+						<table>
+							<tr>
+								<td width="50%"><td>
+							</tr>
+						<?php 
+							$sql_arquivos = "SELECT * FROM sis_formacao_upload";
+							$query_arquivos = mysqli_query($con,$sql_arquivos);
+							while($arq = mysqli_fetch_array($query_arquivos))
+							{ 
+						?>
+								<tr>
+									<td><label><?php echo $arq['documento']?></label></td>
+									<td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+								</tr>							
+						<?php 
+							} 
+						?>
+						</table>	
+						<br />	
+						<input type="hidden" name="idPessoa" value="<?php echo $idPessoa; ?>"  />
+						<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+						<?php if(isset($_POST['volta']))
+						{
+							echo 	"<input type='hidden' name='volta' value='".$_POST['volta']."' />";
+						} 
+						?>
+						<input type='hidden' name='<?php echo $p; ?>' value='1' />
+						<input type="hidden" name="enviar" value="1"  />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value='Enviar'>
+						</form>
+					</div>						
+					<br />
+					<div class="center">
+						<?php echo $form ?>	
+						<input type="hidden" name="idPessoa" value="<?php echo $idPessoa; ?>"  />
+						<input type="hidden" name="tipoPessoa" value="<?php echo $tipoPessoa; ?>"  />
+						<input type="submit" class="btn btn-theme btn-block" value='Voltar ao Cadastro de Pessoa'>
+					</div>
+					<br />
 				</div>
 			</div>
 		</div>

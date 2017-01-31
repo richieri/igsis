@@ -1,196 +1,208 @@
-﻿<?php include 'includes/menu.php';?>
+﻿<?php include 'includes/menu.php';
 
-<?php
-if(isset($_GET['b'])){
+if(isset($_GET['b']))
+{
 	$b = $_GET['b'];	
-}else{
+}
+else
+{
 	$b = 'inicial';
 }
 
-switch($b){
+switch($b)
+{
 case 'inicial':
-if(isset($_POST['pesquisar'])){
-$id = trim($_POST['id']);
-$evento = trim($_POST['evento']);
-$fiscal = $_POST['fiscal'];
-$tipo = $_POST['tipo'];
-$instituicao = $_POST['instituicao'];
-$estado = $_POST['estado'];
-$operador = $_POST['operador'];
-$juridico = $_POST['juridico'];
 
-if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $operador == 0 AND $juridico == 0){ ?>
+if(isset($_POST['pesquisar']))
+{
+	$id = trim($_POST['id']);
+	$evento = trim($_POST['evento']);
+	$fiscal = $_POST['fiscal'];
+	$tipo = $_POST['tipo'];
+	$instituicao = $_POST['instituicao'];
+	$estado = $_POST['estado'];
+	$operador = $_POST['operador'];
+	$juridico = $_POST['juridico'];
 
-<section id="services" class="home-section bg-white">
-	<div class="container">
-		<div class="row">
-		  <div class="col-md-offset-2 col-md-8">
-			<div class="section-heading">
-			 <h2>Busca por pedido</h2>
-			<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
-			</div>
-		  </div>
-		</div>
-			  
-	<div class="row">
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-8">
-				<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-				<form method="POST" action="?perfil=contratos&p=frm_busca" class="form-horizontal" role="form">
-					<label>Código do Pedido</label>
-					<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-						<label>Objeto/Evento</label>
-						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
+	if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $operador == 0 AND $juridico == 0)
+	{ 
+?>
+		<section id="services" class="home-section bg-white">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-offset-2 col-md-8">
+						<div class="section-heading">
+							<h2>Busca por pedido</h2>
+							<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
+						</div>
+					</div>
+				</div>			  
+				<div class="row">
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+							<form method="POST" action="?perfil=contratos&p=frm_busca" class="form-horizontal" role="form">
+							<label>Código do Pedido</label>
+							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+							<label>Objeto/Evento</label>
+							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
 							<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
-							<select class="form-control" name="fiscal" id="inputSubject" >
-								<option value="0"></option>	
-								<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
-							</select>
-									<br />
-									<label>Tipo de evento</label>
-									<select class="form-control" name="tipo" id="inputSubject" >
-										<option value="0"></option>		                
-										<?php echo geraOpcao("ig_tipo_evento","","") ?>
-									</select>	
-										<br />
-											<label>Instituição</label>
-											<select class="form-control" name="instituicao" id="inputSubject" >
-												<option value="0"></option>
-												<?php echo geraOpcao("ig_instituicao","","") ?>
-											</select>		
-													<br />
-														<label>Status do pedido</label>
-														<select class="form-control" name="estado" id="inputSubject" >
-															<option value='0'></option>
-															<?php echo geraOpcao("sis_estado","","") ?>
-														</select>	
-																<label>Operador do Contrato</label>		
-																<select class="form-control" name="operador" id="inputSubject" >
-																	<option value='0'></option>
-																	<?php  geraOpcaoContrato(""); ?>
-																</select>	
-																			<label>Tipo de Relação Jurídica</label>
-																			<select class="form-control" name="juridico" id="inputSubject" >
-																				<option value='0'></option>
-																				<?php  geraOpcao("ig_modalidade","",""); ?>
-																			</select>	
-
-
-            </div>
-		</div>
-				
-	<br />
-				
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-8">
-			<input type="hidden" name="pesquisar" value="1" />
-			<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
-		</form>
-		</div>
-	</div>
-</section>
-
-<?php
-}else{
-$con = bancoMysqli();
+								<select class="form-control" name="fiscal" id="inputSubject" >
+									<option value="0"></option>	
+									<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
+								</select>
+							<br />
+							<label>Tipo de evento</label>
+							<select class="form-control" name="tipo" id="inputSubject" >
+								<option value="0"></option>		                
+								<?php echo geraOpcao("ig_tipo_evento","","") ?>
+							</select>	
+							<br />
+							<label>Instituição</label>
+							<select class="form-control" name="instituicao" id="inputSubject" >
+								<option value="0"></option>
+								<?php echo geraOpcao("ig_instituicao","","") ?>
+							</select>		
+							<br />
+							<label>Status do pedido</label>
+							<select class="form-control" name="estado" id="inputSubject" >
+								<option value='0'></option>
+								<?php echo geraOpcao("sis_estado","","") ?>
+							</select>	
+							<label>Operador do Contrato</label>		
+							<select class="form-control" name="operador" id="inputSubject" >
+								<option value='0'></option>
+								<?php  geraOpcaoContrato(""); ?>
+							</select>	
+							<label>Tipo de Relação Jurídica</label>
+								<select class="form-control" name="juridico" id="inputSubject" >
+									<option value='0'></option>
+									<?php  geraOpcao("ig_modalidade","",""); ?>
+								</select>	
+						</div>
+					</div>				
+					<br />							
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="pesquisar" value="1" />
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	<?php
+	}
+	else
+	{
+	$con = bancoMysqli();
 	$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idEvento = '$evento' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
 	$query_existe = mysqli_query($con, $sql_existe);
 	$num_registro = mysqli_num_rows($query_existe);
-if($id != "" AND $num_registro > 0){ // Foi inserido o número do pedido
+	if($id != "" AND $num_registro > 0)
+	{ // Foi inserido o número do pedido
 		$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
-		if($pedido['estado'] != NULL){
-			
-		$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
-		$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
-		$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
-		$local = listaLocais($pedido['idEvento']);
-		$periodo = retornaPeriodo($pedido['idEvento']);
-		$duracao = retornaDuracao($pedido['idEvento']);
-		$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
-		$fiscal = recuperaUsuario($evento['idResponsavel']);
-		$suplente = recuperaUsuario($evento['suplente']);
-		$protocolo = ""; //recuperaDados("sis_protocolo",$pedido['idEvento'],"idEvento");
-					$operador = recuperaUsuario($pedido['idContratos']);
-		if($pedido['parcelas'] > 1){
-			$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
-			$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
-		}else{
-			$valorTotal = $pedido['valor'];
-			$formaPagamento = $pedido['formaPagamento'];
+		if($pedido['estado'] != NULL)
+		{				
+			$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
+			$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+			$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
+			$local = listaLocais($pedido['idEvento']);
+			$periodo = retornaPeriodo($pedido['idEvento']);
+			$duracao = retornaDuracao($pedido['idEvento']);
+			$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
+			$fiscal = recuperaUsuario($evento['idResponsavel']);
+			$suplente = recuperaUsuario($evento['suplente']);
+			$operador = recuperaUsuario($pedido['idContratos']);
+			if($pedido['parcelas'] > 1)
+			{
+				$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
+				$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
+			}
+			else
+			{
+				$valorTotal = $pedido['valor'];
+				$formaPagamento = $pedido['formaPagamento'];
+			}	
+		$x[0]['id']= $pedido['idPedidoContratacao'];
+		$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+		if($pedido['tipoPessoa'] == 1)
+		{
+			$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+			$x[0]['proponente'] = $pessoa['Nome'];
+			$x[0]['tipo'] = "Física";
 		}
-	
-	$x[0]['id']= $pedido['idPedidoContratacao'];
-	$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-	if($pedido['tipoPessoa'] == 1){
-		$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-		$x[0]['proponente'] = $pessoa['Nome'];
-		$x[0]['tipo'] = "Física";
-
-	}else{
-		$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-		$x[0]['proponente'] = $pessoa['RazaoSocial'];
-		$x[0]['tipo'] = "Jurídica";
-
+		else
+		{
+			$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+			$x[0]['proponente'] = $pessoa['RazaoSocial'];
+			$x[0]['tipo'] = "Jurídica";
+		}
+		$x[0]['local'] = substr($local,1);
+		$x[0]['instituicao'] = $instituicao['sigla'];
+		$x[0]['periodo'] = $periodo;
+		$x[0]['status'] = $pedido['estado'];
+		$x[0]['operador'] = $operador['nomeCompleto'];	
+		$x['num'] = 1;
 	}
-	$x[0]['local'] = substr($local,1);
-	$x[0]['instituicao'] = $instituicao['sigla'];
-	$x[0]['periodo'] = $periodo;
-	$x[0]['status'] = $pedido['estado'];
-	$x[0]['operador'] = $operador['nomeCompleto'];	
-	$x['num'] = 1;
-	}else{
+	else
+	{
 			$x['num'] = 0;
+	}
+}
+else
+{ //Não foi inserido o número do pedido
+	if($evento != '')
+	{
+		$filtro_evento = " AND nomeEvento LIKE '%$evento%' OR autor LIKE '%$evento%' ";
+	}
+	else{
+		$filtro_evento = "";
 		
 	}
-}else{ //Não foi inserido o número do pedido
-		if($evento != ''){
-			$filtro_evento = " AND nomeEvento LIKE '%$evento%' OR autor LIKE '%$evento%' ";
-		}else{
-			$filtro_evento = "";
-			
-		}
-		if($fiscal != 0){
-			$filtro_fiscal = " AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )";	
-		}else{
-			$filtro_fiscal = "";	
-		}
-		
-		if($tipo != 0){
-			$filtro_tipo = " AND ig_tipo_evento_idTipoEvento = '$tipo' ";	
-		}else{
-			$filtro_tipo = "";	
-		}
-		
-		if($instituicao != 0){
-			$filtro_instituicao = " AND idInstituicao = '$instituicao' ";	
-		}else{
-			$filtro_instituicao = "";	
-		}
-		
-		if($estado == "" OR $estado == 0){
-			$filtro_status = " AND estado IS NOT NULL ";	
+	if($fiscal != 0){
+		$filtro_fiscal = " AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )";	
+	}else{
+		$filtro_fiscal = "";	
+	}
 	
-		}else{
-			$filtro_status = " AND estado = '$estado'  ";	
-
-		}
-		
-		if($operador == 0){
-			$filtro_operador = "";	
+	if($tipo != 0){
+		$filtro_tipo = " AND ig_tipo_evento_idTipoEvento = '$tipo' ";	
+	}else{
+		$filtro_tipo = "";	
+	}
 	
-		}else{
-			$filtro_operador = " AND idContratos = '$operador'  ";	
-
-		}
-		
-		if($juridico == 0){
-			$filtro_juridico = "";	
+	if($instituicao != 0){
+		$filtro_instituicao = " AND idInstituicao = '$instituicao' ";	
+	}else{
+		$filtro_instituicao = "";	
+	}
 	
-		}else{
-			$filtro_juridico = " AND ig_modalidade_IdModalidade = '$juridico'  ";	
+	if($estado == "" OR $estado == 0){
+		$filtro_status = " AND estado IS NOT NULL ";	
 
-		}
-		
+	}else{
+		$filtro_status = " AND estado = '$estado'  ";	
+
+	}
+	
+	if($operador == 0){
+		$filtro_operador = "";	
+
+	}else{
+		$filtro_operador = " AND idContratos = '$operador'  ";	
+
+	}
+	
+	if($juridico == 0){
+		$filtro_juridico = "";	
+
+	}else{
+		$filtro_juridico = " AND ig_modalidade_IdModalidade = '$juridico'  ";	
+
+	}
+	
 				
 		$sql_evento = "SELECT * FROM ig_evento WHERE publicado = '1' $filtro_evento $filtro_fiscal $filtro_tipo $filtro_instituicao $filtro_juridico ORDER BY idEvento DESC";
 		$query_evento = mysqli_query($con,$sql_evento);
