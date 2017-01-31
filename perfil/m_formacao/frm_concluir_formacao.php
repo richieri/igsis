@@ -151,6 +151,7 @@
 		<h3>Resultado da busca</h3>
 		<h5>Foram encontrados
 			<?php
+				$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
 				if($pedido['tipoPessoa'] == 4)
 				{ 
 					echo $x['num'];
