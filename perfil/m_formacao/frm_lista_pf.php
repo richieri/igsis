@@ -1,26 +1,28 @@
 <?php
-$_SESSION['idPedido'] = "";
-$con = bancoMysqli();
-include 'includes/menu.php';
+	$_SESSION['idPedido'] = "";
+	$con = bancoMysqli();
+	include 'includes/menu.php';
 ?>
-
-	<script src="jquery/jquery-2.1.4.js"></script>
-		<script>
-			$(document).ready(function(){
-				$("#input").keydown(function(){
-					var input = $("#input").val();
-					$.ajax({
-					  type: "POST",
-					  url: "index.php?perfil=formacao&p=controller_pf",
-					  data: { "input" : input },
-					  success: function(res){
-						$("#resposta").html(res);
-					  }
-					});
-				});
+<script src="jquery/jquery-2.1.4.js"></script>
+<script>
+	$(document).ready(function()
+	{
+		$("#input").keydown(function()
+		{
+			var input = $("#input").val();
+			$.ajax(
+			{
+				type: "POST",
+				url: "index.php?perfil=formacao&p=controller_pf",
+				data: { "input" : input },
+				success: function(res)
+				{
+					$("#resposta").html(res);
+				}
 			});
-		</script>
-		
+		});
+	});
+</script>
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
@@ -29,6 +31,5 @@ include 'includes/menu.php';
 			</div>
 		</div>
 	</div>
-	
 	<div id="resposta"></div>
 </section>

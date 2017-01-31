@@ -1,5 +1,6 @@
-<?php include 'includes/menu.php';?>
-
+<?php
+	include 'includes/menu.php';
+?>
 <section id="services" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
