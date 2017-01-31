@@ -4,6 +4,7 @@
 		<ul class="dl-menu">
 			<li><a href="?perfil=usuario&p=dados">Dados da conta</a></li>
 			<li><a href="?perfil=usuario&p=senha">Mudança de senha</a></li>
+			<li style="color:white;">-------------------------</li>
 			<li><a href="?secao=perfil">Carregar Módulos</a></li>
 			<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-configuracoes-de-conta/">Ajuda</a></li>
 			<li><a href="../include/logoff.php">Sair</a></li>

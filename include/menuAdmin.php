@@ -32,6 +32,7 @@
 					<li><a href="?perfil=admin&p=alteracoes"> Alterações</a></li>
 				</ul>
 			</li>
+			<li style="color:white;">-------------------------</li>
 			<li><a href="?secao=perfil">Carregar Módulos</a></li>
 			<li><a href="?secao=ajuda">Ajuda</a></li>
 			<li><a href="../include/logoff.php">Sair </a></li>

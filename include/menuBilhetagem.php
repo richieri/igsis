@@ -5,9 +5,10 @@
 	         <?php if($_SESSION['idInstituicao'] == 5){ ?>
 	           <li><a href="?perfil=bilhetagem&p=all" > Todos os eventos</a></li>      
 				<?php } ?>
-                 <li><a href="?secao=perfil">Carregar módulos</a></li>
+				<li style="color:white;">-------------------------</li>
+				 <li><a href="?secao=perfil">Carregar módulos</a></li>
 				 <li><a href="http://www.centrocultural.cc/igsis/manual/index.php/acessando-o-modulo-bilhetagem/">Ajuda</a></li>
-                 <li><a href="../include/logoff.php">Sair</a></li>
+				 <li><a href="../include/logoff.php">Sair</a></li>
                                     </ul>
                             </li>   
 						</ul>

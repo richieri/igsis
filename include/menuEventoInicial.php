@@ -8,6 +8,7 @@
         <li><a href="?perfil=evento&p=pedidos_enviados">Acompanhar andamento de pedidos enviados</a> 
         <li><a href="?perfil=propostas">Pesquisar propostas enviadas por formulário online</a>
 		<li><a href="http://www.centrocultural.cc/smcproducao/" target = "_blank">Informações de produção / riders / mapas de luz</a></li>
+		<li style="color:white;">-------------------------</li>
                 <li><a href="?secao=perfil">Carregar Módulos</a></li>
 			 <li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-evento/">Ajuda</a></li>
                 <li><a href="../include/logoff.php">Sair</a></li>
