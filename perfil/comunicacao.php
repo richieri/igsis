@@ -492,17 +492,17 @@
 			<p><a href="?perfil=comunicacao&p=foto&foto=0">Filtrar por fotos pendentes</a></p>
 			<p><a href="?perfil=comunicacao&p=foto&foto=1">Filtrar por fotos aprovadas</a></p>
 			<p><a href="?perfil=comunicacao&p=foto">Todos os eventos</a></p>
-				<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td width='10%'>Numero IG</td>
-							<td>Nome de Evento</td>
-							<td>Enviador por</td>
-							<td>Data/Início</td>
-							<td>Foto/imagem divulgação</td>
-						</tr>
-					</thead>
-					<tbody>
+			<table class='table table-condensed'>
+				<thead>
+					<tr class='list_menu'>
+						<td width='10%'>Numero IG</td>
+						<td>Nome de Evento</td>
+						<td>Enviador por</td>
+						<td>Data/Início</td>
+						<td>Foto/imagem divulgação</td>
+					</tr>
+				</thead>
+				<tbody>
 			<?php
 				$con = bancoMysqli();
 				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' $foto ORDER BY idCom DESC";
@@ -513,44 +513,46 @@
 					$nome = recuperaUsuario($event['idUsuario']);
 					$chamado = recuperaAlteracoesEvento($evento['ig_evento_idEvento']);
 			?>
-	<tr>
-		<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-			<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
-				if($chamado['numero'] == '0'){
-					echo "0";
-				}else{
-					echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
+					<tr>
+						<td><?php echo $evento['ig_evento_idEvento'] ?></td>
+						<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
+					if($chamado['numero'] == '0')
+					{
+						echo "0";
+					}
+					else
+					{
+						echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
+					}
+?>]
+						</td>
+						<td><?php echo $nome['nomeCompleto'] ?></td>
+						<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
+						<td>
+				<?php 
+					if($evento['foto'] == 0 OR $evento['foto'] == NULL)
+					{
+						echo "Pendente";
+					}
+					else
+					{
+						echo "Aprovado";	
+					}
+				?>
+						</td>
+					</tr>
+			<?php
 				}
-					
-?>] 		</td>
-
-	<td><?php echo $nome['nomeCompleto'] ?></td>
-	<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
-	<td><?php 
-	if($evento['foto'] == 0 OR $evento['foto'] == NULL){
-	echo "Pendente";
-	}else{
-	echo "Aprovado";	
-	}
-?></td>
-	</tr>	
-	
-<?php
-						}
-?>
-
-</tbody>
+			?>
+				</tbody>
 			</table>
-				   
-	</div>
+		</div>
 	</div>
 </section>
-
-<?php 
-break;
-case "chamados":
-?>
-
+		<?php 
+			break;
+			case "chamados":
+		?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -561,137 +563,139 @@ case "chamados":
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
                 </div>
 			</div>
-		</div>  
-			
-	<div class="table-responsive list_info">
-		<table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-					<td width='10%'>ID</td>
-					<td>Chamado</td>
-					<td>Data do envio</td>
-					<td>Usuário</td>
-				</tr>
-			</thead>
-			
-<tbody>
-<?php
-	$con = bancoMysqli();
-	$idInstituicao = $_SESSION['idInstituicao'];
-	$sql_busca = "SELECT * FROM igsis_chamado, ig_evento WHERE igsis_chamado.idEvento = ig_evento.idEvento AND idInstituicao = '$idInstituicao' ORDER BY idChamado DESC";
-	$query_busca = mysqli_query($con,$sql_busca);
-		while($chamado = mysqli_fetch_array($query_busca)){ 
-		$tipo = recuperaDados("igsis_tipo_chamado",$chamado['tipo'],"idTipoChamado");
-		$usuario = recuperaDados("ig_usuario",$chamado['idUsuario'],"idUsuario");
-?>
-						
-	<tr>
-		<td><?php echo $chamado['idChamado']; ?></td>
-			<td><a href="?perfil=chamado&p=detalhe&id=<?php echo $chamado['idChamado'] ?>" target="_blank" ><?php echo $tipo['chamado']." - ".$chamado['titulo']; ?>
-			
-                    <?php
-					if($chamado['idEvento'] != NULL){
-							$evento = recuperaDados("ig_evento",$chamado['idEvento'],"idEvento");
-							echo "<br />".$evento['nomeEvento'];
-						}
-	                ?>
-                </a>
-			</td>
-		<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
-		<td><?php echo $usuario['nomeCompleto'] ?></td>
-	</tr>	
-	
-<?php
-						}
-?>
-					
-</tbody>
-	</table>
-				   
-	</div>
+		</div>  	
+		<div class="table-responsive list_info">
+			<table class='table table-condensed'>
+				<thead>
+					<tr class='list_menu'>
+						<td width='10%'>ID</td>
+						<td>Chamado</td>
+						<td>Data do envio</td>
+						<td>Usuário</td>
+					</tr>
+				</thead>
+				<tbody>
+			<?php
+				$con = bancoMysqli();
+				$idInstituicao = $_SESSION['idInstituicao'];
+				$sql_busca = "SELECT * FROM igsis_chamado, ig_evento WHERE igsis_chamado.idEvento = ig_evento.idEvento AND idInstituicao = '$idInstituicao' ORDER BY idChamado DESC";
+				$query_busca = mysqli_query($con,$sql_busca);
+				while($chamado = mysqli_fetch_array($query_busca))
+				{ 
+					$tipo = recuperaDados("igsis_tipo_chamado",$chamado['tipo'],"idTipoChamado");
+					$usuario = recuperaDados("ig_usuario",$chamado['idUsuario'],"idUsuario");
+			?>
+					<tr>
+						<td><?php echo $chamado['idChamado']; ?></td>
+						<td>
+							<a href="?perfil=chamado&p=detalhe&id=<?php echo $chamado['idChamado'] ?>" target="_blank" ><?php echo $tipo['chamado']." - ".$chamado['titulo']; ?>
+				<?php
+					if($chamado['idEvento'] != NULL)
+					{
+						$evento = recuperaDados("ig_evento",$chamado['idEvento'],"idEvento");
+						echo "<br />".$evento['nomeEvento'];
+					}
+				?>
+							</a>
+						</td>
+						<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
+						<td><?php echo $usuario['nomeCompleto'] ?></td>
+					</tr>
+			<?php
+				}
+			?>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </section>
-   	
-<?php
-	break;
-	case "edicao": 
-	$idEvento = $_GET['id'];
-	
-if(isset($_POST['atualizar'])){
-
-	if(isset($_POST['editado'])){
-		$editado = 1;
-	}else{
-		$editado = 0;
-	}
-
-	if(isset($_POST['revisado'])){
-		$revisado = 1;
-	}else{
-		$revisado = 0;
-	}
-	
-	if(isset($_POST['site'])){
-		$site = 1;
-	}else{
-		$site = 0;
-	}
-	
-	if(isset($_POST['publicacao'])){
-		$publicacao = 1;
-	}else{
-		$publicacao = 0;
-	}
-	
-	if(isset($_POST['foto'])){
-		$foto = 1;
-	}else{
-		$foto = 0;
-	}
-
-	$projetoEspecial = $_POST['projetoEspecial']; 
-	$nomeEvento = $_POST['nomeEvento'];
-	$projeto = $_POST['projeto'];
-	$ig_tipo_evento_idTipoEvento = $_POST['ig_tipo_evento_idTipoEvento'];
-	$projetoEspecial = $_POST['projetoEspecial'];
-	$autor = addslashes($_POST['autor']);
-	$fichaTecnica = addslashes($_POST['fichaTecnica']); 
-	$sinopse = addslashes($_POST['sinopse']);
-	$releaseCom = addslashes($_POST['releaseCom']); 
-	$observacao =  addslashes($_POST['observacao']);	
-	$idCom = $_POST['atualizar'];
-
-	$sql_atualiza_com = "UPDATE `igsis`.`ig_comunicacao` SET 
-	`sinopse` = '$sinopse', 
-	`fichaTecnica` = '$fichaTecnica',
-	`autor` = '$autor',
-	`releaseCom` = '$releaseCom',
-	`revisado` = '$revisado',
-	`editado` = '$editado',
-	`projetoEspecial` = '$projetoEspecial',	
-	`site` = '$site',
-	`foto` = '$foto',
-	`publicacao` = '$publicacao',
-	`ig_tipo_evento_idTipoEvento` = '$ig_tipo_evento_idTipoEvento',
-	`projeto` = '$projeto',
-	`nomeEvento` = '$nomeEvento',
-	`observacao` = '$observacao' WHERE `ig_comunicacao`.`idCom` = '$idCom'";
-
-	$con = bancoMysqli();
-		
-	$query_atualiza_com = mysqli_query($con,$sql_atualiza_com);
-	if($query_atualiza_com){
-		$mensagem = "Atualizado com sucesso";	
-	}else{
-		$mensagem = "Erro ao atualizar.";
-	}
-	
-}
-	$idEvento = $_GET['id'];
-	$campo = recuperaDados("ig_comunicacao",$idEvento,"ig_evento_idEvento");
-	$chamado = recuperaAlteracoesEvento($idEvento);	
-?>
-    
+		<?php
+			break;
+			case "edicao": 
+				$idEvento = $_GET['id'];	
+				if(isset($_POST['atualizar']))
+				{
+					if(isset($_POST['editado']))
+					{
+						$editado = 1;
+					}
+					else
+					{
+						$editado = 0;
+					}
+					if(isset($_POST['revisado']))
+					{
+						$revisado = 1;
+					}
+					else
+					{
+						$revisado = 0;
+					}
+					if(isset($_POST['site']))
+					{
+						$site = 1;
+					}
+					else
+					{
+						$site = 0;
+					}
+					if(isset($_POST['publicacao']))
+					{
+						$publicacao = 1;
+					}
+					else
+					{
+						$publicacao = 0;
+					}
+					if(isset($_POST['foto']))
+					{
+						$foto = 1;
+					}
+					else
+					{
+						$foto = 0;
+					}
+					$projetoEspecial = $_POST['projetoEspecial']; 
+					$nomeEvento = $_POST['nomeEvento'];
+					$projeto = $_POST['projeto'];
+					$ig_tipo_evento_idTipoEvento = $_POST['ig_tipo_evento_idTipoEvento'];
+					$projetoEspecial = $_POST['projetoEspecial'];
+					$autor = addslashes($_POST['autor']);
+					$fichaTecnica = addslashes($_POST['fichaTecnica']); 
+					$sinopse = addslashes($_POST['sinopse']);
+					$releaseCom = addslashes($_POST['releaseCom']); 
+					$observacao =  addslashes($_POST['observacao']);	
+					$idCom = $_POST['atualizar'];
+					$sql_atualiza_com = "UPDATE `igsis`.`ig_comunicacao` SET 
+						`sinopse` = '$sinopse', 
+						`fichaTecnica` = '$fichaTecnica',
+						`autor` = '$autor',
+						`releaseCom` = '$releaseCom',
+						`revisado` = '$revisado',
+						`editado` = '$editado',
+						`projetoEspecial` = '$projetoEspecial',	
+						`site` = '$site',
+						`foto` = '$foto',
+						`publicacao` = '$publicacao',
+						`ig_tipo_evento_idTipoEvento` = '$ig_tipo_evento_idTipoEvento',
+						`projeto` = '$projeto',
+						`nomeEvento` = '$nomeEvento',
+						`observacao` = '$observacao' WHERE `ig_comunicacao`.`idCom` = '$idCom'";
+					$con = bancoMysqli();
+					$query_atualiza_com = mysqli_query($con,$sql_atualiza_com);
+					if($query_atualiza_com)
+					{
+						$mensagem = "Atualizado com sucesso";	
+					}
+					else
+					{
+						$mensagem = "Erro ao atualizar.";
+					}
+				}
+				$idEvento = $_GET['id'];
+				$campo = recuperaDados("ig_comunicacao",$idEvento,"ig_evento_idEvento");
+				$chamado = recuperaAlteracoesEvento($idEvento);	
+		?>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -703,172 +707,158 @@ if(isset($_POST['atualizar'])){
                 </div>
             </div>
 		</div>
-    
-    <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-			<form method="POST" action="?perfil=comunicacao&p=edicao&id=<?php echo $_GET['id'] ?>" class="form-horizontal" role="form">
-				<div class="form-group">
-	                <div class="col-md-offset-2 col-md-8">	
-				<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $campo['ig_evento_idEvento'] ?>" target="_blank">Documento enviado </a> | Edição | <a href="?perfil=comunicacao&p=spcultura&id=<?php echo $_GET['id']; ?>" >SPCultura</a> 
-				<?php 
-				if($campo['ig_tipo_evento_idTipoEvento'] == 1){ //edição cinema
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<form method="POST" action="?perfil=comunicacao&p=edicao&id=<?php echo $_GET['id'] ?>" class="form-horizontal" role="form">
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">	
+							<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $campo['ig_evento_idEvento'] ?>" target="_blank">Documento enviado </a> | Edição | <a href="?perfil=comunicacao&p=spcultura&id=<?php echo $_GET['id']; ?>" >SPCultura</a> 
+			<?php 
+				if($campo['ig_tipo_evento_idTipoEvento'] == 1)
+				{
+					//edição cinema
 					$_SESSION['cinema'] = 1;
 					$_SESSION['idEvento'] = $_GET['id'];
 					$_SESSION['com'] = 1;
-				
-				?>
-                | <a href="?perfil=cinema" >Filmes </a>
-                <?php
+			?>
+								| <a href="?perfil=cinema" >Filmes </a>
+			<?php
 				}
-				
-				?>
-                | <?php 
-					if($chamado['numero'] == '0'){
-						echo "Chamados [0]";
-					}else{
-						echo "<a href='?perfil=chamado&p=evento&id=".$idEvento."' target='_blank'>Chamados [".$chamado['numero']."]</a>";	
-					}
-					
-					?>
-                
-                
-                </h6>	
-                 	</div>                     
-                </div>
-
-<div class="form-group">
-	<div class="col-md-offset-2 col-md-8">
-		<input type="checkbox" name="editado"  <?php checar($campo['editado']) ?> /><label style="padding:0 10px 0 5px;"> Editado</label>
-		<input type="checkbox" name="revisado"  <?php checar($campo['revisado']) ?>/><label  style="padding:0 10px 0 5px;"> Revisado</label>
-		<input type="checkbox" name="site"  <?php checar($campo['site']) ?> /><label style="padding:0 10px 0 5px;"> Site</label>
-		<input type="checkbox" name="publicacao"  <?php checar($campo['publicacao']) ?>/><label style="padding:0 10px 0 5px;"> Impresso</label>
-		<input type="checkbox" name="foto"  <?php checar($campo['foto']) ?>/><label style="padding:0 10px 0 5px;"> Foto para divulgação</label>
-    </div>                     
-</div>
-
-    <div class="form-group">
-		<div class="col-md-offset-2 col-md-8">
-            <label>Nome do Evento </label>
-            <input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo $campo['nomeEvento'] ?>"/>
-        </div> 
-    </div>
-           
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-			<label>Nome do Projeto especial</label>
-				<select class="form-control" name="projetoEspecial" id="inputSubject" >
-				<option value="1"></option>
-				<?php echo geraOpcao("ig_projeto_especial",$campo['projetoEspecial'],$_SESSION['idInstituicao']) ?>
-				</select>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-            <label>Nome do Projeto </label>
-            <input type="text" name="projeto" class="form-control" id=""  value="<?php echo $campo['projeto'] ?>">
-        </div>
-    </div>
-	
-	<div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-        	<label>Tipo de Evento </label>
-				<select class="form-control" name="ig_tipo_evento_idTipoEvento" id="inputSubject" >
-				<option value="1"></option>
-				<?php echo geraOpcao("ig_tipo_evento",$campo['ig_tipo_evento_idTipoEvento'],"") ?>
-                </select>					
-        </div>
-    </div>
-	
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-8"><strong>Autor:</strong><br/>
-			<textarea name="autor" class="form-control" rows="5"><?php echo $campo['autor'] ?></textarea>
-		</div>
-	</div>	
-	
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-8"><strong>Ficha Técnica:</strong><br/>
-			<textarea name="fichaTecnica" class="form-control" rows="10"><?php echo $campo['fichaTecnica'] ?></textarea>
-		</div>
-	</div>	 
-	
-    <div class="form-group">
-		<div class="col-md-offset-2 col-md-8"><strong>Sinopse:</strong><br/>
-			<textarea name="sinopse" class="form-control" rows="10" ><?php echo $campo['sinopse'] ?></textarea>
-		</div>
-	</div>	
-	
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-8"><strong>Release:</strong><br/>
-			<textarea name="releaseCom" class="form-control" rows="20" ><?php echo $campo['releaseCom'] ?></textarea>
-		</div>
-	</div>	
-	
-<?php
-	if($_SESSION['idInstituicao'] == 5){ // Mostra Gerador de formatação ?>
-	
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-8"><strong>Gerador de Diagramação</strong><br/>
-            <div class="left">
-				<h5><?php echo $campo['nomeEvento']; ?></h5>
-				<p><?php echo resumoOcorrencias($idEvento); ?></p>
-				<p><?php echo nl2br($campo['sinopse']); ?></p>
-				<p><?php echo nl2br($campo['autor']); ?></p>
-				<p><?php echo nl2br($campo['fichaTecnica']); ?></p>
-				<p>Duração: <?php echo retornaDuracao($idEvento); ?> min.</p>
-				<p>- a venda estará disponível na bilheteria em seu horário de funcionamento (terça a sábado, das 13h às 21h30; e domingos, das 13h às 20h30), e no site www.ingressorapido.com.br a partir de 30 dias antes do evento (mesmo no caso de temporadas longas)</p>
-				
-		<br/>
-		
-<?php
-	$sub = verificaSubEvento($_GET['id']);
-	if($sub['num'] > 0){
+			?>
+								| 
+			<?php 
+				if($chamado['numero'] == '0')
+				{
+					echo "Chamados [0]";
+				}
+				else
+				{
+					echo "<a href='?perfil=chamado&p=evento&id=".$idEvento."' target='_blank'>Chamados [".$chamado['numero']."]</a>";	
+				}	
+			?>          
+							</h6>	
+						</div>                     
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="checkbox" name="editado"  <?php checar($campo['editado']) ?> /><label style="padding:0 10px 0 5px;"> Editado</label>
+							<input type="checkbox" name="revisado"  <?php checar($campo['revisado']) ?>/><label  style="padding:0 10px 0 5px;"> Revisado</label>
+							<input type="checkbox" name="site"  <?php checar($campo['site']) ?> /><label style="padding:0 10px 0 5px;"> Site</label>
+							<input type="checkbox" name="publicacao"  <?php checar($campo['publicacao']) ?>/><label style="padding:0 10px 0 5px;"> Impresso</label>
+							<input type="checkbox" name="foto"  <?php checar($campo['foto']) ?>/><label style="padding:0 10px 0 5px;"> Foto para divulgação</label>
+						</div>                     
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Nome do Evento </label>
+							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo $campo['nomeEvento'] ?>"/>
+						</div> 
+					</div>    
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Nome do Projeto especial</label>
+							<select class="form-control" name="projetoEspecial" id="inputSubject" >
+								<option value="1"></option>
+								<?php echo geraOpcao("ig_projeto_especial",$campo['projetoEspecial'],$_SESSION['idInstituicao']) ?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Nome do Projeto </label>
+							<input type="text" name="projeto" class="form-control" id=""  value="<?php echo $campo['projeto'] ?>">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<label>Tipo de Evento </label>
+							<select class="form-control" name="ig_tipo_evento_idTipoEvento" id="inputSubject" >
+								<option value="1"></option>
+								<?php echo geraOpcao("ig_tipo_evento",$campo['ig_tipo_evento_idTipoEvento'],"") ?>
+							</select>					
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Autor:</strong><br/>
+							<textarea name="autor" class="form-control" rows="5"><?php echo $campo['autor'] ?></textarea>
+						</div>
+					</div>	
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Ficha Técnica:</strong><br/>
+							<textarea name="fichaTecnica" class="form-control" rows="10"><?php echo $campo['fichaTecnica'] ?></textarea>
+						</div>
+					</div>	 
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Sinopse:</strong><br/>
+							<textarea name="sinopse" class="form-control" rows="10" ><?php echo $campo['sinopse'] ?></textarea>
+						</div>
+					</div>	
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Release:</strong><br/>
+							<textarea name="releaseCom" class="form-control" rows="20" ><?php echo $campo['releaseCom'] ?></textarea>
+						</div>
+					</div>
+			<?php
+				if($_SESSION['idInstituicao'] == 5)
+				{
+					// Mostra Gerador de formatação
+			?>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Gerador de Diagramação</strong><br/>
+							<div class="left">
+								<h5><?php echo $campo['nomeEvento']; ?></h5>
+								<p><?php echo resumoOcorrencias($idEvento); ?></p>
+								<p><?php echo nl2br($campo['sinopse']); ?></p>
+								<p><?php echo nl2br($campo['autor']); ?></p>
+								<p><?php echo nl2br($campo['fichaTecnica']); ?></p>
+								<p>Duração: <?php echo retornaDuracao($idEvento); ?> min.</p>
+								<p>- a venda estará disponível na bilheteria em seu horário de funcionamento (terça a sábado, das 13h às 21h30; e domingos, das 13h às 20h30), e no site www.ingressorapido.com.br a partir de 30 dias antes do evento (mesmo no caso de temporadas longas)</p>
+								<br/>
+				<?php
+					$sub = verificaSubEvento($_GET['id']);
+					if($sub['num'] > 0)
+					{
 	?>
-	
-	<strong>Sub-eventos</strong>
-	<?php echo listaSubEventosCom($_GET['id']); ?>
-	<?php } ?>
-	
-	<strong>Ocorrências</strong>	
-	<?php listaOcorrenciasTexto($_GET['id']); ?>
-	 <p></p>
-	 
+								<strong>Sub-eventos</strong>
+								<?php echo listaSubEventosCom($_GET['id']); ?>
+				<?php
+					}
+				?>
+								<strong>Ocorrências</strong>	
+								<?php listaOcorrenciasTexto($_GET['id']); ?>
+								<p></p>
+							</div>
+						</div>
+					</div>	
+			<?php
+				} 
+			?>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
+							<textarea name="observacao" class="form-control" rows="20" ><?php echo $campo['observacao'] ?></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="atualizar" value="<?php echo $campo['idCom'] ?>" />
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+						</div>
+					</div>
+				</form>
 			</div>
-	</div>
-	</div>	
-
-<?php } 
-?>
-                  
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
-			<textarea name="observacao" class="form-control" rows="20" ><?php echo $campo['observacao'] ?></textarea>
 		</div>
-	</div>	 
-	
-    <div class="form-group">
-		<div class="col-md-offset-2 col-md-8">
-           	<input type="hidden" name="atualizar" value="<?php echo $campo['idCom'] ?>" />
-    	    <input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-			</form>
-        </div>
-    </div>
-
-        </div>
-    </div>
-</section> 
-
-<?php
-	break;
-	case "spcultura": 
-	$mapas = recuperaDados("ig_comunicacao",$_GET['id'],"ig_evento_idEvento");
-	$evento = recuperaDados("ig_evento",$_GET['id'],"idEvento");
-	$usuario = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
-	$instituicao = recuperaDados("ig_instituicao",$usuario['idInstituicao'],"idInstituicao");
-	$idEvento = $_GET['id'];
-	$chamado = recuperaAlteracoesEvento($idEvento);	
-?>
-
+	</div>
+</section>
+		<?php
+			break;
+			case "spcultura": 
+				$mapas = recuperaDados("ig_comunicacao",$_GET['id'],"ig_evento_idEvento");
+				$evento = recuperaDados("ig_evento",$_GET['id'],"idEvento");
+				$usuario = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
+				$instituicao = recuperaDados("ig_instituicao",$usuario['idInstituicao'],"idInstituicao");
+				$idEvento = $_GET['id'];
+				$chamado = recuperaAlteracoesEvento($idEvento);	
+		?>
 <section id="services" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -878,79 +868,74 @@ if(isset($_POST['atualizar'])){
 				</div>
 			</div>
 		</div>
-			  
-	<div class="row">
-        <div class="col-md-offset-2 col-md-8">	
-			<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $_GET['id']; ?>" target="_blank">Documento enviado </a> |  <a href="?perfil=comunicacao&p=edicao&id=<?php echo $_GET['id']; ?>" >Edição </a> | SPCultura  | 
-			
-<?php 
-				if($chamado['numero'] == '0'){
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">	
+				<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $_GET['id']; ?>" target="_blank">Documento enviado </a> |  <a href="?perfil=comunicacao&p=edicao&id=<?php echo $_GET['id']; ?>" >Edição </a> | SPCultura  | 
+			<?php 
+				if($chamado['numero'] == '0')
+				{
 					echo "Chamados [0]";
-				}else{
+				}
+				else
+				{
 					echo "<a href='?perfil=chamado&p=evento&id=".$idEvento."' target='_blank'>Chamados [".$chamado['numero']."]</a>";	
 				}				
-?></h6>	
-        </div>                     
-	</div>
-
-	<div class="table-responsive list_info" >
-        <h4><?php echo $mapas['nomeEvento'] ?></h4>
-            <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><br/>
-						<div class="left">
-							<p>* Habilitar logo da SMC</p>        
-							<p>Nome de exibição: <strong><?php echo $mapas['nomeEvento']; ?></strong></p>
-							<p>Descrição curta:<br /> <?php echo $mapas['sinopse']; ?></p>
-							<p>Inscrições: <strong>(tabela oficinas)</strong> </p>
-							<p>Site: <strong><?php echo $instituicao['site']; ?></strong> </p>
-							<p>Mais informações: <strong><?php echo $instituicao['telefone']; ?></strong> </p>
-							<p>Descrição:<br />
-							
-<?php echo nl2br($mapas['observacao']); ?>
-							</p>			            
-						</div>
-                	</div>
+			?>
+				</h6>	
+			</div>                     
+		</div>
+		<div class="table-responsive list_info" >
+			<h4><?php echo $mapas['nomeEvento'] ?></h4>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8"><br/>
+					<div class="left">
+						<p>* Habilitar logo da SMC</p>        
+						<p>Nome de exibição: <strong><?php echo $mapas['nomeEvento']; ?></strong></p>
+						<p>Descrição curta:<br /> <?php echo $mapas['sinopse']; ?></p>
+						<p>Inscrições: <strong>(tabela oficinas)</strong> </p>
+						<p>Site: <strong><?php echo $instituicao['site']; ?></strong> </p>
+						<p>Mais informações: <strong><?php echo $instituicao['telefone']; ?></strong> </p>
+						<p>Descrição:<br />
+							<?php echo nl2br($mapas['observacao']); ?>
+						</p>			            
+					</div>
+                </div>
 			</div>	
-			
-    <div class="form-group">
-		<div class="col-md-offset-2 col-md-8"><strong>Ocorrências</strong><br/>
-            <div class="left">
-				<?php listaOcorrenciasTexto($_GET['id']); ?>		            
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8"><strong>Ocorrências</strong><br/>
+					<div class="left">
+						<?php listaOcorrenciasTexto($_GET['id']); ?>		            
+					</div>
+				</div>
 			</div>
-        </div>
-	</div>	
-	
-    <div class="form-group">
-		<div class="col-md-offset-2 col-md-8"><strong>Teste (não utilizar)</strong><br/>
-			<form method="POST" action="http://centrocultural.pagina-oficial.ws/igsis/MapasSDK/src/recebe.php" class="form-horizontal" role="form">
-			<input type="hidden" name="name" value="<?php echo $mapas['nomeEvento']; ?>" />
-			<input type="hidden" name="shortDescription" value="<?php echo $mapas['sinopse'] ?>" />
-			<input type="hidden" name="classificacaoEtaria" value="Livre" />
-			<input type="hidden" name="linguagem" value="Música Popular" />
-
-	        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Enviar para o SPCultura"  onclick=” this.form.target=’_blank’;return true;>
-			
-			</form>
-        </div>
-	</div>	
-
-			  
-	</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8"><strong>Teste (não utilizar)</strong><br/>
+					<form method="POST" action="http://centrocultural.pagina-oficial.ws/igsis/MapasSDK/src/recebe.php" class="form-horizontal" role="form">
+						<input type="hidden" name="name" value="<?php echo $mapas['nomeEvento']; ?>" />
+						<input type="hidden" name="shortDescription" value="<?php echo $mapas['sinopse'] ?>" />
+						<input type="hidden" name="classificacaoEtaria" value="Livre" />
+						<input type="hidden" name="linguagem" value="Música Popular" />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Enviar para o SPCultura"  onclick=” this.form.target=’_blank’;return true;>
+					</form>
+				</div>
+			</div>			  
+		</div>
 	</div>
 </section>
-
-<?php
-	break;
+		<?php
+			break;
+		} //fim da switch
 	}
- }else{ 
- ?>
-
+	else
+	{ 
+		?>
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">
 		    <h1>Você não tem acesso. Por favor, contacte o administrador do sistema.</h1>
 		</div>
 	</div>
-</section>  
-	 
- <?php } ?>
+</section> 
+ <?php
+	}
+ ?>
