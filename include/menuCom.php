@@ -16,6 +16,7 @@
                                         <li> <a href="?perfil=comunicacao&p=foto&foto=0" >Pendentes</a></li>
                                         <li> <a href="?perfil=comunicacao&p=foto" >Todos os eventos</a>  </li>
                                     </ul>
+					<li><a href="?perfil=comunicacao&p=docs" >Gerar Docs</a></li>                
                          </li>   
                              
                     
