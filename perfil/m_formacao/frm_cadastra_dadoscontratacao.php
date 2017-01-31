@@ -212,7 +212,7 @@ $(function()
 				</div>  
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_edita_pf&id_pf=<?php echo $id_pf; ?>" method="post">
+						<form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_edita_pf&id_pf=<?php echo $id_pf; ?>&id=<?php echo $id; ?>" method="post">
 							<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir proponente">
 						</form>
 					</div>

@@ -1,6 +1,7 @@
 <?php
 	include 'includes/menu.php';
 	$ultimo = $_GET['id_pf']; //recupera o id da pessoa
+	$id = $_GET['id']; //recupera o id de Dados para Contratação
 	if(isset($_POST['idPedido']))
 	{
 		$id_pedido = $_POST['idPedido']; //recupera o id do pedido
@@ -314,16 +315,34 @@
 						<a href="?perfil=formacao&p=frm_cadastra_pf_add&id_pf=<?php echo $ultimo;  ?>"><input type="submit" value="Informações adicionais" class="btn btn-theme btn-block"></a>
 					</div>
 				</div>
-				<div class="col-md-offset-2 col-md-8">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
 <?php
 	if(isset($id_pedido))
 	{
 ?>
-					<a href="?perfil=formacao&p=frm_edita_pedidocontratacaopf&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
+						<a href="?perfil=formacao&p=frm_edita_pedidocontratacaopf&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
 <?php
 	}
 ?>
+					</div>
 				</div>
+				
+				<div class="form-group">	
+					<div class="col-md-offset-2 col-md-8"><br/><div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+<?php
+	if($id > 0)
+	{
+?>
+						<a href="?perfil=formacao&p=frm_cadastra_dadoscontratacao&id=<?php echo $id ?>"><input type="submit" value="Voltar aos dados de contratação" class="btn btn-theme btn-block"></a>
+<?php
+	}
+?>
+					</div>
+				</div>	
 			</div>
 		</div>		
 	</div>
