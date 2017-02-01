@@ -1,6 +1,5 @@
-﻿<?php include 'includes/menu.php';?>
+﻿<?php include 'includes/menu.php';
 
-<?php 
 	
 function retornaDataInicio($idEvento)
 { //retorna o período

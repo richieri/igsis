@@ -1,6 +1,4 @@
-<?php include 'includes/menu.php';?>
-
-<?php
+<?php include 'includes/menu.php';
 
 function dataTime($data)
 {
@@ -34,13 +32,6 @@ if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
 			$data_final = exibirDataMysql($_POST['final']);
 			$mensagem = "Filtro aplicado: eventos entre ".$_POST['inicio']." e ".$_POST['final'];
 		}
-	}
-}
-else
-	{
-		$data_inicio = "";
-		$data_final = "";
-		$mensagem = "É preciso informar a data inicial da busca";	
 	}
 	$con = bancoMysqli();
 	$sql_busca = "SELECT * FROM ig_evento, igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND ig_evento.idEvento = igsis_pedido_contratacao.idEvento AND ig_evento.dataEnvio >= '$data_inicio' AND ig_evento.dataEnvio <= '$data_final' ORDER BY ig_evento.dataEnvio";
@@ -98,104 +89,115 @@ else
 	$x['num'] = $i;
 	$mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 ?>
-<br />
-<br />
-<section id="list_items">
-	<div class="container">
-		<h3>Resultado da busca</3>
-		<h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
-		<h5><a href="?perfil=contratos&p=frm_busca_dataenvio">Fazer outra busca</a></h5>
-		<div class="table-responsive list_info">
-		<?php 
-			if($x['num'] == 0)
-			{ 
-			}
-			else
-			{ 
-		?>
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Codigo do Pedido</td>
-							<td>Processo</td>
-							<td>Proponente</td>
-							<td>Tipo</td>
-							<td>Objeto</td>
-							<td>Data de Cadastro</td>
-							<td>Instituição</td>
-							<td>Periodo</td>
-							<td>Status</td>
-							<td>Operador</td>
-						</tr>
-					</thead>
-					<tbody>
-			<?php
-				$data=date('Y');
-				for($h = 0; $h < $x['num']; $h++)
-				{
-					$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
-					if($x[$h]['tipo'] == 'Física')
-					{
-						echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
-					}
-					else
-					{
-						echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";	
-					}
-					echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].'</td>';
-					echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
-					echo '<td class="list_description">'.$x[$h]['tipo'].'</td> ';
-					echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
-					echo '<td class="list_description">'.$x[$h]['dataEnvio'].'</td> ';
-					echo '<td class="list_description">'.$x[$h]['instituicao'].'</td> ';
-					echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
-					echo '<td class="list_description">'.$status['estado'].'</td> ';
-					echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
+	<br />
+	<br />
+	<section id="list_items">
+		<div class="container">
+			<h3>Resultado da busca</3>
+			<h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
+			<h5><a href="?perfil=contratos&p=frm_busca_dataenvio">Fazer outra busca</a></h5>
+			<div class="table-responsive list_info">
+			<?php 
+				if($x['num'] == 0)
+				{ 
 				}
+				else
+				{ 
 			?>
-					</tbody>
-				</table>
-		<?php 
-			} 
-		?>		
+					<table class="table table-condensed">
+						<thead>
+							<tr class="list_menu">
+								<td>Codigo do Pedido</td>
+								<td>Processo</td>
+								<td>Proponente</td>
+								<td>Tipo</td>
+								<td>Objeto</td>
+								<td>Data de Cadastro</td>
+								<td>Instituição</td>
+								<td>Periodo</td>
+								<td>Status</td>
+								<td>Operador</td>
+							</tr>
+						</thead>
+						<tbody>
+				<?php
+					$data=date('Y');
+					for($h = 0; $h < $x['num']; $h++)
+					{
+						$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
+						if($x[$h]['tipo'] == 'Física')
+						{
+							echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+						}
+						else
+						{
+							echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";	
+						}
+						echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].'</td>';
+						echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['tipo'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['dataEnvio'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['instituicao'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
+						echo '<td class="list_description">'.$status['estado'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
+					}
+				?>
+						</tbody>
+					</table>
+			<?php 
+				} 
+			?>		
+			</div>			
 		</div>
-			
-	</div>
-</section>
-<section id="services" class="home-section bg-white">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
-				<div class="section-heading">
-					<h2>Busca por pedido</h2>
-                </div>
+	</section>
+<?php
+}
+else
+{
+	$data_inicio = "";
+	$data_final = "";
+	$mensagem = "É preciso informar a data inicial da busca";	
+?>
+
+	<section id="services" class="home-section bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
+					<div class="section-heading">
+						<h2>Busca por pedido</h2>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<form method="POST" action="?perfil=contratos&p=frm_busca_dataenvio" class="form-horizontal" role="form">
-            <div class="form-group">
-            	<div class="col-md-offset-2 col-md-8">
-					<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-                </div>				
-                <div class="form-group">
-                	<div class="col-md-offset-2 col-md-6">
-               			<label>Data início *</label>
-							<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
-               		</div>
-                	<div class=" col-md-6">
-                		<label>Data encerramento *</label>
-							<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
-               		</div>
-                </div>
-				<br />             
-	            <div class="form-group">
-		            <div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="pesquisar" value="1" />
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">                    
-        	    	</div>
-        	    </div>
-            </div>
-			</form>
-		</div>	
-	</div>               
-</section>               
+			<div class="row">
+				<form method="POST" action="?perfil=contratos&p=frm_busca_dataenvio" class="form-horizontal" role="form">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
+					</div>				
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6">
+							<label>Data início *</label>
+								<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
+						</div>
+						<div class=" col-md-6">
+							<label>Data encerramento *</label>
+								<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
+						</div>
+					</div>
+					<br />             
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="pesquisar" value="1" />
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">                    
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>	
+		</div>               
+	</section> 
+<?php
+}
+?>              
