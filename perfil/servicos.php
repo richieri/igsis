@@ -218,27 +218,4 @@ case "grafico":
 		</div>
 	</section>
 
-<?php 
-break;
-case "digiacervo":
-$chamado = recuperaDados("igsis_chamado",$_GET['id'],"idChamado");
-$tipo = recuperaDados("igsis_tipo_chamado",$chamado['tipo'],"idTipoChamado");
-?>
-	<section id="list_items" class="home-section bg-white">
-		<div class="container">
-      			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Digitalização de acervo</h2>
-	                  <h5>Em construção<?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-                 </div>
-				  </div>
-			  </div>  
-    <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-       
-            </div>			
-					</div>
-	</section>
-<?php break; ?>
 <?php } ?>
