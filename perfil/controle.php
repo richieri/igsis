@@ -9,11 +9,10 @@
 							<li><a href="?perfil=controle&p=pedidos">Pedidos de contratação</a></li>
 							<li><a href="?perfil=controle&p=relatorios">Relatórios</a></li>
    							<li><a href="?perfil=controle">Instituições, usuários e espaços</a></li>
-                         					<li><a href="#">+ opções</a>   
-                             <ul class="dl-submenu">
-                                        <li selected><a href="?perfil=evento&p=basica">Início</a></li>
-                                        <li><a href="?secao=perfil">Carregar módulo</a></li>
-                                        <li><a href="../include/logoff.php">Sair</a></li>
+							<li style="color:white;">-------------------------</li>
+							<li><a href="?secao=perfil">Carregar Módulos</a></li>
+							<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-controle-orcamentario/">Ajuda</a></li>
+							<li><a href="../include/logoff.php">Sair</a></li>
                                     </ul>
                             </li>   
 							<!--<li>

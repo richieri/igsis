@@ -75,7 +75,7 @@
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                    <h3>Abrir um chamado.</h3>
+                    <h3>Abrir um chamado</h3>
                     <h4><?php if(isset($mensagem)){echo $mensagem;} ?></h4>
                 </div>
             </div>
@@ -85,7 +85,7 @@
 				<form method="POST" action="?perfil=chamado&p=acompanhar" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Título do chamado</label>
+							<label>Título</label>
 							<input type="text" name="titulo" class="form-control" id="inputSubject" />
 						</div> 
 					</div>
@@ -211,11 +211,11 @@
 							if(mysqli_query($con,$sql_alt))
 							{
 								gravarLog($sql_alt);
-								$mensagem = "Chamada aberta com sucesso!";
+								$mensagem = "Chamado aberto com sucesso!";
 							}
 							else
 							{
-								$mensagem = "Erro ao abrir chamada. Tente novamente.";
+								$mensagem = "Erro ao abrir chamado. Tente novamente.";
 							}
 							gravarLog($sql);
 							if( !move_uploaded_file( $arquivoTmp, $arquivo ) )

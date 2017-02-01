@@ -29,7 +29,7 @@
 					<li><a href="?perfil=admin&p=espacos"> Listar Espaços</a></li>
 					<li><a href="?perfil=admin&p=listaprojetoespecial"> Listar Projetos Especiais</a></li>
 					<li><a href="?perfil=admin&p=eventos"> Listar Eventos</a></li>
-					<li><a href="?perfil=admin&p=alteracoes"> Alterações</a></li>
+					<li><a href="?perfil=admin&p=alteracoes">Chamados</a></li>
 				</ul>
 			</li>
 			<li style="color:white;">-------------------------</li>

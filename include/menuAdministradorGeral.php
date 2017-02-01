@@ -17,8 +17,8 @@
 				</ul>
 			</li>
 			<li><a href="?perfil=admin&p=email">E-mail para solicitação de reenvio</a></li>
-   			<li><a href="?perfil=admin&p=contratos">Contratos</a></li>
 			<li><a href="?perfil=admin">Menu Principal</a></li>
+			<li style="color:white;">-------------------------</li>
 			<li><a href="?secao=perfil">Carregar Módulos</a></li>
 			<li><a href="?secao=ajuda">Ajuda</a></li>
 			<li><a href="../include/logoff.php">Sair </a></li>

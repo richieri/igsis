@@ -87,7 +87,7 @@ $(function(){
 						<ul class="dl-menu">
 							<li><a href="?secao=inicio">Início</a></li>
 							<li><a href="?secao=perfil">Carregar módulo</a></li>
-							<li><a href="?secao=ajuda">Ajuda</a></li>
+							<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/acessando-o-modulo-agenda/">Ajuda</a></li>
                             <li><a href="../include/logoff.php">Sair</a></li>
 							
 						</ul>
