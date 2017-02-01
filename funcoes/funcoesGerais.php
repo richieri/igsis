@@ -1,189 +1,198 @@
 <?php 
-
 /*
 igSmc v0.1 - 2015
 ccsplab.org - centro cultural são paulo
-
 Esta é a página para as funções gerais do sistema.
-
 > Testes e verificações
 > Conexão de Banco MySQLi
 > Framework
 > Formatação de datas, valores
 > Outras bibliotecas: email, pdf, etc
 */
-
 // Testes e verificações
-
-
-
 // Conecta-se ao banco de dados MySQL
-function verificaMysql($sql_inserir){ 	//Verifica erro na string/query
+function verificaMysql($sql_inserir)
+{
+	//Verifica erro na string/query
 	$mysqli = new mysqli("localhost", "root", "lic54eca","igsisbeta");
-	if (!$mysqli->query($sql_inserir)) {
-    printf("Errormessage: %s\n", $mysqli->error);
+	if (!$mysqli->query($sql_inserir))
+	{
+		printf("Errormessage: %s\n", $mysqli->error);
 	}
 }
-
-function habilitarErro(){
-
-   @ini_set('display_errors', '1');
-	error_reporting(E_ALL); 	
-
+function habilitarErro()
+{
+	@ini_set('display_errors', '1');
+	error_reporting(E_ALL);
 }
-
-
-function verificaSessao($idUsuario){
+function verificaSessao($idUsuario)
+{
 	$con = bancoMysqli();
-		$time = date('Y-m-d H:i:s');
-		$ip = $_SERVER["REMOTE_ADDR"];
-
+	$time = date('Y-m-d H:i:s');
+	$ip = $_SERVER["REMOTE_ADDR"];
 	//Verifica se o usuário está no banco
 	$sql_busca = "SELECT * FROM igsis_time WHERE idUsuario = '$idUsuario' AND ip = '$ip'";
 	$query_busca = mysqli_query($con,$sql_busca);
 	$numero_busca = mysqli_num_rows($query_busca);
-	if($numero_busca > 0){
+	if($numero_busca > 0)
+	{
 		$sql_atualiza = "UPDATE igsis_time SET time = '$time', ip = '$ip' WHERE idUsuario = '$idUsuario'";
 		mysqli_query($con,$sql_atualiza); 
-	}else{
+	}
+	else
+	{
 		$sql_insere = "INSERT INTO igsis_time (`id`, `idUsuario`, `time`, `ip`) VALUES (NULL, '$idUsuario', '$time', '$ip')";
 		mysqli_query($con,$sql_insere);
 	}
 }
-
-
 // Framework
-
 //autentica usuario e cria inicia uma session
-function autenticaUsuario($usuario, $senha){ 
-//
-	
+function autenticaUsuario($usuario, $senha)
+{	
 	$sql = "SELECT * FROM ig_usuario, ig_instituicao, ig_papelusuario WHERE ig_usuario.nomeUsuario = '$usuario' AND ig_instituicao.idInstituicao = ig_usuario.idInstituicao AND ig_papelusuario.idPapelUsuario = ig_usuario.ig_papelusuario_idPapelUsuario AND ig_usuario.publicado = '1' LIMIT 0,1";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	 //query que seleciona os campos que voltarão para na matriz
-	if($query){ //verifica erro no banco de dados
-		if(mysqli_num_rows($query) > 0){ // verifica se retorna usuário válido
+	//query que seleciona os campos que voltarão para na matriz
+	if($query)
+	{
+		//verifica erro no banco de dados
+		if(mysqli_num_rows($query) > 0)
+		{
+			// verifica se retorna usuário válido
 			$user = mysqli_fetch_array($query);
-				if($user['senha'] == md5($_POST['senha'])){ // compara as senhas
-					session_start();
-					$_SESSION['usuario'] = $user['nomeUsuario'];
-					$_SESSION['perfil'] = $user['idPapelUsuario'];
-					$_SESSION['instituicao'] = $user['instituicao'];
-					$_SESSION['nomeCompleto'] = $user['nomeCompleto'];
-					$_SESSION['idUsuario'] = $user['idUsuario'];
-					$_SESSION['idInstituicao'] = $user['idInstituicao'];
-
-					$log = "Fez login.";
-					gravarLog($log);
-					header("Location: visual/index.php"); 
-
-				}else{
-
-			echo "A senha está incorreta.";
+			if($user['senha'] == md5($_POST['senha']))
+			{
+				// compara as senhas
+				session_start();
+				$_SESSION['usuario'] = $user['nomeUsuario'];
+				$_SESSION['perfil'] = $user['idPapelUsuario'];
+				$_SESSION['instituicao'] = $user['instituicao'];
+				$_SESSION['nomeCompleto'] = $user['nomeCompleto'];
+				$_SESSION['idUsuario'] = $user['idUsuario'];
+				$_SESSION['idInstituicao'] = $user['idInstituicao'];
+				$log = "Fez login.";
+				gravarLog($log);
+				header("Location: visual/index.php");
 			}
-		}else{
+			else
+			{
+				echo "A senha está incorreta.";
+			}
+		}
+		else
+		{
 			echo "O usuário não existe.";
 		}
-	}else{
+	}
+	else
+	{
 		echo "Erro no banco de dados";
 	}	
 }
-
 //saudacao inicial
-function saudacao(){ 
+function saudacao()
+{ 
 	$hora = date('H');
-	if(($hora > 12) AND ($hora <= 18)){
+	if(($hora > 12) AND ($hora <= 18))
+	{
 		return "Boa tarde";	
-	}else if(($hora > 18) AND ($hora <= 23)){
+	}
+	else if(($hora > 18) AND ($hora <= 23))
+	{
 		return "Boa noite";	
-	}else if(($hora >= 0) AND ($hora <= 4)){
+	}
+	else if(($hora >= 0) AND ($hora <= 4))
+	{
 		return "Boa noite";	
-	}else if(($hora > 4) AND ($hora <=12)){
+	}
+	else if(($hora > 4) AND ($hora <=12))
+	{
 		return "Bom dia";
 	}
 }
-
 // Formatação de datas, valores
-
 // Retira acentos das strings
-function semAcento($string){
+function semAcento($string)
+{
 	$newstring = preg_replace("/[^a-zA-Z0-9_.]/", "", strtr($string, "áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ ", "aaaaeeiooouucAAAAEEIOOOUUC_"));
 	return $newstring;
 }
-
 //retorna data d/m/y de mysql/date(a-m-d)
-function exibirDataBr($data){ 
+function exibirDataBr($data)
+{
 	$timestamp = strtotime($data); 
 	return date('d/m/Y', $timestamp);	
 }
-
 // retorna datatime sem hora
-function retornaDataSemHora($data){
+function retornaDataSemHora($data)
+{
 	$semhora = substr($data, 0, 10);
 	return $semhora;
-}
-	
+}	
 //retorna data d/m/y de mysql/datetime(a-m-d H:i:s)	
-function exibirDataHoraBr($data){ 
+function exibirDataHoraBr($data)
+{
 	$timestamp = strtotime($data); 
 	return date('d/m/y - H:i:s', $timestamp);	
 }
-
 //retorna hora H:i de um datetime
-function exibirHora($data){
+function exibirHora($data)
+{
 	$timestamp = strtotime($data); 
 	return date('H:i', $timestamp);	
 }
 //retorna data mysql/date (a-m-d) de data/br (d/m/a)
-function exibirDataMysql($data){ 
+function exibirDataMysql($data)
+{ 
 	list ($dia, $mes, $ano) = explode ('/', $data);
 	$data_mysql = $ano.'-'.$mes.'-'.$dia;
 	return $data_mysql;
 }
-
 //retorna o endereço da página atual
-function urlAtual(){ 
+function urlAtual()
+{
 	$dominio= $_SERVER['HTTP_HOST'];
 	$url = "http://" . $dominio. $_SERVER['REQUEST_URI'];
 	return $url;
 }
-
 //retorna valor xxx,xx para xxx.xx
-function dinheiroDeBr($valor) { 
+function dinheiroDeBr($valor)
+{
 	$valor = str_ireplace(".","",$valor);
     $valor = str_ireplace(",",".",$valor);
     return $valor;
 }
-
 //retorna valor xxx.xx para xxx,xx
-function dinheiroParaBr($valor) { 
-    	$valor = number_format($valor, 2, ',', '.');
-    	return $valor;
+function dinheiroParaBr($valor)
+{ 
+	$valor = number_format($valor, 2, ',', '.');
+	return $valor;
 }
 //use em problemas de codificacao utf-8
-function _utf8_decode($string){ 
+function _utf8_decode($string)
+{
 	$tmp = $string;
 	$count = 0;
-	while (mb_detect_encoding($tmp)=="UTF-8"){
+	while (mb_detect_encoding($tmp)=="UTF-8")
+	{
     	$tmp = utf8_decode($tmp);
     	$count++;
   	}
-	for ($i = 0; $i < $count-1 ; $i++){
+	for ($i = 0; $i < $count-1 ; $i++)
+	{
 	    $string = utf8_decode($string);
 	}
 	return $string;
 }
-
 //retorna o dia da semana segundo um date(a-m-d)
-function diasemana($data) { 
+function diasemana($data)
+{
 	$ano =  substr("$data", 0, 4);
 	$mes =  substr("$data", 5, -3);
 	$dia =  substr("$data", 8, 9);
-
 	$diasemana = date("w", mktime(0,0,0,$mes,$dia,$ano) );
-
-	switch($diasemana) {
+	switch($diasemana)
+	{
 		case"0": $diasemana = "Domingo";       break;
 		case"1": $diasemana = "Segunda-Feira"; break;
 		case"2": $diasemana = "Terça-Feira";   break;
@@ -194,422 +203,458 @@ function diasemana($data) {
 	}
 	return "$diasemana";
 }
-
 //soma(+) ou substrai(-) dias de um date(a-m-d)
-function somarDatas($data,$dias){ 
+function somarDatas($data,$dias)
+{
 	$data_final = date('Y-m-d', strtotime("$dias days",strtotime($data)));	
 	return $data_final;
 }
-
 //retorna a diferença de dias entre duas datas
-function diferencaDatas($data_inicial,$data_final){
-// Define os valores a serem usados
-
-// Usa a função strtotime() e pega o timestamp das duas datas:
-$time_inicial = strtotime($data_inicial);
-$time_final = strtotime($data_final);
-// Calcula a diferença de segundos entre as duas datas:
-$diferenca = $time_final - $time_inicial; // 19522800 segundos
-// Calcula a diferença de dias
-$dias = (int)floor( $diferenca / (60 * 60 * 24)); // 225 dias
-
-return $dias;
-
+function diferencaDatas($data_inicial,$data_final)
+{
+	// Define os valores a serem usados
+	// Usa a função strtotime() e pega o timestamp das duas datas:
+	$time_inicial = strtotime($data_inicial);
+	$time_final = strtotime($data_final);
+	// Calcula a diferença de segundos entre as duas datas:
+	$diferenca = $time_final - $time_inicial; // 19522800 segundos
+	// Calcula a diferença de dias
+	$dias = (int)floor( $diferenca / (60 * 60 * 24)); // 225 dias
+	return $dias;
 }
-
 //Outras bibliotecas
-
 //envia um email pela conta igccsp2015@gmail.com é preciso que a classe phpmailer esteja instalada - vale dar uma revisada geral
-function enviarEmail($conteudo_email, $instituicao, $subject, $idEvento, $num_pedidos ){ 
-
-
+function enviarEmail($conteudo_email, $instituicao, $subject, $idEvento, $num_pedidos )
+{
 	require_once('../include/phpmailer/class.phpmailer.php');
 	//include("class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
-
 	$mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
-
 	$mail->IsSMTP(); // telling the class to use SMTP
-
-	try {
-	  //$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
-	  $mail->CharSet = 'UTF-8';
-	  $mail->SMTPAuth   = true;                  // enable SMTP authentication
-	  $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-	  $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
-	  $mail->Port       = 465;                   // set the SMTP port for the GMAIL server
-	  $mail->Username   = "";  // GMAIL username
-	  $mail->Password   = "";            // GMAIL password
-	  $mail->AddReplyTo('sistema.igsis@gmail.com', 'IGSIS');
-	
-	  //criar laço com todos os interessados
-	  	$con = bancoMysqli();
-		if($num_pedidos == -1){
-		$sql_user = "SELECT DISTINCT ig_usuario.nomeCompleto, ig_usuario.email FROM ig_usuario, ig_papelusuario WHERE ig_papelusuario.idPapelUsuario = ig_usuario.ig_papelusuario_idPapelUsuario AND ig_usuario.receberNotificacao = '1' AND
-		(
-		ig_papelusuario.admin = '1' OR
-		ig_papelusuario.administrador = '1' 
-		)
-		
-		";
-		$query_user = mysqli_query($con,$sql_user);
-		while($campo_user = mysqli_fetch_array($query_user)){
-			
-			$mail->AddBCC($campo_user['email'],$campo_user['nomeCompleto']);
-		}
-
-
-		}else{
-		
-		$sql_user = "SELECT DISTINCT ig_usuario.nomeCompleto, ig_usuario.email FROM ig_usuario, ig_papelusuario WHERE ig_usuario.idInstituicao = '$instituicao' AND ig_papelusuario.idPapelUsuario = ig_usuario.ig_papelusuario_idPapelUsuario AND ig_usuario.receberNotificacao = '1' AND
-		(
-		ig_papelusuario.admin = '1' OR
-		ig_papelusuario.administrador = '1' OR
-		ig_papelusuario.comunicacao = '1' OR
-		ig_papelusuario.financa = '1' OR
-		ig_papelusuario.producao = '1' OR
-		ig_papelusuario.curadoria = '1' OR
-		ig_papelusuario.bilhetagem = '1' OR
-		ig_papelusuario.servicos = '1' 
-		)
-		
-		"; //mudar para 2
-		$query_user = mysqli_query($con,$sql_user);
-		while($campo_user = mysqli_fetch_array($query_user)){
-			
-			$mail->AddBCC($campo_user['email'],$campo_user['nomeCompleto']);
-		}
-
-		// Responsáveis pelo evento
-		$user = recuperaDados("ig_evento",$idEvento,"idEvento");
-		$usuario = recuperaDados("ig_usuario",$user['idUsuario'],"idUsuario");
-		$fiscal = recuperaDados("ig_usuario",$user['idResponsavel'],"idUsuario");
-		$suplente = recuperaDados("ig_usuario",$user['suplente'],"idUsuario");
-
-		if($usuario['receberNotificacao'] == 1){
-			$mail->AddBCC($usuario['email'],$usuario['nomeCompleto']);
-		}
-		if($fiscal['receberNotificacao'] == 1){
-			$mail->AddBCC($fiscal['email'],$fiscal['nomeCompleto']);
-		}
-		if($suplente['receberNotificacao'] == 1){
-			$mail->AddBCC($suplente['email'],$suplente['nomeCompleto']);
-		}
-	
-		if($num_pedidos > 0){
-		$sql_user = "SELECT nomeCompleto, email FROM ig_usuario WHERE contratos IS NOT NULL AND receberNotificacao = '1'"; //seleciona somente a área de contratos
+	try
+	{
+		//$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+		$mail->CharSet = 'UTF-8';
+		$mail->SMTPAuth   = true;                  // enable SMTP authentication
+		$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
+		$mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+		$mail->Port       = 465;                   // set the SMTP port for the GMAIL server
+		$mail->Username   = "";  // GMAIL username
+		$mail->Password   = "";            // GMAIL password
+		$mail->AddReplyTo('sistema.igsis@gmail.com', 'IGSIS');
+		//criar laço com todos os interessados
+		$con = bancoMysqli();
+		if($num_pedidos == -1)
+		{
+			$sql_user = "SELECT DISTINCT ig_usuario.nomeCompleto, ig_usuario.email 
+				FROM ig_usuario, ig_papelusuario 
+				WHERE ig_papelusuario.idPapelUsuario = ig_usuario.ig_papelusuario_idPapelUsuario 
+				AND ig_usuario.receberNotificacao = '1' 
+				AND (ig_papelusuario.admin = '1' OR ig_papelusuario.administrador = '1')";
 			$query_user = mysqli_query($con,$sql_user);
-			while($campo_user = mysqli_fetch_array($query_user)){
-				
+			while($campo_user = mysqli_fetch_array($query_user))
+			{
 				$mail->AddBCC($campo_user['email'],$campo_user['nomeCompleto']);
 			}
 		}
-	
+		else
+		{
+			$sql_user = "SELECT DISTINCT ig_usuario.nomeCompleto, ig_usuario.email 
+				FROM ig_usuario, ig_papelusuario 
+				WHERE ig_usuario.idInstituicao = '$instituicao' 
+				AND ig_papelusuario.idPapelUsuario = ig_usuario.ig_papelusuario_idPapelUsuario 
+				AND ig_usuario.receberNotificacao = '1' 
+				AND(
+					ig_papelusuario.admin = '1' OR
+					ig_papelusuario.administrador = '1' OR
+					ig_papelusuario.comunicacao = '1' OR
+					ig_papelusuario.financa = '1' OR
+					ig_papelusuario.producao = '1' OR
+					ig_papelusuario.curadoria = '1' OR
+					ig_papelusuario.bilhetagem = '1' OR
+					ig_papelusuario.servicos = '1')"; //mudar para 2
+			$query_user = mysqli_query($con,$sql_user);
+			while($campo_user = mysqli_fetch_array($query_user))
+			{	
+				$mail->AddBCC($campo_user['email'],$campo_user['nomeCompleto']);
+			}
+			// Responsáveis pelo evento
+			$user = recuperaDados("ig_evento",$idEvento,"idEvento");
+			$usuario = recuperaDados("ig_usuario",$user['idUsuario'],"idUsuario");
+			$fiscal = recuperaDados("ig_usuario",$user['idResponsavel'],"idUsuario");
+			$suplente = recuperaDados("ig_usuario",$user['suplente'],"idUsuario");
+			if($usuario['receberNotificacao'] == 1)
+			{
+				$mail->AddBCC($usuario['email'],$usuario['nomeCompleto']);
+			}
+			if($fiscal['receberNotificacao'] == 1)
+			{
+				$mail->AddBCC($fiscal['email'],$fiscal['nomeCompleto']);
+			}
+			if($suplente['receberNotificacao'] == 1)
+			{
+				$mail->AddBCC($suplente['email'],$suplente['nomeCompleto']);
+			}
+			if($num_pedidos > 0)
+			{
+				$sql_user = "SELECT nomeCompleto, email 
+					FROM ig_usuario 
+					WHERE contratos IS NOT NULL 
+					AND receberNotificacao = '1'"; //seleciona somente a área de contratos
+				$query_user = mysqli_query($con,$sql_user);
+				while($campo_user = mysqli_fetch_array($query_user))
+				{
+					$mail->AddBCC($campo_user['email'],$campo_user['nomeCompleto']);
+				}
+			}
 		}
-			
-		
-	  
-	  //$mail->AddAddress(emailUserLogin($logado), nomeUserLogin($logado));
-	
-	
-	  $mail->SetFrom('sistema.igsis@gmail.com', 'IGSIS');
-	  $mail->AddReplyTo('sistema.igsis@gmail.com', 'IGSIS');
-	
-	  //assunto da IGCCSP 	
-	  $mail->Subject = '=?UTF-8?B?'.base64_encode($subject).'?=';
-	
-	  $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+		//$mail->AddAddress(emailUserLogin($logado), nomeUserLogin($logado));
+		$mail->SetFrom('sistema.igsis@gmail.com', 'IGSIS');
+		$mail->AddReplyTo('sistema.igsis@gmail.com', 'IGSIS');
+		//assunto da IGCCSP 	
+		$mail->Subject = '=?UTF-8?B?'.base64_encode($subject).'?=';
+		$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 		//	Criar uma variável com as informações
-	  $mail->MsgHTML(utf8_decode ($conteudo_email));
-	  $mail->Send();
-	  return "Um email foi enviado para seu endereço eletrônico cadastrado.</p>\n";
-	} catch (phpmailerException $e) {
-	  return $e->errorMessage(); //Pretty error messages from PHPMailer
-	} catch (Exception $e) {
-	  return $e->getMessage(); //Boring error messages from anything else!
+		$mail->MsgHTML(utf8_decode ($conteudo_email));
+		$mail->Send();
+		return "Um email foi enviado para seu endereço eletrônico cadastrado.</p>\n";
 	}
-
-
+	catch (phpmailerException $e)
+	{
+		return $e->errorMessage(); //Pretty error messages from PHPMailer
+	}
+	catch (Exception $e)
+	{
+		return $e->getMessage(); //Boring error messages from anything else!
+	}
 }
-
-
-
-function enviarEmailSimples($conteudo_email, $subject, $toEmail, $toUsuario, $fromEmail, $fromUsuario ){ //envia um email pela conta igccsp2015@gmail.com é preciso que a classe phpmailer esteja instalada - vale dar uma revisada geral
-
-
+function enviarEmailSimples($conteudo_email, $subject, $toEmail, $toUsuario, $fromEmail, $fromUsuario )
+{
+	//envia um email pela conta igccsp2015@gmail.com é preciso que a classe phpmailer esteja instalada - vale dar uma revisada geral
 	require_once('../include/phpmailer/class.phpmailer.php');
 	//include("class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
-
 	$mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
-
 	$mail->IsSMTP(); // telling the class to use SMTP
-
-	try {
-	  //$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
-	  $mail->CharSet = 'UTF-8';
-	  $mail->SMTPAuth   = true;                  // enable SMTP authentication
-	  $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-	  $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
-	  $mail->Port       = 465;                   // set the SMTP port for the GMAIL server
-	  $mail->Username   = "";  // GMAIL username
-	  $mail->Password   = "";            // GMAIL password
-      $mail->AddAddress($toEmail,$toUsuario);
-	  $mail->AddBcc("igccsp2015@gmail.com"); //hidden copy to igcssp2015
-	
-			
-		
-	  
-	  //$mail->AddAddress(emailUserLogin($logado), nomeUserLogin($logado));
-	
-	
-	  $mail->SetFrom($fromEmail, $fromUsuario);
-	  $mail->AddReplyTo($fromEmail, $fromUsuario);
-	
-	  //assunto da IGCCSP 	
-	  $mail->Subject = $subject;
-	
-	  $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+	try
+	{
+		//$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+		$mail->CharSet = 'UTF-8';
+		$mail->SMTPAuth   = true;                  // enable SMTP authentication
+		$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
+		$mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+		$mail->Port       = 465;                   // set the SMTP port for the GMAIL server
+		$mail->Username   = "";  // GMAIL username
+		$mail->Password   = "";            // GMAIL password
+		$mail->AddAddress($toEmail,$toUsuario);
+		$mail->AddBcc("igccsp2015@gmail.com"); //hidden copy to igcssp2015
+		//$mail->AddAddress(emailUserLogin($logado), nomeUserLogin($logado));
+		$mail->SetFrom($fromEmail, $fromUsuario);
+		$mail->AddReplyTo($fromEmail, $fromUsuario);
+		//assunto da IGCCSP
+		$mail->Subject = $subject;
+		$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 		//	Criar uma variável com as informações
-	  $mail->MsgHTML($conteudo_email);
-	  $mail->Send();
-	} catch (phpmailerException $e) {
-	  echo $e->errorMessage(); //Pretty error messages from PHPMailer
-	} catch (Exception $e) {
-	  echo $e->getMessage(); //Boring error messages from anything else!
+		$mail->MsgHTML($conteudo_email);
+		$mail->Send();
 	}
-
-
+	catch (phpmailerException $e)
+	{
+		echo $e->errorMessage(); //Pretty error messages from PHPMailer
+	}
+	catch (Exception $e)
+	{
+		echo $e->getMessage(); //Boring error messages from anything else!
+	}
 }
-
-
-function verificaOpcao($opcao){
+function verificaOpcao($opcao)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM igsis_opcoes WHERE opcao = '$opcao' LIMIT 0,1";
 	$query = mysqli_query($con,$sql);
 	$valor = mysqli_fetch_array($query);
 	return $valor['valor'];	
 }
-
-function gravarLog($log){ //grava na tabela ig_log os inserts e updates
+function gravarLog($log)
+{
+	//grava na tabela ig_log os inserts e updates
 	$valor = verificaOpcao("log"); //verifica se a opção de gravação de log está habilitada
-	if($valor == 1){
+	if($valor == 1)
+	{
 		$logTratado = addslashes($log);
 		$idUsuario = $_SESSION['idUsuario'];
 		$ip = $_SERVER["REMOTE_ADDR"];
 		$data = date('Y-m-d H:i:s');
-		$sql = "INSERT INTO `ig_log` (`idLog`, `ig_usuario_idUsuario`, `enderecoIP`, `dataLog`, `descricao`) VALUES (NULL, '$idUsuario', '$ip', '$data', '$logTratado')";
+		$sql = "INSERT INTO `ig_log` (`idLog`, `ig_usuario_idUsuario`, `enderecoIP`, `dataLog`, `descricao`) 
+			VALUES (NULL, '$idUsuario', '$ip', '$data', '$logTratado')";
 		$mysqli = bancoMysqli();
 		$mysqli->query($sql);
 	}
 }
-
-function geraOpcaoPublicado($tabela,$select,$instituicao){ //gera os options de um select
-	if($instituicao != ""){
+function geraOpcaoPublicado($tabela,$select,$instituicao)
+{
+	//gera os options de um select
+	if($instituicao != "")
+	{
 		$sql = "SELECT * FROM $tabela WHERE publicado = 0 AND idInstituicao = $instituicao OR idInstituicao = 999  ";
-	}else{
+	}
+	else
+	{
 		$sql = "SELECT * FROM $tabela WHERE publicado = 1";
 	}
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	while($option = mysqli_fetch_row($query)){
-		if($option[0] == $select){
+	while($option = mysqli_fetch_row($query))
+	{
+		if($option[0] == $select)
+		{
 			echo "<option value='".$option[0]."' selected >".$option[1]."</option>";	
-		}else{
+		}
+		else
+		{
 			echo "<option value='".$option[0]."'>".$option[1]."</option>";	
 		}
 	}
 }
-
-
-
-function geraOpcao($tabela,$select,$instituicao){ //gera os options de um select
-	if($instituicao != ""){
+function geraOpcao($tabela,$select,$instituicao)
+{
+	//gera os options de um select
+	if($instituicao != "")
+	{
 		$sql = "SELECT * FROM $tabela WHERE idInstituicao = $instituicao OR idInstituicao = 999 ORDER BY 2 ASC";
-	}else{
+	}
+	else
+	{
 		$sql = "SELECT * FROM $tabela ORDER BY 2";
 	}
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	while($option = mysqli_fetch_row($query)){
-		if($option[0] == $select){
+	while($option = mysqli_fetch_row($query))
+	{
+		if($option[0] == $select)
+		{
 			echo "<option value='".$option[0]."' selected >".$option[1]."</option>";	
-		}else{
+		}
+		else
+		{
 			echo "<option value='".$option[0]."'>".$option[1]."</option>";	
 		}
 	}
 }
-
-function geraOpcaoRelJuridica($select,$idUsuario){ //gera os options de um select
+function geraOpcaoRelJuridica($select,$idUsuario)
+{
+	//gera os options de um select
 	$con = bancoMysqli();
 	$usuario = recuperaDados("ig_usuario",$idUsuario,"idUsuario");
 	$verbas = $usuario['verba'];
 	$sql = "SELECT * FROM sis_verba WHERE Id_Verba IN ($verbas)";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	while($option = mysqli_fetch_row($query)){
-		if($option[0] == $select){
+	while($option = mysqli_fetch_row($query))
+	{
+		if($option[0] == $select)
+		{
 			echo "<option value='".$option[0]."' selected >".$option[1]."</option>";	
-		}else{
+		}
+		else
+		{
 			echo "<option value='".$option[0]."'>".$option[1]."</option>";	
 		}
 	}
 }
-
-function geraOpcaoOrder($tabela,$select,$instituicao){ //gera os options de um select
-	if($instituicao != ""){
+function geraOpcaoOrder($tabela,$select,$instituicao)
+{
+	//gera os options de um select
+	if($instituicao != "")
+	{
 		$sql = "SELECT * FROM $tabela WHERE idInstituicao = $instituicao OR idInstituicao = 999 ORDER BY Verba ASC";
-	}else{
+	}
+	else
+	{
 		$sql = "SELECT * FROM $tabela ORDER BY Verba ASC";
 	}
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	while($option = mysqli_fetch_row($query)){
-		if($option[0] == $select){
+	while($option = mysqli_fetch_row($query))
+	{
+		if($option[0] == $select)
+		{
 			echo "<option value='".$option[0]."' selected >".$option[1]."</option>";	
-		}else{
+		}
+		else
+		{
 			echo "<option value='".$option[0]."'>".$option[1]."</option>";	
 		}
 	}
 }
-
-
-function geraOpcaoPai($tabela,$select,$instituicao){
-	if($instituicao != ""){
+function geraOpcaoPai($tabela,$select,$instituicao)
+{
+	if($instituicao != "")
+	{
 		$sql = "SELECT * FROM $tabela WHERE idInstituicao = $instituicao OR idInstituicao = 999";
-	}else{
+	}
+	else
+	{
 		$sql = "SELECT * FROM $tabela";
 	}
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	while($option = mysqli_fetch_array($query)){
-		if($option['pai'] != NULL){		
-			if($option[0] == $select){
+	while($option = mysqli_fetch_array($query))
+	{
+		if($option['pai'] != NULL)
+		{
+			if($option[0] == $select)
+			{
 				echo "<option value='".$option[0]."' selected >".$option[1]."</option>";	
-			}else{
+			}
+			else
+			{
 				echo "<option value='".$option[0]."'>".$option[1]."</option>";	
 			}
 		}
 	}
 }
-
-function geraOpcaoSub($idEvento,$selecionado){
+function geraOpcaoSub($idEvento,$selecionado)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM ig_sub_evento WHERE ig_evento_idEvento = '$idEvento' AND publicado = '1'";
 	$query = mysqli_query($con,$sql);
-	while($option = mysqli_fetch_array($query)){
-		if($option['idSubEvento'] == $selecionado){
+	while($option = mysqli_fetch_array($query))
+	{
+		if($option['idSubEvento'] == $selecionado)
+		{
 			echo "<option value='".$option['idSubEvento']."' selected >".$option['titulo']."</option>";	
-		}else{
+		}
+		else
+		{
 			echo "<option value='".$option['idSubEvento']."'>".$option['titulo']."</option>";	
 		}
-	}			
+	}		
 }
-
-function recuperaModulo($pag){ 
+function recuperaModulo($pag)
+{
 	$sql = "SELECT * FROM ig_modulo WHERE pag = '$pag'";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
 	$modulo = mysqli_fetch_array($query);
 	return $modulo;
 }
-	
-function listaModulos($perfil){ //gera as tds dos módulos a carregar
+function listaModulos($perfil)
+{
+	//gera as tds dos módulos a carregar
 	// recupera quais módulos o usuário tem acesso
 	$sql = "SELECT * FROM ig_papelusuario WHERE idPapelUsuario = $perfil"; 
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
 	$campoFetch = mysqli_fetch_array($query);
-	
-	while($fieldinfo = mysqli_fetch_field($query)){
-		if(($campoFetch[$fieldinfo->name] == 1) AND ($fieldinfo->name != 'idPapelUsuario')){
+	while($fieldinfo = mysqli_fetch_field($query))
+	{
+		if(($campoFetch[$fieldinfo->name] == 1) AND ($fieldinfo->name != 'idPapelUsuario'))
+		{
 			$descricao = recuperaModulo($fieldinfo->name);
 			echo "<tr>";
 			echo "<td class='list_description'><b>".$descricao['nome']."</b></td>";
 			echo "<td class='list_description'>".$descricao['descricao']."</td>";
 			echo "
-			<td class='list_description'>
-			<form method='POST' action='?perfil=$fieldinfo->name'>
-			<input type ='submit' class='btn btn-theme btn-lg btn-block' value='carregar'></td></form>"	;
+				<td class='list_description'>
+					<form method='POST' action='?perfil=$fieldinfo->name'>
+						<input type ='submit' class='btn btn-theme btn-lg btn-block' value='carregar'></td></form>"	;
 			echo "</tr>";
 		}
 	}
 }
-
-function listaModulosAlfa($perfil){ //gera as tds dos módulos a carregar
+function listaModulosAlfa($perfil)
+{
+	//gera as tds dos módulos a carregar
 	$con = bancoMysqli();
-
 	// recupera os módulos do sistema
 	$sql_modulos = "SELECT pag FROM ig_modulo ORDER BY nome";
 	$query_modulos = mysqli_query($con,$sql_modulos);
-	while($modulos = mysqli_fetch_array($query_modulos)){
+	while($modulos = mysqli_fetch_array($query_modulos))
+	{
 		$sql = "SELECT * FROM ig_papelusuario WHERE idPapelUsuario = $perfil"; 
 		$query = mysqli_query($con,$sql);
 		$campoFetch = mysqli_fetch_array($query);
-		if(($campoFetch[$modulos['pag']] == 1) AND ($campoFetch[$modulos['pag']] != 'idPapelUsuario')){
-				$descricao = recuperaModulo($modulos['pag']);
-				echo "<tr>";
-				echo "<td class='list_description'><b>".$descricao['nome']."</b></td>";
-				echo "<td class='list_description'>".$descricao['descricao']."</td>";
-				echo "
+		if(($campoFetch[$modulos['pag']] == 1) AND ($campoFetch[$modulos['pag']] != 'idPapelUsuario'))
+		{
+			$descricao = recuperaModulo($modulos['pag']);
+			echo "<tr>";
+			echo "<td class='list_description'><b>".$descricao['nome']."</b></td>";
+			echo "<td class='list_description'>".$descricao['descricao']."</td>";
+			echo "
 				<td class='list_description'>
-				<form method='POST' action='?perfil=".$modulos['pag']."' >
-				<input type ='submit' class='btn btn-theme btn-lg btn-block' value='carregar'></td></form>"	;
-				echo "</tr>";
-			}
-		
+					<form method='POST' action='?perfil=".$modulos['pag']."' >
+						<input type ='submit' class='btn btn-theme btn-lg btn-block' value='carregar'></td></form>"	;
+			echo "</tr>";
+		}
 	}	
 }
-
-
-function verificaAcesso($usuario,$pagina){ //verifica se o usuário tem permissão de acesso a uma determinada página
-	$sql = "SELECT * FROM ig_usuario,ig_papelusuario WHERE ig_usuario.idUsuario = $usuario AND ig_usuario.ig_papelusuario_idPapelUsuario = ig_papelusuario.idPapelUsuario LIMIT 0,1";
+function verificaAcesso($usuario,$pagina)
+{
+	//verifica se o usuário tem permissão de acesso a uma determinada página
+	$sql = "SELECT * FROM ig_usuario,ig_papelusuario 
+		WHERE ig_usuario.idUsuario = $usuario 
+		AND ig_usuario.ig_papelusuario_idPapelUsuario = ig_papelusuario.idPapelUsuario LIMIT 0,1";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
 	$verifica = mysqli_fetch_array($query);
-	if($verifica["$pagina"] == 1){
+	if($verifica["$pagina"] == 1)
+	{
 		return 1;
-	}else{
+	}
+	else
+	{
 		return 0;
 	}
 }
-
-function recuperaEvento($idEvento){ //retorna uma array com os dados da tabela ig_evento
+function recuperaEvento($idEvento)
+{
+	//retorna uma array com os dados da tabela ig_evento
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM ig_evento WHERE idEvento = '$idEvento' LIMIT 0,1";
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo;		
-}	
-
-function recuperaDados($tabela,$idEvento,$campo){ //retorna uma array com os dados de qualquer tabela. serve apenas para 1 registro.
+}
+function recuperaDados($tabela,$idEvento,$campo)
+{
+	//retorna uma array com os dados de qualquer tabela. serve apenas para 1 registro.
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM $tabela WHERE ".$campo." = '$idEvento' LIMIT 0,1";
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo;		
 }
-
-
-
-
-function opcaoUsuario($idInstituicao,$idUsuario){ //cria as options com usuários de uma instituicao
-	$sql = "SELECT DISTINCT * FROM ig_usuario,ig_papelusuario WHERE ig_usuario.ig_papelusuario_idPapelUsuario = ig_papelusuario.idPapelUsuario AND ig_papelusuario.evento = 1 ORDER BY nomeCompleto";
+function opcaoUsuario($idInstituicao,$idUsuario)
+{
+	//cria as options com usuários de uma instituicao
+	$sql = "SELECT DISTINCT * FROM ig_usuario,ig_papelusuario 
+		WHERE ig_usuario.ig_papelusuario_idPapelUsuario = ig_papelusuario.idPapelUsuario 
+		AND ig_papelusuario.evento = 1 
+		ORDER BY nomeCompleto";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	while($campo = mysqli_fetch_array($query)){
-		if($campo['idUsuario'] == $idUsuario){
+	while($campo = mysqli_fetch_array($query))
+	{
+		if($campo['idUsuario'] == $idUsuario)
+		{
 			echo "<option value=".$campo['idUsuario']." selected >".$campo['nomeCompleto']."</option>";
-		}else{
+		}
+		else
+		{
 			echo "<option value=".$campo['idUsuario']." >".$campo['nomeCompleto']."</option>";
-			
 		}
 	}	
 }
-
-function verificaExiste($idTabela,$idCampo,$idDado,$st){ //retorna uma array com indice 'numero' de registros e 'dados' da tabela
+function verificaExiste($idTabela,$idCampo,$idDado,$st)
+{
+	//retorna uma array com indice 'numero' de registros e 'dados' da tabela
 	$con = bancoMysqli();
-	if($st == 1){ // se for 1, é uma string
+	if($st == 1)
+	{
+		// se for 1, é uma string
 		$sql = "SELECT * FROM $idTabela WHERE $idCampo = '%$idDado%'";
-	}else{
+	}
+	else
+	{
 		$sql = "SELECT * FROM $idTabela WHERE $idCampo = '$idDado'";
 	}
 	$query = mysqli_query($con,$sql);
@@ -619,203 +664,226 @@ function verificaExiste($idTabela,$idCampo,$idDado,$st){ //retorna uma array com
 	$campo['dados'] = $dados;	
 	return $campo;
 }
-
-function retornaUltimo($idTabela){ //retorna o id do ultimo dado inserido. em desuso e subsitutir por mysqli_insert_id()
-
+function retornaUltimo($idTabela)
+{
+	//retorna o id do ultimo dado inserido. em desuso e subsitutir por mysqli_insert_id()
 	$sql_ultimo = "SELECT * FROM $idTabela ORDER BY idEvento DESC LIMIT 1";
 	$id_evento = mysql_query($sql_ultimo);
 	$id = mysql_fetch_array($id_evento);
 	$_SESSION['idEvento'] = $id['idEvento'];
 }
-
-
-function recuperaIdDado($tabela,$id){ 
+function recuperaIdDado($tabela,$id)
+{ 
 	$con = bancoMysqli();
 	//recupera os nomes dos campos
 	$sql = "SELECT * FROM $tabela";
 	$query = mysqli_query($con,$sql);
 	$campo01 = mysqli_field_name($query, 0);
-	$campo02 = mysqli_field_name($query, 1);
-	
+	$campo02 = mysqli_field_name($query, 1);	
 	$sql = "SELECT * FROM $tabela WHERE $campo01 = $id";
 	$query = mysql_query($sql);
 	$campo = mysql_fetch_array($query);
-	return $campo[$campo02];	
+	return $campo[$campo02];
 }
-
-function recuperaProdutor($idProdutor){ //recupera dados da tabela produtor
+function recuperaProdutor($idProdutor)
+{
+	//recupera dados da tabela produtor
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM ig_produtor WHERE idProdutor = $idProdutor";
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo;	
 }
-
-function listaEventosGravados($idUsuario){ //tabela para gerenciar eventos em aberto
+function listaEventosGravados($idUsuario)
+{
+	//tabela para gerenciar eventos em aberto
 	$con = bancoMysqli();
-	$sql = "SELECT * FROM ig_evento WHERE publicado = 1 AND (idUsuario = '$idUsuario' OR suplente = '$idUsuario' OR idResponsavel = '$idUsuario') AND dataEnvio IS NULL ORDER BY idEvento DESC";
+	$sql = "SELECT * FROM ig_evento 
+	WHERE publicado = 1 
+	AND (idUsuario = '$idUsuario' OR suplente = '$idUsuario' OR idResponsavel = '$idUsuario') 
+	AND dataEnvio IS NULL ORDER BY idEvento DESC";
 	$query = mysqli_query($con,$sql);
-	echo "<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td>Nome do evento</td>
-							<td>Tipo de evento</td>
-  							<td>Data/Período</td>
-							<td width='10%'></td>
-							<td width='10%'></td>
-						</tr>
-					</thead>
-					<tbody>";
-	while($campo = mysqli_fetch_array($query)){
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Nome do evento</td>
+					<td>Tipo de evento</td>
+					<td>Data/Período</td>
+					<td width='10%'></td>
+					<td width='10%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+	while($campo = mysqli_fetch_array($query))
+	{
 			echo "<tr>";
 			echo "<td class='list_description'>".$campo['nomeEvento']."</td>";
 			echo "<td class='list_description'>".retornaTipo($campo['ig_tipo_evento_idTipoEvento'])."</td>";
 			echo "<td class='list_description'>".retornaPeriodo($campo['idEvento'])."</td>";
 			echo "
-			<td class='list_description'>
-			<form method='POST' action='?perfil=evento&p=basica'>
-			<input type='hidden' name='carregar' value='".$campo['idEvento']."' />
-			<input type ='submit' class='btn btn-theme btn-block' value='carregar'></td></form>"	;
-			
+				<td class='list_description'>
+					<form method='POST' action='?perfil=evento&p=basica'>
+						<input type='hidden' name='carregar' value='".$campo['idEvento']."' />
+						<input type ='submit' class='btn btn-theme btn-block' value='carregar'></td></form>";
 			echo "
-			<td class='list_description'>
-			<form method='POST' action='?perfil=evento&p=carregar'>
-			<input type='hidden' name='apagar' value='".$campo['idEvento']."' />
-			<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
+				<td class='list_description'>
+					<form method='POST' action='?perfil=evento&p=carregar'>
+						<input type='hidden' name='apagar' value='".$campo['idEvento']."' />
+						<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
 			echo "</tr>";		
 	}
-	echo "					</tbody>
-				</table>";
+	echo "
+		</tbody>
+		</table>";
 }
-
-function retornaInstituicao($local){ 
+function retornaInstituicao($local)
+{ 
 	$con = bancoMysqli();
 	$sql = "SELECT idInstituicao FROM ig_local WHERE idLocal = $local";
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo['idInstituicao'];
 }
-
-function listaOcorrencias($idEvento){ //lista ocorrencias de determinado evento
-	$sql = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' AND idTipoOcorrencia <> '5' ORDER BY dataInicio";
+function listaOcorrencias($idEvento)
+{
+	//lista ocorrencias de determinado evento
+	$sql = "SELECT * FROM ig_ocorrencia 
+		WHERE idEvento = '$idEvento' 
+		AND publicado = '1' 
+		AND idTipoOcorrencia <> '5' 
+		ORDER BY dataInicio";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	echo "<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td>Ocorrência</td>
-							<td width='10%'></td>
-							<td width='10%'></td>
-							<td width='10%'></td>
-						</tr>
-					</thead>
-					<tbody>";
-	while($campo = mysqli_fetch_array($query)){
-			$tipo_de_evento = retornaTipoOcorrencia($campo['idTipoOcorrencia']); // retorna o tipo de ocorrência
-			if($campo['idSubEvento'] != NULL){
-				$sub = recuperaDados("ig_sub_evento",$campo['idSubEvento'],"idSubEvento");
-			}else{
-				$sub['titulo'] = "";		
-			}
-			if($campo['dataFinal'] == '0000-00-00'){
-				$data = exibirDataBr($campo['dataInicio'])." - ".diasemana($campo['dataInicio']); //precisa tirar a hora para fazer a função funcionar
-					$semana = "";
-			}else{
-				$data = "De ".exibirDataBr($campo['dataInicio'])." a ".exibirDataBr($campo['dataFinal']);
-				if($campo['segunda'] == 1){$seg = "segunda";}else{$seg = "";}
-				if($campo['terca'] == 1){$ter = "terça";}else{$ter = "";}
-				if($campo['quarta'] == 1){$qua = "quarta";}else{$qua = "";}
-				if($campo['quinta'] == 1){$qui = "quinta";}else{$qui = "";}
-				if($campo['sexta'] == 1){$sex = " sexta";}else{$sex = "";}
-				if($campo['sabado'] == 1){$sab = " sábado";}else{$sab = "";}
-				if($campo['domingo'] == 1){$dom = " domingo";}else{$dom = "";}
-				$semana = "(".$seg." ".$ter." ".$qua." ".$qui." ".$sex." ".$sab." ".$dom.")";	
-			}
-			
-			if($campo['diaEspecial'] == 1){
-				if($campo['libras'] == 1){$libras = "Tradução em libras";}else{$libras = "";}
-				if($campo['audiodescricao'] == 1){$audio = "Audiodescrição";}else{$audio = "";}
-				if($campo['precoPopular'] == 1){$popular = "Preço popular";}else{$popular = "";}
-				if($campo['virada'] == 1){$virada = "Jornada do Patrimônio";}else{$virada = "";}
-				
-				$dia_especial =	" - Dia especial:".$libras." ".$audio." ".$popular." ".$virada;
-			}else{
-				$dia_especial = "";
-			}
-			
-			//recuperaDados($tabela,$idEvento,$campo)
-			$hora = exibirHora($campo['horaInicio']);
-			$duracao = recuperaDuracao($campo ['duracao']);
-			$retirada = recuperaIngresso($campo['retiradaIngresso']);
-			$valor = dinheiroParaBr($campo['valorIngresso']);
-			$local = recuperaDados("ig_local",$campo['local'],"idLocal");
-			$espaco = $local['sala'];
-			$inst = recuperaDados("ig_instituicao",$local['idInstituicao'],"idInstituicao");
-			$instituicao = $inst['instituicao'];
-			$id = $campo['idOcorrencia'];
-			
-			if($campo['virada'] == 1){
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Ocorrência</td>
+					<td width='10%'></td>
+					<td width='10%'></td>
+					<td width='10%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+	while($campo = mysqli_fetch_array($query))
+	{
+		$tipo_de_evento = retornaTipoOcorrencia($campo['idTipoOcorrencia']); // retorna o tipo de ocorrência
+		if($campo['idSubEvento'] != NULL)
+		{
+			$sub = recuperaDados("ig_sub_evento",$campo['idSubEvento'],"idSubEvento");
+		}
+		else
+		{
+			$sub['titulo'] = "";		
+		}
+		if($campo['dataFinal'] == '0000-00-00')
+		{
+			$data = exibirDataBr($campo['dataInicio'])." - ".diasemana($campo['dataInicio']); //precisa tirar a hora para fazer a função funcionar
+			$semana = "";
+		}
+		else
+		{
+			$data = "De ".exibirDataBr($campo['dataInicio'])." a ".exibirDataBr($campo['dataFinal']);
+			if($campo['segunda'] == 1){$seg = "segunda";}else{$seg = "";}
+			if($campo['terca'] == 1){$ter = "terça";}else{$ter = "";}
+			if($campo['quarta'] == 1){$qua = "quarta";}else{$qua = "";}
+			if($campo['quinta'] == 1){$qui = "quinta";}else{$qui = "";}
+			if($campo['sexta'] == 1){$sex = " sexta";}else{$sex = "";}
+			if($campo['sabado'] == 1){$sab = " sábado";}else{$sab = "";}
+			if($campo['domingo'] == 1){$dom = " domingo";}else{$dom = "";}
+			$semana = "(".$seg." ".$ter." ".$qua." ".$qui." ".$sex." ".$sab." ".$dom.")";	
+		}
+		if($campo['diaEspecial'] == 1)
+		{
+			if($campo['libras'] == 1){$libras = "Tradução em libras";}else{$libras = "";}
+			if($campo['audiodescricao'] == 1){$audio = "Audiodescrição";}else{$audio = "";}
+			if($campo['precoPopular'] == 1){$popular = "Preço popular";}else{$popular = "";}
+			if($campo['virada'] == 1){$virada = "Jornada do Patrimônio";}else{$virada = "";}
+			$dia_especial =	" - Dia especial:".$libras." ".$audio." ".$popular." ".$virada;
+		}
+		else
+		{
+			$dia_especial = "";
+		}
+		//recuperaDados($tabela,$idEvento,$campo)
+		$hora = exibirHora($campo['horaInicio']);
+		$duracao = recuperaDuracao($campo ['duracao']);
+		$retirada = recuperaIngresso($campo['retiradaIngresso']);
+		$valor = dinheiroParaBr($campo['valorIngresso']);
+		$local = recuperaDados("ig_local",$campo['local'],"idLocal");
+		$espaco = $local['sala'];
+		$inst = recuperaDados("ig_instituicao",$local['idInstituicao'],"idInstituicao");
+		$instituicao = $inst['instituicao'];
+		$id = $campo['idOcorrencia'];
+		if($campo['virada'] == 1)
+		{
 			$hora = "Jornada do Patrimônio";
 			$local = "Jornada do Patrimônio";
-			$espaco = "Jornada do Patrimônio";
-				
-			}
-			
-			
-			
-			
-			$ocorrencia = "<div class='left'>$tipo_de_evento $dia_especial ".
+			$espaco = "Jornada do Patrimônio";	
+		}
+		$ocorrencia = "<div class='left'>$tipo_de_evento $dia_especial ".
 			$sub['titulo']
 			."<br />
 			Data: $data $semana <br />
 			Horário: $hora<br />
 			Duração: $duracao<br />
 			Local: $espaco - $instituicao<br />
-			Retirada de ingresso: $retirada  - Valor: $valor <br /></br>";  
-			
-					
-			echo "<tr>";
-			echo "<td class='list_description'>".$ocorrencia."</td>";
-			echo "
+			Retirada de ingresso: $retirada  - Valor: $valor <br /></br>";
+		echo "<tr>";
+		echo "<td class='list_description'>".$ocorrencia."</td>";
+		echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=evento&p=ocorrencias&action=editar'>
-			<input type='hidden' name='id' value='$id' />
-			<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td></form>"	;
-
-			echo "
+				<form method='POST' action='?perfil=evento&p=ocorrencias&action=editar'>
+					<input type='hidden' name='id' value='$id' />
+					<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td></form>";
+		echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
-			<input type='hidden' name='duplicar' value='".$campo['idOcorrencia']."' />
-			<input type ='submit' class='btn btn-theme btn-block' value='Duplicar'></td></form>"	;
-			
-			echo "
+				<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
+					<input type='hidden' name='duplicar' value='".$campo['idOcorrencia']."' />
+					<input type ='submit' class='btn btn-theme btn-block' value='Duplicar'></td></form>";
+		echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
-			<input type='hidden' name='apagar' value='".$campo['idOcorrencia']."' />
-			<input type ='submit' class='btn btn-theme  btn-block' value='Apagar'></td></form>"	;
-			echo "</tr>";		
+				<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
+					<input type='hidden' name='apagar' value='".$campo['idOcorrencia']."' />
+					<input type ='submit' class='btn btn-theme  btn-block' value='Apagar'></td></form>";
+		echo "</tr>";		
 	}
-	echo "					</tbody>
-				</table>";
+	echo "
+		</tbody>
+		</table>";
 }
-
-function listaOcorrenciasTexto($idEvento){ //lista ocorrencias de determinado evento
-	$sql = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = 1 AND idTipoOcorrencia NOT LIKE '5' ORDER BY dataInicio";
+function listaOcorrenciasTexto($idEvento)
+{
+	//lista ocorrencias de determinado evento
+	$sql = "SELECT * FROM ig_ocorrencia 
+		WHERE idEvento = '$idEvento' 
+		AND publicado = 1 
+		AND idTipoOcorrencia NOT LIKE '5' 
+		ORDER BY dataInicio";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
 	$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
-	if($evento['ig_tipo_evento_idTipoEvento'] != 1){
-	while($campo = mysqli_fetch_array($query)){
+	if($evento['ig_tipo_evento_idTipoEvento'] != 1)
+	{
+		while($campo = mysqli_fetch_array($query))
+		{
 			$tipo_de_evento = retornaTipoOcorrencia($campo['idTipoOcorrencia']); // retorna o tipo de ocorrência
-			if($campo['idSubEvento'] != NULL){
+			if($campo['idSubEvento'] != NULL)
+			{
 				$sub = recuperaDados("ig_sub_evento",$campo['idSubEvento'],"idSubEvento");
-			}else{
+			}
+			else
+			{
 				$sub['titulo'] = "";		
 			}
-			if($campo['dataFinal'] == '0000-00-00'){
+			if($campo['dataFinal'] == '0000-00-00')
+			{
 				$data = exibirDataBr($campo['dataInicio'])." - ".diasemana($campo['dataInicio']); //precisa tirar a hora para fazer a função funcionar
-					$semana = "";
-			}else{
+				$semana = "";
+			}
+			else
+			{
 				$data = "De ".exibirDataBr($campo['dataInicio'])." a ".exibirDataBr($campo['dataFinal']);
 				if($campo['segunda'] == 1){$seg = "segunda";}else{$seg = "";}
 				if($campo['terca'] == 1){$ter = "terça";}else{$ter = "";}
@@ -826,17 +894,17 @@ function listaOcorrenciasTexto($idEvento){ //lista ocorrencias de determinado ev
 				if($campo['domingo'] == 1){$dom = " domingo";}else{$dom = "";}
 				$semana = "(".$seg." ".$ter." ".$qua." ".$qui." ".$sex." ".$sab." ".$dom.")";	
 			}
-			
-			if($campo['diaEspecial'] == 1){
+			if($campo['diaEspecial'] == 1)
+			{
 				if($campo['libras'] == 1){$libras = "Tradução em libras";}else{$libras = "";}
 				if($campo['audiodescricao'] == 1){$audio = "Audiodescrição";}else{$audio = "";}
 				if($campo['precoPopular'] == 1){$popular = "Preço popular";}else{$popular = "";}
-				
 				$dia_especial =	" - Dia especial:".$libras." ".$audio." ".$popular;
-			}else{
+			}
+			else
+			{
 				$dia_especial = "";
 			}
-			
 			//recuperaDados($tabela,$idEvento,$campo)
 			$hora = exibirHora($campo['horaInicio']);
 			$duracao = recuperaDuracao($campo ['duracao']);
@@ -847,138 +915,135 @@ function listaOcorrenciasTexto($idEvento){ //lista ocorrencias de determinado ev
 			$inst = recuperaDados("ig_instituicao",$local['idInstituicao'],"idInstituicao");
 			$instituicao = $inst['instituicao'];
 			$id = $campo['idOcorrencia'];
-			
-			
-			
-			
 			$ocorrencia = "<div class='left'>$tipo_de_evento $dia_especial ".
 			$sub['titulo']
-			."<br />
-			Data: $data $semana <br />
-			Horário: $hora<br />
-			Duração: $duracao min<br />
-			Local: $espaco - $instituicao<br />
-			Retirada de ingresso: $retirada  - Valor: $valor <br /></br></div>";  
-			
-			if($campo['virada'] == 1){
-			$ocorrencia = "<div class='left'>Jornada do Patrimônio</br></div>";
-			}
-			
-					
-			echo $ocorrencia;		
-	}
+				."<br />
+				Data: $data $semana <br />
+				Horário: $hora<br />
+				Duração: $duracao min<br />
+				Local: $espaco - $instituicao<br />
+				Retirada de ingresso: $retirada  - Valor: $valor <br /></br></div>";  
+			if($campo['virada'] == 1)
+			{
+				$ocorrencia = "<div class='left'>Jornada do Patrimônio</br></div>";
+			}	
+			echo $ocorrencia;	
+		}
 	}
 }
-
-function resumoOcorrencias($idEvento){
+function resumoOcorrencias($idEvento)
+{
 	$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
-	
 	$mostra = periodoMostra($idEvento);
 	$local = listaLocais($idEvento);
 	$localMostra = listaLocaisMostra($idEvento);
 	$periodo = retornaPeriodo($idEvento);
-	if($evento['ig_tipo_evento_idTipoEvento'] == 1){
+	if($evento['ig_tipo_evento_idTipoEvento'] == 1)
+	{
 		$final = $mostra."<br />".substr($localMostra,1);
 		return $final;
-	}else{
+	}
+	else
+	{
 		$final = $periodo."<br />".substr($local,1);
 		return $final;
-		
 	}
-	
 }
-
-function checar($id){ //funcao para imprimir checked do checkbox
-	if($id == 1){
+function checar($id)
+{
+	//funcao para imprimir checked do checkbox
+	if($id == 1)
+	{
 		echo "checked";	
 	}	
 }
-
-function listaArquivos($idEvento){ //lista arquivos de determinado evento
+function listaArquivos($idEvento)
+{
+	//lista arquivos de determinado evento
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM ig_arquivo WHERE ig_evento_idEvento = '$idEvento' AND publicado = '1'";
 	$query = mysqli_query($con,$sql);
-	echo "<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td>Nome do arquivo</td>
-							<td width='10%'></td>
-						</tr>
-					</thead>
-					<tbody>";
-	while($campo = mysqli_fetch_array($query)){
-			echo "<tr>";
-			echo "<td class='list_description'><a href='../uploads/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
-			echo "
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Nome do arquivo</td>
+					<td width='10%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+	while($campo = mysqli_fetch_array($query))
+	{
+		echo "<tr>";
+		echo "<td class='list_description'><a href='../uploads/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
+		echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=evento&p=arquivos'>
-			<input type='hidden' name='apagar' value='".$campo['idArquivo']."' />
-			<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
-			echo "</tr>";		
+				<form method='POST' action='?perfil=evento&p=arquivos'>
+					<input type='hidden' name='apagar' value='".$campo['idArquivo']."' />
+					<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
+		echo "</tr>";		
 	}
-					
-						
-
-                        
-
-						
-		
-	echo "					</tbody>
-				</table>";	
+	echo "
+		</tbody>
+		</table>";	
 }
-
-function listaArquivosDetalhe($idEvento){ //lista arquivos de determinado evento
+function listaArquivosDetalhe($idEvento)
+{
+	//lista arquivos de determinado evento
 	$con = bancoMysqli();
-	$sql = "SELECT * FROM ig_arquivo WHERE ig_evento_idEvento = '$idEvento' AND publicado = '1'";
+	$sql = "SELECT * FROM ig_arquivo 
+		WHERE ig_evento_idEvento = '$idEvento' 
+		AND publicado = '1'";
 	$query = mysqli_query($con,$sql);
-	echo "<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td></td>
-							<td width='10%'></td>
-						</tr>
-					</thead>
-					<tbody>";
-	while($campo = mysqli_fetch_array($query)){
-			echo "<tr>";
-			echo "<td class='list_description'><a href='../uploads/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
-			echo "</tr>";		
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td></td>
+					<td width='10%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+	while($campo = mysqli_fetch_array($query))
+	{
+		echo "<tr>";
+		echo "<td class='list_description'><a href='../uploads/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
+		echo "</tr>";		
 	}
-					
-						
-
-                        
-
-						
-		
-	echo "					</tbody>
-				</table>";	
+	echo "
+		</tbody>
+		</table>";	
 }
-
-function verificaSubEvento($idEvento){ //retorna os dados de um subevento
+function verificaSubEvento($idEvento)
+{
+	//retorna os dados de um subevento
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM ig_sub_evento WHERE ig_evento_idEvento = '$idEvento'";
 	$query = mysqli_query($con,$sql);
 	$num = mysqli_num_rows($query);
 	$subEvento['num'] = $num;
-	if($num > 0){
+	if($num > 0)
+	{
 		$subEvento = mysql_fetch_array($query);	
 	}
 	return $subEvento ;
 }
-
-function recuperaUsuario($idUsuario){ //retorna dados do usuário
+function recuperaUsuario($idUsuario)
+{
+	//retorna dados do usuário
 	$recupera = recuperaDados('ig_usuario',$idUsuario,'idUsuario');
-	if($recupera){
+	if($recupera)
+	{
 		return $recupera;
-	}else{
-		return NULL;
 	}
-		
+	else
+	{
+		return NULL;
+	}	
 }
-
-
-function descricaoEvento($idEvento){ //imprime dados de um evento
+function descricaoEvento($idEvento)
+{
+	//imprime dados de um evento
 	$evento = recuperaEvento($idEvento);
 	$tipoEvento = recuperaDados('ig_tipo_evento',$evento['ig_tipo_evento_idTipoEvento'],'idTipoEvento');
 	$programa = recuperaDados('ig_programa',$evento['ig_programa_idPrograma'],'idPrograma');
@@ -986,16 +1051,25 @@ function descricaoEvento($idEvento){ //imprime dados de um evento
 	$responsavel = recuperaUsuario($evento['idResponsavel']);
 	$suplente = recuperaUsuario($evento['suplente']);
 	$faixa = recuperaDados('ig_etaria',$evento['faixaEtaria'],'idIdade');
-
 	//exibe as informações principais
 	echo "Número da IG: <b>".$idEvento."</b><br />";
-	if($evento['dataEnvio'] != NULL){
+	if($evento['dataEnvio'] != NULL)
+	{
 		echo "Evento enviado em ".exibirDataHoraBr($evento['dataEnvio'])."<br />";
 	}
 	echo "<b>Tipo de evento:</b> ".$tipoEvento['tipoEvento']."<br />";
-	if($evento['ig_programa_idPrograma'] != 0){ echo "<b>Programa especial:</b> ".$programa['programa']."<br />";}
-	if($evento['projetoEspecial'] != 0){ echo "<b>Projeto especial:</b> ".$projetoEspecial['projetoEspecial']."<br />";}
-	if($evento['projeto'] != ""){ echo "<b>Projeto:</b> ".$evento['projeto']."<br />";}
+	if($evento['ig_programa_idPrograma'] != 0)
+	{
+		echo "<b>Programa especial:</b> ".$programa['programa']."<br />";
+	}
+	if($evento['projetoEspecial'] != 0)
+	{
+		echo "<b>Projeto especial:</b> ".$projetoEspecial['projetoEspecial']."<br />";
+	}
+	if($evento['projeto'] != "")
+	{
+		echo "<b>Projeto:</b> ".$evento['projeto']."<br />";
+	}
 	echo "<br />";
 	echo "<b>Responsável pelo evento:</b> ".$responsavel['nomeCompleto']."<br />";
 	echo "<b>Suplente:</b> ".$suplente['nomeCompleto']."<br />";
@@ -1010,245 +1084,222 @@ function descricaoEvento($idEvento){ //imprime dados de um evento
 	// Foi para área de pedido de contratação
 	//echo "<b>Justificativa:</b><br />".$evento['justificativa']."<br /><br />"; 
 	//echo "<b>Parecer artístico:</b><br />".$evento['parecerArtistico']."<br /><br />";
-
 }
-
-function descricaoEspecificidades($idEvento,$tipo){
-	
-
+function descricaoEspecificidades($idEvento,$tipo)
+{
 	//switch das áreas específicas
-	switch($tipo){
-	
-	case 2: //artes visuais
-	$artes = recuperaDados("ig_artes_visuais",$idEvento,"idEvento");
-	echo"
-	<strong>Artes Visuais</strong><br />
-	Tipo de contratação: ".$artes['tipo'].
-	"<br />Número de contratados: ".$artes['numero']."
-	<br />Valor total : R$".dinheiroParaBr($artes['valorTotal'])."<br /><br />
-	
-	";
-
-	
-	break;
-	case 7: //teatro e dança
-	case 8:
-	case 14:
-	case 15:
-	case 16:
-	case 17:
-	case 9:
-	
-	$artes = recuperaDados("ig_teatro_danca",$idEvento,"ig_evento_idEvento");
-	if($artes['estreia'] == 0){
-		$estreia = "Não";
-	}else{
-		$estreia = "SIM";
-	}
-	echo"
-	<strong>Teatro / Dança</strong><br />
-	Estréia: ".$estreia.
-	"<br />Gênero: ".$artes['genero']."<br /><br />
-	";	
-	
-	
-	break;
-	case 4: //oficinas e paletras
-	case 5:
-	
-	$oficinas = recuperaDados("ig_oficinas",$idEvento,"idEvento");
-	if($oficinas['certificado'] == 1){
-		echo "<b>Certificado:</b> Sim<br />";	
-	}
-	if($oficinas['vagas'] != 0){
-		echo "<b>Vagas:</b> ".$oficinas['vagas']."<br />"; 	
-	}
-		if($oficinas['publico'] != ""){
-		echo "<b>Público:</b> ".$oficinas['publico']."<br />"; 	
-	}
-
-		if($oficinas['vagas'] != ""){
-		echo "<b>Vagas:</b> ".$oficinas['vagas']."<br />"; 	
-	}
-	if($oficinas['material'] != ""){
-		echo "<b>Material:</b> ".$oficinas['material']."<br />"; 	
-	}
-	switch($oficinas['inscricao']){
-		case 1:
-		echo "<b>Inscrição:</b> Sem necessidade.</br />"; 	
-		
+	switch($tipo)
+	{
+		case 2: //artes visuais
+			$artes = recuperaDados("ig_artes_visuais",$idEvento,"idEvento");
+			echo"
+				<strong>Artes Visuais</strong><br />
+				Tipo de contratação: ".$artes['tipo'].
+				"<br />Número de contratados: ".$artes['numero']."
+				<br />Valor total : R$".dinheiroParaBr($artes['valorTotal'])."<br /><br />";
 		break;
-		case 2:
-		echo "<b>Inscrição:</b>Pelo site - ficha de inscrição.</br />"; 	
+		case 9:
+			$artes = recuperaDados("ig_teatro_danca",$idEvento,"ig_evento_idEvento");
+			if($artes['estreia'] == 0)
+			{
+				$estreia = "Não";
+			}
+			else
+			{
+				$estreia = "SIM";
+			}
+			echo"
+				<strong>Teatro / Dança</strong><br />
+				Estréia: ".$estreia.
+				"<br />Gênero: ".$artes['genero']."<br /><br />";
 		break;
-		case 3:
-		echo "<b>Inscrição:</b>Pelo site - por email.</br />"; 	
+		case 5:
+			$oficinas = recuperaDados("ig_oficinas",$idEvento,"idEvento");
+			if($oficinas['certificado'] == 1)
+			{
+				echo "<b>Certificado:</b> Sim<br />";	
+			}
+			if($oficinas['vagas'] != 0)
+			{
+				echo "<b>Vagas:</b> ".$oficinas['vagas']."<br />"; 	
+			}
+				if($oficinas['publico'] != "")
+				{
+					echo "<b>Público:</b> ".$oficinas['publico']."<br />"; 	
+				}
+				if($oficinas['vagas'] != "")
+				{
+					echo "<b>Vagas:</b> ".$oficinas['vagas']."<br />"; 	
+				}
+			if($oficinas['material'] != "")
+			{
+				echo "<b>Material:</b> ".$oficinas['material']."<br />"; 	
+			}
+			switch($oficinas['inscricao'])
+			{
+				case 1:
+					echo "<b>Inscrição:</b> Sem necessidade.</br />";
+				break;
+				case 2:
+					echo "<b>Inscrição:</b>Pelo site - ficha de inscrição.</br />"; 	
+				break;
+				case 3:
+					echo "<b>Inscrição:</b>Pelo site - por email.</br />"; 	
+				break;
+				case 4:
+					echo "<b>Inscrição:</b> Pessoalmente.</br />"; 	
+				break;
+			}
+			if($oficinas['valorHora'] != 0)
+			{
+				echo "<b>Valor/Hora (em reais):</b> ".$oficinas['valorHora']."<br />"; 	
+			}
+			if($oficinas['divulgacao'] != "0000-00-00")
+			{
+				echo "<b>Divulgação dos resultados da inscrição:</b> ".exibirDataBr($oficinas['divulgacao'])."(ver data da inscrição em ocorrências).<br />"; 	
+			}
+			if($oficinas['cargaHoraria'] != 0)
+			{
+				echo "<b>Carga Horária:</b> ".$oficinas['cargaHoraria']."<br />"; 	
+			}
 		break;
-		case 4:
-		echo "<b>Inscrição:</b> Pessoalmente.</br />"; 	
+		case 19:
+			$artes = recuperaDados("ig_musica",$idEvento,"ig_evento_idEvento");
+			if($artes['venda'] == 0)
+			{
+				$venda = "Não";
+			}
+			else
+			{
+				$venda = "SIM";
+			}
+			echo"
+				<strong>Música</strong><br />
+				Gênero: ".$artes['genero'].
+				"<br />Venda de material: ".$venda."
+				<br />Especificação do material : ".$artes['material']."<br /><br />";
 		break;
 	}
-	if($oficinas['valorHora'] != 0){
-		echo "<b>Valor/Hora (em reais):</b> ".$oficinas['valorHora']."<br />"; 	
-	}
-	if($oficinas['divulgacao'] != "0000-00-00"){
-		echo "<b>Divulgação dos resultados da inscrição:</b> ".exibirDataBr($oficinas['divulgacao'])."(ver data da inscrição em ocorrências).<br />"; 	
-	}
-	if($oficinas['cargaHoraria'] != 0){
-		echo "<b>Carga Horária:</b> ".$oficinas['cargaHoraria']."<br />"; 	
-	}
-
-		
-	
-	break;
-	case 11: //música
-	case 12:	
-	case 19:
-	$artes = recuperaDados("ig_musica",$idEvento,"ig_evento_idEvento");
-	if($artes['venda'] == 0){
-		$venda = "Não";
-	}else{
-		$venda = "SIM";
-	}
-
-
-	echo"
-	<strong>Música</strong><br />
-	Gênero: ".$artes['genero'].
-	"<br />Venda de material: ".$venda."
-	<br />Especificação do material : ".$artes['material']."<br /><br />
-	
-	";
-	
-	
-		
-		
-	break;
-	case 1: //cinema
-	
-	break;
-	}
-
 	//sub-evento
-	
 }
-
-function verificaEdicao($idEvento){ //exibe o evento que está sendo editado.
-	if(isset($idEvento)){
-		if($idEvento != ''){
-		$campo = recuperaEvento($idEvento);
-		echo "- Você está editando o evento <strong>'".$campo['nomeEvento']."'</strong>";	
+function verificaEdicao($idEvento)
+{
+	//exibe o evento que está sendo editado.
+	if(isset($idEvento))
+	{
+		if($idEvento != '')
+		{
+			$campo = recuperaEvento($idEvento);
+			echo "- Você está editando o evento <strong>'".$campo['nomeEvento']."'</strong>";	
 		}
 	}
 }
-
-function recuperaPessoa($id,$tipo){ //recupera os dados de uma pessoa
+function recuperaPessoa($id,$tipo)
+{
+	//recupera os dados de uma pessoa
 	$con = bancoMysqli();
-	if($id == 0){
-			$y['nome'] = ""; 
-			$y['tipo'] = "";
-			$y['numero'] = "";		
-			return $y;
-		
-	}else{
-	switch($tipo){
-		case '1':
-			$sql = "SELECT * FROM sis_pessoa_fisica WHERE Id_PessoaFisica = $id";
-			$query = mysqli_query($con,$sql);
-			$x = mysqli_fetch_array($query);
-			$y['nome'] = $x['Nome']; 
-			$y['tipo'] = "Pessoa física";
-			$y['numero'] = $x['CPF'];
-			$y['cep'] = $x['CEP'];
-			$y['ccm'] = $x['CCM'];
-			$y['email'] = $x['Email'];
-			$y['telefones'] = $x['Telefone1']." / ".$x['Telefone2']." / ".$x['Telefone3'];
-			 
-			return $y;
-
-		break;
-		case '2':
-			$sql = "SELECT * FROM sis_pessoa_juridica WHERE Id_PessoaJuridica = $id";
-			$query = mysqli_query($con,$sql);
-			$x = mysqli_fetch_array($query);
-			$y['nome'] = $x['RazaoSocial']; 
-			$y['tipo'] = "Pessoa jurídica";
-			$y['numero'] = $x['CNPJ'];
-			$y['cep'] = $x['CEP'];
-			$y['ccm'] = $x['CCM'];
-			$y['email'] = $x['Email'];
-			$y['telefones'] = $x['Telefone1']." / ".$x['Telefone2']." / ".$x['Telefone3'];
-				
-						return $y;	
-		break;
-		case '3':
-			$sql = "SELECT * FROM sis_representante_legal WHERE Id_RepresentanteLegal = $id";
-			$query = mysqli_query($con,$sql);
-			$x = mysqli_fetch_array($query);
-			$y['nome'] = $x['RepresentanteLegal']; 
-			$y['tipo'] = "Representante legal";
-			$y['numero'] = $x['CPF'];		
-			return $y;
-		break;		
-
+	if($id == 0)
+	{
+		$y['nome'] = ""; 
+		$y['tipo'] = "";
+		$y['numero'] = "";		
+		return $y;
+	}
+	else
+	{
+		switch($tipo)
+		{
+			case '1':
+				$sql = "SELECT * FROM sis_pessoa_fisica WHERE Id_PessoaFisica = $id";
+				$query = mysqli_query($con,$sql);
+				$x = mysqli_fetch_array($query);
+				$y['nome'] = $x['Nome']; 
+				$y['tipo'] = "Pessoa física";
+				$y['numero'] = $x['CPF'];
+				$y['cep'] = $x['CEP'];
+				$y['ccm'] = $x['CCM'];
+				$y['email'] = $x['Email'];
+				$y['telefones'] = $x['Telefone1']." / ".$x['Telefone2']." / ".$x['Telefone3'];
+				return $y;
+			break;
+			case '2':
+				$sql = "SELECT * FROM sis_pessoa_juridica WHERE Id_PessoaJuridica = $id";
+				$query = mysqli_query($con,$sql);
+				$x = mysqli_fetch_array($query);
+				$y['nome'] = $x['RazaoSocial']; 
+				$y['tipo'] = "Pessoa jurídica";
+				$y['numero'] = $x['CNPJ'];
+				$y['cep'] = $x['CEP'];
+				$y['ccm'] = $x['CCM'];
+				$y['email'] = $x['Email'];
+				$y['telefones'] = $x['Telefone1']." / ".$x['Telefone2']." / ".$x['Telefone3'];
+				return $y;	
+			break;
+			case '3':
+				$sql = "SELECT * FROM sis_representante_legal WHERE Id_RepresentanteLegal = $id";
+				$query = mysqli_query($con,$sql);
+				$x = mysqli_fetch_array($query);
+				$y['nome'] = $x['RepresentanteLegal']; 
+				$y['tipo'] = "Representante legal";
+				$y['numero'] = $x['CPF'];		
+				return $y;
+			break;
 		}
-
 	}
 }
-
-function recuperaEstadoCivil($id){
+function recuperaEstadoCivil($id)
+{
 	$estadoCivil = recuperaDados("sis_estado_civil",$id,"Id_EstadoCivil");
 	$x['IdEstadoCivil'] = $estadoCivil['Id_EstadoCivil'];
 	$x['EstadoCivil'] = $estadoCivil['EstadoCivil'];
 	return $x;		
 }
-
-function retornaEndereco($cep,$numero,$complemento){
+function retornaEndereco($cep,$numero,$complemento)
+{
 	$con = bancoMysqliCEP();
-
 	$cep_index = substr($cep, 0, 5);
 	$sql01 = "SELECT * FROM igsis_cep_cep_log_index WHERE cep5 = '$cep_index' LIMIT 0,1";
 	$query01 = mysqli_query($con,$sql01);
 	$num = mysqli_num_rows($query01);
-	if($num > 0){
+	if($num > 0)
+	{
 		$campo01 = mysqli_fetch_array($query01);
 		$uf = "igsis_cep_".$campo01['uf'];
-	
 		$sql02 = "SELECT * FROM $uf WHERE cep = '$cep'";
 		$query02 = mysqli_query($con,$sql02);
 		$campo02 = mysqli_fetch_array($query02);
 		$endereco =  $campo02['tp_logradouro']." ".$campo02['logradouro'].", ".$numero." / ".$complemento." - ".
 		$campo02['bairro']." - ".$campo02['cidade']." / ".strtoupper($campo01['uf']);
 		return $endereco;
-	}else{
-		
 	}
-	
+	else
+	{
+	}
 }
-
-function geraOpcaoLegal($idEvento){ //gera options de representantes legais
+function geraOpcaoLegal($idEvento)
+{
+	//gera options de representantes legais
 	$sql = "SELECT * FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND tipoPessoa = '3'";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	while($campo = mysqli_fetch_array($query)){
+	while($campo = mysqli_fetch_array($query))
+	{
 		$id = $campo['idPessoa'];	
 		$nome = recuperaPessoa($id,3);
 		$representante = $nome['nome'];
 		echo "<option value='".$id."'>".$representante."</option>";
 	}		
 }
-
-function valorPorExtenso($valor=0) { //retorna um valor por extenso
+function valorPorExtenso($valor=0)
+{
+	//retorna um valor por extenso
 	$singular = array("centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão");
 	$plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões","quatrilhões");
- 
 	$c = array("", "cem", "duzentos", "trezentos", "quatrocentos","quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
 	$d = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta","sessenta", "setenta", "oitenta", "noventa");
 	$d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze","dezesseis", "dezesete", "dezoito", "dezenove");
 	$u = array("", "um", "dois", "três", "quatro", "cinco", "seis","sete", "oito", "nove");
- 
 	$z=0;
- 
 	$valor = number_format($valor, 2, ".", ".");
 	$inteiro = explode(".", $valor);
 	for($i=0;$i<count($inteiro);$i++)
@@ -1257,12 +1308,12 @@ function valorPorExtenso($valor=0) { //retorna um valor por extenso
   	$rt = "";
 	// $fim identifica onde que deve se dar junção de centenas por "e" ou por "," ;) 
 	$fim = count($inteiro) - ($inteiro[count($inteiro)-1] > 0 ? 1 : 2);
-	for ($i=0;$i<count($inteiro);$i++) {
+	for ($i=0;$i<count($inteiro);$i++)
+	{
 		$valor = $inteiro[$i];
 		$rc = (($valor > 100) && ($valor < 200)) ? "cento" : $c[$valor[0]];
 		$rd = ($valor[1] < 2) ? "" : $d[$valor[1]];
 		$ru = ($valor > 0) ? (($valor[1] == 1) ? $d10[$valor[2]] : $u[$valor[2]]) : "";
-	
 		$r = $rc.(($rc && ($rd || $ru)) ? " e " : "").$rd.(($rd && $ru) ? " e " : "").$ru;
 		$t = count($inteiro)-1-$i;
 		$r .= $r ? " ".($valor > 1 ? $plural[$t] : $singular[$t]) : "";
@@ -1270,566 +1321,572 @@ function valorPorExtenso($valor=0) { //retorna um valor por extenso
 		if (($t==1) && ($z>0) && ($inteiro[0] > 0)) $r .= (($z>1) ? " de " : "").$plural[$t]; 
 		if ($r) $rt = $rt . ((($i > 0) && ($i <= $fim) && ($inteiro[0] > 0) && ($z < 1)) ? ( ($i < $fim) ? ", " : " e ") : " ") . $r;
 	}
- 
 	return($rt ? $rt : "zero");
 }
-
-function recuperaModalidade($id){ //imprime a modalidade
+function recuperaModalidade($id)
+{
+	//imprime a modalidade
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM ig_modalidade WHERE idModalidade = '$id'";
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	echo $campo['modalidade'];	
 }
-
-function retornaTipo($id){ //retorna o tipo de evento
+function retornaTipo($id)
+{
+	//retorna o tipo de evento
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM ig_tipo_evento WHERE idTipoEvento = '$id'";
 	$query = mysqli_query($con,$sql);
 	$x = mysqli_fetch_array($query);		
 	return $x['tipoEvento'];
 }
-
-
-
-
-function iniciaFormulario($idUsuario,$idInstituicao){ //inicia um evento zerado
+function iniciaFormulario($idUsuario,$idInstituicao)
+{
+	//inicia um evento zerado
 	unset($_SESSION['idEvento']);
-
 	// Query para inserir um registro em branco
 	$sql_inicio = "INSERT INTO  `ig_evento` (
-
-`idEvento` ,
-`ig_produtor_idProdutor` ,
-`ig_tipo_evento_idTipoEvento` ,
-`ig_programa_idPrograma` ,
-`projetoEspecial` ,
-`nomeEvento` ,
-`projeto` ,
-`memorando` ,
-`idResponsavel` ,
-`suplente` ,
-`autor` ,
-`fichaTecnica` ,
-`faixaEtaria` ,
-`sinopse` ,
-`releaseCom` ,
-`confirmaFinanca` ,
-`confirmaDiretoria` ,
-`confirmaComunicacao` ,
-`confirmaDocumentacao` ,
-`confirmaProducao` ,
-`numeroProcesso` ,
-`publicado` ,
-`idInstituicao` ,
-`idUsuario`
-)
-VALUES (
-NULL ,  '',  '',  '',  '',  '', NULL , NULL ,  '',  '',  '',  '',  '',  '',  '', NULL , NULL , NULL , NULL , NULL , NULL , NULL , $idInstituicao, $idUsuario
-)
-";
+		`idEvento` ,
+		`ig_produtor_idProdutor` ,
+		`ig_tipo_evento_idTipoEvento` ,
+		`ig_programa_idPrograma` ,
+		`projetoEspecial` ,
+		`nomeEvento` ,
+		`projeto` ,
+		`memorando` ,
+		`idResponsavel` ,
+		`suplente` ,
+		`autor` ,
+		`fichaTecnica` ,
+		`faixaEtaria` ,
+		`sinopse` ,
+		`releaseCom` ,
+		`confirmaFinanca` ,
+		`confirmaDiretoria` ,
+		`confirmaComunicacao` ,
+		`confirmaDocumentacao` ,
+		`confirmaProducao` ,
+		`numeroProcesso` ,
+		`publicado` ,
+		`idInstituicao` ,
+		`idUsuario`)
+		VALUES (
+		NULL ,  '',  '',  '',  '',  '', NULL , NULL ,  '',  '',  '',  '',  '',  '',  '', NULL , NULL , NULL , NULL , NULL , NULL , NULL , $idInstituicao, $idUsuario)";
 	// Executa a query
 	$con = bancoMysqli();
 	mysqli_query($con,$sql_inicio);
-	
 	// Retorna o ID gerado na tabela ig_evento
 	$sql_ultimo = "SELECT * FROM ig_evento ORDER BY idEvento DESC LIMIT 1";
 	$id_evento = mysqli_query($con,$sql_ultimo);
 	$id = mysqli_fetch_array($id_evento);
 	$_SESSION['idEvento'] = $id['idEvento'];
-	
 }
-
-function recuperaResponsavel($nomeResponsavel){ //retorna um array com os dados do responsavel
+function recuperaResponsavel($nomeResponsavel)
+{
+	//retorna um array com os dados do responsavel
 	$sql = "SELECT * FROM ig_usuario WHERE nomeUsuario = '%$nomeResponsavel%'";
 	$con = bancoMysqli();
 	$query = mysqli_query($sql,$con);
 	$num_resultado = mysql_num_rows($query);
-	if($num_resultado = 0){
+	if($num_resultado = 0)
+	{
 		$campo['existe'] = 0;
 		$campo['idUsuario'] = 0;
 		$campo['nomeUsuario'] = "";
 		return $campo; // retorna uma array com ['existe'] e ['idResponsavel']
-
-	}else if($num_resultado = 1){
+	}
+	else if($num_resultado = 1)
+	{
 		$id = mysql_fetch_array($query);
 		$campo['existe'] = 1;
 		$campo['idResponsavel'] = $id['idUsuario']; 
 		$campo['nomeUsuario'] = $id['nomeUsuario']; 
 		return $campo;
 	}
-	
 }
-
-function recuperaIngresso($id){ //retorna o tipo de retirada de ingresso
+function recuperaIngresso($id)
+{
+	//retorna o tipo de retirada de ingresso
 	$sql = "SELECT * FROM ig_retirada WHERE idRetirada = '$id'";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo['retirada'];	
 }
-
-
-function recuperaDuracao($id){ //retorna duração
+function recuperaDuracao($id)
+{
+	//retorna duração
 	$sql = "SELECT * FROM ig_ocorrencia WHERE duracao = '$id'";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo['duracao'];	
 }
-
-
-function retornaTipoOcorrencia($id){ //retorna o tipo de ocorrencia
+function retornaTipoOcorrencia($id)
+{
+	//retorna o tipo de ocorrencia
 	$sql = "SELECT * FROM ig_tipo_ocorrencia WHERE idTipoOcorrencia = '$id'";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo['tipoOcorrencia'];	
 }
-
-
-function cadastroPessoa($idEvento,$doc,$tipo){ //cria um cadastro de pessoa zerado
+function cadastroPessoa($idEvento,$doc,$tipo)
+{
+	//cria um cadastro de pessoa zerado
 	$con = bancoMysqli();
-	switch($tipo){	
-	case 1:	
-		$sql = "INSERT INTO sis_pessoa_fisica (CPF,publicado,idEvento) VALUES ('$doc','0','idEvento')";
-		$tabela = "sis_pessoa_fisica";
+	switch($tipo)
+	{	
+		case 1:	
+			$sql = "INSERT INTO sis_pessoa_fisica (CPF,publicado,idEvento) VALUES ('$doc','0','idEvento')";
+			$tabela = "sis_pessoa_fisica";
 		break;
-	
-	case 2:	
-		$sql = "INSERT INTO sis_pessoa_juridica (CNPJ,publicado,idEvento) VALUES ('$doc','0','idEvento')";
-		$tabela = "sis_pessoa_juridica";
+		case 2:	
+			$sql = "INSERT INTO sis_pessoa_juridica (CNPJ,publicado,idEvento) VALUES ('$doc','0','idEvento')";
+			$tabela = "sis_pessoa_juridica";
 		break;
-	
-	case 3:
-		$sql = "INSERT INTO sis_representante_legal (CPF,publicado,idEvento) VALUES ('$doc','0','idEvento')";
-		$tabela = "sis_representante_legal";
+		case 3:
+			$sql = "INSERT INTO sis_representante_legal (CPF,publicado,idEvento) VALUES ('$doc','0','idEvento')";
+			$tabela = "sis_representante_legal";
 		break;
 	}
 	$query = mysqli_query($con,$sql); 
 	$ultimo = recuperaUltimo($tabela);
 	return $ultimo;
-
 }
-function apagarRepresentante($pedido,$tipo,$evento){ //atualiza o publicado do representante para 0
+function apagarRepresentante($pedido,$tipo,$evento)
+{
+	//atualiza o publicado do representante para 0
 	$con = bancoMysqli();
-	$sql = "SELECT * FROM igsis_pedido_contratacao WHERE idPessoa = '$pedido' AND idEvento = '$evento' AND tipoPessoa = '3'  AND publicado = '1' LIMIT 0,1";
+	$sql = "SELECT * FROM igsis_pedido_contratacao 
+		WHERE idPessoa = '$pedido' 
+		AND idEvento = '$evento' 
+		AND tipoPessoa = '3'  
+		AND publicado = '1' LIMIT 0,1";
 	$query = mysqli_query($con,$sql);
 	$num_rows = mysqli_num_rows($query);
-	if($num_rows > 0){
-		while($campo = mysqli_fetch_array($query)){
+	if($num_rows > 0)
+	{
+		while($campo = mysqli_fetch_array($query))
+		{
 			$sql_jur = "SELECT * FROM igsis_pedido_contratacao WHERE idEvento = '$evento' AND tipoPessoa = '2' AND publicado = '1'";
 			$query_jur = mysqli_query($con,$sql_jur);
-			while($campo_jur = mysqli_fetch_array($query_jur)){
-				if(($campo_jur['idRepresentante01'] == $campo['idPessoa']) OR ($campo_jur['idRepresentante02'] == $campo['idPessoa'])){
+			while($campo_jur = mysqli_fetch_array($query_jur))
+			{
+				if(($campo_jur['idRepresentante01'] == $campo['idPessoa']) OR ($campo_jur['idRepresentante02'] == $campo['idPessoa']))
+				{
 					echo " disabled ";
-				}else{
+				}
+				else
+				{
 					echo " erro 1 ";
 				}
 			}
 		}
 	}
 }
-
-function listaArquivosPessoa($idPessoa,$tipo){
+function listaArquivosPessoa($idPessoa,$tipo)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM igsis_arquivos_pessoa WHERE idPessoa = $idPessoa AND idTipoPessoa = $tipo AND publicado = 1";
 	$query = mysqli_query($con,$sql);
-	echo "<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td width='30%'>Tipo</td>
-							<td>Nome do arquivo</td>
-							<td width='10%'></td>
-						</tr>
-					</thead>
-					<tbody>";
-	while($campo = mysqli_fetch_array($query)){
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td width='30%'>Tipo</td>
+					<td>Nome do arquivo</td>
+					<td width='10%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+	while($campo = mysqli_fetch_array($query))
+	{
 		$tipoDoc = recuperaDados("igsis_upload_docs",$campo['tipo'],"idTipoDoc");
 			echo "<tr>";
 			echo "<td class='list_description'>".$tipoDoc['documento']."</td>";
 			echo "<td class='list_description'><a href='../uploadsdocs/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
 			echo "
-			<td class='list_description'>
-			<form method='POST' action='?perfil=contratados&p=arquivos'>
-			<input type='hidden' name='idPessoa' value='".$idPessoa."' />
-			<input type='hidden' name='tipoPessoa' value='".$tipo."' />
-			<input type='hidden' name='apagar' value='".$campo['idArquivosPessoa']."' />
-			<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
+				<td class='list_description'>
+					<form method='POST' action='?perfil=contratados&p=arquivos'>
+						<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+						<input type='hidden' name='tipoPessoa' value='".$tipo."' />
+						<input type='hidden' name='apagar' value='".$campo['idArquivosPessoa']."' />
+						<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
 			echo "</tr>";		
 	}
-					
-						
-
-                        
-
-						
-		
-	echo "					</tbody>
-				</table>";	
+	echo "
+		</tbody>
+		</table>";	
 }
-
-
-function listaArquivosPedido($idPedido){
+function listaArquivosPedido($idPedido)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM igsis_arquivos_pedidos WHERE idPedido = '$idPedido' AND publicado = 1";
 	$query = mysqli_query($con,$sql);
-	echo "<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td width='30%'>Tipo</td>
-							<td>Nome do arquivo</td>
-							<td width='10%'></td>
-						</tr>
-					</thead>
-					<tbody>";
-	while($campo = mysqli_fetch_array($query)){
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td width='30%'>Tipo</td>
+					<td>Nome do arquivo</td>
+					<td width='10%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+	while($campo = mysqli_fetch_array($query))
+	{
 		$tipoDoc = recuperaDados("igsis_upload_docs",$campo['tipo'],"idTipoDoc");
-			echo "<tr>";
-			echo "<td class='list_description'>".$tipoDoc['documento']."</td>";
-			echo "<td class='list_description'><a href='../uploadsdocs/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
-			echo "
+		echo "<tr>";
+		echo "<td class='list_description'>".$tipoDoc['documento']."</td>";
+		echo "<td class='list_description'><a href='../uploadsdocs/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
+		echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=contratados&p=arq_pedidos&id_ped=$idPedido'>
-			<input type='hidden' name='apagar' value='".$campo['idArquivosPedidos']."' />
-			<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
-			echo "</tr>";		
+				<form method='POST' action='?perfil=contratados&p=arq_pedidos&id_ped=$idPedido'>
+					<input type='hidden' name='apagar' value='".$campo['idArquivosPedidos']."' />
+					<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
+		echo "</tr>";
 	}
-					
-						
-
-                        
-
-						
-		
-	echo "					</tbody>
-				</table>";	
+	echo "
+		</tbody>
+		</table>";	
 }
-
-function listaArquivosPedidoEvento($idPedido){
+function listaArquivosPedidoEvento($idPedido)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM igsis_arquivos_pedidos WHERE idPedido = '$idPedido' AND publicado = 1";
 	$query = mysqli_query($con,$sql);
-	echo "<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td width='30%'>Tipo</td>
-							<td>Nome do arquivo</td>
-							<td width='10%'></td>
-						</tr>
-					</thead>
-					<tbody>";
-	while($campo = mysqli_fetch_array($query)){
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td width='30%'>Tipo</td>
+					<td>Nome do arquivo</td>
+					<td width='10%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+	while($campo = mysqli_fetch_array($query))
+	{
 		$tipoDoc = recuperaDados("igsis_upload_docs",$campo['tipo'],"idTipoDoc");
-			echo "<tr>";
-			echo "<td class='list_description'>".$tipoDoc['documento']."</td>";
-			echo "<td class='list_description'><a href='../uploadsdocs/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
-			echo "
+		echo "<tr>";
+		echo "<td class='list_description'>".$tipoDoc['documento']."</td>";
+		echo "<td class='list_description'><a href='../uploadsdocs/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
+		echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=contratados&p=arqped'>
-			<input type='hidden' name='idPedido' value='".$campo['idArquivosPedidos']."' />
-			<input type='hidden' name='apagar' value='".$campo['idArquivosPedidos']."' />
-			<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
-			echo "</tr>";		
+				<form method='POST' action='?perfil=contratados&p=arqped'>
+					<input type='hidden' name='idPedido' value='".$campo['idArquivosPedidos']."' />
+					<input type='hidden' name='apagar' value='".$campo['idArquivosPedidos']."' />
+					<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
+		echo "</tr>";		
 	}
-					
-						
-
-                        
-
-						
-		
-	echo "					</tbody>
-				</table>";	
+	echo "
+		</tbody>
+		</table>";	
 }
-	
-function listaLocais($idEvento){
+function listaLocais($idEvento)
+{
 	$con = bancoMysqli();
-	
 	$sql_virada = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' AND virada = '1' ";
 	$query_virada = mysqli_query($con,$sql_virada);
 	$num = mysqli_num_rows($query_virada);
-	if($num > 0){
-		
+	if($num > 0)
+	{	
 		$locais = " DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
-		
-	}else{
-	
-	$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
-	$query = mysqli_query($con,$sql);	
-	$locais = "";
-	
-	
-	
-	while($local = mysqli_fetch_array($query)){
-		$sala = recuperaDados("ig_local",$local['local'],"idLocal");
-		$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
-		$locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].")";
 	}
-	
+	else
+	{
+		$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
+		$query = mysqli_query($con,$sql);	
+		$locais = "";
+		while($local = mysqli_fetch_array($query))
+		{
+			$sala = recuperaDados("ig_local",$local['local'],"idLocal");
+			$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
+			$locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].")";
+		}
 	}
 	return $locais;
 }
 /*
-function listaLocais($idEvento){
+function listaLocais($idEvento)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
 	$query = mysqli_query($con,$sql);	
 	$locais = "";
-	
-	while($local = mysqli_fetch_array($query)){
+	while($local = mysqli_fetch_array($query))
+	{
 		$sala = recuperaDados("ig_local",$local['local'],"idLocal");
 		$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
 		$locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].")";
 	}
 	return $locais;
-
 }
 */
-
-function listaLocaisJuridico($idEvento){
+function listaLocaisJuridico($idEvento)
+{
 	$con = bancoMysqli();
-	
 	$sql_virada = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' AND virada = '1' ";
 	$query_virada = mysqli_query($con,$sql_virada);
 	$num = mysqli_num_rows($query_virada);
-	if($num > 0){
-		
+	if($num > 0)
+	{
 		$locais = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
-		
-	}else{
-	
-	$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
-	$query = mysqli_query($con,$sql);	
-	$locais = "";
-	
-	while($local = mysqli_fetch_array($query)){
-		$sala = recuperaDados("ig_local",$local['local'],"idLocal");
-		$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
-		$locais = $locais.", ".$sala['sala']." (".$instituicao['instituicao'].")";
-		if($sala['rua'] == 1){
-		$locais .= " - Em itinerância na rua toda";	
-		}
 	}
+	else
+	{
+		$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
+		$query = mysqli_query($con,$sql);	
+		$locais = "";
+		while($local = mysqli_fetch_array($query))
+		{
+			$sala = recuperaDados("ig_local",$local['local'],"idLocal");
+			$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
+			$locais = $locais.", ".$sala['sala']." (".$instituicao['instituicao'].")";
+			if($sala['rua'] == 1)
+			{
+				$locais .= " - Em itinerância na rua toda";	
+			}
+		}
 	}
 	return $locais;
 }
 /*
-
-function listaLocaisJuridico($idEvento){
+function listaLocaisJuridico($idEvento)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
 	$query = mysqli_query($con,$sql);	
 	$locais = "";
-	
-	while($local = mysqli_fetch_array($query)){
+	while($local = mysqli_fetch_array($query))
+	{
 		$sala = recuperaDados("ig_local",$local['local'],"idLocal");
 		$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
 		$locais = $locais.", ".$sala['sala']." (".$instituicao['instituicao'].")";
-		if($sala['rua'] == 1){
-		$locais .= " - Em itinerância na rua toda";	
+		if($sala['rua'] == 1)
+		{
+			$locais .= " - Em itinerância na rua toda";	
 		}
 	}
 	return $locais;
-
 }
-
 */
-function listaLocaisMostra($idEvento){
+function listaLocaisMostra($idEvento)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' AND idTipoOcorrencia = '5' ";
 	$query = mysqli_query($con,$sql);	
-	$locais = "";
-	
-	while($local = mysqli_fetch_array($query)){
+	$locais = "";	
+	while($local = mysqli_fetch_array($query))
+	{
 		$sala = recuperaDados("ig_local",$local['local'],"idLocal");
 		$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
 		$locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].")";
 	}
 	return $locais;
-
 }
-
-function retornaDuracao($idEvento){
+function retornaDuracao($idEvento)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT DISTINCT duracao FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY duracao DESC LIMIT 0,1";
 	$query = mysqli_query($con,$sql);	
 	$campo = mysqli_fetch_array($query);
 	return $campo['duracao'];
-	
 }
-
 /*
-function retornaPeriodo($id){ //retorna o período
+function retornaPeriodo($id)
+{
+	//retorna o período
 	$con = bancoMysqli();
 	$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
 	$query_anterior = mysqli_query($con,$sql_anterior);
 	$data = mysqli_fetch_array($query_anterior);
 	$data_inicio = $data['dataInicio'];
-	
 	$sql_posterior01 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataFinal DESC LIMIT 0,1"; //quando existe data final
 	$sql_posterior02 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
-	
 	$query_anterior01 = mysqli_query($con,$sql_posterior01);
 	$data = mysqli_fetch_array($query_anterior01);
 	$num = mysqli_num_rows($query_anterior01);
-	if(($num > 0) AND ($data['dataFinal'] != '0000-00-00')){
+	if(($num > 0) AND ($data['dataFinal'] != '0000-00-00'))
+	{
 		$dataFinal01 = $data['dataFinal'];	
-	}else{
+	}
+	else
+	{
 		return "Não há ocorrências. <br />
 		Por favor, insira pelo menos uma ocorrência.";	
 	}
 	$query_anterior02 = mysqli_query($con,$sql_posterior02);
 	$data = mysqli_fetch_array($query_anterior02);
 	$dataFinal02 = $data['dataInicio'];
-	
-		
-	if(isset($dataFinal01)){
-		if($dataFinal01 > $dataFinal02){
+	if(isset($dataFinal01))
+	{
+		if($dataFinal01 > $dataFinal02)
+		{
 			$dataFinal = $dataFinal01;
-		}else{
+		}
+		else
+		{
 			$dataFinal = $dataFinal02;
 		}
 	}
-	
-	if($data_inicio == $dataFinal){
+	if($data_inicio == $dataFinal)
+	{
 		return exibirDataBr($data_inicio);
-	}else{
+	}
+	else
+	{
 		return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal);
 	}
-	
 }
-
-function retornaPeriodo($id){ //retorna o período
+function retornaPeriodo($id)
+{
+	//retorna o período
 	$con = bancoMysqli();
 	$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
 	$query_anterior = mysqli_query($con,$sql_anterior);
 	$data = mysqli_fetch_array($query_anterior);
 	$data_inicio = $data['dataInicio'];
-	
 	$sql_posterior01 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataFinal DESC LIMIT 0,1"; //quando existe data final
 	$sql_posterior02 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
-	
 	$query_anterior01 = mysqli_query($con,$sql_posterior01);
 	$data = mysqli_fetch_array($query_anterior01);
 	$num = mysqli_num_rows($query_anterior01);
-	
-	if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL)){  //se existe uma data final e que é diferente de NULO
+	if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL))
+	{
+		//se existe uma data final e que é diferente de NULO
 		$dataFinal01 = $data['dataFinal'];	
 	}
-
 	$query_anterior02 = mysqli_query($con,$sql_posterior02); //recupera a data única mais tarde
 	$data = mysqli_fetch_array($query_anterior02);
 	$dataFinal02 = $data['dataInicio'];
-	
-		
-	if(isset($dataFinal01)){ //se existe uma temporada, compara com a última data única
-		if($dataFinal01 > $dataFinal02){
+	if(isset($dataFinal01))
+	{
+		//se existe uma temporada, compara com a última data única
+		if($dataFinal01 > $dataFinal02)
+		{
 			$dataFinal = $dataFinal01;
-		}else{
+		}
+		else
+		{
 			$dataFinal = $dataFinal02;
 		}
-	}else{
+	}
+	else
+	{
 		$dataFinal = $dataFinal02;		
 	}
-	
-	if($data_inicio == $dataFinal){ 
+	if($data_inicio == $dataFinal)
+	{ 
 		return exibirDataBr($data_inicio);
-	}else{
+	}
+	else
+	{
 		return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal);
 	}
-	
 }
 */
-function retornaPeriodo($id){ //retorna o período
+function retornaPeriodo($id)
+{
+	//retorna o período
 	$con = bancoMysqli();
-	
 	$sql_virada = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' AND virada = '1' ";
 	$query_virada = mysqli_query($con,$sql_virada);
-	
-	
 	$num = mysqli_num_rows($query_virada);
-	
-	if($num > 0){
+	if($num > 0)
+	{
 		$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
-	$query_anterior = mysqli_query($con,$sql_anterior);
-	$data = mysqli_fetch_array($query_anterior);
-	$data_inicio = $data['dataInicio'];
-	
-	$sql_posterior01 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataFinal DESC LIMIT 0,1"; //quando existe data final
-	$sql_posterior02 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
-	
-	$query_anterior01 = mysqli_query($con,$sql_posterior01);
-	$data = mysqli_fetch_array($query_anterior01);
-	$num = mysqli_num_rows($query_anterior01);
-	
-	if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL)){  //se existe uma data final e que é diferente de NULO
-		$dataFinal01 = $data['dataFinal'];	
-	}
-	$query_anterior02 = mysqli_query($con,$sql_posterior02); //recupera a data única mais tarde
-	$data = mysqli_fetch_array($query_anterior02);
-	$dataFinal02 = $data['dataInicio'];
-	
-		
-	if(isset($dataFinal01)){ //se existe uma temporada, compara com a última data única
-		if($dataFinal01 > $dataFinal02){
-			$dataFinal = $dataFinal01;
-		}else{
-			$dataFinal = $dataFinal02;
+		$query_anterior = mysqli_query($con,$sql_anterior);
+		$data = mysqli_fetch_array($query_anterior);
+		$data_inicio = $data['dataInicio'];
+		$sql_posterior01 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataFinal DESC LIMIT 0,1"; //quando existe data final
+		$sql_posterior02 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
+		$query_anterior01 = mysqli_query($con,$sql_posterior01);
+		$data = mysqli_fetch_array($query_anterior01);
+		$num = mysqli_num_rows($query_anterior01);
+		if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL))
+		{
+			//se existe uma data final e que é diferente de NULO
+			$dataFinal01 = $data['dataFinal'];	
 		}
-	}else{
-		$dataFinal = $dataFinal02;		
-	}
-	
-	if($data_inicio == $dataFinal){ 
-		return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
-	}else{
-		return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
-	}
-		
-	}else{
-	
-	
-	$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
-	$query_anterior = mysqli_query($con,$sql_anterior);
-	$data = mysqli_fetch_array($query_anterior);
-	$data_inicio = $data['dataInicio'];
-	
-	$sql_posterior01 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataFinal DESC LIMIT 0,1"; //quando existe data final
-	$sql_posterior02 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
-	
-	$query_anterior01 = mysqli_query($con,$sql_posterior01);
-	$data = mysqli_fetch_array($query_anterior01);
-	$num = mysqli_num_rows($query_anterior01);
-	
-	if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL)){  //se existe uma data final e que é diferente de NULO
-		$dataFinal01 = $data['dataFinal'];	
-	}
-	$query_anterior02 = mysqli_query($con,$sql_posterior02); //recupera a data única mais tarde
-	$data = mysqli_fetch_array($query_anterior02);
-	$dataFinal02 = $data['dataInicio'];
-	
-		
-	if(isset($dataFinal01)){ //se existe uma temporada, compara com a última data única
-		if($dataFinal01 > $dataFinal02){
-			$dataFinal = $dataFinal01;
-		}else{
-			$dataFinal = $dataFinal02;
+		$query_anterior02 = mysqli_query($con,$sql_posterior02); //recupera a data única mais tarde
+		$data = mysqli_fetch_array($query_anterior02);
+		$dataFinal02 = $data['dataInicio'];
+		if(isset($dataFinal01))
+		{
+			//se existe uma temporada, compara com a última data única
+			if($dataFinal01 > $dataFinal02)
+			{
+				$dataFinal = $dataFinal01;
+			}
+			else
+			{
+				$dataFinal = $dataFinal02;
+			}
 		}
-	}else{
-		$dataFinal = $dataFinal02;		
+		else
+		{
+			$dataFinal = $dataFinal02;		
+		}
+		if($data_inicio == $dataFinal)
+		{ 
+			return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
+		}
+		else
+		{
+			return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
+		}	
 	}
-	
-	if($data_inicio == $dataFinal){ 
-		return exibirDataBr($data_inicio);
-	}else{
-		return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal);
-	}
-	
+	else
+	{
+		$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+		$query_anterior = mysqli_query($con,$sql_anterior);
+		$data = mysqli_fetch_array($query_anterior);
+		$data_inicio = $data['dataInicio'];
+		$sql_posterior01 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataFinal DESC LIMIT 0,1"; //quando existe data final
+		$sql_posterior02 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
+		$query_anterior01 = mysqli_query($con,$sql_posterior01);
+		$data = mysqli_fetch_array($query_anterior01);
+		$num = mysqli_num_rows($query_anterior01);
+		if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL))
+		{
+			//se existe uma data final e que é diferente de NULO
+			$dataFinal01 = $data['dataFinal'];	
+		}
+		$query_anterior02 = mysqli_query($con,$sql_posterior02); //recupera a data única mais tarde
+		$data = mysqli_fetch_array($query_anterior02);
+		$dataFinal02 = $data['dataInicio'];
+		if(isset($dataFinal01))
+		{
+			//se existe uma temporada, compara com a última data única
+			if($dataFinal01 > $dataFinal02)
+			{
+				$dataFinal = $dataFinal01;
+			}
+			else
+			{
+				$dataFinal = $dataFinal02;
+			}
+		}
+		else
+		{
+			$dataFinal = $dataFinal02;		
+		}
+		if($data_inicio == $dataFinal)
+		{ 
+			return exibirDataBr($data_inicio);
+		}
+		else
+		{
+			return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal);
+		}
 	}
 }
-
-function retornaData($id){ //retorna o período
+function retornaData($id)
+{
+	//retorna o período
 	$con = bancoMysqli();
 	$sql_inicio = "SELECT * FROM igsis_agenda WHERE idEvento = '$id' ORDER BY data ASC LIMIT 0,1";
 	$sql_final = "SELECT * FROM igsis_agenda WHERE idEvento = '$id' ORDER BY data DESC LIMIT 0,1";
@@ -1842,105 +1899,109 @@ function retornaData($id){ //retorna o período
 	return $x;
 }
 //Comunicação
-
-function saudacaoCom(){
-	return "Olá amigo comunicador!";
-	
+function saudacaoCom()
+{
+	return "Olá amigo comunicador!";	
 }
-
-function listarComunicacao($order,$sentido){
-	if($order != ""){
+function listarComunicacao($order,$sentido)
+{
+	if($order != "")
+	{
 		$query_order = "ORDER BY ".$order." ".$sentido;
-	}else{
+	}
+	else
+	{
 		$query_order = "";
 	}
-	
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM ig_comunicacao $query_order";
 	$query = mysqli_query($con,$sql);
 	$i = 1;
-	while($com = mysqli_fetch_array($query)){
-			$nomeEvento = recuperaDados("ig_evento",$com['ig_evento_idEvento'],"idEvento");
-			$evento = $nomeEvento['nomeEvento'];
-			$enviado = $nomeEvento['idUsuario'];
-			$dataEnvio = $nomeEvento['dataEnvio'];
-			
-			$nomeUsuario = recuperaUsuario($nomeEvento['idUsuario']);
-			
-			$devolve[$i]['codigo'] = $com['idCom'];
-			$devolve[$i]['evento'] = $evento;
-			$devolve[$i]['enviadoPor'] = $nomeUsuario['nomeCompleto'];
-			$devolve[$i]['dataEnvio'] = $dataEnvio;
-			$i++;
-			}	
+	while($com = mysqli_fetch_array($query))
+	{
+		$nomeEvento = recuperaDados("ig_evento",$com['ig_evento_idEvento'],"idEvento");
+		$evento = $nomeEvento['nomeEvento'];
+		$enviado = $nomeEvento['idUsuario'];
+		$dataEnvio = $nomeEvento['dataEnvio'];
+		$nomeUsuario = recuperaUsuario($nomeEvento['idUsuario']);
+		$devolve[$i]['codigo'] = $com['idCom'];
+		$devolve[$i]['evento'] = $evento;
+		$devolve[$i]['enviadoPor'] = $nomeUsuario['nomeCompleto'];
+		$devolve[$i]['dataEnvio'] = $dataEnvio;
+		$i++;
+	}	
 	return $devolve;
 }
-
-function analisaArray($array){ //imprime o conteúdo de uma array
+function analisaArray($array)
+{
+	//imprime o conteúdo de uma array
 	echo "<pre>";
-   print_r($array);
+	print_r($array);
 	echo "</pre>";
 }
-
-function listaSubEventos($idEvento){ //lista ocorrencias de determinado evento
+function listaSubEventos($idEvento)
+{
+	//lista ocorrencias de determinado evento
 	$sql = "SELECT * FROM ig_sub_evento WHERE ig_evento_idEvento = '$idEvento' AND publicado = '1' ORDER BY idSubEvento DESC";
 	$con = bancoMysqli();
 	$query = mysqli_query($con,$sql);
-	echo "<table class='table table-condensed'>
-					<thead>
-						<tr class='list_menu'>
-							<td>Sub-evento</td>
-							<td width='10%'></td>
+	echo "
+		<table class='table table-condensed'>
+			<thead>
+				<tr class='list_menu'>
+					<td>Sub-evento</td>
+					<td width='10%'></td>
 
-							<td width='10%'></td>
-						</tr>
-					</thead>
-					<tbody>";
-	while($campo = mysqli_fetch_array($query)){	
+					<td width='10%'></td>
+				</tr>
+			</thead>
+			<tbody>";
+	while($campo = mysqli_fetch_array($query))
+	{	
 		$descricao = "<strong>".$campo['titulo']."</strong> (".retornaTipo($campo['idTipo']).")<br />";
-		$id = $campo['idSubEvento'];
-				
-					
-			echo "<tr>";
-			echo "<td class='list_description'>".$descricao."</td>";
-			echo "
+		$id = $campo['idSubEvento'];	
+		echo "<tr>";
+		echo "<td class='list_description'>".$descricao."</td>";
+		echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=evento&p=subEvento&action=inserir'>
-			<input type='hidden' name='editar' value='$id' />
-			<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td></form>"	;
-
-			echo "
+				<form method='POST' action='?perfil=evento&p=subEvento&action=inserir'>
+					<input type='hidden' name='editar' value='$id' />
+					<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td></form>";
+		echo "
 			<td class='list_description'>
-			<form method='POST' action='?perfil=evento&p=subEvento&action=listar'>
-			<input type='hidden' name='apagar' value='$id' />
-			<input type ='submit' class='btn btn-theme  btn-block' value='Apagar'></td></form>"	;
-			echo "</tr>";		
+				<form method='POST' action='?perfil=evento&p=subEvento&action=listar'>
+					<input type='hidden' name='apagar' value='$id' />
+					<input type ='submit' class='btn btn-theme  btn-block' value='Apagar'></td></form>"	;
+		echo "</tr>";		
 	}
 	echo "</tbody></table>";
 }
-
-function recuperaUltimo($tabela){
+function recuperaUltimo($tabela)
+{
 	$con = bancoMysqli();
 	$sql = "SELECT * FROM $tabela ORDER BY 1 DESC LIMIT 0,1";
 	$query =  mysqli_query($con,$sql);
 	$campo = mysqli_fetch_array($query);
 	return $campo[0];	
 }
-
-/*function geraOpcaoSub($idEvento,$select){
+/*function geraOpcaoSub($idEvento,$select)
+{
 	$con =  bancoMysqli();
 	$sql = "SELECT * FROM ig_sub_evento WHERE ig_evento_idEvento = '$idEvento'";
 	$query = mysqli_query($con,$sql);
-	while($campo = mysqli_fetch_array($query)){
-		if($select == $campo['idSubEvento']){
+	while($campo = mysqli_fetch_array($query))
+	{
+		if($select == $campo['idSubEvento'])
+		{
 			echo "<option value=".$campo['idSubEvento']." selected >".$campo['titulo']."</option>";
-		}else{
-			echo "<option value=".$campo['idSubEvento'].">".$campo['titulo']."</option>";
-			
+		}
+		else
+		{
+			echo "<option value=".$campo['idSubEvento'].">".$campo['titulo']."</option>";	
 		}
 	}		
-}*/
-
+}
+*/
 function listaFilmes($idEvento){ //lista ocorrencias de determinado evento
 	$sql = "SELECT * FROM ig_cinema WHERE ig_evento_idEvento = '$idEvento' AND publicado = 1";
 	$con = bancoMysqli();
