@@ -1278,10 +1278,7 @@
 							<div class="col-md-offset-2 col-md-8">
 								<strong>Verba: <font color="blue"><?php echo $campo_verba; ?> (atual)</font></strong> <br/>
 								<select class="form-control" id="verba" name="verba" >
-									<?php geraVerbaUsuario($_SESSION['idUsuario'],$pedido['idVerba']);
-									/*
-									geraOpcaoOrder("sis_verba",$pedido['idVerba'],"");
-									*/?>  
+									<?php geraVerbaUsuario($_SESSION['idUsuario'],$pedido['idVerba']); ?>  
 								</select>
 							</div>
 						</div>
@@ -1311,12 +1308,44 @@
 								<textarea name="justificativa" class="form-control" rows="10" placeholder="Texto usado fins jurídicos e confecção de contratos."><?php echo $pedido["justificativa"] ?></textarea>
 							</div> 
 						</div>
+		<?php
+			if ($pedido["parecerArtistico"] <> '')
+			{
+		?>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Parecer artístico*</label>
 								<textarea name="parecerArtistico" class="form-control" rows="10" placeholder="Texto usado fins jurídicos e confecção de contratos."><?php echo $pedido["parecerArtistico"] ?></textarea>
 							</div> 
-						</div>
+						</div>		
+		<?php
+			}
+			else
+			{	
+				if ($_SESSION['idInstituicao'] == 5)
+				{
+					echo "
+							<div class='form-group'>
+								<div class='col-md-offset-2 col-md-8'>
+									<label>Parecer artístico*</label>
+									<textarea name='parecerArtistico' class='form-control' rows='10' placeholder='Texto usado fins jurídicos e confecção de contratos.'>A cargo da comissão</textarea>
+								</div> 
+							</div>
+						"; 
+				}
+				else
+				{
+					echo "
+							<div class='form-group'>
+								<div class='col-md-offset-2 col-md-8'>
+									<label>Parecer artístico*</label>
+									<textarea name='parecerArtistico' class='form-control' rows='10' placeholder='Texto usado fins jurídicos e confecção de contratos.'></textarea>
+								</div> 
+							</div>
+						"; 
+				}
+			}
+		?>							
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 								<textarea name="Observacao" class='form-control' cols="40" rows="5"><?php echo $pedido['observacao'] ?></textarea>
