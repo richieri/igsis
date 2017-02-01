@@ -72,8 +72,7 @@
 		}
 		else
 		{
-			// Se não existe, exibe um formulario para insercao.
-			//$ultimo = cadastroPessoa($_SESSION['idEvento'],$CPF,'1'); 
+			// Se não existe, exibe um formulario para insercao. 
 			$campo = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 	?>
 <section id="contact" class="home-section bg-white">

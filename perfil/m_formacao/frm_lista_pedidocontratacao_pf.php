@@ -80,7 +80,7 @@
  <!-- inicio_list -->
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title">PEDIDOS NÃO ENVIADOS DE CONTRATAÇÃO DE PESSOA FÍSICA</div>
+		<div class="sub-title"><h6>PEDIDOS NÃO ENVIADOS DE CONTRATAÇÃO DE PESSOA FÍSICA</h6></div>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>

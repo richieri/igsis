@@ -334,10 +334,10 @@
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 <?php
-	if($id > 0)
+	if($_SESSION['id'] > 0)
 	{
 ?>
-						<a href="?perfil=formacao&p=frm_cadastra_dadoscontratacao&id=<?php echo $id ?>"><input type="submit" value="Voltar aos dados de contratação" class="btn btn-theme btn-block"></a>
+						<a href="?perfil=formacao&p=frm_cadastra_dadoscontratacao&id=<?php echo $_SESSION['id'] ?>"><input type="submit" value="Voltar aos dados de contratação" class="btn btn-theme btn-block"></a>
 <?php
 	}
 ?>

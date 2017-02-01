@@ -113,6 +113,9 @@ if(isset($_POST['atualizar']))
 $formacao = recuperaDados("sis_formacao",$id,"Id_Formacao");
 $pessoa = recuperaDados("sis_pessoa_fisica",$formacao['IdPessoaFisica'],"Id_PessoaFisica");
 $id_pf = $formacao['IdPessoaFisica'];
+
+$_SESSION['id_pf']= $formacao['IdPessoaFisica'];
+$_SESSION['id']= $id;
 ?>
 
 <script type="application/javascript">

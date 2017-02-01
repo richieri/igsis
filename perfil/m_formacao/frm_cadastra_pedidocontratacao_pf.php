@@ -178,14 +178,13 @@
 		<div class="form-group">
 			<h2>PEDIDO DE CONTRATAÇÃO DE PESSOA FÍSICA</h2>
 			<h6><?php if(isset($mensagem)){ echo $mensagem; } ?></h6>
-			<h6><?php if($_SESSION['perfil'] == '1' ){ echo $sql_pedido; } ?></h6>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form class="form-horizontal" role="form" action="#" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Código de Dados para Contratação:</strong><br/>
-							<input  readonly name="Id_PedidoContratacaoPF"  type="text" class="form-control" id="Id_PedidoContratacaoPF" value="">
+							<input  readonly name="Id_Formacao"  type="text" class="form-control" id="Id_Formacao" value="<?php echo $formacao['Id_Formacao'] ?>">
 						</div>
 					</div>
 					<div class="form-group"> 

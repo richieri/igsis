@@ -52,7 +52,7 @@ $pasta = "?perfil=formacao&p=administrativo&pag=";
 			<li><a href="#">Vigência</a>
 				<ul class="dl-submenu">
 					<li><a href="?perfil=formacao&p=frm_cadastra_vigencia&novo">Cadastrar</a></li>
-					<li><a href="?perfil=formacao&p=frm_cadastra_vigencia&pag=lista">Listar</a></li>
+					<li><a href="?perfil=formacao&p=frm_lista_vigencia">Listar</a></li>
 				</ul>
 			</li>		
 			<li><a href="?perfil=formacao">Voltar ao módulo Formação</a></li>
