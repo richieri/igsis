@@ -23,7 +23,6 @@ while($pedido = mysqli_fetch_array(mysqli_query($conectar,$sql))){
  
 */
 
-
 function siscontratLista($tipoPessoa,$instituicao,$num_registro,$pagina,$ordem,$estado){
 	$con = bancoMysqli();
 	if($estado == "todos"){
