@@ -49,6 +49,8 @@ $link41 = $http."rlt_proposta_galadeballet_edital_pf.php"."?id=".$id_ped."&penal
 $link42 = $http."rlt_pedido_reserva_oficinaseditalcasa_pf.php";
 $link43 = $http."rlt_termo_doacao_pf_assinatura.php";
 $link44 = $http."rlt_ordemservico_pf_assinatura.php";
+$link45 = $http."rlt_pedido_reserva_ccsp_pf.php";
+
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -170,6 +172,7 @@ echo "
 						
 						<tr>
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Reserva de Oficinas - Edital Casas de Cultura</strong></a></td>
+							<td><a href='$link45?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
 						</tr>
 					</tbody>
 				</table>

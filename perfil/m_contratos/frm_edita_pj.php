@@ -271,7 +271,7 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 				                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
-						<textarea name="Observacao" class="form-control" rows="10" placeholder=""></textarea>
+						<textarea name="Observacao" class="form-control" rows="10" placeholder="" value="<?php echo $pj['Observacao']; ?>"></textarea>
 					</div>
 				</div>
 				  

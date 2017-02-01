@@ -325,7 +325,7 @@ if(isset($_POST['pesquisar']))
 	<br />
 	<section id="list_items">
 		<div class="container">
-			<h3>Resultado da busca</3>
+			<h3>Resultado da busca</h3>
             <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
             <h5><a href="?perfil=contratos&p=frm_busca">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
