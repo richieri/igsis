@@ -1,157 +1,167 @@
-	<div class="menu-area">
-			<div id="dl-menu" class="dl-menuwrapper">
-						<button class="dl-trigger">Open Menu</button>
-						<ul class="dl-menu">
-							<li>
-								<a href="?perfil=controle&p=visaogeral">Visão Geral</a>
-							</li>
-							<li><a href="?perfil=controle&p=verbas">Valores de verbas</a></li>
-							<li><a href="?perfil=controle&p=pedidos">Pedidos de contratação</a></li>
-							<li><a href="?perfil=controle&p=relatorios">Relatórios</a></li>
-   							<li><a href="?perfil=controle">Instituições, usuários e espaços</a></li>
-							<li style="color:white;">-------------------------</li>
-							<li><a href="?secao=perfil">Carregar Módulos</a></li>
-							<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-controle-orcamentario/">Ajuda</a></li>
-							<li><a href="../include/logoff.php">Sair</a></li>
-                                    </ul>
-                            </li>   
-							<!--<li>
-								<a href="#">Sub Menu</a>
-								<ul class="dl-submenu">
-									<li><a href="#">Sub menu</a></li>
-									<li><a href="#">Sub menu</a></li>
-								</ul>
-							</li>-->
-						</ul>
-					</div><!-- /dl-menuwrapper -->
-	</div>	
-
+<div class="menu-area">
+	<div id="dl-menu" class="dl-menuwrapper">
+		<button class="dl-trigger">Open Menu</button>
+		<ul class="dl-menu">
+			<li><a href="?perfil=controle&p=visaogeral">Visão Geral</a></li>
+			<li><a href="?perfil=controle&p=verbas">Valores de verbas</a></li>
+			<li><a href="?perfil=controle&p=pedidos">Pedidos de contratação</a></li>
+			<li><a href="?perfil=controle&p=relatorios">Relatórios</a></li>
+			<li><a href="?perfil=controle">Instituições, usuários e espaços</a></li>
+			<li style="color:white;">-------------------------</li>
+			<li><a href="?secao=perfil">Carregar Módulos</a></li>
+			<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-controle-orcamentario/">Ajuda</a></li>
+			<li><a href="../include/logoff.php">Sair</a></li>
+		</ul>
+		<!--<li>
+			<a href="#">Sub Menu</a>
+			<ul class="dl-submenu">
+				<li><a href="#">Sub menu</a></li>
+				<li><a href="#">Sub menu</a></li>
+			</ul>
+		</li>-->
+	</div><!-- /dl-menuwrapper -->
+</div>
 <?php
-require_once("../funcoes/funcoesVerifica.php");
-require_once("../funcoes/funcoesSiscontrat.php");
-require_once("../funcoes/funcoesFinanca.php");
-require_once("../funcoes/funcoesControle.php");
-$con = bancoMysqli();
-if(isset($_GET['p'])){
-	$p = $_GET['p'];	
-}else{
-	$p = "inicio";
-}
-switch($p){
-case 'inicio':
-
+	require_once("../funcoes/funcoesVerifica.php");
+	require_once("../funcoes/funcoesSiscontrat.php");
+	require_once("../funcoes/funcoesFinanca.php");
+	require_once("../funcoes/funcoesControle.php");
+	$con = bancoMysqli();
+	if(isset($_GET['p']))
+	{
+		$p = $_GET['p'];	
+	}
+	else
+	{
+		$p = "inicio";
+	}
+	switch($p)
+	{
+		case 'inicio':
 ?>
-
-
-
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h2>Controle Orçamentário</h2>
+					<h2>Controle Orçamentário</h2>
 	                <h5>Escolha uma opção</h5>
                 </div>
             </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-	            <a href="?perfil=controle&p=visaogeral" class="btn btn-theme btn-lg btn-block">Visão Geral</a>
-   	            <a href="?perfil=controle&p=verbas" class="btn btn-theme btn-lg btn-block">Valores de verbas</a>
-	            <a href="?perfil=controle&p=pedidos" class="btn btn-theme btn-lg btn-block">Pedidos de contratação</a>
-	            <a href="?perfil=controle&p=relatorios" class="btn btn-theme btn-lg btn-block">Relatórios</a>
-   	           
-            </div>
-          </div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<a href="?perfil=controle&p=visaogeral" class="btn btn-theme btn-lg btn-block">Visão Geral</a>
+					<a href="?perfil=controle&p=verbas" class="btn btn-theme btn-lg btn-block">Valores de verbas</a>
+					<a href="?perfil=controle&p=pedidos" class="btn btn-theme btn-lg btn-block">Pedidos de contratação</a>
+					<a href="?perfil=controle&p=relatorios" class="btn btn-theme btn-lg btn-block">Relatórios</a>
+				</div>
+			</div>
         </div>
     </div>
 </section>   
-<?php 
-break;
-case 'pedidos':
-if(isset($_POST['aprova'])){
-	$idPedido = $_POST['idPedido'];
-	if($_POST['aprova'] == 1){
-	$status = 0;
-	$estado = 1;	
-	}else{
-	$status = 1;
-	$estado = 2;
-	}
-	
-	$sql_aprova = "UPDATE igsis_pedido_contratacao SET aprovacaoFinanca = '$status', estado = '$estado' WHERE idPedidoContratacao = '$idPedido'";
-	$query_aprova = mysqli_query($con,$sql_aprova);
-	if($query_aprova){
-		if($status == 0){
-			$mensagem = "Pedido $idPedido NÃO APROVADO";	
-		}else{
-			$mensagem = "Pedido $idPedido APROVADO";
-		}	
-	}
-}
-
-if(isset($_GET['f'])){
-	$f = $_GET['f'];	
-	if($f == 1){
-		$filtro = " AND aprovacaoFinanca = '1' ";
-	}else{
-		$filtro = " AND aprovacaoFinanca IS NULL ";
-	}
-}else{
-	$filtro = "";
-	$f = 2;	//2 é todos
-}
-
-
-?> 
+	<?php 
+		break;
+		case 'pedidos':
+			if(isset($_POST['aprova']))
+			{
+				$idPedido = $_POST['idPedido'];
+				if($_POST['aprova'] == 1)
+				{
+					$status = 0;
+					$estado = 1;	
+				}
+				else
+				{
+					$status = 1;
+					$estado = 2;
+				}
+				$sql_aprova = "UPDATE igsis_pedido_contratacao 
+					SET aprovacaoFinanca = '$status', 
+					estado = '$estado' 
+					WHERE idPedidoContratacao = '$idPedido'";
+				$query_aprova = mysqli_query($con,$sql_aprova);
+				if($query_aprova)
+				{
+					if($status == 0)
+					{
+						$mensagem = "Pedido $idPedido NÃO APROVADO";	
+					}
+					else
+					{
+						$mensagem = "Pedido $idPedido APROVADO";
+					}	
+				}
+			}
+			if(isset($_GET['f']))
+			{
+				$f = $_GET['f'];	
+				if($f == 1)
+				{
+					$filtro = " AND aprovacaoFinanca = '1' ";
+				}
+				else
+				{
+					$filtro = " AND aprovacaoFinanca IS NULL ";
+				}
+			}
+			else
+			{
+				$filtro = "";
+				$f = 2;	//2 é todos
+			}
+	?> 
 <br />
 <br />
 <br />
-	<section id="list_items">
+<section id="list_items">
 		<div class="container">
-             <div class="col-md-offset-2 col-md-8">
+            <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h2>Pedidos de contratação</h2>
+					<h2>Pedidos de contratação</h2>
 	                <h5><?php if(isset($mensagem)){ echo $mensagem; } ?></h5>
                 </div>
             </div>    
-            <!--     <div class="form-group">
-                         <div class="col-md-offset-2 col-md-8">
-                            	<label>Nome do Projeto especial</label>
-            	<select class="form-control" name="filtro" id="inputSubject" >
-					<option value="1"></option>
-					<?php echo geraOpcaoVerba($_SESSION['idUsuario'],"") ?>
-                </select> 	<br />
+            <!--
+			<div class="form-group">
+                <div class="col-md-offset-2 col-md-8">
+					<label>Nome do Projeto especial</label>
+					<select class="form-control" name="filtro" id="inputSubject" >
+						<option value="1"></option>
+						<?php echo geraOpcaoVerba($_SESSION['idUsuario'],"") ?>
+					</select> 	<br />
                 </div>
             </div>
-                        <div class="form-group">
+			<div class="form-group">
 	            <div class="col-md-offset-2 col-md-8">
                 	<input type="hidden" name="atualizar" value="1" />
     		        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Aplicar Filtro">
                     <br /><br />
             	</div>
-            </div> -->
+            </div>
+			-->
            <div class="form-group">
 	            <div class="col-md-offset-2 col-md-8">
-   				<p>* Prazo é o número de dias restantes para o início do contrato.</p>
-                <?php 
-				switch($f){
+					<p>* Prazo é o número de dias restantes para o início do contrato.</p>
+		<?php 
+			switch($f)
+			{
 				case 0:
-				?>
-                <h5>[ <a href="?perfil=controle&p=pedidos">Todos os Pedidos</a> ] [ <a href="?perfil=controle&p=pedidos&f=1">Pedidos Aprovados</a> ] [ Pedidos Não aprovados ]</h5><?php
-				
+		?>
+					<h5>[ <a href="?perfil=controle&p=pedidos">Todos os Pedidos</a> ] [ <a href="?perfil=controle&p=pedidos&f=1">Pedidos Aprovados</a> ] [ Pedidos Não aprovados ]</h5>
+			<?php
 				break;
 				case 1:
-				?>
-                <h5>[ <a href="?perfil=controle&p=pedidos">Todos os Pedidos</a> ] [ Pedidos Aprovados ] [ <a href="?perfil=controle&p=pedidos&f=0">Pedidos Não aprovados</a> ]</h5><?php
-				
+			?>
+					<h5>[ <a href="?perfil=controle&p=pedidos">Todos os Pedidos</a> ] [ Pedidos Aprovados ] [ <a href="?perfil=controle&p=pedidos&f=0">Pedidos Não aprovados</a> ]</h5>
+			<?php
 				break;
 				case 2:
-				?>
-                <h5>[ Todos os Pedidos ] [ <a href="?perfil=controle&p=pedidos&f=1">Pedidos Aprovados</a> ] [ <a href="?perfil=controle&p=pedidos&f=0">Pedidos Não aprovados</a> ]</h5><?php
-				
+			?>
+					<h5>[ Todos os Pedidos ] [ <a href="?perfil=controle&p=pedidos&f=1">Pedidos Aprovados</a> ] [ <a href="?perfil=controle&p=pedidos&f=0">Pedidos Não aprovados</a> ]</h5>
+			<?php
 				break;			
+			}
 				?>
-				<?php } ?>
             	</div>
             </div>
 			<div class="table-responsive list_info">
@@ -169,40 +179,64 @@ if(isset($_GET['f'])){
                             <td>Prazo*</td>
 							<td>Aprovado?</td>
    							<td></td>
-
 						</tr>
 					</thead>
 					<tbody>
 <?php
-$con = bancoMysqli();
-$verbas = sqlVerbaIn($_SESSION['idUsuario']);
-$idInstituicao = $_SESSION['idInstituicao'];
-$sql = "SELECT igsis_pedido_contratacao.idPedidoContratacao, igsis_pedido_contratacao.tipoPessoa, igsis_pedido_contratacao.idPessoa, igsis_pedido_contratacao.aprovacaoFinanca, ig_evento.dataEnvio, ig_evento.idEvento	 FROM igsis_pedido_contratacao,ig_evento WHERE igsis_pedido_contratacao.publicado = '1' $filtro AND idVerba IN($verbas) AND igsis_pedido_contratacao.estado IS NOT NULL AND ig_evento.idEvento = igsis_pedido_contratacao.idEvento ORDER BY ig_evento.dataEnvio DESC";
-
-$query = mysqli_query($con,$sql);
-$num_total = mysqli_num_rows($query);
-
-//paginacao 
-$itensPorPagina = 50;
-$num_paginas = ($num_total/$itensPorPagina) - 1;
-
-if(isset($_GET['pag'])){
-	$pag = $_GET['pag'] - 1;
-	$reg = ($pag * $itensPorPagina);
-}else{
-	$reg = 0;
-}
-
-
-if($num_total <= $itensPorPagina){
-	$query_pagina = $query;
-}else{
-	$sql_pagina =  "SELECT igsis_pedido_contratacao.idPedidoContratacao, igsis_pedido_contratacao.tipoPessoa, igsis_pedido_contratacao.idPessoa, igsis_pedido_contratacao.aprovacaoFinanca, ig_evento.dataEnvio, ig_evento.idEvento FROM igsis_pedido_contratacao,ig_evento WHERE igsis_pedido_contratacao.publicado = '1' $filtro AND idVerba IN($verbas) AND igsis_pedido_contratacao.estado IS NOT NULL AND ig_evento.idEvento = igsis_pedido_contratacao.idEvento ORDER BY ig_evento.dataEnvio DESC LIMIT $reg,$itensPorPagina";	
-	$query_pagina = mysqli_query($con,$sql_pagina);
-}
-
-
-
+			$con = bancoMysqli();
+			$verbas = sqlVerbaIn($_SESSION['idUsuario']);
+			$idInstituicao = $_SESSION['idInstituicao'];
+			$sql = "SELECT igsis_pedido_contratacao.idPedidoContratacao, 
+				igsis_pedido_contratacao.tipoPessoa, 
+				igsis_pedido_contratacao.idPessoa, 
+				igsis_pedido_contratacao.aprovacaoFinanca, 
+				ig_evento.dataEnvio, 
+				ig_evento.idEvento 
+				FROM igsis_pedido_contratacao,
+				ig_evento 
+				WHERE igsis_pedido_contratacao.publicado = '1' 
+				$filtro 
+				AND idVerba IN($verbas) 
+				AND igsis_pedido_contratacao.estado IS NOT NULL 
+				AND ig_evento.idEvento = igsis_pedido_contratacao.idEvento 
+				ORDER BY ig_evento.dataEnvio DESC";
+			$query = mysqli_query($con,$sql);
+			$num_total = mysqli_num_rows($query);
+			//paginacao 
+			$itensPorPagina = 50;
+			$num_paginas = ($num_total/$itensPorPagina) - 1;
+			if(isset($_GET['pag']))
+			{
+				$pag = $_GET['pag'] - 1;
+				$reg = ($pag * $itensPorPagina);
+			}
+			else
+			{
+				$reg = 0;
+			}
+			if($num_total <= $itensPorPagina)
+			{
+				$query_pagina = $query;
+			}
+			else
+			{
+				$sql_pagina = "SELECT igsis_pedido_contratacao.idPedidoContratacao, 
+					igsis_pedido_contratacao.tipoPessoa, 
+					igsis_pedido_contratacao.idPessoa, 
+					igsis_pedido_contratacao.aprovacaoFinanca, 
+					ig_evento.dataEnvio, 
+					ig_evento.idEvento 
+					FROM igsis_pedido_contratacao,
+					ig_evento 
+					WHERE igsis_pedido_contratacao.publicado = '1' 
+					$filtro 
+					AND idVerba IN($verbas) 
+					AND igsis_pedido_contratacao.estado IS NOT NULL 
+					AND ig_evento.idEvento = igsis_pedido_contratacao.idEvento 
+					ORDER BY ig_evento.dataEnvio 
+					DESC LIMIT $reg,$itensPorPagina";	
+				$query_pagina = mysqli_query($con,$sql_pagina);
+			}
 
 $data=date('Y');
 while($linha_tabela_pedido_contratacao = mysqli_fetch_array($query_pagina))
