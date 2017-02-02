@@ -1328,7 +1328,7 @@
 							<div class='form-group'>
 								<div class='col-md-offset-2 col-md-8'>
 									<label>Parecer artístico*</label>
-									<textarea name='parecerArtistico' class='form-control' rows='10' placeholder='Texto usado fins jurídicos e confecção de contratos.'>A cargo da comissão.</textarea>
+									<textarea name='parecerArtistico' class='form-control' rows='10' placeholder='Texto usado fins jurídicos e confecção de contratos.'>Parecer por conta da comissão artística.</textarea>
 								</div> 
 							</div>
 						"; 

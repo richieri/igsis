@@ -361,7 +361,16 @@
 			?>
 						</a></td>
 						<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
-						<td><?php echo $chamado['estado'] ?></td>
+						<td><?php
+							if ($chamado['estado'] == 1)
+							{
+								echo "Aberto";
+							}
+							else
+							{
+								echo "Fechado";
+							}
+						?></td>
 					</tr>					
 		<?php
 			}
@@ -420,7 +429,16 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 	        ?>
 						</a></td>
 						<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
-						<td><?php echo $chamado['estado'] ?></td>
+						<td><?php
+							if ($chamado['estado'] == 1)
+							{
+								echo "Aberto";
+							}
+							else
+							{
+								echo "Fechado";
+							}?>		
+						</td>
 					</tr>					
 		<?php
 			}
@@ -523,14 +541,23 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 						</p> 
 						<br />
 						<p>Aberto em: <strong><?php echo exibirDataHoraBr($chamado['data']) ?></strong></p>
-						<p>Status: <strong><?php echo $chamado['estado'] ?></strong> </p><br />
+						<p>Status: <strong><?php 
+							if ($chamado['estado'] == 1)
+							{
+								echo "Aberto";
+							}
+							else
+							{
+								echo "Fechado";
+							}	
+						?></strong> </p><br />
 					</div>
 					<div class="left">
 						<label>Deixe um comentário</label>
 						<form method="POST" action="?perfil=chamado&p=detalhe&id=<?php echo $_GET['id'] ?>" class="form-horizontal" role="form">
 							<textarea name="comentario" class="form-control" rows="10" placeholder=""></textarea>
 							<input type="hidden" name="envia" value='1' />
-							<input type="image" alt="Enviar" value="submit" class="btn btn-theme btn-block">
+							<input type="submit" value="Enviar" class="btn btn-theme btn-block">
 						</form>
 					</div>
 					<br /><br />

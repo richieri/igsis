@@ -39,10 +39,10 @@ if(mysqli_stmt_execute($stmt))
 				<form class='form-horizontal' role='form'>
 					<div class='form-group'>
 						<div class='col-md-offset-2 col-md-6'>
-							<a href='$link5?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Despacho</a>
+							<a href='$link4?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Despacho</a>
 						</div>
 						<div class='col-md-6'>
-							<a href='$link6?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Manifestação Jurídica</a>
+							<a href='$link5?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Manifestação Jurídica</a>
 						</div>
 					</div>
 				</form>

@@ -5,13 +5,14 @@
 	$ano=date('Y');
 	$id_ped = $_GET['id_ped'];	
 	$pedido = siscontrat($id_ped);
+	$ped = recuperaDados('igsis_pedido_contratacao',$id_ped,'idPedidoContratacao');
 	$idEvento = $pedido['idEvento'];
 	$pessoa = siscontratDocs($pedido['IdProponente'],$pedido['TipoPessoa']);
 	$evento = recuperaDados('ig_evento',$idEvento,'idEvento');
 	$chamado = recuperaAlteracoesEvento($idEvento);	
 ?>
 <!-- Contact -->
-<section id="contact" class="home-section bg-white">
+<section id="list_items" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group"><h3><?php echo $evento['nomeEvento'] ?></h3>
 			<h5><?php if(isset($mensagem)){ echo $mensagem; } ?></h5>
@@ -56,7 +57,7 @@
 		{
 	?>
 					<br />
-					<h5>Grade de Filmes</h5>
+					<h5>Grade de filmes</h5>
 					<p align="justify"><?php gradeFilmes($idEvento) ?></p>
 	<?php
 		}
@@ -65,19 +66,22 @@
 					<h5>Serviços externos</h5>
 					<p align="justify"><?php listaServicosExternos($idEvento); ?></p>
 					<br />
-					<h5>Serviços Internos</h5>
+					<h5>Serviços internos</h5>
 					<p align="justify"><?php listaServicosInternos($idEvento) ?></p>
 <?php
 	}
 ?>
+					<br />	
+					<h5>Arquivos Comunicação/Produção anexos</h5>
+					<p align="left"><?php listaArquivosDetalhe($_GET['id_ped']) ?></p>
 					<br />				
 					<h5>Pedidos de contratação</h5>
 <?php
 	if($pedido != NULL)
 	{
 ?>
-					<p align="justify"><strong>Código do pedido de contratação:</strong> <?php echo $ano."-".$id_ped; ?></p>
-					<p align="justify"><strong>Número do Processo:</strong> <?php echo $pedido['NumeroProcesso'];?></p>
+					<p align="justify"><strong>Código do pedido de contratação:</strong> <?php echo $id_ped; ?></p>
+					<p align="justify"><strong>Número do processo:</strong> <?php echo $pedido['NumeroProcesso'];?></p>
 					<p align="justify"><strong>Setor:</strong> <?php echo $pedido['Setor'];?></p>
 					<p align="justify"><strong>Tipo de pessoa:</strong> <?php echo retornaTipoPessoa($pedido['TipoPessoa']);?></p>
 					<p align="justify"><strong>Proponente:</strong> <?php echo $pessoa['Nome'];?></p>
@@ -87,7 +91,7 @@
 		if($pedido['TipoPessoa'] == '4')
 		{
 	?>
-					<p align="justify"><strong>Carga Horária:</strong> <?php echo $pedido['CargaHoraria'];?></p>
+					<p align="justify"><strong>Carga horária:</strong> <?php echo $pedido['CargaHoraria'];?></p>
 	<?php
 		}
 	?>
@@ -98,34 +102,154 @@
 					<p align="justify"><strong>Justificativa:</strong> <?php echo $pedido['Justificativa']; ?></p>
 					<p align="justify"><strong>Parecer:</strong> <?php echo $pedido['ParecerTecnico'];?></p>
 					<p align="justify"><strong>Nota de Empenho:</strong> <?php echo $pedido['NotaEmpenho'];?></p>
-					<p align="justify"><strong>Data de Emissão da N.E.:</strong> <?php echo exibirDataBr($pedido['EmissaoNE']);?></p>
+					<p align="justify"><strong>Data de Emissão da N.E.:</strong> <?php 
+						if ($pedido['EmissaoNE'] == '0000-00-00')
+						{
+							echo "";
+						}
+						else
+						{	
+							echo exibirDataBr($pedido['EmissaoNE']);
+						}?>
+					</p>
 					<p align="justify"><strong>Data de Entrega de N.E.:</strong> <?php echo exibirDataBr($pedido['EntregaNE']);?></p>
 					<p align="justify"><strong>Dotação Orçamentária:</strong> <?php echo $pedido['ComplementoDotacao'];?></p>
 					<p align="justify"><strong>Observação:</strong> <?php echo $pedido['Observacao'];?></p>
 					<?php $status = recuperaDados("sis_estado",$pedido['Status'],"idEstado"); ?>
 					<p align="justify"><strong>Último Status:</strong> <?php echo $status['estado'];?></p>
-<?php
-	}
-	else
-	{
-?>
+					<br/>
+					<h5>Data de recebimento pelos setores</h5>
+					<div class="table-responsive list_info">
+						<table class='table table-condensed'>
+							<thead>
+								<tr class='list_menu'>
+									<td>Contratos</td>
+									<td>Jurídico</td>
+									<td>Publicação</td>
+									<td>Contabilidade</td>
+									<td>Pagamento</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><?php 
+									if ($ped['DataContrato'] == '0000-00-00 00:00:00')
+										{
+											echo "Não há registro.";
+										}
+										else
+										{
+											echo exibirDataHoraBr($ped['DataContrato']);
+										}	?>
+									</td>
+									<td><?php 
+									if ($ped['DataJuridico'] == '0000-00-00 00:00:00')
+										{
+											echo "Não há registro.";
+										}
+										else
+										{ 
+											echo exibirDataHoraBr($ped['DataJuridico']);
+										}	?>
+									</td>
+									<td><?php 
+									if ($ped['DataPublicacao'] == '0000-00-00 00:00:00')
+										{
+											echo "Não há registro.";
+										}
+										else
+										{ 
+											echo exibirDataHoraBr($ped['DataPublicacao']);
+										}	?>
+									</td>
+									<td><?php 
+									if ($ped['DataContabilidade'] == '0000-00-00 00:00:00')
+										{
+											echo "Não há registro.";
+										}
+										else
+										{
+											echo exibirDataHoraBr($ped['DataContabilidade']);
+										}	?>
+									</td>
+									<td><?php 
+										if ($ped['DataPagamento'] == '0000-00-00 00:00:00')
+										{
+											echo "Não há registro.";
+										}
+										else
+										{
+											echo exibirDataHoraBr($ped['DataPagamento']);
+										}	?>
+									</td>
+								</tr>
+						</table>
+					</div>		
+	<?php
+		}
+		else
+		{
+	?>
 					<h5> Não há pedidos de contratação. </h5>
 <?php
 	}
 ?>
 					<br />
-					<h5>
+					<h5>Chamados</h5>
 <?php 
 	if($chamado['numero'] == '0')
 	{
-		echo "Chamados [0]";
+		echo "Não há registro de chamado para este evento.";
 	}
 	else
-	{
-		echo "<a href='?perfil=chamado&p=evento&id=".$idEvento."' target='_blank'>Chamados [".$chamado['numero']."]</a>";	
-	}						
+	{	
 ?>
-					</h5>
+					<div class="table-responsive list_info">
+						<table class='table table-condensed'>
+							<thead>
+								<tr class='list_menu'>
+									<td width='10%'>ID</td>
+									<td>Chamado</td>
+									<td>Descrição</td>
+									<td>Data do envio</td>
+									<td>Status</td>
+								</tr>
+							</thead>
+							<tbody>
+					<?php
+						$idUsuario = $_SESSION['idUsuario'];
+						$con = bancoMysqli();
+						$sql_busca = "SELECT * FROM igsis_chamado WHERE idEvento = '$idEvento' ORDER BY idChamado DESC";
+						$query_busca = mysqli_query($con,$sql_busca);
+						while($chamado = mysqli_fetch_array($query_busca))
+						{ 
+							$tipo = recuperaDados("igsis_tipo_chamado",$chamado['tipo'],"idTipoChamado");
+					?>	
+								<tr>
+									<td><?php echo $chamado['idChamado']; ?></td>
+									<td><a href="?perfil=chamado&p=detalhe&id=<?php echo $chamado['idChamado'] ?>" ><?php echo $tipo['chamado']; ?></a></td>
+									<td><?php echo nl2br($chamado['descricao']) ?></td>
+									<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
+									<td><?php
+										if ($chamado['estado'] == 1)
+										{
+											echo "Aberto";
+										}
+										else
+										{
+											echo "Fechado";
+										}?>		
+									</td>
+								</tr>					
+					<?php
+						}
+					?>
+							</tbody>
+						</table>	   
+					</div>
+<?php 
+	} 
+?>
 				</div>
 			</div>
 		</div>
