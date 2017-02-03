@@ -216,7 +216,7 @@
 					</div>
 					<div class="form-group">
 						<br />
-						<p>O responsável e suplente devem estar cadastrado como usuários do sistema.</p>
+						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
 						<div class="col-md-offset-2 col-md-8">
 							<label>Primeiro responsável (Fiscal)</label>
 							<select class="form-control" name="nomeResponsavel" id="inputSubject" >
@@ -242,19 +242,19 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Autor*</label>
-							<textarea name="autor" class="form-control" rows="10" placeholder="artista, banda, coletivo, companhia, palestrantes, etc"><?php echo $campo["autor"] ?></textarea>
+							<textarea name="autor" class="form-control" rows="10" placeholder="Artista, banda, coletivo, companhia, palestrantes, etc autor da obra/espetáculo."><?php echo $campo["autor"] ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Nome do Grupo</label>
-							<input type="text" name="nomeGrupo" class="form-control" maxlength="30" id="inputSubject" value="<?php echo $campo['nomeGrupo'] ?>"/>
+							<input type="text" name="nomeGrupo" class="form-control" maxlength="30" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $campo['nomeGrupo'] ?>"/>
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Ficha técnica completa*</label>
-							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php echo $campo["fichaTecnica"] ?></textarea>
+							<textarea name="fichaTecnica" class="form-control" rows="10" placeholder="Elenco, técnicos, programa do concerto, outros profissionais envolvidos."><?php echo $campo["fichaTecnica"] ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
@@ -280,7 +280,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Links *</label>
+							<label>Links </label>
 							<textarea name="linksCom" class="form-control" rows="10" placeholder="Links para auxiliar a divulgação e o jurídico. Site oficinal, vídeos, clipping, artigos, etc "><?php echo $campo["linksCom"] ?></textarea>
 						</div> 
 					</div>
@@ -628,13 +628,13 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Equipe</label>
-							<textarea name="ig_producao_equipe" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php echo $producao["equipe"] ?></textarea>
+							<textarea name="ig_producao_equipe" class="form-control" rows="10" placeholder="Profissionais envolvidos na produção e montagem do evento, tais como equipe de iluminação, figurinistas, etc."><?php echo $producao["equipe"] ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Infraestrutura</label>
-							<textarea name="ig_producao_infraestrutura" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php echo $producao["infraestrutura"] ?></textarea>
+							<textarea name="ig_producao_infraestrutura" class="form-control" rows="10" placeholder="Necessidades técnicas e materiais envolvidos na realização do evento, tais como: cadeiras, iluminação específica, slideshow, etc."><?php echo $producao["infraestrutura"] ?></textarea>
 						</div> 
 					</div>
 					<br /><br />
@@ -1225,7 +1225,7 @@ include "../include/menuEvento.php";
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                    <h3>Evento - Previsão de demandas de serviços externos</h3>
+                    <h3>Previsão de demandas de serviços externos</h3>
                     <h1><?php echo $campo["nomeEvento"] ?>  </h1>
                     <h4><?php if(isset($mensagem_s)){echo $mensagem_s;} ?></h4>
                 </div>
@@ -1240,37 +1240,37 @@ include "../include/menuEvento.php";
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Legenda / legendagem *</label>
+							<label>Legenda / legendagem </label>
 							<input type="text" name="ig_servico_legenda" class="form-control" id="inputSubject" value="<?php echo $externo['legenda'] ?>"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Tradução *</label>
+							<label>Tradução </label>
 							<input type="text" name="ig_servico_traducao" class="form-control" id="inputSubject" value="<?php echo $externo['traducao'] ?>"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Seguro *</label>
+							<label>Seguro </label>
 							<input type="text" name="ig_servico_seguro" class="form-control" id="inputSubject" value="<?php echo $externo['seguro'] ?>"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Transporte *</label>
+							<label>Transporte </label>
 							<input type="text" name="ig_servico_transporte" class="form-control" id="inputSubject" value="<?php echo $externo['transporte'] ?>"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Montagem fina*</label>
+							<label>Montagem fina</label>
 							<input type="text" name="ig_servico_montagem" class="form-control" id="inputSubject" value="<?php echo $externo['montagem'] ?>"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Passagem aérea *</label>
+							<label>Passagem aérea </label>
 							<input type="text" name="ig_servico_passagens" class="form-control" id="inputSubject" value="<?php echo $externo['passagens'] ?>"/>
 						</div>
 					</div>
@@ -1821,7 +1821,7 @@ include "../include/menuEvento.php";
 						</div>
 						<div class=" col-md-6">
 							<label>Data encerramento</label>
-							<input type="text" name="dataFinal" class="form-control" id="datepicker11" onblur="validate()" placeholder="só preencha se for temporada">
+							<input type="text" name="dataFinal" class="form-control" id="datepicker11" onblur="validate()" placeholder="só preencha em caso de temporada">
 						</div>
 					</div>
 					<div class="form-group">
@@ -1850,7 +1850,7 @@ include "../include/menuEvento.php";
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-2">
-							<label>Horário de início</label>
+							<label>Horário de início *</label>
 							<input type="text" name="hora" class="form-control"id="hora" placeholder="hh:mm"/>
 						</div> 
 						<div class="col-md-3">
@@ -2510,12 +2510,12 @@ include "../include/menuEvento.php";
 				<?php //print_r($evento);
 					if($campos['total'] > 0)
 					{
-						echo "<h4>Há campos obrigatórios não preenchidos.</h4>";	
+						echo "<h5>Há campos obrigatórios não preenchidos.</h5>";	
 						echo "<strong>".substr($campos['campos'],1)."</strong>";
 					}
 					else
 					{
-						echo "<h4>Todos os campos obrigatórios foram preenchidos.</h4>";
+						echo "<h5>Todos os campos obrigatórios foram preenchidos.</h5>";
 					}
 				?>
 							</p>
@@ -2525,12 +2525,12 @@ include "../include/menuEvento.php";
 				<?php //print_r($evento);
 					if($ocorrencia > 0)
 					{
-						echo "<h4>Há ocorrências cadastradas.</h4>";	
+						echo "<h5>Há ocorrências cadastradas.</h5>";	
 						echo "<br /><br />";
 					}
 					else
 					{
-						echo "Não há ocorrências cadastradas.";
+						echo "<strong><h5>Não há ocorrências cadastradas.</h5></strong>";
 					}
 				?>
 							</p>
@@ -2547,6 +2547,7 @@ include "../include/menuEvento.php";
 							<div class="col-md-offset-2 col-md-8">
 								<form method='POST' action='?perfil=aprovacao_evento'>
 									<input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
+									<br />
 									<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
 								</form>
 							</div>

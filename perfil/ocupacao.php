@@ -512,13 +512,13 @@ $producao = recuperaDados("ig_producao",$campo['idEvento'],"ig_evento_idEvento")
        		 <div class="form-group">
             	<div class="col-md-offset-2 col-md-8">
             		<label>Equipe</label>
-            		<textarea name="ig_producao_equipe" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php echo $producao["equipe"] ?></textarea>
+            		<textarea name="ig_producao_equipe" class="form-control" rows="10" placeholder="Profissionais envolvidos na produção e montagem do evento, tais como equipe de iluminação, figurinistas, etc."><?php echo $producao["equipe"] ?></textarea>
             	</div> 
             </div>
        		 <div class="form-group">
             	<div class="col-md-offset-2 col-md-8">
             		<label>Infraestrutura</label>
-            		<textarea name="ig_producao_infraestrutura" class="form-control" rows="10" placeholder="Texto auxiliar para as ações de comunicação. Releases do trabalho, pequenas biografias, currículos, etc"><?php echo $producao["infraestrutura"] ?></textarea>
+            		<textarea name="ig_producao_infraestrutura" class="form-control" rows="10" placeholder="Necessidades técnicas e materiais envolvidos na realização do evento, tais como: cadeiras, iluminação específica, slideshow, etc."><?php echo $producao["infraestrutura"] ?></textarea>
             	</div> 
             </div>      
             
@@ -1645,7 +1645,7 @@ function habilitar(){
                		 </div>
                 	<div class=" col-md-6">
                 		<label>Data encerramento</label>
-                		<input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" placeholder="só preencha se for temporada">
+                		<input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" placeholder="só preencha em caso de temporada">
                		</div>
                 </div>
                 <div class="form-group">
@@ -1671,7 +1671,7 @@ function habilitar(){
                 </div>
                 <div class="form-group">
                 	<div class="col-md-offset-2 col-md-2">
-                		<label>Horário de início</label>
+                		<label>Horário de início *</label>
                 		<input type="text" name="hora" class="form-control"id="hora" placeholder="hh:mm"/>
                 	</div> 
                 	<div class="col-md-3">

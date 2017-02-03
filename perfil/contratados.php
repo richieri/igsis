@@ -364,8 +364,8 @@
 					<tr class="list_menu">
 						<td>Razão Social</td>
 						<td>CNPJ</td>
-						<td width="15%"></td>
-						<td width="15%"></td>
+						<td width="25%"></td>
+						<td width="5%"></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -380,11 +380,6 @@
 							<form method='POST' action='?perfil=contratados&p=lista'>
 							<input type='hidden' name='insereJuridica' value='".$descricao['Id_PessoaJuridica']."'>
 							<input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'></td></form>"	;
-						echo "
-							<td class='list_description'>
-							<form method='POST' action='?perfil=contratados&p=lista'>
-							<input type='hidden' name='detalhe' value='".$descricao['Id_PessoaJuridica']."'>
-							<input type ='submit' class='btn btn-theme btn-md btn-block' value='detalhe'></td></form>"	;
 						echo "</tr>";
 					}
 				?>
@@ -556,8 +551,8 @@
 					<tr class="list_menu">
 						<td>Nome</td>
 						<td>CPF</td>
-						<td width="15%"></td>
-						<td width="15%"></td>
+						<td width="25%"></td>
+						<td width="5%"></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -573,11 +568,6 @@
 							<input type='hidden' name='insereFisica' value='1'>
 							<input type='hidden' name='Id_PessoaFisica' value='".$descricao['Id_PessoaFisica']."'>
 							<input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'></td></form>"	;
-						echo "
-							<td class='list_description'>
-							<form method='POST' action='?perfil=contratados&p=lista'>
-							<input type='hidden' name='detalhe' value='".$descricao['Id_PessoaFisica']."'>
-							<input type ='submit' class='btn btn-theme btn-md btn-block' value='detalhe'></td></form>"	;
 						echo "</tr>";
 					}
 				?>		
