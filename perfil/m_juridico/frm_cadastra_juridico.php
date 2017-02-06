@@ -46,7 +46,7 @@ $final = str_replace("rfSuplente", $rfSuplente, $final);
 	  		<div class="col-md-offset-1 col-md-10">
                 <div class="form-group"> 
 					<div class="col-md-offset-2 col-md-8"><h5><?php echo $pedido['Objeto'];?></h5>
-						<a class="btn btn-theme btn-lg btn-block" href="?perfil=detalhes_contrato&id_ped=<?php echo "$id_ped";?>" target="_blank">Detalhes do Evento</a>
+						<a class="btn btn-theme btn-lg btn-block" href="?perfil=detalhe_pedido&id_ped=<?php echo "$id_ped";?>" target="_blank">Detalhes do Evento</a>
                     </div>
                 </div>
 				

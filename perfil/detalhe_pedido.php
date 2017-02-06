@@ -105,14 +105,23 @@
 					<p align="justify"><strong>Data de Emissão da N.E.:</strong> <?php 
 						if ($pedido['EmissaoNE'] == '0000-00-00')
 						{
-							echo "";
+							echo "Não há registro.";
 						}
 						else
 						{	
 							echo exibirDataBr($pedido['EmissaoNE']);
 						}?>
 					</p>
-					<p align="justify"><strong>Data de Entrega de N.E.:</strong> <?php echo exibirDataBr($pedido['EntregaNE']);?></p>
+					<p align="justify"><strong>Data de Entrega de N.E.:</strong> <?php 
+						if ($pedido['EntregaNE'] == '0000-00-00')
+						{
+							echo "Não há registro.";
+						}
+						else
+						{	
+							echo exibirDataBr($pedido['EntregaNE']);
+						}?>
+					</p>
 					<p align="justify"><strong>Dotação Orçamentária:</strong> <?php echo $pedido['ComplementoDotacao'];?></p>
 					<p align="justify"><strong>Observação:</strong> <?php echo $pedido['Observacao'];?></p>
 					<?php $status = recuperaDados("sis_estado",$pedido['Status'],"idEstado"); ?>

@@ -130,7 +130,7 @@ if($num > 0){ ?>
 							<td>Período</td>
 							<td>Status</td>
 							<td>Data Parcela</td>
-							<td colspan="5">GERAR</td>
+							<td colspan="7">GERAR</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -161,6 +161,7 @@ for($h = 0; $h < $x['num']; $h++)
 		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pj&id_ped=".$x[$h]['id']."'>NOTA DE EMPENHO</a><td>";
 		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pj&id_ped=".$x[$h]['id']."'>PAGAMENTO</a><td>";
 		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUIDAÇÃO</a><td>";
+		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_emissao_nf&id_ped=".$x[$h]['id']."'>EMISSÃO N.F.</a><td>";
 	}
 	echo "</tr>";
 }
