@@ -51,7 +51,7 @@
 				<tbody>
 			<?php
 				$con = bancoMysqli();
-				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE editado = '1' AND (revisado = '0' OR revisado = NULL) AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE editado = '1' AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
 				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 				while($evento = mysqli_fetch_array($query_busca_dic))
 				{ 
@@ -78,8 +78,7 @@
 				}
 			?>									
 				</tbody>
-			</table>
-				   
+			</table>				   
 		</div>
 	</div>
 </section>
