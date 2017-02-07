@@ -45,7 +45,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">	
-				<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $_GET['id']; ?>" target="_blank">Documento enviado </a> |  <a href="?perfil=comunicacao&p=edicao&id=<?php echo $_GET['id']; ?>" >Edição </a> | SPCultura  | 
+				<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $_GET['id']; ?>" target="_blank">Documento enviado </a> |  <a href="?perfil=comunicacao&p=editar&id=<?php echo $_GET['id']; ?>" >Edição </a> | SPCultura  | 
 			<?php 
 				if($chamado['numero'] == '0')
 				{

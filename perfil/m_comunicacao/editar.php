@@ -124,7 +124,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=comunicacao&p=edicao&id=<?php echo $_GET['id'] ?>" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=comunicacao&p=editar&id=<?php echo $_GET['id'] ?>" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">	
 							<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $campo['ig_evento_idEvento'] ?>" target="_blank">Documento enviado </a> | Edição | <a href="?perfil=comunicacao&p=spcultura&id=<?php echo $_GET['id']; ?>" >SPCultura</a> 

@@ -46,13 +46,35 @@
 						<td>Nome de Evento</td>
 						<td>Enviador por</td>
 						<td>Data/Início</td>
+						<td>Status</td>
 					</tr>
 				</thead>		
 				<tbody>
 			<?php
+				//verifica a página atual caso seja informada na URL, senão atribui como 1ª página
+				$pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
+			 								
 				$con = bancoMysqli();
 				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
 				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+				 //conta o total de itens
+				$total = mysqli_num_rows($query_busca_dic);
+				
+				//seta a quantidade de itens por página
+				$registros = 100;
+			   
+				//calcula o número de páginas arredondando o resultado para cima
+				$numPaginas = ceil($total/$registros);
+				
+				//variavel para calcular o início da visualização com base na página atual
+				$inicio = ($registros*$pagina)-$registros;
+				
+				//seleciona os itens por página
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' ORDER BY idCom DESC limit $inicio,$registros ";
+				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+				 //conta o total de itens
+				$total = mysqli_num_rows($query_busca_dic);
+				
 				while($evento = mysqli_fetch_array($query_busca_dic))
 				{ 
 					$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
@@ -61,7 +83,7 @@
 			?>			
 					<tr>
 						<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-						<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a> [<?php 
+						<td><a href="?perfil=comunicacao&p=editar&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a> [<?php 
 					if($chamado['numero'] == '0')
 					{
 						echo "0";
@@ -74,8 +96,36 @@
 						</td>
 						<td><?php echo $nome['nomeCompleto'] ?></td>
 						<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
+						<td><?php 
+							if ($evento['editado'] == 1) 
+							{ 
+								echo "Editado <br/>"; 
+							} 
+							if ($evento['revisado'] == 1) 
+							{
+								echo "Revisado <br/>";
+							}
+							if ($evento['site'] == 1) 
+							{
+								echo "Site <br/>";
+							}	
+							if ($evento['publicacao'] == 1) 
+							{
+								echo "Impresso <br/>";
+							}
+							if ($evento['foto'] == 1) 
+							{
+								echo "Foto";
+							}
+						?></td>
 					</tr>
 			<?php
+				}
+				//exibe a paginação
+				echo "<strong>Páginas</strong>";
+				for($i = 1; $i < $numPaginas + 1; $i++) 
+				{
+					echo "<a href='?perfil=comunicacao&p=todos_eventos&pagina=$i'> [".$i."]</a> ";
 				}
 			?>
 				</tbody>
