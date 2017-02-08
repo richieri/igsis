@@ -27,7 +27,9 @@
 			}
 		}
  
-		$idEvento = $_GET['id'];	
+		//$idEvento = $_GET['id'];
+		$idCom = $_GET['idCom'];
+		
 		if(isset($_POST['atualizar']))
 		{
 			if(isset($_POST['editado']))
@@ -107,8 +109,9 @@
 				$mensagem = "Erro ao atualizar.";
 			}
 		}
-		$idEvento = $_GET['id'];
-		$campo = recuperaDados("ig_comunicacao",$idEvento,"ig_evento_idEvento");
+		
+		$campo = recuperaDados("ig_comunicacao",$idCom,"idCom");
+		$idEvento = $campo['ig_evento_idEvento'];
 		$chamado = recuperaAlteracoesEvento($idEvento);	
 ?>
 <section id="inserir" class="home-section bg-white">
@@ -124,7 +127,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=comunicacao&p=editar&id=<?php echo $_GET['id'] ?>" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=comunicacao&p=editar&id=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">	
 							<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $campo['ig_evento_idEvento'] ?>" target="_blank">Documento enviado </a> | Edição | <a href="?perfil=comunicacao&p=spcultura&id=<?php echo $_GET['id']; ?>" >SPCultura</a> 

@@ -248,7 +248,7 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Nome do Grupo</label>
-							<input type="text" name="nomeGrupo" class="form-control" maxlength="30" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $campo['nomeGrupo'] ?>"/>
+							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $campo['nomeGrupo'] ?>"/>
 						</div> 
 					</div>
 					<div class="form-group">

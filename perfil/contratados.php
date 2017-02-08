@@ -1106,10 +1106,21 @@
 							<?php $evento = recuperaEvento($_SESSION['idEvento']); ?>
 							<strong>Setor:</strong> <?php echo $_SESSION['instituicao']; ?> - 
 							<strong>Categoria de contratação:</strong> <?php recuperaModalidade($evento['ig_modalidade_IdModalidade']); ?> <br />
-							<strong>Proponente:</strong>  <?php echo $_SESSION['nomeCompleto']; ?> <br />
+							<?php 
+							$fisica = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+							$juridica = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+							if($pedido['tipoPessoa'] == 1)
+							{
+								echo "<strong>Proponente:</strong> ".$fisica['Nome']."<br />";
+							}
+							else
+							{
+								echo "<strong>Proponente:</strong> ".$juridica['RazaoSocial']."<br />";
+							}	
+							?>
 							<strong>Objeto:</strong> <?php echo retornaTipo($evento['ig_tipo_evento_idTipoEvento']) ?> -  <?php echo $evento['nomeEvento']; ?> <br />
-							<strong>Local: <?php echo listaLocais($_SESSION['idEvento']); ?></strong> <br />
-							<strong>Período: <?php echo retornaPeriodo($_SESSION['idEvento']); ?></strong><br /> 
+							<strong>Local:</strong> <?php echo listaLocais($_SESSION['idEvento']); ?><br />
+							<strong>Período:</strong> <?php echo retornaPeriodo($_SESSION['idEvento']); ?><br /> 
 							<?php 
 								$fiscal = recuperaUsuario($evento['idResponsavel']);
 								$suplente = recuperaUsuario($evento['suplente']);
@@ -1266,7 +1277,7 @@
 			$campo_verba = $recupera_verba['Verba'];
 		?>
 							<div class="col-md-offset-2 col-md-8">
-								<strong>Verba: <font color="blue"><?php echo $campo_verba; ?> (atual)</font></strong> <br/>
+								<strong>Verba:</strong> <?php echo $campo_verba; ?>  <br/>
 								<select class="form-control" id="verba" name="verba" >
 									<?php geraVerbaUsuario($_SESSION['idUsuario'],$pedido['idVerba']); ?>  
 								</select>

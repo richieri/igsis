@@ -57,7 +57,7 @@
 				$con = bancoMysqli();
 				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
 				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-				 //conta o total de itens
+				//conta o total de itens
 				$total = mysqli_num_rows($query_busca_dic);
 				
 				//seta a quantidade de itens por página
@@ -83,7 +83,7 @@
 			?>			
 					<tr>
 						<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-						<td><a href="?perfil=comunicacao&p=editar&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a> [<?php 
+						<td><a href="?perfil=comunicacao&p=editar&idCom=<?php echo $evento['idCom']  ?>"><?php echo $evento['nomeEvento'] ?></a> [<?php 
 					if($chamado['numero'] == '0')
 					{
 						echo "0";
@@ -121,13 +121,19 @@
 					</tr>
 			<?php
 				}
-				//exibe a paginação
-				echo "<strong>Páginas</strong>";
-				for($i = 1; $i < $numPaginas + 1; $i++) 
-				{
-					echo "<a href='?perfil=comunicacao&p=todos_eventos&pagina=$i'> [".$i."]</a> ";
-				}
 			?>
+					<tr>
+						<td colspan="5" bgcolor="#DEDEDE">
+						<?php
+							//exibe a paginação
+							echo "<strong>Páginas</strong>";
+							for($i = 1; $i < $numPaginas + 1; $i++) 
+							{
+								echo "<a href='?perfil=comunicacao&p=todos_eventos&pagina=$i'> [".$i."]</a> ";
+							}
+						?>
+						</td>
+					</tr>	
 				</tbody>
 			</table>
 		</div>

@@ -59,7 +59,7 @@
 				$pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
 				
 				$con = bancoMysqli();
-				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE editado = '1' AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE editado != '1' AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC";
 				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 				//conta o total de itens
 				$total = mysqli_num_rows($query_busca_dic);
@@ -74,7 +74,7 @@
 				$inicio = ($registros*$pagina)-$registros;
 				
 				//seleciona os itens por página
-				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE editado = '1' AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC limit $inicio,$registros ";
+				$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE editado != '1' AND idInstituicao = '$idInstituicao' ORDER BY idCom DESC limit $inicio,$registros ";
 				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 				 //conta o total de itens
 				$total = mysqli_num_rows($query_busca_dic);
