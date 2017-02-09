@@ -1,6 +1,7 @@
 ﻿<?php
 //geram o insert pro framework da igsis
 $pasta = "?perfil=comunicacao&p=";
+$perfil = $_SESSION['perfil'];
 ?>
 
 <div class="menu-area">
@@ -18,7 +19,13 @@ $pasta = "?perfil=comunicacao&p=";
 				</li>   
 				<li><a href="<?php echo $pasta ?>docs">Gerar Docs</a></li>                
 				<li><a href="<?php echo $pasta ?>agenda">Agenda</a></li>   
-				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li>  				
+				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li> 
+			<?php
+				if ($perfil == 1)
+				{
+					echo "<li><a href='?perfil=comunicacao&p=spcultura'>SPCultura</a></li>";
+				}
+			?>
 				<li style="color:white;">-------------------------</li>
 				<li><a href="?secao=perfil">Carregar módulo</a></li>
 				<li selected><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-comunicacao/">Ajuda</a></li>

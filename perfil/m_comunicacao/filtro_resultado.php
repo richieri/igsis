@@ -2,54 +2,63 @@
 
 $idInstituicao = $_SESSION['idInstituicao'];
 
+//verifica a página atual caso seja informada na URL, senão atribui como 1ª página
+$pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
+
 if(isset($_POST['filtrar']))
 {
 	if(isset($_POST['editado']))
 	{
-		$editado = 1;
+		//$editado = 1;
+		$_SESSION['editado'] = '1';
 	}
 	else
 	{
-		$editado = "";
+		$_SESSION['editado'] = '0';
 	}
 	if(isset($_POST['revisado']))
 	{
-		$revisado = 1;
+		//$revisado = 1;
+		$_SESSION['revisado'] = '1';
 	}
 	else
 	{
-		$revisado = "";
+		$_SESSION['revisado'] = '0';
 	}
 	if(isset($_POST['site']))
 	{
-		$site = 1;
+		//$site = 1;
+		$_SESSION['site'] = '1';
 	}
 	else
 	{
-		$site = "";
+		$_SESSION['site'] = '0';
 	}
 	if(isset($_POST['publicacao']))
 	{
-		$publicacao = 1;
+		//$publicacao = 1;
+		$_SESSION['publicacao'] = '1';
 	}
 	else
 	{
-		$publicacao = "";
+		$_SESSION['publicacao'] = '0';
 	}
 	if(isset($_POST['foto']))
 	{
-		$foto = 1;
+		//$foto = 1;
+		$_SESSION['foto'] = '1';
 	}
 	else
 	{
-		$foto = "";
+		$_SESSION['foto'] = '0';
 	}
-	if($editado == "" AND $revisado == "" AND $site == "" AND $impresso == "" AND $foto == "")
-	{ 
-		include 'filtro_resultado2.php';
-	}
-	else
-	{		
+}
+$editado = $_SESSION['editado'];
+$revisado = $_SESSION['revisado'];
+$site = $_SESSION['site'];
+$publicacao = $_SESSION['publicacao'];
+$foto = $_SESSION['foto'];
+			
 		if($editado != 1)
 		{
 			$filtro_editado = "";	
@@ -95,17 +104,16 @@ if(isset($_POST['filtrar']))
 			$filtro_foto = "AND foto = 1";	
 		}
 		
+		
+		
 		$con = bancoMysqli();
 		$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY idCom DESC";
 		$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 		//conta o total de itens
 		$total = mysqli_num_rows($query_busca_dic);
 		
-		//verifica a página atual caso seja informada na URL, senão atribui como 1ª página
-		$pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-		
 		//seta a quantidade de itens por página
-		$registros = 2;
+		$registros = 100;
 		   
 		//calcula o número de páginas arredondando o resultado para cima
 		$numPaginas = ceil($total/$registros);
@@ -143,7 +151,6 @@ if(isset($_POST['filtrar']))
 					</thead>
 					<tbody>	
 					<?php
-						
 						while($evento = mysqli_fetch_array($query_busca_dic))
 						{ 
 							$event = recuperaDados("ig_evento",$evento['ig_evento_idEvento'],"idEvento");
@@ -207,8 +214,3 @@ if(isset($_POST['filtrar']))
 			</div>
 		</div>
 	</section>
-<?php
-	}
-}
-
- ?>

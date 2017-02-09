@@ -1,6 +1,11 @@
 ﻿<?php include 'include/menu.php';
 
 $idInstituicao = $_SESSION['idInstituicao'];
+unset($_SESSION['editado']);
+unset($_SESSION['revisado']);
+unset($_SESSION['site']);
+unset($_SESSION['publicacao']);
+unset($_SESSION['foto']);
 ?>
 	<section id="services" class="home-section bg-white">
 		<div class="container">
