@@ -9,7 +9,7 @@ $perfil = $_SESSION['perfil'];
 		<button class="dl-trigger">Busca</button>
 			<ul class="dl-menu">				
 				<li><a href="<?php echo $pasta ?>filtro">Filtrar</a></li>
-				<li><a href="<?php echo $pasta ?>programadores_externos">Programação Local</a></li>
+				<li><a href="<?php echo $pasta ?>programacao_local">Programação Local</a></li>
 				<li><a href="#">Foto / Imagem de divulgação</a> 
 					<ul class="dl-submenu">
 						<li selected><a href="<?php echo $pasta ?>fotos&foto=1">Aprovados</a></li>

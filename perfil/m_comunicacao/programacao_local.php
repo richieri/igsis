@@ -91,6 +91,8 @@
 			</div>					
 		</form>
 		<div class="table-responsive list_info">
+			<strong>Legenda status:</strong> | [ E ] Editado | [ R ] Revisado | [ S ] Site | [ I ] Impresso | [ F ] Foto | 
+			<p>&nbsp;</p>
 			<table class='table table-condensed'>
 				<thead>
 					<tr class='list_menu'>
@@ -136,23 +138,23 @@
 						<td><?php 
 							if ($comunicacao['editado'] == 1) 
 							{ 
-								echo "Editado <br/>"; 
+								echo "[ E ] "; 
 							} 
 							if ($comunicacao['revisado'] == 1) 
 							{
-								echo "Revisado <br/>";
+								echo "[ R ] ";
 							}
 							if ($comunicacao['site'] == 1) 
 							{
-								echo "Site <br/>";
+								echo "[ S ] ";
 							}	
 							if ($comunicacao['publicacao'] == 1) 
 							{
-								echo "Impresso <br/>";
+								echo "[ I ] ";
 							}
 							if ($comunicacao['foto'] == 1) 
 							{
-								echo "Foto";
+								echo "[ F ]";
 							}
 						?></td>
 					</tr>
