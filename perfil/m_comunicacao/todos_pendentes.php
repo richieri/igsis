@@ -1,166 +1,21 @@
-﻿<?php include 'include/menu.php';
-
+﻿<?php 
 $idInstituicao = $_SESSION['idInstituicao'];
 
 //verifica a página atual caso seja informada na URL, senão atribui como 1ª página
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
 
-if(isset($_POST['filtrar']))
-{
-	if(isset($_POST['editado_c']))
-	{
-		$_SESSION['editado'] == '1';
-	}		
-	else 
-	{
-		if(isset($_POST['editado_p']))
-		{
-			$_SESSION['editado'] == '2';
-		}
-		else
-		{
-			$_SESSION['editado'] == '0';
-		}	
-	}	
-		
-	
-	if(isset($_POST['revisado_c']))
-	{
-		$_SESSION['revisado'] = '1';
-	}
-	else
-	{
-		if(isset($_POST['revisado_p']))
-		{
-			$_SESSION['revisado'] = '2';
-		}
-		else
-		{
-			$_SESSION['revisado'] = '0';
-		}	
-	}
-	
-	if(isset($_POST['site_c']))
-	{
-		$_SESSION['site'] = '1';
-	}
-	else
-	{
-		if(isset($_POST['site_p']))
-		{
-		$_SESSION['site'] = '2';
-		}
-		else
-		{
-		$_SESSION['site'] = '0';
-		}
-	}
-	
-	if(isset($_POST['publicacao_c']))
-	{
-		$_SESSION['publicacao'] = '1';
-	}
-	else
-	{
-		if(isset($_POST['publicacao_p']))
-		{
-			$_SESSION['publicacao'] = '2';
-		}
-		else
-		{
-			$_SESSION['publicacao'] = '0';
-		}	
-	}
-	
-	if(isset($_POST['foto_c']))
-	{
-		$_SESSION['foto'] = '1';
-	}
-	else
-	{
-		if(isset($_POST['foto_p']))
-		{
-			$_SESSION['foto'] = '2';
-		}
-		else
-		{	
-			$_SESSION['foto'] = '0';
-		}	
-	}
-
-}
 $editado = $_SESSION['editado'];
 $revisado = $_SESSION['revisado'];
 $site = $_SESSION['site'];
 $publicacao = $_SESSION['publicacao'];
 $foto = $_SESSION['foto'];
 
-			
-		if ($editado == 1)//confirmado
-		{
-			$filtro_editado = "AND editado = 1";	
-		}
-		elseif ($editado == 1)//confirmado
-		{
-			$filtro_editado = "AND editado != 1";	
-		}
-		else
-		{
-			$filtro_editado = ""; //tanto faz
-		}	
-		
-		if($revisado == 1)
-		{
-			$filtro_revisado = "AND revisado = 1";	
-		}
-		elseif($revisado == 2)//confirmado
-		{
-			$filtro_revisado = "AND revisado != 1";	
-		}
-		else
-		{
-			$filtro_revisado = "";
-		}	
-		
-		if($site == 1)
-		{
-			$filtro_site = "AND site = 1";	
-		}
-		elseif($site == 2)
-		{
-			$filtro_site = "AND site != 1";	
-		}
-		else
-		{
-			$filtro_site = "";
-		}	
+$filtro_editado = "AND editado != 1 ";
+$filtro_revisado = "AND revisado != 1 ";
+$filtro_site = "AND site != 1 ";
+$filtro_publicacao = "AND publicacao != 1";
+$filtro_foto = "AND foto != 1";
 
-		if($publicacao == 1)
-		{
-			$filtro_publicacao = "AND publicacao = 1";
-		}
-		elseif($publicacao == 2)
-		{
-			$filtro_publicacao = "AND publicacao != 1";	
-		}
-		else
-		{
-			$filtro_publicacao = "";
-		}
-		
-		if($foto == 1)
-		{
-			$filtro_foto = "AND foto = 1";
-		}
-		else($foto == 2)
-		{
-			$filtro_foto = "AND foto != 1";	
-		}
-		else
-		{
-			$filtro_foto = "";
-		}
-		
 		$con = bancoMysqli();
 		$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY idCom DESC";
 		$query_busca_dic = mysqli_query($con,$sql_busca_dic);

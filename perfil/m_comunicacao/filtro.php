@@ -20,12 +20,35 @@ unset($_SESSION['foto']);
 				<div class="col-md-offset-1 col-md-10">
 					<form method="POST" action="?perfil=comunicacao&p=filtro_resultado" class="form-horizontal" role="form">
 					<div class="form-group">					
-						<div class="col-md-offset-2 col-md-8"> 
-							| <input type="checkbox" name="editado" /> <label>Editado</label>  |
-							<input type="checkbox" name="revisado" /> <label>Revisado</label> |
-							<input type="checkbox" name="site" /> <label>Site</label> | 
-							<input type="checkbox" name="publicacao" /> <label>Impresso</label> |
-							<input type="checkbox" name="foto" /> <label>Foto</label> |
+						<div class="col-md-offset-1 col-md-2" align="left"> 
+							<label>Editado</label> <br/>
+							<input type="checkbox" name="" /> Todos<br/>
+							<input type="checkbox" name="editado_c" /> Confirmado<br/>
+							<input type="checkbox" name="editado_p" /> Pendente
+						</div>
+						<div class="col-md-2" align="left">
+							<label>Revisado</label> <br/>
+							<input type="checkbox" name="" /> Todos<br/>
+							<input type="checkbox" name="revisado_c" /> Confirmado<br/>
+							<input type="checkbox" name="revisado_p" /> Pendente
+						</div>
+						<div class="col-md-2" align="left">
+							<label>Site</label> <br/>
+							<input type="checkbox" name="" /> Todos<br/>
+							<input type="checkbox" name="site_c" /> Confirmado<br/>
+							<input type="checkbox" name="site_p" /> Pendente
+						</div>
+						<div class="col-md-2" align="left">
+							<label>Impresso</label> <br/>
+							<input type="checkbox" name="" /> Todos<br/>
+							<input type="checkbox" name="publicacao_c" /> Confirmado<br/>
+							<input type="checkbox" name="publicacao_p" /> Pendente
+						</div>
+						<div class="col-md-2" align="left">
+							<label>Foto</label><br/>
+							<input type="checkbox" name="" /> Todos<br/>
+							<input type="checkbox" name="foto_c" /> Confirmado<br/>
+							<input type="checkbox" name="foto_p" /> Pendente
 						</div>
 					</div>
 					<br />             
