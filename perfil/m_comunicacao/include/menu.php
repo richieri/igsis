@@ -18,7 +18,7 @@ $perfil = $_SESSION['perfil'];
 					</ul>
 				</li>   
 				<li><a href="<?php echo $pasta ?>docs">Gerar Docs</a></li>                
-				<li><a href="<?php echo $pasta ?>agenda">Agenda</a></li>   
+				<li><a href="?perfil=agenda" target="_blank">Agenda</a></li>   
 				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li> 
 			<?php
 				if ($perfil == 1)

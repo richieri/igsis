@@ -159,7 +159,7 @@ $foto = $_SESSION['foto'];
 					?>	
 							<tr>
 								<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-								<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['ig_evento_idEvento']  ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
+								<td><a href="?perfil=comunicacao&p=editar&idCom=<?php echo $evento['idCom'] ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
 							if($chamado['numero'] == '0')
 							{
 								echo "0";

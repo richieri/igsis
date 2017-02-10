@@ -110,6 +110,7 @@
 				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 				while($evento = mysqli_fetch_array($query_busca_dic))
 				{ 
+					$comunicacao = recuperaDados("ig_comunicacao",$evento['idEvento'],"ig_evento_idEvento");
 					$event = recuperaDados("ig_evento",$evento['idEvento'],"idEvento");
 					$nome = recuperaUsuario($event['idUsuario']);
 					$chamado = recuperaAlteracoesEvento($evento['idEvento']);						
@@ -117,9 +118,9 @@
 					{
 						// só as enviadas
 			?>			
-					<tr>
+					<tr>					
 						<td><?php echo retornaProtoEvento($evento['idEvento']) ?></td>
-						<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['idEvento']  ?>"><?php echo $event['nomeEvento'] ?></a>  [<?php 
+						<td><a href="?perfil=comunicacao&p=editar&idCom=<?php echo $comunicacao['idCom']  ?>"><?php echo $event['nomeEvento'] ?></a>  [<?php 
 						if($chamado['numero'] == '0')
 						{
 							echo "0";
@@ -133,23 +134,23 @@
 						<td><?php echo $nome['nomeCompleto'] ?></td>
 						<td><?php echo retornaPeriodo($event['idEvento']) ?></td>
 						<td><?php 
-							if ($evento['editado'] == 1) 
+							if ($comunicacao['editado'] == 1) 
 							{ 
 								echo "Editado <br/>"; 
 							} 
-							if ($evento['revisado'] == 1) 
+							if ($comunicacao['revisado'] == 1) 
 							{
 								echo "Revisado <br/>";
 							}
-							if ($evento['site'] == 1) 
+							if ($comunicacao['site'] == 1) 
 							{
 								echo "Site <br/>";
 							}	
-							if ($evento['publicacao'] == 1) 
+							if ($comunicacao['publicacao'] == 1) 
 							{
 								echo "Impresso <br/>";
 							}
-							if ($evento['foto'] == 1) 
+							if ($comunicacao['foto'] == 1) 
 							{
 								echo "Foto";
 							}
