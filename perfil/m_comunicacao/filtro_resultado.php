@@ -139,6 +139,8 @@ $foto = $_SESSION['foto'];
 				</div>
 			</div>	
 			<div class="table-responsive list_info">
+				<strong>Legenda status:</strong> | [ E ] Editado | [ R ] Revisado | [ S ] Site | [ I ] Impresso | [ F ] Foto | 
+				<p>&nbsp;</p>
 				<table class='table table-condensed'>
 					<thead>
 						<tr class='list_menu'>
@@ -174,23 +176,23 @@ $foto = $_SESSION['foto'];
 								<td><?php 
 									if ($evento['editado'] == 1) 
 									{ 
-										echo "Editado <br/>"; 
+										echo "[ E ] "; 
 									} 
 									if ($evento['revisado'] == 1) 
 									{
-										echo "Revisado <br/>";
+										echo "[ R ] ";
 									}
 									if ($evento['site'] == 1) 
 									{
-										echo "Site <br/>";
+										echo "[ S ] ";
 									}	
 									if ($evento['publicacao'] == 1) 
 									{
-										echo "Impresso <br/>";
+										echo "[ I ] ";
 									}
 									if ($evento['foto'] == 1) 
 									{
-										echo "Foto";
+										echo "[ F ]";
 									}
 								?></td>
 							</tr>					

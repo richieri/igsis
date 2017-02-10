@@ -9,7 +9,7 @@ $perfil = $_SESSION['perfil'];
 		<button class="dl-trigger">Busca</button>
 			<ul class="dl-menu">				
 				<li><a href="<?php echo $pasta ?>filtro">Filtrar</a></li>
-				<li><a href="<?php echo $pasta ?>programadores_externos">Eventos de programadores externos</a></li>
+				<li><a href="<?php echo $pasta ?>programadores_externos">Programação Local</a></li>
 				<li><a href="#">Foto / Imagem de divulgação</a> 
 					<ul class="dl-submenu">
 						<li selected><a href="<?php echo $pasta ?>fotos&foto=1">Aprovados</a></li>
@@ -19,13 +19,7 @@ $perfil = $_SESSION['perfil'];
 				</li>   
 				<li><a href="<?php echo $pasta ?>docs">Gerar Docs</a></li>                
 				<li><a href="?perfil=agenda" target="_blank">Agenda</a></li>   
-				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li> 
-			<?php
-				if ($perfil == 1)
-				{
-					echo "<li><a href='?perfil=comunicacao&p=spcultura'>SPCultura</a></li>";
-				}
-			?>
+				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li> 			
 				<li style="color:white;">-------------------------</li>
 				<li><a href="?secao=perfil">Carregar módulo</a></li>
 				<li selected><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-comunicacao/">Ajuda</a></li>
