@@ -27,8 +27,23 @@
 			}
 		}
  
-		//$idEvento = $_GET['id'];
 		$idCom = $_GET['idCom'];
+		
+		if(isset($_POST['apagar']))
+		{
+			$con = bancoMysqli();
+			$idCom = $_POST['apagar'];
+			$sql_apagar = "UPDATE ig_comunicacao SET publicado = 0 WHERE ig_comunicacao.idCom = '$idCom'";
+			$query_apagar = mysqli_query($con,$sql_apagar);
+			if($query_apagar)
+			{
+				$mensagem = "Registro apagado com sucesso.";	
+			}
+			else
+			{
+				$mensagem = "Erro ao apagar.";
+			}
+		}	
 		
 		if(isset($_POST['atualizar']))
 		{
@@ -120,7 +135,7 @@
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
                     <h3>Comunicação - Edição</h3>
-                    <h1><?php echo $campo["nomeEvento"] ?></h1>
+                    <h3><?php echo $campo["nomeEvento"] ?></h3>
                     <h4><?php if(isset($mensagem)){echo $mensagem;} ?></h4>
                 </div>
             </div>
@@ -260,6 +275,13 @@
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="atualizar" value="<?php echo $campo['idCom'] ?>" />
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-4 col-md-4">
+							<input type="hidden" name="apagar" value="<?php echo $campo['idCom'] ?>" />
+							<input type="hidden" name="idCom" value="<?php echo $idCom; ?>" >
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Apagar">
 						</div>
 					</div>
 				</form>

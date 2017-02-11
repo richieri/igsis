@@ -91,7 +91,7 @@
 			</div>					
 		</form>
 		<div class="table-responsive list_info">
-			<strong>Legenda status:</strong> | [ E ] Editado | [ R ] Revisado | [ S ] Site | [ I ] Impresso | [ F ] Foto | 
+			<strong>Legenda status:</strong> | <font color='blue'>[ E ] Editado</font> | <font color='#00FF7F'>[ R ] Revisado</font> | <font color='yellow'>[ S ] Site</font> | <font color='orange'>[ I ] Impresso</font> | <font color='#DA70D6'>[ F ] Foto</font> | 
 			<p>&nbsp;</p>
 			<table class='table table-condensed'>
 				<thead>
@@ -108,7 +108,7 @@
 				$con = bancoMysqli();
 				$loc = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
 				$local = $loc['local'];
-				$sql_busca_dic = "SELECT DISTINCT idEvento FROM igsis_agenda AS age INNER JOIN ig_comunicacao AS com ON age.idEvento = com.ig_evento_idEvento WHERE age.idInstituicao = $idInstituicao AND data <= '$data_final' AND data >= '$data_inicio' ORDER BY idCom DESC";
+				$sql_busca_dic = "SELECT DISTINCT idEvento FROM igsis_agenda AS age INNER JOIN ig_comunicacao AS com ON age.idEvento = com.ig_evento_idEvento WHERE age.idInstituicao = $idInstituicao AND com.publicado = 1 AND data <= '$data_final' AND data >= '$data_inicio' ORDER BY idCom DESC";
 				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 				while($evento = mysqli_fetch_array($query_busca_dic))
 				{ 
@@ -138,23 +138,23 @@
 						<td><?php 
 							if ($comunicacao['editado'] == 1) 
 							{ 
-								echo "[ E ] "; 
+								echo "<font color='blue'>[ E ]</font> ";  
 							} 
 							if ($comunicacao['revisado'] == 1) 
 							{
-								echo "[ R ] ";
+								echo "<font color='#00FF7F'>[ R ]</font> ";
 							}
 							if ($comunicacao['site'] == 1) 
 							{
-								echo "[ S ] ";
+								echo "<font color='yellow'>[ S ]</font> ";
 							}	
 							if ($comunicacao['publicacao'] == 1) 
 							{
-								echo "[ I ] ";
+								echo "<font color='orange'>[ I ]</font> ";
 							}
 							if ($comunicacao['foto'] == 1) 
 							{
-								echo "[ F ]";
+								echo "<font color='#DA70D6'>[ F ]</font>";
 							}
 						?></td>
 					</tr>

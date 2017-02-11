@@ -162,7 +162,7 @@ $foto = $_SESSION['foto'];
 		}
 		
 		$con = bancoMysqli();
-		$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY idCom DESC";
+		$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND publicado = 1 $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento_idEvento DESC";
 		$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 		//conta o total de itens
 		$total = mysqli_num_rows($query_busca_dic);
@@ -177,7 +177,7 @@ $foto = $_SESSION['foto'];
 		$inicio = ($registros*$pagina)-$registros;		
 			
 		//seleciona os itens por página
-		$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY idCom DESC limit $inicio,$registros ";
+		$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND publicado = 1 $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento_idEvento DESC limit $inicio,$registros ";
 		$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 		 //conta o total de itens
 		$total = mysqli_num_rows($query_busca_dic);
@@ -194,7 +194,7 @@ $foto = $_SESSION['foto'];
 				</div>
 			</div>	
 			<div class="table-responsive list_info">
-				<strong>Legenda status:</strong> | [ E ] Editado | [ R ] Revisado | [ S ] Site | [ I ] Impresso | [ F ] Foto | 
+				<strong>Legenda status:</strong> | <font color='blue'>[ E ] Editado</font> | <font color='#00FF7F'>[ R ] Revisado</font> | <font color='yellow'>[ S ] Site</font> | <font color='orange'>[ I ] Impresso</font> | <font color='#DA70D6'>[ F ] Foto</font> | 
 				<p>&nbsp;</p>
 				<table class='table table-condensed'>
 					<thead>
@@ -231,23 +231,23 @@ $foto = $_SESSION['foto'];
 								<td><?php 
 									if ($evento['editado'] == 1) 
 									{ 
-										echo "[ E ] "; 
+										echo "<font color='blue'>[ E ]</font> "; 
 									} 
 									if ($evento['revisado'] == 1) 
 									{
-										echo "[ R ] ";
+										echo "<font color='#00FF7F'>[ R ]</font> ";
 									}
 									if ($evento['site'] == 1) 
 									{
-										echo "[ S ] ";
+										echo "<font color='yellow'>[ S ]</font> ";
 									}	
 									if ($evento['publicacao'] == 1) 
 									{
-										echo "[ I ] ";
+										echo "<font color='orange'>[ I ]</font> ";
 									}
 									if ($evento['foto'] == 1) 
 									{
-										echo "[ F ]";
+										echo "<font color='#DA70D6'>[ F ]</font>";
 									}
 								?></td>
 							</tr>					
