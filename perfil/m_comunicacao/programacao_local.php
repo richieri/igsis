@@ -65,9 +65,9 @@
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
 				<div class="section-heading">
-					<h2>Comunicação - Agenda</h2>
-					<h4></h4>
-					<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+					<h3>Comunicação - Programação Local</h3>
+					<p>&nbsp;</p>
+					<h6><?php if(isset($mensagem)){echo $mensagem;} ?></h6>
 				</div>
 			</div>
 		</div>  
@@ -108,7 +108,7 @@
 				$con = bancoMysqli();
 				$loc = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
 				$local = $loc['local'];
-				$sql_busca_dic = "SELECT DISTINCT idEvento FROM igsis_agenda AS age INNER JOIN ig_comunicacao AS com ON age.idEvento = com.ig_evento_idEvento WHERE age.idInstituicao = $idInstituicao AND data <= '$data_final' AND data >= '$data_inicio' ORDER BY idTipo";
+				$sql_busca_dic = "SELECT DISTINCT idEvento FROM igsis_agenda AS age INNER JOIN ig_comunicacao AS com ON age.idEvento = com.ig_evento_idEvento WHERE age.idInstituicao = $idInstituicao AND data <= '$data_final' AND data >= '$data_inicio' ORDER BY idCom DESC";
 				$query_busca_dic = mysqli_query($con,$sql_busca_dic);
 				while($evento = mysqli_fetch_array($query_busca_dic))
 				{ 

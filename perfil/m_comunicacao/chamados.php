@@ -49,11 +49,33 @@
 					</tr>
 				</thead>
 				<tbody>
-			<?php
+			<?php		
+				//verifica a página atual caso seja informada na URL, senão atribui como 1ª página
+				$pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
 				$con = bancoMysqli();
 				$idInstituicao = $_SESSION['idInstituicao'];
 				$sql_busca = "SELECT * FROM igsis_chamado, ig_evento WHERE igsis_chamado.idEvento = ig_evento.idEvento AND idInstituicao = '$idInstituicao' ORDER BY idChamado DESC";
 				$query_busca = mysqli_query($con,$sql_busca);
+				
+				//conta o total de itens
+				$total = mysqli_num_rows($query_busca);
+				
+				//seta a quantidade de itens por página
+				$registros = 100;
+				   
+				//calcula o número de páginas arredondando o resultado para cima
+				$numPaginas = ceil($total/$registros);
+				
+				//variavel para calcular o início da visualização com base na página atual
+				$inicio = ($registros*$pagina)-$registros;
+				
+				//seleciona os itens por página
+				$sql_busca = "SELECT * FROM igsis_chamado, ig_evento WHERE igsis_chamado.idEvento = ig_evento.idEvento AND idInstituicao = '$idInstituicao' ORDER BY idChamado DESC limit $inicio,$registros ";
+				$query_busca = mysqli_query($con,$sql_busca);
+				 
+				 //conta o total de itens
+				$total = mysqli_num_rows($query_busca);
+				
 				while($chamado = mysqli_fetch_array($query_busca))
 				{ 
 					$tipo = recuperaDados("igsis_tipo_chamado",$chamado['tipo'],"idTipoChamado");
@@ -78,6 +100,18 @@
 			<?php
 				}
 			?>
+					<tr>
+						<td colspan="5" bgcolor="#DEDEDE">
+						<?php
+							//exibe a paginação
+							echo "<strong>Páginas</strong>";
+							for($i = 1; $i < $numPaginas + 1; $i++) 
+							{
+								echo "<a href='?perfil=comunicacao&p=chamados&pagina=$i'> [".$i."]</a> ";
+							}
+						?>
+						</td>
+					</tr>					
 				</tbody>
 			</table>
 		</div>

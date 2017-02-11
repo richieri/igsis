@@ -58,14 +58,12 @@ unset($_SESSION['foto']);
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Filtrar">                    
 						</div>
 					</div>
-					</form>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><br/></div>
 					</div>
-					<form method="POST" action="?perfil=comunicacao&p=todos_eventos" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-4 col-md-6">
-							<input type="hidden" name="todos" value="1" />
+							<input type="hidden" name="filtrar" value="1" />
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Todos os eventos">                    
 						</div>
 					</div>

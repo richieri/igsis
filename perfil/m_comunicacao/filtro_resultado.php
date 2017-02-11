@@ -9,19 +9,19 @@ if(isset($_POST['filtrar']))
 {
 	if(isset($_POST['editado_c']))
 	{
-		$_SESSION['editado'] == '1';
-	}		
-	else 
+		$_SESSION['editado'] = '1';
+	}
+	else
 	{
 		if(isset($_POST['editado_p']))
 		{
-			$_SESSION['editado'] == '2';
+			$_SESSION['editado'] = '2';
 		}
 		else
 		{
-			$_SESSION['editado'] == '0';
+			$_SESSION['editado'] = '0';
 		}	
-	}	
+	}
 		
 	
 	if(isset($_POST['revisado_c']))
@@ -100,7 +100,7 @@ $foto = $_SESSION['foto'];
 		{
 			$filtro_editado = "AND editado = 1";	
 		}
-		elseif ($editado == 1)//confirmado
+		elseif ($editado == 2)//pendente
 		{
 			$filtro_editado = "AND editado != 1";	
 		}
@@ -109,11 +109,11 @@ $foto = $_SESSION['foto'];
 			$filtro_editado = ""; //tanto faz
 		}	
 		
-		if($revisado == 1)
+		if($revisado == 1)//confirmado
 		{
 			$filtro_revisado = "AND revisado = 1";	
 		}
-		elseif($revisado == 2)//confirmado
+		elseif($revisado == 2)
 		{
 			$filtro_revisado = "AND revisado != 1";	
 		}
@@ -152,7 +152,7 @@ $foto = $_SESSION['foto'];
 		{
 			$filtro_foto = "AND foto = 1";
 		}
-		else($foto == 2)
+		elseif($foto == 2)
 		{
 			$filtro_foto = "AND foto != 1";	
 		}
