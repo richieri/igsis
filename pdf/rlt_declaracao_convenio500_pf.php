@@ -53,100 +53,59 @@ $pdf->AddPage();
 
    
 $x=20;
-$l=10; //DEFINE A ALTURA DA LINHA   
+$l=8; //DEFINE A ALTURA DA LINHA   
    
-   $pdf->SetXY( $x , 20 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+   $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(180,5,utf8_decode('DECLARAÇÃO'),0,1,'C');
+   $pdf->Cell(180,5,utf8_decode('DECLARAÇÃO DE CONDIÇÕES PARA PAGAMENTO'),0,1,'C');
    
    $pdf->Ln();
    $pdf->Ln();
-   $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(13,$l,'Nome:',0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(167,$l,utf8_decode($Nome));
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(7,$l,utf8_decode('RG:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(53,$l,utf8_decode($RG),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(10,$l,utf8_decode('CPF:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(50,$l,utf8_decode($CPF),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(10,$l,utf8_decode('CCM:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(45,$l,utf8_decode($CCM),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(160,$l,utf8_decode("$Endereco"));
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(153,$l,utf8_decode($Telefones),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(37,$l,utf8_decode('Data de Nascimento:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(48,$l,utf8_decode($DataNascimento),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(37,$l,utf8_decode('INSS ou PIS/PASEP:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(58,$l,utf8_decode($INSS),0,1,'L');
-   
    $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(180,$l,utf8_decode('Declaro para o fim especial de contratação com a Prefeitura do Município de São Paulo que  NÃO possuo Conta Corrente de Pessoa Física no Banco do Brasil.'));
+   $pdf->MultiCell(167,$l,utf8_decode("Eu, ".$Nome.", RG ".$RG.", CPF ".$CPF.", declaro para os devidos fins que não possuo conta no Banco do Brasil."));
    
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->MultiCell(167,$l,utf8_decode("Por se tratar de uma contratação de natureza eventual e não continuada e o cachê não exceder R$ 5.000,00 (cinco mil reais), solicito que o pagamento seja efetuado através de Ordem de Pagamento ou Ordem Bancária/Contra Recibo, através de recursos 500, conforme art. 2º da portaria SF 255/15."));
    
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->MultiCell(167,$l,utf8_decode("Estou ciente que o pagamento pode ser retirado no guichê do caixa, em qualquer agência do Bando do Brasil S.A, mediante a apresentação de RG e CPF originais, ficando disponível pelo período de 30 dias após a realização do crédito."));
+   
+   $pdf->Ln();
    $pdf->Ln();
     
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(180,$l,utf8_decode("São Paulo, _________ de ________________________________ de "."$ano"."."),0,0,'C');
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(180,$l,utf8_decode("São Paulo, _________ de ________________________________ de "."$ano"."."),0,0,'L');
    
    $pdf->Ln();
    $pdf->Ln();
    $pdf->Ln();
    $pdf->Ln();
-
+   $pdf->Ln();
+   
    $pdf->SetX($x);
-   $pdf->Cell(45,$l,'',0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(90,$l,'ASSINATURA','T',0,'C');
-   $pdf->Cell(45,$l,'',0,0,'L');
-
-   $pdf->Ln();
+   $pdf->SetFont('Arial','B', 11);
+   $pdf->Cell(165,$l,utf8_decode($Nome),'T',1,'L');
    
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 11);
+   $pdf->Cell(8,$l,utf8_decode('RG:'),0,0,'L');
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(50,$l,utf8_decode($RG),0,1,'L');
    
-
-   
-//RODAPÉ PERSONALIZADO
-   $pdf->SetXY($x,250);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(80,$l,'OBJETO:',0,1,'L');
-   
-   $pdf->SetXY($x,255);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode($Objeto));
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 11);
+   $pdf->Cell(11,$l,utf8_decode('CPF:'),0,0,'L');
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(50,$l,utf8_decode($CPF),0,1,'L');
 
 
 $pdf->Output();
-
-
 ?>

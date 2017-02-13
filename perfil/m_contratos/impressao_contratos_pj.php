@@ -48,6 +48,8 @@ $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal
 $link37 = $http."rlt_ordemservico_pj_assinatura.php";
 $link38 = $http."rlt_termo_doacao_pj_assinatura.php";
 $link39 = $http."rlt_pedido_reserva_ccsp_pj.php";
+$link40 = $http."rlt_declaracao_convenio500_1rep_pj.php";
+$link41 = $http."rlt_declaracao_convenio500_2rep_pj.php";
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -111,6 +113,10 @@ echo "
 						<tr>
 							<td><a href='$link19?id=$id_ped' target='_blank'><strong>Exclusividade</strong></a></td>
 							<td><a href='$link20?id=$id_ped' target='_blank'><strong>Exclusividade</strong></a></td>
+						</tr>
+						<tr>
+							<td><a href='$link40?id=$id_ped' target='_blank'><strong>Convênio 500</strong></a></td>
+							<td><a href='$link41?id=$id_ped' target='_blank'><strong>Convênio 500</strong></a></td>
 						</tr>
 						
 						<tr><td class='list_description'><br/></td></tr>
