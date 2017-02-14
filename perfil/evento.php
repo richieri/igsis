@@ -1331,6 +1331,23 @@ include "../include/menuEvento.php";
 			$campo = recuperaEvento($_SESSION['idEvento']); //carrega os dados do evento em questão
 			include "../include/menuEvento.php";
 	?>
+	
+	<section id="list_items" class="home-section bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
+					<div class="section-heading">
+						<h2>Arquivos anexados</h2>
+						<h5>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</h5>
+					</div>
+					<div class="table-responsive list_info">
+						<?php listaArquivos($_SESSION['idEvento']); ?>
+					</div>
+				</div>
+			</div>  
+		</div>
+	</section>
+
 <section id="enviar" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -1439,21 +1456,7 @@ include "../include/menuEvento.php";
 		</div>
 	</div>
 </section>
-<section id="list_items" class="home-section bg-white">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
-				<div class="section-heading">
-					<h2>Arquivos anexados</h2>
-					<h5>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</h5>
-				</div>
-				<div class="table-responsive list_info">
-					<?php listaArquivos($_SESSION['idEvento']); ?>
-				</div>
-			</div>
-		</div>  
-	</div>
-</section>
+
 	<?php 
 		break;
 		case "ocorrencias" :
