@@ -101,7 +101,7 @@
 					{
 						echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
 					}
-?>]
+?>
 						</td>
 						<td><?php echo $nome['nomeCompleto'] ?></td>
 						<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
