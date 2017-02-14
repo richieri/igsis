@@ -52,7 +52,7 @@ if($verifica == 1){
                      <p>&nbsp;</p>
                      <h2>Módulo Comunicação</h2>
                      <p>&nbsp;</p>
-					 <h6>Esse módulo Esse módulo tem a função de gerenciar a comunicação da instituição e preparar as informações a serem enviadas para o SPCultura.</h6>
+					 <h6>Esse módulo tem a função de gerenciar a comunicação da instituição e preparar as informações a serem enviadas para o SPCultura.</h6>
                 </div>
             </div>
         <div class="form-group">
