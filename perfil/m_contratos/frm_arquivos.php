@@ -148,7 +148,7 @@ include 'includes/menu.php';
 								<td width="50%"><td>
 							</tr>
 					<?php 
-						$sql_arquivos = "SELECT * FROM igsis_upload_docs";
+						$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa'";
 						$query_arquivos = mysqli_query($con,$sql_arquivos);
 						while($arq = mysqli_fetch_array($query_arquivos))
 						{ 
