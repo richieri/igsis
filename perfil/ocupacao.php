@@ -1,9 +1,6 @@
-﻿
-
-<?php
+﻿<?php
 $con = bancoMysqli();
-require "../funcoes/funcoesOcupacao.php";
-		
+require "../funcoes/funcoesOcupacao.php";		
 if(isset($_GET['p'])){
 	$p = $_GET['p'];	
 }else{
@@ -1965,7 +1962,6 @@ function habilitar(){
         <div class="form-group">
             <div class="col-md-offset-2 col-md-8">
 	            <a href="?perfil=ocupacao&p=ocorrencias&action=atualizar&agenda=ok" class="btn btn-theme btn-lg btn-block">Atualizar a agenda</a>
-
             </div>
           </div>
         </div>

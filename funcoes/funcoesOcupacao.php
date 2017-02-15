@@ -246,7 +246,10 @@
 				$query = mysqli_query($con,$sql);
 				if($query)
 				{
-					$mensagem = $mensagem."Data importada na agenda.<br />";	
+					$datetime = date("Y-m-d H:i:s");
+					$sql_dataenvio = "UPDATE ig_evento SET dataEnvio = '$datetime'	WHERE idEvento = '$idEvento'";
+					$query_dataenvio = mysqli_query($con,$sql_dataenvio);
+					$mensagem = $mensagem."Data importada na agenda.<br />";
 				}
 				else
 				{
@@ -255,6 +258,9 @@
 			}
 			else
 			{
+					$datetime = date("Y-m-d H:i:s");
+					$sql_dataenvio = "UPDATE ig_evento SET dataEnvio = '$datetime'	WHERE idEvento = '$idEvento'";
+					$query_dataenvio = mysqli_query($con,$sql_dataenvio);
 				// Evento de tempoarada
 				while(strtotime($dataInicio) <=  strtotime($dataFinal))
 				{
