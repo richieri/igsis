@@ -101,7 +101,7 @@ $pedido = siscontrat($_GET['id_ped']);
 								<td width="50%"><td>
 							</tr>
 						<?php 
-							$sql_arquivos = "SELECT * FROM igsis_upload_docs";
+							$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = 3";
 							$query_arquivos = mysqli_query($con,$sql_arquivos);
 							while($arq = mysqli_fetch_array($query_arquivos))
 							{ 

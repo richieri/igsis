@@ -116,7 +116,7 @@ include 'includes/menu.php';
 					<?php if($tipoPessoa == 4){$tipo = 1; } ?>
 					<?php if($tipoPessoa == 2){$tipo = 2; } ?>
 					<?php if($tipoPessoa == 1){$tipo = 1; } ?>
-					<?php if($tipoPessoa == 3){$tipo = 3; } ?>			
+					<?php //if($tipoPessoa == 3){$tipo = 3; } ?>			
 					<?php $pag = "contratos"; ?>
 					<?php listaArquivosPessoaSiscontrat($idPessoa,$tipo,$_SESSION['idPedido'],$p,$pag); ?>
 				</div>
