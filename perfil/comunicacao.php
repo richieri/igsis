@@ -105,6 +105,35 @@
 					{
 						echo "<a href='?perfil=chamado&p=evento&id=".$evento['ig_evento_idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
 					}
+<<<<<<< HEAD
+<<<<<<< HEAD
+?>
+						</td>
+						<td><?php echo $nome['nomeCompleto'] ?></td>
+						<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
+					</tr>
+			<?php
+				}
+			?>
+				</tbody>
+			</table>
+=======
+					
+					?>] </td>
+					<td><?php echo $nome['nomeCompleto'] ?></td>
+					<td><?php echo retornaPeriodo($evento['ig_evento_idEvento']) ?></td>
+					</tr>					
+					<?php
+						}
+					?>
+					
+					
+					</tbody>
+					</table>
+				   
+			</div>
+>>>>>>> 9eb9ef6db66b5804428b34b00027fb06a5c04f2e
+=======
 				?>
 						]</td>
 						<td><?php echo $nome['nomeCompleto'] ?></td>
@@ -115,6 +144,7 @@
 			?>
 				</tbody>
 			</table>
+>>>>>>> 02e4be699ec202252fe8b625ec04079694961573
 		</div>
 	</div>
 </section>

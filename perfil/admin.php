@@ -450,13 +450,33 @@
 			</div>
 		</div>  
 		<div class="table-responsive list_info">
-		<?php 
+		<?php 		
+			//verifica a página atual caso seja informada na URL, senão atribui como 1ª página
+			$pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
 			$idInsituicao = $_SESSION['idInstituicao'];
 			$sql_lista = "SELECT * FROM ig_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL $order";
 			$query_lista = mysqli_query($con,$sql_lista);
-			$num = mysqli_num_rows($query_lista);
+			
+			//conta o total de itens
+			$total = mysqli_num_rows($query_lista);
+			
+			//seta a quantidade de itens por página
+			$registros = 50;
+			   
+			//calcula o número de páginas arredondando o resultado para cima
+			$numPaginas = ceil($total/$registros);
+			
+			//variavel para calcular o início da visualização com base na página atual
+			$inicio = ($registros*$pagina)-$registros;	
+			
+			//seleciona os itens por página
+			$sql_lista = "SELECT * FROM ig_evento WHERE publicado = '1' AND dataEnvio IS NOT NULL $order limit $inicio,$registros ";
+			$query_lista = mysqli_query($con,$sql_lista);
+			//conta o total de itens
+			$total = mysqli_num_rows($query_lista);
+			
 		?>
-			<h5><?php echo $num ?> eventos enviados.</h5>
+			
             <p><a href="?perfil=admin&p=reabertura">Ordenar pelos últimos Números de Evento</a> | <a href="?perfil=admin&p=reabertura&order=dataEnvio">Ordenar pelas últimas datas de envio</a></p>
             <table class='table table-condensed'>
 				<thead>					
@@ -510,12 +530,30 @@
 					echo "</tr>";	
 								}
 		?>
+					<tr>
+						<td colspan="10" bgcolor="#DEDEDE">
+						<?php
+							//exibe a paginação
+							echo "<strong>Páginas</strong>";
+							for($i = 1; $i < $numPaginas + 1; $i++) 
+							{
+								echo "<a href='?perfil=admin&p=reabertura&pagina=$i'> [".$i."]</a> ";
+							}
+						?>
+						</td>
+					</tr>		
 				</tbody>
 			</table>
 		</div>
 	</div>
 </section>
 
+
+<?php
+		break;
+		case "sof":
+		include "../include/menuAdministradorGeral.php";
+?>		
 <!-- Contact -->
 <section id="contact" class="home-section bg-white">
   	<div class="container">
