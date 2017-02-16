@@ -310,7 +310,7 @@ if(isset($_POST['pesquisar']))
 	<br /><br />
 		<section id="list_items">
 			<div class="container">
-				<h3>Resultado da busca</3>
+				<h3>Resultado da busca</h3>
 				<h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
 				<h5><a href="?perfil=pagamento&p=frm_busca_nepagamento">Fazer outra busca</a></h5>
 				<div class="table-responsive list_info">
@@ -340,7 +340,7 @@ if(isset($_POST['pesquisar']))
 								{
 									$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 									echo '<tr><td class="list_description">'.$x[$h]['NumeroProcesso'].			'</td>';
-									echo '<td class="list_description">'.$x[$h]['id'].							'</td>';
+									echo '<td class="list_description"><a target="_blank" href="?perfil=detalhe_pedido&id_ped='.$x[$h]['id'].'">'.$x[$h]['id'].'</a></td>';
 									echo '<td class="list_description">'.$x[$h]['proponente'].					'</td>';
 									echo '<td class="list_description">'.$x[$h]['tipo'].						'</td>';
 									echo '<td class="list_description">'.$x[$h]['objeto'].						'</td>';

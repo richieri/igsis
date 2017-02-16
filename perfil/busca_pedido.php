@@ -292,7 +292,7 @@ for($h = 0; $h < $x['num']; $h++)
  {
 	 $status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 	
-	echo "<tr><td class='lista'> <a target='_blank' href='?perfil=detalhes_contrato&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+	echo "<tr><td class='lista'> <a target='_blank' href='?perfil=detalhe_pedido&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
 	echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].		'</td>';
 	echo '<td class="list_description">'.$x[$h]['proponente'].			'</td> ';
 	echo '<td class="list_description">'.$x[$h]['tipo'].				'</td> ';

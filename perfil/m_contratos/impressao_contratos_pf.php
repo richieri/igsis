@@ -50,7 +50,7 @@ $link42 = $http."rlt_pedido_reserva_oficinaseditalcasa_pf.php";
 $link43 = $http."rlt_termo_doacao_pf_assinatura.php";
 $link44 = $http."rlt_ordemservico_pf_assinatura.php";
 $link45 = $http."rlt_pedido_reserva_ccsp_pf.php";
-
+$link46 = $http."rlt_declaracao_convenio500_pf.php";
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -125,6 +125,9 @@ echo "
 						<tr>
 							<td><a href='$link15?id=$id_ped' target='_blank'><strong>Direitos Conexos</strong></a></td>
 							<td><a href='$link20?id=$id_ped' target='_blank'><strong>Exclusividade</strong></a></td>
+						</tr>
+						<tr>
+							<td><a href='$link46?id=$id_ped' target='_blank'><strong>Convênio 500</strong></a></td>
 						</tr>
 						
 						<tr><td class='list_description'><br/></td></tr>

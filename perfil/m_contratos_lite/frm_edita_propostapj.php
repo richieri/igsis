@@ -555,7 +555,7 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
-						<a href="?perfil=contratos_lite&p=evento&id_ped=<?php echo $pedido['idEvento'];  ?>" class="btn btn-theme btn-block" target="_blank" >Abrir detalhes do evento</a>
+						<a href="?perfil=detalhe_pedido&id_ped=<?php echo $id_ped; ?>" class="btn btn-theme btn-block" target="_blank" >Abrir detalhes do evento</a>
 					</div>                  					
 					<div class="col-md-6">
 						<a href="?perfil=contratos_lite&p=frm_arquivos_pedidos&id_ped=<?php echo  $_GET['id_ped']; ?>" class="btn btn-theme btn-block" target="_blank" >Abrir Anexos do Pedido</a>

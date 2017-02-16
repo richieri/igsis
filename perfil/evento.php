@@ -248,7 +248,7 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Nome do Grupo</label>
-							<input type="text" name="nomeGrupo" class="form-control" maxlength="30" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $campo['nomeGrupo'] ?>"/>
+							<input type="text" name="nomeGrupo" class="form-control" maxlength="100" id="inputSubject" placeholder="Nome do coletivo, grupo teatral, etc." value="<?php echo $campo['nomeGrupo'] ?>"/>
 						</div> 
 					</div>
 					<div class="form-group">
@@ -1331,6 +1331,23 @@ include "../include/menuEvento.php";
 			$campo = recuperaEvento($_SESSION['idEvento']); //carrega os dados do evento em questão
 			include "../include/menuEvento.php";
 	?>
+	
+	<section id="list_items" class="home-section bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
+					<div class="section-heading">
+						<h2>Arquivos anexados</h2>
+						<h5>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</h5>
+					</div>
+					<div class="table-responsive list_info">
+						<?php listaArquivos($_SESSION['idEvento']); ?>
+					</div>
+				</div>
+			</div>  
+		</div>
+	</section>
+
 <section id="enviar" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -1439,21 +1456,7 @@ include "../include/menuEvento.php";
 		</div>
 	</div>
 </section>
-<section id="list_items" class="home-section bg-white">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
-				<div class="section-heading">
-					<h2>Arquivos anexados</h2>
-					<h5>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</h5>
-				</div>
-				<div class="table-responsive list_info">
-					<?php listaArquivos($_SESSION['idEvento']); ?>
-				</div>
-			</div>
-		</div>  
-	</div>
-</section>
+
 	<?php 
 		break;
 		case "ocorrencias" :
@@ -2787,7 +2790,7 @@ include "../include/menuEvento.php";
 				$operador = recuperaDados("ig_usuario",$lista_pedido[$i]['Contratos'],"idUsuario");
 				$status = recuperaDados("sis_estado",$lista_pedido[$i]['Status'],"idEstado");
 				$lista_pf = siscontratDocs($lista_pedido[$i]['IdProponente'],$lista_pedido[$i]['TipoPessoa']);
-				echo "<tr><td class='lista'> <a target='_blank' href='?perfil=detalhes_contrato&id_ped=".$lista_pedido[$i]['idPedido']."'>".$lista_pedido[$i]['idPedido']."</a></td>";
+				echo "<tr><td class='lista'> <a target='_blank' href='?perfil=detalhe_pedido&id_ped=".$lista_pedido[$i]['idPedido']."'>".$lista_pedido[$i]['idPedido']."</a></td>";
 				echo '<td class="list_description">'.$lista_pf['Nome'].'</td> ';
 				echo '<td class="list_description">'.$lista_pedido[$i]['Objeto'].'</td> ';
 				echo '<td class="list_description">'.$lista_pedido[$i]['Local'].'</td> ';

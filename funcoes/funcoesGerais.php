@@ -4252,7 +4252,7 @@
 			echo "<div style='border: 1px solid gray; padding: 20px;'>";
 			echo nl2br($comentario['comentario']);
 			echo "<br />";
-			echo "<i>enviadro por ".$usuario['nomeCompleto']." em ".exibirDataHoraBr($comentario['data'])."</i><br /><br /></div>";
+			echo "<i>enviado por ".$usuario['nomeCompleto']." em ".exibirDataHoraBr($comentario['data'])."</i><br /><br /></div>";
 		}
 	}
 	function detalhesEmail($idEvento)
