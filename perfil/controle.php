@@ -5,8 +5,13 @@
 			<li><a href="?perfil=controle&p=visaogeral">Visão Geral</a></li>
 			<li><a href="?perfil=controle&p=verbas">Valores de verbas</a></li>
 			<li><a href="?perfil=controle&p=pedidos">Pedidos de contratação</a></li>
-			<li><a href="?perfil=controle&p=relatorios">Relatórios</a></li>
-			<li><a href="?perfil=controle">Instituições, usuários e espaços</a></li>
+			<li><a href="#">Relatórios</a>
+				<ul class="dl-submenu">
+					<li><a href="../pdf/relatorios.php?rel=seivalido">Relatório Integração IGSIS/SOF</a></li>
+					<li><a href="../pdf/relatorios.php?rel=seinvalido">Relatório de Discrepâncias</a></li>
+					<li><a href="../pdf/relatorios.php?rel=nosei">Relatórios Pedidos de Contratação sem SEI</a></li>
+				</ul>	
+			</li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="?secao=perfil">Carregar Módulos</a></li>
 			<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-controle-orcamentario/">Ajuda</a></li>
@@ -39,26 +44,26 @@
 	{
 		case 'inicio':
 ?>
+
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-					<h2>Controle Orçamentário</h2>
-	                <h5>Escolha uma opção</h5>
+                <h3>Bem-vindo(a) à IGSIS!</h3>
+                     <p>&nbsp;</p>
+                     <h2>Módulo Controle Orçamentário</h2>
+                     <p>&nbsp;</p>
+					 <h6>Esse módulo tem a função de controle de curadoria e orçamentário da instituição.</h6>
                 </div>
             </div>
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-8">
-					<a href="?perfil=controle&p=visaogeral" class="btn btn-theme btn-lg btn-block">Visão Geral</a>
-					<a href="?perfil=controle&p=verbas" class="btn btn-theme btn-lg btn-block">Valores de verbas</a>
-					<a href="?perfil=controle&p=pedidos" class="btn btn-theme btn-lg btn-block">Pedidos de contratação</a>
-					<a href="?perfil=controle&p=relatorios" class="btn btn-theme btn-lg btn-block">Relatórios</a>
-				</div>
-			</div>
+        <div class="form-group">
+
+          </div>
         </div>
     </div>
-</section>   
+</section> 
+
 	<?php 
 		break;
 		case 'pedidos':
@@ -520,13 +525,6 @@
 	                <h5>Para entender melhor o funcionamento das planilhas, <br /> <a href="http://www.centrocultural.cc/igsis/manual/index.php/tipo-de-relatorios/" target="_blank">clique aqui para ler o manual</a>.</h5>
                 </div>
             </div>
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-8">
-					<a href="../pdf/relatorios.php?rel=seivalido" target="_blank" class="btn btn-theme btn-lg btn-block">Relatório Integração IGSIS/SOF</a>
-					<a href="../pdf/relatorios.php?rel=seinvalido" target="_blank" class="btn btn-theme btn-lg btn-block">Relatório de Discrepâncias</a>
-					<a href="../pdf/relatorios.php?rel=nosei" target="_blank" class="btn btn-theme btn-lg btn-block">Relatórios Pedidos de Contratação sem SEI</a>                
-				</div>
-			</div>
 		</div>
 	</div>
 </section>
