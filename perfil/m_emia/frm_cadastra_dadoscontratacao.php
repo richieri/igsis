@@ -154,26 +154,8 @@ $(function()
 							<?php geraOpcao("sis_emia_faixa_etaria",$emia['idFaixaEtaria'],"") ?>
 						</select>
 					</div>
-				</div>
-				
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<label>Instituição *</label>
-						<select class="form-control" name="instituicao" id="inputSubject" >
-							<?php geraOpcao("ig_instituicao","","") ?>
-						</select>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<label>Local</label>
-						<select class="form-control" name="local" id="inputSubject" >
-							<?php echo geraOpcao("ig_local","","") ?>
-						</select>
-					</div>
 				</div>	
-				<!--
+				
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Instituição *:</strong>
 						<select class="form-control" name="instituicao" id="instituicao" >
@@ -183,10 +165,11 @@ $(function()
 					</div>					
 					<div class="col-md-6"><strong>Local *:</strong><br/>
 						<select class="form-control" name="local" id="local" >
+							<option><?php echo retornaLocal($emia['IdLocal']) ?></option>
 						</select>
 					</div>
 				</div>
-				-->
+				
 				<div class="form-group"> 
 					<div class="col-md-offset-2 col-md-8"><strong>Vigência:</strong><br/>
 						<select class="form-control" name="vigencia" id="local3" >
