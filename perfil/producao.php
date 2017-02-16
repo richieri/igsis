@@ -139,7 +139,7 @@
 					$chamado = recuperaAlteracoesEvento($ocorrencia[$i]['idEvento']);
 					$status = verificaStatus($ocorrencia[$i]['idEvento'],$_SESSION['idUsuario']); 
 					echo "<tr><td class='lista'> <a href='?perfil=producao&p=detalhe&action=evento&id_ped=".$ocorrencia[$i]['idEvento']."' target='_blank' >".$evento['nomeEvento']."</a>"; ?>
-					[<?php 
+					<?php 
 					if($chamado['numero'] == '0')
 					{
 						echo "0";
