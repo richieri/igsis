@@ -384,7 +384,6 @@ $representante = recuperaDados("sis_representante_legal",$id_rep,"Id_Representan
 				   ?>
 						<input type="hidden" name="volta" value="<?php echo $script; ?>" />
 						<input type="hidden" name="Sucesso" id="Sucesso" />
-						<input type="submit" value="Anexos" class="btn btn-theme btn-block">
 					</form>
 					</div>
                 </div>
