@@ -55,7 +55,7 @@ if(isset($_POST['add_cargo']))
 	<div class="container">
 		<div class="form-group">
 			<div class="sub-title">
-            	<h2>CADASTRO DE CARGO</h2>
+            	<h2>CADASTRO DE FUNÇÃO</h2>
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
 		</div>
@@ -63,8 +63,8 @@ if(isset($_POST['add_cargo']))
 			<div class="col-md-offset-1 col-md-10">
 				<form class="form-horizontal" role="form" action="#" method="post">
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Cargo: *</strong>
-							<input type="text" class="form-control" id="Cargo" name="Cargo" placeholder="Cargo"> 
+						<div class="col-md-offset-2 col-md-8"><strong>Função: *</strong>
+							<input type="text" class="form-control" id="Cargo" name="Cargo" placeholder="Exemplo: Oficinas de Artes Plásticas"> 
 						</div>
 					</div>
 					
@@ -94,11 +94,9 @@ case 'list_cargo':
 	{
 		$idCargo = $_POST['atualizar'];		   
 		$cargo = $_POST['cargo'];	
-		$coordenador = $_POST['coordenador'];
 		$justificativa = $_POST['justificativa'];
 		$sql_atualiza_cargo = "UPDATE sis_emia_cargo SET
 		Cargo = '$cargo',
-		coordenador = '$coordenador',
 		justificativa = '$justificativa'
 		WHERE Id_Cargo = '$idCargo'";
 		$con = bancoMysqli();
@@ -116,7 +114,7 @@ case 'list_cargo':
 	<div class="container">
 		<div class="col-md-offset-2 col-md-8">
 			<br />
-			<h2>CARGO</h2>
+			<h2>FUNÇÃO</h2>
 			<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
 			<br/>
 		</div>
@@ -125,8 +123,7 @@ case 'list_cargo':
 				<thead>
 					<tr class="list_menu">
 						<td>Id</td>
-						<td>Cargo</td>
-						<td>Coordenador/<br>Articulador</td>
+						<td>Função</td>
 						<td>Justificativa</td>
 						<td></td>
 					</tr>
@@ -141,14 +138,8 @@ case 'list_cargo':
 						<tr>
 						<form action="?perfil=emia&p=administrativo&pag=list_cargo" method="post">
 							<td><?php echo $cargo['Id_Cargo']; ?></td>
-							<td><input type="text" name="cargo" class="form-control" value="<?php echo $cargo['Cargo']; ?>"/></td>
-							<td>
-								<select class="form-control" name="coordenador" id="Status">
-									<option value='0'<?php if($cargo['coordenador'] == 0){echo " selected ";} ?>>Não</option>
-									<option value='1'<?php if($cargo['coordenador'] == 1){echo " selected ";} ?>>Sim</option>
-								</select>
-								</td>
-							<td><textarea name="justificativa" class="form-control" rows="2"><?php echo $cargo['justificativa']; ?></textarea></td>	<td>
+							<td><input type="text" name="cargo" class="form-control" value="<?php echo $cargo['Cargo']; ?>"/></td>							
+							<td><textarea name="justificativa" class="form-control" rows="8"><?php echo $cargo['justificativa']; ?></textarea></td>	<td>
 								<input type="hidden" name="atualizar" value="<?php echo $cargo['Id_Cargo']; ?>" />
 								<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'>
 							</td>

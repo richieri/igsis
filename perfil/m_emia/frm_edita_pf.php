@@ -60,7 +60,7 @@
 			}
 			else
 			{
-					echo "<h1>Erro ao inserir!</h1>";
+				echo "<h1>Erro ao inserir!</h1>";
 			}
 		}
 	}
@@ -76,7 +76,6 @@
 		$DataNascimento = exibirDataMysql($_POST['DataNascimento']);
 		$Nacionalidade = $_POST['Nacionalidade'];
 		$CEP = $_POST['CEP'];
-		//$Endereco = $_POST['Endereco'];
 		$Numero = $_POST['Numero'];
 		$Complemento = $_POST['Complemento'];
 		$Bairro = $_POST['Bairro'];
@@ -334,7 +333,7 @@
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 <?php
-	if($_SESSION['id'] > 0)
+	if($id != NULL)
 	{
 ?>
 						<a href="?perfil=emia&p=frm_cadastra_dadoscontratacao&id=<?php echo $_SESSION['id'] ?>"><input type="submit" value="Voltar aos dados de contratação" class="btn btn-theme btn-block"></a>

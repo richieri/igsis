@@ -58,7 +58,7 @@
 					$vencimento = exibirDataMysql($_POST['vencimento'.$i]);
 				}
 				$horas = $_POST['cargahoraria'.$i];
-				$mesReferencia = $_POST['parcela'.$i];
+				$mesReferencia = $_POST['mesReferencia'.$i];
 				$sql_atualiza_parcela = "UPDATE `sis_emia_parcelas` SET 
 					`Valor` = '$valor', 
 					`dataInicio` = '$data_inicial', 
@@ -91,7 +91,7 @@
 		<div class="form-group">
 			<div class="sub-title">
 				<h2>CADASTRO DE VIGÊNCIA</h2>
-				<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+				<h5><?php if(isset($mensagem)){echo $mensagem;}?></h5>
 			</div>
 		</div>
 		<div class="row">
@@ -112,7 +112,13 @@
 			{
 				$sql_rec_parcela = "SELECT * FROM sis_emia_parcelas WHERE Id_Vigencia = '$idVigencia' AND N_Parcela	= '$i'";
 				$query_rec_parcela = mysqli_query($con,$sql_rec_parcela);
-				$parcela = mysqli_fetch_array($query_rec_parcela);				
+				$parcela = mysqli_fetch_array($query_rec_parcela);	
+					
+				$sql_soma = "SELECT SUM(Valor) AS valor_soma, SUM(horas) AS horas_soma FROM sis_emia_parcelas WHERE Id_Vigencia = '$idVigencia'";
+				$query_soma = mysqli_query($con,$sql_soma);
+				$soma = mysqli_fetch_array($query_soma);
+				$totalSoma = $soma['valor_soma'];
+				$totalHoras = $soma['horas_soma'];
 		?>
 					<div class="form-group">
 						<div class="col-md-16 col-sm-1"><strong>Parcela</strong><br/>
@@ -131,19 +137,31 @@
 							<input type='text'  name="vencimento<?php echo $i ?>" id='' class='form-control datepicker' value="<?php if($parcela['vencimento'] == NULL OR $parcela['vencimento'] == '0000-00-00' ){}else{ echo exibirDataBr($parcela['vencimento']);} ?>">
 						</div>
 						<div class="col-sm-2"><strong>Mês Referência:</strong><br/>
-							<select class="form-control" name="mesReferencia" id="mesReferencia">
+							<select class="form-control" name="mesReferencia<?php echo $i ?>">
 								<option>Selecione</option>
 								<option value='JANEIRO'<?php if($parcela['mesReferencia'] == 'JANEIRO'){echo " selected ";} ?>>JANEIRO</option>
 								<option value='FEVEREIRO'<?php if($parcela['mesReferencia'] == 'FEVEREIRO'){echo " selected ";} ?>>FEVEREIRO</option>
-						</select>
+								<option value='MARÇO'<?php if($parcela['mesReferencia'] == 'MARÇO'){echo " selected ";} ?>>MARÇO</option>
+								<option value='ABRIL'<?php if($parcela['mesReferencia'] == 'ABRIL'){echo " selected ";} ?>>ABRIL</option>
+								<option value='MAIO'<?php if($parcela['mesReferencia'] == 'MAIO'){echo " selected ";} ?>>MAIO</option>
+								<option value='JUNHO'<?php if($parcela['mesReferencia'] == 'JUNHO'){echo " selected ";} ?>>JUNHO</option>
+								<option value='JULHO'<?php if($parcela['mesReferencia'] == 'JULHO'){echo " selected ";} ?>>JULHO</option>
+								<option value='AGOSTO'<?php if($parcela['mesReferencia'] == 'AGOSTO'){echo " selected ";} ?>>AGOSTO</option>
+								<option value='SETEMBRO'<?php if($parcela['mesReferencia'] == 'SETEMBRO'){echo " selected ";} ?>>SETEMBRO</option>
+								<option value='OUTUBRO'<?php if($parcela['mesReferencia'] == 'OUTUBRO'){echo " selected ";} ?>>OUTUBRO</option>
+								<option value='NOVEMBRO'<?php if($parcela['mesReferencia'] == 'NOVEMBRO'){echo " selected ";} ?>>NOVEMBRO</option>
+								<option value='DEZEMBRO'<?php if($parcela['mesReferencia'] == 'DEZEMBRO'){echo " selected ";} ?>>DEZEMBRO</option>
+							</select>
 						</div>
 						<div class="col-sm-1"><strong>Horas:</strong><br/>
 							<input type='text'  name="cargahoraria<?php echo $i ?>" id='duracao' class='form-control' value="<?php echo $parcela['horas'] ?>">
 						</div>
-					</div>
+					</div>					
 		<?php
 			}
 		?>
+					<div align="left">O valor todas das parcelas é <strong>R$ <?php echo dinheiroParaBr($totalSoma);?></strong> e o total da carga horária é <strong><?php echo $totalHoras;?> horas</strong>.</div>
+					<p>&nbsp;</p>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="cadastrar" value="<?php echo $vigencia['Id_Vigencia'] ?>" />
