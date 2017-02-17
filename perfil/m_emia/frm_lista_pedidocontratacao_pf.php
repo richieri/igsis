@@ -29,7 +29,7 @@
 </section>
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDOS ENVIADOS DE CONTRATAÇÃO DE PESSOA FÍSICA</h6></div>
+		<div class="sub-title"><h6>PEDIDOS DE CONTRATAÇÃO DE PESSOA FÍSICA ENVIADOS</h6></div>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
@@ -47,20 +47,20 @@
 			switch($p)
 			{
 				case $ano:
-					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano ORDER BY idPedidoContratacao DESC";
+					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '5' AND ped.publicado = '1' AND Ano = $ano ORDER BY idPedidoContratacao DESC";
 				break;
 				case $ano - 1:
-					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano - 1 ORDER BY idPedidoContratacao DESC";
+					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '5' AND ped.publicado = '1' AND Ano = $ano - 1 ORDER BY idPedidoContratacao DESC";
 				break; 
 			} 	
 			$data=date('Y');
 			$query_enviados = mysqli_query($con,$sql_enviados);
 			while($pedido = mysqli_fetch_array($query_enviados))
 			{
-				$linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+				$pf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 				$ped = siscontrat($pedido['idPedidoContratacao']);	 
 				echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-				echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].					'</td> ';
+				echo '<td class="list_description">'.$pf['Nome'].					'</td> ';
 				echo '<td class="list_description">'.$ped['Objeto'].						'</td> ';
 				echo '<td class="list_description">'.$ped['Local'].				'</td> ';
 				echo '<td class="list_description">'.$ped['Periodo'].						'</td> ';
@@ -80,35 +80,34 @@
  <!-- inicio_list -->
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDOS NÃO ENVIADOS DE CONTRATAÇÃO DE PESSOA FÍSICA</h6></div>
+		<div class="sub-title"><h6>PEDIDOS DE CONTRATAÇÃO DE PESSOA FÍSICA NÃO ENVIADOS</h6></div>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
-					<td>Codigo do Pedido</td>
-					<td>Proponente</td>
-					<td>Objeto</td>
-					<td>Local</td>
-					<td>Periodo</td>
-					<td>Status</td>
+						<td>Codigo do Pedido</td>
+						<td>Proponente</td>
+						<td>Objeto</td>
+						<td>Local</td>
+						<td>Periodo</td>
 					</tr>
 				</thead>
 				<tbody>
 		<?php
 			$data=date('Y');
-			$sql_n_enviados = "SELECT idPedidoContratacao,idPessoa FROM igsis_pedido_contratacao WHERE estado IS NULL AND tipoPessoa = '4' AND publicado = '1' ORDER BY idPedidoContratacao DESC";
+			$sql_n_enviados = "SELECT ped.idPedidoContratacao,idPessoa,idEmia FROM igsis_pedido_contratacao AS ped INNER JOIN  sis_emia AS emi ON emi.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NULL AND tipoPessoa = '5' AND ped.publicado = '1' ORDER BY ped.idPedidoContratacao DESC";
 			$query_n_enviados = mysqli_query($con,$sql_n_enviados);
 			while($pedido = mysqli_fetch_array($query_n_enviados))
 			{
-				$linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+				$objeto = retornaObjetoEmia($pedido['idEmia']);
+				$local = retornaLocalEmia($pedido['idEmia']);
+				$pf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 				$ped = siscontrat($pedido['idPedidoContratacao']);	 
 				echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-				echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].					'</td> ';
-				echo '<td class="list_description">'.$ped['Objeto'].						'</td> ';
-				echo '<td class="list_description">'.$ped['Local'].				'</td> ';
-				echo '<td class="list_description">'.$ped['Periodo'].						'</td> ';
-				//echo '<td class="list_description">'.$ped['Status'].						'</td> </tr>';
-				echo '<td class="list_description"></td> </tr>';
+				echo '<td class="list_description">'.$pf['Nome'].'</td> ';
+				echo '<td class="list_description">'.$ped['Objeto'].'</td> ';
+				echo '<td class="list_description">'.$ped['Local'].'</td> ';
+				echo '<td class="list_description">'.$ped['Periodo'].'</td> </tr>';
 			}
 ?>
 				</tbody>

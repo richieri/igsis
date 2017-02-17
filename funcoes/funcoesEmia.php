@@ -25,6 +25,23 @@
 		}	
 	}
 	
+	function retornaObjetoEmia($idEmia)
+	{		
+		$emia = recuperaDados("sis_emia",$idEmia,"idEmia");
+		$cargo = recuperaDados("sis_emia_cargo",$emia['IdCargo'],"Id_Cargo");
+		$faixaEtaria = retornaFaixaEtaria($emia['idFaixaEtaria']);
+		$objeto = "Realizar ".$cargo['Cargo']." da EMIA, da faixa etária de ".$faixaEtaria.".";
+		return $objeto;
+	}
+	
+	function retornaLocalEmia($idEmia)
+	{		
+		$emia = recuperaDados("sis_emia",$idEmia,"idEmia");
+		$idLocal = $emia['IdLocal'];
+		$local = recuperaDados("ig_local",$idLocal,"idLocal");
+		return $local['sala'];	
+	}
+	
 	function retornaPeriodoEmia($idPedido,$parcelas)
 	{
 		$con = bancoMysqli();

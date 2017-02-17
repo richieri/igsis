@@ -194,6 +194,22 @@
 				//$carga = "";
 				$justificativa = $cargo['justificativa'];
 			}
+			elseif($pedido['tipoPessoa'] == 5)
+			{
+				$emia = recuperaDados("sis_emia",$pedido['idPedidoContratacao'],"idPedidoContratacao");
+				$cargo = recuperaDados("sis_emia_cargo",$emia['IdCargo'],"Id_Cargo");
+				$funcao = $cargo['Cargo'];
+				$faixaEtaria = recuperaDados("sis_emia_faixa_etaria",$emia['idFaixaEtaria'],"idFaixaEtaria");
+				$faixa =  $faixaEtaria['faixaEtaria'];
+				$objeto = "Realizar ".$funcao." da EMIA, da faixa etária de ".$faixa.".";
+				$idLocal = $emia['IdLocal'];
+				$local = recuperaDados("ig_local",$idLocal,"idLocal");
+				$loc = $local['sala'];
+				$loc_jur = "SMC e equipamentos sobre sua supervisão";
+				$periodo = retornaPeriodoVigencia($idPedido);
+				$carga = retornaCargaHoraria($pedido['idPedidoContratacao'],$pedido['parcelas'])." horas";				
+				$justificativa = $cargo['justificativa'];
+			}
 			else
 			{
 				$objeto = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeGrupo']." - ".$evento['nomeEvento'];
