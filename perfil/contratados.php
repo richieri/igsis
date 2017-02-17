@@ -70,7 +70,59 @@
 					$Pis = 0;
 					$data = date('Y-m-d');
 					$idUsuario = $_SESSION['idUsuario'];
-					$sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` (`Id_PessoaFisica`, `Foto`, `Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `IdEstadoCivil`, `DataNascimento`, `LocalNascimento`, `Nacionalidade`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`, `Funcao`, `InscricaoINSS`, `Pis`, `OMB`, `DataAtualizacao`, `Observacao`, `IdUsuario`) VALUES (NULL, NULL, '$Nome', '$nomeArtistico', '$RG', '$CPF', '$CCM', '$IdEstadoCivil', '$DataNascimento', NULL, '$Nacionalidade', '$CEP', '$Numero', '$Complemento', '$Telefone1', '$Telefone2', '$Telefone3', '$Email', '$DRT', '$Funcao', '$InscricaoINSS', '$Pis', '$OMB', '$data', '$Observacao', '$idUsuario');";
+					$sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` 
+						(`Id_PessoaFisica`, 
+						`Foto`, 
+						`Nome`, 
+						`NomeArtistico`, 
+						`RG`, 
+						`CPF`, 
+						`CCM`, 
+						`IdEstadoCivil`, 
+						`DataNascimento`, 
+						`LocalNascimento`, 
+						`Nacionalidade`, 
+						`CEP`, 
+						`Numero`, 
+						`Complemento`, 
+						`Telefone1`, 
+						`Telefone2`, 
+						`Telefone3`, 
+						`Email`, 
+						`DRT`, 
+						`Funcao`, 
+						`InscricaoINSS`, 
+						`Pis`, 
+						`OMB`, 
+						`DataAtualizacao`, 
+						`Observacao`, 
+						`IdUsuario`) 
+						VALUES (NULL, 
+						NULL, 
+						'$Nome', 
+						'$nomeArtistico', 
+						'$RG', 
+						'$CPF', 
+						'$CCM', 
+						'$IdEstadoCivil', 
+						'$DataNascimento', 
+						NULL, 
+						'$Nacionalidade', 
+						'$CEP', 
+						'$Numero', 
+						'$Complemento', 
+						'$Telefone1', 
+						'$Telefone2', 
+						'$Telefone3', 
+						'$Email', 
+						'$DRT', 
+						'$Funcao', 
+						'$InscricaoINSS', 
+						'$Pis', 
+						'$OMB', 
+						'$data', 
+						'$Observacao', 
+						'$idUsuario');";
 					$query_insert_pf = mysqli_query($con,$sql_insert_pf);
 					if($query_insert_pf)
 					{
@@ -80,7 +132,29 @@
 						$id = mysqli_fetch_array($id_evento);
 						$idFisica = $id['Id_PessoaFisica'];
 						$idEvento = $_SESSION['idEvento'];	
-						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idPedidoContratacao`, `idEvento`, `tipoPessoa`, `idPessoa`,  `valor`, `valorPorExtenso`, `formaPagamento`, `idVerba`, `anexo`, `observacao`, `publicado`) VALUES (NULL, '$idEvento', '1', '$idFisica', NULL, NULL, NULL, NULL, NULL, NULL, '1')";
+						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
+							(`idPedidoContratacao`, 
+							`idEvento`, 
+							`tipoPessoa`, 
+							`idPessoa`,  
+							`valor`, 
+							`valorPorExtenso`, 
+							`formaPagamento`, 
+							`idVerba`, 
+							`anexo`, 
+							`observacao`, 
+							`publicado`) 
+							VALUES (NULL, 
+							'$idEvento', 
+							'1', 
+							'$idFisica', 
+							NULL, 
+							NULL, 
+							NULL, 
+							NULL, 
+							NULL, 
+							NULL, 
+							'1')";
 						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
 						if($query_insert_pedido)
 						{
@@ -104,7 +178,12 @@
 				$idInstituicao = $_SESSION['idInstituicao'];
 				$idPessoa = $_POST['Id_PessoaFisica'];
 				$idEvento = $_SESSION['idEvento'];
-				$sql_verifica_cpf = "SELECT * FROM igsis_pedido_contratacao WHERE idPessoa = '$idPessoa' AND tipoPessoa = '1' AND publicado = '1' AND idEvento = '$idEvento' ";
+				$sql_verifica_cpf = "SELECT * 
+					FROM igsis_pedido_contratacao 
+					WHERE idPessoa = '$idPessoa' 
+					AND tipoPessoa = '1' 
+					AND publicado = '1' 
+					AND idEvento = '$idEvento' ";
 				$query_verifica_cpf = mysqli_query($con,$sql_verifica_cpf);
 				$num_rows = mysqli_num_rows($query_verifica_cpf);
 				if($num_rows > 0)
@@ -113,7 +192,17 @@
 				}
 				else
 				{
-					$sql_insere_pf = "INSERT INTO igsis_pedido_contratacao (idPessoa, tipoPessoa, publicado,idEvento,instituicao) VALUES ('$idPessoa','1','1','$idEvento','$idInstituicao')";
+					$sql_insere_pf = "INSERT INTO igsis_pedido_contratacao 
+						(idPessoa, 
+						tipoPessoa, 
+						publicado,
+						idEvento,
+						instituicao) 
+						VALUES ('$idPessoa',
+						'1',
+						'1',
+						'$idEvento',
+						'$idInstituicao')";
 					$query_insere_pf = mysqli_query($con,$sql_insere_pf);
 					if($query_insere_pf)
 					{
@@ -162,7 +251,33 @@
 						$id = mysqli_fetch_array($id_evento);
 						$idJuridica = $id['Id_PessoaJuridica'];
 						$idEvento = $_SESSION['idEvento'];	
-						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idPedidoContratacao`, `idEvento`, `tipoPessoa`, `idRepresentante01`, `idPessoa`, `valor`, `valorPorExtenso`, `formaPagamento`, `idVerba`, `anexo`, `observacao`, `publicado`, `idRepresentante02`) VALUES (NULL, '$idEvento', '2', 'NULL', '$idJuridica', NULL, NULL, NULL, NULL, NULL, NULL, '1', 'NULL')";
+						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
+							(`idPedidoContratacao`, 
+							`idEvento`, 
+							`tipoPessoa`, 
+							`idRepresentante01`, 
+							`idPessoa`, 
+							`valor`, 
+							`valorPorExtenso`, 
+							`formaPagamento`, 
+							`idVerba`, 
+							`anexo`, 
+							`observacao`, 
+							`publicado`, 
+							`idRepresentante02`) 
+							VALUES (NULL, 
+							'$idEvento', 
+							'2', 
+							'NULL', 
+							'$idJuridica', 
+							NULL, 
+							NULL, 
+							NULL, 
+							NULL, 
+							NULL, 
+							NULL, 
+							'1', 
+							'NULL')";
 						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
 						if($query_insert_pedido)
 						{
@@ -186,9 +301,24 @@
 				$idInstituicao = $_SESSION['idInstituicao'];
 				$idPessoa = $_POST['insereJuridica'];
 				$idEvento = $_SESSION['idEvento'];
-				$sql_verifica_cnpj = "SELECT * FROM igsis_pedido_contratacao WHERE idPessoa = '$idPessoa' AND tipoPessoa = '2' AND publicado = '1' AND idEvento = '$idEvento' ";
+				$sql_verifica_cnpj = "SELECT * 
+					FROM igsis_pedido_contratacao 
+					WHERE idPessoa = '$idPessoa' 
+					AND tipoPessoa = '2' 
+					AND publicado = '1' 
+					AND idEvento = '$idEvento' ";
 				$query_verifica_cnpj = mysqli_query($con,$sql_verifica_cnpj);
-				$sql_insere_cnpj = "INSERT INTO igsis_pedido_contratacao (idPessoa, tipoPessoa, publicado, idEvento, instituicao) VALUES ('$idPessoa','2','1','$idEvento','$idInstituicao')";
+				$sql_insere_cnpj = "INSERT INTO igsis_pedido_contratacao 
+					(idPessoa, 
+					tipoPessoa, 
+					publicado, 
+					idEvento, 
+					instituicao) 
+					VALUES ('$idPessoa',
+					'2',
+					'1',
+					'$idEvento',
+					'$idInstituicao')";
 				$query_insere_cnpj = mysqli_query($con,$sql_insere_cnpj);
 				if($query_insere_cnpj)
 				{
@@ -259,7 +389,10 @@
 		<div class="table-responsive list_info">
 		<?php  
 			$idEvento = $_SESSION['idEvento'];
-			$sql_busca = "SELECT * FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND publicado = '1'";
+			$sql_busca = "SELECT * 
+				FROM igsis_pedido_contratacao 
+				WHERE idEvento = '$idEvento' 
+				AND publicado = '1'";
 			$query_busca = mysqli_query($con,$sql_busca);
 			$num_reg = mysqli_num_rows($query_busca);		   
 			if($num_reg > 0)
@@ -336,7 +469,11 @@
 			{
 				// inicia a busca por Razao Social ou CNPJ
 				$busca = $_POST['busca'];
-				$sql_busca = "SELECT * FROM sis_pessoa_juridica WHERE RazaoSocial LIKE '%$busca%' OR CNPJ LIKE '%$busca%' ORDER BY RazaoSocial";
+				$sql_busca = "SELECT * 
+					FROM sis_pessoa_juridica 
+					WHERE RazaoSocial LIKE '%$busca%' 
+					OR CNPJ LIKE '%$busca%' 
+					ORDER BY RazaoSocial";
 				$query_busca = mysqli_query($con,$sql_busca); 
 				$num_busca = mysqli_num_rows($query_busca);
 				if($num_busca > 0)
@@ -826,7 +963,14 @@
 							$rg = $_POST['RG'];
 							$nacionalidade = $_POST['Nacionalidade'];
 							$civil = $_POST['IdEstadoCivil'];
-							$sql_atualiza_dados = "UPDATE `igsis`.`sis_representante_legal` SET `RepresentanteLegal` = '$representante',`RG` = '$rg', `Nacionalidade` = '$nacionalidade', `IdEstadoCivil` = '$civil' WHERE `sis_representante_legal`.`Id_RepresentanteLegal` = '$idRepresentante'";
+							$sql_atualiza_dados = "UPDATE `igsis`.
+								`sis_representante_legal` 
+								SET `RepresentanteLegal` = '$representante',
+								`RG` = '$rg', 
+								`Nacionalidade` = '$nacionalidade', 
+								`IdEstadoCivil` = '$civil' 
+								WHERE `sis_representante_legal`.
+								`Id_RepresentanteLegal` = '$idRepresentante'";
 							$query_atualiza_dados = mysqli_query($con,$sql_atualiza_dados);
 							if($query_atualiza_dados)
 							{
@@ -1054,27 +1198,29 @@
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
 				if($_POST['atualizar'] > '1')
 				{
-					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET  
-						`observacao` =  '$Observacao',
+					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
+						SET `observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
 						`idVerba` =  '$Verba',
-						`valorIndividual` =  '$ValorIndividual' WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+						`valorIndividual` =  '$ValorIndividual' 
+						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
 				}
 				else
 				{
 					$Valor = dinheiroDeBr($_POST['Valor']);	
 					$FormaPagamento = $_POST['FormaPagamento'];
-					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET  
-						`valor` =  '$Valor',
+					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
+						SET `valor` =  '$Valor',
 						`formaPagamento` =  '$FormaPagamento',
 						`observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
 						`idVerba` =  '$Verba',
-						`valorIndividual` =  '$ValorIndividual' WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+						`valorIndividual` =  '$ValorIndividual' 
+						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
 				}
 				$query_atualizar_pedido = mysqli_query($con,$sql_atualizar_pedido);
 				if($query_atualizar_pedido)
@@ -1660,8 +1806,8 @@
 						$Pis = 0;
 						$data = date('Y-m-d');
 						$idUsuario = $_SESSION['idUsuario'];
-						$sql_atualizar_pessoa = "UPDATE sis_pessoa_fisica SET
-							`Nome` = '$Nome',
+						$sql_atualizar_pessoa = "UPDATE sis_pessoa_fisica 
+							SET `Nome` = '$Nome',
 							`NomeArtistico` = '$NomeArtistico',
 							`RG` = '$RG', 
 							`CPF` = '$CPF', 
@@ -1893,8 +2039,21 @@
 						$dir = '../uploadsdocs/'; //Diretório para uploads	  
 						if(move_uploaded_file($nome_temporario, $dir.$new_name))
 						{
-							$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pessoa` (`idArquivosPessoa`, `idTipoPessoa`, `idPessoa`, `arquivo`, `dataEnvio`, `publicado`, `tipo`) 
-								VALUES (NULL, '1', '$idPessoa', '$new_name', '$hoje', '1', '$y'); ";
+							$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pessoa` 
+								(`idArquivosPessoa`, 
+								`idTipoPessoa`, 
+								`idPessoa`, 
+								`arquivo`, 
+								`dataEnvio`, 
+								`publicado`, 
+								`tipo`) 
+								VALUES (NULL, 
+								'1', 
+								'$idPessoa', 
+								'$new_name', 
+								'$hoje', 
+								'1', 
+								'$y'); ";
 							$query = mysqli_query($con,$sql_insere_arquivo);
 							if($query)
 							{
@@ -2014,7 +2173,19 @@
 						$nome = trim($_POST['nome']);
 						$rg = trim($_POST['rg']);
 						$cpf = $_POST['cpf'];
-						$sql_inserir = "INSERT INTO `igsis_grupos` (`idGrupos`, `idPedido`, `nomeCompleto`, `rg`, `cpf`, `publicado`) VALUES (NULL, '$idPedido', '$nome', '$rg', '$cpf', '1')";
+						$sql_inserir = "INSERT INTO `igsis_grupos` 
+							(`idGrupos`, 
+							`idPedido`, 
+							`nomeCompleto`, 
+							`rg`, 
+							`cpf`, 
+							`publicado`) 
+							VALUES (NULL, 
+							'$idPedido', 
+							'$nome', 
+							'$rg', 
+							'$cpf', 
+							'1')";
 						$query_inserir = mysqli_query($con,$sql_inserir);
 						if($query_inserir)
 						{
@@ -2039,7 +2210,10 @@
 							$mensagem = "Erro ao apagar integrante. Tente novamente.";	
 						}
 					}
-					$sql_grupos = "SELECT * FROM igsis_grupos WHERE idPedido = '$idPedido' and publicado = '1'";
+					$sql_grupos = "SELECT * 
+						FROM igsis_grupos 
+						WHERE idPedido = '$idPedido' 
+						AND publicado = '1'";
 					$query_grupos = mysqli_query($con,$sql_grupos);
 					$num = mysqli_num_rows($query_grupos);
 	?>
@@ -2174,7 +2348,21 @@
 				for($i = 1; $i <= 12; $i++)
 				{
 					// se não há, insere 12 parcelas vazias.
-					$insert_parcela = "INSERT INTO `igsis_parcelas` (`idParcela`, `idPedido`, `numero`, `valor`, `vencimento`, `publicado`, `descricao`) VALUES (NULL, '$idPedido', '$i', '', NULL, '0', '')";
+					$insert_parcela = "INSERT INTO `igsis_parcelas` 
+						(`idParcela`, 
+						`idPedido`, 
+						`numero`, 
+						`valor`, 
+						`vencimento`, 
+						`publicado`, 
+						`descricao`) 
+						VALUES (NULL, 
+						'$idPedido', 
+						'$i', 
+						'', 
+						NULL, 
+						'0', 
+						'')";
 					mysqli_query($con,$insert_parcela);
 				}
 			}
@@ -2186,7 +2374,12 @@
 					$data = exibirDataMysql($_POST['data'.$i]);
 					$descricao = $_POST['descricao'.$i];
 					$mensagem = "";
-					$sql_atualiza_parcela = "UPDATE igsis_parcelas SET valor = '$valor', vencimento = '$data', descricao = '$descricao' WHERE idPedido = '$idPedido' AND numero = '$i'";
+					$sql_atualiza_parcela = "UPDATE igsis_parcelas 
+						SET valor = '$valor', 
+						vencimento = '$data', 
+						descricao = '$descricao' 
+						WHERE idPedido = '$idPedido' 
+						AND numero = '$i'";
 					$query_atualiza_parcela = mysqli_query($con,$sql_atualiza_parcela);
 					if($query_atualiza_parcela)
 					{
@@ -2229,7 +2422,10 @@
 			$soma = 0;
 			for($i = 1; $i <= $pedido['parcelas']; $i++)
 			{
-				$sql_rec_parcela = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND numero = '$i'";
+				$sql_rec_parcela = "SELECT * 
+					FROM igsis_parcelas 
+					WHERE idPedido = '$idPedido' 
+					AND numero = '$i'";
 				$query_rec_parcela = mysqli_query($con,$sql_rec_parcela);
 				$parcela = mysqli_fetch_array($query_rec_parcela);
 		?>
@@ -2299,12 +2495,24 @@
 			if($num_parcelas == 0)
 			{
 				$idInstituicao = $_SESSION['idInstituicao'];
-				$sql_verbas = "SELECT * FROM sis_verba WHERE Idinstituicao = '$idInstituicao' AND pai IS NOT NULL AND multiplo IS NULL";
+				$sql_verbas = "SELECT * 
+					FROM sis_verba 
+					WHERE Idinstituicao = '$idInstituicao' 
+					AND pai IS NOT NULL 
+					AND multiplo IS NULL";
 				$query_verbas = mysqli_query($con,$sql_verbas);
 				while($campo = mysqli_fetch_array($query_verbas))
 				{
 					$verba = $campo['Id_Verba']; 
-					$insert_parcela = "INSERT INTO `sis_verbas_multiplas` (`idMultiplas`, `idPedidoContratacao`, `idVerba`, `valor`) VALUES (NULL, '$idPedido', '$verba', '');";
+					$insert_parcela = "INSERT INTO `sis_verbas_multiplas` 
+						(`idMultiplas`, 
+						`idPedidoContratacao`, 
+						`idVerba`, 
+						`valor`) 
+						VALUES (NULL, 
+						'$idPedido', 
+						'$verba', 
+						'');";
 					mysqli_query($con,$insert_parcela);
 				}
 			}
@@ -2426,7 +2634,21 @@
 				$nacionalidade = $_POST['Nacionalidade'];
 				$estado_civil = $_POST['IdEstadoCivil'];
 				$idPessoaJuridica = $_SESSION['idPessoaJuridica'];
-				$sql_insere_representante =  "INSERT INTO `sis_representante_legal` (`Id_RepresentanteLegal`, `RepresentanteLegal`, `RG`, `CPF`, `Nacionalidade`, `IdEstadoCivil`, `idEvento`) VALUES (NULL, '$representante', '$rg', '$cpf', '$nacionalidade', '$estado_civil', NULL)";
+				$sql_insere_representante =  "INSERT INTO `sis_representante_legal` 
+					(`Id_RepresentanteLegal`, 
+					`RepresentanteLegal`, 
+					`RG`, 
+					`CPF`, 
+					`Nacionalidade`, 
+					`IdEstadoCivil`, 
+					`idEvento`) 
+					VALUES (NULL, 
+					'$representante', 
+					'$rg', 
+					'$cpf', 
+					'$nacionalidade', 
+					'$estado_civil', 
+					NULL)";
 				$con = bancoMysqli();
 				$query_insere_representante = mysqli_query($con,$sql_insere_representante);
 				if($query_insere_representante)
@@ -2507,8 +2729,8 @@
 				$codBanco = $_POST['codBanco'];
 				$agencia = $_POST['agencia'];
 				$conta = $_POST['conta'];
-				$sql_atualizar_pessoa = "UPDATE sis_pessoa_fisica SET
-					`Nome` = '$Nome',
+				$sql_atualizar_pessoa = "UPDATE sis_pessoa_fisica 
+					SET `Nome` = '$Nome',
 					`NomeArtistico` = '$NomeArtistico',
 					`RG` = '$RG', 
 					`CPF` = '$CPF', 
@@ -2567,9 +2789,24 @@
 				$codBanco = $_POST['codBanco'];
 				$agencia = $_POST['agencia'];
 				$conta = $_POST['conta'];
-				$sql_atualizar_juridica = "UPDATE `sis_pessoa_juridica` SET `RazaoSocial` = '$RazaoSocial', `CNPJ` = '$CNPJ', `CCM` = '$CCM', `CEP` = '$CEP', `Numero` = '$Numero', `Complemento` = '$Complemento', `Telefone1` = '$Telefone1', `Telefone2` = '$Telefone2', `Telefone3` = '$Telefone3', `Email` = '$Email', `DataAtualizacao` = '$data', `Observacao` = '$Observacao', `codBanco` = '$codBanco', 
-				`agencia` = '$agencia', 
-				`conta` = '$conta'  WHERE `sis_pessoa_juridica`.`Id_PessoaJuridica` = '$idJuridica';";
+				$sql_atualizar_juridica = "UPDATE `sis_pessoa_juridica` 
+					SET `RazaoSocial` = '$RazaoSocial', 
+					`CNPJ` = '$CNPJ', 
+					`CCM` = '$CCM', 
+					`CEP` = '$CEP', 
+					`Numero` = '$Numero', 
+					`Complemento` = '$Complemento', 
+					`Telefone1` = '$Telefone1', 
+					`Telefone2` = '$Telefone2', 
+					`Telefone3` = '$Telefone3', 
+					`Email` = '$Email', 
+					`DataAtualizacao` = '$data', 
+					`Observacao` = '$Observacao', 
+					`codBanco` = '$codBanco', 
+					`agencia` = '$agencia', 
+					`conta` = '$conta'  
+					WHERE `sis_pessoa_juridica`.
+					`Id_PessoaJuridica` = '$idJuridica';";
 				if(mysqli_query($con,$sql_atualizar_juridica))
 				{
 					$mensagem = "Atualizado com sucesso!";	
@@ -2994,7 +3231,21 @@
 						$dir = '../uploadsdocs/'; //Diretório para uploads
 						if(move_uploaded_file($nome_temporario, $dir.$new_name))
 						{
-							$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pessoa` (`idArquivosPessoa`, `idTipoPessoa`, `idPessoa`, `arquivo`, `dataEnvio`, `publicado`, `tipo`) VALUES (NULL, '$tipoPessoa', '$idPessoa', '$new_name', '$hoje', '1', '$y'); ";
+							$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pessoa` 
+								(`idArquivosPessoa`, 
+								`idTipoPessoa`, 
+								`idPessoa`, 
+								`arquivo`, 
+								`dataEnvio`, 
+								`publicado`, 
+								`tipo`) 
+								VALUES (NULL, 
+								'$tipoPessoa', 
+								'$idPessoa', 
+								'$new_name', 
+								'$hoje', 
+								'1', 
+								'$y'); ";
 							$query = mysqli_query($con,$sql_insere_arquivo);
 							if($query)
 							{
@@ -3112,7 +3363,19 @@
 						$dir = '../uploadsdocs/'; //Diretório para uploads  
 						if(move_uploaded_file($nome_temporario, $dir.$new_name))
 						{	  
-							$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pedidos` (`idArquivosPedidos`, `idPedido`, `arquivo`, `data`, `publicado`, `tipo`) VALUES (NULL, '$idPedido', '$new_name', '$hoje', '1', '$y')";
+							$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pedidos` 
+								(`idArquivosPedidos`, 
+								`idPedido`, 
+								`arquivo`, 
+								`data`, 
+								`publicado`, 
+								`tipo`) 
+								VALUES (NULL, 
+								'$idPedido', 
+								'$new_name', 
+								'$hoje', 
+								'1', 
+								'$y')";
 							$query = mysqli_query($con,$sql_insere_arquivo);
 							if($query)
 							{
@@ -3162,7 +3425,6 @@
 		</div>  
 	</div>
 </section>
-
 <section id="enviar" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
@@ -3203,8 +3465,7 @@
 		</div>
 	</div>
 </section>
-
 	<?php 
 		break;
 	} //fim da switch
-?>
+	?>

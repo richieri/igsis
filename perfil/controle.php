@@ -44,26 +44,23 @@
 	{
 		case 'inicio':
 ?>
-
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                <h3>Bem-vindo(a) à IGSIS!</h3>
-                     <p>&nbsp;</p>
-                     <h2>Módulo Controle Orçamentário</h2>
-                     <p>&nbsp;</p>
-					 <h6>Esse módulo tem a função de controle de curadoria e orçamentário da instituição.</h6>
+					<h3>Bem-vindo(a) à IGSIS!</h3>
+                    <p>&nbsp;</p>
+                    <h2>Módulo Controle Orçamentário</h2>
+                    <p>&nbsp;</p>
+					<h6>Esse módulo tem a função de controle de curadoria e orçamentário da instituição.</h6>
                 </div>
             </div>
-        <div class="form-group">
-
-          </div>
+			<div class="form-group">
+			</div>
         </div>
     </div>
-</section> 
-
+</section>
 	<?php 
 		break;
 		case 'pedidos':
@@ -144,7 +141,7 @@
 			</div>
 		</div>
 		-->
-	   <div class="form-group">
+		<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
 				<p>* Prazo é o número de dias restantes para o início do contrato.</p>
 		<?php 
