@@ -11,63 +11,48 @@
 		if($num_busca > 0)
 		{
 			// Se exisitr, lista a resposta.
-?>
-<section id="services" class="home-section bg-white">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
-				<div class="section-heading">
-					<h3>Cadastro - EMIA</h3>
-					<p></p>
+	?>
+	<section id="list_items" class="home-section bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
+					<div class="section-heading">
+						<h3>Cadastro - EMIA</h3>
+						<p></p>
+					</div>
 				</div>
+			</div>	
+			<div class="table-responsive list_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="list_menu">
+							<td>Nome</td>
+							<td>CPF</td>
+							<td width="25%"></td>
+						</tr>
+					</thead>
+					<tbody>
+					<?php
+						while($descricao = mysqli_fetch_array($query_busca))
+						{
+							$emia = recuperaDados("sis_pessoa_fisica_emia",$descricao['Id_PessoaFisica'],"IdPessoaFisica");
+							if(!isset($emia['IdPessoaFisica'])){ $for = "Não há"; }else{ $for = "Cadastrados"; }				
+							echo "<tr>";
+							echo "<td class='list_description'><b>".$descricao['Nome']."</b></td>";
+							echo "<td class='list_description'>".$descricao['CPF']."</td>";
+							echo "
+								<td class='list_description'>
+								<form method='POST' action='?perfil=emia&p=frm_cadastra_dadoscontratacao&id_pf=".$descricao['Id_PessoaFisica']."&novo=1'>
+								<input type='hidden' name='novo' value='".$descricao['Id_PessoaFisica']."'>
+								<input type ='submit' class='btn btn-theme btn-md btn-block' value='Novo cadastro formação'></td></form>"	;
+							echo "</tr>";
+						}
+					?>		
+					</tbody>
+				</table>
 			</div>
-		</div>	
-		<section id="list_items" class="home-section bg-white">
-			<div class="container">
-				<div class="table-responsive list_info">
-					<table class="table table-condensed">
-						<thead>
-							<tr class="list_menu">
-								<td>Nome</td>
-								<td>CPF</td>
-								<td>Infos adicionais</td>
-								<td width="15%"></td>
-								<td width="25%"></td>
-							</tr>
-						</thead>
-						<tbody>
-		<?php
-			while($descricao = mysqli_fetch_array($query_busca))
-			{
-				$emia = recuperaDados("sis_pessoa_fisica_emia",$descricao['Id_PessoaFisica'],"IdPessoaFisica");
-				if(!isset($emia['IdPessoaFisica'])){ $for = "Não há"; }else{ $for = "Cadastrados"; }				
-				echo "<tr>";
-				echo "<td class='list_description'><b>".$descricao['Nome']."</b></td>";
-				echo "<td class='list_description'>".$descricao['CPF']."</td>";
-				echo "<td class='list_description'>".$for."</td>";
-				echo "
-					<td class='list_description'>
-					<form method='POST' action='?perfil=emia&p=frm_edita_pf&id_pf=".$descricao['Id_PessoaFisica']."'>
-					<input type='hidden' name='detalhe' value='".$descricao['Id_PessoaFisica']."'>
-					<input type ='submit' class='btn btn-theme btn-md btn-block' value='Editar INFOS'></td></form>"	;
-				if(isset($emia['IdPessoaFisica']))
-				{ 
-					echo "
-						<td class='list_description'>
-						<form method='POST' action='?perfil=emia&p=frm_cadastra_dadoscontratacao&id_pf=".$descricao['Id_PessoaFisica']."&novo=1'>
-						<input type='hidden' name='novo' value='".$descricao['Id_PessoaFisica']."'>
-						<input type ='submit' class='btn btn-theme btn-md btn-block' value='Novo cadastro formação'></td></form>"	;
-					echo "</tr>";
-				}
-			}
-		?>		
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</section>
-	</div>                   
-</section>
+		</div>                   
+	</section>
 	<?php
 		}
 		else
@@ -81,11 +66,11 @@
 			<h3>CADASTRO DE PESSOA FÍSICA</h3>
 			<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			<p> O CPF <?php echo $busca; ?> não está cadastrado no nosso sistema. <br />Por favor, insira as informações da Pessoa Física a ser contratada. </p>
-			<p><a href="?perfil=contratados&p=fisica"> Pesquisar outro CPF</a> </p>
+			<p><a href="?perfil=emia&p=frm_cadastra_pf"> Pesquisar outro CPF</a> </p>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form" action="" method="post">
+				<form class="form-horizontal" role="form" action="?perfil=emia&p=frm_edita_pf" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
 							<input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" >
@@ -108,7 +93,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-							<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF">
+							<input type="text" readonly class="form-control" id="cpf" name="CPF" value="<?php echo $busca; ?>">
 						</div>
 						<div class=" col-md-6"><strong>CCM *:</strong><br/>
 							<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM">

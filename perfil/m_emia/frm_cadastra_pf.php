@@ -29,8 +29,7 @@
 					<tr class="list_menu">
 						<td>Nome</td>
 						<td>CPF</td>
-						<td>Cadastro EMIA</td>
-						<td width="15%"></td>
+						<td width="25%"></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,7 +40,6 @@
 				echo "<tr>";
 				echo "<td class='list_description'><b>".$descricao['Nome']."</b></td>";
 				echo "<td class='list_description'>".$descricao['CPF']."</td>";
-				echo "<td class='list_description'>".$for."</td>";
 				echo "
 					<td class='list_description'>
 					<form method='POST' action='?perfil=emia&p=frm_edita_pf&id_pf=".$descricao['Id_PessoaFisica']."'>
@@ -66,7 +64,7 @@
 		<div class="form-group">
 			<h3>CADASTRO DE PESSOA FÍSICA</h3>
 			<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-			<p> O CPF <?php //echo $busca; ?> não está cadastrado no nosso sistema. <br />Por favor, insira as informações da Pessoa Física a ser contratada. </p>
+			<p> O CPF <?php echo $busca; ?> não está cadastrado no nosso sistema. <br />Por favor, insira as informações da Pessoa Física a ser contratada. </p>
 			<p><a href="?perfil=emia&p=cadastra_pf">Pesquisar outro CPF</a> </p>
 		</div>
 		<div class="row">

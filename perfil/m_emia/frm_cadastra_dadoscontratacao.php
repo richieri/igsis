@@ -35,13 +35,12 @@ if(isset($_POST['atualizar']))
 	$ano = $_POST['ano'];
 	$status  = $_POST['status'];	
 	$cargo  = $_POST['cargo'];
-	$idFaixaEtaria = $_POST['idFaixaEtaria'];
-	$local = $_POST['local'];
+	$idFaixaEtaria = $_POST['idFaixaEtaria'];	
 	$obs = addslashes($_POST['obs']);	
 	$vigencia = $_POST['vigencia'];
 	$sql_atualiza_emia = "UPDATE sis_emia SET
 	`Ano` = '$ano',
-	`IdLocal` = '$local',
+	`IdLocal` = '523',
 	`IdCargo` = '$cargo',
 	`idFaixaEtaria` = $idFaixaEtaria,
 	`Status` = '$status', 
@@ -156,17 +155,9 @@ $(function()
 					</div>
 				</div>	
 				
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Instituição *:</strong>
-						<select class="form-control" name="instituicao" id="instituicao" >
-							<option>Selecione</option>
-							<?php geraOpcao("ig_instituicao","","") ?>
-						</select>
-					</div>					
-					<div class="col-md-6"><strong>Local *:</strong><br/>
-						<select class="form-control" name="local" id="local" >
-							<option><?php echo retornaLocal($emia['IdLocal']) ?></option>
-						</select>
+				<div class="form-group">					
+					<div class="col-md-offset-2 col-md-8"><strong>Local:</strong><br/>
+						<input type='text' readonly class='form-control' value="EMIA" />
 					</div>
 				</div>
 				
@@ -218,7 +209,7 @@ $(function()
 					<div class="col-md-offset-2 col-md-8"><br/></div>
 				</div>
 	
-			<?php 
+			<?php 					
 				if($emia['idPedidoContratacao'] == NULL)
 				{
 			?>

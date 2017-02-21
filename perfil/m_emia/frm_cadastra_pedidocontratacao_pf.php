@@ -46,7 +46,7 @@
 						//idPedido, numero, valor, vencimento, vigencia_inicio, vigencia_final, horas
 						$numero = $parcela['N_Parcela'];
 						$valor = $parcela['Valor'];
-						$pagamento = $parcela['pagamento'];
+						$pagamento = $parcela['vencimento'];
 						$vigencia_inicio = $parcela['dataInicio'];
 						$vigencia_final = $parcela['dataFinal'];
 						$horas = $parcela['horas'];

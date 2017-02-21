@@ -309,10 +309,7 @@
 							<input type="hidden" name="Sucesso" id="Sucesso" />
 							<input type="submit" value="Anexos" class="btn btn-theme btn-block">
 						</form>
-					</div>
-					<div class=" col-md-6">
-						<a href="?perfil=emia&p=frm_cadastra_pf_add&id_pf=<?php echo $ultimo;  ?>"><input type="submit" value="Informações adicionais" class="btn btn-theme btn-block"></a>
-					</div>
+					</div>					
 				</div>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">

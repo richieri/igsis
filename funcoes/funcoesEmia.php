@@ -24,7 +24,7 @@
 			return "Inativo";	
 		}	
 	}
-	
+	/*
 	function retornaObjetoEmia($idEmia)
 	{		
 		$emia = recuperaDados("sis_emia",$idEmia,"idEmia");
@@ -33,7 +33,7 @@
 		$objeto = "Realizar ".$cargo['Cargo']." da EMIA, da faixa etária de ".$faixaEtaria.".";
 		return $objeto;
 	}
-	
+	*/
 	function retornaLocalEmia($idEmia)
 	{		
 		$emia = recuperaDados("sis_emia",$idEmia,"idEmia");

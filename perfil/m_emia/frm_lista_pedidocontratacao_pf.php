@@ -99,8 +99,6 @@
 			$query_n_enviados = mysqli_query($con,$sql_n_enviados);
 			while($pedido = mysqli_fetch_array($query_n_enviados))
 			{
-				$objeto = retornaObjetoEmia($pedido['idEmia']);
-				$local = retornaLocalEmia($pedido['idEmia']);
 				$pf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 				$ped = siscontrat($pedido['idPedidoContratacao']);	 
 				echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";

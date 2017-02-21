@@ -81,11 +81,11 @@
 			<h3>CADASTRO DE PESSOA FÍSICA</h3>
 			<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			<p> O CPF <?php echo $busca; ?> não está cadastrado no nosso sistema. <br />Por favor, insira as informações da Pessoa Física a ser contratada. </p>
-			<p><a href="?perfil=contratados&p=fisica"> Pesquisar outro CPF</a> </p>
+			<p><a href="?perfil=formacao&p=cadastra_pf">Pesquisar outro CPF</a> </p>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form" action="" method="post">
+				<form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_edita_pf" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
 							<input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" >
