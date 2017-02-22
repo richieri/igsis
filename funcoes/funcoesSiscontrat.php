@@ -202,14 +202,14 @@
 				$faixaEtaria = recuperaDados("sis_emia_faixa_etaria",$emia['idFaixaEtaria'],"idFaixaEtaria");
 				$faixa =  $faixaEtaria['faixaEtaria'];
 				$objeto = "Realizar ".$funcao." da EMIA, da faixa etária de ".$faixa.".";
-				/*
+				
 				$idLocal = $emia['IdLocal'];
 				$local = recuperaDados("ig_local",$idLocal,"idLocal");
 				$loc = $local['sala'];
-				$loc_jur = "SMC e equipamentos sobre sua supervisão";
-				*/
-				$loc = retornaLocal($emia['IdLocal']);
 				$loc_jur = "EMIA";
+				
+				//$loc = retornaLocal($emia['IdLocal']);
+				//$loc_jur = "EMIA";
 				$periodo = retornaPeriodoVigencia($idPedido);
 				$carga = retornaCargaHoraria($pedido['idPedidoContratacao'],$pedido['parcelas'])." horas";				
 				$justificativa = $cargo['justificativa'];

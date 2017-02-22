@@ -15,7 +15,7 @@
 				$proponenteEmia = recuperaDados("sis_pessoa_fisica_emia",$emia['IdPessoaFisica'],"IdPessoaFisica");
 				$vigencia = $emia['IdVigencia'];				
 				$idPessoa = $emia['IdPessoaFisica'];
-				$idVerba = "";
+				$idVerba = "39";
 				$instituicao = $_SESSION['idInstituicao'];
 				$justificativa = addslashes($cargo['justificativa']);
 				$mensagem = "";
@@ -91,7 +91,7 @@
 				$Fiscal  = $_POST['Fiscal'];
 				$Parecer  = addslashes($_POST['Parecer']);
 				$Justificativa  = addslashes($_POST['Justificativa']);
-				$Verba = $_POST['Verba'];
+				$Verba = "39";
 				$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
 					observacao = '$Observacao',
 					parecerArtistico = '$Parecer',
@@ -148,18 +148,16 @@
 		}
 	}
 	$ano=date('Y');
-	$id_ped = $idPedidoContratacao;
-	$pedido = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
-	$proponente = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-	$emia = recuperaDados("sis_emia",$pedido['idPedidoContratacao'],"idPedidoContratacao");
+	$id_ped = $idPedidoContratacao;	
+	$pedido = siscontrat($id_ped);
+	$proponente = recuperaDados("sis_pessoa_fisica",$pedido['IdProponente'],"Id_PessoaFisica");
+	$emia = recuperaDados("sis_emia",$id_ped,"idPedidoContratacao");
 	$cargo = recuperaDados("sis_emia_cargo",$emia['IdCargo'],"Id_Cargo");
 	$faixaEtaria = retornaFaixaEtaria($emia['idFaixaEtaria']);
-	//$verba = recuperaDados("sis_verba",$programa['verba'],"Id_Verba");
-	$objeto = "Realizar ".$cargo['Cargo']." da EMIA, da faixa etária de ".$faixaEtaria.".";
-	//$local=;	
-	$carga = retornaCargaHoraria($pedido['idPedidoContratacao'],$pedido['parcelas']);
-	$periodo = retornaPeriodoVigencia($pedido['idPedidoContratacao'],$pedido['parcelas']);
+	$carga = retornaCargaHoraria($id_ped,$pedido['parcelas']);	
 	$justif = $cargo['justificativa'];
+	$idVerba = "39"; //Verba da EMIA
+	$verba = recuperaDados("sis_verba",$idVerba,"Id_Verba");
 	//MENU
 	include 'includes/menu.php';
 ?>
@@ -184,17 +182,17 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Objeto:</strong><br/>
-							<textarea readonly="readonly"  class="form-control" rows="5"><?php echo $objeto; ?> </textarea>
+							<textarea readonly="readonly"  class="form-control" rows="5"><?php echo $pedido['Objeto']; ?> </textarea>
 						</div>
 					</div>
                   	<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Local:</strong><br/>
-							<textarea readonly="readonly"  class="form-control" rows="5"><?php echo $local; ?> </textarea>
+							<input type='text' readonly class='form-control' value="<?php echo $pedido['Local']; ?>">
 						</div>
 					</div>       
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Período:</strong><br/>
-							<input type='text' readonly name="Periodo" class='form-control' value="<?php echo $periodo ?>">
+							<input type='text' readonly name="Periodo" class='form-control' value="<?php echo $pedido['Periodo']; ?>">
 						</div>
 						<div class="col-md-6"><strong>Carga Horária:</strong><br/>
 							<input type='text' readonly name="CargaHoraria" class='form-control' value="<?php echo $carga ?>">
@@ -203,12 +201,12 @@
 					<form class="form-horizontal" role="form" action="#" method="post">
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Valor:</strong><br/>
-								<input type='text' disabled name="valor_parcela" id='valor' class='form-control' value="<?php echo dinheiroParaBr($pedido['valor']) ?>" >
+								<input type='text' disabled name="valor_parcela" id='valor' class='form-control' value="<?php echo dinheiroParaBr($pedido['ValorGlobal']) ?>" >
 							</div>	
 						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
-								<textarea  disabled name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']); ?> 
+								<textarea  disabled name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($id_ped,$pedido['parcelas']); ?> 
 								</textarea>
 							</div>
 						</div>
@@ -237,19 +235,19 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
-									<textarea name="Observacao" cols="40" rows="5"><?php echo $pedido['observacao'] ?></textarea>
+									<textarea name="Observacao" cols="40" rows="5"><?php echo $pedido['Observacao'] ?></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
 									<input type="hidden" name="action" value="atualizar"  />
-									<input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>"  />
+									<input type="hidden" name="idPedido" value="<?php echo $id_ped; ?>"  />
 									<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
 								</div>
 							</div>
 						</form>	
 <?php
-	if($pedido['estado'] == NULL OR $pedido['estado'] == "" )
+	if($pedido['Status'] == NULL OR $pedido['Status'] == "" )
 	{
 ?>
 						<form class="form-horizontal" role="form" action="?perfil=emia&p=frm_cadastra_pedidocontratacao_pf&id_ped=<?php echo $idPedidoContratacao; ?>" method="post">
@@ -267,7 +265,7 @@
 ?>			                                
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8">
-			<a href="../pdf/rlt_proposta_emia.php?id=<?php echo $pedido['idPedidoContratacao']; ?>&penal=20" class="btn btn-theme btn-lg btn-block" target="_blank">Gerar proposta</a>
+			<a href="../pdf/rlt_proposta_emia.php?id=<?php echo $id_ped; ?>&penal=30" class="btn btn-theme btn-lg btn-block" target="_blank">Gerar proposta</a>
 		</div>
 	</div>
 <?php
