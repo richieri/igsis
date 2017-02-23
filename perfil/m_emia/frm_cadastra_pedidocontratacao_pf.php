@@ -153,7 +153,6 @@
 	$proponente = recuperaDados("sis_pessoa_fisica",$pedido['IdProponente'],"Id_PessoaFisica");
 	$emia = recuperaDados("sis_emia",$id_ped,"idPedidoContratacao");
 	$cargo = recuperaDados("sis_emia_cargo",$emia['IdCargo'],"Id_Cargo");
-	$faixaEtaria = retornaFaixaEtaria($emia['idFaixaEtaria']);
 	$carga = retornaCargaHoraria($id_ped,$pedido['parcelas']);	
 	$justif = $cargo['justificativa'];
 	$idVerba = "39"; //Verba da EMIA
@@ -182,7 +181,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Objeto:</strong><br/>
-							<textarea readonly="readonly"  class="form-control" rows="5"><?php echo $pedido['Objeto']; ?> </textarea>
+							<input type='text' readonly class='form-control' value="<?php echo $pedido['Objeto']; ?>">
 						</div>
 					</div>
                   	<div class="form-group">
@@ -219,6 +218,11 @@
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8"><strong>Justificativa:</strong><br/>
 									<textarea name="Justificativa" cols="40" rows="5"><?php echo $justif ?></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8"><strong>Parecer Artístico:</strong><br/>
+									<textarea name="Parecer" cols="40" rows="5"><?php echo $pedido['ParecerTecnico'] ?></textarea>
 								</div>
 							</div>
 							<div class="form-group">

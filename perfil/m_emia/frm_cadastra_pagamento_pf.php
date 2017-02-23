@@ -8,8 +8,8 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 
 $server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; 
 $http = $server."/pdf/";
-$link1 = $http."rlt_pagamento_emia_pf.php"."?id=".$id_ped;
-$link2 = $http."rlt_recibo_pagamento_emia_pf.php"."?id=".$id_ped;
+$link1 = $http."rlt_pagamento_formacao_pf.php"."?id=".$id_ped;
+$link2 = $http."rlt_recibo_pagamento_formacao_pf.php"."?id=".$id_ped;
 $link3 = $http."rlt_atestado_confirmacao_servicos_pf.php"."?id=".$id_ped;
 $link4 = $http."rlt_flcontabilidade_emia_pf.php"."?id=".$id_ped;
 $link5 = $http."rlt_relatorio_horas_trabalhadas_emia.php"."?id=".$id_ped;
@@ -53,7 +53,7 @@ if(isset($_POST['inserir'])){ //
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
-			<h4>PEDIDO DE PAGAMENTO DA FORMAÇÃO</h4>
+			<h4>PEDIDO DE PAGAMENTO DA EMIA</h4>
 		</div>
 
 	<div class="row">
@@ -61,9 +61,9 @@ if(isset($_POST['inserir'])){ //
 			<form class="form-horizontal" role="form" action="#" method="post">
 
 		<div class="form-group">
-			<div class="col-md-offset-2 col-md-4"><strong>Pedido de Contratação nº:</strong> <?php echo $id_ped; ?>
-				<div class="col-md-4"><strong>Processo nº:</strong> <?php echo $pedido["NumeroProcesso"]; ?>
-				</div>
+			<div class="col-md-offset-2 col-md-6"><strong>Pedido de Contratação nº:</strong> <?php echo $id_ped; ?>
+			</div>
+			<div class="col-md-6"><strong>Processo nº:</strong> <?php echo $pedido["NumeroProcesso"]; ?>
 			</div>
 		</div>
 		

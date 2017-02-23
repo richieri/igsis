@@ -35,14 +35,12 @@ if(isset($_POST['atualizar']))
 	$ano = $_POST['ano'];
 	$status  = $_POST['status'];	
 	$cargo  = $_POST['cargo'];
-	$idFaixaEtaria = $_POST['idFaixaEtaria'];	
 	$obs = addslashes($_POST['obs']);	
 	$vigencia = $_POST['vigencia'];
 	$sql_atualiza_emia = "UPDATE sis_emia SET
 	`Ano` = '$ano',
 	`IdLocal` = '523',
 	`IdCargo` = '$cargo',
-	`idFaixaEtaria` = $idFaixaEtaria,
 	`Status` = '$status', 
 	`publicado` = '1',
 	`IdVigencia` = '$vigencia',
@@ -146,14 +144,6 @@ $(function()
 						</select>
 					</div>
 				</div>
-				
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Faixa Etária *:</strong>
-						<select class="form-control" name="idFaixaEtaria" id="idFaixaEtaria">
-							<?php geraOpcao("sis_emia_faixa_etaria",$emia['idFaixaEtaria'],"") ?>
-						</select>
-					</div>
-				</div>	
 				
 				<div class="form-group">					
 					<div class="col-md-offset-2 col-md-8"><strong>Local:</strong><br/>

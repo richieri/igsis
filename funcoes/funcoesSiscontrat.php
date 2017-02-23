@@ -199,17 +199,11 @@
 				$emia = recuperaDados("sis_emia",$pedido['idPedidoContratacao'],"idPedidoContratacao");
 				$cargo = recuperaDados("sis_emia_cargo",$emia['IdCargo'],"Id_Cargo");
 				$funcao = $cargo['Cargo'];
-				$faixaEtaria = recuperaDados("sis_emia_faixa_etaria",$emia['idFaixaEtaria'],"idFaixaEtaria");
-				$faixa =  $faixaEtaria['faixaEtaria'];
-				$objeto = "Realizar ".$funcao." da EMIA, da faixa etária de ".$faixa.".";
-				
+				$objeto = "Realizar ".$funcao." da EMIA, da faixa etária de 05 a 12 anos.";
 				$idLocal = $emia['IdLocal'];
 				$local = recuperaDados("ig_local",$idLocal,"idLocal");
 				$loc = $local['sala'];
-				$loc_jur = "EMIA";
-				
-				//$loc = retornaLocal($emia['IdLocal']);
-				//$loc_jur = "EMIA";
+				$loc_jur = "EMIA - Escola Municipal de Iniciação Artística";
 				$periodo = retornaPeriodoVigencia($idPedido);
 				$carga = retornaCargaHoraria($pedido['idPedidoContratacao'],$pedido['parcelas'])." horas";				
 				$justificativa = $cargo['justificativa'];

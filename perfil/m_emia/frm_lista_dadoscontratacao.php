@@ -34,7 +34,6 @@
 						<td>Proponente</td>
 						<td>Telefone</td>
 						<td>Cargo</td>
-						<td>Faixa Etária<td/>
 						<td>Ano</td>
 						<td>Status</td>
 					</tr>
@@ -60,7 +59,6 @@
 						<td class="list_description"><a href="?perfil=emia&p=frm_cadastra_dadoscontratacao&id=<?php echo $emia['idEmia']; ?>"><?php echo $pessoa['Nome'];  ?></a></td>
 						<td class="list_description"><?php echo $pessoa['Telefone1'];  ?></td>
 						<td class="list_description"><?php echo retornaCargo($emia['IdCargo']);  ?></td>
-						<td colspan="2" class="list_description"><?php echo retornaFaixaEtaria($emia['idFaixaEtaria']);  ?></td>
 						<td class="list_description"><?php echo $emia['Ano'];  ?></td>
 						<td class="list_description"><?php echo retornaStatus($emia['Status']);  ?></td>    
 					</tr>

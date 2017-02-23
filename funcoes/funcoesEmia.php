@@ -7,12 +7,6 @@
 		return $programa['Cargo'];	
 	}
 	
-	function retornaFaixaEtaria($id)
-	{
-		$faixaEtaria = recuperaDados("sis_emia_faixa_etaria",$id,"idFaixaEtaria");
-		return $faixaEtaria['faixaEtaria'];	
-	}
-	
 	function retornaStatus($id)
 	{
 		if($id != 0)
