@@ -10,7 +10,7 @@ $server = "http://".$_SERVER['SERVER_NAME']."/igsis/";
 $http = $server."/pdf/";
 $link1 = $http."rlt_pagamento_formacao_pf.php"."?id=".$id_ped;
 $link2 = $http."rlt_recibo_pagamento_formacao_pf.php"."?id=".$id_ped;
-$link3 = $http."rlt_atestado_confirmacao_servicos_pf.php"."?id=".$id_ped;
+$link3 = $http."rlt_atestado_confirmacao_servicos_emia.php"."?id=".$id_ped;
 $link4 = $http."rlt_flcontabilidade_emia_pf.php"."?id=".$id_ped;
 $link5 = $http."rlt_relatorio_horas_trabalhadas_emia.php"."?id=".$id_ped;
 $link6 = $http."rlt_fac_pf.php"."?id=".$id_ped;
