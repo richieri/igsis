@@ -39,7 +39,6 @@ $link27 = $http."rlt_termo_parceria_pj.php";
 $link28 = $http."rlt_pedido_reserva_existente_pj.php";
 $link29 = $http."rlt_pedido_reserva_transferencia_virada_pj.php";
 $link30 = $http."rlt_pedido_reserva_transferencia_virada_centro_pj.php";
-$link31 = $http."rlt_pedido_reserva_existente_pj_ccsp.php";
 $link32 = $http."rlt_normas_internas_teatros_pj.php"."?id=".$id_ped;
 $link33 = $http."rlt_proposta_exposicao_edital_pj.php"."?id=".$id_ped."&penal=22";
 $link34 = $http."rlt_proposta_mediacao_edital_pj.php"."?id=".$id_ped."&penal=24";
@@ -50,6 +49,9 @@ $link38 = $http."rlt_termo_doacao_pj_assinatura.php";
 $link39 = $http."rlt_pedido_reserva_ccsp_pj.php";
 $link40 = $http."rlt_declaracao_convenio500_1rep_pj.php";
 $link41 = $http."rlt_declaracao_convenio500_2rep_pj.php";
+$link42 = $http."rlt_declaracao_abertura_bb_pj.php";
+$link43 = $http."rlt_pedido_reserva_gabinete_pj.php";
+
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -119,6 +121,10 @@ echo "
 							<td><a href='$link41?id=$id_ped' target='_blank'><strong>Convênio 500</strong></a></td>
 						</tr>
 						
+						<tr>
+							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Abertura de Conta - Banco do Brasil</strong></a></td>
+						</tr>
+						
 						<tr><td class='list_description'><br/></td></tr>
 						
 						<tr class='list_menu'><td colspan='2'><strong>OUTROS</strong></td></tr>
@@ -147,20 +153,17 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>PEDIDO DE RESERVA</strong></td></tr>
 						
 						<tr>
-							<td><a href='$link9?id=$id_ped' target='_blank'><strong>Reserva Nova</strong></a></td>
 							<td><a href='$link10?id=$id_ped' target='_blank'><strong>Cooperativa</strong></a></td>
-						</tr>
-						<tr>
-							<td><a href='$link28?id=$id_ped' target='_blank'><strong>Reserva Existente</strong></a></td>
 							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
 						</tr>
-						<tr>
-							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva Existente - Centros Culturais</strong></a></td>
-							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva de Verba com Transferência - VIRADA</strong></a></td>			
-						</tr>
-						<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
-						<tr>
 						
+						<tr>
+							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva de Verba com Transferência - VIRADA</strong></a></td>		
+							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>							
+						</tr>
+						
+						<tr>
+						<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva - Gabinete</strong></a></td>
 						</tr>
 					</tbody>
 				</table>

@@ -11,7 +11,6 @@ $http = $server."/pdf/";
 $link0 = $http."rlt_pedido_contratacao_pf.php"."?id=".$id_ped;
 $link5 = $http."rlt_fac_pf.php";
 $link6 = $http."rlt_evento_pf.php";
-$link7 = $http."rlt_pedido_reserva_nova_pf.php";
 $link8 = $http."rlt_pedido_reserva_fepac_pf.php";
 $link9 = $http."rlt_pedido_reserva_cooperativa_pf.php";
 $link10 = $http."rlt_pedido_reserva_vocacional_pf.php";
@@ -35,7 +34,6 @@ $link27 = $http."rlt_termo_doacaoservico_pf.php";
 $link28 = $http."rlt_termo_parceria_pf.php";
 $link29 = $http."rlt_proposta_formacao.php"."?id=".$id_ped."&penal=20";
 $link30 = $http."rlt_proposta_pia_pf.php"."?id=".$id_ped."&penal=21";
-$link31 = $http."rlt_pedido_reserva_existente_pf.php";
 $link32 = $http."rlt_pedido_reserva_chefiagabinete_pf.php";
 $link33 = $http."rlt_pedido_contratacao_pf_formacao.php";
 $link34 = $http."rlt_pedido_reserva_transferencia_pf.php";
@@ -51,6 +49,9 @@ $link43 = $http."rlt_termo_doacao_pf_assinatura.php";
 $link44 = $http."rlt_ordemservico_pf_assinatura.php";
 $link45 = $http."rlt_pedido_reserva_ccsp_pf.php";
 $link46 = $http."rlt_declaracao_convenio500_pf.php";
+$link47 = $http."rlt_declaracao_abertura_bb_pf.php";
+$link48 = $http."rlt_pedido_reserva_gabinete_pf.php";
+
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -128,6 +129,7 @@ echo "
 						</tr>
 						<tr>
 							<td><a href='$link46?id=$id_ped' target='_blank'><strong>Convênio 500</strong></a></td>
+							<td><a href='$link47?id=$id_ped' target='_blank'><strong>Abertura de Conta - Banco do Brasil </strong></a></td>
 						</tr>
 						
 						<tr><td class='list_description'><br/></td></tr>
@@ -157,25 +159,21 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>PEDIDO DE RESERVA</strong></td></tr>
 						
 						<tr>
-							<td><a href='$link7?id=$id_ped' target='_blank'><strong>Reserva Nova</strong></a></td>
 							<td><a href='$link9?id=$id_ped' target='_blank'><strong>Cooperativa</strong></a></td>
-						</tr>
-						<tr>
 							<td><a href='$link8?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
-							<td><a href='$link10?id=$id_ped' target='_blank'><strong>Formação</strong></a></td>
 						</tr>
 						<tr>
-							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva Existente</strong></a></td>
+							<td><a href='$link10?id=$id_ped' target='_blank'><strong>Formação</strong></a></td>
 							<td><a href='$link32?id=$id_ped' target='_blank'><strong>Formação - Gabinete</strong></a></td>
 						</tr>
 						<tr>
-							<td><a href='$link34?id=$id_ped' target='_blank'><strong>Reserva de Verba com Transferência</strong></a></td>
-							<td><a href='$link35?id=$id_ped' target='_blank'><strong>Reserva de Verba com Transferência - VIRADA</strong></a></td>
+							<td><a href='$link34?id=$id_ped' target='_blank'><strong>Verba com Transferência</strong></a></td>
+							<td><a href='$link35?id=$id_ped' target='_blank'><strong>Verba com Transferência - VIRADA</strong></a></td>
 						</tr>
 						
 						<tr>
-							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Reserva de Oficinas - Edital Casas de Cultura</strong></a></td>
-							<td><a href='$link45?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
+							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficinas - Edital Casas de Cultura</strong></a></td>
+							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
 						</tr>
 					</tbody>
 				</table>
