@@ -89,7 +89,7 @@ case 12: $mes = "Dezembro"; break;
 $sei = 
   "<p><strong><u><center>ATESTADO DE CONFIRMAÇÃO DE SERVIÇOS</strong></p></u></center>".
   "<p>&nbsp;</p>".
-  "<p>Informamos que os serviços prestados pelo(a): </p>".
+  "<p>Informamos que os serviços prestados pelo(a): ".$nome."</p>".
   "<p><strong>EVENTO: </strong> Oficineiro de Artes Plásticas da EMIA, da faixa etária de 05 a 12 anos</p>".
   "<p><strong>NO: </strong> EMIA </p>".
   "<P><strong>DIA(S) / HORÁRIO(S): </strong>".$periodoParcela."</p>".
