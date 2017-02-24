@@ -66,33 +66,6 @@ $_SESSION['id_pf']= $emia['IdPessoaFisica'];
 $_SESSION['id']= $id;
 ?>
 
-<script type="application/javascript">
-$(function()
-{
-	$('#instituicao').change(function()
-	{
-		if( $(this).val() ) 
-		{
-			$('#local').hide();
-			$('.carregando').show();
-			$.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
-			{
-				var options = '<option value=""></option>';	
-				for (var i = 0; i < j.length; i++) 
-				{
-					options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
-				}	
-				$('#local').html(options).show();
-				$('.carregando').hide();
-			});
-		} 
-		else 
-		{
-			$('#local').html('<option value="">-- Escolha uma instituição --</option>');
-		}
-	});
-});
-</script>
 		
 <section id="contact" class="home-section bg-white">
 	<div class="container">

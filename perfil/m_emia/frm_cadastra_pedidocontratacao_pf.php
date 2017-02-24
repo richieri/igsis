@@ -87,8 +87,6 @@
 			case "atualizar":
 				$idPedidoContratacao = $_POST['idPedido'];
 				$Observacao = addslashes($_POST['Observacao']);
-				$Suplente  = $_POST['Suplente']; 
-				$Fiscal  = $_POST['Fiscal'];
 				$Parecer  = addslashes($_POST['Parecer']);
 				$Justificativa  = addslashes($_POST['Justificativa']);
 				$Verba = "39";
@@ -103,8 +101,8 @@
 				if($query_atualiza_pedido)
 				{
 					$sql_atualiza_emia = "UPDATE sis_emia SET
-						fiscal = '$Fiscal',
-						suplente = '$Suplente'
+						fiscal = '420',
+						suplente = '717'
 						WHERE idPedidoContratacao = '$idPedidoContratacao'";
 					$query_atualiza_emia = mysqli_query($con,$sql_atualiza_emia);
 					if($query_atualiza_emia)
@@ -227,14 +225,10 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6"><strong>Fiscal:</strong>
-									<select class="form-control" name="Fiscal" id="Fiscal">
-										<?php opcaoUsuario($_SESSION['idInstituicao'],$emia['fiscal']); ?>
-									</select>
+									<input type='text' readonly class='form-control' value="Luciana Schwinden" />
 								</div>
 								<div class="col-md-6"><strong>Suplente:</strong>
-								   <select class="form-control" name="Suplente" id="Fiscal">
-										<?php opcaoUsuario($_SESSION['idInstituicao'],$emia['suplente']); ?>
-								   </select>
+								  <input type='text' readonly class='form-control' value="Evandro Brito da Silveira" />
 								</div>
 							</div>
 							<div class="form-group">

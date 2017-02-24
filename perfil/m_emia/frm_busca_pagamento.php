@@ -28,7 +28,7 @@ if(isset($_POST['pesquisar']))
 				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="section-heading">
-							<h2>Busca Formação</h2>
+							<h2>Busca EMIA</h2>
 							<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 						</div>
 					</div>
@@ -67,7 +67,7 @@ if(isset($_POST['pesquisar']))
 else
 {
 	$con = bancoMysqli();
-	$sql_existe = "SELECT * FROM igsis_pedido_contratacao, sis_emia, sis_pessoa_fisica WHERE sis_emia.idPedidoContratacao = igsis_pedido_contratacao.idPedidoContratacao AND igsis_pedido_contratacao.idPessoa = sis_pessoa_fisica.Id_PessoaFisica AND igsis_pedido_contratacao.publicado = '1' AND tipoPessoa = '4' AND estado IS NOT NULL ORDER BY igsis_pedido_contratacao.idPedidoContratacao DESC";
+	$sql_existe = "SELECT * FROM igsis_pedido_contratacao, sis_emia, sis_pessoa_fisica WHERE sis_emia.idPedidoContratacao = igsis_pedido_contratacao.idPedidoContratacao AND igsis_pedido_contratacao.idPessoa = sis_pessoa_fisica.Id_PessoaFisica AND igsis_pedido_contratacao.publicado = '1' AND tipoPessoa = '5' AND estado IS NOT NULL ORDER BY igsis_pedido_contratacao.idPedidoContratacao DESC";
 	$query_existe = mysqli_query($con, $sql_existe);
 	$num_registro = mysqli_num_rows($query_existe);
 	if($id != "" AND $num_registro > 0) // Foi inserido o número do pedido
@@ -75,7 +75,7 @@ else
 		$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
 		if($pedido['estado'] != NULL)
 		{
-			$pessoa = recuperaPessoa($pedido['idPessoa'],4);
+			$pessoa = recuperaPessoa($pedido['idPessoa'],5);
 			if($pedido['parcelas'] > 1)
 			{
 				$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
@@ -133,7 +133,7 @@ else
 			if(mysqli_num_rows($query_evento) > 0)
 			{
 				$pedido = recuperaDados("igsis_pedido_contratacao",$evento['idPedidoContratacao'],"idPedidoContratacao");
-				$pessoa = recuperaPessoa($pedido['idPessoa'],4);
+				$pessoa = recuperaPessoa($pedido['idPessoa'],5);
 				if($pedido['parcelas'] > 1)
 				{
 					$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
@@ -214,7 +214,7 @@ else
 			<div class="row">
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-						<h2>Busca Formação</h2>
+						<h2>Busca EMIA</h2>
 					</div>
 				</div>
 			</div>			  
