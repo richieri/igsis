@@ -107,7 +107,7 @@ $sei =
   "<p><strong>LOTAÇÃO:</strong> EMIA-Escola Municipal de Iniciação Artística</p>".
   "<p><strong>REGISTRO FUNCIONAL:</strong> 755.179.7 </p>".
   "<p>&nbsp;</p>".
-  "<p>Com base no Relatório de Horas Trabalhadas: (Documento SEI link ) atesto que os materiais/serviços prestados discriminados no documento fiscal (Documento SEI link )  foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia: ".$dataFinal.", dentro do prazo previsto. O prazo contratual é do dia ".$periodoParcela.". </p>".
+  "<p>Com base na Folha de Frequência Individual: (Documento SEI link ) atesto que os materiais/serviços prestados discriminados no documento fiscal (Documento SEI link )  foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia: ".$dataFinal.", dentro do prazo previsto. O prazo contratual é do dia ".$periodoParcela.". </p>".
   "<p>&nbsp;</p>".
   "<p><strong><center>INFORMAÇÕES COMPLEMENTARES</strong></p></center>".
   "<p>À área gestora/de liquidação e pagamento:</p>".
