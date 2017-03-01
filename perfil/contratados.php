@@ -1481,7 +1481,7 @@
 						"; 
 				}
 				else
-				{
+				{//ajustar botões do parecer - colocar um if para tipoPessoa
 					echo "
 							<div class='form-group'>
 								<div class='col-md-offset-2 col-md-8'>
@@ -1490,8 +1490,11 @@
 								</div> 
 							</div>
 							<div class='form-group'>
-							<div class='col-md-offset-2 col-md-8'>
-								<a href='?perfil=contratados&p=edicaoParecer' class='btn btn-theme btn-block'>Editar parecer</a>
+							<div class='col-md-offset-2 col-md-6'>
+								<a href='?perfil=contratados&p=edicaoParecer' class='btn btn-theme btn-block'>Editar parecer artista local</a>
+							</div>
+							<div class='col-md-6'>
+								<a href='?perfil=contratados&p=edicaoParecer' class='btn btn-theme btn-block'>Editar parecer artista consagrado</a>
 							</div>
 						</div>
 						"; 
