@@ -1,4 +1,9 @@
-﻿	<div class="menu-area">
+﻿<?php
+$server = "http://".$_SERVER['SERVER_NAME']."/igsis/";
+$http = $server."/pdf/";
+$link = $http."rlt_comunicacao_fotos.php";
+?>	
+	<div class="menu-area">
 		<div id="dl-menu" class="dl-menuwrapper">
 			<button class="dl-trigger">Busca</button>
 				<ul class="dl-menu">
@@ -13,6 +18,7 @@
 							<li selected><a href="?perfil=comunicacao&p=foto&foto=1" >Aprovados</a></li>
 							<li> <a href="?perfil=comunicacao&p=foto&foto=0" >Pendentes</a></li>
 							<li> <a href="?perfil=comunicacao&p=foto" >Todos os eventos</a>  </li>
+							<li><a href='<?php echo $link ?>' target='_blank'>Relatório do mês</a></li>
 						</ul>
 					</li>   
 					<li><a href="?perfil=comunicacao&p=docs" >Gerar Docs</a></li>                
