@@ -6,8 +6,12 @@ $link="index.php?perfil=gestao_eventos&p=detalhe_evento&id_eve=";
 $con = bancoMysqli();
 $usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
 $localUsr = $usr['local'];
-$sql_lista = "
+/*$sql_lista = "
 	SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND statusEvento = 'Aguardando' AND dataEnvio IS NULL AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1 AND estado IS NULL) )AND local IN ($localUsr) ORDER BY dataInicio DESC";
+*/	
+$sql_lista = "SELECT DISTINCT eve.idEvento FROM ig_evento AS eve 
+INNER JOIN ig_ocorrencia AS oco ON oco.idEvento=eve.idEvento 
+WHERE eve.publicado = 1 AND statusEvento = 'Aguardando' AND dataEnvio IS NULL AND eve.idEvento NOT IN (SELECT ped.idEvento FROM igsis_pedido_contratacao AS ped WHERE publicado = 1) AND local IN ($localUsr) ORDER BY dataInicio DESC";	
 $query_lista = mysqli_query($con,$sql_lista);
 ?>
 

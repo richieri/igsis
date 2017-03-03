@@ -78,7 +78,7 @@ if(isset($_POST['pesquisar']))
 	else
 	{
 		$con = bancoMysqli();
-		$sql_existe = "SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND statusEvento = 'Aguardando' AND dataEnvio IS NULL AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1 AND estado IS NULL) ) ORDER BY dataInicio DESC";
+		$sql_existe = "SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND statusEvento = 'Aguardando' AND dataEnvio IS NULL AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) ) ORDER BY dataInicio DESC";
 		$query_existe = mysqli_query($con, $sql_existe);
 		$num_registro = mysqli_num_rows($query_existe);
 		
@@ -131,7 +131,7 @@ if(isset($_POST['pesquisar']))
 			$usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
 			$localUsr = $usr['local'];
 			$sql_evento = "
-				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND statusEvento = 'Aguardando' AND dataEnvio IS NULL $filtro_fiscal $filtro_projeto AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1 AND estado IS NULL) )AND local IN ($localUsr) $filtro_nomeEvento  ORDER BY dataInicio DESC";
+				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND statusEvento = 'Aguardando' AND dataEnvio IS NULL $filtro_fiscal $filtro_projeto AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) )AND local IN ($localUsr) $filtro_nomeEvento  ORDER BY dataInicio DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
 			
 			$i = 0;
