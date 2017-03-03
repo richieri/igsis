@@ -51,6 +51,9 @@ $link45 = $http."rlt_pedido_reserva_ccsp_pf.php";
 $link46 = $http."rlt_declaracao_convenio500_pf.php";
 $link47 = $http."rlt_declaracao_abertura_bb_pf.php";
 $link48 = $http."rlt_pedido_reserva_gabinete_pf.php";
+$link49 = $http."rlt_ordemservico_gabinete_pf.php";
+$link50 = $http."rlt_ordemservico_gabinete_pf_assinatura.php";
+
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -141,16 +144,17 @@ echo "
 							<td><a href='$link14?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
 						</tr>
 						<tr>
-							<td><a href='$link19?id=$id_ped' target='_blank'><strong>Ordem de serviço</strong></a></td>
-							<td><a href='$link44?id=$id_ped' target='_blank'><strong>Ordem de serviço - Assinatura</strong></a></td>
-						</tr>
-						<tr>
-							<td><a href='$link27?id=$id_ped' target='_blank'><strong>Termo de Doação de Serviço</strong></a></td>
-							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Termo Doação de Serviço - Assinatura</strong></a></td>
+							<td><a href='$link44?id=$id_ped' target='_blank'><strong>Ordem de serviço - CCSP Assinatura</strong></a></td>
+							<td><a href='$link50?id=$id_ped' target='_blank'><strong>Ordem de serviço - Gabinete Assinatura</strong></a></td>
 						</tr>
 						
 						<tr>
+							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Termo Doação de Serviço - Assinatura</strong></a></td>
 							<td><a href='$link28?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
+
+						</tr>
+						
+						<tr>
 							<td><a href='$link26?id=$id_ped' target='_blank'><strong>Termo de Doação de Obra de Arte</strong></a></td>
 						</tr>
 						
