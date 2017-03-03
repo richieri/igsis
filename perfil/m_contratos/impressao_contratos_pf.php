@@ -175,6 +175,10 @@ echo "
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficinas - Edital Casas de Cultura</strong></a></td>
 							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
 						</tr>
+							<td><a href='$link45?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
+						<tr>
+						
+						</tr>
 					</tbody>
 				</table>
 			</div>	
