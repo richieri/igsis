@@ -1,4 +1,4 @@
-<?php 
+ï»¿<?php 
 	session_start();
 	   @ini_set('display_errors', '1');
 	error_reporting(E_ALL); 	
@@ -9,7 +9,7 @@
    require_once("../funcoes/funcoesGerais.php");
    require_once("../funcoes/funcoesSiscontrat.php");
 
-   //CONEXÃO COM BANCO DE DADOS 
+   //CONEXÃƒO COM BANCO DE DADOS 
    $conexao = bancoMysqli(); 
    
 
@@ -150,7 +150,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(180,$l,utf8_decode('PREFEITURA DO MUNICÃPIO DE SÃO PAULO'),0,1,'C');
+   $pdf->Cell(180,$l,utf8_decode('PREFEITURA DO MUNICÃPIO DE SÃƒO PAULO'),0,1,'C');
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
@@ -158,13 +158,13 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(180,$l,utf8_decode('PROCESSO SEI Nº ' .$NumeroProcesso),0,1,'C');
+   $pdf->Cell(180,$l,utf8_decode('PROCESSO SEI NÂº ' .$NumeroProcesso),0,1,'C');
      
    $pdf->Ln();
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(180,$l,utf8_decode('Ordem de execuÃ§Ã£o de serviço nº ___/2017'),0,1,'C');
+   $pdf->Cell(180,$l,utf8_decode('Ordem de execuÃ§Ã£o de serviÃ§o nÂº ___/2017'),0,1,'C');
    
    $pdf->Ln();
       
@@ -172,19 +172,19 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(23,$l,utf8_decode('Emanada de:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(170,$l,utf8_decode('DivisiÃ£o de Administração'),0,1,'L');
+   $pdf->Cell(170,$l,utf8_decode('DivisiÃ£o de AdministraÃ§Ã£o'),0,1,'L');
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(27,$l,utf8_decode('Suporte Legal:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(153,$l,utf8_decode('Artigo 25, inciso III, da Lei Federal nº 8.666/93 e alterações posteriores e artigo 1º da Lei Municipal nº 13.278/02, nos termos dos artigos 16 e 17 do Decreto nº 44.279/03.'));
+   $pdf->MultiCell(153,$l,utf8_decode('Artigo 25, inciso III, da Lei Federal nÂº 8.666/93 e alteraÃ§Ãµes posteriores e artigo 1Âº da Lei Municipal nÂº 13.278/02, nos termos dos artigos 16 e 17 do Decreto nÂº 44.279/03.'));
    
    $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(180,$l,utf8_decode('Prestador e/ou executor do serviço'),0,1,'C');
+   $pdf->Cell(180,$l,utf8_decode('Prestador e/ou executor do serviÃ§o'),0,1,'C');
       
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
@@ -204,7 +204,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
+   $pdf->Cell(20,$l,utf8_decode('EndereÃ§o:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(160,$l,utf8_decode($Endereco));
    
@@ -229,11 +229,11 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(180,$l,utf8_decode('Serviço'),0,1,'C');
+   $pdf->Cell(180,$l,utf8_decode('ServiÃ§o'),0,1,'C');
      
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("Especificações: Contratação dos serviços profissionais de natureza artística de ".$Objeto.", através dos integrantes mencionados na Declaração de Exclusividade, por ".$Nome.", CPF: ".$CPF.", para realização de evento no "."$Local".", no período "."$Periodo"." conforme proposta e cronograma."));		
+   $pdf->MultiCell(180,$l,utf8_decode("EspecificaÃ§Ãµes: ContrataÃ§Ã£o dos serviÃ§os profissionais de natureza artÃ­stica de ".$Objeto.", atravÃ©s dos integrantes mencionados na DeclaraÃ§Ã£o de Exclusividade, por ".$Nome.", CPF: ".$CPF.", para realizaÃ§Ã£o de evento no "."$Local".", no perÃ­odo "."$Periodo"." conforme proposta e cronograma."));		
    
    	$pdf->Ln();
    
@@ -267,13 +267,13 @@ $pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÃGINA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("- Multa de 10% (dez por cento) sobre o valor do contrato ou sobre o valor integral da venda de todos os ingressos disponíveis por atraso de até 30 (trinta) minutos no evento. Ultrapassado esse tempo, e independentemente da aplicação de penalidade, fica a critéio do equipamento da Secretaria Municipal de Cultura autorizar a realização do evento, visando evitar prejuízos à grade de programação. NÃO sendo autorizada a realização do evento, será considerada inexecução total do contrato, com aplicação de multa prevista por inexecução total.
+   $pdf->MultiCell(180,$l,utf8_decode("- Multa de 10% (dez por cento) sobre o valor do contrato ou sobre o valor integral da venda de todos os ingressos disponÃ­veis por atraso de atÃ© 30 (trinta) minutos no evento. Ultrapassado esse tempo, e independentemente da aplicaÃ§Ã£o de penalidade, fica a critÃ©rio do equipamento da Secretaria Municipal de Cultura autorizar a realizaÃ§Ã£o do evento, visando evitar prejuÃ­zos Ã  grade de programaÃ§Ã£o. NÃƒO sendo autorizada a realizaÃ§Ã£o do evento, serÃ¡ considerada inexecuÃ§Ã£o total do contrato, com aplicaÃ§Ã£o de multa prevista por inexecuÃ§Ã£o total.
    
-- Multa de 10% (dez por cento) para casos de infração de cláusula contratual e/ou inexecução parcial do ajuste e de 30% (trinta por cento) para casos de inexecução total do ajuste. O valor da multa será calculado sobre o valor do contrato ou sobre o valor integral da venda de todos os ingressos disponíveis.
+- Multa de 10% (dez por cento) para casos de infraÃ§Ã£o de clÃ¡usula contratual e/ou inexecuÃ§Ã£o parcial do ajuste e de 30% (trinta por cento) para casos de inexecuÃ§Ã£o total do ajuste. O valor da multa serÃ¡ calculado sobre o valor do contrato ou sobre o valor integral da venda de todos os ingressos disponÃ­veis.
    
-- Multa de 10% (dez por cento) sobre o valor do contrato ou sobre o valor integral da venda de todos os ingressos disponíveis, em função da falta de regularidade fiscal do contratado, bem como, pela verificação de que possui pendências junto ao Cadastro Informativo Municipal (CADIN).
+- Multa de 10% (dez por cento) sobre o valor do contrato ou sobre o valor integral da venda de todos os ingressos disponÃ­veis, em funÃ§Ã£o da falta de regularidade fiscal do contratado, bem como, pela verificaÃ§Ã£o de que possui pendÃªncias junto ao Cadastro Informativo Municipal (CADIN).
    
-- As penalidades serão aplicadas sem prejuízo das demais sanções previstas na legislação que rege a matéria."));
+- As penalidades serÃ£o aplicadas sem prejuÃ­zo das demais sanÃ§Ãµes previstas na legislaÃ§Ã£o que rege a matÃ©ria."));
 
    $pdf->Ln();
    
@@ -283,7 +283,7 @@ $pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÃGINA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("Esta O.E.S. poderá ser cancelada no interesse da administração, devidamente justificada ou em virtude da inexecução total ou parcial do serviço sem prejuízo de multa."));
+   $pdf->MultiCell(180,$l,utf8_decode("Esta O.E.S. poderÃ¡ ser cancelada no interesse da administraÃ§Ã£o, devidamente justificada ou em virtude da inexecuÃ§Ã£o total ou parcial do serviÃ§o sem prejuÃ­zo de multa."));
    
    $pdf->Ln();
    
@@ -293,45 +293,45 @@ $pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÃGINA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("Fica eleito o foro desta comarca para todo e qualquer procedimento judicial oriundo desta ordem de execução de serviços."));
+   $pdf->MultiCell(180,$l,utf8_decode("Fica eleito o foro desta comarca para todo e qualquer procedimento judicial oriundo desta ordem de execuÃ§Ã£o de serviÃ§os."));
    
    $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(180,$l,utf8_decode('Observações'),0,1,'C');
+   $pdf->Cell(180,$l,utf8_decode('ObservaÃ§Ãµes'),0,1,'C');
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode(" - Compete à contratada a realização do espetáculo, e a fazer constar o crédito à “ PMSP/SECRETARIA MUNICIPAL DE CULTURA, em toda divulgação escrita ou falada, realizada sobe o espetáculo programado.
+   $pdf->MultiCell(180,$l,utf8_decode(" - Compete Ã  contratada a realizaÃ§Ã£o do espetÃ¡culo, e a fazer constar o crÃ©dito Ã  PMSP/SECRETARIA MUNICIPAL DE CULTURA, em toda divulgaÃ§Ã£o escrita ou falada, realizada sobe o espetÃ¡culo programado.
 
-- A empresa contratada fica sujeita ao atendimento no disposto nas Leis Municipais nº 10.973/9, regulamentada pelo DM 30.730/91; 11.113/91; 11.357/93; 12.975/2000 e portaria 66/SMC/2007; Leis Estaduais nº 7.844/92; Medida Provisória Federal 12.933/2013 e Lei Federal 10.741/2013.
+- A empresa contratada fica sujeita ao atendimento no disposto nas Leis Municipais nÂº 10.973/9, regulamentada pelo DM 30.730/91; 11.113/91; 11.357/93; 12.975/2000 e portaria 66/SMC/2007; Leis Estaduais nÂº 7.844/92; Medida ProvisÃ³ria Federal 12.933/2013 e Lei Federal 10.741/2013.
 
-- A contratada é responsável por qualquer prejuízo ou dano causado ao patrimônio municipal ou a bens de terceiros que estejam sob a guarda do equipamento local de realização do evento.
+- A contratada Ã© responsÃ¡vel por qualquer prejuÃ­zo ou dano causado ao patrimÃ´nio municipal ou a bens de terceiros que estejam sob a guarda do equipamento local de realizaÃ§Ã£o do evento.
 
-- Quaisquer outras despesas não ressalvadas aqui serão de responsabilidade da contratada, que se compromete a adotar as providências necessárias junto á OMB.
+- Quaisquer outras despesas nÃ£o ressalvadas aqui serÃ£o de responsabilidade da contratada, que se compromete a adotar as providÃªncias necessÃ¡rias junto Ã  OMB.
 
-- As providências administrativas para liberação da autorização do ECAD serão de responsabilidade da contratada, sendo que eventuais pagamento serão efetuados pela SMC.
+- As providÃªncias administrativas para liberaÃ§Ã£o da autorizaÃ§Ã£o do ECAD serÃ£o de responsabilidade da contratada, sendo que eventuais pagamento serÃ£o efetuados pela SMC.
 
-- A Municipalidade não é responsável por qualquer material ou equipamento que não lhe pertença utilizado no espetáculo, devendo esse material ser retirado no seu término.
+- A Municipalidade nÃ£o Ã© responsÃ¡vel por qualquer material ou equipamento que nÃ£o lhe pertenÃ§a utilizado no espetÃ¡culo, devendo esse material ser retirado no seu tÃ©rmino.
 
-- A Cia. deverá designar uma pessoa para atuar na Bilheteria durante toda a temporada, cabendo a esta a responsabilidade exclusiva pela venda dos ingressos.
+- A Cia. deverÃ¡ designar uma pessoa para atuar na Bilheteria durante toda a temporada, cabendo a esta a responsabilidade exclusiva pela venda dos ingressos.
 
-- A Bilheteria deverá abrir 1 (uma) hora antes do início de cada espetáculo.
+- A Bilheteria deverÃ¡ abrir 1 (uma) hora antes do inÃ­cio de cada espetÃ¡culo.
 
-- Após o término de cada espetáculo um servidor designado pela Coordenação do Teatro efetuará o fechamento do borderô com o bilheteiro responsável.
+- ApÃ³s o tÃ©rmino de cada espetÃ¡culo um servidor designado pela CoordenaÃ§Ã£o do Teatro efetuarÃ¡ o fechamento do borderÃ´ com o bilheteiro responsÃ¡vel.
 
-- Caberá a Cia. efetuar o repasse do percentual do FEPAC e a Coordenação do Teatro caberá o recolhimento do valor.
+- CaberÃ¡ a Cia. efetuar o repasse do percentual do FEPAC e a CoordenaÃ§Ã£o do Teatro caberÃ¡ o recolhimento do valor.
 
-- Em havendo contratação pela Secretaria de Cultura de empresa prestadora de serviços de gerenciamento da bilheteria, caberá a esta efetuar a venda dos ingressos.
+- Em havendo contrataÃ§Ã£o pela Secretaria de Cultura de empresa prestadora de serviÃ§os de gerenciamento da bilheteria, caberÃ¡ a esta efetuar a venda dos ingressos.
 
-- Compete, ainda, à  Municipalidade, o fornecimento da sonorização necessária à realização de espetáculos e dos equipamentos de iluminação disponíveis no local do evento, assim como providências quanto à divulgação de praxe (confecção de cartaz a ser afixado no equipamento cultural e encaminhamento de release à  mídia impressa e televisiva).
+- Compete, ainda, Ã  Municipalidade, o fornecimento da sonorizaÃ§Ã£o necessÃ¡ria Ã  realizaÃ§Ã£o de espetÃ¡culos e dos equipamentos de iluminaÃ§Ã£o disponÃ­veis no local do evento, assim como providÃªncias quanto Ã  divulgaÃ§Ã£o de praxe (confecÃ§Ã£o de cartaz a ser afixado no equipamento cultural e encaminhamento de release Ã  mÃ­dia impressa e televisiva).
 
-- A Coordenadoria dos Centros Culturais reserva-se o direito de disponibilizar 6 (seis) ingressos por apresentação, que não poderão ser comercializados pela Cia. Sendo que haverá comunicado com antecedência quando da utilização desses ingressos. Caso não haja manifestação por parte da SMC a comercialização desses ingressos será livre.
+- A Coordenadoria dos Centros Culturais reserva-se o direito de disponibilizar 6 (seis) ingressos por apresentaÃ§Ã£o, que nÃ£o poderÃ£o ser comercializados pela Cia. Sendo que haverÃ¡ comunicado com antecedÃªncia quando da utilizaÃ§Ã£o desses ingressos. Caso nÃ£o haja manifestaÃ§Ã£o por parte da SMC a comercializaÃ§Ã£o desses ingressos serÃ¡ livre.
 
-- A/o contratada/o se compromete a realizar o espetáculo para um número mínimo de 10 (dez) pagantes.
+- A/o contratada/o se compromete a realizar o espetÃ¡culo para um nÃºmero mÃ­nimo de 10 (dez) pagantes.
 
-Aceito as condições dessa O.E.S para todos os efeitos de direito."));
+Aceito as condiÃ§Ãµes dessa O.E.S para todos os efeitos de direito."));
    
    $pdf->Ln();
      
@@ -339,7 +339,7 @@ Aceito as condições dessa O.E.S para todos os efeitos de direito."));
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(25,$l,utf8_decode('Local e data:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(160,$l,utf8_decode('São Paulo, '.$dataAtual),0,1,'L');
+   $pdf->Cell(160,$l,utf8_decode('SÃ£o Paulo, '.$dataAtual),0,1,'L');
    
    $pdf->Ln();
    $pdf->Ln();
@@ -356,7 +356,7 @@ Aceito as condições dessa O.E.S para todos os efeitos de direito."));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("Determino a execução do serviço na forma desta O.E.S."));
+   $pdf->MultiCell(180,$l,utf8_decode("Determino a execuÃ§Ã£o do serviÃ§o na forma desta O.E.S."));
    
     $pdf->Ln();
 	  

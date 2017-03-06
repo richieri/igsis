@@ -19,7 +19,7 @@ $pasta = "?perfil=emia&p=administrativo&pag=";
 					<li><a href="?perfil=emia&p=frm_lista_vigencia">Listar</a></li>
 				</ul>
 			</li>		
-			<li><a href="?perfil=emia">Voltar ao módulo Formação</a></li>
+			<li><a href="?perfil=emia">Voltar ao módulo EMIA</a></li>
 		</ul>
 	</div>
 </div>	

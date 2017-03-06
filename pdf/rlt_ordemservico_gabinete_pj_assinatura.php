@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 	session_start();
 	   @ini_set('display_errors', '1');
 	error_reporting(E_ALL); 	
@@ -238,7 +238,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(27,$l,utf8_decode('Suporte Legal:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(153,$l,utf8_decode('Artigo 25, inciso III, da Lei Federal nº 8.666/93 e alterações posteriores e artigo 1º da Lei Municipal nÂº 13.278/02, nos termos dos artigos 16 e 17 do Decreto nº 44.279/03.'));
+   $pdf->MultiCell(153,$l,utf8_decode('Artigo 25, inciso III, da Lei Federal nº 8.666/93 e alterações posteriores e artigo 1º da Lei Municipal nº 13.278/02, nos termos dos artigos 16 e 17 do Decreto nº 44.279/03.'));
    
    $pdf->Ln();
    
