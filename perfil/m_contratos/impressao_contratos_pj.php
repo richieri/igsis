@@ -51,6 +51,9 @@ $link40 = $http."rlt_declaracao_convenio500_1rep_pj.php";
 $link41 = $http."rlt_declaracao_convenio500_2rep_pj.php";
 $link42 = $http."rlt_declaracao_abertura_bb_pj.php";
 $link43 = $http."rlt_pedido_reserva_gabinete_pj.php";
+$link44 = $http."rlt_ordemservico_gabinete_pj.php";
+$link45 = $http."rlt_ordemservico_gabinete_pj_assinatura.php";
+
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -135,16 +138,17 @@ echo "
 						</tr>
 						
 						<tr>
-							<td><a href='$link23?id=$id_ped' target='_blank'><strong>Ordem de Serviço</strong></a></td>
 							<td><a href='$link37?id=$id_ped' target='_blank'><strong>Ordem de Serviço - Assinatura</strong></a></td>
+							<td><a href='$link45?id=$id_ped' target='_blank'><strong>Ordem de serviço - Gabinete Assinatura</strong></a></td>
+
 						</tr>
+
 						<tr>
-							<td><a href='$link26?id=$id_ped' target='_blank'><strong>Termo de Doação</strong></a></td>
 							<td><a href='$link38?id=$id_ped' target='_blank'><strong>Termo de Doação - Assinatura</strong></a></td>
+							<td><a href='$link8?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
 						</tr>	
 
 						<tr>
-							<td><a href='$link8?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
 							<td><a href='$link27?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
 						</tr>						
 						
