@@ -650,20 +650,144 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 </section>
 	<?php 
 		break;
-		case "arqpessoas":
+		case "arqcontratos":
+		
+		if(isset( $_POST['arqcontratos'] ) )
+			{
+				$idEvento = $_POST['evento'];
+				$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
+				$nome_evento = $evento['nomeEvento'];
+				$pathToSave = '../uploadscontratos/';
+				$i = 0;
+				$msg = array( );
+				$arquivos = array( array( ) );
+				foreach(  $_FILES as $key=>$info )
+				{
+					foreach( $info as $key=>$dados )
+					{
+						for( $i = 0; $i < sizeof( $dados ); $i++ )
+						{							
+							$arquivos[$i][$key] = $info[$key][$i];
+						}
+					}
+				}
+				$i = 1;
+				// Fazemos o upload normalmente, igual no exemplo anterior
+				foreach( $arquivos as $file )
+				{
+					// Verificar se o campo do arquivo foi preenchido
+					if( $file['name'] != '' )
+					{
+						$con = bancoMysqli();
+						$dataUnique = date('YmdHis');
+						$data = date('Y-m-d H:i:s');
+						$arquivoTmp = $file['tmp_name'];
+						$arquivo = $pathToSave.$dataUnique."_alt_".semAcento($file['name']);
+						$arquivo_base = $dataUnique."_alt_".semAcento($file['name']);
+						if(file_exists($arquivo))
+						{
+							echo "O arquivo ".$arquivo_base." já existe! Renomeie e tente novamente<br />";
+						}
+						else
+						{
+							$sql = "INSERT INTO ig_arquivo (idArquivo , arquivo , ig_evento_idEvento, publicado) VALUES( NULL , '$arquivo_base' , '$idEvento', '1' );";
+							mysqli_query($con,$sql);
+							$descricao = "Foram anexados arquivos.<br />
+							<a href=?perfil=busca&p=detalhe&evento=$idEvento target=_blank>Clique aqui para ter acesso.</a><br />";
+							$idUsuario = $_SESSION['idUsuario'];
+							$titulo = "Foram enviados arquivos.";
+							$sql_alt="INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', 'aberto', '10', '$idEvento', '')";
+							if(mysqli_query($con,$sql_alt))
+							{
+								gravarLog($sql_alt);
+								$mensagem = "Chamado aberto com sucesso!";
+							}
+							else
+							{
+								$mensagem = "Erro ao abrir chamado. Tente novamente.";
+							}
+							gravarLog($sql);
+							if( !move_uploaded_file( $arquivoTmp, $arquivo ) )
+							{
+								$msg[$i] = 'Erro no upload do arquivo '.$i;
+							}
+							else
+							{
+								$msg[$i] = 'Upload do arquivo %s foi um sucesso!';
+							}
+						}
+					}
+					$i++;
+				}
+				// Imprimimos as mensagens geradas pelo sistema	
+				foreach( $msg as $e )
+				{
+					echo " <div id = 'mensagem_upload'>";
+					printf('%s<br>', $e);
+					echo " </div>";
+				}
+				$titulo = "Foram enviados arquivos.";
+				$sql_alt="INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', 'aberto', '10', '$idEvento', '')";
+				if(mysqli_query($con,$sql_alt))
+				{
+					gravarLog($sql_alt);
+					$mensagem = "Chamada aberta com sucesso!";
+				}
+				else
+				{
+					$mensagem = "Erro ao abrir chamada. Tente novamente.";
+				}
+			}
 	?>
 <section id="contact" class="home-section bg-white">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-	                <h4>Escolha uma opção</h4>
+	                <h4>Envio de Arquivos</h4>
                 </div>
             </div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<a href="?perfil=chamado&p=arqpf" class="btn btn-theme btn-lg btn-block">Enviar arquivos de pessoas físicas (PF)</a>
-					<a href="?perfil=chamado&p=arqpj" class="btn btn-theme btn-lg btn-block">Enviar arquivos de pessoas jurídicas (PJ)</a>
+					<p>Nesta página, você envia os arquivos ligados ao pedido de contratação, como por exemplo, propostas, FACC, decarações. O tamanho máximo do arquivo deve ser 50MB e deve estar no formato PDF.</p>					
+					<br />
+					
+					<form method='POST' action="?perfil=chamado&p=arqcontratos" enctype='multipart/form-data'>
+					
+					<label>Evento</label>
+					<select class="form-control" name="evento" id="inputSubject" >
+						<option value="0"></option>
+					<?php
+						$idUsuario = $_SESSION['idUsuario'];
+						$con = bancoMysqli();
+						$sql_lista_eventos = "SELECT * FROM ig_evento WHERE (idUsuario = '$idUsuario' OR idResponsavel = '$idUsuario' OR suplente = '$idUsuario') AND publicado = '1' AND dataEnvio IS NOT NULL ORDER BY idEvento";
+						$query_lista_eventos = mysqli_query($con,$sql_lista_eventos);
+						while($event = mysqli_fetch_array($query_lista_eventos))
+						{
+					?>
+							<option value="<?php echo $event['idEvento'] ?>"><?php echo $event['nomeEvento'] ?></option>
+					<?php					
+						}				
+					?>
+					</select>
+					<br />
+					<br />
+					<div class = "center">
+						<p><input type='file' name='arquivo[]'></p>
+						<p><input type='file' name='arquivo[]'></p>
+						<p><input type='file' name='arquivo[]'></p>
+						<p><input type='file' name='arquivo[]'></p>
+						<p><input type='file' name='arquivo[]'></p>
+						<p><input type='file' name='arquivo[]'></p>
+						<p><input type='file' name='arquivo[]'></p>
+						<p><input type='file' name='arquivo[]'></p>
+						<p><input type='file' name='arquivo[]'></p>
+						<br>
+						<input type="hidden" value='<?php echo $event['idEvento'] ?>' name='arqcontratos' />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value='Enviar' name='enviar'>				
+					</div>
+					</form>
+							
 				</div>
 			</div>
         </div>
