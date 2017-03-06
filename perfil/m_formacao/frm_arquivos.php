@@ -4,6 +4,7 @@ include 'includes/menu.php';
 $con = bancoMysqli();
 $idPessoa = $_REQUEST['idPessoa'];
 $tipoPessoa = $_REQUEST['tipoPessoa'];
+$id = $_SESSION['id'];
 
 if(isset($_POST['fisica']) OR ($_GET['tipoPessoa'] == 4))
 {
@@ -139,7 +140,7 @@ $campo = recuperaPessoa($_REQUEST['idPessoa'],$_REQUEST['tipoPessoa']);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 <?php
-	if($_SESSION['id'] > 0)
+	if($id > 0)
 	{
 ?>
 						<a href="?perfil=formacao&p=frm_cadastra_dadoscontratacao&id=<?php echo $_SESSION['id'] ?>"><input type="submit" value="Voltar aos dados de contratação" class="btn btn-theme btn-block"></a>

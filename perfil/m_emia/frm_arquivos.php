@@ -76,7 +76,7 @@ $campo = recuperaPessoa($_REQUEST['idPessoa'],$_REQUEST['tipoPessoa']);
 					<p><strong>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</p></strong>
 				</div>
 				<div class="table-responsive list_info">
-					<?php listaArquivosPessoaSiscontratEmia($idPessoa,$tipoPessoa,"",$p,"emia"); ?>
+					<?php listaArquivosPessoaSiscontratFormacao($idPessoa,$tipoPessoa,"",$p,"emia"); ?>
 				</div>
 			</div>
 		</div>  
