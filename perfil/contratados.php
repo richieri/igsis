@@ -3476,6 +3476,27 @@
 	<?php 
 		break;
 		case "edicaoParecer":
+		
+		if(isset($_POST['editaParecer']))
+			{
+				$id_ped = $_SESSION['idPedido'];				
+				$topico1 = $_POST['topico1'];
+				$topico2 = $_POST['topico2'];
+				$topico3 = $_POST['topico3'];
+				$topico4 = $_POST['topico4'];
+				
+				$sql_insere_parecer = "INSERT INTO `igsis_parecer_artistico`( `idPedidoContratacao`, `topico1`, `topico2`, `topico3`, `topico4`) VALUES ('$id_ped','$topico1','$topico2','$topico3','$topico4')";
+				if(mysqli_query($con,$sql_insere_parecer))
+				{
+					gravarLog($sql_insere_parecer);
+					$mensagem = "Atualizado com sucesso!";
+				}
+				else
+				{
+					$mensagem = "Erro ao atualizar! Tente novamente.";
+				}
+			}
+		$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
 	?>
 <script>
 function mostrarResultado(box,num_max,campospan){
@@ -3485,23 +3506,47 @@ function mostrarResultado(box,num_max,campospan){
 		if (contagem_carac == 1){
 			document.getElementById(campospan).innerHTML = contagem_carac + " caracter digitado";
 		}
-		if (contagem_carac <= num_max){
-			document.getElementById(campospan).innerHTML = "Você não inseriu a quantidade mínima de caracteres!";
+		if (contagem_carac < num_max){
+			document.getElementById(campospan).innerHTML = "<font color='red'>Você não inseriu a quantidade mínima de caracteres!</font>";
 		}
 	}else{
-		document.getElementById(campospan).innerHTML = "Ainda não temos nada digitado..";
+		document.getElementById(campospan).innerHTML = "Ainda não temos nada digitado...";
 	}
 }
+
 function contarCaracteres(box,valor,campospan){
 	var conta = valor - box.length;
-	document.getElementById(campospan).innerHTML = "Você ainda pode digitar " + conta + " caracteres";
+	document.getElementById(campospan).innerHTML = "Faltam " + conta + " caracteres";
 	if(box.length >= valor){
-		document.getElementById(campospan).innerHTML = "Opss.. você não pode mais digitar..";
-		document.getElementById("campo").value = document.getElementById("campo").value.substr(0,valor);
-		document.getElementById("topico4").value = document.getElementById("campo").value.substr(0,valor);
+		document.getElementById(campospan).innerHTML = "Quantidade mínima de caracteres atingida!";
 	}	
 }
- </script> 	
+
+function mostrarResultado3(box,num_max,campospan){
+	var contagem_carac = box.length;
+	if (contagem_carac != 0){
+		document.getElementById(campospan).innerHTML = contagem_carac + " caracteres digitados";
+		if (contagem_carac == 1){
+			document.getElementById(campospan).innerHTML = contagem_carac + " caracter digitado";
+		}
+		if (contagem_carac < num_max){
+			document.getElementById(campospan).innerHTML = "<font color='red'>Você não inseriu a quantidade mínima de caracteres!</font>";
+		}
+	}else{
+		document.getElementById(campospan).innerHTML = "Ainda não temos nada digitado...";
+	}
+}
+function contarCaracteres3(box,valor,campospan){
+	var conta = valor - box.length;
+	document.getElementById(campospan).innerHTML = "Faltam " + conta + " caracteres";
+	if(box.length >= valor){
+		document.getElementById(campospan).innerHTML = "Quantidade mínima de caracteres atingida!";
+	}	
+}
+</script>
+
+
+ 	
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
@@ -3511,31 +3556,29 @@ function contarCaracteres(box,valor,campospan){
 	  	<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">    
                 <div class="form-group">
-				<form name="form" class="form-horizontal" role="form" onsubmit="return valida()" action="#" method="post">>	
+				<form name="form" class="form-horizontal" role="form" onsubmit="return valida()" action="#" method="post">
 					<hr/>
 					<h6>1º Tópico</h6>					
 					<label>Neste tópico deve conter o posicionamento da comissão e as informações gerais do evento (nome do artista, evento, datas, valor, tempo, etc).</label>
 					<p align="justify"><font color="gray"><strong><i>Texto de exemplo:</strong><br/>Esta comissão ratifica o pedido de contratação de Nome do artista ou grupo(nome artístico) por intermédio da Nome da empresa representante, para apresentação artística no evento “Nome do evento ou atividade especial”, que ocorrerá no dia datas ou período quando for temporada no valor de R$ XXX (valor por extenso).</font></i></p>					
-					<textarea name="topico1" id="topico1" class="form-control" rows="6"><?php //echo $pedido["justificativa"] ?></textarea>
+					<textarea name="topico1" id="topico1" class="form-control" rows="6"><?php echo $parecer["topico1"]; ?></textarea>
 					
 					<hr/>
 					
 					<h6>2º Tópico (mínimo de 500 caracteres)</h6> 
 					<label>Neste tópico deve-se falar sobre o evento ou atividade especial da qual o artista/grupo irá participar. Se for programação geral do equipamento, sem estar vinculada a nenhum evento ou projeto específico, falar sobre o equipamento, histórico, tipo de atividades desenvolvidas, etc, demonstrando a importância desse tipo de programação dentro do equipamento.</label>
-					<p align="justify"><font color="gray"><strong><i>Texto de exemplo:</strong><br/>Em sua nona edição, o projeto Virada Cultural, da Secretaria Municipal de Cultura, consolida a Cidade de São Paulo como o principal pólo gerador de arte e cultura do País proporcionando, não só aos munícipes como também aos visitantes de outros Estados e de outras nacionalidades, o acesso gratuito ao que há de melhor na produção cultural atual existente no Brasil e no exterior. A Virada Cultural da Cidade de São Paulo, através de apresentações artísticas em logradouros públicos e equipamentos oficiais dentre outros espaços culturais conquistou, nesses nove anos de existência, o reconhecimento da mídia e do público, solidificando-se como um dos eventos nacionais mais conhecidos e divulgados do Brasil, assim como no exterior.</font></i></p>
-					<span class="caracteres">-500</span> Caracteres <br>
-					<textarea name="topico2" id="topico2" class="form-control" rows="10"><?php //echo $pedido["justificativa"] ?></textarea>
-					
+					<p align="justify"><font color="gray"><strong><i>Texto de exemplo:</strong><br/>Em sua nona edição, o projeto Virada Cultural, da Secretaria Municipal de Cultura, consolida a Cidade de São Paulo como o principal pólo gerador de arte e cultura do País proporcionando, não só aos munícipes como também aos visitantes de outros Estados e de outras nacionalidades, o acesso gratuito ao que há de melhor na produção cultural atual existente no Brasil e no exterior. A Virada Cultural da Cidade de São Paulo, através de apresentações artísticas em logradouros públicos e equipamentos oficiais dentre outros espaços culturais conquistou, nesses nove anos de existência, o reconhecimento da mídia e do público, solidificando-se como um dos eventos nacionais mais conhecidos e divulgados do Brasil, assim como no exterior.</font></i></p>					
+					<textarea cols="45" name="topico2" id="topico2" rows="10" class="form-control" onkeyup="mostrarResultado(this.value,500,'spcontando');contarCaracteres(this.value,500,'sprestante')"><?php echo $parecer["topico2"]; ?></textarea>
+					<span id="spcontando" style="font-family:Georgia;">Ainda não temos nada digitado...</span><br />
+					<span id="sprestante" style="font-family:Georgia;"></span>
+								
 					<hr/>
 					
 					<h6>3º Tópico (mínimo de 700 caracteres)</h6> 
 					<label>Neste tópico deve-se falar sobre o currículo/biografia do artista ou grupo (na 3ª pessoa), escrever um breve release. Deve ficar claro que o artista contribuirá positivamente para a programação e porque essa é a melhor escolha de artista para o evento.</label>
-					<span class="caracteres">-700</span> Caracteres <br>
-					<textarea name="topico3" id="topico3" class="form-control" rows="10"><?php //echo $pedido["justificativa"] ?></textarea>
-					
-					<textarea cols="45" id="campo" rows="5" onkeyup="mostrarResultado(this.value,700,'spcontando');contarCaracteres(this.value,700,'sprestante')"></textarea><br />
-<span id="spcontando" style="font-family:Georgia;">Ainda não temos nada digitado...</span><br />
-<span id="sprestante" style="font-family:Georgia;"></span>
+					<textarea cols="45" name="topico3" id="topico3" rows="10" class="form-control" onkeyup="mostrarResultado3(this.value,700,'spcontando3');contarCaracteres3(this.value,700,'sprestante3')"><?php echo $parecer["topico3"]; ?></textarea>
+					<span id="spcontando3" style="font-family:Georgia;">Ainda não temos nada digitado...</span><br />
+					<span id="sprestante3" style="font-family:Georgia;"></span>
 					
 					<hr/>
 					
@@ -3544,14 +3587,12 @@ function contarCaracteres(box,valor,campospan){
 					<p align="justify"><font color="gray"><strong><i>Texto de exemplo:</strong><br/>O contratado, pelo exposto, reúne as condições necessárias para desenvolver este trabalho de natureza artística, tendo em vista que uma das metas da Secretaria Municipal de Cultura é proporcionar uma oportunidade para artistas que ainda não se projetaram na carreira e tenham visibilidade local. Ainda, avaliamos que o cachê proposto encontra-se compatível com os valores praticados no mercado e pagos por esta Secretaria, conforme pode ser comprovado pelos documentos x, y e z, em cumprimento ao Acórdão TCM 2.393/15-37.
 					<br/>
 					Sendo os serviços indubitavelmente de natureza artística, manifestamo-nos favoravelmente à contratação, endossando a proposta inicial.</font></i></p>
-					<textarea name="topico4" id="topico4" class="form-control" rows="10"onkeyup="mostrarResultado(this.value,700,'spcontando');contarCaracteres(this.value,700,'sprestante')"></textarea><br />
-<span id="spcontando" style="font-family:Georgia;">Ainda não temos nada digitado...</span><br />
-<span id="sprestante" style="font-family:Georgia;"></span>
+					<textarea name="topico4" class="form-control" rows="10"><?php echo $parecer["topico4"]; ?></textarea>
 											
 				</div>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="editaJuridica" value="<?php echo $juridica['Id_PessoaJuridica'] ?>" />
+						<input type="hidden" name="editaParecer" value="<?php echo $parecer['idParecer'] ?>" />
 						<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 					</div>
 				</div>
