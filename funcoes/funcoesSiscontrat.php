@@ -199,7 +199,7 @@
 				$emia = recuperaDados("sis_emia",$pedido['idPedidoContratacao'],"idPedidoContratacao");
 				$cargo = recuperaDados("sis_emia_cargo",$emia['IdCargo'],"Id_Cargo");
 				$funcao = $cargo['Cargo'];
-				$objeto = "Realizar ".$funcao." da EMIA, da faixa etária de 05 a 12 anos.";
+				$objeto = $funcao." da EMIA, da faixa etária de 05 a 12 anos.";
 				$idLocal = $emia['IdLocal'];
 				$local = recuperaDados("ig_local",$idLocal,"idLocal");
 				$loc = $local['sala'];

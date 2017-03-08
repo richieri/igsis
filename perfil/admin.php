@@ -1290,9 +1290,36 @@
 							</div> <!-- Fim de Preenchemento !-->  
 							<!-- Botão de Confirmar cadastro !-->
 							<div class="col-md-offset-2 col-md-8">
+								<script type="application/javascript">
+									$(function() {
+										/* caixa-confirmacao representa a id onde o caixa de confirmação deve ser criada no html */
+										$( "#caixa-confirmacao" ).dialog({
+										  resizable: false,
+										  height:500,
+
+										  /* 
+										   * Modal desativa os demais itens da tela, impossibilitando interação com eles,
+										   * forçando usuário a responder à pergunta da caixa de confirmação
+										   */ 
+										  modal: true,
+
+										  /* Os botões que você quer criar */
+										  buttons: {
+											"Sim": function() {
+											  $( this ).dialog( "close" );
+											  alert("Você clicou em Sim");
+											},
+											"Não": function() {
+											  $( this ).dialog( "close" );
+											  alert("Você clicou em Não");
+											}
+										  }
+										});
+									  });
+								</script>
 								<input type="hidden" name="editarUser" value="<?php echo $_POST['editarUser'] ?>"  />
 								<input type="hidden" name="atualizar" value="1"  />
-								<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar Usuário"  />
+								<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar Usuário" onclick="return confirm('Tem certeza que deseja realizar essa ação?')" />
 							</div>
 						</div>
 					</div>

@@ -4,7 +4,7 @@
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
    require_once("../funcoes/funcoesSiscontrat.php");
-   require_once("../funcoes/funcoesFormacao.php");
+   require_once("../funcoes/funcoesEmia.php");
 
 //CONEXÃO COM BANCO DE DADOS 
    $conexao = bancoMysqli();
@@ -29,11 +29,6 @@ $dataPagamento = $parcelamento[$id_parcela]['pagamento'];
 $dataAtual = date("d/m/Y");
 $ano=date('Y');
 $dataFinal = $parcelamento[$id_parcela]['vigencia_final'];
-
-  
- ?>
- 
- <?
 //datas
 $dia = date('d');
 $mes = date('m');
@@ -90,8 +85,8 @@ $sei =
   "<p><strong><u><center>ATESTADO DE CONFIRMAÇÃO DE SERVIÇOS</strong></p></u></center>".
   "<p>&nbsp;</p>".
   "<p>Informamos que os serviços prestados pelo(a): ".$nome."</p>".
-  "<p><strong>EVENTO: </strong> Oficineiro de Artes Plásticas da EMIA, da faixa etária de 05 a 12 anos</p>".
-  "<p><strong>NO: </strong> EMIA </p>".
+  "<p><strong>OBJETO: </strong>".$objeto."</p>".
+  "<p><strong>NA: </strong> EMIA </p>".
   "<P><strong>DIA(S) / HORÁRIO(S): </strong>".$periodoParcela."</p>".
   "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS</p>".
   "<p>( X ) FORAM REALIZADOS A CONTENTO</p>".
