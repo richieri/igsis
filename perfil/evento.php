@@ -990,7 +990,7 @@ include "../include/menuEvento.php";
 </div>
 			<?php 
 				break;
-				case 9:
+				case 3 || 7 || 9 || 14 || 17 || 27 || 29:
 					$idTabela = "ig_teatro_danca";
 					$idCampo = "ig_evento_idEvento";
 					$idDado = $_SESSION['idEvento'];
