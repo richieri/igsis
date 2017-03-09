@@ -69,9 +69,9 @@ $sei =
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>Solicito a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 - ProgramaÃ§Ã£o de Atividades Culturais da U.O. 25.10 (Pessoa JurÃ­dica) visando possibilitar a contrataÃ§Ã£o de que trata esse processo.</p>".
+  "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 - Programação de Atividades Culturais da U.O. 25.10 (Pessoa Jurídica) visando possibilitar a contratação de que trata esse processo.</p>".
   "<p>&nbsp;</p>".
-  "<p>ApÃ³s, encaminhar para SMC / Assessoria JurÃ­dica para prosseguimento. </p>".
+  "<p>Após, encaminhar para SMC / Assessoria Jurídica para prosseguimento. </p>".
   "<p>&nbsp;</p>"
 
 ?>
