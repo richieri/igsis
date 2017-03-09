@@ -9,50 +9,56 @@ $server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; //mudar para pasta do igs
 $http = $server."/pdf/";
 
 $link0 = $http."rlt_pedido_contratacao_pf.php"."?id=".$id_ped;
-$link5 = $http."rlt_fac_pf.php";
-$link6 = $http."rlt_evento_pf.php";
-$link8 = $http."rlt_pedido_reserva_fepac_pf.php";
-$link9 = $http."rlt_pedido_reserva_cooperativa_pf.php";
-$link10 = $http."rlt_pedido_reserva_vocacional_pf.php";
-$link11 = $http."rlt_recibo_ne_pf.php";
-$link12 = $http."rlt_declaracao_naoservidor_pf.php";
-$link13 = $http."rlt_declaracao_iss_pf.php";
-$link14 = $http."rlt_parecer_pf.php";
-$link15 = $http."rlt_direitos_conexos.php";
+$link33 = $http."rlt_pedido_contratacao_pf_formacao.php";
+
 $link16 = $http."rlt_proposta_reversaolonga_pf.php"."?id=".$id_ped."&penal=18"; 
 $link17 = $http."rlt_proposta_reversaocurta_pf.php"."?id=".$id_ped."&penal=16";
 $link18 = $http."rlt_proposta_doacao_pf.php"."?id=".$id_ped."&penal=6";
-$link19 = $http."rlt_ordemservico_pf.php";
-$link20 = $http."rlt_declaracao_exclusividade_pf.php";
 $link21 = $http."rlt_proposta_cinema_pf.php"."?id=".$id_ped."&penal=3";
 $link22 = $http."rlt_proposta_comissaojulgadora_pf.php"."?id=".$id_ped."&penal=5";
 $link23 = $http."rlt_proposta_exposicao_pf.php"."?id=".$id_ped."&penal=10";
 $link24 = $http."rlt_proposta_oficinassemedital_pf.php"."?id=".$id_ped."&penal=12";
 $link25 = $http."rlt_proposta_palestra_pf.php"."?id=".$id_ped."&penal=15";
-$link26 = $http."rlt_termo_doacaoobradearte_pf.php";
-$link27 = $http."rlt_termo_doacaoservico_pf.php";
-$link28 = $http."rlt_termo_parceria_pf.php";
 $link29 = $http."rlt_proposta_formacao.php"."?id=".$id_ped."&penal=20";
 $link30 = $http."rlt_proposta_pia_pf.php"."?id=".$id_ped."&penal=21";
-$link32 = $http."rlt_pedido_reserva_chefiagabinete_pf.php";
-$link33 = $http."rlt_pedido_contratacao_pf_formacao.php";
-$link34 = $http."rlt_pedido_reserva_transferencia_pf.php";
-$link35 = $http."rlt_pedido_reserva_transferencia_virada_pf.php";
-$link36 = $http."rlt_pedido_reserva_transferencia_virada_centro_pf.php";
-$link37 = $http."rlt_normas_internas_teatros_pf.php"."?id=".$id_ped;
 $link38 = $http."rlt_proposta_exposicao_edital_pf.php"."?id=".$id_ped."&penal=23";
 $link39 = $http."rlt_proposta_mediacao_edital_pf.php"."?id=".$id_ped."&penal=25";
 $link40 = $http."rlt_proposta_contadores_edital_pf.php"."?id=".$id_ped."&penal=26";
 $link41 = $http."rlt_proposta_galadeballet_edital_pf.php"."?id=".$id_ped."&penal=29";
-$link42 = $http."rlt_pedido_reserva_oficinaseditalcasa_pf.php";
-$link43 = $http."rlt_termo_doacao_pf_assinatura.php";
-$link44 = $http."rlt_ordemservico_pf_assinatura.php";
-$link45 = $http."rlt_pedido_reserva_ccsp_pf.php";
+
+
+$link12 = $http."rlt_declaracao_naoservidor_pf.php";
+$link13 = $http."rlt_declaracao_iss_pf.php";
+$link20 = $http."rlt_declaracao_exclusividade_pf.php";
 $link46 = $http."rlt_declaracao_convenio500_pf.php";
 $link47 = $http."rlt_declaracao_abertura_bb_pf.php";
+
+$link3 = $http."rlt_pedido_reserva_fepac_pf.php";
+$link9 = $http."rlt_pedido_reserva_cooperativa_pf.php";
+$link10 = $http."rlt_pedido_reserva_vocacional_pf.php";
+$link34 = $http."rlt_pedido_reserva_transferencia_pf.php";
+$link35 = $http."rlt_pedido_reserva_transferencia_virada_pf.php";
+$link45 = $http."rlt_pedido_reserva_centrosculturais_pf.php";
 $link48 = $http."rlt_pedido_reserva_gabinete_pf.php";
+$link48 = $http."rlt_pedido_reserva_dph_pf.php";
+$link48 = $http."rlt_pedido_reserva_csmb_pf.php";
+$link48 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
+
+$link15 = $http."rlt_direitos_conexos.php";
+$link2 = $http."rlt_evento_pf.php";
+$link1 = $http."rlt_fac_pf.php";
+$link37 = $http."rlt_normas_internas_teatros_pf.php"."?id=".$id_ped;
+$link19 = $http."rlt_ordemservico_pf.php";
+$link44 = $http."rlt_ordemservico_pf_assinatura.php";
 $link49 = $http."rlt_ordemservico_gabinete_pf.php";
-$link50 = $http."rlt_ordemservico_gabinete_pf_assinatura.php";
+$link10 = $http."rlt_ordemservico_gabinete_pf_assinatura.php";
+$link14 = $http."rlt_parecer_pf.php";
+$link11 = $http."rlt_recibo_ne_pf.php";
+$link26 = $http."rlt_termo_doacaoobradearte_pf.php";
+$link27 = $http."rlt_termo_doacaoservico_pf.php";
+$link28 = $http."rlt_termo_parceria_pf.php";
+$link43 = $http."rlt_termo_doacao_pf_assinatura.php";
+
 
 
 
@@ -140,12 +146,12 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>OUTROS</strong></td></tr>
 						
 						<tr>
-							<td><a href='$link5?id=$id_ped' target='_blank'><strong>FACC</strong></a></td>
+							<td><a href='$link1?id=$id_ped' target='_blank'><strong>FACC</strong></a></td>
 							<td><a href='$link14?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
 						</tr>
 						<tr>
 							<td><a href='$link44?id=$id_ped' target='_blank'><strong>Ordem de serviço - CCSP Assinatura</strong></a></td>
-							<td><a href='$link50?id=$id_ped' target='_blank'><strong>Ordem de serviço - Gabinete Assinatura</strong></a></td>
+							<td><a href='$link10?id=$id_ped' target='_blank'><strong>Ordem de serviço - Gabinete Assinatura</strong></a></td>
 						</tr>
 						
 						<tr>
@@ -164,11 +170,11 @@ echo "
 						
 						<tr>
 							<td><a href='$link9?id=$id_ped' target='_blank'><strong>Cooperativa</strong></a></td>
-							<td><a href='$link8?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
+							<td><a href='$link3?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
 						</tr>
 						<tr>
 							<td><a href='$link10?id=$id_ped' target='_blank'><strong>Formação</strong></a></td>
-							<td><a href='$link32?id=$id_ped' target='_blank'><strong>Formação - Gabinete</strong></a></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td><a href='$link34?id=$id_ped' target='_blank'><strong>Verba com Transferência</strong></a></td>
@@ -176,7 +182,7 @@ echo "
 						</tr>
 						
 						<tr>
-							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficinas - Edital Casas de Cultura</strong></a></td>
+							<td></td>
 							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
 						</tr>
 							<td><a href='$link45?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
