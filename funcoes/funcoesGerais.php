@@ -830,7 +830,9 @@
 				Horário: $hora<br />
 				Duração: $duracao<br />
 				Local: $espaco - $instituicao<br />
-				Retirada de ingresso: $retirada  - Valor: $valor <br /></br>";
+				Retirada de ingresso: $retirada  - Valor: $valor <br />
+				Observações: $observacao<br />";
+				
 			echo "<tr>";
 			echo "<td class='list_description'>".$ocorrencia."</td>";
 			echo "
@@ -940,6 +942,7 @@
 		$local = listaLocais($idEvento);
 		$localMostra = listaLocaisMostra($idEvento);
 		$periodo = retornaPeriodo($idEvento);
+		$observacao = recuperaObservacao($idEvento);
 		if($evento['ig_tipo_evento_idTipoEvento'] == 1)
 		{
 			$final = $mostra."<br />".substr($localMostra,1);
