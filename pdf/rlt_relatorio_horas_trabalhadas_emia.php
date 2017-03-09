@@ -59,7 +59,7 @@ header("Content-Disposition: attachment;Filename=Relatorio_Horas_trabalhadas_$an
 <style type='text/css'>
 .style_01 {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 8px;
 }
 
 table {
@@ -67,20 +67,16 @@ table {
 }
 </style>
 
-
-
 <p align="center"><strong>PREFEITURA  MUNICIPAL DE SÃO PAULO</strong><br />
 <strong>SECRETARIA  MUNICIPAL DE CULTURA – ESCOLA MUNICIPAL DE INICIAÇÃO ARTÍSTICA</strong><br /></p>
 <strong><?php echo $nome; ?></strong><br />
-<strong><?php echo $cargo; ?> </strong>- de segunda-feira a sexta-feira, em dias e horários determinados pela direção da Escola.<br />
-<strong>Período: </strong> <?php echo $periodoParcela; ?> 
-<p>&nbsp;</p>
+<strong><?php echo $cargo; ?> </strong>- de segunda-feira a sábado, em dias e horários determinados pela direção da Escola.<br />
+<strong>Período: </strong> <?php echo $periodoParcela; ?> <br />
 <table width="100%" border="1">
   <tr>
 	<td align="center" width="100%"><strong>FOLHA DE FREQUÊNCIA INDIVIDUAL (carga de aula)</strong></td>
   </tr>
 </table>	
-<br /><br />
 <table width="100%" border="1">
   <tr>
     <td align="center" width="10%"><strong>DIA</strong></td>
@@ -220,21 +216,54 @@ table {
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
+    <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+    <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+    <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+    <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
   <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td><strong> < total carga horária</strong></td>
     <td>&nbsp;</td>
   </tr>
+  
 </table>
-
+<p>&nbsp;</p>
 <table width="100%" border="0">
   <tr>
-    <td align="center" width="34%" height="70" valign="bottom">_______________________________________</td>
-	</td>  
-  </tr>
-  <tr>
-    <td align="center" width="33%" valign="top">Luciana Schwinden</td>
+    <td align="center" width="33%" valign="top">_______________________________________ <br />Luciana Schwinden</td>
 	<tr><center>Diretora</center></tr>
 	<tr><center>RF 791.181.5-4</center></tr>
   </tr>
