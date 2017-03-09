@@ -24,7 +24,9 @@
 				$estado = $_POST['estado'];
 				$juridico = $_POST['juridico'];
 				$processo = $_POST['NumeroProcesso'];
-				if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $processo == 0 AND $juridico == 0)
+				$valor_inicial = $_POST['valor_inicial'];
+				$valor_final = $_POST['valor_final'];
+				if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $processo == 0 AND $juridico == 0 AND $valor_inicial == 0 AND $valor_final == 0)
 				{
 ?>
 <section id="services" class="home-section bg-white">
@@ -214,7 +216,15 @@
 						else
 						{
 							$filtro_juridico = " AND ig_evento.ig_modalidade_IdModalidade = '$juridico'  ";
-						}	
+						}
+						if($valor_inicial == 0 || $valor_final == 0)
+						{
+							$filtro_valor = " ";
+						}
+						else
+						{
+							$filtro_valor = "AND igsis_pedido_contratacao.valor BETWEEN '$valor_inicial' AND '$valor_final'";
+						}
 						$sql_evento = "SELECT * 
 							FROM ig_evento,
 							igsis_pedido_contratacao 
@@ -226,7 +236,8 @@
 							$filtro_tipo 
 							$filtro_instituicao 
 							$filtro_processo 
-							$filtro_juridico  
+							$filtro_juridico
+							$filtro_valor
 							AND estado IS NOT NULL 
 							ORDER BY idPedidoContratacao DESC";
 						$query_evento = mysqli_query($con,$sql_evento);
@@ -287,7 +298,8 @@
 										$x[$i]['local'] = substr($local,1);
 										$x[$i]['instituicao'] = $instituicao['sigla'];
 										$x[$i]['periodo'] = $periodo;
-										$x[$i]['status'] = $pedido['estado'];			
+										$x[$i]['status'] = $pedido['estado'];	
+										$x[$i]['valor'] = $pedido['valor'];
 										$i++;
 									}
 								}
@@ -341,7 +353,8 @@
 						echo '<td class="list_description">'.$x[$h]['local'].				'</td> ';
 						echo '<td class="list_description">'.$x[$h]['instituicao'].			'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].				'</td> ';
-						echo '<td class="list_description">'.$status['estado'].				'</td> </tr>';
+						echo '<td class="list_description">'.$status['estado'].				'</td> ';
+						echo '<td class="list_description">'.$x[$h]['valor'].		'</td>	</tr>';
 					}
 				?>
 				</tbody>
@@ -406,6 +419,10 @@
 							<option value='0'></option>
 							<?php  geraOpcao("ig_modalidade","",""); ?>
 						</select>
+						<br />
+						<label>Valor</label>
+						<input type="text" name="valor_inicial" class="form-control" placeholder="Valor Inicial" > - <input type="text" name="valor_final" class="form-control" placeholder="Valor Final" 
+						><br />
 				</div>
 			</div>
 			<br />             
