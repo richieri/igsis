@@ -926,7 +926,8 @@
 					Horário: $hora<br />
 					Duração: $duracao min<br />
 					Local: $espaco - $instituicao<br />
-					Retirada de ingresso: $retirada  - Valor: $valor <br /></br></div>";  
+					Retirada de ingresso: $retirada  - Valor: $valor <br />
+					Observações: $observacao</br></div>";  
 				if($campo['virada'] == 1)
 				{
 					$ocorrencia = "<div class='left'>Jornada do Patrimônio</br></div>";
@@ -1031,7 +1032,7 @@
 		{
 			$subEvento = mysql_fetch_array($query);	
 		}
-		return $subEvento ;
+		return $subEvento;
 	}
 	function recuperaUsuario($idUsuario)
 	{

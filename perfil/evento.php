@@ -1672,7 +1672,7 @@ include "../include/menuEvento.php";
 				`duracao` = '$duracao',
 				`precoPopular` = '$precoPopular',
 				`idSubEvento` = '$idSubEvento',
-				`virada` = '$virada'
+				`virada` = '$virada',
 				`observacao` = '$observacao'
 				WHERE 	`idOcorrencia` = '$idOc'";
 				$con = bancoMysqli();
@@ -1904,7 +1904,7 @@ include "../include/menuEvento.php";
 					
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Observações</strong><br/>
-							<textarea name="observacao" cols="40" rows="2"></textarea>
+							<textarea name="observacao" class="form-control" cols="40" rows="2"></textarea>
 						</div>
 					</div>
 					<div class="form-group">
@@ -2035,7 +2035,8 @@ include "../include/menuEvento.php";
                     <div class="form-group">  
                         <div class="col-md-offset-2 col-md-8">
  						    <select class="form-control" name="idSubEvento" id="inputSubject" >
-								<option>Selecione</option>
+								<option>Selecione o sub-evento</option>
+								<option value="0">Não é sub-evento</option>
 								<?php geraOpcaoSub($_SESSION['idEvento'],""); ?>
 							</select>
 						</div>
@@ -2129,7 +2130,7 @@ include "../include/menuEvento.php";
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Observações</strong><br/>
-							<textarea name="observacao" cols="40" rows="2"></textarea>
+							<textarea name="observacao" class="form-control" cols="40" rows="4"> <?php echo $ocor['observacao'] ?> </textarea>
 						</div>
 					</div>
 					<div class="form-group">
