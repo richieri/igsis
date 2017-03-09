@@ -23,6 +23,7 @@ $pedido_pessoa = siscontratDocs($pedido['IdProponente'],1);
 $nome = $pedido_pessoa["Nome"];
 $cpf = $pedido_pessoa["CPF"];
 
+
 //$horas = retornaCargaHoraria($id_ped,$id_parcela);
 
 $parcelamento = retornaParcelaPagamento($id_ped);

@@ -7,7 +7,7 @@
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
    require_once("../funcoes/funcoesSiscontrat.php");
-   require_once("../funcoes/funcoesFormacao.php");
+   require_once("../funcoes/funcoesEmia.php");
 
    //CONEXÃO COM BANCO DE DADOS 
    $conexao = bancoMysqli(); 
@@ -42,12 +42,8 @@ $pedido_pessoa = siscontratDocs($pedido['IdProponente'],1);
 $nome = $pedido_pessoa["Nome"];
 $cpf = $pedido_pessoa["CPF"];
 
-$formacao = pdfFormacao($id_ped);
-$cargo = $formacao["Cargo"];
-$programa = $formacao["Programa"];
-$linguagem = $formacao["linguagem"];
-
-$retornaMes = retornaMesExtenso(exibirDataMysql($dataFinal));
+$emia = pdfEmia($id_ped);
+$cargo = $emia["Cargo"];
 
 $dataAtual = date("d/m/Y");
 $ano=date('Y');
@@ -67,7 +63,7 @@ header("Content-Disposition: attachment;Filename=Relatorio_Horas_trabalhadas_$an
 }
 @page WordSection1
 	{size:842.0pt 21.0cm;
-	mso-page-orientation:landscape;
+	mso-page-orientation:portrait;
 	margin:15.9pt 26.1pt 15.9pt 36.0pt;
 	mso-header-margin:35.45pt;
 	mso-footer-margin:35.45pt;
@@ -84,8 +80,15 @@ table {
 <p align="center"><strong>PREFEITURA  MUNICIPAL DE SÃO PAULO</strong><br />
 <strong>SECRETARIA  MUNICIPAL DE CULTURA – ESCOLA MUNICIPAL DE INICIAÇÃO ARTÍSTICA</strong><br /></p>
 <strong><?php echo $nome; ?></strong><br />
-<strong>Oficinas de <?php echo $cargo; ?> </strong>- de segunda-feira a sexta-feira, em dias e horários determinados pela direção da Escola.<br />
-<strong>Período: </strong> <?php echo $periodoParcela; ?>
+<strong><?php echo $cargo; ?> </strong>- de segunda-feira a sexta-feira, em dias e horários determinados pela direção da Escola.<br />
+<strong>Período: </strong> <?php echo $periodoParcela; ?> <br />
+
+<table width="100%" border="1"><br />
+  <tr>
+	<td align="center" width="100%"><strong>FOLHA DE FREQUÊNCIA INDIVIDUAL (carga de aula)</strong></td>
+  </tr>
+</table>	
+<br />
 <table width="100%" border="1"><br />
   <tr>
     <td align="center" width="10%"><strong>DIA</strong></td>

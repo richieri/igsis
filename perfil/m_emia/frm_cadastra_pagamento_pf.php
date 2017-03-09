@@ -134,7 +134,7 @@ for($i = 1; $i < count($parcelamento); $i++)
 	echo '<td class="list_description"><a target="_blank" href='.$link1.'&parcela='.$i.'>Pagamento</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link2.'&parcela='.$i.'>Recibo</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link3.'&parcela='.$i.'>Atestado Serviço</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link5.'&parcela='.$i.'>Relatório Horas</a></td>';
+	echo '<td class="list_description"><a target="_blank" href='.$link5.'&parcela='.$i.'>FFI</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Contabilidade</a></td></tr>';
 } ?>	
 

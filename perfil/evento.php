@@ -1630,10 +1630,11 @@ include "../include/menuEvento.php";
 				$frequencia = 0;
 				$idEvento = $_SESSION['idEvento'];
 				$publicado = 1;
+				$observacao = $_POST['observacao'];
 			}
 			if(isset($_POST['inserir']))
 			{
-				$sql_inserir = "INSERT INTO `ig_ocorrencia` (`idOcorrencia`, `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`,`idSubEvento`, `virada` ) VALUES (NULL, '$tipoOcorrencia', NULL, '$local', '$idEvento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$dataInicio', '$dataFinal', '$horaInicio', '$horaFinal', '$timezone', '$diaInteiro', '$diaEspecial', '$libras', '$audiodescricao', '$valorIngresso', '$retiradaIngresso', '$localOutros', '$lotacao', '$reservados', '$duracao', '$precoPopular', '$frequencia', '$publicado', '$idSubEvento', '$virada');";
+				$sql_inserir = "INSERT INTO `ig_ocorrencia` (`idOcorrencia`, `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`,`idSubEvento`, `virada`, `observacao`  ) VALUES (NULL, '$tipoOcorrencia', NULL, '$local', '$idEvento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$dataInicio', '$dataFinal', '$horaInicio', '$horaFinal', '$timezone', '$diaInteiro', '$diaEspecial', '$libras', '$audiodescricao', '$valorIngresso', '$retiradaIngresso', '$localOutros', '$lotacao', '$reservados', '$duracao', '$precoPopular', '$frequencia', '$publicado', '$idSubEvento', '$virada', '$observacao');";
 				if(mysqli_query($con,$sql_inserir))
 				{
 					$mensagem = "Ocorrência inserida com sucesso!";	
@@ -1672,6 +1673,7 @@ include "../include/menuEvento.php";
 				`precoPopular` = '$precoPopular',
 				`idSubEvento` = '$idSubEvento',
 				`virada` = '$virada'
+				`observacao` = '$observacao'
 				WHERE 	`idOcorrencia` = '$idOc'";
 				$con = bancoMysqli();
 				if(mysqli_query($con,$sql_atualizar_ocorrencia))
@@ -1687,7 +1689,7 @@ include "../include/menuEvento.php";
 			if(isset($_POST['duplicar']))
 			{
 				$idOc = $_POST['duplicar'];
-				$sql_duplicar_ocorrencia = "INSERT INTO ig_ocorrencia (`idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada` ) SELECT `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada` FROM ig_ocorrencia WHERE `idOcorrencia` = '$idOc'";
+				$sql_duplicar_ocorrencia = "INSERT INTO ig_ocorrencia (`idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada`, `observacao` ) SELECT `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada`, `observacao` FROM ig_ocorrencia WHERE `idOcorrencia` = '$idOc'";
 				if(mysqli_query($con,$sql_duplicar_ocorrencia))
 				{
 					$mensagem = "Ocorrência duplicada com sucesso!";	
@@ -1897,6 +1899,12 @@ include "../include/menuEvento.php";
 						<div class=" col-md-6">
 							<label>Ingressos reservados</label>
 							<input type="text" class="form-control" name="ingressosReservados" id="" placeholder="">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Observações</strong><br/>
+							<textarea name="observacao" cols="40" rows="2"></textarea>
 						</div>
 					</div>
 					<div class="form-group">
@@ -2120,6 +2128,11 @@ include "../include/menuEvento.php";
 						</div>
 					</div>
 					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Observações</strong><br/>
+							<textarea name="observacao" cols="40" rows="2"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="atualizar" value="<?php echo $ocor['idOcorrencia']; ?>"  />
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Atualizar ocorrência"  />
@@ -2239,6 +2252,11 @@ include "../include/menuEvento.php";
 								<input type="text" class="form-control" name="ingressosReservados" id="" placeholder="">
 							</div>
 						</div>
+						<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Observações</strong><br/>
+							<textarea name="observacao" cols="40" rows="2"></textarea>
+						</div>
+					</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<input type="hidden" name="inserir" value="1"  />

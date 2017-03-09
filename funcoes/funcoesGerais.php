@@ -810,6 +810,7 @@
 			$hora = exibirHora($campo['horaInicio']);
 			$duracao = recuperaDuracao($campo ['duracao']);
 			$retirada = recuperaIngresso($campo['retiradaIngresso']);
+			$observacao = recuperaObservacao($campo['observacao']);
 			$valor = dinheiroParaBr($campo['valorIngresso']);
 			$local = recuperaDados("ig_local",$campo['local'],"idLocal");
 			$espaco = $local['sala'];
@@ -909,6 +910,7 @@
 				$hora = exibirHora($campo['horaInicio']);
 				$duracao = recuperaDuracao($campo ['duracao']);
 				$retirada = recuperaIngresso($campo['retiradaIngresso']);
+				$observacao = recuperaObservacao($campo['observacao']);
 				$valor = dinheiroParaBr($campo['valorIngresso']);
 				$local = recuperaDados("ig_local",$campo['local'],"idLocal");
 				$espaco = $local['sala'];
@@ -1422,6 +1424,15 @@
 		$query = mysqli_query($con,$sql);
 		$campo = mysqli_fetch_array($query);
 		return $campo['duracao'];	
+	}
+	function recuperaObservacao($id)
+	{
+		//retorna duração
+		$sql = "SELECT * FROM ig_ocorrencia WHERE observacao = '$id'";
+		$con = bancoMysqli();
+		$query = mysqli_query($con,$sql);
+		$campo = mysqli_fetch_array($query);
+		return $campo['observacao'];	
 	}
 	function retornaTipoOcorrencia($id)
 	{
