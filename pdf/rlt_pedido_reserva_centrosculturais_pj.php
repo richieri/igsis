@@ -27,20 +27,13 @@ $NumeroProcesso = $pedido["NumeroProcesso"];
 $assinatura = $pedido["Assinatura"];
 $cargo = $pedido["Cargo"];
 
-$verba = recuperaVerba($pedido['Verba']);
-
-$LinkPJ = $verba["linkpj"];
-$NumeroReservaPJ = $verba["reservapj"];
-$dotacao = $verba["dotacao"];
-$detalhamento = $verba["detalhamento"];
 
 //PessoaJuridica
 
 $pjRazaoSocial = $pj["Nome"];
 $pjCNPJ = $pj['CNPJ'];
 
-$codPed = "";
-   
+$ano=date('Y');  
  ?>
  
  
@@ -68,17 +61,17 @@ $codPed = "";
 <?php
 
 $sei = 
-"<p align='center'><strong>PEDIDO DE  CONTRATAÇÃO DE PESSOA FÍSICA</strong></p>".
-"<p>&nbsp;</p>".
-"<p>&nbsp;</p>".
-"<p><strong>Interessado:</strong> "."$pjRazaoSocial"."</p>".
-"<p><strong>Assunto:</strong> "."$objeto"."</p>".
-"<p>&nbsp;</p>".
-"<p><strong>SMC/CAF/SCO</strong></p>".
-"<p><strong>Senhor Supervisor</strong></p>".
-"<p>Solicito a reserva de recursos no valor de R$ "."$ValorGlobal"." ("."$ValorPorExtenso". " ) na Atividade 6354 - Programação de Atividades Culturais da U.O. 25.60 (Pessoa Jurídica)  visando possibilitar a contratação da despesa que trata esse processo</p>".
-"<p>&nbsp;</p>".
-"<p>Após, encaminhar para SMC/Assessoria Jurídica para prosseguimento.</p>";
+  "<p>&nbsp;</p>".
+  "<p><strong>INTERESSADO:</strong> "."$pjRazaoSocial"."</span></p>".
+  "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
+  "<p>&nbsp;</p>".
+  "<p><strong>SMC/CAF/SCO</strong></p>".
+  "<p><strong>Senhor Supervisor</strong></p>".
+  "<p>&nbsp;</p>".
+  "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 – Programação de Atividades Culturais da U.O. 25.60 (Pessoa Jurídica) visando possibilitar a contratação de que trata esse processo.</p>".
+  "<p>&nbsp;</p>".
+  "<p>Após, encaminhar para SMC / Assessoria Jurídica para prosseguimento. </p>".
+  "<p>&nbsp;</p>"
 
 ?>
 

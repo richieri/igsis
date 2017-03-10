@@ -12,27 +12,24 @@
 //CONSULTA 
 $id_ped=$_GET['id'];
 dataReserva($id_ped);
-$ano=date('Y');
+$linha_tabelas = siscontrat($id_ped);
 
-$pedido = siscontrat($id_ped);
-$pj = siscontratDocs($pedido['IdProponente'],2);
-$ex = siscontratDocs($pedido['IdExecutante'],1);
-$rep01 = siscontratDocs($pj['Representante01'],3);
-$rep02 = siscontratDocs($pj['Representante02'],3);
 $codPed = $id_ped;
-$objeto = $pedido["Objeto"];
-$ValorGlobal = $pedido["ValorGlobal"];
-$ValorPorExtenso = valorPorExtenso($pedido["ValorGlobal"]); 
+$objeto = $linha_tabelas["Objeto"];
+$ValorGlobal = $linha_tabelas["ValorGlobal"];
+$ValorPorExtenso = valorPorExtenso($linha_tabelas["ValorGlobal"]); 
+$periodo = $linha_tabelas["Periodo"];
+$duracao = $linha_tabelas["Duracao"];
 $dataAtual = date("d/m/Y");
-$NumeroProcesso = $pedido["NumeroProcesso"];
-$assinatura = $pedido["Assinatura"];
-$cargo = $pedido["Cargo"];
+$NumeroProcesso = $linha_tabelas["NumeroProcesso"];
+$assinatura = $linha_tabelas["Assinatura"];
+$cargo = $linha_tabelas["Cargo"];
 
+$linha_tabelas_pessoa = siscontratDocs($linha_tabelas['IdProponente'],1);
+$nome = $linha_tabelas_pessoa["Nome"];
+$cpf = $linha_tabelas_pessoa["CPF"];
 
-//PessoaJuridica
-
-$pjRazaoSocial = $pj["Nome"];
-$pjCNPJ = $pj['CNPJ'];
+$setor = $linha_tabelas["Setor"];
 
 $ano=date('Y');
   
@@ -64,13 +61,13 @@ $ano=date('Y');
 
 $sei = 
   "<p>&nbsp;</p>".
-  "<p><strong>INTERESSADO:</strong> "."$pjRazaoSocial"."</span></p>".
+  "<p><strong>INTERESSADO:</strong> "."$nome"."  </span></p>".
   "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
   "<p>&nbsp;</p>".
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 – Programação de Atividades Culturais da U.O. 25.10 (Pessoa Jurídica) visando possibilitar a contratação de que trata esse processo.</p>".
+  "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 – Programação de Atividades Culturais da U.O. 25.70 (Pessoa Física) visando possibilitar a contratação de que trata esse processo.</p>".
   "<p>&nbsp;</p>".
   "<p>Após, encaminhar para SMC / Assessoria Jurídica para prosseguimento. </p>".
   "<p>&nbsp;</p>"

@@ -65,13 +65,23 @@ header("Content-Disposition: attachment;Filename=Relatorio_Horas_trabalhadas_$an
 table {
     border-collapse: collapse;
 }
+
+@page WordSection1
+ 	{
+	margin:38.9pt 46.1pt 38.9pt 46.0pt;
+ 	mso-header-margin:35.45pt;
+ 	mso-footer-margin:35.45pt;
+ 	mso-paper-source:0;}
+ div.WordSection1
+ 	{page:WordSection1;}
 </style>
 
+<div class=WordSection1>
 <p align="center"><strong>PREFEITURA  MUNICIPAL DE SÃO PAULO</strong><br />
 <strong>SECRETARIA  MUNICIPAL DE CULTURA – ESCOLA MUNICIPAL DE INICIAÇÃO ARTÍSTICA</strong><br /></p>
 <strong><?php echo $nome; ?></strong><br />
 <strong><?php echo $cargo; ?> </strong>- de segunda-feira a sábado, em dias e horários determinados pela direção da Escola.<br />
-<strong>Período: </strong> <?php echo $periodoParcela; ?> <br />
+<strong>Período: </strong> <?php echo $periodoParcela; ?> <br /><br />
 <table width="100%" border="1">
   <tr>
 	<td align="center" width="100%"><strong>FOLHA DE FREQUÊNCIA INDIVIDUAL (carga de aula)</strong></td>
@@ -83,6 +93,12 @@ table {
     <td align="center" width="27%"><strong>CARGA HORÁRIA</strong></td>
     <td align="center" width="50%"><strong>TURMA / ATIVIDADE</strong></td>
     <td align="center" width="13%"><strong>ASSINATURA</strong></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
@@ -268,5 +284,6 @@ table {
 	<tr><center>RF 791.181.5-4</center></tr>
   </tr>
 </table>
+</div>
 </body>
 </html>

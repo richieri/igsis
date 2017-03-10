@@ -46,14 +46,16 @@ $link35 = $http."rlt_proposta_contadores_edital_pj.php"."?id=".$id_ped."&penal=2
 $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal=28";
 $link37 = $http."rlt_ordemservico_pj_assinatura.php";
 $link38 = $http."rlt_termo_doacao_pj_assinatura.php";
-$link39 = $http."rlt_pedido_reserva_ccsp_pj.php";
+$link39 = $http."rlt_pedido_reserva_centrosculturais_pj.php";
 $link40 = $http."rlt_declaracao_convenio500_1rep_pj.php";
 $link41 = $http."rlt_declaracao_convenio500_2rep_pj.php";
 $link42 = $http."rlt_declaracao_abertura_bb_pj.php";
 $link43 = $http."rlt_pedido_reserva_gabinete_pj.php";
 $link44 = $http."rlt_ordemservico_gabinete_pj.php";
 $link45 = $http."rlt_ordemservico_gabinete_pj_assinatura.php";
-
+$link46 = $http."rlt_pedido_reserva_dph_pj.php";
+$link47 = $http."rlt_pedido_reserva_csmb_pj.php";
+$link48 = $http."rlt_pedido_reserva_casasdecultura_pj.php";
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -163,11 +165,17 @@ echo "
 						
 						<tr>
 							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva de Verba com Transferência - VIRADA</strong></a></td>		
-							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>							
+							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais</strong></a></td>
 						</tr>
 						
 						<tr>
-						<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva - Gabinete</strong></a></td>
+							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
+							<td><a href='$link46?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
+						</tr>
+						
+						<tr>
+							<td><a href='$link47?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
+							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura </strong></a></td>
 						</tr>
 					</tbody>
 				</table>

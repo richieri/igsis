@@ -37,28 +37,21 @@ $link23 = $http."rlt_direitos_conexos.php";
 $link24 = $http."rlt_pedido_reserva_fepac_pf.php";
 $link25 = $http."rlt_pedido_reserva_vocacional_pf.php";
 $link26 = $http."rlt_pedido_reserva_cooperativa_pf.php";
-
 $link27 = $http."rlt_pedido_reserva_transferencia_pf.php";
 $link28 = $http."rlt_pedido_reserva_transferencia_virada_pf.php";
 $link29 = $http."rlt_pedido_reserva_centrosculturais_pf.php";
-$link48 = $http."rlt_pedido_reserva_gabinete_pf.php";
-$link48 = $http."rlt_pedido_reserva_dph_pf.php";
-$link48 = $http."rlt_pedido_reserva_csmb_pf.php";
-$link48 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
+$link30 = $http."rlt_pedido_reserva_gabinete_pf.php";
+$link31 = $http."rlt_pedido_reserva_dph_pf.php";
+$link32 = $http."rlt_pedido_reserva_csmb_pf.php";
+$link33 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
 
-
-$link111 = $http."rlt_fac_pf.php";
-
-$link19 = $http."rlt_ordemservico_pf.php";
-$link44 = $http."rlt_ordemservico_pf_assinatura.php";
-$link49 = $http."rlt_ordemservico_gabinete_pf.php";
-$link99 = $http."rlt_ordemservico_gabinete_pf_assinatura.php";
-$link14 = $http."rlt_parecer_pf.php";
-$link11 = $http."rlt_recibo_ne_pf.php";
-$link26 = $http."rlt_termo_doacaoobradearte_pf.php";
-$link27 = $http."rlt_termo_doacaoservico_pf.php";
-$link28 = $http."rlt_termo_parceria_pf.php";
-$link43 = $http."rlt_termo_doacao_pf_assinatura.php";
+$link34 = $http."rlt_fac_pf.php";
+$link35 = $http."rlt_ordemservico_pf.php";
+$link36 = $http."rlt_ordemservico_gabinete_pf_assinatura.php";
+$link37 = $http."rlt_parecer_pf.php";
+$link38 = $http."rlt_termo_doacaoobradearte_pf.php";
+$link39 = $http."rlt_termo_parceria_pf.php";
+$link40 = $http."rlt_termo_doacao_pf_assinatura.php";
 
 
 
@@ -146,22 +139,22 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>OUTROS</strong></td></tr>
 						
 						<tr>
-							<td><a href='$link111?id=$id_ped' target='_blank'><strong>FACC</strong></a></td>
-							<td><a href='$link14?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
+							<td><a href='$link34?id=$id_ped' target='_blank'><strong>FACC</strong></a></td>
+							<td><a href='$link37?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
 						</tr>
 						<tr>
-							<td><a href='$link44?id=$id_ped' target='_blank'><strong>Ordem de serviço - CCSP Assinatura</strong></a></td>
-							<td><a href='$link10?id=$id_ped' target='_blank'><strong>Ordem de serviço - Gabinete Assinatura</strong></a></td>
+							<td><a href='$link35?id=$id_ped' target='_blank'><strong>Ordem de serviço - CCSP Assinatura</strong></a></td>
+							<td><a href='$link36?id=$id_ped' target='_blank'><strong>Ordem de serviço - Gabinete Assinatura</strong></a></td>
 						</tr>
 						
 						<tr>
-							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Termo Doação de Serviço - Assinatura</strong></a></td>
-							<td><a href='$link28?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
+							<td><a href='$link40?id=$id_ped' target='_blank'><strong>Termo Doação de Serviço - Assinatura</strong></a></td>
+							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
 
 						</tr>
 						
 						<tr>
-							<td><a href='$link26?id=$id_ped' target='_blank'><strong>Termo de Doação de Obra de Arte</strong></a></td>
+							<td><a href='$link38?id=$id_ped' target='_blank'><strong>Termo de Doação de Obra de Arte</strong></a></td>
 						</tr>
 						
 						<tr><td class='list_description'><br/></td></tr>
@@ -172,23 +165,25 @@ echo "
 							<td><a href='$link26?id=$id_ped' target='_blank'><strong>Cooperativa</strong></a></td>
 							<td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
 						</tr>
-						<tr>
-							<td><a href='$link25?id=$id_ped' target='_blank'><strong>Formação</strong></a></td>
-							<td></td>
-						</tr>
+						
 						<tr>
 							<td><a href='$link27?id=$id_ped' target='_blank'><strong>Verba com Transferência</strong></a></td>
 							<td><a href='$link28?id=$id_ped' target='_blank'><strong>Verba com Transferência - VIRADA</strong></a></td>
 						</tr>
 						
 						<tr>
-							<td></td>
-							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
+							<td><a href='$link25?id=$id_ped' target='_blank'><strong>Formação</strong></a></td>
+							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
 						</tr>
-							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
-						<tr>
+							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais</strong></a></td>
+							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>	
+						</tr>
 						
 						</tr>
+							<td><a href='$link32?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
+							<td><a href='$link33?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura</strong></a></td>	
+						</tr>
+						
 					</tbody>
 				</table>
 			</div>	
