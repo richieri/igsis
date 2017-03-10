@@ -223,7 +223,7 @@
 						}
 						else
 						{
-							$filtro_valor = "AND igsis_pedido_contratacao.valor BETWEEN '$valor_inicial' AND '$valor_final'";
+							$filtro_valor = "AND igsis_pedido_contratacao.valor > '$valor_inicial' AND igsis_pedido_contratacao.valor < '$valor_final'";
 						}
 						$sql_evento = "SELECT * 
 							FROM ig_evento,
@@ -297,9 +297,9 @@
 										}
 										$x[$i]['local'] = substr($local,1);
 										$x[$i]['instituicao'] = $instituicao['sigla'];
-										$x[$i]['periodo'] = $periodo;
-										$x[$i]['status'] = $pedido['estado'];	
+										$x[$i]['periodo'] = $periodo;	
 										$x[$i]['valor'] = $pedido['valor'];
+										$x[$i]['status'] = $pedido['estado'];
 										$i++;
 									}
 								}
@@ -336,6 +336,7 @@
 						<td width="20%">Local</td>
 						<td>Instituição</td>
 						<td>Periodo</td>
+						<td>Valor</td>
 						<td>Status</td>
 					</tr>
 				</thead>
@@ -353,8 +354,8 @@
 						echo '<td class="list_description">'.$x[$h]['local'].				'</td> ';
 						echo '<td class="list_description">'.$x[$h]['instituicao'].			'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].				'</td> ';
-						echo '<td class="list_description">'.$status['estado'].				'</td> ';
-						echo '<td class="list_description">'.$x[$h]['valor'].		'</td>	</tr>';
+						echo '<td class="list_description">'.dinheiroParaBr($x[$h]['valor']).'</td>';
+						echo '<td class="list_description">'.$status['estado'].				'</td></tr> ';
 					}
 				?>
 				</tbody>
@@ -420,9 +421,13 @@
 							<?php  geraOpcao("ig_modalidade","",""); ?>
 						</select>
 						<br />
-						<label>Valor</label>
-						<input type="text" name="valor_inicial" class="form-control" placeholder="Valor Inicial" > - <input type="text" name="valor_final" class="form-control" placeholder="Valor Final" 
-						><br />
+						<label>Valor</label><br/> <font size="2">(em fase de testes)</font><br/>
+						<div class="col-md-offset-2 col-md-6">
+							<input type="number" name="valor_inicial" class="form-control" placeholder="Valor Inicial" > 
+						</div>
+						<div class="col-md-6">
+							<input type="number" name="valor_final" class="form-control" placeholder="Valor Final" 
+						></div> <br />
 				</div>
 			</div>
 			<br />             
