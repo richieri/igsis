@@ -2541,8 +2541,27 @@ include "../include/menuEvento.php";
 					}
 				?>
 							</p>
-							<br />
-							<br />
+							<br/>
+							<h6>Parecer Artístico</h6>
+							<p>
+						<?php
+						$pedido = listaPedidoContratacao($_SESSION['idEvento']);
+						for($i = 0; $i < count($pedido); $i++)
+						{
+							$dados = siscontrat($pedido[$i]);
+							$pessoa = siscontratDocs($dados['IdProponente'],$dados['TipoPessoa']);
+							$parecer = verificaParecer($pedido[$i]);
+						?>
+							<p align="left">
+								Pedido nº: <b><?php echo $pedido[$i] ?></b><br />
+								<?php echo $parecer;?><br/>
+							
+							</p>      
+						<?php
+						}// fechamento do for 						
+						?>
+						</p>
+						<br/>	
 							<p>
 				<?php //print_r($evento);
 					if($ocorrencia > 0)
@@ -2556,7 +2575,7 @@ include "../include/menuEvento.php";
 					}
 				?>
 							</p>
-						</div>
+						</div>						
 						<br />
 						<br />
 						<p><?php echo $prazo['mensagem'];?><p>

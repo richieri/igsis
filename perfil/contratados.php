@@ -1285,13 +1285,13 @@
 					<div class="col-md-offset-2 col-md-8"><br/>
 					</div>
                 </div> 
-                <div class="form-group"> 
-					<div class="col-md-offset-2 col-md-8"><strong>Líder do Grupo:</strong><br/>
-						<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoExecutante&id_pf=<?php echo $pedido['IdExecutante']?>"  method="post">
+				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoExecutante&id_pf=<?php echo $pedido['IdExecutante']?>"  method="post">
+					<div class="form-group"> 
+						<div class="col-md-offset-2 col-md-8"><strong>Líder do Grupo:</strong><br/>						
 							<input type='text' readonly class='form-control' name='Executante' id='Executante' value="<?php echo $executante['Nome'] ?>">
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8">
-									<input type="hidden" name="idPedido" value="<?php echo $_SESSION['idPedido']; ?>" />
+						</div>	
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="idPedido" value="<?php echo $_SESSION['idPedido']; ?>" />
 			<?php
 				if($pedido['IdExecutante'] == NULL OR $pedido['IdExecutante'] == "")
 				{
@@ -1306,11 +1306,9 @@
             <?php
 				}
 			?>
-								</div>
-							</div>
-						</form>
+						</div>
 					</div>
-				</div>
+				</form>
 				<!-- /Executante -->
 		<?php
 			}
@@ -1320,20 +1318,18 @@
 					<div class="col-md-offset-2 col-md-8"><br/>
 					</div>
                 </div>
-                <div class="form-group"> 
-					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-						<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo"  method="post">
+				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo"  method="post">
+					<div class="form-group"> 
+						<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
 							<textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($pedido['idPedidoContratacao']); ?>
 							</textarea>
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8">
-									<input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>" >
-									<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
+						</div>				
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>" >
+							<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
+						</div>
+					</div>				
+				</form>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
@@ -1473,11 +1469,9 @@
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Parecer artístico</label>
-								<textarea name="parecerArtistico" class="form-control" rows="10" placeholder="Texto usado fins jurídicos e confecção de contratos."><?php echo $pedido["parecerArtistico"] ?></textarea>
+								<textarea name="parecerArtistico" readonly class="form-control" rows="10" placeholder="Texto usado fins jurídicos e confecção de contratos."><?php echo $pedido["parecerArtistico"] ?></textarea>
 							</div> 
-						</div>
-										
-						<div class='form-group'>
+						
 							<div class='col-md-offset-2 col-md-6'>
 								<a href='?perfil=contratados&p=edicaoParecer&artista=Local' class='btn btn-theme btn-block'>Editar parecer artista local</a>
 							</div>
@@ -1511,7 +1505,7 @@
 						</form>
 					</div>
 					<div class="col-md-6">
-						<a href="?perfil=contratados" value="VOLTAR" class="btn btn-theme btn-lg btn-block">VOLTAR para pedidos</a>
+						<a href="?perfil=contratados" value="VOLTAR" class="btn btn-theme btn-lg btn-block">VOLTAR para contratados</a>
 					</div>
 				</div>
 			</div>
@@ -3483,6 +3477,17 @@
 			{
 				gravarLog($sql_insere_parecer);
 				$mensagem = "Atualizado com sucesso!";
+				$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
+				$topicos = $parecer['topico1'].'\n'.$parecer['topico2'].'\n'.$parecer['topico3'].'\n'.$parecer['topico4'];
+				$sql_pedido = "UPDATE igsis_pedido_contratacao SET parecerArtistico ='$topicos' WHERE idPedidoContratacao = '$id_ped'";
+				if(mysqli_query($con,$sql_pedido))
+				{
+					$mensagem = "Atualizado com sucesso!";
+				}
+				else
+				{
+					$mensagem = "Erro ao atualizar!";
+				}
 			}
 			else
 			{
@@ -3504,15 +3509,15 @@
 				gravarLog($sql_edita_parecer);
 				$mensagem = "Atualizado com sucesso!";
 				$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
-				$topicos = $parecer['topico1'].$parecer['topico2'].$parecer['topico3'].$parecer['topico4'];
+				$topicos = $parecer['topico1'].'\n'.$parecer['topico2'].'\n'.$parecer['topico3'].'\n'.$parecer['topico4'];
 				$sql_pedido = "UPDATE igsis_pedido_contratacao SET parecerArtistico ='$topicos' WHERE idPedidoContratacao = '$id_ped'";
 				if(mysqli_query($con,$sql_pedido))
 				{
-					$mensagem = "OK";
+					$mensagem = "Atualizado com sucesso!";
 				}
 				else
 				{
-					$mensagem = "Erro!";
+					$mensagem = "Erro ao atualizar!";
 				}	
 				
 			}
@@ -3522,9 +3527,7 @@
 			}
 		}
 		$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
-		
-		$total = $parecer['topico1']."<br/>".$parecer['topico2']."<br/>".$parecer['topico3']."<br/>".$parecer['topico4'];
-		
+					
 		$pedido = siscontrat($id_ped);
 		$Objeto = $pedido["Objeto"];
 		$Periodo = $pedido["Periodo"];
@@ -3690,7 +3693,6 @@ function contarCaracteres3(box,valor,campospan){
 											
 				</div>
 			<?php
-			echo $total;
 				if($parecer == NULL)
 				{
 			?>	

@@ -314,4 +314,38 @@
 		$z['total'] = $total;
 		return $z;
 	}
+	
+	function verificaParecer ($id_ped)
+	{
+		$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
+		$topico1 = $parecer['topico1'];
+		$topico2 = $parecer['topico2'];
+		$topico3 = $parecer['topico3'];
+		$topico4 = $parecer['topico4'];
+		$cont1 = strlen($topico1);
+		if((strlen($topico2)) < 500)
+		{
+			$msg2= 'Você não atingiu o mínimo de caracteres para o tópico #2';
+ 
+		}
+		else
+		{
+			$msg2 = "Tópico 02 - OK";
+		}	
+		
+		if((strlen($topico2)) < 700)
+		{
+			$msg3= 'Você não atingiu o mínimo de caracteres para o tópico #3';
+ 
+		}
+		else
+		{
+			$msg3 = "Tópico 03 - OK";
+		}	
+		$cont4 = strlen($topico4);
+		
+		$mensagem = $msg2.'<br/>'.$msg3;
+		return $mensagem;
+		
+	}
 ?>
