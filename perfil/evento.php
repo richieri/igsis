@@ -2542,6 +2542,10 @@ include "../include/menuEvento.php";
 				?>
 							</p>
 							<br/>
+				<?php
+					if ($_SESSION['idInstituicao'] != 5)
+					{
+				?>		
 							<h6>Parecer Artístico</h6>
 							<p>
 						<?php
@@ -2561,13 +2565,16 @@ include "../include/menuEvento.php";
 						}// fechamento do for 						
 						?>
 						</p>
-						<br/>	
-							<p>
+						<br/>
+				<?php
+					}		
+				?>		
+						<p>
 				<?php //print_r($evento);
 					if($ocorrencia > 0)
 					{
 						echo "<h5>Há ocorrências cadastradas.</h5>";	
-						echo "<br /><br />";
+						echo "<br />";
 					}
 					else
 					{
@@ -2575,8 +2582,7 @@ include "../include/menuEvento.php";
 					}
 				?>
 							</p>
-						</div>						
-						<br />
+						</div>
 						<br />
 						<p><?php echo $prazo['mensagem'];?><p>
 				<?php

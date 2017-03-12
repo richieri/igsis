@@ -40,5 +40,5 @@ $cache_expire = session_cache_expire();
       </head>
   <body>
   <div id="bar">
-  <p id="p-bar"><img src="images/logo_pequeno.png" /><?php echo saudacao(); ?>, <?php echo $_SESSION['nomeCompleto']; ?> <?php if(isset($_SESSION['idEvento'])){verificaEdicao($_SESSION['idEvento']);} ?> </p>
+  <p id="p-bar"><img src="images/logo_pequeno.png" /><?php echo saudacao(); ?>, <?php echo $_SESSION['nomeCompleto']; ?> <?php if(isset($_SESSION['idEvento'])){verificaEdicao($_SESSION['idEvento']);} ?></p>
   </div>

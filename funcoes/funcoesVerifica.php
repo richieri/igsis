@@ -325,22 +325,22 @@
 		$cont1 = strlen($topico1);
 		if((strlen($topico2)) < 500)
 		{
-			$msg2= 'Você não atingiu o mínimo de caracteres para o tópico #2';
+			$msg2= 'Você não atingiu o mínimo de caracteres para o 2º tópico.';
  
 		}
 		else
 		{
-			$msg2 = "Tópico 02 - OK";
+			$msg2 = "2º tópico - OK";
 		}	
 		
-		if((strlen($topico2)) < 700)
+		if((strlen($topico3)) < 700)
 		{
-			$msg3= 'Você não atingiu o mínimo de caracteres para o tópico #3';
+			$msg3= 'Você não atingiu o mínimo de caracteres para o 3º tópico.';
  
 		}
 		else
 		{
-			$msg3 = "Tópico 03 - OK";
+			$msg3 = "3º tópico - OK";
 		}	
 		$cont4 = strlen($topico4);
 		
