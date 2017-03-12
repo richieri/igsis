@@ -34,5 +34,5 @@ ini_set('session.gc_maxlifetime', 60*60*2); // 60 minutos
       </head>
   <body>
   <div id="bar">
-  <p id="p-bar"><img src="images/logo_pequeno.png" /><?php echo saudacao(); ?>, <?php echo $_SESSION['nomeCompleto']; ?> <?php if(isset($_SESSION['idEvento'])){verificaEdicao($_SESSION['idEvento']);} ?> <g id="doc"></a> </p>
+  <p id="p-bar"><img src="images/logo_pequeno.png" /><!--<?php echo saudacao(); ?>, <?php echo $_SESSION['nomeCompleto']; ?> <?php if(isset($_SESSION['idEvento'])){verificaEdicao($_SESSION['idEvento']);} ?> <g id="doc"></a>--> </p>
   </div>
