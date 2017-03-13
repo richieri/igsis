@@ -1,5 +1,18 @@
 ﻿<?php include 'includes/menu.php';
 
+if(isset($_GET['pag']))
+{
+	$p = $_GET['pag'];
+}
+else
+{
+	$p = 'inicial';	
+}
+
+switch($p)
+{
+/* =========== INICIAL ===========*/
+case 'inicial':
 	
 function retornaDataInicio($idEvento)
 { //retorna o período
@@ -48,13 +61,31 @@ function retornaDataInicio($idEvento)
 		return $data_inicio;
 	}	
 }
+if(isset($_POST['local']) AND trim($_POST['local']))
+{
+	$idLocal = trim($_POST['local']);
+	$local = " AND idLocal = '$idLocal' ";	
+}
+else
+{
+	$local = "";	
+}
+if(isset($_POST['instituicao']) AND trim($_POST['instituicao']))
+{
+	$idInstituicao = $_POST['instituicao'];
+	$instituicao = " AND idInstituicao = '$idInstituicao' ";	
+}
+else
+{
+	$instituicao = "";	
+}
 
 if(isset($_POST['periodo']))
 {
 	$inicio = exibirDataMysql($_POST['inicio']);
 	$final = exibirDataMysql($_POST['final']);	
 	$con = bancoMysqli();
-	$sql_evento = "SELECT DISTINCT idEvento FROM igsis_agenda WHERE data BETWEEN '$inicio' AND '$final'  ORDER BY data ASC ";
+	$sql_evento = "SELECT DISTINCT idEvento FROM igsis_agenda WHERE data BETWEEN '$inicio' AND '$final' $instituicao $local  ORDER BY data ASC ";
 	$query_evento = mysqli_query($con,$sql_evento);
 	$num = mysqli_num_rows($query_evento);
 	$i = 0;
@@ -114,12 +145,12 @@ if(isset($_POST['periodo']))
 				}
 			}
 		}
-		
 	}
 	$x['num'] = $i;
 	if($num > 0)
 	{ 
 ?>
+
 	<br />
 	<br />
 	<section id="list_items">
@@ -224,9 +255,37 @@ if(isset($_POST['periodo']))
 else
 {
 ?>
+<script type="application/javascript">
+	$(function()
+	{
+		$('#instituicao').change(function()
+		{
+			if( $(this).val() )
+			{
+				$('#local').hide();
+				$('.carregando').show();
+				$.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
+				{
+					var options = '<option value="0"></option>';	
+					for (var i = 0; i < j.length; i++)
+					{
+						options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+					}	
+					$('#local').html(options).show();
+					$('.carregando').hide();
+				});
+			}
+			else
+			{
+				$('#local').html('<option value="">-- Escolha uma instituição --</option>');
+			}
+		});
+	});
+</script>
 	<section id="services" class="home-section bg-white">
 		<div class="container">
 			<div class="row">
+				<h5>| Busca por período | <a href="?perfil=contratos&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
 						<h2>Busca por período</h2>
@@ -237,11 +296,6 @@ else
 			<div class="row">
 			<form method="POST" action="?perfil=contratos&p=frm_busca_periodo" class="form-horizontal" role="form">
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-					</div>
-				</div>
-				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
 						<label>Data início *</label>
 							<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
@@ -249,6 +303,108 @@ else
 					<div class=" col-md-6">
 						<label>Data encerramento *</label>
 							<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<label>Instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
+						<select class="form-control" name="instituicao" id="instituicao" >
+							<option value="">Selecione</option>
+							<?php geraOpcao("ig_instituicao","","") ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<label>Sala / espaço (antes selecione a instituição)</label>
+						<select class="form-control" name="local" id="local" ></select>
+					</div>
+				</div>
+				<br />             
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<input type="hidden" name="periodo" value="1" />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+	</section>
+<?php
+}	
+ /* =========== INICIAL ===========*/ break; 
+ 
+ 
+/* =========== RELATÓRIO ===========*/
+case 'relatorio':
+	$server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; //mudar para pasta do igsis
+	$http = $server."/pdf/";
+?>	
+<script type="application/javascript">
+	$(function()
+	{
+		$('#instituicao').change(function()
+		{
+			if( $(this).val() )
+			{
+				$('#local').hide();
+				$('.carregando').show();
+				$.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
+				{
+					var options = '<option value="0"></option>';	
+					for (var i = 0; i < j.length; i++)
+					{
+						options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+					}	
+					$('#local').html(options).show();
+					$('.carregando').hide();
+				});
+			}
+			else
+			{
+				$('#local').html('<option value="">-- Escolha uma instituição --</option>');
+			}
+		});
+	});
+</script>
+
+	<section id="services" class="home-section bg-white">
+		<div class="container">			
+			<div class="row">
+				<h5>| <a href="?perfil=contratos&p=frm_busca_periodo">Busca por período</a> | Relatório por período | </h5>
+				<div class="col-md-offset-2 col-md-8">
+					<div class="section-heading">
+						<h2>Relatório por período</h2>
+						<p><?php if(isset($mensagem)){ echo $num; }?></p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			<form method="POST" action="<?php echo $http ?>rlt_busca_periodo.php" class="form-horizontal" role="form">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-6">
+						<label>Data início *</label>
+							<input type="text" name="inicio" class="form-control" id="datepicker03" placeholder="">
+					</div>
+					<div class=" col-md-6">
+						<label>Data encerramento *</label>
+							<input type="text" name="final" class="form-control" id="datepicker04"  placeholder="">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<label>Instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
+						<select class="form-control" name="instituicao" id="instituicao" >
+							<option value="">Selecione</option>
+							<?php geraOpcao("ig_instituicao","","") ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<label>Sala / espaço (antes selecione a instituição)</label>
+						<select class="form-control" name="local" id="local" ></select>
 					</div>
 				</div>
 				<br />             
@@ -263,5 +419,7 @@ else
 		</div>
 	</section>
 <?php 
-} 
+ break; 
+
+ } //fim da switch 
 ?>
