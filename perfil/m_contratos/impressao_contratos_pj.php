@@ -102,7 +102,7 @@ echo "
 						
 						<tr>
 							<td><a href='$link36?id=$id_ped' target='_blank'><strong>Edital - Gala de Balé</strong></a></td>
-							<td><a href='$link32' target='_blank'><strong>NORMAS INTERNAS - Teatro Distrital</strong></a></td>
+							<td><a href='$link32' target='_blank'><strong>NORMAS INTERNAS - Teatros Municipais</strong></a></td>
 						</tr>
 						
 						<tr><td class='list_description'><br/></td></tr>

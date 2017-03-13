@@ -111,20 +111,20 @@ $l=4.3; //DEFINE A ALTURA DA LINHA
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(180,$l,utf8_decode('NORMAS INTERNAS PARA DISPONIBILIZAÇÃO DO USO DO TEATRO DISTRITAL'),0,1,'C');
+   $pdf->Cell(180,$l,utf8_decode('NORMAS INTERNAS PARA DISPONIBILIZAÇÃO DO USO DOS TEATROS MUNICIPAIS'),0,1,'C');
   
    $pdf->Ln();
   
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(180,$l,utf8_decode("
-1.	Cumprir rigorosamente as datas e horários estabelecidos em conjunto com a Coordenação de Produção da Coordenadoria dos Centros Culturais.
+1.	Cumprir rigorosamente as datas e horários estabelecidos em conjunto com a Coordenação do Teatro.
 
 2.	Dar início às apresentações no horário estabelecido com tolerância máxima de 15 minutos, salvo motivo de força maior.
 
-3.	ECAD - A produção do show deve encaminhar o repertório junto com as demais documentações necessárias para que a Coordenação de Produção da Coordenadoria dos Centros Culturais providencie o pagamento. Em caso de autoria própria e / ou domínio público as produções dos shows devem dirigir-se ao ECAD e apresentar repertório (nome da música, autor e se é domínio público) que será executado, para posteriormente, entregar a liberação ao DEC (junto com toda a documentação necessária para contratação).
+3.	ECAD - A produção do espetáculo deve adotar as medidas necessárias para liberação da autorização do ECAD, assim como providenciar eventuais pagamentos. Em caso de autoria própria e/ou domínio público as produções dos espetáculos devem dirigir-se ao ECAD e apresentar repertório (nome da música, autor e se é domínio público) que será executado, para posteriormente, entregar a liberação ao setor de contratação artística (junto com toda a documentação necessária para contratação).
 
-4.	SBAT - A produção do espetáculo deve encaminhar a liberação do autor ou do seu representante junto com as demais documentações necessárias à Coordenadoria de Produção para inserção do percentual no borderô.
+4.	SBAT - A produção do espetáculo deve encaminhar a liberação do autor ou do seu representante junto com as demais documentações necessárias à coordenação do teatro.
 
 5.	O Usuário deverá trazer uma lista de material que será conferida por um funcionário do Teatro, quando da entrada para a montagem e na saída (após a desmontagem).
 
@@ -163,12 +163,9 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 14.1. Em havendo contratação pela Secretaria de Cultura de empresa prestadora de serviços de gerenciamento da bilheteria, caberá a esta efetuar a venda dos ingressos. 
 
-14.2. A Coordenadoria dos Centros Culturais reserva-se o direito de disponibilizar 6 (seis) ingressos por apresentação, que não poderão ser comercializados pela Cia. Sendo que haverá comunicado com antecedência quando da utilização desses ingressos. Caso não haja manifestação por parte da SMC a comercialização desses ingressos será livre.
+14.2. A Coordenadoria dos Centros Culturais e Teatros reserva-se o direito de disponibilizar 6 (seis) ingressos por apresentação, que não poderão ser comercializados pela Cia. Sendo que haverá comunicado com antecedência quando da utilização desses ingressos. Caso não haja manifestação por parte da SMC, a comercialização desses ingressos será livre.
 
-15.	Os preços máximos dos ingressos, conforme Portaria 88/2009/SMC de 20/06/2009, serão de:
-- Espetáculos Adultos, Dança e Show Musical: R$ 20,00 (vinte reais)
-- Espetáculos Infantis: R$ 15,00 (quinze reais)
-- Temporada com preços populares, conforme Comunicado nº nº 001/2015-SMC/SP: R$ 10,00 (dez reais).
+15.	Os preços máximos dos ingressos, conforme Portaria SMC 22/2017 de 07/03/2017, será de R$40,00 para os espetáculos artísticos culturais das diversas linguagens.
  
 16.	O telefone do Teatro é para uso da Administração, poderá ser usado pelo elenco para telefonemas úteis e rápidos com prévia autorização do Coordenador.
 
@@ -176,7 +173,7 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 18.	Deverá ser fixado, em lugar visível e de fácil acesso, à entrada do Teatro, informação destacada quanto à natureza do espetáculo e a respectiva abrangência de faixa etária do mesmo.
 
-19.	A realização de qualquer tipo de degustação ou coquetel nas dependências do Teatro deverá ser autorizada pela Coordenação de Produção da Coordenadoria dos Centros Culturais da Secretaria Municipal de Cultura com antecedência de, no mínimo, uma semana da data do mesmo.
+19.	A realização de qualquer tipo de degustação ou coquetel nas dependências do Teatro deverá ser autorizada pela coordenação do teatro com antecedência de, no mínimo, uma semana da data do mesmo.
 
 20.	Não será permitida a entrada de qualquer elemento da Companhia em cartaz, fora do seu horário de apresentação ou ensaio, sem o conhecimento e a prévia autorização da Coordenação do Teatro.
 
@@ -189,14 +186,10 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(180,$l,utf8_decode("São Paulo, _________ de _____________________________ de ").$ano.".",0,0,'L');
    
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   
+   $pdf->Ln();  
    
 //RODAPÉ PERSONALIZADO
-   $pdf->SetXY($x,268);
+   $pdf->SetXY($x,260);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
    $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
@@ -204,7 +197,13 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,$l,$rep02RG,0,1,'L');
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(85,$l,$rep01CPF,0,0,'L');
+   $pdf->Cell(85,$l,$rep02CPF,0,0,'L');
+   
 
    
 

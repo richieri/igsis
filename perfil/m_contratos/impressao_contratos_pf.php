@@ -114,7 +114,7 @@ echo "
 						</tr>	
 						
 						<tr>
-							<td><a href='$link17' target='_blank'><strong>NORMAS INTERNAS - Teatro Distrital</strong></a></td>
+							<td><a href='$link17' target='_blank'><strong>NORMAS INTERNAS - Teatros Municipais</strong></a></td>
 						</tr>
 						
 						<tr><td class='list_description'><br/></td></tr>
