@@ -528,7 +528,7 @@
 						<input type='hidden' name='carregar' value='".$campo['idEvento']."' >
 						<input type ='submit' class='btn btn-theme  btn-block' value='Carregar'></td></form>"	;
 					echo "</tr>";	
-								}
+			}
 		?>
 					<tr>
 						<td colspan="10" bgcolor="#DEDEDE">
