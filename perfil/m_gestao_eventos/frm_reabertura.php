@@ -42,7 +42,7 @@ if(isset($_POST['pesquisar']))
 						<div class="col-md-offset-2 col-md-8">
 							<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
 							
-							<form method="POST" action="?perfil=gestao_eventos&p=frm_busca" class="form-horizontal" role="form">
+							<form method="POST" action="?perfil=gestao_eventos&p=frm_reabertura" class="form-horizontal" role="form">
 							<label>Id do Evento</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Id do Evento" ><br />
 							
@@ -78,27 +78,43 @@ if(isset($_POST['pesquisar']))
 	else
 	{
 		$con = bancoMysqli();
-		$sql_existe = "SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) ) ORDER BY dataInicio DESC";
-		$query_existe = mysqli_query($con, $sql_existe);
-		$num_registro = mysqli_num_rows($query_existe);
 		
-		if($id != "" AND $num_registro > 0)//Foi inserido número do evento
+		if($id != "")//Foi inserido número do evento
 		{ 	
-			$evento = recuperaDados("ig_evento",$id,"idEvento");
-			$idEvento = $evento['idEvento'];
-			$projeto = recuperaDados("ig_projeto_especial",$evento['idEvento'],"projetoEspecial");
-			$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
-			$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
-			$local = listaLocais($idEvento);
-			$periodo = retornaPeriodo($idEvento);
-			$fiscal = recuperaUsuario($evento['idResponsavel']);
-			
-			$x[0]['id']= $evento['idEvento'];			
-			$x[0]['local'] = substr($local,1);
-			$x[0]['periodo'] = $periodo;
-			$x[0]['fiscal'] = $fiscal['nomeCompleto'];
-			$x['num'] = 1;
-			$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+			$usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
+			$localUsr = $usr['local'];
+			$sql_evento = "
+				SELECT DISTINCT idEvento FROM ig_ocorrencia 
+				WHERE publicado = 1 AND idEvento IN 
+					(
+						SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL AND idEvento = $id AND idEvento NOT IN 
+						(
+							SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1
+						) 
+					) 
+				AND local IN ($localUsr) ORDER BY dataInicio DESC";
+			$query_evento = mysqli_query($con,$sql_evento);
+			$i = 0;
+
+			while($evento = mysqli_fetch_array($query_evento))
+			{
+				$evento = recuperaDados("ig_evento",$id,"idEvento");
+				$idEvento = $evento['idEvento'];
+				$projeto = recuperaDados("ig_projeto_especial",$evento['idEvento'],"projetoEspecial");
+				$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+				$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
+				$local = listaLocais($idEvento);
+				$periodo = retornaPeriodo($idEvento);
+				$fiscal = recuperaUsuario($evento['idResponsavel']);
+				
+				$x[0]['id']= $evento['idEvento'];			
+				$x[0]['local'] = substr($local,1);
+				$x[0]['periodo'] = $periodo;
+				$x[0]['fiscal'] = $fiscal['nomeCompleto'];
+				$x['num'] = 1;
+				$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+			}
+			$x['num'] = $i;	
 		}
 		else
 		{ //Não foi inserido o número do evento
@@ -172,7 +188,7 @@ if(isset($_POST['pesquisar']))
 				echo "<h5>Foram encontrados ".$x['num']." eventos</h5>";
 			}
 			?>
-			<h5><a href="?perfil=gestao_eventos&p=frm_busca">Fazer outra busca</a></h5>
+			<h5><a href="?perfil=gestao_eventos&p=frm_reabertura">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
 			<?php 
 				if($x['num'] == 0)
@@ -256,7 +272,7 @@ else
 					<div class="col-md-offset-2 col-md-8">
 						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
 						
-						<form method="POST" action="?perfil=gestao_eventos&p=frm_busca" class="form-horizontal" role="form">
+						<form method="POST" action="?perfil=gestao_eventos&p=frm_reabertura" class="form-horizontal" role="form">
 						<label>Id do Evento</label>
 						<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Id do Evento" ><br />
             		
