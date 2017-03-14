@@ -189,6 +189,7 @@ if(isset($_POST['pesquisar']))
 							<td>Local</td>
 							<td>Periodo</td>
 							<td>Fiscal</td>
+							<td></td>
 							</tr>
 						</thead>
 					<tbody>
@@ -201,7 +202,11 @@ if(isset($_POST['pesquisar']))
 						echo '<td class="list_description">'.$x[$h]['objeto'].'</td>';
 						echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['fiscal'].'</td> </tr>';
+						echo '<td class="list_description">'.$x[$h]['fiscal'].'</td>';
+						echo "<td class='list_description'>
+						<form method='POST' action='?perfil=gestao_eventos&p=frm_reabertura'>
+						<input type='hidden' name='reabertura' value='".$evento['idEvento']."' >	
+						<input type ='submit' class='btn btn-theme  btn-block' value='reabrir'></td></form></tr>"	;
 					}
 				?>					
 					</tbody>
@@ -217,6 +222,21 @@ if(isset($_POST['pesquisar']))
 }
 else
 {
+	//AQUI FAZ A REABERTURA
+	if(isset($_POST['reabertura']))
+	{
+		$con = BancoMysqli();
+		$idEvento = $_POST['reabertura'];
+		$mensagem = "";
+		$sql_reabrir = "UPDATE ig_evento SET dataEnvio = NULL, statusEvento = 'Em elaboração' WHERE idEvento = '$idEvento'";
+		$query_reabrir = mysqli_query($con,$sql_reabrir);
+		if($query_reabrir)
+		{
+			$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
+			$mensagem = $mensagem."O evento ".$evento['nomeEvento']." foi reaberto.<br />";
+		} 
+	}
+
 ?>
 	<section id="services" class="home-section bg-white">
 		<div class="container">
