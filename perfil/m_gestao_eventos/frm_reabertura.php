@@ -233,8 +233,12 @@ else
 		if($query_reabrir)
 		{
 			$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
-			$mensagem = $mensagem."O evento ".$evento['nomeEvento']." foi reaberto.<br />";
+			$mensagem = $mensagem."O evento ".$evento['nomeEvento']." foi reaberto.<br /><br/>";
 		} 
+		else
+		{
+			$mensagem = $mensagem."Erro ao reabrir.<br/><br/>";
+		}	
 	}
 
 ?>
