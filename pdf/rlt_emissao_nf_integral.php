@@ -172,7 +172,7 @@ if ($verba == 9)
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(65,$l,utf8_decode("Rua Vergueiro, 1000 - Liberdade - CEP: 01504-000"),0,1,'L');
 }
-	else 
+	else
 {
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
