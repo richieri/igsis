@@ -18,7 +18,7 @@
         <div class="row">    
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<h5>Seus últimos eventos inseridos</h5>
+					<h5>Seus últimos eventos enviados</h5>
 					<div class="left">
 						<ul>
 		<?php 

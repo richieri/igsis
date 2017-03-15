@@ -84,20 +84,10 @@ if(isset($_POST['pesquisar']))
 			$usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
 			$localUsr = $usr['local'];
 			$sql_evento = "
-				SELECT DISTINCT idEvento FROM ig_ocorrencia 
-				WHERE publicado = 1 AND idEvento IN 
-					(
-						SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL AND idEvento = $id AND idEvento NOT IN 
-						(
-							SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1
-						) 
-					) 
-				AND local IN ($localUsr) ORDER BY dataInicio DESC";
+				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) )AND local IN ($localUsr) AND idEvento = '$id' ORDER BY dataInicio DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
 			$i = 0;
-
-			while($evento = mysqli_fetch_array($query_evento))
-			{
+			
 				$evento = recuperaDados("ig_evento",$id,"idEvento");
 				$idEvento = $evento['idEvento'];
 				$projeto = recuperaDados("ig_projeto_especial",$evento['idEvento'],"projetoEspecial");
@@ -113,8 +103,7 @@ if(isset($_POST['pesquisar']))
 				$x[0]['fiscal'] = $fiscal['nomeCompleto'];
 				$x['num'] = 1;
 				$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-			}
-			$x['num'] = $i;	
+				
 		}
 		else
 		{ //Não foi inserido o número do evento
