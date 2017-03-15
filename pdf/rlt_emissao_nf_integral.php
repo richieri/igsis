@@ -63,7 +63,7 @@ $notaFiscal = $pedido["notaFiscal"];
 $descricaoNF = $pedido["descricaoNF"];
 $notaempenho = $pedido["NotaEmpenho"];
 $data_entrega_empenho = exibirDataBr($pedido['EntregaNE']);
-$verba = $pedido['idVerba'];
+$verba = $pedido['Verba'];
 
 //PessoaJuridica
 
@@ -128,34 +128,34 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(180,$l,utf8_decode("Secretaria Municipal de Cultura"),0,1,'L');
    
-   if ($pedido['idverba'] == 9)
-{
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,utf8_decode('CNPJ:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(65,$l,utf8_decode("49.269.244/0003-25"),0,1,'L');
-}
+   if ($verba == 9)
+   {
+	   $pdf->SetX($x);
+	   $pdf->SetFont('Arial','B', 10);
+	   $pdf->Cell(12,$l,utf8_decode('CNPJ:'),0,0,'L');
+	   $pdf->SetFont('Arial','', 10);
+	   $pdf->Cell(65,$l,utf8_decode("49.269.244/0003-25"),0,1,'L');
+   }
 
-	elseif ($verba == 6 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 33 | 37 | 63 | 64 | 65 | 66 | 67 | 68 | 69)
-{
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,utf8_decode('CNPJ:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(65,$l,utf8_decode("49.269.244/0006-78"),0,1,'L');
-}
+   elseif ($verba == 6 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 33 | 37 | 63 | 64 | 65 | 66 | 67 | 68 | 69)
+   {
+	   $pdf->SetX($x);
+	   $pdf->SetFont('Arial','B', 10);
+	   $pdf->Cell(12,$l,utf8_decode('CNPJ:'),0,0,'L');
+	   $pdf->SetFont('Arial','', 10);
+	   $pdf->Cell(65,$l,utf8_decode("49.269.244/0006-78"),0,1,'L');
+   }
 	else 
-{
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,utf8_decode('CNPJ:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(65,$l,utf8_decode("49.269.244/0001-63"),0,1,'L');
-}
+   {
+	   $pdf->SetX($x);
+	   $pdf->SetFont('Arial','B', 10);
+	   $pdf->Cell(12,$l,utf8_decode('CNPJ:'),0,0,'L');
+	   $pdf->SetFont('Arial','', 10);
+	   $pdf->Cell(65,$l,utf8_decode("49.269.244/0001-63"),0,1,'L');
+   }
 
    
-if ($pedido['idverba'] == 9)
+if ($verba == 9)
 {
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);

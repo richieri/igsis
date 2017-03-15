@@ -1,9 +1,7 @@
 ﻿<?php 
 require_once("../funcoes/funcoesVerifica.php");
 require_once("../funcoes/funcoesSiscontrat.php");
-
 include "includes/menu.php"; 
-
 if(isset($_GET['b']))
 {
 	$b = $_GET['b'];	
@@ -12,7 +10,6 @@ else
 {
 	$b = 'inicial';
 }
-
 switch($b)
 {
 case 'inicial':
@@ -23,7 +20,6 @@ if(isset($_POST['pesquisar']))
 	$evento = trim($_POST['nomeEvento']);
 	$fiscal = $_POST['fiscal'];
 	$projeto = $_POST['projeto'];
-
 	if($id == "" AND $evento == "" AND $fiscal == 0 AND $projeto == 0)
 	{
 ?>
@@ -140,7 +136,6 @@ if(isset($_POST['pesquisar']))
 			$query_evento = mysqli_query($con,$sql_evento);
 			
 			$i = 0;
-
 			while($evento = mysqli_fetch_array($query_evento))
 			{
 				$idEvento = $evento['idEvento'];	
@@ -245,7 +240,6 @@ else
 			$mensagem = $mensagem."Erro ao reabrir.<br/><br/>";
 		}	
 	}
-
 ?>
 	<section id="services" class="home-section bg-white">
 		<div class="container">
@@ -301,6 +295,5 @@ else
 
 <?php 
 } 
-
  break; 
 } // fim da switch ?>
