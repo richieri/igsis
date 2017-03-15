@@ -128,16 +128,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(180,$l,utf8_decode("Secretaria Municipal de Cultura"),0,1,'L');
    
-   if ($pedido['idverba'] == 8 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 34 | 35 | 36 | 38 | 52 | 71 | 72 | 73 | 74 )
-{
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,utf8_decode('CNPJ:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(65,$l,utf8_decode("49.269.244/0001-63"),0,1,'L');
-}
-
-	else if ($pedido['idverba'] == 9)
+   if ($pedido['idverba'] == 9)
 {
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
@@ -146,7 +137,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(65,$l,utf8_decode("49.269.244/0003-25"),0,1,'L');
 }
 
-	else ($pedido['idverba'] == 6 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 33 | 37 | 63 | 64 | 65 | 66 | 67 | 68 | 69)
+	elseif ($verba == 6 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 33 | 37 | 63 | 64 | 65 | 66 | 67 | 68 | 69)
 {
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
@@ -154,35 +145,43 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(65,$l,utf8_decode("49.269.244/0006-78"),0,1,'L');
 }
+	else 
+{
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(12,$l,utf8_decode('CNPJ:'),0,0,'L');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(65,$l,utf8_decode("49.269.244/0001-63"),0,1,'L');
+}
 
    
-   if ($pedido['idverba'] == 8 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 34 | 35 | 36 | 38 | 52 | 71 | 72 | 73 | 74 )
+if ($pedido['idverba'] == 9)
 {
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
+   $pdf->Cell(12,$l,utf8_decode('Endereço:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(180,$l,utf8_decode("Avenida São João, 473 - 11º andar - CEP: 01035-000"),0,1,'L');
+   $pdf->Cell(65,$l,utf8_decode("Rua Catão, 611 – Vila Romana - CEP: 05049-000"),0,1,'L');
 }
 
-	else if ($pedido['idverba'] == 9)
+	elseif ($verba == 6 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 33 | 37 | 63 | 64 | 65 | 66 | 67 | 68 | 69)
 {
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
+   $pdf->Cell(12,$l,utf8_decode('Endereço:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(180,$l,utf8_decode("Rua Catão, 611 – Vila Romana - CEP: 05049-000"),0,1,'L');
+   $pdf->Cell(65,$l,utf8_decode("Rua Vergueiro, 1000 - Liberdade - CEP: 01504-000"),0,1,'L');
+}
+	else 
+{
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(12,$l,utf8_decode('Endereço:'),0,0,'L');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(65,$l,utf8_decode("Av. São João, 473 – 11º andar - CEP: 01035-000"),0,1,'L');
 }
 
-	else ($pedido['idverba'] == 6 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 33 | 37 | 63 | 64 | 65 | 66 | 67 | 68 | 69)
-{
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(180,$l,utf8_decode("Rua Vergueiro, 1000 - Liberdade - CEP: 01504-000"),0,1,'L');
-}
-   
+
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(20,$l,utf8_decode('Município:'),0,0,'L');
