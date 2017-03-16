@@ -76,69 +76,66 @@ if(isset($_POST['pesquisar']))
 	else
 	{
 		$con = bancoMysqli();
+		if($id != '')
+		{
+			$filtro_id = " AND idEvento = '$id' ";
+		}
+		else
+		{
+			$filtro_id = "";			
+		}
 		
-		
-			if($id != '')
-			{
-				$filtro_id = " AND idEvento = '$id' ";
-			}
-			else
-			{
-				$filtro_id = "";			
-			}
-			
-			if($nomeEvento != '')
-			{
-				$filtro_nomeEvento = " AND nomeEvento LIKE '%$nomeEvento%' OR autor LIKE '%$nomeEvento%' ";
-			}
-			else
-			{
-				$filtro_nomeEvento = "";			
-			}		
-					
-			if($fiscal != 0)
-			{
-				$filtro_fiscal = " AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )";	
-			}
-			else
-			{
-				$filtro_fiscal = "";	
-			}	
-			
-			if($projeto == 0)
-			{
-				$filtro_projeto = " ";	
-			}
-			else
-			{
-				$filtro_projeto = " AND ig_evento.projetoEspecial = '$projeto'  ";	
-			}		
-			$usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
-			$localUsr = $usr['local'];
-			$sql_evento = "
-				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL $filtro_id $filtro_fiscal $filtro_projeto AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) )  $filtro_nomeEvento  ORDER BY dataInicio DESC";
-			$query_evento = mysqli_query($con,$sql_evento);
-			
-			$i = 0;
-
-			while($evento = mysqli_fetch_array($query_evento))
-			{
-				$idEvento = $evento['idEvento'];	
-				$evento = recuperaDados("ig_evento",$idEvento,"idEvento"); 			
-				$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
-				$local = listaLocais($idEvento);
-				$periodo = retornaPeriodo($idEvento);
-				$fiscal = recuperaUsuario($evento['idResponsavel']);			
+		if($nomeEvento != '')
+		{
+			$filtro_nomeEvento = " AND nomeEvento LIKE '%$nomeEvento%' OR autor LIKE '%$nomeEvento%' ";
+		}
+		else
+		{
+			$filtro_nomeEvento = "";			
+		}		
 				
-				$x[$i]['id']= $evento['idEvento'];
-				$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-				$x[$i]['local'] = substr($local,1);
-				$x[$i]['periodo'] = $periodo;
-				$x[$i]['fiscal'] = $fiscal['nomeCompleto'];			
-				$i++;			
-			}
-			$x['num'] = $i;
-						
+		if($fiscal != 0)
+		{
+			$filtro_fiscal = " AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )";	
+		}
+		else
+		{
+			$filtro_fiscal = "";	
+		}	
+		
+		if($projeto == 0)
+		{
+			$filtro_projeto = " ";	
+		}
+		else
+		{
+			$filtro_projeto = " AND ig_evento.projetoEspecial = '$projeto'  ";	
+		}		
+		$usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
+		$localUsr = $usr['local'];
+		$sql_evento = "
+			SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL $filtro_id $filtro_fiscal $filtro_projeto AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) )  $filtro_nomeEvento  ORDER BY dataInicio DESC";
+		$query_evento = mysqli_query($con,$sql_evento);
+		
+		$i = 0;
+
+		while($evento = mysqli_fetch_array($query_evento))
+		{
+			$idEvento = $evento['idEvento'];	
+			$evento = recuperaDados("ig_evento",$idEvento,"idEvento"); 			
+			$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+			$local = listaLocais($idEvento);
+			$periodo = retornaPeriodo($idEvento);
+			$fiscal = recuperaUsuario($evento['idResponsavel']);			
+			
+			$x[$i]['id']= $evento['idEvento'];
+			$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+			$x[$i]['local'] = substr($local,1);
+			$x[$i]['periodo'] = $periodo;
+			$x[$i]['fiscal'] = $fiscal['nomeCompleto'];			
+			$i++;			
+		}
+		$x['num'] = $i;				
 	}
 	$mensagem ="Total de eventos encontrados: ".$x['num'].".";
 ?>
