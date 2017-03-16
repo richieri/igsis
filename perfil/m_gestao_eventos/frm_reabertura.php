@@ -1,7 +1,9 @@
 ﻿<?php 
 require_once("../funcoes/funcoesVerifica.php");
 require_once("../funcoes/funcoesSiscontrat.php");
+
 include "includes/menu.php"; 
+
 if(isset($_GET['b']))
 {
 	$b = $_GET['b'];	
@@ -10,6 +12,7 @@ else
 {
 	$b = 'inicial';
 }
+
 switch($b)
 {
 case 'inicial':
@@ -20,6 +23,7 @@ if(isset($_POST['pesquisar']))
 	$evento = trim($_POST['nomeEvento']);
 	$fiscal = $_POST['fiscal'];
 	$projeto = $_POST['projeto'];
+
 	if($id == "" AND $evento == "" AND $fiscal == 0 AND $projeto == 0)
 	{
 ?>
@@ -28,12 +32,10 @@ if(isset($_POST['pesquisar']))
 				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="section-heading">
-							<h2>Busca por Evento</h2>
+							<h2>Busca por Evento - Reabertura</h2>
 							<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 						</div>
 					</div>
-				</div>
-				<div class="row">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
@@ -75,34 +77,16 @@ if(isset($_POST['pesquisar']))
 	{
 		$con = bancoMysqli();
 		
-		if($id != "")//Foi inserido número do evento
-		{ 	
-			$usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
-			$localUsr = $usr['local'];
-			$sql_evento = "
-				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) )AND local IN ($localUsr) AND idEvento = '$id' ORDER BY dataInicio DESC";
-			$query_evento = mysqli_query($con,$sql_evento);
-			$i = 0;
+		
+			if($id != '')
+			{
+				$filtro_id = " AND idEvento = '$id' ";
+			}
+			else
+			{
+				$filtro_id = "";			
+			}
 			
-				$evento = recuperaDados("ig_evento",$id,"idEvento");
-				$idEvento = $evento['idEvento'];
-				$projeto = recuperaDados("ig_projeto_especial",$evento['idEvento'],"projetoEspecial");
-				$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
-				$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
-				$local = listaLocais($idEvento);
-				$periodo = retornaPeriodo($idEvento);
-				$fiscal = recuperaUsuario($evento['idResponsavel']);
-				
-				$x[0]['id']= $evento['idEvento'];			
-				$x[0]['local'] = substr($local,1);
-				$x[0]['periodo'] = $periodo;
-				$x[0]['fiscal'] = $fiscal['nomeCompleto'];
-				$x['num'] = 1;
-				$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-				
-		}
-		else
-		{ //Não foi inserido o número do evento
 			if($nomeEvento != '')
 			{
 				$filtro_nomeEvento = " AND nomeEvento LIKE '%$nomeEvento%' OR autor LIKE '%$nomeEvento%' ";
@@ -132,10 +116,11 @@ if(isset($_POST['pesquisar']))
 			$usr = recuperaDados('ig_usuario',$_SESSION['idUsuario'],'idUsuario');
 			$localUsr = $usr['local'];
 			$sql_evento = "
-				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL $filtro_fiscal $filtro_projeto AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) )AND local IN ($localUsr) $filtro_nomeEvento  ORDER BY dataInicio DESC";
+				SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE publicado = 1 AND idEvento IN (SELECT idEvento FROM ig_evento WHERE publicado = 1 AND dataEnvio IS NOT NULL $filtro_id $filtro_fiscal $filtro_projeto AND idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) )  $filtro_nomeEvento  ORDER BY dataInicio DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
 			
 			$i = 0;
+
 			while($evento = mysqli_fetch_array($query_evento))
 			{
 				$idEvento = $evento['idEvento'];	
@@ -151,10 +136,9 @@ if(isset($_POST['pesquisar']))
 				$x[$i]['periodo'] = $periodo;
 				$x[$i]['fiscal'] = $fiscal['nomeCompleto'];			
 				$i++;			
-			
 			}
 			$x['num'] = $i;
-		}				
+						
 	}
 	$mensagem ="Total de eventos encontrados: ".$x['num'].".";
 ?>
@@ -202,11 +186,11 @@ if(isset($_POST['pesquisar']))
 						echo '<td class="list_description">'.$x[$h]['objeto'].'</td>';
 						echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['fiscal'].'</td>';
+						echo '<td class="list_description">'.$x[$h]['fiscal'].'</td> ';
 						echo "<td class='list_description'>
 						<form method='POST' action='?perfil=gestao_eventos&p=frm_reabertura'>
-						<input type='hidden' name='reabertura' value='".$evento['idEvento']."' >	
-						<input type ='submit' class='btn btn-theme  btn-block' value='reabrir'></td></form></tr>"	;
+						<input type='hidden' name='reabertura' value='".$x[$h]['id']."' >	
+						<input type ='submit' class='btn btn-theme  btn-block' value='reabrir'></td></form></tr>";
 					}
 				?>					
 					</tbody>
@@ -226,18 +210,18 @@ else
 	if(isset($_POST['reabertura']))
 	{
 		$con = BancoMysqli();
-		$idEvento = $_POST['reabertura'];
+		$id = $_POST['reabertura'];
 		$mensagem = "";
-		$sql_reabrir = "UPDATE ig_evento SET dataEnvio = NULL, statusEvento = 'Em elaboração' WHERE idEvento = '$idEvento'";
+		$sql_reabrir = "UPDATE ig_evento SET dataEnvio = NULL, statusEvento = 'Em elaboração' WHERE idEvento = '$id'";
 		$query_reabrir = mysqli_query($con,$sql_reabrir);
 		if($query_reabrir)
 		{
-			$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
+			$evento = recuperaDados("ig_evento",$id,"idEvento");
 			$mensagem = $mensagem."O evento ".$evento['nomeEvento']." foi reaberto.<br /><br/>";
-		} 
+		}
 		else
 		{
-			$mensagem = $mensagem."Erro ao reabrir.<br/><br/>";
+			$mensagem = $mensagem."Erro ao reabrir evento.<br/><br/>";
 		}	
 	}
 ?>
@@ -245,12 +229,8 @@ else
 		<div class="container">
 			<div class="row">
 				<div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-						<h2>Busca por Evento</h2>
-					</div>
+					<h2>Busca por Evento - Reabertura</h2>
 				</div>
-			</div>
-			<div class="row">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
@@ -295,5 +275,6 @@ else
 
 <?php 
 } 
+
  break; 
 } // fim da switch ?>
