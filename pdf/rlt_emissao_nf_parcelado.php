@@ -36,7 +36,7 @@ $notaFiscal = $pedido["notaFiscal"];
 $descricaoNF = $pedido["descricaoNF"];
 $notaempenho = $pedido["NotaEmpenho"];
 $data_entrega_empenho = exibirDataBr($pedido['EntregaNE']);
-
+$verba = $pedido['Verba'];
 //PessoaJuridica
 
 $pjRazaoSocial = $pj["Nome"];
@@ -72,6 +72,41 @@ $rep02CPF = $rep02["CPF"];
 header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Parcela $id_parcela.doc");
 
+switch($verba)
+{
+	case 9:
+	   $cnpj = "49.269.244/0003-25";
+	   $endereco = "Rua Catão, 611 – Vila Romana - CEP: 05049-000";
+	break;
+	case 6:
+	case 10:
+	case 11:
+	case 12: 
+	case 13:
+	case 14:
+	case 15:
+	case 16:
+	case 17:
+	case 18:
+	case 19:
+	case 33:
+	case 37:
+	case 63:
+	case 64:
+	case 65:
+	case 66:
+	case 67:
+	case 68:
+	case 69:
+		$cnpj = "49.269.244/0006-78";
+		$endereco = "Rua Vergueiro, 1000 - Liberdade - CEP: 01504-000";
+	break;
+	default:
+		$cnpj = "49.269.244/0001-63";
+		$endereco = "Av. São João, 473 – 11º andar - CEP: 01035-000";
+	break;
+}
+
 ?>
 <html>
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
@@ -82,8 +117,8 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p>Segue abaixo os dados para emissão da Nota Fiscal:  </p>
 <p>&nbsp;</p>
 <p><strong>Sacado:</strong> Secretaria Municipal de Cultura </p>
-<p><strong>CNPJ:</strong> 49.269.244/0001-63 </p>
-<p><strong>Endereço:</strong> Av. São João, 473 - 11º andar - CEP: 01035-000 </p>
+<p><strong>CNPJ:</strong> <?php echo $cnpj?></p>
+<p><strong>Endereço:</strong> <?php echo $endereco?></p>
 <p><strong>Município:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Estado:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>I. Est. Nº</strong>: Isento </p>
 <p>&nbsp;</p>
 <p><strong>Nota Fiscal:</strong> <?php echo $notaFiscal?></p>
