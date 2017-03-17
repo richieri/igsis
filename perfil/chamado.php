@@ -526,15 +526,21 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 				<div class="col-md-offset-2 col-md-8">
 					<div class="left">
 						<p>Chamado: <strong><?php echo $tipo['chamado']." - ".$chamado['titulo'];
-							if($chamado['idEvento'] != NULL)
-							{
-								$evento = recuperaDados("ig_evento",$chamado['idEvento'],"idEvento");
-								echo "<br />".$evento['nomeEvento'];
-							}?>
+						if($chamado['idEvento'] != NULL)
+						{
+							$evento = recuperaDados("ig_evento",$chamado['idEvento'],"idEvento");
+							echo "<br />".$evento['nomeEvento'];
+						}?>
 						</strong></p>
 						<p>Descrição:<br />
 							<strong><?php echo nl2br($chamado['descricao']) ?></strong>
-						</p> 
+						</p>
+						<?php
+						if($chamado['tipo']== 12)
+						{
+							echo "<p><a href='#'>Clique aqui para ver os arquivos de Contratos.</a></p>";
+						}
+						?>	
 						<br />
 						<p>Justificativa:<br />
 							<strong><?php echo nl2br($chamado['justificativa']) ?></strong>
@@ -690,13 +696,13 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 						}
 						else
 						{
-							$sql = "INSERT INTO ig_arquivo (idArquivo , arquivo , ig_evento_idEvento, publicado) VALUES( NULL , '$arquivo_base' , '$idEvento', '1' );";
+							$sql = "INSERT INTO ig_arquivo_contratos (idArquivo , arquivo , ig_evento_idEvento, publicado) VALUES( NULL , '$arquivo_base' , '$idEvento', '1' );";
 							mysqli_query($con,$sql);
 							$descricao = "Foram anexados arquivos.<br />
 							<a href=?perfil=busca&p=detalhe&evento=$idEvento target=_blank>Clique aqui para ter acesso.</a><br />";
 							$idUsuario = $_SESSION['idUsuario'];
 							$titulo = "Foram enviados arquivos.";
-							$sql_alt="INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', 'aberto', '10', '$idEvento', '')";
+							$sql_alt="INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', 'aberto', '12', '$idEvento', '')";
 							if(mysqli_query($con,$sql_alt))
 							{
 								gravarLog($sql_alt);
@@ -727,15 +733,15 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 					echo " </div>";
 				}
 				$titulo = "Foram enviados arquivos.";
-				$sql_alt="INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', 'aberto', '10', '$idEvento', '')";
+				$sql_alt="INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', 'aberto', '12', '$idEvento', '')";
 				if(mysqli_query($con,$sql_alt))
 				{
 					gravarLog($sql_alt);
-					$mensagem = "Chamada aberta com sucesso!";
+					$mensagem = "Chamado aberto com sucesso!";
 				}
 				else
 				{
-					$mensagem = "Erro ao abrir chamada. Tente novamente.";
+					$mensagem = "Erro ao abrir chamado. Tente novamente.";
 				}
 			}
 	?>
@@ -744,12 +750,13 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-	                <h4>Envio de Arquivos</h4>
+	                <h4>Envio de Arquivos para Contratos</h4>
+					<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
                 </div>
             </div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<p>Nesta página, você envia os arquivos ligados ao pedido de contratação, como por exemplo, propostas, FACC, decarações. O tamanho máximo do arquivo deve ser 50MB e deve estar no formato PDF.</p>					
+					<p>Nesta página, você envia os arquivos ligados ao pedido de contratação, como por exemplo, <strong>propostas, FACC e decarações, que já assinadas pelo proponente</strong>.<br/>O tamanho máximo do arquivo deve ser 50MB e deve estar no formato PDF.</p>					
 					<br />
 					
 					<form method='POST' action="?perfil=chamado&p=arqcontratos" enctype='multipart/form-data'>
