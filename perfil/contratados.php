@@ -1196,7 +1196,7 @@
 				$parecer = addslashes($_POST['parecerArtistico']);
 				$justificativa = addslashes($_POST['justificativa']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				if($_POST['atualizar'] > '1')
+				if($_POST['atualizar'] >= '1')
 				{
 					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
 						SET `observacao` =  '$Observacao',
@@ -2427,17 +2427,7 @@
 							<input type='text'  name="valor<?php echo $i; ?>" id='valor' class='form-control valor' value="<?php echo dinheiroParaBr($parcela['valor']); ?>">
 						</div>
 						<div class="col-xs-6 col-sm-3"><strong>Data do Kit de Pagamento:</strong><br/>
-							<input type='text' name="data<?php echo $i; ?>" id='datepicker1<?php echo $i; ?>' class='form-control datepicker' value="
-			<?php 
-				if($parcela['vencimento'] == '0000-00-00 00:00:00' OR $parcela['vencimento'] == NULL)
-				{ 
-					echo date('d/m/Y');
-				}
-				else
-				{
-					echo exibirDataBr($parcela['vencimento']); 
-				} 
-			?>">
+							<input type='text' name="data<?php echo $i; ?>" id='datepicker1<?php echo $i; ?>' class='form-control datepicker' value="<?php 	echo exibirDataBr($parcela['vencimento']); ?>">
 						</div>
 						<div class="col-xs-6 col-sm-3"><strong>Descrição:</strong><br/>
 							<input type='text'  name="descricao<?php echo $i; ?>" id='' class='form-control' value="<?php echo $parcela['descricao']; ?>">

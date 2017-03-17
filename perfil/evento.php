@@ -18,12 +18,12 @@
         <div class="row">    
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<h5>Seus últimos eventos inseridos</h5>
+					<h5>Seus últimos eventos enviados</h5>
 					<div class="left">
 						<ul>
 		<?php 
 			$con = bancoMysqli();
-			$sql_ultimo = "SELECT * FROM ig_evento WHERE dataEnvio IS NOT NULL AND idUsuario = ".$_SESSION['idUsuario']." OR idResponsavel = ".$_SESSION['idUsuario']." OR suplente = ".$_SESSION['idUsuario']." ORDER BY dataEnvio DESC LIMIT 0,30";
+			$sql_ultimo = "SELECT * FROM ig_evento WHERE (idUsuario = ".$_SESSION['idUsuario']." OR idResponsavel = ".$_SESSION['idUsuario']." OR suplente = ".$_SESSION['idUsuario'].") AND dataEnvio IS NOT NULL ORDER BY dataEnvio DESC LIMIT 0,30";
 			$query_ultimo = mysqli_query($con,$sql_ultimo);
 			while($evento = mysqli_fetch_array($query_ultimo))
 			{
