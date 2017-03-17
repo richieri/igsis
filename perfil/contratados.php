@@ -1196,7 +1196,7 @@
 				$parecer = addslashes($_POST['parecerArtistico']);
 				$justificativa = addslashes($_POST['justificativa']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				if($_POST['atualizar'] > '1')
+				if($_POST['atualizar'] >= '1')
 				{
 					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
 						SET `observacao` =  '$Observacao',
