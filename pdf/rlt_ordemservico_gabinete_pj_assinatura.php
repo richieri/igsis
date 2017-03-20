@@ -1,87 +1,71 @@
 ﻿<?php 
-	session_start();
-	   @ini_set('display_errors', '1');
-	error_reporting(E_ALL); 	
    
-   // INSTALA��O DA CLASSE NA PASTA FPDF.
+      
+   // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
 	require_once("../include/lib/fpdf/fpdf.php");
+	
+   //require '../include/';
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
    require_once("../funcoes/funcoesSiscontrat.php");
-
-   //CONEX�O COM BANCO DE DADOS 
-   $conexao = bancoMysqli(); 
+   
+   //CONEXÃO COM BANCO DE DADOS 
+   $conexao = bancoMysqli();
    
 
 class PDF extends FPDF
 {
-// Page header
-function Header()
-{
-	$inst = recuperaDados("ig_instituicao",$_SESSION['idInstituicao'],"idInstituicao");	$logo = "img/".$inst['logo']; // Logo
-    $this->Image($logo,20,20,50);
-    // Move to the right
-    $this->Cell(80);
-    $this->Image('../visual/img/logo_smc.jpg',170,10);
-    // Line break
-    $this->Ln(20);
-}
+	// Page header
+	function Header()
+	{
+		$inst = recuperaDados("ig_instituicao",$_SESSION['idInstituicao'],"idInstituicao");	$logo = "img/".$inst['logo']; // Logo
+		$this->Image($logo,20,20,50);
+		// Move to the right
+		$this->Cell(80);
+		$this->Image('../visual/img/logo_smc.jpg',170,10);
+		// Line break
+		$this->Ln(20);
+	}
 
-// Simple table
-function Cabecalho($header, $data)
-{
-    // Header
-    foreach($header as $col)
-        $this->Cell(40,7,$col,1);
-    $this->Ln();
-    // Data
+	// Simple table
+	function Cabecalho($header, $data)
+	{
+		// Header
+		foreach($header as $col)
+		$this->Cell(40,7,$col,1);
+		$this->Ln();
+		// Data
+	}
 
-}
+	// Simple table
+	function Tabela($header, $data)
+	{
+		//Data
+		foreach($data as $col)
+		$this->Cell(40,7,$col,1);
+		$this->Ln();
+		// Data
+	}
 
-// Simple table
-function Tabela($header, $data)
-{
-    //Data
-    foreach($data as $col)
-        $this->Cell(40,7,$col,1);
-    $this->Ln();
-    // Data
+	//INSERIR ARQUIVOS
+	
+	function ChapterBody($file)
+	{
+		// Read text file
+		$txt = file_get_contents($file);
+		// Arial 10
+		$this->SetFont('Arial','',10);
+		// Output justified text
+		$this->MultiCell(0,5,$txt);
+		// Line break
+		$this->Ln();
+	}
 
-}
-
-
-// Page footer
-/*
-function Footer()
-{
-    // Position at 1.5 cm from bottom
-    $this->SetY(-15);
-    // Arial italic 8
-    $this->SetFont('Arial','I',8);
-    // Page number
-    $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
-}
-*/
-
-//INSERIR ARQUIVOS
-
-function ChapterBody($file)
-{
-    // Read text file
-    $txt = file_get_contents($file);
-    // Arial 10
-    $this->SetFont('Arial','',10);
-    // Output justified text
-    $this->MultiCell(0,5,$txt);
-    // Line break
-    $this->Ln();
-}
-
-function PrintChapter($file)
-{
-    $this->ChapterBody($file);
-}
-
+	function PrintChapter($file)
+	{
+		$this->ChapterBody($file);
+	}
+	
 }
 
 
@@ -195,6 +179,7 @@ $rep02Telefones = $rep02["Telefones"];
 $rep02Email = $rep02["Email"];
 $rep02INSS = $rep02["INSS"];
 
+
 // GERANDO O PDF:
 $pdf = new PDF('P','mm','A4'); //CRIA UM NOVO ARQUIVO PDF NO TAMANHO A4
 $pdf->AliasNbPages();
@@ -211,7 +196,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
    $pdf->Cell(180,$l,utf8_decode('PREFEITURA DO MUNICÍPIO DE SÃO PAULO'),0,1,'C');
-   
+ /*  
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
    $pdf->Cell(180,$l,utf8_decode('SECRETARIA MUNICIPAL DE CULTURA'),0,1,'C');
@@ -341,9 +326,9 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->MultiCell(180,$l,utf8_decode($FormaPagamento));
 
    
-//	QUEBRA DE PÃGINA
+//	QUEBRA DE PÁGINA
 $pdf->AddPage('','');
-$pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÃGINA  
+$pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA  
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
@@ -468,16 +453,8 @@ Aceito as condições dessa O.E.S para todos os efeitos de direito."));
     
    
    $pdf->Ln();
-    
 
-  
-
-
+*/
    
-
-//for($i=1;$i<=20;$i++)
-   // $pdf->Cell(0,10,'Printing line number '.$i,0,1);
 $pdf->Output();
-
-
 ?>
