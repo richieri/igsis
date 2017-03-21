@@ -78,6 +78,14 @@
 							<option value='0'></option>
 							<?php  geraOpcao("ig_modalidade","",""); ?>
 						</select>
+						<br />
+						<label>Valor</label><br/><br/>
+						<div class="col-md-offset-2 col-md-6">
+							<input type="number" name="valor_inicial" class="form-control" placeholder="Valor Inicial" > 
+						</div>
+						<div class="col-md-6">
+							<input type="number" name="valor_final" class="form-control" placeholder="Valor Final" 
+						></div> <br />
 				</div>
 			</div>
 			<br />             
@@ -150,6 +158,7 @@
 							$x[0]['local'] = substr($local,1);
 							$x[0]['instituicao'] = $instituicao['sigla'];
 							$x[0]['periodo'] = $periodo;
+							$x[0]['valor'] = $pedido['valor'];
 							$x[0]['status'] = $pedido['estado'];	
 							$x['num'] = 1;
 						}
@@ -223,7 +232,7 @@
 						}
 						else
 						{
-							$filtro_valor = "AND igsis_pedido_contratacao.valor > '$valor_inicial' AND igsis_pedido_contratacao.valor < '$valor_final'";
+							$filtro_valor = "AND igsis_pedido_contratacao.valor BETWEEN '$valor_inicial' AND '$valor_final'";
 						}
 						$sql_evento = "SELECT * 
 							FROM ig_evento,
@@ -244,65 +253,50 @@
 						$i = 0;
 						while($evento = mysqli_fetch_array($query_evento))
 						{
-							$idEvento = $evento['idEvento'];	
-							$sql_existe = "SELECT idPedidoContratacao,
-								idEvento,
-								estado 
-								FROM igsis_pedido_contratacao 
-								WHERE idEvento = '$idEvento' 
-								AND publicado = '1' 
-								$filtro_status ";
-							$query_existe = mysqli_query($con, $sql_existe);
-							if(mysqli_num_rows($query_existe) > 0)
+							$pedido = recuperaDados("igsis_pedido_contratacao",$evento['idPedidoContratacao'],"idPedidoContratacao");
+							$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
+							$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+							$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
+							$local = listaLocais($pedido['idEvento']);
+							$periodo = retornaPeriodo($pedido['idEvento']);
+							$duracao = retornaDuracao($pedido['idEvento']);
+							$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
+							$fiscal = recuperaUsuario($evento['idResponsavel']);
+							$suplente = recuperaUsuario($evento['suplente']);
+							$protocolo = ""; //recuperaDados("sis_protocolo",$pedido['idEvento'],"idEvento");
+							if($pedido['parcelas'] > 1)
 							{
-								while($ped = mysqli_fetch_array($query_existe))
-								{	
-									$pedido = recuperaDados("igsis_pedido_contratacao",$ped['idPedidoContratacao'],"idPedidoContratacao");
-									$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
-									$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
-									$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
-									$local = listaLocais($pedido['idEvento']);
-									$periodo = retornaPeriodo($pedido['idEvento']);
-									$duracao = retornaDuracao($pedido['idEvento']);
-									$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
-									$fiscal = recuperaUsuario($evento['idResponsavel']);
-									$suplente = recuperaUsuario($evento['suplente']);
-									$protocolo = ""; //recuperaDados("sis_protocolo",$pedido['idEvento'],"idEvento");
-									if($pedido['parcelas'] > 1)
-									{
-										$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
-										$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
-									}
-									else
-									{
-										$valorTotal = $pedido['valor'];
-										$formaPagamento = $pedido['formaPagamento'];
-									}
-									if($pedido['publicado'] == 1)
-									{		
-										$x[$i]['id']= $pedido['idPedidoContratacao'];
-										$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
-										$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-										if($pedido['tipoPessoa'] == 1)
-										{
-											$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-											$x[$i]['proponente'] = $pessoa['Nome'];
-											$x[$i]['tipo'] = "Física";
-										}
-										else
-										{
-											$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-											$x[$i]['proponente'] = $pessoa['RazaoSocial'];
-											$x[$i]['tipo'] = "Jurídica";
-										}
-										$x[$i]['local'] = substr($local,1);
-										$x[$i]['instituicao'] = $instituicao['sigla'];
-										$x[$i]['periodo'] = $periodo;	
-										$x[$i]['valor'] = $pedido['valor'];
-										$x[$i]['status'] = $pedido['estado'];
-										$i++;
-									}
+								$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
+								$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
+							}
+							else
+							{
+								$valorTotal = $pedido['valor'];
+								$formaPagamento = $pedido['formaPagamento'];
+							}
+							if($pedido['publicado'] == 1)
+							{		
+								$x[$i]['id']= $pedido['idPedidoContratacao'];
+								$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
+								$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+								if($pedido['tipoPessoa'] == 1)
+								{
+									$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+									$x[$i]['proponente'] = $pessoa['Nome'];
+									$x[$i]['tipo'] = "Física";
 								}
+								else
+								{
+									$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+									$x[$i]['proponente'] = $pessoa['RazaoSocial'];
+									$x[$i]['tipo'] = "Jurídica";
+								}
+								$x[$i]['local'] = substr($local,1);
+								$x[$i]['instituicao'] = $instituicao['sigla'];
+								$x[$i]['periodo'] = $periodo;	
+								$x[$i]['valor'] = $pedido['valor'];
+								$x[$i]['status'] = $pedido['estado'];
+								$i++;
 							}
 						}
 						$x['num'] = $i;
@@ -421,7 +415,7 @@
 							<?php  geraOpcao("ig_modalidade","",""); ?>
 						</select>
 						<br />
-						<label>Valor</label><br/> <font size="2">(em fase de testes)</font><br/>
+						<label>Valor</label><br/><br/>
 						<div class="col-md-offset-2 col-md-6">
 							<input type="number" name="valor_inicial" class="form-control" placeholder="Valor Inicial" > 
 						</div>
