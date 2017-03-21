@@ -1,9 +1,9 @@
-﻿<?php 
+<?php 
 	session_start();
 	   @ini_set('display_errors', '1');
 	error_reporting(E_ALL); 	
    
-   // INSTALA��O DA CLASSE NA PASTA FPDF.
+   // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
 	require_once("../include/lib/fpdf/fpdf.php");
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
@@ -194,11 +194,11 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(8,$l,utf8_decode('CPF:'),0,0,'L');
+   $pdf->Cell(10,$l,utf8_decode('CPF:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(70,$l,utf8_decode($CPF),0,0,'L');
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(10,$l,utf8_decode('RG:'),0,0,'L');
+   $pdf->Cell(8,$l,utf8_decode('RG:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(65,$l,utf8_decode($RG),0,1,'L');
    
@@ -210,7 +210,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(26,$l,utf8_decode('Representante:'),0,0,'L');
+   $pdf->Cell(28,$l,utf8_decode('Representante:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(160,$l,utf8_decode($Nome));
    
@@ -220,9 +220,9 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(65,$l,utf8_decode($EstadoCivil),0,0,'L');
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(10,$l,utf8_decode('Nacionalidade:'),0,0,'L');
+   $pdf->Cell(27,$l,utf8_decode('Nacionalidade:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(65,$l,utf8_decode($Nacionalidade),0,1,'L');
+   $pdf->Cell(48,$l,utf8_decode($Nacionalidade),0,1,'L');
    
   
    $pdf->Ln();
@@ -304,31 +304,18 @@ $pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(180,$l,utf8_decode(" - Compete à contratada a realização do espetáculo, e a fazer constar o crédito à PMSP/SECRETARIA MUNICIPAL DE CULTURA, em toda divulgação escrita ou falada, realizada sobe o espetáculo programado.
-
 - A empresa contratada fica sujeita ao atendimento no disposto nas Leis Municipais nº 10.973/9, regulamentada pelo DM 30.730/91; 11.113/91; 11.357/93; 12.975/2000 e portaria 66/SMC/2007; Leis Estaduais nº 7.844/92; Medida Provisória Federal 12.933/2013 e Lei Federal 10.741/2013.
-
 - A contratada é responsável por qualquer prejuízo ou dano causado ao patrimônio municipal ou a bens de terceiros que estejam sob a guarda do equipamento local de realização do evento.
-
 - Quaisquer outras despesas não ressalvadas aqui serão de responsabilidade da contratada, que se compromete a adotar as providências necessárias junto à OMB.
-
 - As providências administrativas para liberação da autorização do ECAD serão de responsabilidade da contratada, sendo que eventuais pagamento serão efetuados pela SMC.
-
 - A Municipalidade não é responsável por qualquer material ou equipamento que não lhe pertença utilizado no espetáculo, devendo esse material ser retirado no seu término.
-
 - A Cia. deverá designar uma pessoa para atuar na Bilheteria durante toda a temporada, cabendo a esta a responsabilidade exclusiva pela venda dos ingressos.
-
 - A Bilheteria deverá abrir 1 (uma) hora antes do início de cada espetáculo.
-
 - Após o término de cada espetáculo um servidor designado pela Coordenação do Teatro efetuará o fechamento do borderô com o bilheteiro responsável.
-
 - Caberá a Cia. efetuar o repasse do percentual do FEPAC e a Coordenação do Teatro caberá o recolhimento do valor.
-
 - Em havendo contratação pela Secretaria de Cultura de empresa prestadora de serviços de gerenciamento da bilheteria, caberá a esta efetuar a venda dos ingressos.
-
 - Compete, ainda, à Municipalidade, o fornecimento da sonorização necessária à realização de espetáculos e dos equipamentos de iluminação disponíveis no local do evento, assim como providências quanto à divulgação de praxe (confecção de cartaz a ser afixado no equipamento cultural e encaminhamento de release à mídia impressa e televisiva).
-
 - A Coordenadoria dos Centros Culturais reserva-se o direito de disponibilizar 6 (seis) ingressos por apresentação, que não poderão ser comercializados pela Cia. Sendo que haverá comunicado com antecedência quando da utilização desses ingressos. Caso não haja manifestação por parte da SMC a comercialização desses ingressos será livre.
-
 - A/o contratada/o se compromete a realizar o espetáculo para um número mínimo de 10 (dez) pagantes.
 
 Aceito as condições dessa O.E.S para todos os efeitos de direito."));
@@ -384,15 +371,7 @@ Aceito as condições dessa O.E.S para todos os efeitos de direito."));
     
    
    $pdf->Ln();
-    
-
-  
-
-
    
-
-//for($i=1;$i<=20;$i++)
-   // $pdf->Cell(0,10,'Printing line number '.$i,0,1);
 $pdf->Output();
 
 
