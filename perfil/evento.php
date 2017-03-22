@@ -711,7 +711,7 @@
 		break;
 		case "area" :
 			$campo = recuperaEvento($_SESSION['idEvento']); //carrega os dados do evento em questão
-include "../include/menuEvento.php";
+			include "../include/menuEvento.php";
 	?>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
@@ -990,7 +990,88 @@ include "../include/menuEvento.php";
 </div>
 			<?php 
 				break;
-				case 3 || 7 || 9 || 14 || 17 || 27 || 29:
+				case 11:
+				case 12:
+				case 19:
+				case 21:
+					$idTabela = "ig_musica";
+					$idCampo = "ig_evento_idEvento";
+					$idDado = $_SESSION['idEvento'];
+					$st = 0;
+					if(isset($_POST['atualizar']))
+					{
+						$ig_musica_genero = $_POST['ig_musica_genero'];
+						$ig_musica_venda = $_POST['ig_musica_venda'];
+						$ig_musica_material = addslashes($_POST['ig_musica_material']);
+						//verifica se existe um registro na tabela
+						$ver = verificaExiste($idTabela,$idCampo,$idDado,$st);
+						if($ver['numero'] == 0)
+						{
+							// insere um registro novo
+							$sql_insere_musica = "INSERT INTO  `ig_musica` (`idMusica` ,`ig_evento_idEvento` ,`genero` ,`venda` ,`material`)VALUES (NULL ,  '$idDado',  '$ig_musica_genero',  '$ig_musica_venda','$ig_musica_material');";
+							if(mysqli_query($con,$sql_insere_musica))
+							{		
+								$mensagem = "Atualizado com sucesso! ";	
+								gravarLog($sql_insere_musica); //grava log
+							}
+							else
+							{
+								$mensagem = "Erro ao atualizar(3)!";
+							}
+						}
+						else
+						{
+							//atualiza o registro existente
+							$sql_atualiza_musica = "UPDATE ig_musica SET genero = '$ig_musica_genero', venda = '$ig_musica_venda', material = '$ig_musica_material' WHERE ig_evento_idEvento = $idDado";
+							if(mysqli_query($con,$sql_atualiza_musica))
+							{		
+								$mensagem = "Atualizado com sucesso! ";	
+								gravarLog($sql_atualiza_musica); //grava log
+							}
+							else
+							{
+								$mensagem = "Erro ao atualizar(4)!";
+							}
+						}
+					}
+					$artes = recuperaDados($idTabela,$_SESSION['idEvento'],$idCampo);
+			?>
+<h3>Música</h3>
+<h4><? if(isset($mensagem)){echo $mensagem;} ?></h4>
+<div class="form-group">
+	<div class="col-md-offset-2 col-md-6">
+		<label>Gênero</label>
+		<input type="text" class="form-control" name="ig_musica_genero" value="<?php if(isset($artes)){echo $artes['genero'];} ?>" id="" placeholder="Erudito, popular, rock, samba, experimental, etc">
+	</div>
+	<div class=" col-md-2">
+		<label>Venda de material</label>
+		<select class="form-control" name="ig_musica_venda" id="inputSubject" >
+			<option value="1" <?php if(isset($artes)){if($artes['venda'] == "1"){echo "selected";}} ?> >Sim</option>
+			<option value="0" <?php if(isset($artes)){if($artes['venda'] == "0"){echo "selected";}} ?>>Não</option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-md-offset-2 col-md-8">
+		<label>Descrição o material</label>
+		<textarea name="ig_musica_material" class="form-control" rows="10" placeholder="Livro, camiseta, CD, DVD, etc"><?php echo $artes["material"] ?></textarea>
+	</div> 
+</div>   
+<div class="form-group">
+	<div class="col-md-offset-2 col-md-8">
+		<input type="hidden" name="atualizar" value="1" />
+		<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
+	</div>
+</div>
+			<?php
+				break;
+				case 3:
+				case 7:
+				case 9:
+				case 14:
+				case 17:
+				case 27:
+				case 29:
 					$idTabela = "ig_teatro_danca";
 					$idCampo = "ig_evento_idEvento";
 					$idDado = $_SESSION['idEvento'];
@@ -1075,78 +1156,6 @@ include "../include/menuEvento.php";
 </div>
 			<?php 
 				break;
-				case 19:
-					$idTabela = "ig_musica";
-					$idCampo = "ig_evento_idEvento";
-					$idDado = $_SESSION['idEvento'];
-					$st = 0;
-					if(isset($_POST['atualizar']))
-					{
-						$ig_musica_genero = $_POST['ig_musica_genero'];
-						$ig_musica_venda = $_POST['ig_musica_venda'];
-						$ig_musica_material = addslashes($_POST['ig_musica_material']);
-						//verifica se existe um registro na tabela
-						$ver = verificaExiste($idTabela,$idCampo,$idDado,$st);
-						if($ver['numero'] == 0)
-						{
-							// insere um registro novo
-							$sql_insere_musica = "INSERT INTO  `ig_musica` (`idMusica` ,`ig_evento_idEvento` ,`genero` ,`venda` ,`material`)VALUES (NULL ,  '$idDado',  '$ig_musica_genero',  '$ig_musica_venda','$ig_musica_material');";
-							if(mysqli_query($con,$sql_insere_musica))
-							{		
-								$mensagem = "Atualizado com sucesso! ";	
-								gravarLog($sql_insere_musica); //grava log
-							}
-							else
-							{
-								$mensagem = "Erro ao atualizar(3)!";
-							}
-						}
-						else
-						{
-							//atualiza o registro existente
-							$sql_atualiza_musica = "UPDATE ig_musica SET genero = '$ig_musica_genero', venda = '$ig_musica_venda', material = '$ig_musica_material' WHERE ig_evento_idEvento = $idDado";
-							if(mysqli_query($con,$sql_atualiza_musica))
-							{		
-								$mensagem = "Atualizado com sucesso! ";	
-								gravarLog($sql_atualiza_musica); //grava log
-							}
-							else
-							{
-								$mensagem = "Erro ao atualizar(4)!";
-							}
-						}
-					}
-					$artes = recuperaDados($idTabela,$_SESSION['idEvento'],$idCampo);
-			?>
-<h3>Música</h3>
-<h4><? if(isset($mensagem)){echo $mensagem;} ?></h4>
-<div class="form-group">
-	<div class="col-md-offset-2 col-md-6">
-		<label>Gênero</label>
-		<input type="text" class="form-control" name="ig_musica_genero" value="<?php if(isset($artes)){echo $artes['genero'];} ?>" id="" placeholder="Erudito, popular, rock, samba, experimental, etc">
-	</div>
-	<div class=" col-md-2">
-		<label>Venda de material</label>
-		<select class="form-control" name="ig_musica_venda" id="inputSubject" >
-			<option value="1" <?php if(isset($artes)){if($artes['venda'] == "1"){echo "selected";}} ?> >Sim</option>
-			<option value="0" <?php if(isset($artes)){if($artes['venda'] == "0"){echo "selected";}} ?>>Não</option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<div class="col-md-offset-2 col-md-8">
-		<label>Descrição o material</label>
-		<textarea name="ig_musica_material" class="form-control" rows="10" placeholder="Livro, camiseta, CD, DVD, etc"><?php echo $artes["material"] ?></textarea>
-	</div> 
-</div>   
-<div class="form-group">
-	<div class="col-md-offset-2 col-md-8">
-		<input type="hidden" name="atualizar" value="1" />
-		<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-	</div>
-</div>
-			<?php
-				break; 
 				default:
 			?>
 <div class="form-group">
