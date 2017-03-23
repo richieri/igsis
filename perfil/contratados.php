@@ -1190,6 +1190,7 @@
 			if(isset($_POST['atualizar']))
 			{
 				$ValorIndividual = "0.00";
+				$Valor = addslashes($_POST['Valor']);
 				$Observacao = addslashes($_POST['Observacao']);
 				$parcelas = $_POST['parcelas'];
 				$Verba = $_POST['verba'];
@@ -1199,7 +1200,8 @@
 				if($_POST['atualizar'] >= '1')
 				{
 					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
-						SET `observacao` =  '$Observacao',
+						SET `valor` =  '$Valor',
+						`observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
