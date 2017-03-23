@@ -18,7 +18,6 @@ $link6 = $http."rlt_evento_pj.php";
 $link7 = $http."rlt_direitos_conexos.php";
 $link8 = $http."rlt_parecer_pj.php";
 $link9 = $http."rlt_pedido_reserva_nova_pj.php";
-$link10 = $http."rlt_pedido_reserva_cooperativa_pj.php";
 $link11 = $http."rlt_pedido_reserva_fepac_pj.php";
 $link12 = $http."rlt_pedido_reserva_atividadecultural_pj.php";
 $link13 = $http."rlt_pedido_reserva_atividadecultural_cooperativa_pj.php";
@@ -159,11 +158,6 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>PEDIDO DE RESERVA</strong></td></tr>
 						
 						<tr>
-							<td><a href='$link10?id=$id_ped' target='_blank'><strong>Cooperativa</strong></a></td>
-							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
-						</tr>
-						
-						<tr>
 							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva de Verba com Transferência - VIRADA</strong></a></td>		
 							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais</strong></a></td>
 						</tr>
@@ -176,6 +170,10 @@ echo "
 						<tr>
 							<td><a href='$link47?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
 							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura </strong></a></td>
+						</tr>
+						
+						<tr>
+							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
 						</tr>
 					</tbody>
 				</table>

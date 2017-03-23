@@ -31,6 +31,7 @@ $Suplente = $pedido["Suplente"];
 $rfSuplente = $pedido["RfSuplente"];
 $dataAtual = exibirDataBr($pedido["DataCadastro"]);
 $setor = $pedido["Setor"];
+$qtdApresentacoes = $pedido["qtdApresentacoes"];
 
 $verba = recuperaVerba($pedido['Verba']);
 $vocativo = $verba["vocativo"];
@@ -82,7 +83,7 @@ $sei =
    "<strong>E-mail:</strong> "."$pjEmail"."</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Objeto:</strong> "."$Objeto"."</p>".
-"<p><strong>Data / Período:</strong> "."$Periodo"." - conforme Proposta/Cronograma</p>".
+"<p><strong>Data / Período:</strong> "."$Periodo".", totalizando "."$qtdApresentacoes"." apresentações conforme proposta/cronograma.</p>".
 "<p><strong>Tempo Aproximado de Duração do Espetáculo:</strong> "."$Duracao"."utos </p>".
 "<p><strong>Carga Horária:</strong> "."$CargaHoraria"."</p>".
 "<p align='justify'><strong>Local:</strong> "."$Local"."</p>".

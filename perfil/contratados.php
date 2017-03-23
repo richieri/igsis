@@ -142,7 +142,8 @@
 							`formaPagamento`, 
 							`idVerba`, 
 							`anexo`, 
-							`observacao`, 
+							`observacao`,
+							`qtdApresentacoes`,
 							`publicado`) 
 							VALUES (NULL, 
 							'$idEvento', 
@@ -262,7 +263,8 @@
 							`formaPagamento`, 
 							`idVerba`, 
 							`anexo`, 
-							`observacao`, 
+							`observacao`,
+							`qtdApresentacoes`,
 							`publicado`, 
 							`idRepresentante02`) 
 							VALUES (NULL, 
@@ -275,7 +277,8 @@
 							NULL, 
 							NULL, 
 							NULL, 
-							NULL, 
+							NULL,
+							NULL,
 							'1', 
 							'NULL')";
 						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
@@ -1196,6 +1199,7 @@
 				$Verba = $_POST['verba'];
 				$parecer = addslashes($_POST['parecerArtistico']);
 				$justificativa = addslashes($_POST['justificativa']);
+				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
 				if($_POST['atualizar'] >= '1')
 				{
@@ -1205,6 +1209,7 @@
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
+						`qtdApresentacoes` =  '$qtdApresentacoes',
 						`idVerba` =  '$Verba',
 						`valorIndividual` =  '$ValorIndividual' 
 						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
@@ -1220,6 +1225,7 @@
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
+						`qtdApresentacoes` =  '$qtdApresentacoes',
 						`idVerba` =  '$Verba',
 						`valorIndividual` =  '$ValorIndividual' 
 						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
@@ -1490,6 +1496,13 @@
 								<textarea name="Observacao" class='form-control' cols="40" rows="5"><?php echo $pedido['observacao'] ?></textarea>
 							</div>
 						</div>
+						
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><strong>Quantidade de Apresentações:</strong><br/>
+								<input type='text' name="qtdApresentacoes" id='qtdApresentacoes' class='form-control' value="<?php echo $pedido['qtdApresentacoes'] ?>" >
+							</div>
+						</div>
+						
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<input type="hidden" name="atualizar" value="<?php echo $pedido['parcelas']; ?>" />

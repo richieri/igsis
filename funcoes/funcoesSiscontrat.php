@@ -269,6 +269,7 @@
 				"descricaoNF" => $pedido['descricaoNF'],
 				"aprovacaoFinanca" => $pedido['aprovacaoFinanca'],
 				"ingresso" => $ingresso['valorIngresso'],
+				"qtdApresentacoes" => $pedido['qtdApresentacoes'],
 				"tipoPessoa" => $pedido['tipoPessoa']);
 			return $x;	
 		}

@@ -13,6 +13,8 @@
 $id_ped=$_GET['id'];
 dataReserva($id_ped);
 $ano=date('Y');
+$pedido = siscontrat($id_ped);
+
 
 $pedido = siscontrat($id_ped);
 $pj = siscontratDocs($pedido['IdProponente'],2);
@@ -27,7 +29,8 @@ $dataAtual = date("d/m/Y");
 $NumeroProcesso = $pedido["NumeroProcesso"];
 $assinatura = $pedido["Assinatura"];
 $cargo = $pedido["Cargo"];
-
+$qtdApresentacoes = $pedido["qtdApresentacoes"];
+$Periodo = $pedido["Periodo"];
 
 //PessoaJuridica
 
@@ -70,7 +73,7 @@ $sei =
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 – Programação de Atividades Culturais da U.O. 25.10 (Pessoa Jurídica) visando possibilitar a contratação de que trata esse processo.</p>".
+  "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 – Programação de Atividades Culturais da U.O. 25.10 (Pessoa Jurídica) visando possibilitar a contratação de que trata esse processo, no período de "."$Periodo".", totalizando "."$qtdApresentacoes"." apresentações conforme proposta e cronograma.</p>".
   "<p>&nbsp;</p>".
   "<p>Após, encaminhar para SMC / Assessoria Jurídica para prosseguimento. </p>".
   "<p>&nbsp;</p>"
