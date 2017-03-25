@@ -5,6 +5,9 @@ $_SESSION['idPedido'] = $_GET['id_ped'];
 $id_ped = $_GET['id_ped'];
 $id = $id_ped;
 
+$pedido = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
+$id_pf = $pedido['idPessoa'];
+
 $server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; //mudar para pasta do igsis
 $http = $server."/pdf/";
 
@@ -44,7 +47,7 @@ $link31 = $http."rlt_pedido_reserva_dph_pf.php";
 $link32 = $http."rlt_pedido_reserva_csmb_pf.php";
 $link33 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
 
-$link34 = $http."rlt_fac_pf.php";
+$link34 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
 $link35 = $http."rlt_ordemservico_pf.php";
 $link36 = $http."rlt_ordemservico_gabinete_pf_assinatura.php";
 $link37 = $http."rlt_parecer_pf.php";
@@ -138,7 +141,7 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>OUTROS</strong></td></tr>
 						
 						<tr>
-							<td><a href='$link34?id=$id_ped' target='_blank'><strong>FACC</strong></a></td>
+							<td><a href='$link34' target='_blank'><strong>FACC</strong></a></td>
 							<td><a href='$link37?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
 						</tr>
 						<tr>

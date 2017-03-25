@@ -31,12 +31,11 @@ function Header()
 
 
 //CONSULTA 
-$id_ped=$_GET['id'];
+$id_pf=$_GET['id_pf'];
 
 $ano=date('Y');
 
-$pedido = siscontrat($id_ped);
-$pessoa = siscontratDocs($pedido['IdProponente'],1);
+$pessoa = siscontratDocs($id_pf,1);
 $enderecoCEP = enderecoCEP($pessoa['CEP']);
 
 $rua = $enderecoCEP["rua"]; 

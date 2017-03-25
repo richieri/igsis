@@ -6,6 +6,8 @@ $pedido = siscontrat($id_ped);
 $pessoa = siscontratDocs($pedido['IdProponente'],1);
 $parcelamento = retornaParcelaPagamento($id_ped);
 
+$id_pf = $pedido['IdProponente'];
+
 $server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; 
 $http = $server."/pdf/";
 $link1 = $http."rlt_pagamento_formacao_pf.php"."?id=".$id_ped;
@@ -13,7 +15,7 @@ $link2 = $http."rlt_recibo_pagamento_formacao_pf.php"."?id=".$id_ped;
 $link3 = $http."rlt_atestado_confirmacao_servicos_pf.php"."?id=".$id_ped;
 $link4 = $http."rlt_flcontabilidade_formacao_pf.php"."?id=".$id_ped;
 $link5 = $http."rlt_relatorio_horas_trabalhadas_formacao.php"."?id=".$id_ped;
-$link6 = $http."rlt_fac_pf.php"."?id=".$id_ped;
+$link6 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
 ?>
 
 <?php
@@ -61,9 +63,9 @@ if(isset($_POST['inserir'])){ //
 			<form class="form-horizontal" role="form" action="#" method="post">
 
 		<div class="form-group">
-			<div class="col-md-offset-2 col-md-4"><strong>Pedido de Contratação nº:</strong> <?php echo $id_ped; ?>
-				<div class="col-md-4"><strong>Processo nº:</strong> <?php echo $pedido["NumeroProcesso"]; ?>
-				</div>
+			<div class="col-md-offset-2 col-md-6"><strong>Pedido de Contratação nº:</strong> <?php echo $id_ped; ?>
+			</div>
+			<div class="col-md-6"><strong>Processo nº:</strong> <?php echo $pedido["NumeroProcesso"]; ?>
 			</div>
 		</div>
 		
