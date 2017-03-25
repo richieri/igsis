@@ -137,6 +137,10 @@
 		}
 	}
 	$fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
+	
+	$server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; 
+	$http = $server."/pdf/";
+	$link1 = $http."rlt_fac_pf.php"."?id_pf=".$fisica['Id_PessoaFisica'];
 ?>
 <section id="contact" class="home-section bg-white">
 	<div class="container">
@@ -309,8 +313,12 @@
 							<input type="hidden" name="Sucesso" id="Sucesso" />
 							<input type="submit" value="Anexos" class="btn btn-theme btn-block">
 						</form>
-					</div>					
+					</div>	
+					<div class="col-md-6">
+						<a target="_blank" class="btn btn-theme btn-block" href="<?php echo $link1; ?>"><strong>EMITIR FACC</strong></a>
+					</div>
 				</div>
+				
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 <?php
