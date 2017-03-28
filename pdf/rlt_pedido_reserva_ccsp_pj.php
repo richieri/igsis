@@ -4,7 +4,6 @@
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
    require_once("../funcoes/funcoesSiscontrat.php");
-   require_once("../funcoes/funcoesFormacao.php");
 
 //CONEXÃO COM BANCO DE DADOS 
    $conexao = bancoMysqli();
@@ -12,29 +11,30 @@
 //CONSULTA 
 $id_ped=$_GET['id'];
 dataReserva($id_ped);
-$linha_tabelas = siscontrat($id_ped);
-$pedido = siscontrat($id_ped);
-
-$codPed = $id_ped;
-$objeto = $linha_tabelas["Objeto"];
-$ValorGlobal = $linha_tabelas["ValorGlobal"];
-$ValorPorExtenso = valorPorExtenso($linha_tabelas["ValorGlobal"]); 
-$periodo = $linha_tabelas["Periodo"];
-$duracao = $linha_tabelas["Duracao"];
-$dataAtual = date("d/m/Y");
-$NumeroProcesso = $linha_tabelas["NumeroProcesso"];
-$assinatura = $linha_tabelas["Assinatura"];
-$cargo = $linha_tabelas["Cargo"];
-$qtdApresentacoes = $pedido["qtdApresentacoes"];
-
-$linha_tabelas_pessoa = siscontratDocs($linha_tabelas['IdProponente'],1);
-$nome = $linha_tabelas_pessoa["Nome"];
-$cpf = $linha_tabelas_pessoa["CPF"];
-
-$setor = $linha_tabelas["Setor"];
-
 $ano=date('Y');
-  
+
+$pedido = siscontrat($id_ped);
+$pj = siscontratDocs($pedido['IdProponente'],2);
+$ex = siscontratDocs($pedido['IdExecutante'],1);
+$rep01 = siscontratDocs($pj['Representante01'],3);
+$rep02 = siscontratDocs($pj['Representante02'],3);
+$codPed = $id_ped;
+$objeto = $pedido["Objeto"];
+$ValorGlobal = $pedido["ValorGlobal"];
+$ValorPorExtenso = valorPorExtenso($pedido["ValorGlobal"]); 
+$dataAtual = date("d/m/Y");
+$NumeroProcesso = $pedido["NumeroProcesso"];
+$assinatura = $pedido["Assinatura"];
+$cargo = $pedido["Cargo"];
+$qtdApresentacoes = $pedido["qtdApresentacoes"];
+$Periodo = $pedido["Periodo"];
+
+//PessoaJuridica
+
+$pjRazaoSocial = $pj["Nome"];
+$pjCNPJ = $pj['CNPJ'];
+
+$ano=date('Y');  
  ?>
  
  
@@ -63,21 +63,21 @@ $ano=date('Y');
 
 $sei = 
   "<p>&nbsp;</p>".
-  "<p><strong>INTERESSADO:</strong> "."$nome"."  </span></p>".
+  "<p><strong>INTERESSADO:</strong> "."$pjRazaoSocial"."</span></p>".
   "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
   "<p>&nbsp;</p>".
-  "<p><strong>SMC/CSMB</strong></p>".
+  "<p><strong>SMC/CCSP</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, foram anexados os documentos necessários e incluído o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a "."$qtdApresentacoes"." (valor por extenso) apresentações, no período de "."$periodo".". Diante disso, encaminho para reserva de recursos.</p>".
+  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, foram anexados os documentos necessários e incluído o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a "."$qtdApresentacoes"." (valor por extenso) apresentações, no período de "."$Periodo".". Diante disso, encaminho para reserva de recursos.</p>".
   "<p>Supervisão de Contratação Artística</p>".
   "<p>&nbsp;</p>".
   "<p>_________________________________________________________________________________________________________________________________</p>".
-  "<p>&nbsp;</p>".
+ "<p>&nbsp;</p>".
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
   "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 – Programação de Atividades Culturais da U.O. 25.10 (Pessoa Física) visando possibilitar a contratação acima mencionada.</p>".
-  "<p>Coordenadoria do Sistema Municipal de Bibliotecas</p>".
+  "<p>Direção do Centro Cultural da Cidade de São Paulo</p>".
   "<p>&nbsp;</p>".
   "<p>Após, encaminhar para SMC / Assessoria Jurídica para prosseguimento. </p>".
   "<p>&nbsp;</p>"

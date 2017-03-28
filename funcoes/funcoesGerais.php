@@ -1329,6 +1329,7 @@
 		}
 		return($rt ? $rt : "zero");
 	}
+
 	function recuperaModalidade($id)
 	{
 		//imprime a modalidade

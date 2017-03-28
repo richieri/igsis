@@ -1193,7 +1193,7 @@
 			if(isset($_POST['atualizar']))
 			{
 				$ValorIndividual = "0.00";
-				$Valor = addslashes($_POST['Valor']);
+				$Valor = dinheiroDeBr($_POST['Valor']);
 				$Observacao = addslashes($_POST['Observacao']);
 				$parcelas = $_POST['parcelas'];
 				$Verba = $_POST['verba'];

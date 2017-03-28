@@ -55,6 +55,8 @@ $link45 = $http."rlt_ordemservico_gabinete_pj_assinatura.php";
 $link46 = $http."rlt_pedido_reserva_dph_pj.php";
 $link47 = $http."rlt_pedido_reserva_csmb_pj.php";
 $link48 = $http."rlt_pedido_reserva_casasdecultura_pj.php";
+$link49 = $http."rlt_pedido_reserva_ccsp_pj.php";
+
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -174,6 +176,7 @@ echo "
 						
 						<tr>
 							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
+							<td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
 						</tr>
 					</tbody>
 				</table>

@@ -1,10 +1,12 @@
 <?php
+   @ini_set('display_errors', '1');
+	error_reporting(E_ALL); 
 
 //require '../include/';
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
    require_once("../funcoes/funcoesSiscontrat.php");
-   require_once("../funcoes/funcoesFormacao.php");
+      require_once("../funcoes/funcoesFormacao.php");
 
 //CONEXÃO COM BANCO DE DADOS 
    $conexao = bancoMysqli();
@@ -14,6 +16,7 @@ $id_ped=$_GET['id'];
 dataReserva($id_ped);
 $linha_tabelas = siscontrat($id_ped);
 $pedido = siscontrat($id_ped);
+
 
 $codPed = $id_ped;
 $objeto = $linha_tabelas["Objeto"];
@@ -27,14 +30,15 @@ $assinatura = $linha_tabelas["Assinatura"];
 $cargo = $linha_tabelas["Cargo"];
 $qtdApresentacoes = $pedido["qtdApresentacoes"];
 
+
+
 $linha_tabelas_pessoa = siscontratDocs($linha_tabelas['IdProponente'],1);
 $nome = $linha_tabelas_pessoa["Nome"];
 $cpf = $linha_tabelas_pessoa["CPF"];
 
 $setor = $linha_tabelas["Setor"];
 
-$ano=date('Y');
-  
+
  ?>
  
  
@@ -62,11 +66,11 @@ $ano=date('Y');
 <?php
 
 $sei = 
-  "<p>&nbsp;</p>".
+   "<p>&nbsp;</p>".
   "<p><strong>INTERESSADO:</strong> "."$nome"."  </span></p>".
   "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
   "<p>&nbsp;</p>".
-  "<p><strong>SMC/CSMB</strong></p>".
+  "<p><strong>SMC/CCSP</strong></p>".
   "<p>&nbsp;</p>".
   "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, foram anexados os documentos necessários e incluído o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a "."$qtdApresentacoes"." (valor por extenso) apresentações, no período de "."$periodo".". Diante disso, encaminho para reserva de recursos.</p>".
   "<p>Supervisão de Contratação Artística</p>".
@@ -77,7 +81,7 @@ $sei =
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
   "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Atividade 6354 – Programação de Atividades Culturais da U.O. 25.10 (Pessoa Física) visando possibilitar a contratação acima mencionada.</p>".
-  "<p>Coordenadoria do Sistema Municipal de Bibliotecas</p>".
+  "<p>Direção do Centro Cultural da Cidade de São Paulo</p>".
   "<p>&nbsp;</p>".
   "<p>Após, encaminhar para SMC / Assessoria Jurídica para prosseguimento. </p>".
   "<p>&nbsp;</p>"
