@@ -29,6 +29,8 @@ $NumeroProcesso = $linha_tabelas["NumeroProcesso"];
 $assinatura = $linha_tabelas["Assinatura"];
 $cargo = $linha_tabelas["Cargo"];
 $qtdApresentacoes = $pedido["qtdApresentacoes"];
+$qtdApresentacoesPorExtenso = qtdApresentacoesPorExtenso ($pedido["qtdApresentacoes"]);
+
 
 
 
@@ -72,7 +74,7 @@ $sei =
   "<p>&nbsp;</p>".
   "<p><strong>SMC/CCULT</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, foram anexados os documentos necessários e incluído o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a "."$qtdApresentacoes"." (valor por extenso) apresentações, no período de "."$periodo".". Diante disso, encaminho para reserva de recursos.</p>".
+  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, foram anexados os documentos necessários e incluído o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentações, no período de "."$periodo".". Diante disso, encaminho para reserva de recursos.</p>".
   "<p>Supervisão de Contratação Artística</p>".
   "<p>&nbsp;</p>".
   "<p>_________________________________________________________________________________________________________________________________</p>".

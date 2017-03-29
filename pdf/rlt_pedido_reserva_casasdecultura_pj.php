@@ -28,6 +28,7 @@ $NumeroProcesso = $pedido["NumeroProcesso"];
 $assinatura = $pedido["Assinatura"];
 $cargo = $pedido["Cargo"];
 $qtdApresentacoes = $pedido["qtdApresentacoes"];
+$qtdApresentacoesPorExtenso = qtdApresentacoesPorExtenso ($pedido["qtdApresentacoes"]);
 $Periodo = $pedido["Periodo"];
 
 
@@ -71,7 +72,7 @@ $sei =
   "<p>&nbsp;</p>".
   "<p><strong>SMC/DEC/DP/NCC</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, foram anexados os documentos necessários e incluído o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a "."$qtdApresentacoes"." (valor por extenso) apresentações, no período de "."$Periodo".". Diante disso, encaminho para reserva de recursos.</p>".
+  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, foram anexados os documentos necessários e incluído o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentações, no período de "."$Periodo".". Diante disso, encaminho para reserva de recursos.</p>".
   "<p>Supervisão de Contratação Artística</p>".
   "<p>&nbsp;</p>".
   "<p>_________________________________________________________________________________________________________________________________</p>".
