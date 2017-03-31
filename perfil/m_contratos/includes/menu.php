@@ -1,7 +1,6 @@
 <?php
 //geram o insert pro framework da igsis
 $pasta = "?perfil=contratos&p=";
-$usuario = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
  ?>
 
 <div class="menu-area">
