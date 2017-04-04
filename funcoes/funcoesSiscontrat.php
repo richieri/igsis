@@ -179,7 +179,8 @@
 				$formacao = recuperaDados("sis_formacao",$pedido['idPedidoContratacao'],"idPedidoContratacao");
 				$cargo = recuperaDados("sis_formacao_cargo",$formacao['IdCargo'],"Id_Cargo");
 				$programa = recuperaDados("sis_formacao_programa",$formacao['IdPrograma'],"Id_Programa");
-				$objeto = "CONTRATAÇÃO COMO ".strtoupper($cargo['Cargo'])." DO ".strtoupper($programa['Programa'])." NOS TERMOS DO EDITAL ".$programa['edital']." - PROGRAMAS DA DIVISÃO DE FORMAÇÃO.";
+				$linguagem = recuperaDados("sis_formacao_linguagem",$formacao['IdLinguagem'],"Id_Linguagem");
+				$objeto = "CONTRATAÇÃO COMO ".strtoupper($cargo['Cargo'])." DE ".strtoupper($linguagem['Linguagem'])." DO ".strtoupper($programa['Programa'])." NOS TERMOS DO EDITAL ".$programa['edital']." - PROGRAMAS DA DIVISÃO DE FORMAÇÃO.";
 				if($cargo['coordenador'] == 1)
 				{ 
 					$loc = "SMC e equipamentos sobre sua supervisão";
