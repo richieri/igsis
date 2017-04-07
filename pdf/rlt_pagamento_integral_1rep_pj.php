@@ -151,7 +151,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(180,$l,utf8_decode("Ilustríssimo(a) Senhor(a) Diretor(a)"),0,1,'L');
+   $pdf->Cell(180,$l,utf8_decode("Senhor(a) Diretor(a)"),0,1,'L');
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
@@ -241,7 +241,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("Venho, mui respeitosamente, requerer  que Vossa Senhoria se digne  submeter a exame   à  decisão do órgão competente o pedido supra.
+   $pdf->MultiCell(180,$l,utf8_decode("Venho, mui respeitosamente, requerer  que o(a) senhor(a) se digne  submeter a exame à  decisão do órgão competente o pedido supra.
 Declaro, sob as penas da Lei, não possuir débitos perante as Fazendas Públicas, em especial com a Prefeitura do Município de São Paulo.
 Nestes termos, encaminho para deferimento."));   
    

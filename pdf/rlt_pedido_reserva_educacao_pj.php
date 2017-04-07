@@ -200,7 +200,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("À vista do contido às fls. retro e, uma vez que se trata de recursos transferidos da Secretaria Municipal de Educação, encaminhamos o presente para providências de Vossa Senhoria, conforme nota de transferência nº 40.468."));
+   $pdf->MultiCell(180,$l,utf8_decode("À vista do contido às fls. retro e, uma vez que se trata de recursos transferidos da Secretaria Municipal de Educação, encaminhamos o presente para providências do(a) senhor(a), conforme nota de transferência nº 40.468."));
    
    $pdf->Ln();
    

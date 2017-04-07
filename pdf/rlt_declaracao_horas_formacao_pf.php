@@ -132,7 +132,7 @@ $f=12; //DEFINE O TAMANHO DA FONTE
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', $f);
-   $pdf->MultiCell(180,$l,utf8_decode("Eu, _______________________________________________________________________, responsável pelo(a)    (     ) Núcleo de Ação Cultural 	(     ) Gestão      do equipamento acima  citado declaro para os devidos fins que o artista acima descrito cumpriu _______ horas, no período informado  realizando atividades internas e externas  relacionadas às demandas deste equipamento."));   
+   $pdf->MultiCell(180,$l,utf8_decode("Eu, _______________________________________________________________________, responsável pelo(a)    (     ) Núcleo de Ação Cultural 	(     ) Gestão do equipamento acima  citado declaro para os devidos fins que o artista acima descrito cumpriu _______ horas, no período informado  realizando atividades internas e externas  relacionadas às demandas deste equipamento."));   
       
    $pdf->Ln();
    $pdf->Ln();

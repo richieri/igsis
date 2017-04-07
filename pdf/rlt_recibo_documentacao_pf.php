@@ -67,7 +67,7 @@ $sei =
   "<p><strong>SMC - CONTABILIDADE</strong></p>".
   "<p><strong>Sr.(a) Contador(a)</strong></p>".
   "<p>&nbsp;</p>". 
-  "<p>Encaminho o presente a Vossa Senhoria para providências quanto ao pagamento, uma vez que os serviços foram realizados e confirmados a contento conforme documento <strong>LINK DA SOLICITAÇÃO</strong>.</p>".
+  "<p>Encaminho o presente para providências quanto ao pagamento, uma vez que os serviços foram realizados e confirmados a contento conforme documento <strong>LINK DA SOLICITAÇÃO</strong>.</p>".
   "<p>&nbsp;</p>". 
   "<p>&nbsp;</p>".
   "<p>INFORMAÇÕES COMPLEMENTARES</p>".

@@ -151,6 +151,7 @@
 			$verba = recuperaVerba($pedido['idPenalidade']);
 			$ingresso = recuperaDados("ig_ocorrencia", $pedido['idEvento'], "idEvento");
 			$viradaOcorrencia = viradaOcorrencia($pedido['idEvento']);
+			$observacao = recuperaDados("ig_ocorrencia", $pedido['idEvento'], "idEvento");
 			if($viradaOcorrencia['bool'] == '1')
 			{
 				$virada = "Uma hora de evento no período da Virada Cultural.";	
@@ -271,7 +272,8 @@
 				"aprovacaoFinanca" => $pedido['aprovacaoFinanca'],
 				"ingresso" => $ingresso['valorIngresso'],
 				"qtdApresentacoes" => $pedido['qtdApresentacoes'],
-				"tipoPessoa" => $pedido['tipoPessoa']);
+				"tipoPessoa" => $pedido['tipoPessoa'],
+				"observacao" => $pedido['observacao']);
 			return $x;	
 		}
 		else

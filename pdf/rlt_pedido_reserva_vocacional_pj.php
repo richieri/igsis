@@ -69,7 +69,7 @@ $sei =
   "<p><strong>CONTABILIDADE</strong></p>".
   "<p><strong>Sr(a). Responsável</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>À vista do contido às fls. retro e, uma vez que se trata de recursos transferidos da Secretaria Municipal de Educação,  encaminhamos o presente para providências de Vossa Senhoria.</p>".
+  "<p>À vista do contido às fls. retro e, uma vez que se trata de recursos transferidos da Secretaria Municipal de Educação,  encaminhamos o presente para providências do(a) senhor(a).</p>".
   "<p>&nbsp;</p>".
   "<p> Valor: "."R$ $ValorGlobal"."  "."($ValorPorExtenso)"."</p>".
   "<p>&nbsp;</p>".

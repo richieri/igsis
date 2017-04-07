@@ -126,7 +126,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p align="center"><strong>PEDIDO DE PAGAMENTO DE PESSOA JURÍDICA</strong></p>
 <p>&nbsp;</p>
 <p><strong>
-	Ilustríssimo(a) Senhor(a) Diretor(a)</br>
+	Senhor(a) Diretor(a)</br>
 	Secretaria Municipal de Cultura
 </strong></p>
 <p>&nbsp;</p>
@@ -140,7 +140,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p align="justify"><strong>Local:</strong> <?php echo $Local?></p>
 <p align="justify"><strong>Valor:</strong> R$ <?php echo $valorParcela?> (<?php echo $ValorPorExtenso?> )</p>
 <p>&nbsp;</p>
-<p align="justify">Venho, mui respeitosamente, requerer  que Vossa Senhoria se digne  submeter a exame   à  decisão do órgão competente o pedido supra.</p>
+<p align="justify">Venho, mui respeitosamente, requerer  que o(a) senhor(a) se digne  submeter a exame   à  decisão do órgão competente o pedido supra.</p>
 <p align="justify">Declaro, sob as penas da Lei, não possuir débitos perante as Fazendas Públicas, em especial com a Prefeitura do Município de São Paulo.
 Nestes termos, encaminho para deferimento.</p>
 <p>&nbsp;</p>

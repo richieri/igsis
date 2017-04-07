@@ -7,7 +7,6 @@ $id_ped = $_GET['id_ped'];
 
 if(isset($_POST['idPedido']))
 {
-	$id_ped = $_GET['id_ped'];
 	$id_pedido = $_POST['idPedido']; //recupera o id do pedido
 	$mensagem = $id_pedido;
 }
@@ -135,7 +134,7 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Estado civil:</strong><br/>
 						<select class="form-control" id="IdEstadoCivil" name="IdEstadoCivil" >
-							<?php geraOpcao("sis_estado_civil","",""); ?>  
+							<?php geraOpcao("sis_estado_civil",$fisica['IdEstadoCivil'],""); ?>  
 						</select>
 					</div>				  
 					<div class=" col-md-6"><strong>Data de nascimento:</strong><br/>

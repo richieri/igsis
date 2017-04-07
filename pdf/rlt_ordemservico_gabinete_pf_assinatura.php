@@ -114,6 +114,8 @@ $data_entrega_empenho = exibirDataBr($pedido['EntregaNE']);
 $data_emissao_empenho = exibirDataBr($pedido['EmissaoNE']);
 $ingresso = dinheiroParaBr($pedido['ingresso']);
 $ingressoExtenso = valorPorExtenso($pedido['ingresso']);
+$observacao = $pedido["observacao"];
+
 
 $grupo = grupos($id_ped);
 $integrantes = $grupo["texto"];
@@ -243,9 +245,17 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->Ln();
    
+   if($pedido['ingresso'] == '0')
+   {
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("Valor do Ingresso: ".$ingresso." ( ".$ingressoExtenso." )."));    
+   $pdf->MultiCell(180,$l,utf8_decode("Valor do Ingresso: ".$observacao." "));    
+   }
+   else {
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(180,$l,utf8_decode("Valor do Ingresso: ".$ingresso." ( ".$ingressoExtenso." )."));  
+   }
    
    $pdf->Ln();
      

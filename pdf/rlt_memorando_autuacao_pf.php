@@ -173,7 +173,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->Ln();
    
    $pdf->SetX($x);
-   $pdf->MultiCell(180,$l,utf8_decode("Nos termos da Portaria nº 50/87 - S.M.A. (DOM de 27.08.87), solicitamos a Vossa Senhoria autuar o presente expediente, fornecendo para tanto os seguintes dados:"));
+   $pdf->MultiCell(180,$l,utf8_decode("Nos termos da Portaria nº 50/87 - S.M.A. (DOM de 27.08.87), solicitamos que autue o presente expediente, fornecendo para tanto os seguintes dados:"));
    
    $pdf->Ln();
    

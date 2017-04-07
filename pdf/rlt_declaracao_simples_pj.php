@@ -153,7 +153,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(170,$l,utf8_decode("Ilmo. Senhor (a)"));
+   $pdf->MultiCell(170,$l,utf8_decode("Senhor (a)"));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);

@@ -69,7 +69,7 @@ $sei =
   "<p><strong>CONTABILIDADE</strong></p>".
   "<p><strong>Sr(a). Responsável</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>Encaminho o presente a Vossa Senhoria para a necessária reserva de recursos (RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10) no valor supra citado para o pagamento do cachê que deverá onerar a dotação do FEPAC.</p>".
+  "<p>Encaminho o presente para a necessária reserva de recursos (RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10) no valor supra citado para o pagamento do cachê que deverá onerar a dotação do FEPAC.</p>".
   "<p>&nbsp;</p>".
   "<p> Valor: "."R$ $ValorGlobal"."  "."($ValorPorExtenso)"."</p>".
   "<p>&nbsp;</p>".

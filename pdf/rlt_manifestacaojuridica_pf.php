@@ -70,7 +70,7 @@ $sei =
   "<p>Sr(a) Diretor(a)</p>".
   "<p>&nbsp;</p>".
   "<p>Trata-se de proposta de contratação de serviços de natureza artística para <strong>".$objeto."</strong> conforme parecer da Comissão de Atividades Artísticas e Culturais, que ratifica o pedido, sustentando que “o espetáculo é composto por profissionais consagrados pelo público e pela crítica especializada, estando o cachê proposto de acordo com os praticados no mercado e pagos por esta Secretaria para artistas do mesmo renome”, tendo em vista, vale dizer, os <strong>artigos 25, III e 26, §único, II e III da Lei Federal n° 8.666/93, c/c artigos 16 e 17 do Decreto Municipal n° 44.279/03.</strong></p>".
-  "<p align='justify'>Assim sendo, pela competência, encaminhamos-lhe o presente para deliberação final de V.Sa., ressaltando que as certidões referentes à regularidade fiscal da contratada encontram-se em ordem.</p>".
+  "<p align='justify'>Assim sendo, pela competência, encaminhamos-lhe o presente para deliberação final do(a) senhor(a), ressaltando que as certidões referentes à regularidade fiscal da contratada encontram-se em ordem.</p>".
   "<p>&nbsp;</p>". 
   "<p>&nbsp;</p>".
   "<p align='center'>São Paulo, ".$dataAtual."</p>".
