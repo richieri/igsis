@@ -1192,8 +1192,7 @@
 			}
 			if(isset($_POST['atualizar']))
 			{
-				$ValorIndividual = "0.00";
-				$Valor = dinheiroDeBr($_POST['Valor']);
+				
 				$Observacao = addslashes($_POST['Observacao']);
 				$parcelas = $_POST['parcelas'];
 				$Verba = $_POST['verba'];
@@ -1201,24 +1200,22 @@
 				$justificativa = addslashes($_POST['justificativa']);
 				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				if($_POST['atualizar'] >= '1')
+				$FormaPagamento = $_POST['FormaPagamento'];
+				if($_POST['atualizar'] >= '2')
 				{
 					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
-						SET `valor` =  '$Valor',
-						`observacao` =  '$Observacao',
+						SET `observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
 						`qtdApresentacoes` =  '$qtdApresentacoes',
-						`idVerba` =  '$Verba',
-						`valorIndividual` =  '$ValorIndividual' 
+						`idVerba` =  '$Verba'
 						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
 				}
 				else
-				{
-					$Valor = dinheiroDeBr($_POST['Valor']);	
-					$FormaPagamento = $_POST['FormaPagamento'];
-					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
+				{	
+					$Valor = dinheiroDeBr($_POST['Valor']);
+					$sql_atualizar_pedido = "UPDATE  	`igsis_pedido_contratacao` 
 						SET `valor` =  '$Valor',
 						`formaPagamento` =  '$FormaPagamento',
 						`observacao` =  '$Observacao',
@@ -1226,8 +1223,7 @@
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
 						`qtdApresentacoes` =  '$qtdApresentacoes',
-						`idVerba` =  '$Verba',
-						`valorIndividual` =  '$ValorIndividual' 
+						`idVerba` =  '$Verba'
 						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
 				}
 				$query_atualizar_pedido = mysqli_query($con,$sql_atualizar_pedido);
