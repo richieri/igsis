@@ -3468,10 +3468,10 @@
 		if(isset($_POST['insereParecer']))
 		{
 			$id_ped = $_SESSION['idPedido'];				
-			$topico1 = $_POST['topico1'];
-			$topico2 = $_POST['topico2'];
-			$topico3 = $_POST['topico3'];
-			$topico4 = $_POST['topico4'];
+			$topico1 = addslashes($_POST['topico1']);
+			$topico2 = addslashes($_POST['topico2']);
+			$topico3 = addslashes($_POST['topico3']);
+			$topico4 = addslashes($_POST['topico4']);
 					
 			$sql_insere_parecer = "INSERT INTO `igsis_parecer_artistico`( `idPedidoContratacao`, `topico1`, `topico2`, `topico3`, `topico4`) VALUES ('$id_ped','$topico1','$topico2','$topico3','$topico4')";
 			if(mysqli_query($con,$sql_insere_parecer))
@@ -3499,10 +3499,10 @@
 		if(isset($_POST['editaParecer']))
 		{
 			$id_ped = $_SESSION['idPedido'];				
-			$topico1 = $_POST['topico1'];
-			$topico2 = $_POST['topico2'];
-			$topico3 = $_POST['topico3'];
-			$topico4 = $_POST['topico4'];
+			$topico1 = addslashes($_POST['topico1']);
+			$topico2 = addslashes($_POST['topico2']);
+			$topico3 = addslashes($_POST['topico3']);
+			$topico4 = addslashes($_POST['topico4']);
 						
 			$sql_edita_parecer = "UPDATE `igsis_parecer_artistico` SET `topico1`='$topico1', `topico2`='$topico2', `topico3`='$topico3', `topico4`='$topico4' WHERE idPedidoContratacao = '$id_ped'";
 			if(mysqli_query($con,$sql_edita_parecer))
