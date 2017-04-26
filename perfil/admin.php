@@ -2083,9 +2083,6 @@ $sql_compara_pf	= "";
 				$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
 				$objReader = PHPExcel_IOFactory::createReader($inputFileType);
 				$objPHPExcel = $objReader->load($inputFileName);
-				
-				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
-				$objWriter->save("teste");
 			}
 			catch(Exception $e)
 			{
@@ -2096,111 +2093,87 @@ $sql_compara_pf	= "";
 			$highestRow = $sheet->getHighestRow(); 
 			$highestColumn = $sheet->getHighestColumn();
 			//Apagamos a tabela orcamento_central
-			$sql_limpa = "TRUNCATE TABLE orcamento_central";
+			$sql_limpa = "TRUNCATE TABLE googleforms_evento";
 			if(mysqli_query($con,$sql_limpa))
 			{
-				$mensagem .= "<br />Tabela orcamento_central limpa.<br />";	
+				$mensagem .= "<br />Tabela googleforms_evento limpa.<br />";	
 			}
 			else
 			{
-				$mensagem .= "Erro ao limpar a tabela orcamento_central.<br />";	
+				$mensagem .= "Erro ao limpar a tabela googleforms_evento.<br />";	
 			}
-			//Apagamos a tabela saldo_unidade
-			$sql_limpa = "TRUNCATE TABLE saldo_unidade";
-			if(mysqli_query($con,$sql_limpa))
-			{
-				$mensagem .= "<br />Tabela saldo_unidade limpa <br />";	
-			}
-			else
-			{
-				$mensagem .= "Erro ao limpar a tabela saldo_unidade <br />";	
-			}		
 			//  Loop through each row of the worksheet in turn
 			for ($row = 1; $row <= $highestRow; $row++)
-			{ 
+			{
 				//  Read a row of data into an array
 				$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
 					NULL,
 					TRUE,
 					FALSE);
 				//  Insert row data array into your database of choice here
-				if($row == 1)
-				{
-					// Dados da Tabela
-					$mensagem .= "Situação de projeto atividade";
-					$data = date("Y-m-d H:i:s");
-					$mens_sof = "Situação de projeto atividade - ".$data;
-					$sql_atualizacao = "INSERT INTO `atualizacao` (`id`, `data`, `texto`) VALUES (NULL, '$data', '$mens_sof')";
-					$query_atualizacao = mysqli_query($con,$sql_atualizacao);
-					if($query_atualizacao)
-					{
-						$mensagem .= " Atualização registrada.<br />";	
-					}
-				}	
 				if($row > 2)
 				{
 					// Insere na tabela googleforms_evento
-					$id = $rowData[0][0];
-					$responsavelContratos = $rowData[0][1];
-					$fiscal = $rowData[0][2];
-					$suplente = $rowData[0][3];
-					$idEvento = $rowData[0][4];
-					$idPedido = $rowData[0][5];
-					$enviadoSei = $rowData[0][6];
-					$valor = $rowData[0][7];
-					$data = $rowData[0][8];
-					$horario = $rowData[0][9];
-					$local = $rowData[0][10];
-					$dataHora = $rowData[0][11];
-					$nomeEspetaculo = $rowData[0][12];
-					$nomeGrupo = $rowData[0][13];
-					$classificacao = $rowData[0][14];
-					$duracao = $rowData[0][15];
-					$sinopse = $rowData[0][16];
-					$releaseApresentacao = $rowData[0][17];
-					$releaseCompleto = $rowData[0][18];
-					$links = $rowData[0][19];
-					$fichaTecnica = $rowData[0][20];
-					$nomeProdutor = $rowData[0][21];
-					$emailProdutor = $rowData[0][22];
-					$confirmacaoEmail = $rowData[0][23];
-					$emailOpicionalProdutor = $rowData[0][24];
-					$telefoneFixoProdutor = $rowData[0][25];
-					$celular1Produtor = $rowData[0][26];
-					$celular2Produtor = $rowData[0][27];
-					$nomeExecutante = $rowData[0][28];
-					$dataNascimento = $rowData[0][29];
-					$estadoCivil = $rowData[0][30];
-					$rg = $rowData[0][31];
-					$confirmacaoRG = $rowData[0][32];
-					$cpf = $rowData[0][33];
-					$confirmacaoCpf = $rowData[0][34];
-					$endereco = $rowData[0][35];
-					$cep = $rowData[0][36];
-					$numero = $rowData[0][37];
-					$complemento = $rowData[0][38];
-					$cnpj = $rowData[0][39];
-					$ccm = $rowData[0][40];
-					$razaoSocial = $rowData[0][41];
-					$enderecoPJ = $rowData[0][42];
-					$cepPJ = $rowData[0][43];
-					$numeroPJ = $rowData[0][44];
-					$complementoPJ = $rowData[0][45];
-					$representante1 = $rowData[0][46];
-					$dataNascimento1 = $rowData[0][47];
-					$estadoCivil1 = $rowData[0][48];
-					$rg1 = $rowData[0][49];
-					$cpf1 = $rowData[0][50];
-					$representante2 = $rowData[0][51];
-					$dataNascimento2 = $rowData[0][52];
-					$estadocivil2 = $rowData[0][53];
-					$rg2 = $rowData[0][54];
-					$cpf2 = $rowData[0][55];
-					$fichaEquipe = $rowData[0][56];
-					$banco = $rowData[0][57];
-					$agencia = $rowData[0][58];
-					$conta = $rowData[0][59];
-					$sql_insere = "INSERT INTO  `saldo_unidade` 
+					$responsavelContratos = $rowData[0][0];
+					$fiscal = $rowData[0][1];
+					$suplente = $rowData[0][2];
+					$idEvento = $rowData[0][3];
+					$idPedido = $rowData[0][4];
+					$enviadoSei = $rowData[0][5];
+					$valor = $rowData[0][6];
+					$data = $rowData[0][7];
+					$horario = $rowData[0][8];
+					$local = $rowData[0][9];
+					$dataHora = $rowData[0][10];
+					$nomeEspetaculo = $rowData[0][11];
+					$nomeGrupo = $rowData[0][12];
+					$classificacao = $rowData[0][13];
+					$duracao = $rowData[0][14];
+					$sinopse = $rowData[0][15];
+					$releaseApresentacao = $rowData[0][16];
+					$releaseCompleto = $rowData[0][17];
+					$links = $rowData[0][18];
+					$fichaTecnica = $rowData[0][19];
+					$nomeProdutor = $rowData[0][20];
+					$emailProdutor = $rowData[0][21];
+					$confirmacaoEmail = $rowData[0][22];
+					$emailOpicionalProdutor = $rowData[0][23];
+					$telefoneFixoProdutor = $rowData[0][24];
+					$celular1Produtor = $rowData[0][25];
+					$celular2Produtor = $rowData[0][26];
+					$nomeExecutante = $rowData[0][27];
+					$dataNascimento = $rowData[0][28];
+					$estadoCivil = $rowData[0][29];
+					$rg = $rowData[0][30];
+					$confirmacaoRG = $rowData[0][31];
+					$cpf = $rowData[0][32];
+					$confirmacaoCpf = $rowData[0][33];
+					$endereco = $rowData[0][34];
+					$cep = $rowData[0][35];
+					$numero = $rowData[0][36];
+					$complemento = $rowData[0][37];
+					$cnpj = $rowData[0][38];
+					$ccm = $rowData[0][39];
+					$razaoSocial = $rowData[0][40];
+					$enderecoPJ = $rowData[0][41];
+					$cepPJ = $rowData[0][42];
+					$numeroPJ = $rowData[0][43];
+					$complementoPJ = $rowData[0][44];
+					$representante1 = $rowData[0][45];
+					$dataNascimento1 = $rowData[0][46];
+					$estadoCivil1 = $rowData[0][47];
+					$rg1 = $rowData[0][48];
+					$cpf1 = $rowData[0][49];
+					$representante2 = $rowData[0][50];
+					$dataNascimento2 = $rowData[0][51];
+					$estadocivil2 = $rowData[0][52];
+					$rg2 = $rowData[0][53];
+					$cpf2 = $rowData[0][54];
+					$fichaEquipe = $rowData[0][55];
+					$banco = $rowData[0][56];
+					$agencia = $rowData[0][57];
+					$conta = $rowData[0][58];
+					$sql_insere = "INSERT INTO  `googleforms_evento` 
 						(`responsavelContratos`, 
 						`fiscal`, 
 						`suplente`, 
@@ -2258,8 +2231,8 @@ $sql_compara_pf	= "";
 						`cpf2`, 
 						`fichaEquipe`, 
 						`banco`, 
-						`agencia`, 
-						`conta` )
+						`agencia`,
+						`conta`)
 						VALUES 
 						('$responsavelContratos', 
 						'$fiscal', 
@@ -2318,7 +2291,7 @@ $sql_compara_pf	= "";
 						'$cpf2', 
 						'$fichaEquipe', 
 						'$banco', 
-						'$agencia', 
+						'$agencia',
 						'$conta') ";
 					$query_insere = mysqli_query($con,$sql_insere);
 				}
@@ -2326,22 +2299,6 @@ $sql_compara_pf	= "";
 			if($query_insere)
 			{
 				$mensagem .= "Arquivo inserido na tabela googleforms_evento. <br /><br />";
-				$sql_insere_orcamentoCentral = "INSERT orcamento_central 
-					(dotacao, 
-					saldoOrcado, 
-					creditoTramitacao, 
-					totalCongelado, 
-					saldoDotacao, 
-					saldoReservas)
-					SELECT detalhes, 
-					saldoOrcado, 
-					creditoTramitacao, 
-					totalCongelados, 
-					saldoDotacao, 
-					saldoReservas 
-					FROM `saldo_unidade` 
-					WHERE `detalhes` LIKE '______13%'";
-				$query_orcamentoCentral = mysqli_query($con,$sql_insere_orcamentoCentral);							
 			}
 			else
 			{
@@ -2378,7 +2335,7 @@ $sql_compara_pf	= "";
 			else
 			{
 		?>
-				<form method="POST" action="?perfil=contabilidade&p=sof_saldoPorUnidade" enctype="multipart/form-data">
+				<form method="POST" action="?perfil=admin&p=importar_evento" enctype="multipart/form-data">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Arquivo em EXCEL (Máximo 50MB)</strong><br/>
 							<input type="file" class="form-control" name="arquivo" /	>
