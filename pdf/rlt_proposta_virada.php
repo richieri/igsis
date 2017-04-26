@@ -328,15 +328,32 @@ $l=7; //DEFINE A ALTURA DA LINHA
 
 
 //RODAPÉ PERSONALIZADO
-   $pdf->SetXY($x,262);
+   $pdf->SetXY($x,261);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   }  
+   
+   $pdf->Ln();
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(85,5,"CPF: ".$rep01CPF,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"CPF: ".$rep02CPF,0,0,'L');
+   }
    
 
 //	QUEBRA DE PÁGINA
@@ -493,15 +510,32 @@ No caso de espetáculo musical, declara assumir quaisquer ônus decorrentes da f
    
    
 //RODAPÉ PERSONALIZADO
-   $pdf->SetXY($x,265);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->SetXY($x,264);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->Cell(85,4,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,4,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->SetFont('Arial','', 9);
+   $pdf->Cell(85,4,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,4,"RG: ".$rep02RG,0,0,'L');
+   }  
+   
+   $pdf->Ln();
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->Cell(85,4,"CPF: ".$rep01CPF,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,4,"CPF: ".$rep02CPF,0,0,'L');
+   }
    
    
    
@@ -560,15 +594,32 @@ $l=5; //DEFINE A ALTURA DA LINHA
 	}
 
 //RODAPÉ PERSONALIZADO
-   $pdf->SetXY($x,262);
+   $pdf->SetXY($x,261);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   }  
+   
+   $pdf->Ln();
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(85,5,"CPF: ".$rep01CPF,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"CPF: ".$rep02CPF,0,0,'L');
+   }  
    
 
 //for($i=1;$i<=20;$i++)
