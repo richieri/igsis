@@ -145,6 +145,14 @@
 	function exibirDataMysql($data)
 	{ 
 		list ($dia, $mes, $ano) = explode ('/', $data);
+		if(strlen($dia) == 1){
+			$dia = "0".$dia;
+		}
+		if(strlen($mes) == 1){
+			$dia = "0".$mes;
+		}
+
+		
 		$data_mysql = $ano.'-'.$mes.'-'.$dia;
 		return $data_mysql;
 	}
