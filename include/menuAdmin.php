@@ -18,9 +18,11 @@
 							<li><a href="?perfil=admin&p=scripts&contabilidade=1">Verificar tabela contabilidade</a></li>
 							<li><a href="?perfil=admin&p=sof"> SOF </a></li>
 						</ul>
-					</li>
+					</li>										
 					<li><a href="?perfil=admin&p=email">E-mail para solicitação de reenvio</a></li>
 					<li><a href="?perfil=admin&p=contratos">Contratos</a></li>
+					<li><a href="?perfil=admin&p=importar_evento">Importar eventos</a></li>
+					<li><a href="?perfil=admin&p=lista_importados">Listar importados</a></li>
 				</ul>
 			</li>
 			<li><a href="?perfil=admin&p=visaogeral">Administrador Local</a>

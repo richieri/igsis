@@ -1961,5 +1961,444 @@
 </section> <!--/#list_items-->
 		<?php
 		break;
+		case "lista_importados": // IMPORTAÇÃO DO GOOGLE FORMS 
+		include "../include/menuAdministradorGeral.php";
+	
+	// 1ª parte - insere os registros na tabela de eventos
+	$sql_compara_evento = "INSERT INTO `ig_evento`(`nomeEvento`,`autor`,`nomeGrupo`, `sinopse`)
+		SELECT DISTINCT googleforms_evento.nomeEspetaculo, googleforms_evento.nomeGrupo, googleforms_evento.nomeGrupo, googleforms_evento.sinopse FROM googleforms_evento, ig_evento WHERE ig_evento.nomeEvento != googleforms_evento.nomeEspetaculo";
+	
+$sql_compara_pf	= "";
+	
+	?>
+<section id="list_items" class="home-section bg-white">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="section-heading">					
+					<h4>Selecione o usuário para editar.</h4>
+                    <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+				</div>
+			</div>
+		</div> 	
+		<div class="table-responsive list_info">
+		<?php
+			
+			$sql_forms = "SELECT * FROM googleforms_evento ORDER BY dataHora ASC";
+			$query_forms = mysqli_query($con,$sql_forms);
+			$num = mysqli_num_rows($query_forms);
+		?>
+			
+			<p>Foram encontrados <?php echo $num ?> registros.</p>
+			<table class='table table-condensed'>
+				<thead>					
+					<tr class='list_menu'> 
+						<td>Data e Hora</td>
+						<td>Nome Espetáculo</td>
+						<td>Nome grupo</td>
+						<td>Classificação</td>
+						<td>Duração</td>
+					</tr>	
+				</thead>
+				<tbody>
+				
+				<?php 
+					while($campo = mysqli_fetch_array($query_forms))
+					{						
+						echo "<tr>";
+						echo "<td class='list_description'>".$campo['dataHora']."</td>";
+						echo "<td class='list_description'>".$campo['nomeEspetaculo']."</td>";
+						echo "<td class='list_description'>".$campo['nomeGrupo']."</td>";
+						echo "<td class='list_description'>".$campo['classificacao']."</td>";
+						echo "<td class='list_description'>".$campo['duracao']."</td>";						
+						echo "</tr>";
+					}
+				?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section> 	
+		<?php
+		break;
+		case "importar_evento":
+		
+		
+	if(isset($_FILES['arquivo']))
+	{
+		$mensagem = "";
+		// Pasta onde o arquivo vai ser salvo
+		$_UP['pasta'] = '../uploads/';
+		// Tamanho máximo do arquivo (em Bytes)
+		$_UP['tamanho'] = 1024 * 1024 * 50; // 2Mb
+		// Array com as extensões permitidas
+		$_UP['extensoes'] = array('xls', 'xlsx','csv');
+		// Renomeia o arquivo? (Se true, o arquivo será salvo como .jpg e um nome único)
+		$_UP['renomeia'] = true;
+		// Array com os tipos de erros de upload do PHP
+		$_UP['erros'][0] = 'Não houve erro';
+		$_UP['erros'][1] = 'O arquivo no upload é maior do que o limite do PHP';
+		$_UP['erros'][2] = 'O arquivo ultrapassa o limite de tamanho especifiado no HTML';
+		$_UP['erros'][3] = 'O upload do arquivo foi feito parcialmente';
+		$_UP['erros'][4] = 'Não foi feito o upload do arquivo';
+		// Verifica se houve algum erro com o upload. Se sim, exibe a mensagem do erro
+		if ($_FILES['arquivo']['error'] != 0)
+		{
+		  die("Não foi possível fazer o upload, erro:" . $_UP['erros'][$_FILES['arquivo']['error']]);
+		  $mensagem .= "Não foi possível fazer o upload, erro:" . $_UP['erros'][$_FILES['arquivo']['error']];
+		  exit; // Para a execução do script
+		}
+		// Caso script chegue a esse ponto, não houve erro com o upload e o PHP pode continuar
+		// Faz a verificação da extensão do arquivo
+		// Faz a verificação do tamanho do arquivo
+		if ($_UP['tamanho'] < $_FILES['arquivo']['size'])
+		{
+		  $mensagem .= "O arquivo enviado é muito grande, envie arquivos de até 50Mb.";
+		  exit;
+		}
+		// O arquivo passou em todas as verificações, hora de tentar movê-lo para a pasta
+		// Primeiro verifica se deve trocar o nome do arquivo
+		if ($_UP['renomeia'] == true)
+		{
+			// Cria um nome baseado no UNIX TIMESTAMP atual e com extensão .jpg
+			$dataUnique = date('YmdHis');
+			$arquivo_final = $dataUnique."_".semAcento($_FILES['arquivo']['name']);
+		}
+		else
+		{
+			// Mantém o nome original do arquivo
+			$nome_final = $_FILES['arquivo']['name'];
+		}  
+		// Depois verifica se é possível mover o arquivo para a pasta escolhida
+		if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $_UP['pasta'] . $arquivo_final))
+		{
+			// Upload efetuado com sucesso, exibe uma mensagem e um link para o arquivo
+			$mensagem .=  "Upload efetuado com sucesso!<br />";
+			$mensagem .= '<a href="' . $_UP['pasta'] . $arquivo_final . '">Clique aqui para acessar o arquivo</a>';
+			require_once("../include/phpexcel/Classes/PHPExcel.php");
+			$inputFileName = $_UP['pasta'] . $arquivo_final;	
+			//  Read your Excel workbook
+			try
+			{
+				$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+				$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+				$objPHPExcel = $objReader->load($inputFileName);
+				
+				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+				$objWriter->save("teste");
+			}
+			catch(Exception $e)
+			{
+				die('Error loading file "'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+			}
+			//  Get worksheet dimensions
+			$sheet = $objPHPExcel->getSheet(0); 
+			$highestRow = $sheet->getHighestRow(); 
+			$highestColumn = $sheet->getHighestColumn();
+			//Apagamos a tabela orcamento_central
+			$sql_limpa = "TRUNCATE TABLE orcamento_central";
+			if(mysqli_query($con,$sql_limpa))
+			{
+				$mensagem .= "<br />Tabela orcamento_central limpa.<br />";	
+			}
+			else
+			{
+				$mensagem .= "Erro ao limpar a tabela orcamento_central.<br />";	
+			}
+			//Apagamos a tabela saldo_unidade
+			$sql_limpa = "TRUNCATE TABLE saldo_unidade";
+			if(mysqli_query($con,$sql_limpa))
+			{
+				$mensagem .= "<br />Tabela saldo_unidade limpa <br />";	
+			}
+			else
+			{
+				$mensagem .= "Erro ao limpar a tabela saldo_unidade <br />";	
+			}		
+			//  Loop through each row of the worksheet in turn
+			for ($row = 1; $row <= $highestRow; $row++)
+			{ 
+				//  Read a row of data into an array
+				$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+					NULL,
+					TRUE,
+					FALSE);
+				//  Insert row data array into your database of choice here
+				if($row == 1)
+				{
+					// Dados da Tabela
+					$mensagem .= "Situação de projeto atividade";
+					$data = date("Y-m-d H:i:s");
+					$mens_sof = "Situação de projeto atividade - ".$data;
+					$sql_atualizacao = "INSERT INTO `atualizacao` (`id`, `data`, `texto`) VALUES (NULL, '$data', '$mens_sof')";
+					$query_atualizacao = mysqli_query($con,$sql_atualizacao);
+					if($query_atualizacao)
+					{
+						$mensagem .= " Atualização registrada.<br />";	
+					}
+				}	
+				if($row > 2)
+				{
+					// Insere na tabela googleforms_evento
+					$id = $rowData[0][0];
+					$responsavelContratos = $rowData[0][1];
+					$fiscal = $rowData[0][2];
+					$suplente = $rowData[0][3];
+					$idEvento = $rowData[0][4];
+					$idPedido = $rowData[0][5];
+					$enviadoSei = $rowData[0][6];
+					$valor = $rowData[0][7];
+					$data = $rowData[0][8];
+					$horario = $rowData[0][9];
+					$local = $rowData[0][10];
+					$dataHora = $rowData[0][11];
+					$nomeEspetaculo = $rowData[0][12];
+					$nomeGrupo = $rowData[0][13];
+					$classificacao = $rowData[0][14];
+					$duracao = $rowData[0][15];
+					$sinopse = $rowData[0][16];
+					$releaseApresentacao = $rowData[0][17];
+					$releaseCompleto = $rowData[0][18];
+					$links = $rowData[0][19];
+					$fichaTecnica = $rowData[0][20];
+					$nomeProdutor = $rowData[0][21];
+					$emailProdutor = $rowData[0][22];
+					$confirmacaoEmail = $rowData[0][23];
+					$emailOpicionalProdutor = $rowData[0][24];
+					$telefoneFixoProdutor = $rowData[0][25];
+					$celular1Produtor = $rowData[0][26];
+					$celular2Produtor = $rowData[0][27];
+					$nomeExecutante = $rowData[0][28];
+					$dataNascimento = $rowData[0][29];
+					$estadoCivil = $rowData[0][30];
+					$rg = $rowData[0][31];
+					$confirmacaoRG = $rowData[0][32];
+					$cpf = $rowData[0][33];
+					$confirmacaoCpf = $rowData[0][34];
+					$endereco = $rowData[0][35];
+					$cep = $rowData[0][36];
+					$numero = $rowData[0][37];
+					$complemento = $rowData[0][38];
+					$cnpj = $rowData[0][39];
+					$ccm = $rowData[0][40];
+					$razaoSocial = $rowData[0][41];
+					$enderecoPJ = $rowData[0][42];
+					$cepPJ = $rowData[0][43];
+					$numeroPJ = $rowData[0][44];
+					$complementoPJ = $rowData[0][45];
+					$representante1 = $rowData[0][46];
+					$dataNascimento1 = $rowData[0][47];
+					$estadoCivil1 = $rowData[0][48];
+					$rg1 = $rowData[0][49];
+					$cpf1 = $rowData[0][50];
+					$representante2 = $rowData[0][51];
+					$dataNascimento2 = $rowData[0][52];
+					$estadocivil2 = $rowData[0][53];
+					$rg2 = $rowData[0][54];
+					$cpf2 = $rowData[0][55];
+					$fichaEquipe = $rowData[0][56];
+					$banco = $rowData[0][57];
+					$agencia = $rowData[0][58];
+					$conta = $rowData[0][59];
+					$sql_insere = "INSERT INTO  `saldo_unidade` 
+						(`responsavelContratos`, 
+						`fiscal`, 
+						`suplente`, 
+						`idEvento`, 
+						`idPedido`, 
+						`enviadoSei`, 
+						`valor`, 
+						`data`, 
+						`horario`, 
+						`local`, 
+						`dataHora`, 
+						`nomeEspetaculo`, 
+						`nomeGrupo`, 
+						`classificacao`, 
+						`duracao`, 
+						`sinopse`, 
+						`releaseApresentacao`, 
+						`releaseCompleto`, 
+						`links`, 
+						`fichaTecnica`, 
+						`nomeProdutor`, 
+						`emailProdutor`, 
+						`confirmacaoEmail`, 
+						`emailOpicionalProdutor`, 
+						`telefoneFixoProdutor`, 
+						`celular1Produtor`, 
+						`celular2Produtor`, 
+						`nomeExecutante`, 
+						`dataNascimento`, 
+						`estadoCivil`, 
+						`rg`, 
+						`confirmacaoRG`, 
+						`cpf`, 
+						`confirmacaoCpf`, 
+						`endereco`, 
+						`cep`, 
+						`numero`, 
+						`complemento`, 
+						`cnpj`, 
+						`ccm`, 
+						`razaoSocial`, 
+						`enderecoPJ`, 
+						`cepPJ`, 
+						`numeroPJ`, 
+						`complementoPJ`, 
+						`representante1`, 
+						`dataNascimento1`, 
+						`estadoCivil1`, 
+						`rg1`, 
+						`cpf1`, 
+						`representante2`, 
+						`dataNascimento2`, 
+						`estadocivil2`, 
+						`rg2`, 
+						`cpf2`, 
+						`fichaEquipe`, 
+						`banco`, 
+						`agencia`, 
+						`conta` )
+						VALUES 
+						('$responsavelContratos', 
+						'$fiscal', 
+						'$suplente', 
+						'$idEvento', 
+						'$idPedido', 
+						'$enviadoSei', 
+						'$valor', 
+						'$data', 
+						'$horario', 
+						'$local', 
+						'$dataHora', 
+						'$nomeEspetaculo', 
+						'$nomeGrupo', 
+						'$classificacao', 
+						'$duracao', 
+						'$sinopse', 
+						'$releaseApresentacao', 
+						'$releaseCompleto', 
+						'$links', 
+						'$fichaTecnica', 
+						'$nomeProdutor', 
+						'$emailProdutor', 
+						'$confirmacaoEmail', 
+						'$emailOpicionalProdutor', 
+						'$telefoneFixoProdutor', 
+						'$celular1Produtor', 
+						'$celular2Produtor', 
+						'$nomeExecutante', 
+						'$dataNascimento', 
+						'$estadoCivil', 
+						'$rg', 
+						'$confirmacaoRG', 
+						'$cpf', 
+						'$confirmacaoCpf', 
+						'$endereco', 
+						'$cep',
+						'$numero', 
+						'$complemento', 
+						'$cnpj', 
+						'$ccm', 
+						'$razaoSocial', 
+						'$enderecoPJ', 
+						'$cepPJ', 
+						'$numeroPJ', 
+						'$complementoPJ', 
+						'$representante1', 
+						'$dataNascimento1', 
+						'$estadoCivil1', 
+						'$rg1', 
+						'$cpf1', 
+						'$representante2', 
+						'$dataNascimento2', 
+						'$estadocivil2', 
+						'$rg2', 
+						'$cpf2', 
+						'$fichaEquipe', 
+						'$banco', 
+						'$agencia', 
+						'$conta') ";
+					$query_insere = mysqli_query($con,$sql_insere);
+				}
+			}
+			if($query_insere)
+			{
+				$mensagem .= "Arquivo inserido na tabela googleforms_evento. <br /><br />";
+				$sql_insere_orcamentoCentral = "INSERT orcamento_central 
+					(dotacao, 
+					saldoOrcado, 
+					creditoTramitacao, 
+					totalCongelado, 
+					saldoDotacao, 
+					saldoReservas)
+					SELECT detalhes, 
+					saldoOrcado, 
+					creditoTramitacao, 
+					totalCongelados, 
+					saldoDotacao, 
+					saldoReservas 
+					FROM `saldo_unidade` 
+					WHERE `detalhes` LIKE '______13%'";
+				$query_orcamentoCentral = mysqli_query($con,$sql_insere_orcamentoCentral);							
+			}
+			else
+			{
+				$mensagem .= "erro ao inserir. <br />";
+			}
+		}
+		else
+		{
+			// Não foi possível fazer o upload, provavelmente a pasta está incorreta
+			$mensagem =  "Não foi possível enviar o arquivo, tente novamente";
+		}	
+	}
+?>
+<section id="contact" class="home-section bg-white">
+  	<div class="container">
+		<div class="form-group">
+			<div class="sub-title">
+				<h2>Integração SOF / SINCOR</h2><br/>
+				<h2>SITUAÇÃO PROJETOS ATIVIDADES</h2>
+				<h5>Aqui você pode subir arquivos de saldo por unidade</h5>
+				<h3></h3>
+			</div>       
+		</div>
+	  	<div class="row">
+	  		<div class="col-md-offset-1 col-md-10">
+		<?php
+			if(isset($rowData))
+			{
+				if(isset($mensagem))
+				{
+					echo $mensagem;
+				} 	
+			}
+			else
+			{
+		?>
+				<form method="POST" action="?perfil=contabilidade&p=sof_saldoPorUnidade" enctype="multipart/form-data">
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Arquivo em EXCEL (Máximo 50MB)</strong><br/>
+							<input type="file" class="form-control" name="arquivo" /	>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="enviado" />
+							<input type="submit" value="Fazer upload" class="btn btn-theme btn-lg btn-block">
+						</div>
+					</div>
+				</form> 
+		<?php
+			}
+		?>                  
+	  		</div>	
+	  	</div>
+	</div>
+</section> 
+<?php
+		break;
 	}
 ?>
