@@ -47,6 +47,7 @@ $link35 = $http."rlt_proposta_contadores_edital_pj.php"."?id=".$id_ped."&penal=2
 $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal=28";
 $link37 = $http."rlt_ordemservico_pj_assinatura.php";
 $link38 = $http."rlt_termo_doacao_pj_assinatura.php";
+$link39 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal=30";
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -93,6 +94,9 @@ echo "
 						<tr>
 							<td><a href='$link36?id=$id_ped' target='_blank'><strong>Edital - Gala de Balé</strong></a></td>
 							<td><a href='$link32' target='_blank'><strong>NORMAS INTERNAS - Teatro Distrital</strong></a></td>
+						</tr>
+						<tr>
+							<td><a href='$link39' target='_blank'><strong>Virada 2017</strong></a></td>
 						</tr>
 						
 						<tr><td class='list_description'><br/></td></tr>
