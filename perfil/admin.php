@@ -2083,9 +2083,6 @@ $sql_compara_pf	= "";
 				$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
 				$objReader = PHPExcel_IOFactory::createReader($inputFileType);
 				$objPHPExcel = $objReader->load($inputFileName);
-				
-				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
-				$objWriter->save("teste");
 			}
 			catch(Exception $e)
 			{
