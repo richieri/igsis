@@ -8,16 +8,16 @@ include "../funcoes/funcoesConecta.php";
 include "../funcoes/funcoesGerais.php";
 $con = bancoMysqli();
 $idVirada = '41';
-$idVerba = '';
-$justificativa = "";
-$parecer = "";
-$idUsuarioAdmin = 1;
+$idVerba = '92';
+$justificativa = "Promovida desde 2005 pela Prefeitura de São Paulo, por meio da Secretaria Municipal de Cultura, a Virada Cultural tornou-se ao longo de sua existência um dos maiores eventos culturais oferecidos aos cidadãos paulistanos e aos turistas que para cá convergem por ocasião da realização deste evento. Tradicionalmente o evento oferece, todos os anos, 24 horas de programação contínua integrando os diversos equipamentos da SMC, bem como a ocupação de espaços públicos das diferentes regiões da cidade de São Paulo. O objeto deste processo é a contratação dos artistas para realizar a atração durante este evento que em 2017 ocorrerá ao longo dos dias 20 e 21 de maio A Prefeitura de São Paulo, através de uma política cultural diversificada, proporciona assim, a todos os munícipes e visitantes, o acesso gratuito ao que há de melhor na produção cultural atual existente no País.";
+$formaPagto = "O pagamento se dará em até 45 dias úteis, após a data de realização do evento, mediante a entrega dentro do prazo solicitado de toda documentação correta relativa ao pagamento.";
+$idUsuarioAdmin = 16;
 
 echo "<p>Os valores das variáveis são: <br />
 	idVirada = $idVirada <br />
 	idVerba = $idVerba <br />
 	justificativa = $justificativa <br />
-	parecer = $parecer<br />
+	forma de pagamento = $formaPagto<br />
 	idUsuarioAdmin = $idUsuarioAdmin<br />
 </p>";
 
@@ -218,7 +218,8 @@ if($tableExists == 0){
 								$idProdutor = "";
 							}
 							
-							$releaseCom = "Release Apresentacao:   ".$releaseApresentacao."  Release Completo:   ".$releaseCompleto;
+							$releaseCom = "Release Apresentacao: ".$releaseApresentacao.'\n'.'\n'."Release Completo: ".$releaseCompleto;
+							
 
 							// atualiza o evento
 							$sql_update_evento = "UPDATE ig_evento SET
@@ -264,16 +265,11 @@ if($tableExists == 0){
 										echo "<p> O CNPJ contratante já existe no sistema</p>";
 										$y = mysqli_fetch_array($query_ver_cnpj);
 										$idPessoa = $y['Id_PessoaJuridica'];
-										$obs_pedido .= "
-										Dados importados automaticamente para Virada Cultura 2017. Por favor, conferir. /n
-										Razao Social : $razaoSocial / CCM : $ccm / CEP: $cepPJ / Número : $numeroPJ /
-										Complemento: $complementoPJ / Código do Banco: $codBanco / Agência: $agencia / CC: $conta						
-										";
+										$obs_pedido .= "Dados importados automaticamente para Virada Cultura 2017. Por favor, conferir. ".'\n'.'\n'."Razão Social: $razaoSocial / CCM: $ccm / CEP: $cepPJ / Número: $numeroPJ / Complemento: $complementoPJ / Código do Banco: $codBanco / Agência: $agencia / CC: $conta";
 									}else{ // o cnpj não existe
 										$sql_insere_pj = "INSERT INTO `sis_pessoa_juridica` 
 										(`RazaoSocial`, `CNPJ`, `CCM`, `CEP`, `Numero`, `Complemento`, `DataAtualizacao`, `codBanco`, `agencia`, `conta`) 
 										VALUES ('$razaoSocial','$cnpj', '$ccm', '$cepPJ', '$numeroPJ', '$complementoPJ', '$hoje', '$codBanco', '$agencia', '$conta')";
-										echo $sql_insere_pj."<br />";
 										$query_insere_pj = mysqli_query($con,$sql_insere_pj);
 										if($query_insere_pj){
 											$idPessoa = mysqli_insert_id($con);
@@ -292,10 +288,7 @@ if($tableExists == 0){
 										echo "<p> O representante legal já existe no sistema</p>";
 										$y = mysqli_fetch_array($query_ver_rep01);
 										$idRep01= $y['Id_RepresentanteLegal'];
-										$obs_pedido .= "
-										 
-										Nome RL01 : $representante1 / data de nascimento : $dataNascimento1 / Estado Civil: $estadoCivil1 / RG: $rg1 / CPF = $cpf1 
-										";
+										$obs_pedido .= '\n'.'\n'."Nome RL01: $representante1 / data de nascimento: $dataNascimento1 / Estado Civil: $estadoCivil1 / RG: $rg1 / CPF: = $cpf1";
 									}else{ // o cpf não existe
 										$estCivil1 = idEstadoCivil($estadoCivil1);
 										$sql_insere_rep01 = "INSERT INTO `sis_representante_legal` (`RepresentanteLegal`, `RG`, `CPF`, `Nacionalidade`, `IdEstadoCivil`)
@@ -316,10 +309,7 @@ if($tableExists == 0){
 										echo "<p> O representante legal já existe no sistema</p>";
 										$y = mysqli_fetch_array($query_ver_rep02);
 										$idRep02= $y['Id_RepresentanteLegal'];
-										$obs_pedido .= "
-										 
-										Nome RL02 : $representante2 / data de nascimento : $dataNascimento2 / Estado Civil: $estadoCivil2 / RG: $rg2 / CPF = $cpf2 
-										";
+										$obs_pedido .= '\n'.'\n'."Nome RL02: $representante2 / data de nascimento: $dataNascimento2 / Estado Civil: $estadoCivil2 / RG: $rg2 / CPF: = $cpf2";
 									}else{ // o cpf não existe
 										$estCivil2 = idEstadoCivil($estadoCivil2);
 										$sql_insere_rep02 = "INSERT INTO `sis_representante_legal` (`RepresentanteLegal`, `RG`, `CPF`, `Nacionalidade`, `IdEstadoCivil`)
@@ -344,10 +334,7 @@ if($tableExists == 0){
 										echo " __estado civil".$estadoCivil."<br />";
 										$y = mysqli_fetch_array($query_ver_exec);
 										$idExec = $y['Id_PessoaFisica'];
-										$obs_pedido .= " 
-										Executante: $nomeExecutante / Data de nascimento : $dataNascimento / Estado civil: 	$estCivilExec / RG : $rg / CPF : $cpf  
-										CEP: $cep / Número: $numero / Complemento: $complemento
-										  ";
+										$obs_pedido .= '\n'.'\n'."Executante: $nomeExecutante / Data de nascimento: $dataNascimento / Estado civil: $estCivilExec / RG: $rg / CPF: $cpf".'\n'.'\n'."CEP: $cep / Número: $numero / Complemento: $complemento";
 									}else{ // o exec não existe
 										$estCivilExec = idEstadoCivil($estadoCivil);
 										//$dataNasc = exibirDataMysql($dataNascimento);
@@ -378,10 +365,9 @@ if($tableExists == 0){
 								`observacao` = '$obs_pedido' ,
 								`publicado` = '1',
 								`instituicao` = '4',
-
 								`IdExecutante` = '$idExec',
 								`justificativa` = '$justificativa',
-								`parecerArtistico` = '$parecer',
+								`formaPagamento` = '$formaPagto',
 								`idContratos` = ''
 								WHERE `idPedidoContratacao` = '$idPedido'";
 									echo $sql_update_pedido;
@@ -391,12 +377,7 @@ if($tableExists == 0){
 										echo "<p>Erro ao atualizar pedido.</p>";
 									}
 										
-								}
-								
-								
-								
-								
-								
+								}								
 							}else{
 								echo "<p>Erro ao inserir o evento $nomeEspetaculo (error02). $sql_update_evento</p>";
 							}
