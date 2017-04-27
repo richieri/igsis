@@ -1967,9 +1967,7 @@
 	// 1ª parte - insere os registros na tabela de eventos
 	$sql_compara_evento = "INSERT INTO `ig_evento`(`nomeEvento`,`autor`,`nomeGrupo`, `sinopse`)
 		SELECT DISTINCT googleforms_evento.nomeEspetaculo, googleforms_evento.nomeGrupo, googleforms_evento.nomeGrupo, googleforms_evento.sinopse FROM googleforms_evento, ig_evento WHERE ig_evento.nomeEvento != googleforms_evento.nomeEspetaculo";
-	
-$sql_compara_pf	= "";
-	
+
 	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
@@ -2022,7 +2020,7 @@ $sql_compara_pf	= "";
 		<?php
 		break;
 		case "importar_evento":
-		
+		include "../include/menuAdministradorGeral.php";
 		
 	if(isset($_FILES['arquivo']))
 	{
@@ -2319,9 +2317,8 @@ $sql_compara_pf	= "";
   	<div class="container">
 		<div class="form-group">
 			<div class="sub-title">
-				<h2>Integração SOF / SINCOR</h2><br/>
-				<h2>SITUAÇÃO PROJETOS ATIVIDADES</h2>
-				<h5>Aqui você pode subir arquivos de saldo por unidade</h5>
+				<h2>Importar Eventos</h2><br/>
+				<h5>Aqui você pode importar a planilha do Google Forms da Virada Cultural 2017</h5>
 				<h3></h3>
 			</div>       
 		</div>
