@@ -2523,7 +2523,6 @@ if($tableExists == 0){
 							// atualiza o evento
 							$sql_update_evento = "UPDATE ig_evento SET
    							 `ig_produtor_idProdutor` = '$idProdutor',
-							  `ig_tipo_evento_idTipoEvento` = '', 
 							  `projetoEspecial` = '$idVirada', 
 							  `nomeEvento` = '$nomeEspetaculo', 
 							  `idResponsavel` = '$fiscal', 
