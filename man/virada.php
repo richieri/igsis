@@ -1,10 +1,77 @@
 <h1>Migração da base Google Forms para Virada</h1>
-
+<p>As datas de nascimento estão entrando sem padronização, não dá para importar.</p>
 <?php 
+$hoje = date('Y-m-d');
+$antes = strtotime(date('Y-m-d H:i:s')); // note que usei hífen
 echo "<p>carregando as funcoes...</p>";
 include "../funcoes/funcoesConecta.php";
 include "../funcoes/funcoesGerais.php";
 $con = bancoMysqli();
+$idVirada = '41';
+$idVerba = '';
+$justificativa = "";
+$parecer = "";
+$idUsuarioAdmin = 1;
+
+echo "<p>Os valores das variáveis são: <br />
+	idVirada = $idVirada <br />
+	idVerba = $idVerba <br />
+	justificativa = $justificativa <br />
+	parecer = $parecer<br />
+	idUsuarioAdmin = $idUsuarioAdmin<br />
+</p>";
+
+// funções para esta migração
+
+
+function recUser($string){
+	$con = bancoMysqli();
+	$sql = "SELECT idUsuario FROM ig_usuario WHERE nomeUsuario LIKE '$string' LIMIT 0,1";
+	$query = mysqli_query($con, $sql);
+	$x = mysqli_fetch_array($query);
+	return $x['idUsuario'];	
+}
+
+function idEstadoCivil($string){
+	$con = bancoMysqli();
+	$sql = "SELECT Id_EstadoCivil FROM sis_estado_civil WHERE EstadoCivil LIKE '%$string%' LIMIT 0,1";
+	$query = mysqli_query($con, $sql);
+	$x = mysqli_fetch_array($query);
+	return $x['Id_EstadoCivil'];	
+		
+}
+
+function faixaEt($string){
+	switch(trim($string)){
+	
+	case "10 anos":
+		return 6;
+	break;
+		
+	case "12 anos":
+		return 5;
+	
+	break;
+	case "14 anos":
+		return 4;
+	
+	break;
+	case "16 anos":
+		return 3;
+	
+	break;
+	case "18 anos":
+			return 2;
+	break;
+	
+	default:
+		return 1;
+	break;
+	
+	}	
+
+}
+// Fim das funções
 
 
 // Criando a tabela igsis_virada para guardar os eventos migrados
@@ -23,7 +90,7 @@ if($tableExists == 0){
 	if($query){
 		echo "<p>Tabela igsis_virada criada</p>";	
 	}else{
-		echo "<p>Erro ao criar a tabela igsis_virada</p>";	
+		echo "<p>Erro ao criar a tabela igsis_virada (error01)</p>";	
 		
 	}
 
@@ -42,7 +109,7 @@ if($tableExists == 0){
 }else{
 	echo "<p>A tabela googleforms_evento existe</p>";	
 	echo "<p>Importando as PK da tabela googleforms_evento (dataHora)</p>";
-	$sql_pk = "SELECT * FROM googleforms_evento WHERE dataHora NOT IN(SELECT data FROM igsis_virada)"; //seleciona todos pks que não existem na tabela igsis_virada
+	$sql_pk = "SELECT * FROM googleforms_evento WHERE dataHora NOT IN(SELECT data FROM igsis_virada) AND dataHora <> '' AND fiscal <> '' AND suplente <> ''"; //seleciona todos pks que não existem na tabela igsis_virada
 	$query_pk = mysqli_query($con,$sql_pk);
 	$n = mysqli_num_rows($query_pk);
 	echo "<p>Foram encontrados $n registros para serem importados</p>";
@@ -70,12 +137,16 @@ if($tableExists == 0){
 						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idPedidoContratacao`, `idEvento`) VALUES (NULL, '$id')";
 						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
 						if($query_insert_pedido){
+							$idPedido = mysqli_insert_id($con);
 							echo "pedido com evento $id criado<br />";
 							
 							// Blocão da importação
+							
+							
+							// carrega as variáveis
 							$responsavelContratos = $x['responsavelContratos'];
-							$fiscal = $x['fiscal'];
-							$suplente = $x['suplente'];
+							$fiscal = recUser($x['fiscal']);
+							$suplente = recUser($x['suplente']);
 							$enviadoSei = $x['enviadoSei'];
 							$valor = $x['valor'];
 
@@ -88,7 +159,7 @@ if($tableExists == 0){
 
 							$nomeEspetaculo = $x['nomeEspetaculo'];
 							$nomeGrupo = $x['nomeGrupo'];
-							$classificacao = $x['classificacao'];
+							$classificacao = faixaEt($x['classificacao']);
 							$duracao = $x['duracao'];
 							$sinopse = $x['sinopse'];
 							$releaseApresentacao = $x['releaseApresentacao'];
@@ -124,51 +195,235 @@ if($tableExists == 0){
 							$cpf1 = $x['cpf1'];
 							$representante2 = $x['representante2'];
 							$dataNascimento2 = $x['dataNascimento2'];
-							$estadocivil2 = $x['estadocivil2'];
+							$estadoCivil2 = $x['estadocivil2'];
 							$rg2 = $x['rg2'];
 							$cpf2 = $x['cpf2'];
 							$fichaEquipe = $x['fichaEquipe'];
 							$banco = $x['banco'];
+							$codBanco = '1';
 							$agencia = $x['agencia'];
 							$conta = $x['conta'];
+							
+							
+							// insere produtor
+							$email_produtor = $emailProdutor." / ".$emailOpicionalProdutor;
+							$telefone_produtor = $celular1Produtor." / ".$celular2Produtor;
+							$sql_insere_produtor = "INSERT INTO `ig_produtor` 
+							(`idProdutor`, `nome`, `email`, `telefone`, `telefone2`, `idSpCultura`) 
+							VALUES (NULL, '$nomeProdutor', '$email_produtor', '$telefoneFixoProdutor' , '$telefone_produtor','')";
+							$query_insere_produtor = mysqli_query($con,$sql_insere_produtor);
+							if($query_insere_produtor){
+								$idProdutor = mysqli_insert_id($con);	
+							}else{
+								$idProdutor = "";
+							}
+							
+							$releaseCom = "Release Apresentacao:   ".$releaseApresentacao."  Release Completo:   ".$releaseCompleto;
+
+							// atualiza o evento
+							$sql_update_evento = "UPDATE ig_evento SET
+   							 `ig_produtor_idProdutor` = '$idProdutor',
+							  `ig_tipo_evento_idTipoEvento` = '', 
+							  `projetoEspecial` = '$idVirada', 
+							  `nomeEvento` = '$nomeEspetaculo', 
+							  `idResponsavel` = '$fiscal', 
+							  `suplente` = '$suplente', 
+							  `autor` = '$nomeGrupo', 
+							  `nomeGrupo` = '$nomeGrupo', 
+							  `fichaTecnica` = '$fichaTecnica', 
+							  `faixaEtaria` = '$classificacao', 
+							  `sinopse` = '$sinopse', 
+							  `releaseCom` = '$releaseCom', 
+							  `publicado` = '1', 
+							  `idUsuario` = '$idUsuarioAdmin', 
+							  `ig_modalidade_IdModalidade` = '5', 
+							  `linksCom` = '$links', 
+							  `idInstituicao` = '4' 
+								WHERE idEvento = '$id'";
+							$query_update_evento = mysqli_query($con,$sql_update_evento);
+							if($query_update_evento){
+								echo "<p>Evento $nomeEspetaculo inserido corretamente</p>";
+								
+								// atualiza o pedido de contratação
+								
+								
+								
+								
+								// verifica se o cnpj está em branco
+								if($cnpj == "" OR $cnpj == NULL){
+									// insere pessoa fisica
+								
+								}else{
+									//insere pessoa juridica
+									$obs_pedido = "";
+									// verifica se o cnpj existe na base
+									$sql_ver_cnpj = "SELECT Id_PessoaJuridica FROM sis_pessoa_juridica WHERE CNPJ LIKE '%$cnpj%' ORDER BY Id_PessoaJuridica DESC LIMIT 0,1";
+									$query_ver_cnpj = mysqli_query($con,$sql_ver_cnpj);
+									$n_cnpj = mysqli_num_rows($query_ver_cnpj);
+									if($n_cnpj > 0){ // o cnpj existe
+										echo "<p> O CNPJ contratante já existe no sistema</p>";
+										$y = mysqli_fetch_array($query_ver_cnpj);
+										$idPessoa = $y['Id_PessoaJuridica'];
+										$obs_pedido .= "
+										Dados importados automaticamente para Virada Cultura 2017. Por favor, conferir. /n
+										Razao Social : $razaoSocial / CCM : $ccm / CEP: $cepPJ / Número : $numeroPJ /
+										Complemento: $complementoPJ / Código do Banco: $codBanco / Agência: $agencia / CC: $conta						
+										";
+									}else{ // o cnpj não existe
+										$sql_insere_pj = "INSERT INTO `sis_pessoa_juridica` 
+										(`RazaoSocial`, `CNPJ`, `CCM`, `CEP`, `Numero`, `Complemento`, `DataAtualizacao`, `codBanco`, `agencia`, `conta`) 
+										VALUES ('$razaoSocial','$cnpj', '$ccm', '$cepPJ', '$numeroPJ', '$complementoPJ', '$hoje', '$codBanco', '$agencia', '$conta')";
+										echo $sql_insere_pj."<br />";
+										$query_insere_pj = mysqli_query($con,$sql_insere_pj);
+										if($query_insere_pj){
+											$idPessoa = mysqli_insert_id($con);
+											$obs_pedido .= "";	
+										}else{
+											echo "<p>Erro ao inserir Pessoa Jurídica</p>";	
+										}										
+									}
+									
+									// verfica se o representante existe na base
+									
+									$sql_ver_rep01 = "SELECT Id_RepresentanteLegal FROM sis_representante_legal WHERE CPF LIKE '%$cpf1%' ORDER BY Id_RepresentanteLegal DESC LIMIT 0,1";
+									$query_ver_rep01 = mysqli_query($con,$sql_ver_rep01);
+									$n_rep01 = mysqli_num_rows($query_ver_rep01);
+									if($n_rep01 > 0){ // o cpf existe
+										echo "<p> O representante legal já existe no sistema</p>";
+										$y = mysqli_fetch_array($query_ver_rep01);
+										$idRep01= $y['Id_RepresentanteLegal'];
+										$obs_pedido .= "
+										 
+										Nome RL01 : $representante1 / data de nascimento : $dataNascimento1 / Estado Civil: $estadoCivil1 / RG: $rg1 / CPF = $cpf1 
+										";
+									}else{ // o cpf não existe
+										$estCivil1 = idEstadoCivil($estadoCivil1);
+										$sql_insere_rep01 = "INSERT INTO `sis_representante_legal` (`RepresentanteLegal`, `RG`, `CPF`, `Nacionalidade`, `IdEstadoCivil`)
+										 VALUES ('$representante1', '$rg1', '$cpf1', 'Brasileiro(a)', '$estCivil1');";
+										$query_insere_rep01 = mysqli_query($con,$sql_insere_rep01);
+										if($query_insere_rep01){
+											$idRep01 = mysqli_insert_id($con);
+											$obs_pedido .= "";	
+										}else{
+											echo "<p>Erro ao inserir representante legal</p>";
+										}										
+									}
+									
+									$sql_ver_rep02 = "SELECT Id_RepresentanteLegal FROM sis_representante_legal WHERE CPF LIKE '%$cpf2%' ORDER BY Id_RepresentanteLegal DESC LIMIT 0,1";
+									$query_ver_rep02 = mysqli_query($con,$sql_ver_rep02);
+									$n_rep02 = mysqli_num_rows($query_ver_rep02);
+									if($n_rep02 > 0){ // o cpf existe
+										echo "<p> O representante legal já existe no sistema</p>";
+										$y = mysqli_fetch_array($query_ver_rep02);
+										$idRep02= $y['Id_RepresentanteLegal'];
+										$obs_pedido .= "
+										 
+										Nome RL02 : $representante2 / data de nascimento : $dataNascimento2 / Estado Civil: $estadoCivil2 / RG: $rg2 / CPF = $cpf2 
+										";
+									}else{ // o cpf não existe
+										$estCivil2 = idEstadoCivil($estadoCivil2);
+										$sql_insere_rep02 = "INSERT INTO `sis_representante_legal` (`RepresentanteLegal`, `RG`, `CPF`, `Nacionalidade`, `IdEstadoCivil`)
+										 VALUES ('$representante2', '$rg2', '$cpf2', 'Brasileiro(a)', '$estCivil2');";
+										$query_insere_rep02 = mysqli_query($con,$sql_insere_rep02);
+										if($query_insere_rep02){
+											
+											$idRep02 = mysqli_insert_id($con);
+											$obs_pedido .= "";	
+										}else{
+											echo "<p>Erro ao inserir representante legal</p>";	
+										}										
+									}
+									
+									// verifica se o executante existe na base
+									$sql_ver_exec = "SELECT Id_PessoaFisica FROM sis_pessoa_fisica WHERE CPF LIKE '%$cpf%' ORDER BY Id_PessoaFisica DESC LIMIT 0,1";
+									$query_ver_exec = mysqli_query($con,$sql_ver_exec);
+									$n_exec = mysqli_num_rows($query_ver_exec);
+									if($n_exec > 0){ // o exec existe
+										echo "<p> O executante contratante já existe no sistema</p>";
+										$estCivilExec = idEstadoCivil($estadoCivil);
+										echo " __estado civil".$estadoCivil."<br />";
+										$y = mysqli_fetch_array($query_ver_exec);
+										$idExec = $y['Id_PessoaFisica'];
+										$obs_pedido .= " 
+										Executante: $nomeExecutante / Data de nascimento : $dataNascimento / Estado civil: 	$estCivilExec / RG : $rg / CPF : $cpf  
+										CEP: $cep / Número: $numero / Complemento: $complemento
+										  ";
+									}else{ // o exec não existe
+										$estCivilExec = idEstadoCivil($estadoCivil);
+										//$dataNasc = exibirDataMysql($dataNascimento);
+										$sql_insere_exec = "INSERT INTO `sis_pessoa_fisica` 
+										(`Nome`, `RG`, `CPF`, `CCM`, `IdEstadoCivil`,  `CEP`, `Numero`, `Complemento`, `DataAtualizacao`, `codBanco`, `agencia`, `conta`) 
+										VALUES ('$nomeExecutante', '$rg', '$cpf', '$ccm','$estCivilExec',  '$cep', '$numero', '$complemento', '$hoje', '1', '$agencia', '$conta' )";
+										//echo $sql_insere_exec;
+										$query_insere_exec = mysqli_query($con,$sql_insere_exec);
+										if($query_insere_exec){
+											$idExec = mysqli_insert_id($con);
+											$obs_pedido .= "";	
+										}else{
+										echo "<p>Erro ao inserir executante </p>";
+	
+										}										
+									}									
+									
+									
+									
+									if(isset($idPessoa)){ // se foi encontrado ou inserido o PJ, atualiza o pedido de Contratação
+									$sql_update_pedido = "UPDATE igsis_pedido_contratacao SET
+								`tipoPessoa` = '2',
+								`idRepresentante01` = '$idRep01',
+								`idRepresentante02` = '$idRep02',
+								`idPessoa` = '$idPessoa',
+								`valor` = '$valor',
+								`idVerba` = '$idVerba',
+								`observacao` = '$obs_pedido' ,
+								`publicado` = '1',
+								`instituicao` = '4',
+
+								`IdExecutante` = '$idExec',
+								`justificativa` = '$justificativa',
+								`parecerArtistico` = '$parecer',
+								`idContratos` = ''
+								WHERE `idPedidoContratacao` = '$idPedido'";
+									echo $sql_update_pedido;
+									$query_update_pedido = mysqli_query($con,$sql_update_pedido);
+										echo "<p>Pedido atualizado.</p>";
+									}else{
+										echo "<p>Erro ao atualizar pedido.</p>";
+									}
+										
+								}
+								
+								
+								
+								
+								
+							}else{
+								echo "<p>Erro ao inserir o evento $nomeEspetaculo (error02). $sql_update_evento</p>";
+							}
+
 
 							// Fim do blocão da importação
 							
 						}else{
-							echo "erro ao inserir pedido<br />";
-							
+							echo "erro ao inserir pedido (error03)<br />";
 						}
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
 					}else{
-						echo " erro ao criar relacionamento. <br />";
+						echo " erro ao criar relacionamento. (error04)<br />";
 					}
 				}else{
-					echo " erro ao criar evento<br />";
+					echo " erro ao criar evento (error05)<br />";
 				}		
 			}else{
-				echo "Erro ao gerar nova chave.<br />";
+				echo "Erro ao gerar nova chave. (error06)<br />";
 				
 			}
 		}
 	}
 	
-	
-	
-	
-	
-	
 }// if da tabela googleform
+
+$depois = strtotime(date('Y-m-d H:i:s'));
+$tempo = $depois - $antes;
+echo "<br /><br /> Importação executada em $tempo segundos";
 
 ?>
