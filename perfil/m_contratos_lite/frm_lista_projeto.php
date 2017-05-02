@@ -104,7 +104,7 @@ switch($_GET['atribuido'])
 							echo "<strong>Páginas</strong>";
 							for($i = 1; $i < $numPaginas + 1; $i++) 
 							{
-								echo "<a href='?perfil=admin&p=reabertura&pagina=$i'> [".$i."]</a> ";
+								echo "<a href='?perfil=contratos_lite&p=frm_lista_projeto&atribuido=0&pagina=$i'> [".$i."]</a> ";
 							}
 						?>
 						</td>
