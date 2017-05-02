@@ -3,6 +3,7 @@ include 'includes/menu.php';
 
 $con = bancoMysqli();
 $_SESSION['idPedido'] = $_GET['id_ped'];
+$idContratos = $_SESSION['idUsuario'];
 $id_ped = $_GET['id_ped'];
 $ano=date('Y');
 
@@ -142,7 +143,8 @@ if(isset($_POST['atualizar']))
 			observacao = '$observacao',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
-			NumeroProcesso = '$processo'
+			NumeroProcesso = '$processo',
+			idContratos = '$idContratos'
 			WHERE idPedidoContratacao = '$ped'";
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_pedido)
@@ -190,7 +192,8 @@ if(isset($_POST['atualizar']))
 			observacao = '$observacao',
 			DataContrato = '$dataAgora',
 			parecerArtistico = '$parecer',
-			NumeroProcesso = '$processo'
+			NumeroProcesso = '$processo',
+			idContratos = '$idContratos'
 			WHERE idPedidoContratacao = '$ped'";
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_pedido)

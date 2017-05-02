@@ -10,6 +10,12 @@ $usuario = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
 		<ul class="dl-menu">
 			<li><a href="<?php echo $pasta ?>frm_busca">Contratos</a></li>
 			<li><a href="<?php echo $pasta ?>frm_busca_periodo">Contratos por período</a></li>
+			<li><a href="#">Virada</a>
+				<ul class="dl-submenu">
+					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=0">Não Atribuídos</a>
+					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=1">Atribuídos</a>
+				</ul>
+			</li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Carregar Módulos</a></li>
 			<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/contratos-lite/">Ajuda</a></li>
