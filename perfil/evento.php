@@ -2210,7 +2210,7 @@
 						</div>
 						<div class="form-group">                    
 							<div class="col-md-offset-2 col-md-8">
-								<input type="checkbox" name="virada" id="virada" onclick="disabled()"/><label  style="padding:0 20px 0 5px;">Jornada do Patrimônio</label>          			    
+								<input type="checkbox" name="virada" id="virada" onclick="disabled()"/><label  style="padding:0 20px 0 5px;">Virada Cultural</label>          			    
 							</div>  
 						</div>
 						<div class="form-group">

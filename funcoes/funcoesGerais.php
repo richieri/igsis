@@ -807,7 +807,7 @@
 				if($campo['libras'] == 1){$libras = "Tradução em libras";}else{$libras = "";}
 				if($campo['audiodescricao'] == 1){$audio = "Audiodescrição";}else{$audio = "";}
 				if($campo['precoPopular'] == 1){$popular = "Preço popular";}else{$popular = "";}
-				if($campo['virada'] == 1){$virada = "Jornada do Patrimônio";}else{$virada = "";}
+				if($campo['virada'] == 1){$virada = "Virada Cultural";}else{$virada = "";}
 				$dia_especial =	" - Dia especial:".$libras." ".$audio." ".$popular." ".$virada;
 			}
 			else
@@ -827,9 +827,9 @@
 			$id = $campo['idOcorrencia'];
 			if($campo['virada'] == 1)
 			{
-				$hora = "Jornada do Patrimônio";
-				$local = "Jornada do Patrimônio";
-				$espaco = "Jornada do Patrimônio";	
+				$hora = "De acordo com a programação da Virada Cultural";
+				$local = "De acordo com a programação da Virada Cultural";
+				$espaco = "De acordo com a programação da Virada Cultural";	
 			}
 			$ocorrencia = "<div class='left'>$tipo_de_evento $dia_especial ".
 				$sub['titulo']
@@ -938,7 +938,7 @@
 					Observações: $observacao</br></div>";  
 				if($campo['virada'] == 1)
 				{
-					$ocorrencia = "<div class='left'>Jornada do Patrimônio</br></div>";
+					$ocorrencia = "<div class='left'>Virada Cultural</br></div>";
 				}	
 				echo $ocorrencia;	
 			}
@@ -1648,7 +1648,7 @@
 		$num = mysqli_num_rows($query_virada);
 		if($num > 0)
 		{	
-			$locais = " DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
+			$locais = " DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 		}
 		else
 		{
@@ -1688,7 +1688,7 @@
 		$num = mysqli_num_rows($query_virada);
 		if($num > 0)
 		{
-			$locais = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
+			$locais = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 		}
 		else
 		{
@@ -1887,11 +1887,11 @@
 			}
 			if($data_inicio == $dataFinal)
 			{ 
-				return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
+				return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 			}
 			else
 			{
-				return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
+				return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 			}	
 		}
 		else
@@ -3540,7 +3540,7 @@
 					$x[$i]['tipo'] = "Virada Cultural 2016";	
 					$x[$i]['data'] = $data." ".trim($semana);
 					$x[$i]['hora'] = "";
-					$x[$i]['espaco'] = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA JORNADA DO PATRIMÔNIO.";
+					$x[$i]['espaco'] = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 				}
 				$i++;
 			}
