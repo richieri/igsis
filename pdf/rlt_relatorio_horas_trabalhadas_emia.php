@@ -279,9 +279,9 @@ table {
 <p>&nbsp;</p>
 <table width="100%" border="0">
   <tr>
-    <td align="center" width="33%" valign="top">_______________________________________ <br />Luciana Schwinden</td>
-	<tr><center>Diretora</center></tr>
-	<tr><center>RF 791.181.5-4</center></tr>
+    <td align="center" width="33%" valign="top">_______________________________________ <br />Antonio Francisco da Silva Junior</td>
+	<tr><center>Diretor</center></tr>
+	<tr><center>RF 840.968-4</center></tr>
   </tr>
 </table>
 </div>

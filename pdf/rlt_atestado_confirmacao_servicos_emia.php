@@ -93,10 +93,10 @@ $sei =
   "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS A CONTENTO, PELO SEGUINTE MOTIVO:</p>".
   "<p>&nbsp;</p>".
   "<p><strong>DADOS DO SERVIDOR (A) QUE ESTÁ CONFIRMANDO OU NÃO A REALIZAÇÃO DOS SERVIÇOS:</strong></p>".
-  "<p><strong>NOME LEGÍVEL:</strong> Luciana Schwinden</p>".
+  "<p><strong>NOME LEGÍVEL:</strong> Antonio Francisco da Silva Junior</p>".
   "<p><strong>TELEFONE DE CONTATO:</strong> (11) 5017-2192</p>".
   "<p><strong>LOTAÇÃO:</strong> EMIA-Escola Municipal de Iniciação Artística</p>".
-  "<p><strong>REGISTRO FUNCIONAL:</strong>791.191.5/3</p>".
+  "<p><strong>REGISTRO FUNCIONAL:</strong>840.968/4</p>".
   "<p><strong>SUPLENTE:</strong> Evandro Brito da Silveira</p>".
   "<p><strong>TELEFONE DE CONTATO:</strong> (11) 5017-2192</p>".
   "<p><strong>LOTAÇÃO:</strong> EMIA-Escola Municipal de Iniciação Artística</p>".
