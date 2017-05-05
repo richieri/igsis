@@ -2543,10 +2543,20 @@ if($tableExists == 0){
 							if($query_update_evento){
 								echo "<p>Evento $nomeEspetaculo inserido corretamente</p>";
 								
+							
+								// insere ocorrencia
+								$sql_insere_ocorrencia = "INSERT INTO ig_ocorrencia (idEvento, idTipoOcorrencia, sabado, domingo, dataInicio, dataFinal, timezone, duracao, publicado, virada) VALUES ('$id', '4', '1', '1', '2017-05-20', '2017-05-21', '-3', '$duracao', '1', '1')";
+								$query_insere_ocorrencia = mysqli_query($con,$sql_insere_ocorrencia);
+								if($query_insere_ocorrencia)
+								{
+									echo "<p>Ocorrência inserida corretamente</p>";
+								
+								
+								
+								
 								// atualiza o pedido de contratação
 								
-								
-								
+															
 								
 								// verifica se o cnpj está em branco
 								if($cnpj == "" OR $cnpj == NULL){
@@ -2675,12 +2685,15 @@ if($tableExists == 0){
 										echo "<p>Erro ao atualizar pedido.</p>";
 									}
 										
-								}								
+								}
+							}else{
+								echo "erro ao inserir ocorrencia (error07)<br />";							
+							}
+							
 							}else{
 								echo "<p>Erro ao inserir o evento $nomeEspetaculo (error02). $sql_update_evento</p>";
-							}
-
-
+							}	
+								
 							// Fim do blocão da importação
 							
 						}else{

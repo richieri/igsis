@@ -34,7 +34,7 @@ switch($_GET['atribuido'])
 			$total = mysqli_num_rows($query_lista);
 			
 			//seta a quantidade de itens por página
-			$registros = 50;
+			$registros = 150;
 			   
 			//calcula o número de páginas arredondando o resultado para cima
 			$numPaginas = ceil($total/$registros);
