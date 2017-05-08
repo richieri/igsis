@@ -3537,7 +3537,7 @@
 				$x[$i]['espaco'] = $local['sala']." (".$instituicao.")";
 				if($campo['virada'] == 1)
 				{
-					$x[$i]['tipo'] = "Virada Cultural 2016";	
+					$x[$i]['tipo'] = "Virada Cultural 2017";	
 					$x[$i]['data'] = $data." ".trim($semana);
 					$x[$i]['hora'] = "";
 					$x[$i]['espaco'] = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
@@ -3625,7 +3625,7 @@
 						`idCinema`) 
 						VALUES (NULL, 
 						'$idEvento', 
-						'2016-05-22', 
+						'2017-05-21', 
 						'00:00:00', 
 						'388', 
 						'4', 
@@ -3997,7 +3997,7 @@
 						`idCinema`) 
 						VALUES (NULL, 
 						'$idEvento', 
-						'2016-05-22', 
+						'2017-05-21', 
 						'00:00:00', 
 						'388', 
 						'4', 

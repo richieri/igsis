@@ -47,6 +47,7 @@ $link31 = $http."rlt_pedido_reserva_dph_pf.php";
 $link32 = $http."rlt_pedido_reserva_csmb_pf.php";
 $link33 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
 $link41 = $http."rlt_pedido_reserva_ccsp_pf.php";
+$link42 = $http."rlt_pedido_reserva_oficina.php";
 
 
 $link34 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
@@ -186,6 +187,11 @@ echo "
 						<tr>
 							<td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
 							<td><a href='$link41?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
+						</tr>
+						
+						<tr>
+							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
+							<td></td>
 						</tr>
 						
 					</tbody>
