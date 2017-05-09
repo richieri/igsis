@@ -2437,7 +2437,7 @@ if($tableExists == 0){
 						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
 						if($query_insert_pedido){
 							$idPedido = mysqli_insert_id($con);
-							echo "pedido com evento $id criado<br />";
+							echo "pedido $idPedido com evento $id criado<br />";
 							
 							// Blocão da importação
 							
