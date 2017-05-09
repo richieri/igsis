@@ -57,6 +57,7 @@ $link47 = $http."rlt_pedido_reserva_csmb_pj.php";
 $link48 = $http."rlt_pedido_reserva_casasdecultura_pj.php";
 $link49 = $http."rlt_pedido_reserva_ccsp_pj.php";
 $link50 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal=30";
+$link51 = $http."rlt_pedido_reserva_virada_pj.php";
 
 
 
@@ -182,6 +183,9 @@ echo "
 							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
 							<td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
 						</tr>
+						<tr>
+							<td><a href='$link51?id=$id_ped' target='_blank'><strong>Virada</strong></a></td>
+						</tr>	
 					</tbody>
 				</table>
 			</div>	
