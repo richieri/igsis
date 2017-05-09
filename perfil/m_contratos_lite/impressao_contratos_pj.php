@@ -48,6 +48,7 @@ $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal
 $link37 = $http."rlt_ordemservico_pj_assinatura.php";
 $link38 = $http."rlt_termo_doacao_pj_assinatura.php";
 $link39 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal=30";
+$link40 = $http."rlt_pedido_reserva_virada_pj.php";
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -154,7 +155,10 @@ echo "
 						<tr>
 							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva Existente - Centros Culturais</strong></a></td>
 							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva de Verba com Transferência - VIRADA</strong></a></td>			
-						</tr>					
+						</tr>
+						<tr>
+							<td><a href='$link40?id=$id_ped' target='_blank'><strong>Virada</strong></a></td>
+						</tr>	
 					</tbody>
 				</table>
 			</div>	

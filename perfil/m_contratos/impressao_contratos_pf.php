@@ -48,6 +48,7 @@ $link32 = $http."rlt_pedido_reserva_csmb_pf.php";
 $link33 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
 $link41 = $http."rlt_pedido_reserva_ccsp_pf.php";
 $link42 = $http."rlt_pedido_reserva_oficina.php";
+$link43 = $http."rlt_pedido_reserva_virada_pf.php";
 
 
 $link34 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
@@ -191,7 +192,7 @@ echo "
 						
 						<tr>
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
-							<td></td>
+							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Virada</strong></a></td>
 						</tr>
 						
 					</tbody>
