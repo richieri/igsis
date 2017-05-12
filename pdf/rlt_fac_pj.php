@@ -125,7 +125,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(50,$l,utf8_decode($rep01RG),0,0,'L');
 
 
-$pdf->Output();
+$pdf->Output('D',$id_ped.' - FACC.pdf');
 
 
 ?>

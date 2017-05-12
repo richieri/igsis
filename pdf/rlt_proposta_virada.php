@@ -294,7 +294,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(27,$l,utf8_decode('Data / Período:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(153,$l,utf8_decode("Dias 21 e 22 de maio de 2017."));
+   $pdf->MultiCell(153,$l,utf8_decode("Dias 20 e 21 de maio de 2017."));
       
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
@@ -618,7 +618,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 
 //for($i=1;$i<=20;$i++)
    // $pdf->Cell(0,10,'Printing line number '.$i,0,1);
-$pdf->Output();
+$pdf->Output('D',$idPedido.' - Proposta.pdf');
 
 
 ?>
