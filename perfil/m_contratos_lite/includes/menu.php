@@ -14,6 +14,7 @@ $usuario = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=0">Não Atribuídos</a>
 					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=1">Atribuídos</a>
+					<li><a href="<?php echo $pasta ?>frm_imprime_proposta_facc">Gerar Proposta/FACC</a>
 				</ul>
 			</li>
 			<li style="color:white;">-------------------------</li>
