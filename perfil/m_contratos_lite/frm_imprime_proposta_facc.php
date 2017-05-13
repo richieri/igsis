@@ -7,7 +7,7 @@ $link="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=";
 
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO DE PESSOA JURÍDICA</h6>
+		<div class="sub-title"><h6><br/>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6>
 		</div>
 		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>	
 		<div class="table-responsive list_info">
@@ -27,7 +27,7 @@ $link="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=";
 			$total = mysqli_num_rows($query_lista);
 			
 			//seta a quantidade de itens por página
-			$registros = 150;
+			$registros = 100;
 			   
 			//calcula o número de páginas arredondando o resultado para cima
 			$numPaginas = ceil($total/$registros);
@@ -52,21 +52,13 @@ $link="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=";
 					<tr class="list_menu">
 						<td>Evento</td>
 						<td>Codigo do Pedido</td>
+						<td>Processo</td>
 						<td>Proposta</td>
 						<td>FACC</td>
 					</tr>
 				</thead>
 				<tbody>
 			<?php
-				/*
-				$sql_enviados = "SELECT eve.idEvento, ped.idPedidoContratacao, ped.idPessoa, eve.nomeEvento, ped.valor, proj.projetoEspecial, ped.idContratos
-					FROM ig_evento AS eve
-					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
-					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.idContratos = '' AND eve.projetoEspecial IN (41) 
-					ORDER BY idPedidoContratacao";
-				$query_enviados = mysqli_query($con,$sql_enviados);
-				*/
 				while($pedido = mysqli_fetch_array($query_lista))
 				{
 					
@@ -77,7 +69,8 @@ $link="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=";
 					$link5 = $http."rlt_fac_pj.php?id=";
 					$link39 = $http."rlt_proposta_virada.php?penal=30&id=";
 					echo '<tr><td class="list_description">'.$ped['idEvento'].'</td>' ;
-					echo '<td class="list_description">'.$pedido['idPedidoContratacao'].'</td>' ;				
+					echo '<td class="list_description">'.$pedido['idPedidoContratacao'].'</td>' ;
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>' ;					
 					echo "<td class='lista'> <a href='".$link39.$pedido['idPedidoContratacao']."'>Donwload Proposta</a></td>";
 					echo "<td class='lista'> <a href='".$link5.$pedido['idPedidoContratacao']."'>Donwload FACC</a></td>";					
 					echo "</tr>";
@@ -90,7 +83,7 @@ $link="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=";
 							echo "<strong>Páginas</strong>";
 							for($i = 1; $i < $numPaginas + 1; $i++) 
 							{
-								echo "<a href='?perfil=contratos_lite&p=frm_lista_projeto&atribuido=0&pagina=$i'> [".$i."]</a> ";
+								echo "<a href='?perfil=contratos_lite&p=frm_imprime_proposta_facc&pagina=$i'> [".$i."]</a> ";
 							}
 						?>
 						</td>
