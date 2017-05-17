@@ -1,14 +1,10 @@
 <?php
 include 'includes/menu.php';	
-
 $con = bancoMysqli();
 $link="?perfil=contratos&p=frm_edita_propostapj&id_ped=";
-
-
 switch($_GET['atribuido'])
 {
 	case 0:
-
 ?>
 <br /><br /><br />
 
@@ -34,7 +30,7 @@ switch($_GET['atribuido'])
 			$total = mysqli_num_rows($query_lista);
 			
 			//seta a quantidade de itens por página
-			$registros = 150;
+			$registros = 250;
 			   
 			//calcula o número de páginas arredondando o resultado para cima
 			$numPaginas = ceil($total/$registros);
@@ -47,7 +43,7 @@ switch($_GET['atribuido'])
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IS NULL AND eve.projetoEspecial IN (41) 
+					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IN (NULL, '') AND eve.projetoEspecial IN (41) 
 					ORDER BY idPedidoContratacao DESC limit $inicio,$registros ";
 			$query_lista = mysqli_query($con,$sql_lista);
 			//conta o total de itens
@@ -58,6 +54,8 @@ switch($_GET['atribuido'])
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
+						<td>Número do Processo</td>
+						<td>CNPJ</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -75,7 +73,9 @@ switch($_GET['atribuido'])
 					$ped = siscontrat($pedido['idPedidoContratacao']);
 					$operador = recuperaUsuario($pedido['idContratos']);
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-					echo '<td class="list_description">'.$pj['RazaoSocial'].'</td> 
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td> 
+					<td class="list_description">'.$pj['CNPJ'].'</td>
+					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
@@ -109,7 +109,6 @@ switch($_GET['atribuido'])
 <?php 
 break;
 case 1:
-
 ?>
 <br /><br /><br />
 <section id="list_items">
@@ -122,6 +121,8 @@ case 1:
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
+						<td>Número do Processo</td>
+						<td>CNPJ</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -146,7 +147,9 @@ case 1:
 					$ped = siscontrat($pedido['idPedidoContratacao']);
 					$operador = recuperaUsuario($pedido['idContratos']);
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-					echo '<td class="list_description">'.$pj['RazaoSocial'].'</td> 
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>
+					<td class="list_description">'.$pj['CNPJ'].'</td> 
+					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
