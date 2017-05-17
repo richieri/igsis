@@ -58,6 +58,7 @@ switch($_GET['atribuido'])
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
+						<td>Número do Processo</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -75,7 +76,8 @@ switch($_GET['atribuido'])
 					$ped = siscontrat($pedido['idPedidoContratacao']);
 					$operador = recuperaUsuario($pedido['idContratos']);
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-					echo '<td class="list_description">'.$pj['RazaoSocial'].'</td> 
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td> 
+					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
@@ -122,6 +124,7 @@ case 1:
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
+						<td>Número do Processo</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -146,7 +149,8 @@ case 1:
 					$ped = siscontrat($pedido['idPedidoContratacao']);
 					$operador = recuperaUsuario($pedido['idContratos']);
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-					echo '<td class="list_description">'.$pj['RazaoSocial'].'</td> 
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>
+					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
