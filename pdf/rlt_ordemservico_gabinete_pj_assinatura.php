@@ -409,11 +409,32 @@ Aceito as condições dessa O.E.S para todos os efeitos de direito."));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(120,$l,utf8_decode($rep01Nome),'T',1,'L');
-   $pdf->SetX($x);
-   $pdf->Cell(120,$l,utf8_decode('CPF:'.$rep01CPF),0,0,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
-     $pdf->Ln();
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   }  
+   
+   $pdf->Ln();
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(85,5,"CPF: ".$rep01CPF,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"CPF: ".$rep02CPF,0,0,'L');
+   }
+   
+   $pdf->Ln();
    $pdf->Ln();
    
    $pdf->SetX($x);
