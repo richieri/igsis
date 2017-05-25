@@ -225,7 +225,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6"><strong>Fiscal:</strong>
-									<input type='text' readonly class='form-control' value="Luciana Schwinden" />
+									<input type='text' readonly class='form-control' value="Antonio Francisco da Silva Junior" />
 								</div>
 								<div class="col-md-6"><strong>Suplente:</strong>
 								  <input type='text' readonly class='form-control' value="Evandro Brito da Silveira" />
