@@ -195,6 +195,7 @@ case 3:
 						<td>Objeto</td>
 						<td>Local</td>
 						<td>Periodo</td>
+						<td>Valor</td>
 						<td>Operador</td>
 						<td>Status</td>
 						<td width="7%"></td>
@@ -220,7 +221,8 @@ case 3:
 					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
-					<td class="list_description">'.$ped['Periodo'].'</td> 
+					<td class="list_description">'.$ped['Periodo'].'</td>
+					<td class="list_description">'.$ped['ValorGlobal'].'</td> 					
 					<td class="list_description">'.$operador['nomeCompleto'].'</td> 
 					<td class="list_description">'.retornaEstado($ped['Status']).'</td>';
 					echo "<td class='list_description'>

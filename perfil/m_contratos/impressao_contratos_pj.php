@@ -58,6 +58,7 @@ $link48 = $http."rlt_pedido_reserva_casasdecultura_pj.php";
 $link49 = $http."rlt_pedido_reserva_ccsp_pj.php";
 $link50 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal=30";
 $link51 = $http."rlt_pedido_reserva_virada_pj.php";
+$link52 = $http."rlt_minuta_acima80k.php";
 
 
 
@@ -158,6 +159,7 @@ echo "
 
 						<tr>
 							<td><a href='$link27?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
+							<td><a href='$link52?id=$id_ped' target='_blank'><strong>Minuta Acima 80 mil</strong></a></td>
 						</tr>						
 						
 						<tr><td class='list_description'><br/></td></tr>
