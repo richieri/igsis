@@ -124,8 +124,8 @@ $rep02Telefones = $rep02["Telefones"];
 $rep02Email = $rep02["Email"];
 $rep02INSS = $rep02["INSS"];
 
-//header("Content-type: application/vnd.ms-word");
-//header("Content-Disposition: attachment;Filename=termo de parceria.doc");
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment;Filename=termo de parceria.doc");
 
 //contando parcelas
 $con = bancoMysqli();
