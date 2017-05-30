@@ -127,6 +127,13 @@ $rep02INSS = $rep02["INSS"];
 //header("Content-type: application/vnd.ms-word");
 //header("Content-Disposition: attachment;Filename=termo de parceria.doc");
 
+//contando parcelas
+$con = bancoMysqli();
+$sql_parcela = "SELECT * FROM igsis_parcelas WHERE idPedido = $id_ped AND valor != 0";
+$query_parcela = mysqli_query($con, $sql_parcela);
+
+$n_parcela = mysqli_num_rows($query_parcela);
+
 ?>
 
 <html>
@@ -142,34 +149,31 @@ $rep02INSS = $rep02["INSS"];
 <p><strong>PREFEITURA DO MUNICÍPIO DE SÃO PAULO</strong></p>
 <p><strong>SECRETARIA MUNICIPAL DE CULTURA</strong></p>
 <p><strong>TERMO DE CONTRATO Nº _______________________</strong></p>
-<p><strong>Processo nº XXXXX</strong></p>
-<p><strong>TERMO DE CONTRATO DE PRESTAÇÃO DE SERVIÇOS FORMALIZADO ENTRE A SECRETARIA MUNICIPAL CULTURA E NOME DA EMPRESA, COM FUNDAMENTO NO ARTIGO 25, INCISO III, DA LEI FEDERAL Nº 8666/93 E ALTERAÇÕES POSTERIORES, ARTIGO 1º DA LEI MUNICIPAL Nº 13.278/02 E ARTIGOS 16 E 17 DO DECRETO MUNICIPAL Nº 44.279/03.</strong></p>
+<p><strong>Processo nº <?php echo strtoupper($NumeroProcesso); ?></strong></p>
+<p><strong>TERMO DE CONTRATO DE PRESTAÇÃO DE SERVIÇOS FORMALIZADO ENTRE A SECRETARIA MUNICIPAL CULTURA E <?php echo strtoupper($pjRazaoSocial); ?>, COM FUNDAMENTO NO ARTIGO 25, INCISO III, DA LEI FEDERAL Nº 8666/93 E ALTERAÇÕES POSTERIORES, ARTIGO 1º DA LEI MUNICIPAL Nº 13.278/02 E ARTIGOS 16 E 17 DO DECRETO MUNICIPAL Nº 44.279/03.</strong></p>
 <p> </p>
-<p>  A <strong>PREFEITURA DO MUNICÍPIO DE SÃO PAULO</strong> doravante denominada simplesmente <strong>PREFEITURA</strong>, através da <strong>SECRETARIA MUNICIPAL DE CULTURA</strong>, neste ato representada pela Chefe de Gabinete, Giovanna de Moura Rocha Lima, e <strong><?php echo strtoupper($pjRazaoSocial); ?></strong>, CNPJ <?php echo $pjCNPJ; ?>, com endereço xxxxxxx , neste ato representada por <?php echo strtoupper($rep01Nome); ?>, RG n° xxxx , CPF Nº <?php echo $rep01CPF; ?>, doravante denominada <strong>CONTRATADA</strong>, com fundamento no artigo 25, inciso III da Lei Federal nº 8.666/93 e conforme consta do processo administrativo em referência, tem justo e acordado o que segue:</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+<p> A PREFEITURA DO MUNICÍPIO DE SÃO PAULO doravante denominada simplesmente PREFEITURA, através da SECRETARIA MUNICIPAL DE CULTURA, neste ato representada pela Chefe de Gabinete, Giovanna de Moura Rocha Lima, e <?php echo strtoupper($pjRazaoSocial); ?>, CNPJ <?php echo $pjCNPJ; ?>, com endereço <?php echo strtoupper($pjEndereco); ?> , neste ato representada por <?php echo strtoupper($rep01Nome); ?>, RG n° <?php echo strtoupper($rep01RG); ?> , CPF Nº <?php echo $rep01CPF; ?>, doravante denominada CONTRATADA, com fundamento no artigo 25, inciso III da Lei Federal nº 8.666/93 e conforme consta do processo administrativo em referência, tem justo e acordado o que segue:</p>
+<p> </p>
 <h3>CLÁUSULA PRIMEIRA - DO OBJETO</h3>
-<p>&nbsp;</p>
-<p>Contratação dos serviços profissionais de natureza artística de OBJETO, através de NOME DO EXECUTANTE e demais integrantes mencionados na Declaração de Exclusividade, por intermédio da empresa <?php echo strtoupper($pjRazaoSocial); ?>, CNPJ: <?php echo $pjCNPJ; ?>, representada legalmente por <?php echo strtoupper($rep01Nome); ?>, CPF: <?php echo $rep01CPF; ?>, para realização do EVENTO &nbsp;XXXXXX &nbsp;no LOCAL, no período DATAS, conforme proposta e cronograma.</p>
-<p>&nbsp;</p>
+<p> </p>
+<p>Contratação dos serviços profissionais de natureza artística de <?php echo strtoupper($Objeto); ?>, através de <?php echo strtoupper($exNome); ?> e demais integrantes mencionados na Declaração de Exclusividade, por intermédio da empresa <?php echo strtoupper($pjRazaoSocial); ?>, CNPJ: <?php echo ($pjCNPJ); ?>, representada legalmente por <?php echo strtoupper($rep01Nome); ?>, CPF: <?php echo ($rep01CPF); ?>, para realização do <?php echo ($Objeto); ?> no <?php echo ($Local); ?>, no período <?php echo ($Periodo); ?>, conforme proposta e cronograma.</p>
+<p> &nbsp; </p>
 <h3>CLÁUSULA SEGUNDA – DAS CONDIÇÕES GERAIS</h3>
-<p>&nbsp;</p>
+<p> </p>
 <p>2.1 O presente contrato é regido pelas leis e normas vigentes, especialmente pela Lei Federal nº. 8.666/93, artigo 1º. da Lei Municipal nº. 13.278/02 nos termos dos artigos 16 e 17 do Decreto nº. 44.279/03, inclusive quanto às hipóteses de rescisão.</p>
 2.2 A CONTRATANTE se exime de todo e quaisquer ônus e obrigações assumidas pela CONTRATADA
 <p>em decorrência de eventual contratação de terceiros.</p>
 <p>2.3 A CONTRATANTE fica inteiramente responsável por garantir as condições indispensáveis à consecução dos trabalhos por parte da CONTRATADA no local e horários estipulados.</p>
 <p>&nbsp;</p>
 <h3>CLÁUSULA TERCEIRA – DO PREÇO E CONDIÇÕES DE PAGAMENTO</h3>
-<p>&nbsp;</p>
-<p>3.1 Pelos serviços prestados, a CONTRATANTE pagará à CONTRATADA o total de R$ XXXX, a serem pagos em XX parcelas, após a confirmação da execução dos serviços pela unidade requisitante.</p>
+<p> </p>
+<p>3.1 Pelos serviços prestados, a CONTRATANTE pagará à CONTRATADA o total de R$ <?php echo ($ValorGlobal); ?>, a serem pagos em <?php echo ($n_parcela); ?> parcelas, após a confirmação da execução dos serviços pela unidade requisitante.</p>
 <p>3.2  As despesas relativas ao presente Contrato estão garantidas pela dotação n° 25.10 13.392.3001.6.354 3.3.90.39.00.00. </p>
-<p>&nbsp;</p>
 <p>3.3 Não haverá reajuste do valor contratual.</p>
-<p>&nbsp;</p>
 <p>3.4 No caso de atraso no pagamento por culpa exclusiva da CONTRATANTE haverá, a pedido da CONTRATADA, compensação financeira, nos termos da Portaria SF nº. 05, publicada em 07 de janeiro de 2012. </p>
 <p>&nbsp;</p>
 <h3>CLÁUSULA QUARTA – DA RESCISÃO E PENALIDADES</h3>
-<p>&nbsp;</p>
+<p> </p>
 <p>4.1  A CONTRATADA incorrerá em multa de:</p>
 <p>4.1.1. 10% (dez por cento) no caso de infração de cláusula contratual, desobediência às determinações da fiscalização ou se desrespeitar munícipes ou funcionários municipais;</p>
 <p>4.1.2 10% (dez por cento) no caso de inexecução parcial do contrato;</p>
@@ -183,32 +187,40 @@ $rep02INSS = $rep02["INSS"];
 <p>4.6. O contrato será rescindido nos casos previstos em lei.</p>
 <p>&nbsp;</p>
 <h3>CLÁUSULA QUINTA – DAS DISPOSIÇÕES FINAIS</h3>
-<p>5.1 Nos termos do art. 6º do Decreto Municipal nº 54.873/2014, designo como fiscal desta contratação artística o(a) servidor(a)  NOME DO FISCAL, RF:XXXX e, como substituto, NOME DO SUPLENTE, RF XXXXX.</p>
+<p>5.1 Nos termos do art. 6º do Decreto Municipal nº 54.873/2014, designo como fiscal desta contratação artística o(a) servidor(a) <?php echo strtoupper($Fiscal); ?> , RF: <?php echo strtoupper($rfFiscal); ?> e, como substituto,  <?php echo strtoupper($Suplente); ?>, RF: <?php echo strtoupper($rfSuplente); ?>.</p>
 <p>5.2 O Foro da Fazenda Pública desta Capital será o competente para todo e qualquer procedimento oriundo deste contrato, com renúncia de qualquer outro, por mais especial e privilegiado que seja.</p>
-<p>&nbsp;</p>
 <p>E, para constar, o presente Termo foi digitado em três vias, de igual teor, o qual lido e achado conforme vai assinado pelas partes, com as testemunhas abaixo a tudo presentes.</p>
 
-<br/>
+<p>&nbsp;</p>
 
-<p align='justify'><?php echo $pjRazaoSocial; ?></p>
+<p align='center'>São Paulo, _________ de ________________________________ de 2017.</p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<p align='center'><strong>____________________________________<br/>
+GIOVANNA DE MOURA ROCHA LIMA<br/>
+Chefe de Gabinete<br/>
+Secretria Municipal de Cultura
+</strong></p>
 
 <p>&nbsp;</p>
 
-<p align='justify'><?php echo $rep01Nome; ?><br/>
-CPF nº <?php echo $rep01CPF; ?><br/>
-RG nº <?php echo $rep01RG; ?>
-</p>
+<p align='center'><strong>________________________________<br/>
+<?php echo $pjRazaoSocial; ?><br/>
+CPF: 
+</p></strong>
 
 <p>&nbsp;</p>
 
-<p align='justify'><?php echo $rep02Nome; ?><br/>
-CPF nº <?php echo $rep02CPF; ?><br/>
-RG nº <?php echo $rep02RG; ?>
-</p>
-
+<p align='center'><strong>TESTEMUNHAS:</strong></p>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 
-<p align='justify'>TESTEMUNHAS</p>
+
+<p align='center'>_______________________________ &nbsp; &nbsp; &nbsp; _______________________________ </p>
+
+<p>&nbsp;</p>
 
 </body>
 </html>
