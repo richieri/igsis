@@ -1169,6 +1169,20 @@
 			} //fecha a action
 		break;
 		case "edicaoPedido":
+		?>
+<script>
+	function valida()
+	{
+		var campo = document.getElementById("qtdApresentacoes");
+		if(campo.value == "")
+		{
+		   alert("Preencha o campo Quantidade de Apresentações!");
+		   return false;
+		} 
+		return true;
+	}
+</script>
+		<?php
 			if(isset($_POST['idPedidoContratacao']))
 			{
 				$_SESSION['idPedido'] = $_POST['idPedidoContratacao'];
@@ -1200,7 +1214,7 @@
 				$justificativa = addslashes($_POST['justificativa']);
 				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				$FormaPagamento = $_POST['FormaPagamento'];
+				//$FormaPagamento = $_POST['FormaPagamento'];
 				if($_POST['atualizar'] >= '2')
 				{
 					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
@@ -1338,7 +1352,7 @@
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
 				<!-- /Grupo -->
-				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPedido" method="post">
+				<form class="form-horizontal" role="form" onsubmit="return valida()" action="?perfil=contratados&p=edicaoPedido" method="post">
 		<?php
 			$multiplo = recuperaDados("sis_verba",$pedido['idVerba'],"Id_Verba");
 			if($pedido['parcelas'] > 1 OR $multiplo['multiplo'] == '1' )
@@ -1495,7 +1509,7 @@
 						
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Quantidade de Apresentações:</strong><br/>
-								<input type='text' name="qtdApresentacoes" id='qtdApresentacoes' class='form-control' value="<?php echo $pedido['qtdApresentacoes'] ?>" >
+								<input type="text" class="form-control" id="qtdApresentacoes" name="qtdApresentacoes" value="<?php echo $pedido['qtdApresentacoes'] ?>" >
 							</div>
 						</div>
 						
