@@ -3,8 +3,8 @@
 @ini_set('display_errors', '1');
 error_reporting(E_ALL);
 
-//define a session como 60 min
-session_cache_expire(60);
+//define a session como 120 min
+session_cache_expire(120);
 
 
 //carrega as funcoes gerais
