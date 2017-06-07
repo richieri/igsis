@@ -49,14 +49,54 @@
 			{
 				$local = recuperaDados("ig_local",$ocorrencia['local'],"idLocal");	
 				$instituicao = recuperaDados("ig_instituicao",$local['idInstituicao'],"idInstituicao");
-				$x = $x."| ".$local['sala']."(".$instituicao['instituicao'].") .Dia ".exibirDataBr($ocorrencia['dataInicio']).", ".substr(($ocorrencia['horaInicio']),0,2)."h<br />";
+				$x = $x."| ".$local['sala']." (".$instituicao['instituicao']."). Dia ".exibirDataBr($ocorrencia['dataInicio']).", ".substr(($ocorrencia['horaInicio']),0,2)."h<br />";
 			}
 			if($ocorrencia['idTipoOcorrencia'] == '6' )
 			{
 				$local = recuperaDados("ig_local",$ocorrencia['local'],"idLocal");	
 				$instituicao = recuperaDados("ig_instituicao",$local['idInstituicao'],"idInstituicao");
-				$sub = recuperaDados("ig_sub_evento",$ocorrencia['idSubEvento'],"idSubEvento");
-				$x = $x."| ".$sub['titulo']." - ".$local['sala']." .Dia ".substr(exibirDataBr($ocorrencia['dataInicio']),0,5).", ".substr(($ocorrencia['horaInicio']),0,2)."h<br />";
+				$semana = "";
+				if($ocorrencia['segunda'] == 1)
+				{
+					$semana = $semana."segunda,";
+				}
+				if($ocorrencia['terca'] == 1)
+				{
+					$semana = $semana." terça,";
+				}
+				if($ocorrencia['quarta'] == 1)
+				{
+					$semana = $semana." quarta,";
+				}
+				if($ocorrencia['quinta'] == 1)
+				{
+					$semana = $semana." quinta,";
+				}
+				if($ocorrencia['sexta'] == 1)
+				{
+					$semana = $semana." sexta,";
+				}
+				if($ocorrencia['sabado'] == 1)
+				{
+					$semana = $semana."	sábado,";
+				}
+				if($ocorrencia['domingo'] == 1)
+				{
+					$semana = $semana." domingo,";
+				}
+				
+				
+				if($ocorrencia['dataFinal'] == '0000-00-00')
+				{
+					$sub = recuperaDados("ig_sub_evento",$ocorrencia['idSubEvento'],"idSubEvento");
+					$x = $x."| ".$sub['titulo']." - ".$local['sala'].". Dia ".exibirDataBr($ocorrencia['dataInicio']).", ".substr(($ocorrencia['horaInicio']),0,2)."h<br />";
+				}
+				else
+				{
+					$sub = recuperaDados("ig_sub_evento",$ocorrencia['idSubEvento'],"idSubEvento");
+					$x = $x."| ".$sub['titulo']." - ".$local['sala'].". De ".exibirDataBr($ocorrencia['dataInicio'])." a ".exibirDataBr($ocorrencia['dataFinal'])." ".trim(substr($semana,0, -1))." , ".substr(($ocorrencia['horaInicio']),0,2)."h<br />";
+				}	
+				
 			}
 			if($ocorrencia['idTipoOcorrencia'] == '4' )
 			{
@@ -92,7 +132,7 @@
 					$semana = $semana." domingo,";
 				}
 				//$x = $x."| ".$local['sala']."(".$instituicao['instituicao'].") .De ".substr(exibirDataBr($ocorrencia['dataInicio']),0,5)." a ".substr(exibirDataBr($ocorrencia['dataFinal']),0,5)." ".trim(substr($semana,0, -1))." , ".substr(($ocorrencia['horaInicio']),0,2)."h<br />";
-				$x = $x."| ".$local['sala']."(".$instituicao['instituicao'].") .De ".exibirDataBr($ocorrencia['dataInicio'])." a ".exibirDataBr($ocorrencia['dataFinal'])." ".trim(substr($semana,0, -1))." , ".substr(($ocorrencia['horaInicio']),0,2)."h<br />";
+				$x = $x."| ".$local['sala']." (".$instituicao['instituicao'].") .De ".exibirDataBr($ocorrencia['dataInicio'])." a ".exibirDataBr($ocorrencia['dataFinal'])." ".trim(substr($semana,0, -1))." , ".substr(($ocorrencia['horaInicio']),0,2)."h<br />";
 			}
 			$x = $x."Retirada de ingresso: ".$retirada['retirada']." Valor: ".dinheiroParaBr($ocorrencia['valorIngresso'])."<br />
 			Duração: ".$ocorrencia['duracao']. "min. <br />";

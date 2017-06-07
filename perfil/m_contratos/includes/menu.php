@@ -22,6 +22,7 @@ $pasta = "?perfil=contratos&p=";
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=0">Sem nº Processo</a>
 					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=1">Com nº Processo</a>
+					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=3">Geral</a>
 				</ul>
 			</li>
 			<li><a href="<?php echo $pasta ?>frm_chamados">Chamados</a></li>
