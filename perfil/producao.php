@@ -3,6 +3,7 @@
 		<button class="dl-trigger">Open Menu</button>
 		<ul class="dl-menu">
 			<li><a href="?perfil=producao&p=lista">Lista de eventos</a></li>
+			<li><a href="?perfil=producao&p=lista&order=dataEnvio">Lista de eventos por envio</a></li>
 			<li><a href="?perfil=producao&p=chamados">Lista de chamados</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="?secao=perfil">Carregar Módulos</a></li>
@@ -99,18 +100,17 @@
 		<div class="col-md-offset-2 col-md-8">
 			<div class="text-hide">
 				<h2>Eventos</h2>
-				<h5>Por ordem decrescente de data de início</h5>
 		<?php
 			if($ordem == "dataEnvio")
 			{ 
 		?>
-				<h5><a href="?perfil=producao&p=lista&order=dataInicio">Ordenar por período de realização</a></h5>
+				<h5>Ordenar por data de envio</h5>
 		<?php 
 			}
 			else
 			{ 
 		?>
-				<h5><a href="?perfil=producao&p=lista&order=dataEnvio">Ordenar por envio</a></h5>
+				<h5>Ordenar por período de realização</h5>
 		<?php
 			}
 		?>
@@ -142,13 +142,13 @@
 					<?php 
 					if($chamado['numero'] == '0')
 					{
-						echo "0";
+						echo "[0]";
 					}
 					else
 					{
-						echo "<a href='?perfil=chamado&p=evento&id=".$ocorrencia[$i]['idEvento']."' target='_blank'>".$chamado['numero']."</a>";	
+						echo "<a href='?perfil=chamado&p=evento&id=".$ocorrencia[$i]['idEvento']."' target='_blank'>[".$chamado['numero']."]</a>";	
 					}	
-					?>]
+					?>
 				<?php
 					echo "</td>";
 					echo '<td class="list_description">'.retornaTipo($evento['ig_tipo_evento_idTipoEvento']).'</td> ';

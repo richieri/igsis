@@ -273,23 +273,34 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->Ln();
    $pdf->Ln();
    $pdf->Ln();
-   $pdf->Ln();   
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(90,$l,utf8_decode($rep01Nome),'T',1,'L');
+   $pdf->Ln(); 
    
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(8,$l,utf8_decode('RG:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(45,$l,utf8_decode($rep01RG),0,1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(10,$l,utf8_decode('CPF:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(45,$l,utf8_decode($rep01CPF),0,1,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   }  
+   
+   $pdf->Ln();
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(85,5,"CPF: ".$rep01CPF,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"CPF: ".$rep02CPF,0,0,'L');
+   }
    
    $pdf->Ln();
    $pdf->Ln();

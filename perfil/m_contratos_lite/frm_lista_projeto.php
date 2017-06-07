@@ -1,14 +1,10 @@
 <?php
 include 'includes/menu.php';	
-
 $con = bancoMysqli();
 $link="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=";
-
-
 switch($_GET['atribuido'])
 {
 	case 0:
-
 ?>
 <br /><br /><br />
 
@@ -118,7 +114,6 @@ switch($_GET['atribuido'])
 <?php 
 break;
 case 1:
-
 ?>
 <br /><br /><br />
 <section id="list_items">
@@ -195,6 +190,7 @@ case 3:
 						<td>Objeto</td>
 						<td>Local</td>
 						<td>Periodo</td>
+						<td>Valor</td>
 						<td>Operador</td>
 						<td>Status</td>
 						<td width="7%"></td>
@@ -206,7 +202,7 @@ case 3:
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND eve.projetoEspecial = 41 
+					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IS NOT NULL AND eve.projetoEspecial = 41 
 					ORDER BY idPedidoContratacao DESC";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
@@ -220,7 +216,8 @@ case 3:
 					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
-					<td class="list_description">'.$ped['Periodo'].'</td> 
+					<td class="list_description">'.$ped['Periodo'].'</td>
+					<td class="list_description">'.$ped['ValorGlobal'].'</td> 					
 					<td class="list_description">'.$operador['nomeCompleto'].'</td> 
 					<td class="list_description">'.retornaEstado($ped['Status']).'</td>';
 					echo "<td class='list_description'>
