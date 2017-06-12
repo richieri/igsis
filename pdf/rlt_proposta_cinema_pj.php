@@ -324,25 +324,32 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(40,$l,'Forma de Pagamento:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(140,$l,utf8_decode($FormaPagamento));
+   $pdf->MultiCell(140,5,utf8_decode($FormaPagamento));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(25,$l,'Justificativa:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(155,$l,utf8_decode($Justificativa));
+   $pdf->MultiCell(155,5,utf8_decode($Justificativa));
 
 
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   } 
    
 
 //	QUEBRA DE PÁGINA
@@ -493,13 +500,20 @@ $pdf->SetX($x);
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   } 
    
    
    
@@ -560,13 +574,20 @@ $l=5; //DEFINE A ALTURA DA LINHA
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   }  
    
 
 //for($i=1;$i<=20;$i++)
