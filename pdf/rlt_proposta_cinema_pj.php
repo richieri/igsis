@@ -472,7 +472,7 @@ $pdf->SetX($x);
    $pdf->Ln();
 
 
-$pdf->SetX($x);
+   $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,5,'(D)',0,0,'L');
    $pdf->SetFont('Arial','B', 12);
