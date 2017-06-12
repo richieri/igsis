@@ -314,13 +314,13 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(140,$l,utf8_decode($FormaPagamento));
+   $pdf->MultiCell(180,5,utf8_decode($FormaPagamento));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(25,$l,'Justificativa:',0,0,'L');
+   $pdf->Cell(25,5,'Justificativa:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(155,$l,utf8_decode($Justificativa));
+   $pdf->MultiCell(155,5,utf8_decode($Justificativa));
 
 
 //RODAPÉ PERSONALIZADO
@@ -338,7 +338,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
 //	QUEBRA DE PÁGINA
 $pdf->AddPage('','');
 
-$pdf->SetXY( $x , 33 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+$pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 $l=4; //DEFINE A ALTURA DA LINHA  
 
@@ -453,17 +453,17 @@ $pdf->SetX($x);
 
 $l=3.5; //DEFINE A ALTURA DA LINHA
 
-$pdf->SetX($x);
+   $pdf->SetX($x);
    $pdf->SetFont('Arial','', 8);
    $pdf->Cell(10,$l,'(D)',0,0,'L');
    $pdf->SetFont('Arial','B', 8);
    $pdf->Cell(170,5,utf8_decode('OBSERVAÇÃO'),0,1,'C');
    
-$pdf->SetX($x);
-$pdf->PrintChapter('txt/proposta_reversaolonga_observacao.txt');
+   $pdf->SetX($x);
+   $pdf->PrintChapter('txt/proposta_reversaolonga_observacao.txt');
     
 
-$pdf->SetX($x);
+   $pdf->SetX($x);
    $pdf->SetFont('Arial','', 8);
    $pdf->Cell(10,$l,'',0,0,'L');
    $pdf->SetFont('Arial','B', 8);
