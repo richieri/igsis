@@ -470,10 +470,10 @@ $l=3.5; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(170,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
    
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 8);
+   $pdf->SetFont('Arial','', 7);
    $pdf->MultiCell(0,$l,utf8_decode($txtPenalidade),0,'J');
     
-   //$pdf->Ln();
+   $pdf->Ln();
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 9);
