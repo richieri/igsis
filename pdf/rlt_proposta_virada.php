@@ -469,25 +469,27 @@ $pdf->SetX($x);
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,5,'(D)',0,0,'L');
-   $pdf->SetFont('Arial','B', 8);
+   $pdf->SetFont('Arial','B', 7);
    $pdf->Cell(170,5,utf8_decode('OBSERVAÇÕES'),0,1,'C');
    
    
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 8);
+   $pdf->SetFont('Arial','', 7);
    $pdf->MultiCell(0,$l,utf8_decode("A/o proponente tem ciência da obrigatoriedade de fazer menção dos créditos da PREFEITURA DA CIDADE DE SÃO PAULO, SECRETARIA MUNICIPAL DE CULTURA, em toda divulgação, escrita ou falada, realizada sobre o espetáculo programado, sob pena de cancelamento sumário do evento.
 No caso de pagamento do cachê por reversão de bilheteria, fica o valor dos ingressos sujeito ao atendimento no disposto nas Leis Municipais nº 10.973/91, regulamentada pelo Decreto Municipal nº 30.730/91; Leis Municipais 11.113/91, 11.357/93 e 12.975/2000 e Portaria 66/SMC/2007; Lei Estadual nº 7.844/92, regulamentada pelo Decreto Estadual nº 35.606/92; Lei Estadual 10.858/2001, com as alterações da Lei Estadual nº 14.729/2012 e Lei Federal nº 12.933/2013.
 Nos casos de comercialização de qualquer produto artístico-cultural, a proponente assume inteira responsabilidade fiscal e tributária quanto à sua comercialização, isentando a Municipalidade de quaisquer ônus ou encargos, nos termos da O.I. nº 01/2002 – SMC-G.
-No caso de espetáculo musical, declara assumir quaisquer ônus decorrentes da fiscalização e autuação da Ordem dos Músicos do Brasil – OMB."),0,'J');
+No caso de espetáculo musical, declara assumir quaisquer ônus decorrentes da fiscalização e autuação da Ordem dos Músicos do Brasil – OMB.
+As idéias e opiniões expressas durante as apresentações artísticas e culturais não representam a posição da Secretaria Municipal de Cultura, sendo os artistas e seus representantes os únicos e exclusivos responsáveis pelo conteúdo de suas manifestações, ficando a Municipalidade de São Paulo com direito de regresso sobre os mesmos, inclusive em caso de indenização por dano material, moral ou à imagem de terceiros."),0,'J');
    
+   $pdf->Ln();
    
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 8);
+   $pdf->SetFont('Arial','B', 7);
    $pdf->Cell(180,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
    
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 8);
+   $pdf->SetFont('Arial','', 7);
    $pdf->MultiCell(0,$l,utf8_decode($txtPenalidade),0,'J');
 
    $pdf->Ln();
@@ -614,11 +616,8 @@ $l=5; //DEFINE A ALTURA DA LINHA
    {
 	   $pdf->Cell(85,5,"CPF: ".$rep02CPF,0,0,'L');
    }  
-   
+ 
 
-//for($i=1;$i<=20;$i++)
-   // $pdf->Cell(0,10,'Printing line number '.$i,0,1);
-$pdf->Output('D',$idPedido.' - Proposta.pdf');
-
-
+//$pdf->Output('D',$idPedido.' - Proposta.pdf');
+$pdf->Output();
 ?>
