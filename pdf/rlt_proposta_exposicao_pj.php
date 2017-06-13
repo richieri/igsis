@@ -332,13 +332,20 @@ $l=7; //DEFINE A ALTURA DA LINHA
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   } 
    
 
 //	QUEBRA DE PÁGINA
@@ -350,7 +357,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 
 	//Pessoa Jurídica
 
-$pdf->SetX($x);
+   $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,5,'(C)',0,0,'L');
    $pdf->SetFont('Arial','B', 12);
@@ -478,7 +485,7 @@ $pdf->SetX($x);
    $pdf->Cell(160,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(0,$l,utf8_decode($txtPenalidade),0,'J');
 
    $pdf->Ln();
@@ -497,13 +504,20 @@ $pdf->SetX($x);
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   } 
    
    
    
@@ -564,18 +578,23 @@ $l=5; //DEFINE A ALTURA DA LINHA
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   } 
    
 
 //for($i=1;$i<=20;$i++)
    // $pdf->Cell(0,10,'Printing line number '.$i,0,1);
 $pdf->Output();
-
-
 ?>
