@@ -252,17 +252,17 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(40,$l,utf8_decode('Valor da Prestação do Serviço:'),0,1,'L');
+   $pdf->Cell(40,5,utf8_decode('Valor da Prestação do Serviço:'),0,1,'L');
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(140,$l,utf8_decode($FormaPagamento));
+   $pdf->MultiCell(180,5,utf8_decode($FormaPagamento));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(25,$l,'Justificativa:',0,0,'L');
+   $pdf->Cell(25,5,'Justificativa:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(155,$l,utf8_decode($Justificativa));
+   $pdf->MultiCell(155,5,utf8_decode($Justificativa));
 
 
 //RODAPÉ PERSONALIZADO
@@ -301,7 +301,7 @@ $pdf->SetX($x);
    $pdf->Cell(170,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
    
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 8);
+   $pdf->SetFont('Arial','', 9);
    $pdf->MultiCell(0,$l,utf8_decode($txtPenalidade),0,'J');
     
    $pdf->Ln();
@@ -318,7 +318,7 @@ $pdf->SetX($x);
    
    
 //RODAPÉ PERSONALIZADO
-   $pdf->SetXY($x,262);
+   $pdf->SetXY($x,268);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(100,$l,utf8_decode($Nome),'T',1,'L');
    
