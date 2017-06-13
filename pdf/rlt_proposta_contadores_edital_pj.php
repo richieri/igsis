@@ -593,10 +593,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
    }
    
-
 //for($i=1;$i<=20;$i++)
    // $pdf->Cell(0,10,'Printing line number '.$i,0,1);
 $pdf->Output();
-
-
 ?>
