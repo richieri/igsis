@@ -294,15 +294,20 @@ $pdf->AddPage('','');
 
 $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
-$pdf->SetX($x);
+   $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(10,5,'(C)',0,1,'L');
+   $pdf->Cell(10,$l,'(C)',0,0,'L');
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(160,$l,utf8_decode('OBSERVAÇÃO'),0,1,'C');
    
+   $pdf->SetX($x);
+   $pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
+    
    $pdf->Ln();
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(0,6,utf8_decode($txtPenalidade),0,'J');
+   $pdf->MultiCell(0,5,utf8_decode($txtPenalidade),0,'J');
 
    $pdf->Ln();
    
