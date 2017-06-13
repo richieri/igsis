@@ -260,8 +260,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(64,$l,utf8_decode('Inscrição no INSS ou nº PIS / PASEP:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(45,$l,utf8_decode($exINSS),0,1,'L');
-   
-  
+     
    
    $pdf->SetX($x);
    $pdf->Cell(180,5,'','B',1,'C');
@@ -306,13 +305,20 @@ $l=7; //DEFINE A ALTURA DA LINHA
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   } 
    
 
 //	QUEBRA DE PÁGINA
@@ -324,7 +330,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 
 	//Pessoa Jurídica
 
-$pdf->SetX($x);
+   $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,5,'(C)',0,0,'L');
    $pdf->SetFont('Arial','B', 12);
@@ -435,18 +441,27 @@ $pdf->SetX($x);
    $pdf->Ln();
 
 
-$pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(10,5,'(D)',0,0,'L');
-   $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(170,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->Cell(10,$l,'(D)',0,0,'L');
+   $pdf->SetFont('Arial','B', 9);
+   $pdf->Cell(160,5,utf8_decode('OBSERVAÇÃO'),0,1,'C');
    
-   $pdf->Ln();
+   $pdf->SetX($x);
+   $pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
+    
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->Cell(10,$l,'',0,0,'L');
+   $pdf->SetFont('Arial','B', 9);
+   $pdf->Cell(160,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(0,$l,utf8_decode($txtPenalidade),0,'J');
 
+   $pdf->Ln();
    $pdf->Ln();
 
    $pdf->SetX($x);
@@ -463,13 +478,20 @@ $pdf->SetX($x);
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   } 
    
    
    
@@ -530,13 +552,20 @@ $l=5; //DEFINE A ALTURA DA LINHA
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,utf8_decode($rep01Nome),'T',0,'L');
-   $pdf->Cell(85,$l,utf8_decode($rep02Nome),'T',1,'L');
+   $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,utf8_decode($rep02Nome),'T',0,'L');
+   }  
+   $pdf->Ln();
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(85,$l,$rep01RG,0,0,'L');
-   $pdf->Cell(85,$l,$rep02RG,0,0,'L');
+   $pdf->Cell(85,5,"RG: ".$rep01RG,0,0,'L');
+   if ($rep02Nome != '')
+   {
+	   $pdf->Cell(85,5,"RG: ".$rep02RG,0,0,'L');
+   } 
    
 
 //for($i=1;$i<=20;$i++)
