@@ -233,7 +233,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(82,$l,utf8_decode('Tempo Aproximado de Duração do Espetáculo:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(98,$l,utf8_decode("$Duracao"." minutos"));
+   $pdf->MultiCell(98,$l,utf8_decode("$Duracao"."utos"));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
