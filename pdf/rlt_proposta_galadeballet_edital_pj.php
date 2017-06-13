@@ -300,12 +300,6 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(27,$l,utf8_decode('Carga Horária:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,$CargaHoraria);
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(15,$l,'Local:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(165,$l,utf8_decode($Local));
@@ -469,12 +463,20 @@ $l=5; //DEFINE A ALTURA DA LINHA
 
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(10,5,'(D)',0,0,'L');
-   $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(170,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
+   $pdf->SetFont('Arial','', 9);
+   $pdf->Cell(10,$l,'(D)',0,0,'L');
+   $pdf->SetFont('Arial','B', 9);
+   $pdf->Cell(160,5,utf8_decode('OBSERVAÇÃO'),0,1,'C');
    
-   $pdf->Ln();
+   $pdf->SetX($x);
+   $pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
+    
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->Cell(10,$l,'',0,0,'L');
+   $pdf->SetFont('Arial','B', 9);
+   $pdf->Cell(160,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
