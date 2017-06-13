@@ -24,10 +24,8 @@ $link13 = $http."rlt_pedido_reserva_atividadecultural_cooperativa_pj.php";
 $link14 = $http."rlt_pedido_reserva_vocacional_pj.php";
 $link15 = $http."rlt_proposta_reversaolonga_pj.php"."?id=".$id_ped."&penal=18";
 $link16 = $http."rlt_proposta_reversaocurta_pj.php"."?id=".$id_ped."&penal=16";
-$link17 = $http."rlt_declaracao_iss_1rep_pj.php";
-$link18 = $http."rlt_declaracao_iss_2rep_pj.php";
-$link19 = $http."rlt_declaracao_exclusividade_1rep_pj.php";
-$link20 = $http."rlt_declaracao_exclusividade_2rep_pj.php";
+$link17 = $http."rlt_declaracao_iss_pj.php?id=".$id_ped;
+$link19 = $http."rlt_declaracao_exclusividade_pj.php?id=".$id_ped;
 $link21 = $http."rlt_proposta_doacao_pj.php"."?id=".$id_ped."&penal=6";
 $link22 = $http."rlt_ordemservico_pj.php";
 $link23 = $http."rlt_ordemservico_pj_word.php";
@@ -46,8 +44,7 @@ $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal
 $link37 = $http."rlt_ordemservico_pj_assinatura.php";
 $link38 = $http."rlt_termo_doacao_pj_assinatura.php";
 $link39 = $http."rlt_pedido_reserva_centrosculturais_pj.php";
-$link40 = $http."rlt_declaracao_convenio500_1rep_pj.php";
-$link41 = $http."rlt_declaracao_convenio500_2rep_pj.php";
+$link40 = $http."rlt_declaracao_convenio500_pj.php?id=".$id_ped;
 $link42 = $http."rlt_declaracao_abertura_bb_pj.php";
 $link43 = $http."rlt_pedido_reserva_gabinete_pj.php";
 $link44 = $http."rlt_ordemservico_gabinete_pj.php";
@@ -115,25 +112,14 @@ echo "
 						<tr><td class='list_description'><br/></td></tr>
 						
 						<tr class='list_menu'><td colspan='2'><strong>DECLARAÇÃO</strong></td></tr>
-						
+												
 						<tr>
-							<td class='list_menu'>01 Representante</td>
-							<td class='list_menu'>02 Representantes</td>
-						</tr>
-						<tr>
-							<td><a href='$link17?id=$id_ped' target='_blank'><strong>ISS</strong></a></td>
-							<td><a href='$link18?id=$id_ped' target='_blank'><strong>ISS</strong></a></td>
-						</tr>
-						<tr>
-							<td><a href='$link19?id=$id_ped' target='_blank'><strong>Exclusividade</strong></a></td>
-							<td><a href='$link20?id=$id_ped' target='_blank'><strong>Exclusividade</strong></a></td>
-						</tr>
-						<tr>
-							<td><a href='$link40?id=$id_ped' target='_blank'><strong>Convênio 500</strong></a></td>
-							<td><a href='$link41?id=$id_ped' target='_blank'><strong>Convênio 500</strong></a></td>
+							<td><a href='$link17' target='_blank'><strong>ISS</strong></a></td>	
+							<td><a href='$link19' target='_blank'><strong>Exclusividade</strong></a></td>							
 						</tr>
 						
 						<tr>
+							<td><a href='$link40' target='_blank'><strong>Convênio 500</strong></a></td>
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Abertura de Conta - Banco do Brasil</strong></a></td>
 						</tr>
 						

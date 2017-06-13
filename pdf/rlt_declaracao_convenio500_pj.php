@@ -133,10 +133,19 @@ $l=8; //DEFINE A ALTURA DA LINHA
    $pdf->Ln();
    $pdf->Ln();
    
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(167,$l,utf8_decode("Eu, ".$rep01Nome.", RG ".$rep01RG.", CPF ".$rep01CPF.", e eu ".$rep02Nome.", RG ".$rep02RG.", CPF ".$rep02CPF.", representantes da empresa ".$pjRazaoSocial.", inscrita no CNPJ ".$pjCNPJ.", declaramos para os devidos fins que a empresa não possui conta no Banco do Brasil."));
-   
+   if ($rep02Nome != '')
+   {
+	   $pdf->SetX($x);
+	   $pdf->SetFont('Arial','', 11);
+	   $pdf->MultiCell(167,$l,utf8_decode("Eu, ".$rep01Nome.", RG ".$rep01RG.", CPF ".$rep01CPF.", e eu ".$rep02Nome.", RG ".$rep02RG.", CPF ".$rep02CPF.", representantes da empresa ".$pjRazaoSocial.", inscrita no CNPJ ".$pjCNPJ.", declaramos para os devidos fins que a empresa não possui conta no Banco do Brasil."));
+   }
+   else
+   {
+	   $pdf->SetX($x);
+	   $pdf->SetFont('Arial','', 11);
+	   $pdf->MultiCell(167,$l,utf8_decode("Eu, ".$rep01Nome.", RG ".$rep01RG.", CPF ".$rep01CPF.", representante da empresa ".$pjRazaoSocial.", inscrita no CNPJ ".$pjCNPJ.", declaro para os devidos fins que a empresa não possui conta no Banco do Brasil."));
+   }
+      
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
    $pdf->MultiCell(167,$l,utf8_decode("Por se tratar de uma contratação de natureza eventual e não continuada e o cachê não exceder R$ 5.000,00 (cinco mil reais), solicito que o pagamento seja efetuado na conta informada na FACC, através de recursos 500, conforme art. 3º da portaria SF 255/15."));
@@ -170,28 +179,30 @@ $l=8; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 11);
    $pdf->Cell(50,$l,utf8_decode($rep01CPF),0,1,'L');
    
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
+   if ($rep02Nome != '')
+   {
+	   $pdf->Ln();
+	   $pdf->Ln();
+	   $pdf->Ln();
+	   $pdf->Ln();
+	   $pdf->Ln();
 
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 11);
-   $pdf->Cell(165,$l,utf8_decode($rep02Nome),'T',1,'L');
+	   $pdf->SetX($x);
+	   $pdf->SetFont('Arial','B', 11);
+	   $pdf->Cell(165,$l,utf8_decode($rep02Nome),'T',1,'L');
+	   
+	   $pdf->SetX($x);
+	   $pdf->SetFont('Arial','B', 11);
+	   $pdf->Cell(8,$l,utf8_decode('RG:'),0,0,'L');
+	   $pdf->SetFont('Arial','', 11);
+	   $pdf->Cell(50,$l,utf8_decode($rep02RG),0,1,'L');
+	   
+	   $pdf->SetX($x);
+	   $pdf->SetFont('Arial','B', 11);
+	   $pdf->Cell(11,$l,utf8_decode('CPF:'),0,0,'L');
+	   $pdf->SetFont('Arial','', 11);
+	   $pdf->Cell(50,$l,utf8_decode($rep02CPF),0,1,'L');
+   }
    
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 11);
-   $pdf->Cell(8,$l,utf8_decode('RG:'),0,0,'L');
-   $pdf->SetFont('Arial','', 11);
-   $pdf->Cell(50,$l,utf8_decode($rep02RG),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 11);
-   $pdf->Cell(11,$l,utf8_decode('CPF:'),0,0,'L');
-   $pdf->SetFont('Arial','', 11);
-   $pdf->Cell(50,$l,utf8_decode($rep02CPF),0,1,'L');
-
-
 $pdf->Output();
 ?>
