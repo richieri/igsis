@@ -4,7 +4,7 @@
 	error_reporting(E_ALL); 	
    
    // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
-	require_once("../include/lib/fpdf/fpdf.php");
+   require_once("../include/lib/fpdf/fpdf.php");
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
    require_once("../funcoes/funcoesSiscontrat.php");
