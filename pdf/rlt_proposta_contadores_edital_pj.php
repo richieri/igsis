@@ -300,9 +300,9 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(27,$l,utf8_decode('Carga Horária:'),0,0,'L');
+   //$pdf->Cell(27,$l,utf8_decode('Carga Horária:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,$CargaHoraria);
+   //$pdf->MultiCell(180,$l,$CargaHoraria);
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);

@@ -3,7 +3,7 @@
 	   @ini_set('display_errors', '1');
 	error_reporting(E_ALL); 	
    
-   // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
+   // INSTALAÃ‡ÃƒO DA CLASSE NA PASTA FPDF.
 	require_once("../include/lib/fpdf/fpdf.php");
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
@@ -11,7 +11,7 @@
    
    
 
-   //CONEXÃO COM BANCO DE DADOS 
+   //CONEXÃƒO COM BANCO DE DADOS 
    $conexao = bancoMysqli(); 
    
 
@@ -177,7 +177,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
 
 	//Executante
    
-   $pdf->SetXY( $x , 37 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+   $pdf->SetXY( $x , 37 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÃGINA
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
@@ -187,7 +187,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','I', 10);
-   $pdf->Cell(10,10,utf8_decode('(Quando se tratar de grupo, o líder do grupo)'),0,0,'L');
+   $pdf->Cell(10,10,utf8_decode('(Quando se tratar de grupo, o lÃ­der do grupo)'),0,0,'L');
    
    $pdf->Ln();
    
@@ -199,7 +199,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(28,$l,utf8_decode('Nome Artístico:'),0,0,'L');
+   $pdf->Cell(28,$l,utf8_decode('Nome ArtÃ­stico:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(152,$l,utf8_decode($exNomeArtistico));
    
@@ -237,13 +237,13 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(45,$l,utf8_decode($exDRT),0,0,'L');
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(15,$l,utf8_decode('Função:'),0,0,'L');
+   $pdf->Cell(15,$l,utf8_decode('FunÃ§Ã£o:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(45,$l,utf8_decode($exFuncao),0,1,'L');
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
+   $pdf->Cell(20,$l,utf8_decode('EndereÃ§o:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(160,$l,utf8_decode($exEndereco));
    
@@ -259,7 +259,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(64,$l,utf8_decode('Inscrição no INSS ou nº PIS / PASEP:'),0,0,'L');
+   $pdf->Cell(64,$l,utf8_decode('InscriÃ§Ã£o no INSS ou nÂº PIS / PASEP:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(45,$l,utf8_decode($exINSS),0,1,'L');
    
@@ -288,19 +288,19 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(27,$l,utf8_decode('Data / Período:'),0,0,'L');
+   $pdf->Cell(27,$l,utf8_decode('Data / PerÃ­odo:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(153,$l,utf8_decode("$Periodo"." - conforme cronograma."));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(82,$l,utf8_decode('Tempo Aproximado de Duração do Espetáculo:'),0,0,'L');
+   $pdf->Cell(82,$l,utf8_decode('Tempo Aproximado de DuraÃ§Ã£o do EspetÃ¡culo:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(98,$l,utf8_decode("$Duracao"."utos"));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(27,$l,utf8_decode('Carga Horária:'),0,0,'L');
+   $pdf->Cell(27,$l,utf8_decode('Carga HorÃ¡ria:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(180,$l,$CargaHoraria);
    
@@ -329,7 +329,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->MultiCell(155,5,utf8_decode($Justificativa));
 
 
-//RODAPÉ PERSONALIZADO
+//RODAPÃ‰ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
@@ -348,24 +348,24 @@ $l=7; //DEFINE A ALTURA DA LINHA
    } 
    
 
-//	QUEBRA DE PÁGINA
+//	QUEBRA DE PÃGINA
 $pdf->AddPage('','');
 
-$pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+$pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÃGINA
 
 $l=5; //DEFINE A ALTURA DA LINHA  
 
-	//Pessoa Jurídica
+	//Pessoa JurÃ­dica
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,5,'(C)',0,0,'L');
    $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(170,5,utf8_decode('PESSOA JURÍDICA'),0,1,'C');
+   $pdf->Cell(170,5,utf8_decode('PESSOA JURÃDICA'),0,1,'C');
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','I', 9);
-   $pdf->Cell(10,10,utf8_decode('(empresário exclusivo SE FOR O CASO)'),0,0,'L');
+   $pdf->Cell(10,10,utf8_decode('(empresÃ¡rio exclusivo SE FOR O CASO)'),0,0,'L');
    
    $pdf->Ln();
    
@@ -387,7 +387,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
+   $pdf->Cell(20,$l,utf8_decode('EndereÃ§o:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(160,$l,utf8_decode($pjEndereco));
    
@@ -472,7 +472,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 9);
    $pdf->Cell(10,$l,'(D)',0,0,'L');
    $pdf->SetFont('Arial','B', 9);
-   $pdf->Cell(160,5,utf8_decode('OBSERVAÇÃO'),0,1,'C');
+   $pdf->Cell(160,5,utf8_decode('OBSERVAÃ‡ÃƒO'),0,1,'C');
    
    $pdf->SetX($x);
    $pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
@@ -482,7 +482,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 9);
    $pdf->Cell(10,$l,'',0,0,'L');
    $pdf->SetFont('Arial','B', 9);
-   $pdf->Cell(160,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
+   $pdf->Cell(160,5,utf8_decode('DECLARAÃ‡Ã•ES'),0,1,'C');
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
@@ -501,7 +501,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
    $pdf->Ln();
    
    
-//RODAPÉ PERSONALIZADO
+//RODAPÃ‰ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
@@ -521,10 +521,10 @@ $l=5; //DEFINE A ALTURA DA LINHA
    
    
    
-//	QUEBRA DE PÁGINA
+//	QUEBRA DE PÃGINA
 $pdf->AddPage('','');
 
-$pdf->SetXY( $x , 37 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+$pdf->SetXY( $x , 37 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÃGINA
 
 $l=5; //DEFINE A ALTURA DA LINHA 
 
@@ -556,13 +556,13 @@ $l=5; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(22,$l,utf8_decode('Data/Perído:'),0,0,'L');
+   $pdf->Cell(22,$l,utf8_decode('Data/PerÃ­do:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(148,$l,utf8_decode($dia));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(15,$l,utf8_decode('Horário:'),0,0,'L');
+   $pdf->Cell(15,$l,utf8_decode('HorÃ¡rio:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(155,$l,utf8_decode($hour));
    
@@ -575,7 +575,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
    $pdf->Ln(); 
 	}
 
-//RODAPÉ PERSONALIZADO
+//RODAPÃ‰ PERSONALIZADO
    $pdf->SetXY($x,262);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(85,5,utf8_decode($rep01Nome),'T',0,'L');
