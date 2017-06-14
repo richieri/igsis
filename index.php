@@ -51,17 +51,18 @@ if(isset($_POST['usuario']))
 						</div>
 					</form>
 					
-					<br />
+					<br /><br />
 					
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<h4><p>Não possui cadastro?<strong><a href="https://goo.gl/lHLdnI" target="_blank"> CLIQUE AQUI!</strong></a></p></h4>
+								<p>&nbsp;</p>
 								<p>Dúvidas? Envie e-mail para: <strong>sistema.igsis@gmail.com</strong></p>
-								<p>Saiba mais sobre <u>"Fluxo SEI na SMC"</u> :  <strong><a href="http://sei.smc.adm.br/" target="_blank"> sei.smc.adm.br </strong></a></p>
 								<br />
 							</div>
 						</div>
-
+						
+						<!--
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<h5>Últimos eventos inseridos</h5>
@@ -88,6 +89,7 @@ if(isset($_POST['usuario']))
 								</div>
 							</div>
 						</div>
+						-->
 					</div>
 				</div>
 			</div>
