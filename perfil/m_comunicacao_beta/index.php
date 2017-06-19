@@ -34,9 +34,9 @@
                 <div class="text-hide">
 					<h3>Bem-vindo(a) à IGSIS!</h3>
                     <p>&nbsp;</p>
-                    <h2>Módulo Comunicação</h2>
+                    <h2>Módulo Comunicação Beta</h2>
                     <p>&nbsp;</p>
-					<h6>Esse módulo Esse módulo tem a função de gerenciar a comunicação da instituição e preparar as informações a serem enviadas para o SPCultura.</h6>
+					<h6>Esse módulo tem a função de gerenciar a comunicação da instituição e preparar as informações a serem enviadas para o SPCultura.</h6>
                 </div>
             </div>
         </div>

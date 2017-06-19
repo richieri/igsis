@@ -1,6 +1,6 @@
 ﻿<?php
 //geram o insert pro framework da igsis
-$pasta = "?perfil=comunicacao&p=";
+$pasta = "?perfil=comunicacao_beta&p=";
 $perfil = $_SESSION['perfil'];
 ?>
 
@@ -9,8 +9,10 @@ $perfil = $_SESSION['perfil'];
 		<button class="dl-trigger">Busca</button>
 			<ul class="dl-menu">				
 				<li><a href="<?php echo $pasta ?>filtro">Filtrar</a></li>
-				<li><a href="<?php echo $pasta ?>programacao_local">Programação Local</a></li>				
-				<li><a href="<?php echo $pasta ?>docs">Gerar Docs</a></li>     
+				<li><a href="<?php echo $pasta ?>programacao_local">Programação Local</a></li>
+				<li><a href="<?php echo $pasta ?>foto">Foto/Imagem de Divulgação</a></li>
+				<li><a href="<?php echo $pasta ?>docs">Gerar Docs</a></li>   
+				<li><a href="<?php echo $pasta ?>programacao_local">Agenda</a></li>				
 				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li> 			
 				<li style="color:white;">-------------------------</li>
 				<li><a href="?secao=perfil">Carregar módulo</a></li>

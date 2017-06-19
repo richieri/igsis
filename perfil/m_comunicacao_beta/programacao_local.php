@@ -71,7 +71,7 @@
 				</div>
 			</div>
 		</div>  
-		<form method="POST" action="?perfil=comunicacao&p=agenda" class="form-horizontal" role="form">
+		<form method="POST" action="?perfil=comunicacao_beta&p=agenda" class="form-horizontal" role="form">
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
 					<label>Data início *</label>
@@ -122,7 +122,7 @@
 			?>			
 					<tr>					
 						<td><?php echo retornaProtoEvento($evento['idEvento']) ?></td>
-						<td><a href="?perfil=comunicacao&p=editar&idCom=<?php echo $comunicacao['idCom']  ?>"><?php echo $event['nomeEvento'] ?></a>  [<?php 
+						<td><a href="?perfil=comunicacao_beta&p=editar&idCom=<?php echo $comunicacao['idCom']  ?>"><?php echo $event['nomeEvento'] ?></a>  [<?php 
 						if($chamado['numero'] == '0')
 						{
 							echo "0";

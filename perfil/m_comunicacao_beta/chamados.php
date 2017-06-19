@@ -107,7 +107,7 @@
 							echo "<strong>Páginas</strong>";
 							for($i = 1; $i < $numPaginas + 1; $i++) 
 							{
-								echo "<a href='?perfil=comunicacao&p=chamados&pagina=$i'> [".$i."]</a> ";
+								echo "<a href='?perfil=comunicacao_beta&p=chamados&pagina=$i'> [".$i."]</a> ";
 							}
 						?>
 						</td>

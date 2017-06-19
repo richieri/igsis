@@ -9,5 +9,5 @@
 		$p = "index";
 	}
 	include "../funcoes/funcoesComunicacao.php";
-	include "m_comunicacao/".$p.".php";
+	include "m_comunicacao_beta/".$p.".php";
 ?>
