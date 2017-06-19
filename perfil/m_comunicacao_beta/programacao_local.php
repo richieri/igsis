@@ -1,5 +1,7 @@
 <?php
 include "include/menu.php";
+
+$idInstituicao = $_SESSION['idInstituicao'];
 	
 if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
 {
@@ -23,64 +25,18 @@ if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
 		}
 		
 	}
-	
+}
+else
+{
+	$mes = date("m");      // Mês desejado, pode ser por ser obtido por POST, GET, etc.
+	$ano = date("Y"); // Ano atual
+	$dia = date("t", mktime(0,0,0,$mes,'01',$ano)); // Mágica, plim!
+	$data_inicio = "$ano-$mes-01";
+	$data_final = "$ano-$mes-$dia";
+	$nome_mes = retornaMes($mes);	
+	$mensagem = "Filtro aplicado: eventos de $nome_mes de $ano.";
+}	
 
-
-	$idInstituicao = $_SESSION['idInstituicao'];	
-			
-		if(isset($_GET['order']))
-		{
-			$order = $_GET['order'];
-		}
-		else
-		{
-			$order = "";
-		}
-		if(isset($_GET['sentido']))
-		{
-			$sentido = $_GET['sentido'];
-			if($sentido == "ASC")
-			{
-				$invertido = "DESC";
-			}
-			else
-			{
-				$invertido = "ASC";
-			}
-		}
-
-		if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
-		{
-			if($_POST['final'] == "")
-			{
-				$mensagem = "É preciso informar a data final do filtro";	
-			}
-			else
-			{
-				$inicio = exibirDataMysql($_POST['inicio']);
-				$final = exibirDataMysql($_POST['final']);
-				if($_POST['inicio'] > $_POST['final'])
-				{
-					$mensagem = "A data final do filtro deve ser maior que a data inicio";		
-				}
-				else
-				{
-					$data_inicio = exibirDataMysql($_POST['inicio']);
-					$data_final = exibirDataMysql($_POST['final']);
-					$mensagem = "Filtro aplicado: eventos entre ".$_POST['inicio']." e ".$_POST['final'];
-				}
-			}	
-		}
-		else
-		{
-			$mes = date("m");      // Mês desejado, pode ser por ser obtido por POST, GET, etc.
-			$ano = date("Y"); // Ano atual
-			$dia = date("t", mktime(0,0,0,$mes,'01',$ano)); // Mágica, plim!
-			$data_inicio = "$ano-$mes-01";
-			$data_final = "$ano-$mes-$dia";
-			$nome_mes = retornaMes($mes);	
-			$mensagem = "Filtro aplicado: eventos de $nome_mes de $ano.";
-		}
 ?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
@@ -113,7 +69,7 @@ if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
 			</div>					
 		</form>
 		<div class="table-responsive list_info">
-			<strong>Legenda status:</strong> | <font color='blue'>[ E ] Editado</font> | <font color='#00FF7F'>[ R ] Revisado</font> | <font color='yellow'>[ S ] Site</font> | <font color='orange'>[ I ] Impresso</font> | <font color='#DA70D6'>[ F ] Foto</font> | 
+			<strong>Legenda status:</strong> | <font color='blue'>[ E ] Editado</font> | <font color='#32CD32'>[ R ] Revisado</font> | <font color='red'>[ S ] Site</font> | <font color='orange'>[ I ] Impresso</font> | <font color='#DA70D6'>[ F ] Foto</font> | 
 			<p>&nbsp;</p>
 			<table class='table table-condensed'>
 				<thead>
@@ -164,11 +120,11 @@ if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
 							} 
 							if ($comunicacao['revisado'] == 1) 
 							{
-								echo "<font color='#00FF7F'>[ R ]</font> ";
+								echo "<font color='#32CD32'>[ R ]</font> ";
 							}
 							if ($comunicacao['site'] == 1) 
 							{
-								echo "<font color='yellow'>[ S ]</font> ";
+								echo "<font color='red'>[ S ]</font> ";
 							}	
 							if ($comunicacao['publicacao'] == 1) 
 							{
