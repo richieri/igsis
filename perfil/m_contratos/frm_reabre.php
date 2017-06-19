@@ -17,7 +17,7 @@ if(isset($_POST['reabrir']))
 {
 	$titulo = "Reabertura do evento ".$evento['nomeEvento']." pela área de Contratos";
 	$idUsuario = $_SESSION['idUsuario'];
-	$tipo = 7;
+	$tipo = $_POST['tipo'];
 	$event = $idEvento;
 	$descricao = $titulo;	
 	$justificativa = addslashes($_POST['justificativa']);
@@ -56,26 +56,7 @@ if(isset($_POST['reabrir']))
 else
 {
 ?>
-	<script type="application/javascript">
-	$(function(){
-		$('#instituicao').change(function(){
-			if( $(this).val() ) {
-				$('#local').hide();
-				$('.carregando').show();
-				$.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j){
-					var options = '<option value=""></option>';	
-					for (var i = 0; i < j.length; i++) {
-						options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
-					}	
-					$('#local').html(options).show();
-					$('.carregando').hide();
-				});
-			} else {
-				$('#local').html('<option value="">-- Escolha uma instituição --</option>');
-			}
-		});
-	});
-	</script>
+	
 	<section id="inserir" class="home-section bg-white">
 		<div class="container">
 			<div class="row">
@@ -109,8 +90,18 @@ else
 					
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
+							<label>Tipo de chamado</label>
+							<select class="form-control" name="tipo" id="inputSubject" >
+								<option value="0"></option>
+								<?php echo geraOpcaoTipoChamado() ?>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
 							<label>Justificativa para reabertura</label>
-							<textarea name="justificativa" class="form-control" rows="10" placeholder="Caso seja uma alteração de dados, justifique."></textarea>
+							<textarea name="justificativa" class="form-control" rows="10" placeholder="Informe aqui o que será alterado"></textarea>
 						</div>
 					</div>
 
