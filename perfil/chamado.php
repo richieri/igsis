@@ -403,6 +403,7 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 					<tr class='list_menu'>
 						<td width='10%'>ID</td>
 						<td>Chamado</td>
+						<td>Justificativa</td>
 						<td>Data do envio</td>
 						<td>Status</td>
 					</tr>
@@ -419,7 +420,7 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 		?>	
 					<tr>
 						<td><?php echo $chamado['idChamado']; ?></td>
-						<td><a href="?perfil=chamado&p=detalhe&id=<?php echo $chamado['idChamado'] ?>" ><?php echo $tipo['chamado']." - ".$chamado['titulo']; ?>
+						<td><a href="?perfil=chamado&p=detalhe&id=<?php echo $chamado['idChamado'] ?>" ><?php echo $tipo['chamado']." - ".$chamado['titulo']; ?>						
 			<?php
 				if($chamado['idEvento'] != NULL)
 				{
@@ -428,6 +429,7 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 				}
 	        ?>
 						</a></td>
+						<td><?php echo $chamado['justificativa']; ?></td>
 						<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
 						<td><?php
 							if ($chamado['estado'] == 1)
