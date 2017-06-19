@@ -1,10 +1,32 @@
 <?php
-	include "include/menu.php";
-	//verifica se o usuário tem acesso a página
-	$verifica = verificaAcesso($_SESSION['idUsuario'],$_GET['perfil']); 
-	if($verifica == 1)
+include "include/menu.php";
+	
+if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
+{
+	if($_POST['final'] == "")
 	{
-		$idInstituicao = $_SESSION['idInstituicao'];	
+		$mensagem = "É preciso informar a data final do filtro";	
+	}
+	else
+	{
+		$inicio = exibirDataMysql($_POST['inicio']);
+		$final = exibirDataMysql($_POST['final']);
+		if($_POST['inicio'] > $_POST['final'])
+		{
+			$mensagem = "A data final do filtro deve ser maior que a data inicio";		
+		}
+		else
+		{
+			$data_inicio = exibirDataMysql($_POST['inicio']);
+			$data_final = exibirDataMysql($_POST['final']);
+			$mensagem = "Filtro aplicado: eventos entre ".$_POST['inicio']." e ".$_POST['final'];
+		}
+		
+	}
+	
+
+
+	$idInstituicao = $_SESSION['idInstituicao'];	
 			
 		if(isset($_GET['order']))
 		{
@@ -71,7 +93,7 @@
 				</div>
 			</div>
 		</div>  
-		<form method="POST" action="?perfil=comunicacao_beta&p=agenda" class="form-horizontal" role="form">
+		<form method="POST" action="?perfil=comunicacao_beta&p=programacao_local" class="form-horizontal" role="form">
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
 					<label>Data início *</label>
@@ -167,18 +189,3 @@
 		</div>
 	</div>
 </section>
-<?php 
-	}
-	else
-	{ 
-?>
-<section id="contact" class="home-section bg-white">
-    <div class="container">
-        <div class="row">
-		    <h1>Você não tem acesso. Por favor, contacte o administrador do sistema.</h1>
-		</div>
-	</div>
-</section> 
- <?php
-	}
- ?>

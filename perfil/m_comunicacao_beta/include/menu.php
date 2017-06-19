@@ -16,7 +16,7 @@ $link = $http."rlt_comunicacao_fotos.php";
 				<li><a href="<?php echo $pasta ?>programacao_local">Programação Local</a></li>
 				<li><a href='<?php echo $link ?>' target='_blank'>Relatório de Foto do Mês</a></li>
 				<li><a href="<?php echo $pasta ?>docs">Em Cartaz</a></li>   
-				<li><a href="<?php echo $pasta ?>programacao_local">Agenda</a></li>				
+				<!--<li><a href="<?php echo $pasta ?>programacao_local">Agenda</a></li>-->				
 				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li> 			
 				<li style="color:white;">-------------------------</li>
 				<li><a href="?secao=perfil">Carregar módulo</a></li>
