@@ -22,31 +22,26 @@ unset($_SESSION['foto']);
 					<div class="form-group">					
 						<div class="col-md-offset-1 col-md-2" align="left"> 
 							<label>Editado</label> <br/>
-							<input type="checkbox" name="" /> Todos<br/>
 							<input type="checkbox" name="editado_c" /> Confirmado<br/>
 							<input type="checkbox" name="editado_p" /> Pendente
 						</div>
 						<div class="col-md-2" align="left">
 							<label>Revisado</label> <br/>
-							<input type="checkbox" name="" /> Todos<br/>
 							<input type="checkbox" name="revisado_c" /> Confirmado<br/>
 							<input type="checkbox" name="revisado_p" /> Pendente
 						</div>
 						<div class="col-md-2" align="left">
 							<label>Site</label> <br/>
-							<input type="checkbox" name="" /> Todos<br/>
 							<input type="checkbox" name="site_c" /> Confirmado<br/>
 							<input type="checkbox" name="site_p" /> Pendente
 						</div>
 						<div class="col-md-2" align="left">
 							<label>Impresso</label> <br/>
-							<input type="checkbox" name="" /> Todos<br/>
 							<input type="checkbox" name="publicacao_c" /> Confirmado<br/>
 							<input type="checkbox" name="publicacao_p" /> Pendente
 						</div>
 						<div class="col-md-2" align="left">
 							<label>Foto</label><br/>
-							<input type="checkbox" name="" /> Todos<br/>
 							<input type="checkbox" name="foto_c" /> Confirmado<br/>
 							<input type="checkbox" name="foto_p" /> Pendente
 						</div>
