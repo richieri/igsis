@@ -567,6 +567,40 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 						<label>Comentários anteriores</label><br /><br />
 						<?php recuperaComentarios($_GET['id']); ?>
 					</div>
+					
+					
+					<br /><br />
+					<div class="left">
+						<?php
+						$con = bancoMysqli();
+						$idEvento = $chamado['idEvento'];
+						$sql_data_envio = "SELECT * FROM `ig_data_envio` WHERE idEvento = '$idEvento' ORDER BY dataEnvio DESC";
+						$query_data_envio = mysqli_query($con,$sql_data_envio);						
+						?>
+						
+							<table class='table table-condensed'>
+								<thead>
+									<tr class='list_menu'>
+										<td><label>Hitórico de envio</label></td>
+									</tr>
+								</thead>
+								<tbody>
+									<?php									
+									while($dataEnvio = mysqli_fetch_array($query_data_envio))
+									{ 
+									?>	
+									<tr>
+										<td><?php  echo exibirDataHoraBr($dataEnvio['dataEnvio']); ?></td>
+									</tr>
+									<?php	
+									}
+									?>
+								</tbody>
+							</table>
+						
+						
+					</div>
+					
 				</div> 
 			</div>			
 		</div>

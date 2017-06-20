@@ -11,6 +11,8 @@
 		{
 			gravarLog($sql_atualiza_evento);
 			atualizarAgenda($idEvento);	
+			$sql_data_envio = "INSERT INTO `ig_data_envio`(`idEvento`, `dataEnvio`) VALUES ('$idEvento', '$datetime')";
+			$query_data_envio = mysqli_query($con,$sql_data_envio);
 		}
 		$sql_atualiza_pedido = "UPDATE `igsis`.`igsis_pedido_contratacao` SET 
 			`estado` = '1'

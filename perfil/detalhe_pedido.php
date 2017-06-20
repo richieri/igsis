@@ -10,6 +10,7 @@
 	$pessoa = siscontratDocs($pedido['IdProponente'],$pedido['TipoPessoa']);
 	$evento = recuperaDados('ig_evento',$idEvento,'idEvento');
 	$chamado = recuperaAlteracoesEvento($idEvento);	
+	
 ?>
 <!-- Contact -->
 <section id="list_items" class="home-section bg-white">
@@ -259,6 +260,35 @@
 <?php 
 	} 
 ?>
+					<br />
+					<h5>Histórico de envio</h5>
+					<?php
+						$dataHistorico = recuperaDados('ig_data_envio',$idEvento,'idEvento');
+						$sql_data_envio = "SELECT * FROM `ig_data_envio` WHERE idEvento = '$idEvento' ORDER BY dataEnvio DESC";
+						$query_data_envio = mysqli_query($con,$sql_data_envio);	
+						
+						if($dataHistorico != '')
+						{
+					?>							
+							<table class='table table-condensed'>
+								<?php									
+								while($dataEnvio = mysqli_fetch_array($query_data_envio))
+								{ 									
+								?>	
+										<tr>
+											<td><?php  echo exibirDataHoraBr($dataEnvio['dataEnvio']); ?></td>
+										</tr>
+								<?php
+								}
+								?>
+							</table>
+					<?php
+						}
+						else
+						{
+							echo "Não há registro para este evento.";
+						}	
+					?>	
 				</div>
 			</div>
 		</div>
