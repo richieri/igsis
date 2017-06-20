@@ -85,7 +85,7 @@
 				<form method="POST" action="?perfil=chamado&p=acompanhar" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Tipo de chamado</label>
+							<label>Tipo de Chamado</label>
 							<select class="form-control" name="tipo" id="inputSubject" >
 								<option value="1"></option>
 								<?php echo geraOpcao("igsis_tipo_chamado","","") ?>
