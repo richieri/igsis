@@ -96,91 +96,91 @@ $publicacao = $_SESSION['publicacao'];
 $foto = $_SESSION['foto'];
 
 			
-		if ($editado == 1)//confirmado
-		{
-			$filtro_editado = "AND editado = 1";	
-		}
-		elseif ($editado == 2)//pendente
-		{
-			$filtro_editado = "AND editado != 1";	
-		}
-		else
-		{
-			$filtro_editado = ""; //tanto faz
-		}	
-		
-		if($revisado == 1)//confirmado
-		{
-			$filtro_revisado = "AND revisado = 1";	
-		}
-		elseif($revisado == 2)
-		{
-			$filtro_revisado = "AND revisado != 1";	
-		}
-		else
-		{
-			$filtro_revisado = "";
-		}	
-		
-		if($site == 1)
-		{
-			$filtro_site = "AND site = 1";	
-		}
-		elseif($site == 2)
-		{
-			$filtro_site = "AND site != 1";	
-		}
-		else
-		{
-			$filtro_site = "";
-		}	
+if ($editado == 1)//confirmado
+{
+	$filtro_editado = "AND editado = 1";	
+}
+elseif ($editado == 2)//pendente
+{
+	$filtro_editado = "AND editado != 1";	
+}
+else
+{
+	$filtro_editado = ""; //tanto faz
+}	
 
-		if($publicacao == 1)
-		{
-			$filtro_publicacao = "AND publicacao = 1";
-		}
-		elseif($publicacao == 2)
-		{
-			$filtro_publicacao = "AND publicacao != 1";	
-		}
-		else
-		{
-			$filtro_publicacao = "";
-		}
-		
-		if($foto == 1)
-		{
-			$filtro_foto = "AND foto = 1";
-		}
-		elseif($foto == 2)
-		{
-			$filtro_foto = "AND foto != 1";	
-		}
-		else
-		{
-			$filtro_foto = "";
-		}
-		
-		$con = bancoMysqli();
-		$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND publicado = 1 $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento_idEvento DESC";
-		$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-		//conta o total de itens
-		$total = mysqli_num_rows($query_busca_dic);
-		
-		//seta a quantidade de itens por página
-		$registros = 100;
-		   
-		//calcula o número de páginas arredondando o resultado para cima
-		$numPaginas = ceil($total/$registros);
-		
-		//variavel para calcular o início da visualização com base na página atual
-		$inicio = ($registros*$pagina)-$registros;		
-			
-		//seleciona os itens por página
-		$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND publicado = 1 $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento_idEvento DESC limit $inicio,$registros ";
-		$query_busca_dic = mysqli_query($con,$sql_busca_dic);
-		 //conta o total de itens
-		$total = mysqli_num_rows($query_busca_dic);
+if($revisado == 1)//confirmado
+{
+	$filtro_revisado = "AND revisado = 1";	
+}
+elseif($revisado == 2)
+{
+	$filtro_revisado = "AND revisado != 1";	
+}
+else
+{
+	$filtro_revisado = "";
+}	
+
+if($site == 1)
+{
+	$filtro_site = "AND site = 1";	
+}
+elseif($site == 2)
+{
+	$filtro_site = "AND site != 1";	
+}
+else
+{
+	$filtro_site = "";
+}	
+
+if($publicacao == 1)
+{
+	$filtro_publicacao = "AND publicacao = 1";
+}
+elseif($publicacao == 2)
+{
+	$filtro_publicacao = "AND publicacao != 1";	
+}
+else
+{
+	$filtro_publicacao = "";
+}
+
+if($foto == 1)
+{
+	$filtro_foto = "AND foto = 1";
+}
+elseif($foto == 2)
+{
+	$filtro_foto = "AND foto != 1";	
+}
+else
+{
+	$filtro_foto = "";
+}
+
+$con = bancoMysqli();
+$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND publicado = 1 $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY idCom DESC";
+$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+//conta o total de itens
+$total = mysqli_num_rows($query_busca_dic);
+
+//seta a quantidade de itens por página
+$registros = 100;
+   
+//calcula o número de páginas arredondando o resultado para cima
+$numPaginas = ceil($total/$registros);
+
+//variavel para calcular o início da visualização com base na página atual
+$inicio = ($registros*$pagina)-$registros;		
+	
+//seleciona os itens por página
+$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND publicado = 1 $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY idCom DESC limit $inicio,$registros ";
+$query_busca_dic = mysqli_query($con,$sql_busca_dic);
+ //conta o total de itens
+$total = mysqli_num_rows($query_busca_dic);
 ?>
 
 	<section id="list_items" class="home-section bg-white">
@@ -194,7 +194,7 @@ $foto = $_SESSION['foto'];
 				</div>
 			</div>	
 			<div class="table-responsive list_info">
-				<strong>Legenda status:</strong> | <font color='blue'>[ E ] Editado</font> | <font color='#00FF7F'>[ R ] Revisado</font> | <font color='yellow'>[ S ] Site</font> | <font color='orange'>[ I ] Impresso</font> | <font color='#DA70D6'>[ F ] Foto</font> | 
+				<strong>Legenda status:</strong> | <font color='blue'>[ E ] Editado</font> | <font color='#32CD32'>[ R ] Revisado</font> | <font color='red'>[ S ] Site</font> | <font color='orange'>[ I ] Impresso</font> | <font color='#DA70D6'>[ F ] Foto</font> | 
 				<p>&nbsp;</p>
 				<table class='table table-condensed'>
 					<thead>
@@ -235,11 +235,11 @@ $foto = $_SESSION['foto'];
 									} 
 									if ($evento['revisado'] == 1) 
 									{
-										echo "<font color='#00FF7F'>[ R ]</font> ";
+										echo "<font color='#32CD32'>[ R ]</font> ";
 									}
 									if ($evento['site'] == 1) 
 									{
-										echo "<font color='yellow'>[ S ]</font> ";
+										echo "<font color='red'>[ S ]</font> ";
 									}	
 									if ($evento['publicacao'] == 1) 
 									{
