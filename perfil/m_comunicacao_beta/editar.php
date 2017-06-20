@@ -142,7 +142,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=comunicacao_beta&p=editar&id=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=comunicacao_beta&p=editar&idCom=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">	
 							<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $campo['ig_evento_idEvento'] ?>" target="_blank">Documento enviado </a> | Edição | <a href="?perfil=comunicacao_beta&p=spcultura&id=<?php echo $idEvento; ?>" >SPCultura</a> 
@@ -277,6 +277,8 @@
 							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
 						</div>
 					</div>
+				</form>
+				<form method="POST" action="?perfil=comunicacao_beta&p=editar&idCom=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-4 col-md-4">
 							<input type="hidden" name="apagar" value="<?php echo $campo['idCom'] ?>" />
