@@ -56,7 +56,18 @@ if(isset($_POST['reabrir']))
 else
 {
 ?>
-	
+	<script>
+	function valida()
+	{
+		var campo = document.getElementById("justificativa");
+		if(campo.value == "")
+		{
+		   alert("Preencha o campo Justificativa para reabertura!");
+		   return false;
+		} 
+		return true;
+	}
+</script>
 	<section id="inserir" class="home-section bg-white">
 		<div class="container">
 			<div class="row">
@@ -69,7 +80,7 @@ else
 			</div>		
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" class="form-horizontal" role="form">
+				<form method="POST" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" onsubmit="return valida()" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<div class="left">
@@ -101,7 +112,7 @@ else
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Justificativa para reabertura</label>
-							<textarea name="justificativa" class="form-control" rows="10" placeholder="Informe aqui o que será alterado"></textarea>
+							<textarea name="justificativa" id='justificativa' class="form-control" rows="10" placeholder="Informe aqui o que será alterado"></textarea>
 						</div>
 					</div>
 
@@ -110,7 +121,7 @@ else
 							<input type="hidden" name="reabrir" value="1" />
 							<input type="hidden" name="idEvento" value="<?php echo $_POST['idEvento'] ?>" />
 							<input type="hidden" name="voltar" value="<?php echo $_POST['voltar'] ?>" />
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Reabrir evento" onclick="this.disabled = true; this.value = 'Reabrindo…'; this.form.submit();">
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Reabrir evento">
 						</div>
 					</div>
 				</form>
