@@ -93,7 +93,7 @@ else
 							<label>Tipo de chamado</label>
 							<select class="form-control" name="tipo" id="inputSubject" >
 								<option value="0"></option>
-								<?php echo geraOpcaoTipoChamado() ?>
+								<?php echo geraOpcaoTipoChamado("") ?>
 							</select>
 						</div>
 					</div>
