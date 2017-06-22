@@ -69,7 +69,19 @@
 	<?php 
 		break;
 		case "inserir":
-	?>
+		?>
+<script>
+	function valida()
+	{
+		var campo = document.getElementById("justificativa");
+		if(campo.value == "")
+		{
+		   alert("Preencha o campo Justificativa para alterações!");
+		   return false;
+		} 
+		return true;
+	}
+</script>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -82,7 +94,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=chamado&p=acompanhar" class="form-horizontal" role="form">
+				<form method="POST" onsubmit="return valida()" action="?perfil=chamado&p=acompanhar" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Tipo de Chamado</label>
@@ -121,13 +133,13 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Justificativa para alteração</label>
-							<textarea name="justificativa" class="form-control" rows="10" placeholder="Caso seja uma alteração de dados, justifique."></textarea>				
+							<textarea name="justificativa" id='justificativa' class="form-control" rows="10" placeholder="Caso seja uma alteração de dados, justifique." value=""></textarea>				
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="inserir" value="1" />
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Enviar" onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Enviar" name="Enviar">
 						</div>
 					</div>
 				</form>
