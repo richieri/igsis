@@ -9,8 +9,6 @@ session_cache_expire(30);
 $cache_expire = session_cache_expire();
 
 
-
-
  session_start();
 	if(!isset ($_SESSION['usuario']) == true) //verifica se há uma sessão, se não, volta para área de login
 		{
