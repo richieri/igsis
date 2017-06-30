@@ -251,6 +251,12 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(15,$l,'Local:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(165,$l,utf8_decode($Local));
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(25,5,'Justificativa:',0,0,'L');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(155,5,utf8_decode($Justificativa));   
 
 
 //RODAPÉ PERSONALIZADO
