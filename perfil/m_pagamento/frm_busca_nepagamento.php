@@ -107,7 +107,7 @@ if(isset($_POST['pesquisar']))
 	else
 	{
 		$con = bancoMysqli();
-		$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idEvento = '$evento' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
+		$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idPedidoContratacao = '$id' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
 		$query_existe = mysqli_query($con, $sql_existe);
 		$num_registro = mysqli_num_rows($query_existe);
 		if($id != "" AND $num_registro > 0)
