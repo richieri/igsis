@@ -45,7 +45,7 @@ if(isset($_POST['pesquisar']))
 						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
 						<label>Código do Pedido</label>
 						<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-						<label>Objeto/Evento</label>
+						<label>Nome do Evento</label>
 						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
 						<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
 							<select class="form-control" name="fiscal" id="inputSubject" >
@@ -103,7 +103,7 @@ if(isset($_POST['pesquisar']))
 	else
 	{
 		$con = bancoMysqli();
-		$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idEvento = '$evento' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
+		$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idPedidoContratacao = '$id' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
 		$query_existe = mysqli_query($con, $sql_existe);
 		$num_registro = mysqli_num_rows($query_existe);
 		if($id != "" AND $num_registro > 0)
@@ -172,7 +172,7 @@ if(isset($_POST['pesquisar']))
 		{ //Não foi inserido o número do pedido
 			if($evento != '')
 			{
-				$filtro_evento = " AND nomeEvento LIKE '%$evento%' OR autor LIKE '%$evento%' ";
+				$filtro_evento = " AND nomeEvento LIKE '%$evento%'";
 			}
 			else
 			{
@@ -410,7 +410,7 @@ else
 						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>                        
 						<label>Código do Pedido</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-						<label>Objeto/Evento</label>
+						<label>Nome do Evento</label>
 							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />     
 						<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
 							<select class="form-control" name="fiscal" id="inputSubject" >
