@@ -41,14 +41,14 @@ $link33 = $http."rlt_proposta_exposicao_edital_pj.php"."?id=".$id_ped."&penal=22
 $link34 = $http."rlt_proposta_mediacao_edital_pj.php"."?id=".$id_ped."&penal=24";
 $link35 = $http."rlt_proposta_contadores_edital_pj.php"."?id=".$id_ped."&penal=26";
 $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal=28";
-$link37 = $http."rlt_ordemservico_pj_assinatura.php";
-$link38 = $http."rlt_termo_doacao_pj_assinatura.php";
+$link37 = $http."rlt_ordemservico_pj_assinatura_word.php";
+$link38 = $http."rlt_termo_doacao_pj_assinatura_word.php";
 $link39 = $http."rlt_pedido_reserva_centrosculturais_pj.php";
 $link40 = $http."rlt_declaracao_convenio500_pj.php?id=".$id_ped;
 $link42 = $http."rlt_declaracao_abertura_bb_pj.php";
 $link43 = $http."rlt_pedido_reserva_gabinete_pj.php";
 $link44 = $http."rlt_ordemservico_gabinete_pj.php";
-$link45 = $http."rlt_ordemservico_gabinete_pj_assinatura.php";
+$link45 = $http."rlt_ordemservico_gabinete_pj_assinatura_word.php";
 $link46 = $http."rlt_pedido_reserva_dph_pj.php";
 $link47 = $http."rlt_pedido_reserva_csmb_pj.php";
 $link48 = $http."rlt_pedido_reserva_casasdecultura_pj.php";
