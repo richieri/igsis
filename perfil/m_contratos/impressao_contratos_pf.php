@@ -52,12 +52,12 @@ $link43 = $http."rlt_pedido_reserva_virada_pf.php";
 
 
 $link34 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
-$link35 = $http."rlt_ordemservico_pf.php";
-$link36 = $http."rlt_ordemservico_gabinete_pf_assinatura.php";
+$link35 = $http."rlt_ordemservico_pf_word.php";
+$link36 = $http."rlt_ordemservico_gabinete_pf_assinatura_word.php";
 $link37 = $http."rlt_parecer_pf.php";
 $link38 = $http."rlt_termo_doacaoobradearte_pf.php";
 $link39 = $http."rlt_termo_parceria_pf.php";
-$link40 = $http."rlt_termo_doacao_pf_assinatura.php";
+$link40 = $http."rlt_termo_doacao_pf_assinatura_word.php";
 
 
 
