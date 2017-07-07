@@ -283,7 +283,15 @@
 <?php
 	}
 ?>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><br/></div>
+				</div>	
 					
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<a href="?perfil=formacao&p=frm_edicao_parcelas&id_ped=<?php echo $pedido['idPedidoContratacao']; ?>" class="btn btn-theme btn-lg btn-block" target="_blank">Editar parcela</a>
+					</div>
+				</div>			
 				
 			</div>
 		</div>
