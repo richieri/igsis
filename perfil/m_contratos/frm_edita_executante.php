@@ -43,7 +43,7 @@ case "busca":
 			</div>
 		</div>			  
 	    <div class="row">
-		<form method="POST" action="?perfil=contratos&p=frm_edita_executante&id_pf=" class="form-horizontal" role="form">
+		<form method="POST" action="?perfil=contratos&p=frm_edita_executante&id_ped=<?php echo $id_ped ?>&id_pf=" class="form-horizontal" role="form">
             <div class="form-group">
             	<div class="col-md-offset-2 col-md-8">  
             		<label>Insira o CPF</label>
@@ -125,7 +125,7 @@ else
 			<div class="form-group">
 				<h3>CADASTRO DE PESSOA FÍSICA</h3>
 				<p> O CPF <?php echo $busca; ?> não está cadastrado no nosso sistema. <br />Por favor, insira as informações da Pessoa Física a ser contratada. </p>
-				<p><a href="?perfil=contratos&p=frm_edita_executante&id_pf="> Pesquisar outro CPF</a> </p>
+				<p><a href="?perfil=contratos&p=frm_edita_executante&id_ped=<?php echo $id_ped ?>&id_pf="> Pesquisar outro CPF</a> </p>
 			</div>
 			<div class="row">
 			<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $_SESSION['idPedido'] ?>" method="post">
@@ -352,7 +352,7 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
         </div>
   		<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">
-			<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_executante&id_pf=<?php echo $ultimo ?>" method="post">
+			<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_executante&id_ped=<?php echo $id_ped ?>&id_pf=<?php echo $ultimo ?>" method="post">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
 						<input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" value="<?php echo $fisica['Nome']; ?>" >
@@ -523,7 +523,7 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 			?>        
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<a href="?perfil=contratos&p=frm_edita_executante&id_pf="><input type="submit" value="Mudar o executante" class="btn btn-theme btn-block"></a>
+							<a href="?perfil=contratos&p=frm_edita_executante&id_ped=<?php echo $id_ped ?>&id_pf="><input type="submit" value="Mudar o executante" class="btn btn-theme btn-block"></a>
 						</div>
 					</div>
             <?php 
