@@ -88,9 +88,9 @@ header("Content-Disposition: attachment;Filename=$NumeroProcesso - Termo de Parc
 <h2><center>TERMO DE PARCERIA Nº__________ / <?php echo $ano; ?><br />
 PROCESSO Nº <?php echo $NumeroProcesso; ?></center></h2>
 
-<h3><center>Termo de Parceria Formalizado Entre a Prefeitura Municipal de São Paulo/Secretaria Municipal de Cultura e <?php echo $grupo; ?></center></h3>
+<h3><center>Termo de Parceria Formalizado Entre a Prefeitura Municipal de São Paulo/Secretaria Municipal de Cultura e <?php echo $integrantes; ?></center></h3>
 
-<p align='justify'>A PREFEITURA DO MUNICÍPIO DE SÃO PAULO, por intermédio de sua SECRETARIA MUNICIPAL DE CULTURA, neste ato representado pelo Sr. AUGUSTO JOSÉ BOTELHO SCHIMIDT, CPF: 581.703.838-20, RG: 5.253.934-9, Diretor do Centro Cultural São Paulo, de agora em diante denominada simplesmente SECRETARIA e o <?php echo $grupo; ?>, representado por <?php echo $Nome; ?>, portadora da cédula de identidade RG nº.<?php echo $RG; ?>, inscrita no C.P.F. nº. <?php echo $CPF; ?>, residente e domiciliada no endereço <?php echo $Endereco; ?>, com fundamento no artigo 2º, incisos V e VIII, da Lei Municipal nº 13.278.2002, em especial a manifestação da assessoria jurídica deste departamento às fls., 25/27 e parecer da Comissão de Atividades Artísticas e Culturais instituída pela portaria nº. 024/2014/SMC.G aplicáveis à espécie, firmar Parceria mediante as seguintes cláusulas e condições que outorgam e aceitam: </p>
+<p align='justify'>A PREFEITURA DO MUNICÍPIO DE SÃO PAULO, por intermédio de sua SECRETARIA MUNICIPAL DE CULTURA, neste ato representado pelo Sr. CARLOS ADÃO VOLPATO, CPF: 007.960.558-31, RG: 7.365.984-8, Diretor do Centro Cultural São Paulo, de agora em diante denominada simplesmente SECRETARIA e o <?php echo $integrantes; ?>, representado por <?php echo $Nome; ?>, portadora da cédula de identidade RG nº.<?php echo $RG; ?>, inscrita no C.P.F. nº. <?php echo $CPF; ?>, residente e domiciliada no endereço <?php echo $Endereco; ?>, com fundamento no artigo 2º, incisos V e VIII, da Lei Municipal nº 13.278.2002, em especial a manifestação da assessoria jurídica deste departamento às fls., 25/27 e parecer da Comissão de Atividades Artísticas e Culturais instituída pela portaria nº. 024/2014/SMC.G aplicáveis à espécie, firmar Parceria mediante as seguintes cláusulas e condições que outorgam e aceitam: </p>
 <br/>
 
 <h3>CLÁUSULA PRIMEIRA</h3>
@@ -107,7 +107,7 @@ PROCESSO Nº <?php echo $NumeroProcesso; ?></center></h2>
 </ol>
 
 <h3>CLÁUSULA TERCEIRA</h3>
-<p align='justify'><strong>Caberá a <?php echo $grupo; ?>,</strong></p>
+<p align='justify'><strong>Caberá a <?php echo $integrantes; ?>,</strong></p>
 
 <ol type="a">
 <li>Realizar a coordenação executiva do projeto, garantindo a participação de escritores e poetas para lançamentos de livros, de músicos ou bandas para pocket shows, apresentações de esquetes teatrais ou intervenções com performances literárias, entre outras atividades; </li>
@@ -134,7 +134,7 @@ PROCESSO Nº <?php echo $NumeroProcesso; ?></center></h2>
 <li>Realizar o acompanhamento das equipes de Produção, Palcos e Administração de salas durante e na pré e pós-produção do evento;</li>
 <li>Disponibilizar a garagem do prédio para carga e descarga de equipamentos relacionados ao evento;</li>
 <li>Realizar a divulgação do evento como parte da programação nos principais meios de comunicação institucional, tais como: agenda mensal impressa, folhetos, boletim eletrônico, cartazes, site, cartazes, site e redes sociais, desde que as informações tenham sido recebidas com a antecedência requerida;</li>
-<li>Inserir o logotipo do <?php echo $grupo; ?> na comunicação impressa e eletrônica da instituição;</li>
+<li>Inserir o logotipo do <?php echo $integrantes; ?> na comunicação impressa e eletrônica da instituição;</li>
 <li>Responsabilizar-se pelo pagamento ao ECAD das músicas dos saraus, cuja relação de músicas para o pagamento será informada e providenciada pelo coletivo, previamente à realização do evento;</li>
 <li>Fornecer serviço geral de segurança patrimonial, limpeza e atendimento ao público no espaço;</li>
 <li>Acompanhar e zelar pela observância das demais normas legais aplicáveis à espécie e pelo cumprimento das obrigações pactuadas.</li>
@@ -142,8 +142,8 @@ PROCESSO Nº <?php echo $NumeroProcesso; ?></center></h2>
 
 
 <h3>CLÁUSULA SEXTA</h3>
-<p align='justify'>As responsabilidades civis, penais, comerciais e outras advindas de utilização de direitos autorais e/ou patrimoniais anteriores ou posteriores a este ajuste cabem inteiramente ao <?php $grupo; ?>, em relação ao apresente, não cabendo à SECRETARIA qualquer imputação ou ônus;
-A SECRETARIA não se responsabilizará em nenhuma hipótese pelos atos, contratos ou compromissos assumidos de natureza comecial, financeira, trabalhista ou de outra espécie, celebrado pelo(a) <?php $grupo; ?> , para fins de cumprimento deste termo.
+<p align='justify'>As responsabilidades civis, penais, comerciais e outras advindas de utilização de direitos autorais e/ou patrimoniais anteriores ou posteriores a este ajuste cabem inteiramente ao <?php $integrantes; ?>, em relação ao apresente, não cabendo à SECRETARIA qualquer imputação ou ônus;
+A SECRETARIA não se responsabilizará em nenhuma hipótese pelos atos, contratos ou compromissos assumidos de natureza comecial, financeira, trabalhista ou de outra espécie, celebrado pelo(a) <?php $integrantes; ?> , para fins de cumprimento deste termo.
 </p>
 
 <h3>CLÁUSULA SÉTIMA</h3>
@@ -165,18 +165,14 @@ A SECRETARIA não se responsabilizará em nenhuma hipótese pelos atos, contrato
 
 <p>&nbsp;</p>
 
-<p align='justify'>Secretaria Municipal de Cultura / <?php echo $setor; ?><br/>
-AUGUSTO JOSÉ BOTELHO SCHIMIDT<br/>
-CPF:581.703.838-20<br/>
-RG: 5.253.934-9</p>
+<p align='justify'>Secretaria Municipal de Cultura / Centro Cultural São Paulo<?php //echo $setor; ?><br/>
+CARLOS ADÃO VOLPATO<br/>
+CPF: 007.960.558-31<br/>
+RG: 7.365.984-8</p>
 
 <br/>
 
-<p align='justify'><?php echo $Nome; ?></p>
-
-<p>&nbsp;</p>
-
-<p align='justify'><?php echo $rep01Nome; ?><br/>
+<p align='justify'><?php echo $Nome; ?><br/>
 CPF nº <?php echo $CPF; ?><br/>
 RG nº <?php echo $RG; ?>
 </p>
