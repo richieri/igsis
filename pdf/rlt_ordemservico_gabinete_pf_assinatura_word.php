@@ -117,7 +117,7 @@ echo
   <p>Esta O.E.S. poderá ser cancelada no interesse da  administração, devidamente justificada ou em virtude da inexecução total ou  parcial do serviço sem prejuízo de multa.</p>
 <h2>&nbsp;</h2>
   <p><strong>Foro</strong></p>
-  <p>Fica eleito o foro desta comarca para todo e qualquer  procedimento judicial oriundo desta ordem de execução de serviços.</p>
+  <p>Fica eleito o foro da Fazenda Pública para todo e qualquer  procedimento judicial oriundo desta ordem de execução de serviços.</p>
 <h2>&nbsp;</h2>
   <p><strong>Observações</strong></p>
   <p>- Compete à contratada a realização do espetáculo, e a  fazer constar o crédito - PMSP/SECRETARIA MUNICIPAL DE CULTURA, em toda  divulgação escrita ou falada,realizada sobe o espetáculo programado.</p>
@@ -127,7 +127,7 @@ echo
 <p>- As   providências  administrativas  para   liberação  da  autorização   do  ECAD  serão   de  responsabilidade     da contratada,  assim como eventuais pagamentos.
 </p>
 <p>- A Municipalidade não é responsável  por qualquer material ou equipamento que não lhe pertença utilizado no  espetáculo, devendo esse material ser retirado no seu término.</p>
-<p>- A renda integral apurada na  bilheteria, com ingressos vendidos ao preço único de ".$ingresso." (".$ingressoExtenso."), será  revertida a/o contratada/o, por intermédio da Empresa Brasileira de  Comercialização de Ingressos Ltda, que também confeccionará os ingressos, já  deduzidos os impostos e taxas pertinentes, podendo ter preços reduzidos em face  de promoções realizadas pela produção do evento.</p>
+<p>- A renda integral apurada na bilheteria, com ingressos vendidos ao preço único de ".$ingresso." ( ".$ingressoExtenso." ), será revertida a/o contratada/o, já deduzidos os impostos pertinentes, podendo ter preços reduzidos em face de promoções realizadas pela produção do evento.</p>
 <p>- Compete, ainda, à Municipalidade, o  fornecimento da sonorização necessária à realização de espetáculos e  dos equipamentos de iluminação disponíveis no  local do evento, assim como providências quanto à divulgação  de praxe (confecção de cartaz a ser afixado  no equipamento cultural e encaminhamento de release à mídia impressa e  televisiva).</p>
 <p>- Serão reservados ingressos aos funcionários da PMSP,  até 10% (dez por cento) da lotação da sala.</p>
 <p>- A/o contratada/o se compromete a  realizar o espetáculo para um número mínimo de 10 (dez) pagantes. Aceito as  condições dessa O.E.S para todos os efeitos de direito.</p>".
