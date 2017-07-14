@@ -16,6 +16,7 @@
    
 class PDF extends FPDF
 {
+/*
 // Page header
 function Header()
 {
@@ -30,7 +31,7 @@ function Header()
     // Line break
     $this->Ln(20);
 }
-
+*/
 }
 
 
