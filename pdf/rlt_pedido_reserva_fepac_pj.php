@@ -66,12 +66,12 @@ $sei =
   "<p><strong>INTERESSADO:</strong> "."$pjRazaoSocial"."  </span></p>".
   "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
   "<p>&nbsp;</p>".
-  "<p><strong>CONTABILIDADE</strong></p>".
-  "<p><strong>Sr(a). Responsável</strong></p>".
+  "<p><strong>SMC/CAF/SCO</strong></p>".
+  "<p><strong>Sr(a). Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>Encaminho o presente para a necessária reserva de recursos (RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10) no valor supra citado para o pagamento do cachê que deverá onerar a dotação do FEPAC.</p>".
+  "<p>O presente processo trata da contratação de ".$pjRazaoSocial.", no valor de R$ ".$ValorGlobal." ( ".$ValorPorExtenso." ), conforme solicitação LINK, tendo sido anexados os documentos necessários e incluido o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a 1 ( uma) apresentação, no período de ________ a _______.</p>".
+   "<p>Autorizo a reserva que deverá onerar recursos do FEPAC, dotação 95.10.13.392.3001.6354.3390.3900.08 (Pessoa Jurídica), mediante RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10.</p>". 
   "<p>&nbsp;</p>".
-  "<p> Valor: "."R$ $ValorGlobal"."  "."($ValorPorExtenso)"."</p>".
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/Assessoria Jurídica para prosseguimento. </p>".
   "<p>&nbsp;</p>"
