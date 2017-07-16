@@ -26,6 +26,9 @@ $dataAtual = date("d/m/Y");
 $NumeroProcesso = $pedido["NumeroProcesso"];
 $assinatura = $pedido["Assinatura"];
 $cargo = $pedido["Cargo"];
+$qtdApresentacoes = $pedido["qtdApresentacoes"];
+$qtdApresentacoesPorExtenso = qtdApresentacoesPorExtenso ($pedido["qtdApresentacoes"]);
+$Periodo = $pedido["Periodo"];
 
 //PessoaJuridica
 
@@ -61,15 +64,15 @@ $codPed = "";
 <?php
 
 $sei = 
-  "<p><strong>Do processo nº:</strong> "."$NumeroProcesso"."</p>".
+  "<p><strong>Do processo nº:</strong> ".$NumeroProcesso."</p>".
   "<p>&nbsp;</p>".
-  "<p><strong>INTERESSADO:</strong> "."$pjRazaoSocial"."  </span></p>".
-  "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
+  "<p><strong>INTERESSADO:</strong> ".$pjRazaoSocial."  </span></p>".
+  "<p><strong>ASSUNTO:</strong> ".$objeto."  </p>".
   "<p>&nbsp;</p>".
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Sr(a). Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de ".$pjRazaoSocial.", no valor de R$ ".$ValorGlobal." ( ".$ValorPorExtenso." ), conforme solicitação LINK, tendo sido anexados os documentos necessários e incluido o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a 1 ( uma) apresentação, no período de ________ a _______.</p>".
+  "<p>O presente processo trata da contratação de ".$objeto.", no valor de R$ ".$ValorGlobal." ( ".$ValorPorExtenso." ), conforme solicitação LINK, tendo sido anexados os documentos necessários e incluido o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a ".$qtdApresentacoes." ( ".$qtdApresentacoesPorExtenso." ) apresentação, no período de ".$Periodo.".</p>".
    "<p>Autorizo a reserva que deverá onerar recursos do FEPAC, dotação 95.10.13.392.3001.6354.3390.3900.08 (Pessoa Jurídica), mediante RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10.</p>". 
   "<p>&nbsp;</p>".
   "<p>&nbsp;</p>".
