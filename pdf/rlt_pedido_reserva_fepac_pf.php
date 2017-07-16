@@ -23,6 +23,9 @@ $dataAtual = date("d/m/Y");
 $NumeroProcesso = $linha_tabelas["NumeroProcesso"];
 $assinatura = $linha_tabelas["Assinatura"];
 $cargo = $linha_tabelas["Cargo"];
+$qtdApresentacoes = $linha_tabelas["qtdApresentacoes"];
+$qtdApresentacoesPorExtenso = qtdApresentacoesPorExtenso ($linha_tabelas["qtdApresentacoes"]);
+$Periodo = $linha_tabelas["Periodo"];
 
 $linha_tabelas_pessoa = siscontratDocs($linha_tabelas['IdProponente'],1);
 $nome = $linha_tabelas_pessoa["Nome"];
@@ -59,17 +62,17 @@ $ano=date('Y');
 <?php
 
 $sei = 
-  "<p><strong>Do processo nº:</strong> "."$NumeroProcesso"."</p>".
+  "<p><strong>Do processo nº:</strong> ".$NumeroProcesso."</p>".
   "<p>&nbsp;</p>".
-  "<p><strong>INTERESSADO:</strong> "."$nome"."  </span></p>".
-  "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
+  "<p><strong>INTERESSADO:</strong> ".$nome."  </span></p>".
+  "<p><strong>ASSUNTO:</strong> ".$objeto."  </p>".
   "<p>&nbsp;</p>".
-  "<p><strong>CONTABILIDADE</strong></p>".
-  "<p><strong>Sr(a). Responsável</strong></p>".
+  "<p><strong>SMC/CAF/SCO</strong></p>".
+  "<p><strong>Sr(a). Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>Encaminho o presente a Vossa Senhoria para a necessária reserva de recursos (RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10) no valor supra citado para o pagamento do cachê que deverá onerar a dotação do FEPAC.</p>".
+  "<p>O presente processo trata da contratação de ".$objeto.", no valor de R$ ".$ValorGlobal." ( ".$ValorPorExtenso." ), conforme solicitação LINK, tendo sido anexados os documentos necessários e incluido o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a ".$qtdApresentacoes." ( ".$qtdApresentacoesPorExtenso." ) apresentação, no período de ".$Periodo.".</p>".
+   "<p>Autorizo a reserva que deverá onerar recursos do FEPAC, dotação 95.10.13.392.3001.6354.3390.3600.08 (Pessoa Física), mediante RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10.</p>". 
   "<p>&nbsp;</p>".
-  "<p> Valor: "."R$ $ValorGlobal"."  "."($ValorPorExtenso)"."</p>".
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/Assessoria Jurídica para prosseguimento. </p>".
   "<p>&nbsp;</p>"
