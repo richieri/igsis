@@ -120,30 +120,18 @@ $rep02Telefones = $rep02["Telefones"];
 $rep02Email = $rep02["Email"];
 $rep02INSS = $rep02["INSS"];
   
- ?>
- 
- 
-<html>
-	<head> 
-		<meta http-equiv=\"Content-Type\" content=\"text/html. charset=Windows-1252\">
-		<style>
-			.texto{
-				width: 900px;
-				border: solid;
-				padding: 20px;
-				font-size: 13px;
-				font-family: Arial, Helvetica, sans-serif;
-				text-align:justify;
-			}
-		</style>
-		<script src="include/dist/ZeroClipboard.min.js"></script>
-	</head>
-	<body>
-  
-<?php
 
-	$sei = 
-		"<p align='center'><strong>ORDEM DE EXECUÇÃO DE SERVIÇOS</strong></p>".
+ 
+ 
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment;Filename=$NumeroProcesso em $dataAtual.doc");
+echo "<html>";
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
+echo "<body>";
+  
+	echo 
+		"<p align='center'><strong>PROCESSO SEI Nº ".$NumeroProcesso."</strong></p>".
+		"<p align='center'><strong>ORDEM DE EXECUÇÃO DE SERVIÇO Nº ______/2017</strong></p>".
 		"<p>&nbsp;</p>".
 		"<p><strong>Emanada de:</strong> Divisão Administrativa</p>".
 		"<p><strong>Suporte Legal:</strong> Artigo 25, inciso III, da Lei Federal nº 8.666/93 e alterações posteriores e artigo 1º da Lei Municipal nº 13.278/02, nos termos dos artigos 16 e 17 do Decreto nº 44.279/03.</p>".
@@ -159,7 +147,7 @@ $rep02INSS = $rep02["INSS"];
 		"<p><strong>Nacionalidade:</strong> ".$rep01Nacionalidade."</p>".
 		"<p>&nbsp;</p>".
 		"<p><strong>Serviço</strong></p>".
-		"<p>Especificações: Contratação dos serviços profissionais de natureza artística de ".$Objeto." através de ".$exNome." e demais integrantes mencionados na Declaração de Exclusividade, por intermédio da empresa ".$pjRazaoSocial. ", CNPJ: ".$pjCNPJ. ", representada legalmente por ".$rep01Nome. ", CPF: ".$rep01CPF.", para realização de evento no(s) local(is)".$Local." no perído ".$Periodo." conforme proposta e cronograma.</p>".
+		"<p>Especificações: Contratação dos serviços profissionais de natureza artística de ".$Objeto." através de ".$exNome." e demais integrantes mencionados na Declaração de Exclusividade, por intermédio da empresa ".$pjRazaoSocial. ", CNPJ: ".$pjCNPJ. ", representada legalmente por ".$rep01Nome. ", CPF: ".$rep01CPF.", para realização de evento no(s) local(is) ".$Local." no período ".$Periodo." conforme proposta e cronograma.</p>".
 		"<p>Fica designado como fiscal do contrato ".$Fiscal.", RF ".$rfFiscal." e como suplente ".$Suplente.", RF ".$rfSuplente.".</p>".
 		"<p>&nbsp;</p>".
 		"<p>Valor do Ingresso: ".$ingresso." ( ".$ingressoExtenso." ).</p>".
@@ -176,7 +164,7 @@ $rep02INSS = $rep02["INSS"];
 		"<p>Esta O.E.S. poderá ser cancelada no interesse da administração, devidamente justificada ou em virtude da inexecução total ou parcial do serviço sem prejuízo de multa.</p>".
 		"<p>&nbsp;</p>".
 		"<p><strong>Foro</strong></p>".
-		"<p>Fica eleito o foro desta comarca para todo e qualquer procedimento judicial oriundo desta ordem de execução de serviços.</p>".
+		"<p>Fica eleito o foro da Fazenda Pública para todo e qualquer procedimento judicial oriundo desta ordem de execução de serviços.</p>".
 		"<p>&nbsp;</p>".
 		"<p><strong>Observações</strong></p>".
 		"<p>- Compete à contratada a realização do espetáculo, e a fazer constar o crédito - PMSP/SECRETARIA MUNICIPAL DE CULTURA, em toda divulgação escrita ou falada, realizada sobe o espetáculo programado.</p>".
@@ -196,22 +184,11 @@ $rep02INSS = $rep02["INSS"];
 		"<p>".$rep01CPF."</p>".
 		"<p>&nbsp;</p>".
 		"<p>Com competência delegada pela Portaria nº. 19/2016- SMC/G, determino a execução do serviço na forma desta O.E.S.</p>".
-		"<p>&nbsp;</p>"
-?>
+		"<p>&nbsp;</p>".
+		"<p>&nbsp;</p>".
+		"<p>Carlos Adão Volpato</p>".
+		"<p>Diretor do Centro Cultural da Cidade de São Paulo</p>";
+	echo "</body>";
+echo "</html>";	
 
-		<div align="center">
-			<div id="texto" class="texto"><?php echo $sei; ?>
-			</div>
-		</div>
-		<p>&nbsp;</p> 
-		<div align="center"><button id="botao-copiar" data-clipboard-target="texto"><img src="img/copy-icon.jpg">CLIQUE AQUI PARA COPIAR O TEXTO</button>
-		</div>         
-		<script>
-		var client = new ZeroClipboard();
-		client.clip(document.getElementById("botao-copiar"));
-		client.on("aftercopy", function(){
-			alert("Copiado com sucesso!");
-		});
-		</script>
-	</body>
-</html>
+?>

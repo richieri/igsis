@@ -27,9 +27,9 @@ include "espaco.php";
 
 
 $toEmail = "sistema.igsis@gmail.com";
-$toEmail2 = "marcioyonamine@gmail.com";
+$toEmail2 = "loreleigab@gmail.com";
 $toUsuario = "Sistema IGSIS";
-$toUsuario2 = "Marcio Yonamine";
+$toUsuario2 = "Lorelei Lourenço";
 
 $fromEmail = "sistema.igsis@gmail.com"; 
 $fromUsuario = "Sistema IGSIS";

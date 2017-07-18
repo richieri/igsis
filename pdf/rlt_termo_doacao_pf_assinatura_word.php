@@ -65,29 +65,16 @@ $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
   
- ?>
  
  
-<html>
-	<head> 
-		<meta http-equiv=\"Content-Type\" content=\"text/html. charset=Windows-1252\">
-		<style>
-			.texto{
-				width: 900px;
-				border: solid;
-				padding: 20px;
-				font-size: 13px;
-				font-family: Arial, Helvetica, sans-serif;
-				text-align:justify;
-			}
-		</style>
-		<script src="include/dist/ZeroClipboard.min.js"></script>
-	</head>
-	<body>
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment;Filename=$NumeroProcesso em $dataAtual.doc");
+echo "<html>";
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
+echo "<body>";
   
-<?php
-
-	$sei = 
+echo 		
+		"<p align='center'><strong>PROCESSO SEI Nº ".$NumeroProcesso."</strong></p>".
 		"<p align='center'><strong>TERMO DE DOAÇÃO</strong></p>".
 		"<p>&nbsp;</p>".
 		"<p>&nbsp;</p>".
@@ -115,33 +102,26 @@ $INSS = $pessoa["INSS"];
 		"<p>E por estarem justas e pactuadas firmam as Partes o presente Termo, em 4 (quatro) vias de igual teor, forma e data para um só efeito na presença das testemunhas abaixo.</p>".
 		"<p>&nbsp;</p>".
 		"<p>&nbsp;</p>".
+		"<p><strong>DONATÁRIA</strong></p>".
+		"<p>&nbsp;</p>".
+		"<p>&nbsp;</p>".
+		"<p>&nbsp;</p>".
+		"<p><b>André Luiz Pompeia Sturm<br/>".
+			"Secretário Municipal de Cultura</b></p>".
+		"<p>&nbsp;</p>".
+		"<p>&nbsp;</p>".	
 		"<p><strong>DOADOR</strong></p>".
 		"<p>&nbsp;</p>".
 		"<p>&nbsp;</p>".
-		"<p>".$Nome."</p>".
-		"<p>".$CPF."</p>".
+		"<p><b>".$Nome."<br/>".
+		"CPF: ".$CPF."</b></p>".
 		"<p>&nbsp;</p>".
 		"<p>&nbsp;</p>".
 		"<p><strong>TESTEMUNHAS</strong></p>".
 		"<p>&nbsp;</p>".
 		"<p>&nbsp;</p>".
 		"<p>&nbsp;</p>".
-		"<p>&nbsp;</p>"
+		"<p>&nbsp;</p>";
+	echo "</body>";
+echo "</html>";	
 ?>
-
-		<div align="center">
-			<div id="texto" class="texto"><?php echo $sei; ?>
-			</div>
-		</div>
-		<p>&nbsp;</p> 
-		<div align="center"><button id="botao-copiar" data-clipboard-target="texto"><img src="img/copy-icon.jpg">CLIQUE AQUI PARA COPIAR O TEXTO</button>
-		</div>         
-		<script>
-		var client = new ZeroClipboard();
-		client.clip(document.getElementById("botao-copiar"));
-		client.on("aftercopy", function(){
-			alert("Copiado com sucesso!");
-		});
-		</script>
-	</body>
-</html>

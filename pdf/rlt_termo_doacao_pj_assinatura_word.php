@@ -113,84 +113,61 @@ $rep02Telefones = $rep02["Telefones"];
 $rep02Email = $rep02["Email"];
 $rep02INSS = $rep02["INSS"];
   
- ?>
- 
- 
-<html>
-	<head> 
-		<meta http-equiv=\"Content-Type\" content=\"text/html. charset=Windows-1252\">
-		<style>
-			.texto{
-				width: 900px;
-				border: solid;
-				padding: 20px;
-				font-size: 13px;
-				font-family: Arial, Helvetica, sans-serif;
-				text-align:justify;
-			}
-		</style>
-		<script src="include/dist/ZeroClipboard.min.js"></script>
-	</head>
-	<body>
-  
-<?php
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment;Filename=$NumeroProcesso em $dataAtual.doc");
+echo "<html>";
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
+echo "<body>"; 
 
-	$sei = 
-		"<p align='center'><strong>TERMO DE DOAÇÃO</strong></p>".
-		"<p>&nbsp;</p>".
-		"<p>&nbsp;</p>".
-		"<p>A PREFEITURA DO MUNICÍPIO DE SÃO PAULO, por intermédio da SECRETARIA MUNICIPAL DE CULTURA, neste ato representada  André Sturm, Secretário Municipal de Cultura, doravante denominada donatária e ".$pjRazaoSocial.", CNPJ: ".$pjCNPJ.", localizada na ".$pjEndereco.", representada por ".$rep01Nome.", RG: ".$rep01RG.", CPF: ".$rep01CPF.", denominado/a doador/a, com fundamento no artigo 1º do Decreto Municipal nº 40.384/2001, resolvem, firmar o presente termo de doação, mediante as seguintes cláusulas e condições:</p>".
-		"<p>&nbsp;</p>".
-		"<p><strong>CLÁUSULA 1 - OBJETO</strong></p>".
-		"<p>Doação de serviços artísticos para o evento ".$Objeto.", no ".$Local.", no período ".$Periodo.", conforme proposta e cronograma constantes no processo eletrônico.</p>".
-		"<p>&nbsp;</p>".
-		"<p><strong>CLÁUSULA 2 - OBRIGAÇÕES DO DOADOR</strong></p>".
-		"<p>O/a doador/a compromete-se a:</p>".
-		"<p>2.1. Executar os serviços no período e horário constantes na proposta de doação, garantindo sua qualidade e adequação aos propósitos do evento.</p>".
-		"<p>2.2 Fazer menção dos créditos da Prefeitura da Cidade de São Paulo, Secretaria Municipal de Cultura, Centro Cultural São Paulo, em toda divulgação, escrita ou falada, realizada sobre o evento programado.</p>".
-		"<p>&nbsp;</p>".
-		"<p><strong>CLÁUSULA 3 - DOS DIREITOS E ENCARGOS DA DONATÁRIA</strong></p>".
-		"<p>A donatária:</p>".
-		"<p>3.1. Compete o fornecimento da sonorização necessária à realização de espetáculos e dos equipamentos de iluminação disponíveis no local do evento, assim como providências quanto à divulgação de praxe (confecção de cartaz a ser afixado no equipamento cultural e encaminhamento de release à mídia impressa e televisiva).</p>".
-		"<p>3.2. Exercer a coordenação e comunicações necessárias, bem como dirimir dúvidas, para o bom cumprimento das obrigações descritas neste termo.</p>".
-		"<p>&nbsp;</p>".
-		"<p><strong>CLÁUSULA 4 - DISPOSIÇÕES GERAIS</strong></p>".
-		"<p>4.1. O/a doador/a, nos termos do artigo 8° do Decreto Municipal n° 40.384/01, declara, sob as penas da lei, que não está em débito com a Fazenda Municipal.</p>".
-		"<p>4.2. A presente doação não acarretará ônus para a Municipalidade.</p>".
-		"<p>4.3. A donatária fica autorizada a reproduzir, por processo fotográfico ou digital, e a utilizar, sem qualquer ônus, as imagens do evento realizado em anúncio, catálogo, exposição, folder e outras publicações, sem fins lucrativos, nos eventos promovidos e/ou produzidos pela Prefeitura do Município de São Paulo. Essa autorização terá validade a partir da presente assinatura e vigorará pelo prazo previsto no artigo 41 da Lei Federal nº 9.610/98.</p>".
-		"<p>4.4. Nos termos do art. 6 do Decreto nº. 54.873/2014, fica designado como fiscal do contrato ".$Fiscal.", RF ".$rfFiscal." e como suplente ".$Suplente.", RF ".$rfSuplente.".</p>".
-		"<p>4.5. Fica eleito o foro da Comarca da Capital, através de uma de suas varas da Fazenda Pública, para qualquer procedimento judicial oriundo do presente Termo, com a renúncia de qualquer outro, por mais especial ou privilegiado que seja.</p>".
-		"<p>E por estarem justas e pactuadas firmam as Partes o presente Termo, em 4 (quatro) vias de igual teor, forma e data para um só efeito na presença das testemunhas abaixo.</p>".
-		"<p>&nbsp;</p>".
-		"<p>&nbsp;</p>".
-		"<p><strong>DOADOR</strong></p>".
-		"<p>&nbsp;</p>".
-		"<p>&nbsp;</p>".
-		"<p>".$rep01Nome."</p>".
-		"<p>".$rep01RG."</p>".
-		"<p>".$rep01CPF."</p>".
-		"<p>&nbsp;</p>".
-		"<p>&nbsp;</p>".
-		"<p><strong>TESTEMUNHAS</strong></p>".
-		"<p>&nbsp;</p>".
-		"<p>&nbsp;</p>".
-		"<p>&nbsp;</p>".
-		"<p>&nbsp;</p>"
+echo 
+	"<p align='center'><strong>PROCESSO SEI Nº ".$NumeroProcesso."</strong></p>".
+	"<p align='center'><strong>TERMO DE DOAÇÃO</strong></p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>".
+	"<p align='justify'>A PREFEITURA DO MUNICÍPIO DE SÃO PAULO, por intermédio da SECRETARIA MUNICIPAL DE CULTURA, neste ato representada  André Sturm, Secretário Municipal de Cultura, doravante denominada donatária e ".$pjRazaoSocial.", CNPJ: ".$pjCNPJ.", localizada na ".$pjEndereco.", representada por ".$rep01Nome.", RG: ".$rep01RG.", CPF: ".$rep01CPF.", denominado/a doador/a, com fundamento no artigo 1º do Decreto Municipal nº 40.384/2001, resolvem, firmar o presente termo de doação, mediante as seguintes cláusulas e condições:</p>".
+	"<p>&nbsp;</p>".
+	"<p><strong>CLÁUSULA 1 - OBJETO</strong></p>".
+	"<p align='justify'>Doação de serviços artísticos para o evento ".$Objeto.", no ".$Local.", no período ".$Periodo.", conforme proposta e cronograma constantes no processo eletrônico.</p>".
+	"<p>&nbsp;</p>".
+	"<p><strong>CLÁUSULA 2 - OBRIGAÇÕES DO DOADOR</strong></p>".
+	"<p>O/a doador/a compromete-se a:</p>".
+	"<p align='justify'>2.1. Executar os serviços no período e horário constantes na proposta de doação, garantindo sua qualidade e adequação aos propósitos do evento.</p>".
+	"<p align='justify'>2.2 Fazer menção dos créditos da Prefeitura da Cidade de São Paulo, Secretaria Municipal de Cultura, Centro Cultural São Paulo, em toda divulgação, escrita ou falada, realizada sobre o evento programado.</p>".
+	"<p>&nbsp;</p>".
+	"<p><strong>CLÁUSULA 3 - DOS DIREITOS E ENCARGOS DA DONATÁRIA</strong></p>".
+	"<p>A donatária:</p>".
+	"<p align='justify'>3.1. Compete o fornecimento da sonorização necessária à realização de espetáculos e dos equipamentos de iluminação disponíveis no local do evento, assim como providências quanto à divulgação de praxe (confecção de cartaz a ser afixado no equipamento cultural e encaminhamento de release à mídia impressa e televisiva).</p>".
+	"<p align='justify'>3.2. Exercer a coordenação e comunicações necessárias, bem como dirimir dúvidas, para o bom cumprimento das obrigações descritas neste termo.</p>".
+	"<p>&nbsp;</p>".
+	"<p><strong>CLÁUSULA 4 - DISPOSIÇÕES GERAIS</strong></p>".
+	"<p align='justify'>4.1. O/a doador/a, nos termos do artigo 8° do Decreto Municipal n° 40.384/01, declara, sob as penas da lei, que não está em débito com a Fazenda Municipal.</p>".
+	"<p>4.2. A presente doação não acarretará ônus para a Municipalidade.</p>".
+	"<p align='justify'>4.3. A donatária fica autorizada a reproduzir, por processo fotográfico ou digital, e a utilizar, sem qualquer ônus, as imagens do evento realizado em anúncio, catálogo, exposição, folder e outras publicações, sem fins lucrativos, nos eventos promovidos e/ou produzidos pela Prefeitura do Município de São Paulo. Essa autorização terá validade a partir da presente assinatura e vigorará pelo prazo previsto no artigo 41 da Lei Federal nº 9.610/98.</p>".
+	"<p align='justify'>4.4. Nos termos do art. 6 do Decreto nº. 54.873/2014, fica designado como fiscal do contrato ".$Fiscal.", RF ".$rfFiscal." e como suplente ".$Suplente.", RF ".$rfSuplente.".</p>".
+	"<p align='justify'>4.5. Fica eleito o foro da Comarca da Capital, através de uma de suas varas da Fazenda Pública, para qualquer procedimento judicial oriundo do presente Termo, com a renúncia de qualquer outro, por mais especial ou privilegiado que seja.</p>".
+	"<p align='justify'>E por estarem justas e pactuadas firmam as Partes o presente Termo, em 4 (quatro) vias de igual teor, forma e data para um só efeito na presença das testemunhas abaixo.</p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>".
+	"<p><strong>DONATÁRIA:</strong></p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>".
+	"<p><b>André Luiz Pompeia Sturm<br/>
+		Secretário Municipal de Cultura</b></p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>".
+	"<p><strong>DOADOR</strong></p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>".
+	"<p><b>".$rep01Nome."<br/>".
+	"RG: ".$rep01RG."<br/>".
+	"CPF: ".$rep01CPF."</b></p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>".
+	"<p><strong>TESTEMUNHAS</strong></p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>".
+	"<p>&nbsp;</p>";
+echo "</body>";
+echo "</html>";	
 ?>
-
-		<div align="center">
-			<div id="texto" class="texto"><?php echo $sei; ?>
-			</div>
-		</div>
-		<p>&nbsp;</p> 
-		<div align="center"><button id="botao-copiar" data-clipboard-target="texto"><img src="img/copy-icon.jpg">CLIQUE AQUI PARA COPIAR O TEXTO</button>
-		</div>         
-		<script>
-		var client = new ZeroClipboard();
-		client.clip(document.getElementById("botao-copiar"));
-		client.on("aftercopy", function(){
-			alert("Copiado com sucesso!");
-		});
-		</script>
-	</body>
-</html>

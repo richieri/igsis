@@ -26,13 +26,33 @@ $dataAtual = date("d/m/Y");
 $NumeroProcesso = $pedido["NumeroProcesso"];
 $assinatura = $pedido["Assinatura"];
 $cargo = $pedido["Cargo"];
+$qtdApresentacoes = $pedido["qtdApresentacoes"];
+$qtdApresentacoesPorExtenso = qtdApresentacoesPorExtenso ($pedido["qtdApresentacoes"]);
+$Periodo = $pedido["Periodo"];
 
 //PessoaJuridica
 
 $pjRazaoSocial = $pj["Nome"];
 $pjCNPJ = $pj['CNPJ'];
 
-$codPed = "";
+$setor = $pedido["Setor"];
+
+if ($setor == "Casas de Cultura")
+{
+	$uo = "25.70";
+}
+elseif ($setor == "Secretaria Municipal de Cultura")
+{
+	$uo = "25.10";
+}
+ elseif ($setor == "Coordenadoria do Sistema Municipal de Bibliotecas")
+{
+	$uo = "25.30";
+}
+else
+{
+	$uo = "25.60";
+}
   
  ?>
  
@@ -61,17 +81,17 @@ $codPed = "";
 <?php
 
 $sei = 
-  "<p><strong>Do processo nº:</strong> "."$NumeroProcesso"."</p>".
+  "<p><strong>Do processo nº:</strong> ".$NumeroProcesso."</p>".
   "<p>&nbsp;</p>".
-  "<p><strong>INTERESSADO:</strong> "."$pjRazaoSocial"."  </span></p>".
-  "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
+  "<p><strong>INTERESSADO:</strong> ".$pjRazaoSocial."  </span></p>".
+  "<p><strong>ASSUNTO:</strong> ".$objeto."  </p>".
   "<p>&nbsp;</p>".
-  "<p><strong>CONTABILIDADE</strong></p>".
-  "<p><strong>Sr(a). Responsável</strong></p>".
+  "<p><strong>SMC/CAF/SCO</strong></p>".
+  "<p><strong>Sr(a). Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>Encaminho o presente para a necessária reserva de recursos (RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10) no valor supra citado para o pagamento do cachê que deverá onerar a dotação do FEPAC.</p>".
+  "<p>O presente processo trata da contratação de ".$objeto.", no valor de R$ ".$ValorGlobal." ( ".$ValorPorExtenso." ), conforme solicitação LINK, tendo sido anexados os documentos necessários e incluido o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a ".$qtdApresentacoes." ( ".$qtdApresentacoesPorExtenso." ) apresentação(ões), no período de ".$Periodo.".</p>".
+   "<p>Autorizo a reserva que deverá onerar recursos do FEPAC, dotação 95.10.13.392.3001.6354.3390.3900.08 (Pessoa Jurídica), mediante RESERVA COM TRANSFERÊNCIA PARA U.O. ".$uo.".</p>". 
   "<p>&nbsp;</p>".
-  "<p> Valor: "."R$ $ValorGlobal"."  "."($ValorPorExtenso)"."</p>".
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/Assessoria Jurídica para prosseguimento. </p>".
   "<p>&nbsp;</p>"

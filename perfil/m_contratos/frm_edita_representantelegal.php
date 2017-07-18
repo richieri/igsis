@@ -3,6 +3,7 @@ include 'includes/menu.php';
 
 $con = bancoMysqli(); // conecta no banco
 $ultimo = $_GET['id_rep']; //recupera o id da pessoa
+$id_ped = $_GET['id_ped'];
 
 if(isset($_POST['idPedido']))
 {
@@ -124,7 +125,7 @@ case "busca":
 					$pj = $_GET['pj'];
 					$num = $_GET['num']
 				?>
-                    <form method="POST" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $pj ?>&num=<?php echo $num ?>&id_rep=" class="form-horizontal" role="form">
+                    <form method="POST" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $pj ?>&num=<?php echo $num ?>&id_ped=<?php echo $id_ped ?>&id_rep=" class="form-horizontal" role="form">
 						<label>Insira o CPF</label>
 						<input type="text" name="busca" class="form-control" id="cpf" >
             	</div>
@@ -182,7 +183,7 @@ case "pesquisar":
 											<tr>
 												<td class='list_description'><b>".$descricao['RepresentanteLegal']."</b></td>
 												<td class='list_description'>".$descricao['CPF']."</td><td class='list_description'>
-												<form method='POST' action='?perfil=contratos&p=frm_edita_pj&id_pj=".$_GET['pj']."'>
+												<form method='POST' action='?perfil=contratos&p=frm_edita_pj&id_pj=".$_GET['pj']."&id_ped=".$id_ped."'>
 													<input type='hidden' name='insereRepresentante' value='".$descricao['Id_RepresentanteLegal']."'>
 													<input type='hidden' name='numero' value='".$_GET['num']."'>
 													<input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'>
@@ -197,7 +198,7 @@ case "pesquisar":
 						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
-								<a href="?perfil=contratos&p=frm_edita_representantelegal&num=<?php echo $_GET['num'] ?>&pj=<?php echo $_GET['pj'] ?>&id_rep=0"><input type="submit" value="Inserir outro representante" class="btn btn-theme btn-block"></a> 
+								<a href="?perfil=contratos&p=frm_edita_representantelegal&num=<?php echo $_GET['num'] ?>&pj=<?php echo $_GET['pj'] ?>&id_ped=<?php echo $id_ped; ?>&id_rep=0"><input type="submit" value="Inserir outro representante" class="btn btn-theme btn-block"></a> 
 							</div>
 						</div>
             		</div>
@@ -221,7 +222,7 @@ case "pesquisar":
 						$pj = $_GET['pj'];
 						$num = $_GET['num']
 					?>
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $pj ?>&num=<?php echo $num ?>&id_rep=" method="POST">
+					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $pj ?>&num=<?php echo $num ?>&id_ped=<?php echo $id_ped; ?>&id_rep=" method="POST">
 				        <div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Representante legal: *</strong><br/>
 								<input type="text" class="form-control" id="RepresentanteLegal" name="RepresentanteLegal" placeholder="Representante Legal">
@@ -297,7 +298,7 @@ $representante = recuperaDados("sis_representante_legal",$id_rep,"Id_Representan
 		</div>
 	  	<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_representantelegal&num=<?php echo $_GET['num'] ?>&pj=<?php echo $_GET['pj']; ?>&id_rep=<?php echo $id_rep ?>" method="post">
+				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_representantelegal&num=<?php echo $_GET['num'] ?>&pj=<?php echo $_GET['pj']; ?>&id_ped=<?php echo $id_ped; ?>&id_rep=<?php echo $id_rep ?>" method="post">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Representante Legal: *</strong>
 						<input type="text" class="form-control" id="RepresentanteLegal" name="RepresentanteLegal" placeholder="Representante Legal" value="<?php echo $representante['RepresentanteLegal']; ?>">
@@ -335,7 +336,20 @@ $representante = recuperaDados("sis_representante_legal",$id_rep,"Id_Representan
 	
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<a href="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $_GET['pj']; ?>"><input type="submit" value="Voltar a edição de Pessoa Jurídica" class="btn btn-theme btn-block"></a> 
+						<?php
+						if($id_ped != '')
+						{
+						?>	
+							<a href="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $_GET['pj']; ?>&id_ped=<?php echo $id_ped ?>"><input type="submit" value="Voltar a edição de Pessoa Jurídica" class="btn btn-theme btn-block"></a> 
+						<?php	
+						}
+						else
+						{
+						?>
+							<a href="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $_GET['pj']; ?>"><input type="submit" value="Voltar a edição de Pessoa Jurídica" class="btn btn-theme btn-block"></a>
+						<?php	
+						}	
+						?>			
 					</div>
 				</div>
                 
@@ -345,7 +359,7 @@ $representante = recuperaDados("sis_representante_legal",$id_rep,"Id_Representan
                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $_GET['pj']; ?>" method="POST">                  
+					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $_GET['pj']; ?>&id_ped=<?php echo $id_ped; ?>" method="POST">                  
 						<input type="hidden" name="apagarRepresentante" value="<?php echo $_GET['num'] ?>"  />
 						<input type="submit" value="Retirar representante da Pessoa Jurídica" class="btn btn-theme btn-block">
 					</form>
@@ -359,7 +373,7 @@ $representante = recuperaDados("sis_representante_legal",$id_rep,"Id_Representan
                 <!-- Botão para inserir outro representante -->
 				 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<a href="?perfil=contratos&p=frm_edita_representantelegal&num=<?php echo $_GET['num'] ?>&pj=<?php echo $_GET['pj'] ?>&id_rep=0"><input type="submit" value="Inserir outro representante" class="btn btn-theme btn-block"></a> 
+						<a href="?perfil=contratos&p=frm_edita_representantelegal&num=<?php echo $_GET['num'] ?>&pj=<?php echo $_GET['pj'] ?>&id_ped=<?php echo $id_ped; ?>&id_rep=0"><input type="submit" value="Inserir outro representante" class="btn btn-theme btn-block"></a> 
 					</div>
 				</div>
                 
@@ -372,15 +386,13 @@ $representante = recuperaDados("sis_representante_legal",$id_rep,"Id_Representan
 					<div class="col-md-offset-2 col-md-8">
 					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_arquivos&pj=<?php echo $_GET['pj']; ?>&idPessoa=<?php echo $_GET['id_rep']; ?>&tipoPessoa=3" method="post">
 					<?php 
-						if(isset($id_pedido))
+						if($id_ped != '')
 						{ 
 					?>
-							<input type="hidden" name="idPedido" value="<?php echo $id_pedido ?>" />
+							<input type="hidden" name="idPedido" value="<?php echo $id_ped ?>" />
 							<input type="hidden" name="representante" value="1" />
                    <?php 
-						} 
-					
-						$script = $_SERVER['QUERY_STRING'];
+						} 						
 				   ?>
 						<input type="hidden" name="volta" value="<?php echo $script; ?>" />
 						<input type="hidden" name="Sucesso" id="Sucesso" />
@@ -398,7 +410,7 @@ $representante = recuperaDados("sis_representante_legal",$id_rep,"Id_Representan
 						if(isset($id_pedido))
 						{ 
 					?>
-                        <a href="?perfil=contratos&p=frm_edita_representantelegal&num=<?php $_GET['num'] ?>&id_pf="><input type="submit" value="Mudar o executante" class="btn btn-theme btn-block"></a>
+                        <a href="?perfil=contratos&p=frm_edita_representantelegal&num=<?php $_GET['num'] ?>&id_ped=<?php echo $id_ped; ?>&id_pf="><input type="submit" value="Mudar o executante" class="btn btn-theme btn-block"></a>
                    <?php 
 						} 
 					?>

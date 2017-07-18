@@ -108,7 +108,7 @@
 						idEvento,
 						estado 
 						FROM igsis_pedido_contratacao 
-						WHERE idEvento = '$evento' 
+						WHERE idPedidoContratacao = '$id' 
 						AND publicado = '1' 
 						AND estado IS NOT NULL 
 						ORDER BY idPedidoContratacao DESC";
@@ -172,7 +172,7 @@
 						//Não foi inserido o número do pedido
 						if($evento != '')
 						{
-							$filtro_evento = " AND nomeEvento LIKE '%$evento%' OR autor LIKE '%$evento%' ";
+							$filtro_evento = " AND nomeEvento LIKE '%$evento%'";
 						}
 						else
 						{

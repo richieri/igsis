@@ -155,9 +155,24 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 				
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-					<form class="form-horizontal" role="form"  method="post" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $ultimo; ?>&num=1&id_rep=<?php echo $pj['IdRepresentanteLegal1']?>">
+					<?php
+					if($id_ped != '')
+					{
+					?>
+						<form class="form-horizontal" role="form"  method="post" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $ultimo; ?>&num=1&id_rep=<?php echo $pj['IdRepresentanteLegal1']?>&id_ped=<?php echo $id_ped ?>">
 						<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir Representante legal #01">
-                    </form><br />
+						</form><br />
+					<?php	
+					}
+					else
+					{
+					?>
+						<form class="form-horizontal" role="form"  method="post" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $ultimo; ?>&num=1&id_rep=<?php echo $pj['IdRepresentanteLegal1']?>">
+							<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir Representante legal #01">
+						</form><br />					
+					<?php	
+					}	
+					?>					
 					</div>
 				</div>
 				
@@ -169,9 +184,24 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-					<form class="form-horizontal" role="form"  method="post" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $ultimo; ?>&num=2&id_rep=<?php echo $pj['IdRepresentanteLegal2']?>">
-						<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir Representante legal #02">
-                    </form><br />
+					<?php
+					if($id_ped != '')
+					{
+					?>
+						<form class="form-horizontal" role="form"  method="post" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $ultimo; ?>&num=2&id_rep=<?php echo $pj['IdRepresentanteLegal2']?>&id_ped=<?php echo $id_ped ?>">
+							<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir Representante legal #02">
+						</form><br />
+					<?php	
+					}
+					else
+					{
+					?>
+						<form class="form-horizontal" role="form"  method="post" action="?perfil=contratos&p=frm_edita_representantelegal&pj=<?php echo $ultimo; ?>&num=2&id_rep=<?php echo $pj['IdRepresentanteLegal2']?>">
+							<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir Representante legal #02">
+						</form><br />
+					<?php	
+					}	
+					?>	
 					</div>
 				</div>
 
@@ -315,19 +345,13 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 					</form>
 					</div>                    
 					<div class="col-md-6">
-                    <?php 
-						if(isset($id_pedido))
-						{ 
+                    <?php
+						if($id_ped != '')
+						{
 					?>
-							<br/><a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
-					<?php 
-						}
-						elseif($id_ped <> "")
-						{ 
-					?>
-							<a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
-					<?php 
-						}  
+							<br/><a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>	
+					<?php	
+						} 
 					?>
 					</div>
 				</div>

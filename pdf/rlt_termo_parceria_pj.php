@@ -124,8 +124,8 @@ $rep02Telefones = $rep02["Telefones"];
 $rep02Email = $rep02["Email"];
 $rep02INSS = $rep02["INSS"];
 
-//header("Content-type: application/vnd.ms-word");
-//header("Content-Disposition: attachment;Filename=termo de parceria.doc");
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment;Filename=termo de parceria.doc");
 
 ?>
 
@@ -144,7 +144,7 @@ PROCESSO Nº <?php echo $NumeroProcesso; ?></center></h2>
 
 <h3><center>Termo de Parceria Formalizado Entre a Prefeitura Municipal de São Paulo/Secretaria Municipal de Cultura e a Empresa <?php echo $pjRazaoSocial; ?></center></h3>
 
-<p align='justify'>A PREFEITURA DO MUNICÍPIO DE SÃO PAULO, por intermédio de sua SECRETARIA MUNICIPAL DE CULTURA, neste ato representado pelo Sr. AUGUSTO JOSÉ BOTELHO SCHIMIDT, CPF: 581.703.838-20, RG: 5.253.934-9, Diretor do Centro Cultural São Paulo, de agora em diante denominada simplesmente SECRETARIA e a empresa <?php echo $pjRazaoSocial; ?>,  estabelecida no endereço <?php echo $pjEndereco; ?>, CNPJ nº <?php echo $pjCNPJ; ?>, neste ato legalmente representada por <?php echo $rep01Nome; ?>, CPF nº <?php echo $rep01CPF; ?>, RG nº <?php echo $rep01RG; ?> e por <?php echo $rep02Nome; ?>, CPF nº <?php echo $rep02CPF; ?>, RG nº <?php echo $rep02RG; ?>, com fundamento no artigo 2º, incisos V e VIII, da Lei Municipal nº 8.204/75, Decreto Municipal nº. 51.300/10, combinados com o artigo 116, da Lei Federal nº 8.666/93 e alterações posteriores e artigo 1º da Lei Municipal nº 13.278/2002, em especial a manifestação da assessoria jurídica deste departamento às fls., 35/37 e parecer da Comissão de Atividades Artísticas e Culturais instituída pela portaria nº. 024/2014/SMC.G às fls., 33/34, bem como as demais disposições legais e regularmente aplicáveis à espécie, firmar Parceria mediante as seguintes cláusulas e condições que outorgam e aceitam:</p>
+<p align='justify'>A PREFEITURA DO MUNICÍPIO DE SÃO PAULO, por intermédio de sua SECRETARIA MUNICIPAL DE CULTURA, neste ato representado pelo Sr. CARLOS ADÃO VOLPATO, CPF: 007.960.558-31, RG: 7.365.984-8, Diretor do Centro Cultural São Paulo, de agora em diante denominada simplesmente SECRETARIA e a empresa <?php echo $pjRazaoSocial; ?>,  estabelecida no endereço <?php echo $pjEndereco; ?>, CNPJ nº <?php echo $pjCNPJ; ?>, neste ato legalmente representada por <?php echo $rep01Nome; ?>, CPF nº <?php echo $rep01CPF; ?>, RG nº <?php echo $rep01RG; ?> e por <?php echo $rep02Nome; ?>, CPF nº <?php echo $rep02CPF; ?>, RG nº <?php echo $rep02RG; ?>, com fundamento no artigo 2º, incisos V e VIII, da Lei Municipal nº 8.204/75, Decreto Municipal nº. 51.300/10, combinados com o artigo 116, da Lei Federal nº 8.666/93 e alterações posteriores e artigo 1º da Lei Municipal nº 13.278/2002, em especial a manifestação da assessoria jurídica deste departamento às fls., 35/37 e parecer da Comissão de Atividades Artísticas e Culturais instituída pela portaria nº. 024/2014/SMC.G às fls., 33/34, bem como as demais disposições legais e regularmente aplicáveis à espécie, firmar Parceria mediante as seguintes cláusulas e condições que outorgam e aceitam:</p>
 
 <br/>
 
@@ -227,10 +227,10 @@ echo "Data: ".$dia." às ".$hour."<br/>Local: ".$lugar."<br/><br/>";
 
 <p>&nbsp;</p>
 
-<p align='justify'>Secretaria Municipal de Cultura / <?php echo $setor; ?><br/>
-AUGUSTO JOSÉ BOTELHO SCHIMIDT<br/>
-CPF:581.703.838-20<br/>
-RG: 5.253.934-9</p>
+<p align='justify'>Secretaria Municipal de Cultura / Centro Cultural São Paulo<?php //echo $setor; ?><br/>
+CARLOS ADÃO VOLPATO<br/>
+CPF: 007.960.558-31<br/>
+RG: 7.365.984-8</p>
 
 <br/>
 
