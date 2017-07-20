@@ -73,10 +73,14 @@
 <script>
 	function valida()
 	{
-		var campo = document.getElementById("justificativa");
-		if(campo.value == "")
+		if(document.getElementById("justificativa").value == "")
 		{
-		   alert("Preencha o campo Justificativa para alterações!");
+		   alert("Preencha o campo Justificativa para prosseguir!");
+		   return false;
+		}
+		if(document.getElementById("tipo").selectedIndex == "")
+		{
+		   alert("Preencha o campo Tipo de Chamado para prosseguir!");
 		   return false;
 		} 
 		return true;
@@ -98,7 +102,7 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Tipo de chamado</label>
-							<select class="form-control" name="tipo" id="inputSubject" >
+							<select class="form-control" name="tipo" id="tipo" >
 								<option value="1"></option>
 								<?php echo geraOpcao("igsis_tipo_chamado","","") ?>
 							</select>

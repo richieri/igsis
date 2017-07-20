@@ -351,7 +351,13 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 					?>
 							<br/><a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>	
 					<?php	
-						} 
+						}
+						else
+						{
+							?>
+							<br/><a href="?perfil=contratos&p=frm_lista_pj"><input type="submit" value="Voltar" class="btn btn-theme btn-block"></a>
+							<?php
+						}
 					?>
 					</div>
 				</div>
