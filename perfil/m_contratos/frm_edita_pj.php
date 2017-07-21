@@ -209,7 +209,7 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
                     <div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
                 
-				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $ultimo ?>" method="post">
+				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_pj&id_pj=<?php echo $ultimo ?>&id_ped=<?php echo $id_ped ?>" method="post">
 			
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Razão Social *:</strong><br/>
@@ -349,7 +349,7 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 						if($id_ped != '')
 						{
 					?>
-							<br/><a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>	
+							<br/><a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>	
 					<?php	
 						}
 						else
