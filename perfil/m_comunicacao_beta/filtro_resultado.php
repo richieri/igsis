@@ -98,11 +98,11 @@ $foto = $_SESSION['foto'];
 			
 if ($editado == 1)//confirmado
 {
-	$filtro_editado = "AND editado = 1";	
+	$filtro_editado = "AND ig_comunicacao.editado = 1";	
 }
 elseif ($editado == 2)//pendente
 {
-	$filtro_editado = "AND editado != 1";	
+	$filtro_editado = "AND ig_comunicacao.editado != 1";	
 }
 else
 {
@@ -111,11 +111,11 @@ else
 
 if($revisado == 1)//confirmado
 {
-	$filtro_revisado = "AND revisado = 1";	
+	$filtro_revisado = "AND ig_comunicacao.revisado = 1";	
 }
 elseif($revisado == 2)
 {
-	$filtro_revisado = "AND revisado != 1";	
+	$filtro_revisado = "AND ig_comunicacao.revisado != 1";	
 }
 else
 {
@@ -124,11 +124,11 @@ else
 
 if($site == 1)
 {
-	$filtro_site = "AND site = 1";	
+	$filtro_site = "AND ig_comunicacao.site = 1";	
 }
 elseif($site == 2)
 {
-	$filtro_site = "AND site != 1";	
+	$filtro_site = "AND ig_comunicacao.site != 1";	
 }
 else
 {
@@ -137,11 +137,11 @@ else
 
 if($publicacao == 1)
 {
-	$filtro_publicacao = "AND publicacao = 1";
+	$filtro_publicacao = "AND ig_comunicacao.publicacao = 1";
 }
 elseif($publicacao == 2)
 {
-	$filtro_publicacao = "AND publicacao != 1";	
+	$filtro_publicacao = "AND ig_comunicacao.publicacao != 1";	
 }
 else
 {
@@ -150,11 +150,11 @@ else
 
 if($foto == 1)
 {
-	$filtro_foto = "AND foto = 1";
+	$filtro_foto = "AND ig_comunicacao.foto = 1";
 }
 elseif($foto == 2)
 {
-	$filtro_foto = "AND foto != 1";	
+	$filtro_foto = "AND ig_comunicacao.foto != 1";	
 }
 else
 {
@@ -162,7 +162,8 @@ else
 }
 
 $con = bancoMysqli();
-$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND publicado = 1 $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY idCom DESC";
+$sql_busca_dic = "SELECT * FROM ig_comunicacao, ig_evento WHERE ig_comunicacao.idInstituicao = '$idInstituicao' AND ig_comunicacao.publicado = '1' AND ig_evento.publicado = '1' AND ig_comunicacao.ig_evento_idEvento = ig_evento.idEvento $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento.dataEnvio DESC";
+
 $query_busca_dic = mysqli_query($con,$sql_busca_dic);
 //conta o total de itens
 $total = mysqli_num_rows($query_busca_dic);
@@ -177,7 +178,7 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;		
 	
 //seleciona os itens por página
-$sql_busca_dic = "SELECT * FROM ig_comunicacao WHERE idInstituicao = '$idInstituicao' AND publicado = 1 $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY idCom DESC limit $inicio,$registros ";
+$sql_busca_dic = "SELECT * FROM ig_comunicacao, ig_evento WHERE ig_comunicacao.idInstituicao = '$idInstituicao' AND ig_comunicacao.publicado = '1' AND ig_evento.publicado = '1' AND ig_comunicacao.ig_evento_idEvento = ig_evento.idEvento $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento.dataEnvio DESC limit $inicio,$registros ";
 $query_busca_dic = mysqli_query($con,$sql_busca_dic);
  //conta o total de itens
 $total = mysqli_num_rows($query_busca_dic);

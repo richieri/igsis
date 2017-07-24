@@ -13,7 +13,7 @@
 	}
 	
 
-ini_set('session.gc_maxlifetime', 60*60*2); // 60 minutos
+ini_set('session.gc_maxlifetime', 120*120*2); // minutos
 
 	?>
 
