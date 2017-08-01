@@ -360,7 +360,7 @@ $pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("Fica eleito o foro desta comarca para todo e qualquer procedimento judicial oriundo desta ordem de execução de serviços."));
+   $pdf->MultiCell(180,$l,utf8_decode("Fica eleito o foro da Fazenda Pública para todo e qualquer procedimento judicial oriundo desta ordem de execução de serviços."));
    
    $pdf->Ln();
    

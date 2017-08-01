@@ -197,7 +197,7 @@ header("Content-Disposition: attachment;Filename=ordem.doc");
    
 <center><h3>FORO</h3></center>
 
-<p>FICA ELEITO O FORO DESTA COMARCA PARA TODO E QUALQUER PROCEDIMENTO JUDICIAL ORIUNDO DESTA ORDEM DE EXECUÇÃO DE SERVIÇOS.</p>
+<p>FICA ELEITO O FORO DA FAZENDA PÚBLICA PARA TODO E QUALQUER PROCEDIMENTO JUDICIAL ORIUNDO DESTA ORDEM DE EXECUÇÃO DE SERVIÇOS.</p>
    
 <center><h3>OBSERVAÇÕES</h3></center>
 <p>-Compete à contratada a realização do espetáculo, e a fazer constar o crédito - PMSP/SECRETARIA MUNICIPAL DE CULTURA, em toda divulgação escrita ou falada, realizada sobre o espetáculo programado.</p>

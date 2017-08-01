@@ -116,7 +116,7 @@ echo
   <p>Esta O.E.S. poderá ser cancelada no interesse da  administração, devidamente justificada ou em virtude da inexecução total ou  parcial do serviço sem prejuízo de multa.</p>
 <h2>&nbsp;</h2>
   <p><strong>Foro</strong></p>
-  <p>Fica eleito o foro desta comarca para todo e qualquer  procedimento judicial oriundo desta ordem de execução de serviços.</p>
+  <p>Fica eleito o foro da Fazenda Pública para todo e qualquer  procedimento judicial oriundo desta ordem de execução de serviços.</p>
 <h2>&nbsp;</h2>
   <p><strong>Observações</strong></p>
   <p>- Compete à contratada a realização do espetáculo, e a  fazer constar o crédito - PMSP/SECRETARIA MUNICIPAL DE CULTURA, em toda  divulgação escrita ou falada,realizada sobe o espetáculo programado.</p>
