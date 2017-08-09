@@ -1,59 +1,62 @@
-<?php 
-   //Exibe erros PHP
+<?php    
 @ini_set('display_errors', '1');
 error_reporting(E_ALL); 
-   
-   // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
-   require_once("../include/lib/fpdf/fpdf.php");
-   require_once("../funcoes/funcoesConecta.php");
-   require_once("../funcoes/funcoesGerais.php");
-   require_once("../funcoes/funcoesSiscontrat.php");
 
-   //CONEXÃO COM BANCO DE DADOS 
-   $conexao = bancoMysqli(); 
+// INSTALAÇÃO DA CLASSE NA PASTA FPDF.
+require_once("../include/lib/fpdf/fpdf.php");
+
+require_once("../funcoes/funcoesConecta.php");
+require_once("../funcoes/funcoesGerais.php");
+require_once("../funcoes/funcoesFormacao.php");
+require_once("../funcoes/funcoesSiscontrat.php");
+
+
+//CONEXÃO COM BANCO DE DADOS 
+$conexao = bancoMysqli(); 
    
 // logo da instituição 
 session_start();
 
+// esse código limpa algum print errada da session
+while (ob_get_level())
+ob_end_clean();
+header("Content-Encoding: None", true);
 
 //var_dump($_SESSION);
   
 class PDF extends FPDF
 {
-// Page header
-function Header()
-{
-	$inst = recuperaDados("ig_instituicao",$_SESSION['idInstituicao'],"idInstituicao");
-	$logo = "../visual/img/".$inst['logo']; 
-    // Logo
-    $this->Image($logo,20,20,50);
-    // Move to the right
-    $this->Cell(80);
-    $this->Image('../visual/img/logo_smc.jpg',170,10);
-    // Line break
-    $this->Ln(20);
-}
+	// Page header
+	function Header()
+	{ 
+		$inst = recuperaDados("ig_instituicao",$_SESSION['idInstituicao'],"idInstituicao");
+		$logo = "../visual/img/".$inst['logo']; 
+		// Logo
+		$this->Image($logo,20,20,50);
+		// Move to the right
+		$this->Cell(80);
+		$this->Image('../visual/img/logo_smc.jpg',170,10);
+		// Line break
+		$this->Ln(20);
+	}
 
+	//INSERIR ARQUIVOS
+	function ChapterBody($file)
+	{
+		// Read text file
+		$txt = file_get_contents($file);
+		// Arial 10
+		$this->SetFont('Arial','',10);
+		// Output justified text
+		$this->MultiCell(0,5,$txt);
+		// Line break
+		$this->Ln();
+	}
 
-//INSERIR ARQUIVOS
-
-function ChapterBody($file)
-{
-    // Read text file
-    $txt = file_get_contents($file);
-    // Arial 10
-    $this->SetFont('Arial','',10);
-    // Output justified text
-    $this->MultiCell(0,5,$txt);
-    // Line break
-    $this->Ln();
-}
-
-function PrintChapter($file)
-{
-    $this->ChapterBody($file);
-}
-
+	function PrintChapter($file)
+	{
+		$this->ChapterBody($file);
+	}
 }
 
 
@@ -100,14 +103,16 @@ $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
 
-/* variáveis novas a criar 
+
+/* variáveis novas a criar */
 $formacao = pdfFormacao($id_ped);
 $cargo = $formacao['Cargo'];
 $programa = $formacao['Programa'];
 $descricaoPrograma = $formacao['descricaoPrograma'];
 $edital = $formacao['edital'];
 $linguagem = $formacao['linguagem'];
-*/
+
+
 
 // GERANDO O PDF:
 $pdf = new PDF('P','mm','A4'); //CRIA UM NOVO ARQUIVO PDF NO TAMANHO A4
@@ -118,7 +123,7 @@ $pdf->AddPage();
 $x=20;
 $l=7; //DEFINE A ALTURA DA LINHA   
    
-   $pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+   $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
@@ -212,11 +217,14 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(45,$l,utf8_decode($DataNascimento),0,1,'L');
    
+   
    $pdf->SetX($x);
    $pdf->Cell(180,5,'','B',1,'C');
    
-   $pdf->Ln();
-          
+   //$pdf->Ln();
+    
+   
+    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,10,'(B)',0,0,'L');
@@ -229,24 +237,23 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(15,$l,'Objeto:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(165,$l,utf8_decode($Objeto));
+   $pdf->MultiCell(165,5,utf8_decode($Objeto));
   
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(27,$l,utf8_decode('Data / Período:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(153,$l,utf8_decode($Periodo));
+   $pdf->Cell(50,$l,utf8_decode($Periodo),0,0,'L');
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(27,$l,utf8_decode('Carga Horária:'),0,0,'L');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(80,$l,$CargaHoraria,0,1,'L');
+   
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(27,$l,utf8_decode('Horário:'),0,0,'L');
+   $pdf->Cell(12,5,'Local:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(153,$l,utf8_decode("em dias e horários a serem determinados pela Direção da escola podendo ser distribuídos de 2ª feira a sábado, com carga horária mensal distribuídas conforme cronograma."));
-      
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,'Local:',0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(168,$l,utf8_decode($Local));
+   $pdf->MultiCell(168,5,utf8_decode($Local));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
@@ -256,13 +263,13 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(40,5,'Forma de Pagamento:',0,0,'L');
+   $pdf->Cell(40,$l,'Forma de Pagamento:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(140,5,utf8_decode($FormaPagamento));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(25,5,'Justificativa:',0,0,'L');
+   $pdf->Cell(25,$l,'Justificativa:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(155,5,utf8_decode($Justificativa));
 
@@ -280,70 +287,20 @@ $l=7; //DEFINE A ALTURA DA LINHA
 //	QUEBRA DE PÁGINA
 $pdf->AddPage('','');
 
-$pdf->SetXY( $x , 27 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+$pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(10,5,'(C)',0,0,'L');
-   $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(170,5,utf8_decode('CONDIÇÕES GERAIS'),0,1,'C');
+   $pdf->Cell(10,$l,'(C)',0,0,'L');
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(160,$l,utf8_decode('CONDIÇÕES GERAIS'),0,1,'C');
    
    $pdf->Ln();
    
-   $pdf->SetX($x);
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,5,utf8_decode("I - DEVOLUÇÃO: Este documento deverá ser devolvido à Unidade de Origem.
-II - DOCUMENTAÇÃO: A xérox da documentação (legível) deverá iniciar o processo constando:
-1 - Proposta do artista.
-2 - Programa do Evento.
-3 - Autorização do SBAT (conforme o caso)
-4 - Ficha Técnica atualizada.
-5 - Autorização dos componentes do grupo.
-6 - RG e CIC do(s) artista(s) ou líder do grupo observada a Ordem Interna nº 10/97 (DOM de 22/8/97).
-7 - D.R.T. ou O.M.B. ou Diploma do(s) artista(s).
-8 - Currículo(s) do(s) artista(s).
-9 - Documento comprobatório da exclusividade do eventual empresário.
-10- Contrato Social e alterações posteriores, devidamente registrados na Junta Comercial ou no Cartório de Registro Civil de Pessoas Jurídicas.
-11- C.G.C. e C.C.M. da empresa.
-12- C.N.D.
-13- R.G. e C.I.C. do Representante Legal da empresa.
-14- Material de Imprensa, que demonstre consagração pelo público e pela crítica.
-15- Parecer conclusivo sobre a natureza artística e razoabilidade do cachê.
-III - PUBLICAÇÕES: Constará na publicação o número do processo, autorização para contratação, nome do contratado, serviço e período."),0,'J');
-      
-   $pdf->Ln();
-
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(0,5,utf8_decode($txtPenalidade),0,'J');
-   
-   $pdf->Ln();
-   $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(180,5,utf8_decode('DA RESCISÃO CONTRATUAL'),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,5,utf8_decode("1 O contrato poderá ser rescindido pela CONTRATANTE a qualquer tempo.
-2 O contrato poderá ser rescindido por qualquer das partes, sem aplicação de penalidades, mediante a notificação à outra, por escrito, com 30 (trinta) dias de antecedência.
-3 A inexecução total ou parcial do contrato enseja a sua rescisão, com as consequências contratuais e as previstas em Lei ou regulamento."),0,'J');
 
-   $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(180,5,utf8_decode('DECLARAÇÕES'),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,5,utf8_decode("Declaro que não tenho débitos perante as Fazendas Públicas, em especial perante a Prefeitura do Município de São Paulo. Declaro, também, estar ciente da penalidade prevista no item IV do Campo ( D ). Todas as informações precedentes são formadas sob as penas da Lei."),0,'J');
-
-   $pdf->Ln();
-   $pdf->Ln();
    $pdf->Ln();
    
    $pdf->SetX($x);
@@ -353,7 +310,8 @@ III - PUBLICAÇÕES: Constará na publicação o número do processo, autorizaç
    $pdf->Ln();
    $pdf->Ln();
    $pdf->Ln();
-   $pdf->Ln();   
+   $pdf->Ln();
+   
    
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
@@ -363,8 +321,6 @@ III - PUBLICAÇÕES: Constará na publicação o número do processo, autorizaç
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(100,$l,"RG: ".$RG,0,0,'L');
-
-   
       
    
 //	QUEBRA DE PÁGINA
@@ -372,66 +328,54 @@ $pdf->AddPage('','');
 $pdf->SetXY( $x , 37 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 
-
 $l=5; //DEFINE A ALTURA DA LINHA 
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(180,5,"CRONOGRAMA",0,1,'C');
+   $pdf->Cell(170,5,utf8_decode('CRONOGRAMA'),0,1,'L');
    
-   $pdf->Ln();
-
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,5,utf8_decode("O(a) contratado(a) executará ".$RG." para a faixa etária ".$RG.", no período ".$Periodo." com carga horária e em dias e horários a serem deterinados pela direção da Escola, distribuída na forma abaixo descrita."),0,'J');
-      
-   $pdf->Ln();
-   /*
-   //inicio cronograma
-   $con = bancoMysqli();
-   $sql_parcelas = "SELECT * FROM igsis_parcelas WHERE idPedido = '$id_ped' ORDER BY vigencia_inicio ASC";
-   $query = mysqli_query($con,$sql_parcelas);
-   while($parcela = mysqli_fetch_array($query))
-   {
-		if($parcela['valor'] > 0)
-		{
-			$inicio = exibirDataBr($parcela['vigencia_inicio']);
-			$fim = exibirDataBr($parcela['vigencia_final']);
-			$horas = $parcela['horas'];
-		
-			$pdf->SetX($x);
-			$pdf->SetFont('Arial','', 10);
-			$pdf->MultiCell(180,$l,utf8_decode("De $inicio a $fim - $horas horas"));
-		}
-	}
-	//fim cronograma
-	*/
-	//inicio cronograma
-   $con = bancoMysqli();
-   $sql_parcelas = "SELECT * FROM igsis_parcelas WHERE idPedido = '$id_ped' ORDER BY vigencia_inicio ASC";
-   $query = mysqli_query($con,$sql_parcelas);
-   while($parcela = mysqli_fetch_array($query))
-   {
-		if($parcela['valor'] > 0)
-		{
-			$inicio = exibirDataBr($parcela['vigencia_inicio']);
-			$fim = exibirDataBr($parcela['vigencia_final']);
-			$horas = $parcela['horas'];
-		
-			$pdf->SetX($x);
-			$pdf->SetFont('Arial','', 10);
-			$pdf->MultiCell(180,$l,utf8_decode("De $inicio a $fim - $horas horas"));
-		}
-	}
-	//fim cronograma
+   $pdf->SetFont('Arial','', 12);
+   $pdf->MultiCell(170,$l,utf8_decode($Objeto));
    
-   $pdf->Ln();
-    
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(180,$l,utf8_decode("São Paulo, ______ de ____________________ de "."$ano").".",0,0,'L');
-   
+   $pdf->Ln();	 
 
+	$ocor = listaOcorrenciasContrato($id);
+
+	for($i = 0; $i < $ocor['numero']; $i++){
+	
+	$tipo = $ocor[$i]['tipo'];
+	$dia = $ocor[$i]['data'];
+	$hour = $ocor[$i]['hora'];
+	$lugar = $ocor[$i]['espaco'];
+
+  
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(12,$l,utf8_decode('Tipo:'),0,0,'L');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(158,$l,utf8_decode($tipo));
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(22,$l,utf8_decode('Data/Perído:'),0,0,'L');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(148,$l,utf8_decode($dia));
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(15,$l,utf8_decode('Horário:'),0,0,'L');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(155,$l,utf8_decode($hour));
+   
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','B', 10);
+   $pdf->Cell(12,$l,utf8_decode('Local:'),0,0,'L');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(158,$l,utf8_decode($lugar));
+   
+   $pdf->Ln(); 
+	}
 
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
@@ -447,6 +391,4 @@ $l=5; //DEFINE A ALTURA DA LINHA
    // $pdf->Cell(0,10,'Printing line number '.$i,0,1);
 
 $pdf->Output();
-
-
 ?>
