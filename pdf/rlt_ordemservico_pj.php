@@ -377,7 +377,7 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 - Quaisquer outras despesas não ressalvadas aqui serão de responsabilidade da contratada, que se compromete a adotar as providências necessárias junto à OMB.
 
-- As providências administrativas para liberação da autorização do ECAD serão de responsabilidade da contratada, assim como eventuais pagamentos.
+- As  providências  administrativas para liberação da autorização do ECAD  serão de responsabilidade da contratada, assim como eventuais pagamentos.
 
 - A Municipalidade não é responsável por qualquer material ou equipamento que não lhe pertença utilizado no espetáculo, devendo esse material ser retirado no seu término.
 

@@ -317,7 +317,7 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 - A contratada fica sujeita ao atendimento no disposto nas Leis Municipais nº 10.973/9, regulamentada pelo DM 30.730/91; 11.113/91; 11.357/93; 12.975/2000 e portaria 66/SMC/2007; Leis Estaduais nº 7.844/92; Medida Provisória Federal 12.933/2013 e Lei Federal 10.741/2013.
 - A contratada é responsável por qualquer prejuízo ou dano causado ao patrimônio municipal ou a bens de terceiros que estejam sob a guarda do equipamento local de realização do evento.
 - Quaisquer outras despesas não ressalvadas aqui serão de responsabilidade da contratada, que se compromete a adotar as providências necessárias junto à OMB.
-- As providências administrativas para liberação da autorização do ECAD serão de responsabilidade da contratada, assim como eventuais pagamentos.
+- As providências administrativas para liberação da autorização do ECAD serão de responsabilidade da/o contratada/o, assim como eventuais pagamentos.
 - A Municipalidade não é responsável por qualquer material ou equipamento que não lhe pertença utilizado no espetáculo, devendo esse material ser retirado no seu término.
 - A Cia. deverá designar uma pessoa para atuar na Bilheteria durante toda a temporada, cabendo a esta a responsabilidade exclusiva pela venda dos ingressos.
 - A Bilheteria deverá abrir 1 (uma) hora antes do início de cada espetáculo.

@@ -123,8 +123,7 @@ echo
   <p>- A contratada fica sujeita ao  atendimento no disposto nas Leis Municipais nº 10.973/9, regulamentada pelo DM  30.730/91; 11.113/91; 11.357/93; 12.975/2000 e portaria 66/SMC/2007; Leis  Estaduais nº 7.844/92; Medida Provisória Federal 12.933/2013 e Lei Federal  10.741/2013.</p>
   <p>- A contratada é responsável por  qualquer prejuízo ou dano causado ao patrimônio municipal ou a bens de  terceiros que estejam sob a guarda do equipamento local de realização do  evento.</p>
   <p>- Quaisquer outras despesas não  ressalvadas aqui serão de responsabilidade da contratada, que se compromete a  adotar as providências necessárias junto à OMB.</p>
-<p>- As   providências  administrativas  para   liberação  da  autorização   do  ECAD  serão   de  responsabilidade     da contratada,  assim como eventuais pagamentos.
-</p>
+<p>- As   providências  administrativas  para   liberação  da  autorização   do  ECAD  serão   de  responsabilidade da/o contratada/o,  assim como eventuais pagamentos.</p>
 <p>- A Municipalidade não é responsável  por qualquer material ou equipamento que não lhe pertença utilizado no  espetáculo, devendo esse material ser retirado no seu término.</p>
 <p>- A renda integral apurada na  bilheteria, com ingressos vendidos ao preço único de ".$ingresso." (".$ingressoExtenso."), será  revertida a/o contratada/o, por intermédio da Empresa Brasileira de  Comercialização de Ingressos Ltda, que também confeccionará os ingressos, já  deduzidos os impostos e taxas pertinentes, podendo ter preços reduzidos em face  de promoções realizadas pela produção do evento.</p>
 <p>- Compete, ainda, à Municipalidade, o  fornecimento da sonorização necessária à realização de espetáculos e  dos equipamentos de iluminação disponíveis no  local do evento, assim como providências quanto à divulgação  de praxe (confecção de cartaz a ser afixado  no equipamento cultural e encaminhamento de release à mídia impressa e  televisiva).</p>
