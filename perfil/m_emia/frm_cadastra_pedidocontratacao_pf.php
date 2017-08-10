@@ -17,7 +17,7 @@
 				$idPessoa = $emia['IdPessoaFisica'];
 				$idVerba = "39";
 				$instituicao = $_SESSION['idInstituicao'];
-				$justificativa = addslashes($cargo['justificativa']);
+				$justificativa = "A EMIA - Escola Municipal de Iniciação Artística existe desde 1980 e passou a ser organizada de acordo com a Lei 15.372 em 03 de maio de 2011. Atende em média 1000 (mil) alunos, entre 5 e 13 anos, em cursos regulares e integrados nas áreas de artes visuais, dança, música e teatro. As crianças ingressam com idade entre 5 e 7 anos, por meio de sorteio público, e podem permanecer por um período de seis a oito anos. Para suprir essa demanda ?alunos distribuídos entre os cursos Regulares, e, a partir dos 7 anos, com opção de participação em cursos Optativos, Corais, Orquestra e Oficinas concomitantemente ?, a escola necessita de um corpo docente constituído por artistas oficineiros, profissionais com formação nas quatro áreas artísticas oferecidas pela escola: Teatro, Dança, Música e Artes Visuais (Artes Plásticas). Na EMIA, o oficineiro é também um artista dentro da linguagem que ele trabalha com a criança. O seu projeto de trabalho com o grupo de crianças está intimamente ligado com o que ele, naquele momento, acredita e deseja realizar artisticamente. Trata-se, portanto, de um ato criador que instigará o aprendizado da criança.";
 				$mensagem = "";
 				// insere um novo pedido pf com pessoa = 5
 				$sql_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `instituicao`, `justificativa`, `publicado`) VALUES ('$idEmia', '5', '$idPessoa',  '$instituicao', '$justificativa', '1')";
@@ -263,7 +263,7 @@
 ?>			                                
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-8">
-			<a href="../pdf/rlt_proposta_emia.php?id=<?php echo $id_ped; ?>&penal=30" class="btn btn-theme btn-lg btn-block" target="_blank">Gerar proposta</a>
+			<a href="../pdf/rlt_proposta_emia.php?id=<?php echo $id_ped; ?>&penal=31" class="btn btn-theme btn-lg btn-block" target="_blank">Gerar proposta</a>
 		</div>
 	</div>
 <?php
