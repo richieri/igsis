@@ -37,14 +37,11 @@ $http = $server."/pdf/";
 	<div class="container">			
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
-				<div class="section-heading">
-					<h2>Relatório por período</h2>
-					<p><?php if(isset($mensagem)){ echo $num; }?></p>
-				</div>
+				<h3>Relatório por Período</h3><br/>				
 			</div>
 		</div>
 		<div class="row">
-		<form method="POST" action="<?php echo $http ?>rlt_busca_periodo.php" class="form-horizontal" role="form">
+		<form method="POST" action="<?php echo $http ?>rlt_periodo_juridico.php" class="form-horizontal" role="form">
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
 					<label>Data início *</label>
@@ -74,7 +71,7 @@ $http = $server."/pdf/";
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<input type="hidden" name="periodo" value="1" />
-					<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+					<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gerar">
 				</div>
 			</div>
 		</form>

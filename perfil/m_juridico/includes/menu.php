@@ -9,7 +9,7 @@ $pasta = "?perfil=juridico&p=";
 		<ul class="dl-menu">
 			<li><a href="<?php echo $pasta ?>frm_busca_juridico">Buscar Evento</a></li>
 			<li><a href="<?php echo $pasta ?>frm_busca_formacao">Buscar Formação</a></li>
-			<li><a href="<?php echo $pasta ?>agenda">Agenda</a></li>
+			<li><a href="<?php echo $pasta ?>agenda">Relatório por Período</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Carregar Módulos</a></li>
 			<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-juridico/">Ajuda</a></li>
