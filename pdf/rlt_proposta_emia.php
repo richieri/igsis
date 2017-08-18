@@ -130,11 +130,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(10,5,'(A)',0,0,'L');
    $pdf->SetFont('Arial','B', 12);
    $pdf->Cell(170,5,'CONTRATADO',0,1,'C');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','I', 10);
-   $pdf->Cell(10,10,utf8_decode('(Quando se tratar de grupo, o líder do grupo)'),0,0,'L');
-   
+      
    $pdf->Ln();
    
    $pdf->SetX($x);

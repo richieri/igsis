@@ -168,7 +168,14 @@
 				}
 				else
 				{
-					$pagamento = txtParcelas($idPedido,$pedido['parcelas']);	
+					if ($pedido['tipoPessoa'] == 5)
+					{
+						$pagamento = txtParcelasEmia($idPedido,$pedido['parcelas']);
+					}
+					else
+					{
+						$pagamento = txtParcelas($idPedido,$pedido['parcelas']);
+					}
 				}
 			}
 			else
@@ -814,6 +821,39 @@
 			return "O pagamento se dará no 20º (vigésimo) dia após a data de entrega de toda documentação correta relativa ao pagamento.";
 		}
 	}
+	function txtParcelasEmia($idPedido,$numero)
+	{
+		$con = bancoMysqli();
+		$sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido'";
+		$query = mysqli_query($con,$sql);
+		$i = 1;
+		$num_parcelas = mysqli_num_rows($query);
+		if($num_parcelas > 1)
+		{
+			while($parcela = mysqli_fetch_array($query))
+			{
+				$x[$i]['valor'] = $parcela['valor'];
+				$x[$i]['vencimento'] = $parcela['vencimento'];
+				$i++;
+			}
+			$k = 1;
+			$texto = "";
+			for($k = 1; $k <= $numero; $k++)
+			{
+				if($x[$k]['valor'] != 0)
+				{
+					$texto .= $k."ª parcela de R$ ".dinheiroParaBr($x[$k]['valor']).". Entrega de documentos a partir de ".exibirDataBr($x[$k]['vencimento']).".\n";		
+				}
+			}
+			$texto .= "Parcelas mensais,  liberáveis a partir da confirmação dos serviços. ";
+			return $texto;
+		}
+		else
+		{
+			return "Parcelas mensais,  liberáveis a partir da confirmação dos serviços. ";
+		}
+	}
+	
 	function listaGrupo($idPedido)
 	{
 		$con = bancoMysqli();

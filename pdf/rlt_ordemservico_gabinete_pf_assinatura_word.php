@@ -145,7 +145,7 @@ echo
 	"<p>&nbsp;</p>".
 	"<p>&nbsp;</p>".
 	"<p>&nbsp;</p>".
-	"<p><b>Giovanna M. R. Lima<br/>".
+	"<p><b>Juliana Velho<br/>".
 		"Chefe de Gabinete<br/>".
 		"Secretaria Municipal de Cultura</b></p>";
 	echo "</body>";

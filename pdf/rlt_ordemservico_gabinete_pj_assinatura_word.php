@@ -258,7 +258,7 @@ echo
 	"<p>Com competência delegada pela Portaria nº. 19/2016- SMC/G, determino a execução do serviço na forma desta O.E.S.</p>".
 	"<p>&nbsp;</p>".
 	"<p>&nbsp;</p>".
-	"<p><b>Giovanna M. R. Lima<br/>
+	"<p><b>Juliana Velho<br/>
 		Chefe de Gabinete<br/>
 		Secretaria Municipal de Cultura</b></p>";
 echo "</body>";

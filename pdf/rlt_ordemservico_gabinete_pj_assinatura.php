@@ -455,7 +455,7 @@ Aceito as condições dessa O.E.S para todos os efeitos de direito."));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(120,$l,utf8_decode('Giovanna M. R. Lima'),'T',1,'L');
+   $pdf->Cell(120,$l,utf8_decode('Juliana Velho'),'T',1,'L');
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
