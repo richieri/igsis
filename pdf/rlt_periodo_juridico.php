@@ -99,7 +99,8 @@ else
 					if ( $pedido ['estado'] == 1 OR $pedido ['estado'] == 2 OR 	$pedido ['estado'] == 3 OR $pedido ['estado'] == 4 OR $pedido ['estado'] == 5 OR $pedido ['estado'] == 6 OR $pedido ['estado'] == 7 OR $pedido ['estado'] == 8 OR $pedido ['estado'] == 9 OR $pedido ['estado'] == 10 OR $pedido ['estado'] == 11 OR $pedido ['estado'] == 13 OR $pedido ['estado'] == 14 OR $pedido ['estado'] == 15) 
 					{
 						$x[$i]['id']= $pedido['idPedidoContratacao'];
-						$x[$i]['NumeroProcesso'] = $pedido['NumeroProcesso'];	
+						$x[$i]['NumeroProcesso'] = $pedido['NumeroProcesso'];
+						$x[$i]['objeto'] = retornaTipo($event['ig_tipo_evento_idTipoEvento'])." - ".$event['nomeEvento'];						
 						$i++;
 					}
 				}
@@ -114,8 +115,9 @@ else
 		$html .= '<tr>';
 		$html .= '<td>Codigo do Pedido</td>';
 		$html .= '<td>Numedo do Processo</td>';
+		$html .= '<td>Objeto</td>';
 		$html .= '</tr>';
-		$html .= '<tr>';
+		
 		
 		
 			$data=date('Y');
@@ -123,8 +125,10 @@ else
 			{
 				$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 				
-				$html .= '<tr><td class="list_description">'.$x[$h]['id'].'</td> ';
+				$html .= '<tr>';
+				$html .= '<td class="list_description">'.$x[$h]['id'].'</td> ';
 				$html .= '<td class="list_description">'.$x[$h]['NumeroProcesso'].'</td> ';
+				$html .= '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
 				$html .= '</tr>';
 			}		
 		$html .= '</table>';
