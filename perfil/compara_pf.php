@@ -1,6 +1,6 @@
 <?php
 
-$cpf = "000.000.000-00";
+$cpf = "000.000.000-55";
 
 $con1 = bancoMysqli();
 $con2 = bancoMysqliProponente();
@@ -107,21 +107,111 @@ if(isset($_POST['atualizaIgsis']))
 	{
 		$mensagem = "Erro ao atualizar ".$nome.". Tente novamente!";
 	}
+}
+
+if(isset($_POST['importarMacapacIgsis']))
+{
+	$sql_insere_pf = "INSERT INTO sis_pessoa_fisica (`Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `IdEstadoCivil`, `DataNascimento`, `LocalNascimento`,	`Nacionalidade`, `CEP`,	`Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`,	`Funcao`, `Pis`, `OMB`, `DataAtualizacao`,`tipoDocumento`, `codBanco`, `agencia`, `conta`, `cbo`) VALUES ('$nome', '$nomeArtistico', '$rg', '$cpf', '$ccm', '$idEstadoCivil', '$dataNascimento', '$localNascimento', '$nacionalidade', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$drt', '$funcao', '$pis', '$omb', '$dataAtualizacao', '$idTipoDocumento', '$codigoBanco', '$agencia', '$conta', '$cbo')";
+	 
+	if(mysqli_query($con1,$sql_insere_pf))
+	{
+		$mensagem = "Atualizado com sucesso!";	
+	}
+	else
+	{
+		$mensagem = "Erro ao atualizar! Tente novamente.";
+	}	  
 }	
 
-
-echo "<br><br><br>";
 
 //Se existir no IGSIS e não no MACAPAC
 If($query1 != '' && $query2 == '')
 {
+	echo "<br><br><br>";
 	echo "Carregar o resultado do IGSIS.";
 }
 
 //Se existir no MACAPAC e não no IGSIS
 If($query1 == '' && $query2 != '')
 {
-	echo "Não foi encontrado registro com esse CPF no IGSIS. Deseja importar do MACAPAC?";
+	?>
+	<section id="list_items" class="home-section bg-white">
+		<div class="container">
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<h6>Não foi encontrado registro com esse CPF no IGSIS. Deseja importar do Cadastro de Proponente?</h6>
+					<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-6">
+					<?php 
+					if($query1 == '' && $query2 != '')
+					{
+					?>	
+						<br/>
+					<?php 	
+					}
+					else
+					{
+					?>
+						<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
+							<input type='hidden' name='botaoImportar' value='1'  />
+							<input type='submit' name='importarMacapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
+						</form>
+					<?php 	
+					}	
+					?>	
+				</div>
+				<div class="col-md-6">
+					<form method='POST' action='".$link."' enctype='multipart/form-data'>
+						<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
+					</form>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8"><hr/></div>
+			</div>
+			
+			<div align="left">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<strong>Nome:</strong> <?php echo $nome ?><br/>
+						<strong>Nome Artístico:</strong> <?php echo $nomeArtistico ?><br/>
+						<strong>RG:</strong> <?php echo $rg ?> | 
+						<strong>CPF:</strong> <?php echo $cpf ?> | 
+						<strong>CCM:</strong> <?php echo $ccm ?><br/>
+						<strong>Estado Civil:</strong> <?php echo $idEstadoCivil ?><br/>
+						<strong>Data de Nascimento:</strong> <?php echo exibirDataBr($dataNascimento) ?><br/>
+						<strong>Local de Nascimento:</strong> <?php echo $localNascimento ?> | 
+						<strong>Nacionalidade:</strong> <?php echo $nacionalidade ?><br/>
+						<strong>CEP:</strong> <?php echo $cep ?><br/>
+						<strong>Número:</strong> <?php echo $numero ?> | 
+						<strong>Complemento:</strong> <?php echo $complemento ?><br/>
+						<strong>Telefone #1:</strong> <?php echo $telefone1 ?> / <?php echo $telefone2 ?> / <?php echo $telefone3 ?><br/>
+						<strong>E-mail:</strong> <?php echo $email ?><br/>
+						<strong>DRT:</strong> <?php echo $drt ?><br/>
+						<strong>Função:</strong> <?php echo $funcao ?> | 
+						<strong>CBO:</strong> <?php echo $cbo ?><br/>
+						<strong>NIT:</strong> <?php echo $pis ?><br/>
+						<strong>OMB:</strong> <?php echo $omb ?><br/>
+						<strong>Banco:</strong> <?php echo $codigoBanco ?><br/>
+						<strong>Agência:</strong> <?php echo $agencia ?> | 
+						<strong>Conta:</strong> <?php echo $conta ?><br/>
+						<strong>Última Atualização:</strong> <?php echo exibirDataBr($dataAtualizacao) ?>						
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8"><hr/></div>
+			</div>
+			
+		</div>	
+	</section>	
+<?php
 }
 
 //Se existir no MACAPAC e também no IGSIS
@@ -132,7 +222,9 @@ If($query1 != '' && $query2 != '')
 	<section id="list_items" class="home-section bg-white">
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-8">
-				<div class="table-responsive list_info"><h6>Divergências</h6><h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+				<div class="table-responsive list_info">
+					<h6>Divergências</h6>
+					<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 					<table class='table table-condensed'>
 						<thead>
 							<tr class='list_menu'>
@@ -521,6 +613,7 @@ If($query1 != '' && $query2 != '')
 //Se existir no IGSIS e não no MACAPAC
 If($query1 == '' && $query2 == '')
 {
+	echo "<br><br><br>";
 	echo "Ir para o formulário do primeiro cadastro no IGSIS.";
 }
 
