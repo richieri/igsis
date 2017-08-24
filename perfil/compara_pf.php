@@ -1,6 +1,6 @@
 <?php
 
-$cpf = "000.000.000-55";
+$cpf = "000.000.000-00";
 
 $con1 = bancoMysqli();
 $con2 = bancoMysqliProponente();
@@ -115,11 +115,12 @@ if(isset($_POST['importarMacapacIgsis']))
 	 
 	if(mysqli_query($con1,$sql_insere_pf))
 	{
-		$mensagem = "Atualizado com sucesso!";	
+		$mensagem = "Importado com sucesso!";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."'>";		
 	}
 	else
 	{
-		$mensagem = "Erro ao atualizar! Tente novamente.";
+		$mensagem = "Erro ao importar! Tente novamente.";
 	}	  
 }	
 
@@ -150,16 +151,16 @@ If($query1 == '' && $query2 != '')
 					if($query1 == '' && $query2 != '')
 					{
 					?>	
-						<br/>
+						<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
+							<input type='hidden' name='botaoImportar' value='1'  />
+							<input type='submit' name='importarMacapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
+						</form><br/>
 					<?php 	
 					}
 					else
 					{
 					?>
-						<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
-							<input type='hidden' name='botaoImportar' value='1'  />
-							<input type='submit' name='importarMacapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
-						</form>
+						<br/>
 					<?php 	
 					}	
 					?>	
@@ -220,391 +221,406 @@ If($query1 != '' && $query2 != '')
 	echo "Comparar os campos para atulizar o cadastro do IGSIS, com um botão de atualizar na frente de cada campo com divergência.";
 	?>
 	<section id="list_items" class="home-section bg-white">
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-8">
-				<div class="table-responsive list_info">
-					<h6>Divergências</h6>
-					<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
-					<table class='table table-condensed'>
-						<thead>
-							<tr class='list_menu'>
-								<td><strong>Campo Divergente</strong></td>
-								<td><strong>IGSIS</strong></td>
-								<td><strong>MACAPAC</strong></td>
-								<td width='20%'></td>
-							</tr>
-						</thead>
-						<tbody>
-						<?php
-							if($Nome != $nome)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Nome</td>";
-								echo "<td class='list_description'>".$Nome."</td>";
-								echo "<td class='list_description'>".$nome."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Nome'  />
-											<input type='hidden' name='varCampo' value='".$nome."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($NomeArtistico != $nomeArtistico)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Nome Artístico</td>";
-								echo "<td class='list_description'>".$NomeArtistico."</td>";
-								echo "<td class='list_description'>".$nomeArtistico."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='NomeArtistico'  />
-											<input type='hidden' name='varCampo' value='".$nomeArtistico."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($RG != $rg)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>RG</td>";
-								echo "<td class='list_description'>".$RG."</td>";
-								echo "<td class='list_description'>".$rg."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='RG'  />
-											<input type='hidden' name='varCampo' value='".$rg."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($CCM != $ccm)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>CCM</td>";
-								echo "<td class='list_description'>".$CCM."</td>";
-								echo "<td class='list_description'>".$ccm."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='CCM'  />
-											<input type='hidden' name='varCampo' value='".$ccm."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($IdEstadoCivil != $idEstadoCivil)
-							{
-								$igEstadoCivil = recuperaDadosIgsis("sis_estado_civil","Id_EstadoCivil","$IdEstadoCivil");
-								$propEstadoCivil = recuperaDadosProp("estado_civil","id","$idEstadoCivil");
-								echo "<tr>";
-								echo "<td class='list_description'>Estado Civil</td>";
-								echo "<td class='list_description'>".$igEstadoCivil['EstadoCivil']."</td>";
-								echo "<td class='list_description'>".$propEstadoCivil['estadoCivil']."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='IdEstadoCivil'  />
-											<input type='hidden' name='varCampo' value='".$idEstadoCivil."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($DataNascimento != $dataNascimento)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Data de Nascimento</td>";
-								echo "<td class='list_description'>".exibirDataBr($DataNascimento)."</td>";
-								echo "<td class='list_description'>".exibirDataBr($dataNascimento)."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='DataNascimento'  />
-											<input type='hidden' name='varCampo' value='".$dataNascimento."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($LocalNascimento != $localNascimento)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Local de Nascimento</td>";
-								echo "<td class='list_description'>".$LocalNascimento."</td>";
-								echo "<td class='list_description'>".$localNascimento."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='LocalNascimento'  />
-											<input type='hidden' name='varCampo' value='".$localNascimento."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Nacionalidade != $nacionalidade)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Nacionalidade</td>";
-								echo "<td class='list_description'>".$Nacionalidade."</td>";
-								echo "<td class='list_description'>".$nacionalidade."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Nacionalidade'  />
-											<input type='hidden' name='varCampo' value='".$nacionalidade."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($CEP != $cep)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>CEP</td>";
-								echo "<td class='list_description'>".$CEP."</td>";
-								echo "<td class='list_description'>".$cep."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='CEP'  />
-											<input type='hidden' name='varCampo' value='".$cep."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Numero != $numero)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Número</td>";
-								echo "<td class='list_description'>".$Numero."</td>";
-								echo "<td class='list_description'>".$numero."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Numero'  />
-											<input type='hidden' name='varCampo' value='".$numero."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Complemento != $complemento)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Complemento</td>";
-								echo "<td class='list_description'>".$Complemento."</td>";
-								echo "<td class='list_description'>".$complemento."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Complemento'  />
-											<input type='hidden' name='varCampo' value='".$complemento."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Telefone1 != $telefone1)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Telefone #1</td>";
-								echo "<td class='list_description'>".$Telefone1."</td>";
-								echo "<td class='list_description'>".$telefone1."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Telefone1'  />
-											<input type='hidden' name='varCampo' value='".$telefone1."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Telefone2 != $telefone2)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Telefone #2</td>";
-								echo "<td class='list_description'>".$Telefone2."</td>";
-								echo "<td class='list_description'>".$telefone2."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Telefone2'  />
-											<input type='hidden' name='varCampo' value='".$telefone2."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Telefone3 != $telefone3)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Telefone #3</td>";
-								echo "<td class='list_description'>".$Telefone3."</td>";
-								echo "<td class='list_description'>".$telefone3."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Telefone3'  />
-											<input type='hidden' name='varCampo' value='".$telefone3."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Email != $email)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>E-mail</td>";
-								echo "<td class='list_description'>".$Email."</td>";
-								echo "<td class='list_description'>".$email."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Email'  />
-											<input type='hidden' name='varCampo' value='".$email."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($DRT != $drt)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>DRT</td>";
-								echo "<td class='list_description'>".$DRT."</td>";
-								echo "<td class='list_description'>".$drt."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='DRT'  />
-											<input type='hidden' name='varCampo' value='".$drt."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Funcao != $funcao)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Função</td>";
-								echo "<td class='list_description'>".$Funcao."</td>";
-								echo "<td class='list_description'>".$funcao."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Funcao'  />
-											<input type='hidden' name='varCampo' value='".$funcao."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Cbo != $cbo)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>CBO</td>";
-								echo "<td class='list_description'>".$Cbo."</td>";
-								echo "<td class='list_description'>".$cbo."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Cbo'  />
-											<input type='hidden' name='varCampo' value='".$cbo."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Pis != $pis)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>NIT</td>";
-								echo "<td class='list_description'>".$Pis."</td>";
-								echo "<td class='list_description'>".$pis."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Pis'  />
-											<input type='hidden' name='varCampo' value='".$pis."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($OMB != $omb)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>OMB</td>";
-								echo "<td class='list_description'>".$OMB."</td>";
-								echo "<td class='list_description'>".$omb."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='OMB'  />
-											<input type='hidden' name='varCampo' value='".$omb."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($codBanco != $codigoBanco)
-							{
-								$igNomeBanco = recuperaDadosIgsis("igsis_bancos","ID","$codBanco");
-								$propNomeBanco = recuperaDadosProp("banco","id","$codigoBanco");
-								echo "<tr>";
-								echo "<td class='list_description'>Banco</td>";
-								echo "<td class='list_description'>".$igNomeBanco['banco']."</td>";
-								echo "<td class='list_description'>".$propNomeBanco['banco']."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='codBanco'  />
-											<input type='hidden' name='varCampo' value='".$codigoBanco."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Agencia != $agencia)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Agência</td>";
-								echo "<td class='list_description'>".$Agencia."</td>";
-								echo "<td class='list_description'>".$agencia."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Agencia'  />
-											<input type='hidden' name='varCampo' value='".$agencia."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($Conta != $conta)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Conta</td>";
-								echo "<td class='list_description'>".$Conta."</td>";
-								echo "<td class='list_description'>".$conta."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='Conta'  />
-											<input type='hidden' name='varCampo' value='".$conta."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}
-							if($DataAtualizacao != $dataAtualizacao)
-							{
-								echo "<tr>";
-								echo "<td class='list_description'>Última Atualização</td>";
-								echo "<td class='list_description'>".exibirDataBr($DataAtualizacao)."</td>";
-								echo "<td class='list_description'>".exibirDataBr($dataAtualizacao)."</td>";
-								echo "<td>
-										<form method='POST' action='".$link."' enctype='multipart/form-data'>
-											<input type='hidden' name='campo' value='DataAtualizacao'  />
-											<input type='hidden' name='varCampo' value='".$dataAtualizacao."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
-										</form>
-									</td>";
-								echo "</tr>";
-							}							
-						?>
-						</tbody>
-					</table>
+		<div class="container">
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-6">
+					<form method='POST' action='".$link."' enctype='multipart/form-data'>
+						<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
+					</form>				
+				</div>
+				<div class="col-md-6">
+					<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
+						<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Avançar'>
+					</form><br/>
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8"><br/></div>
+			</div>			
+			
+			<div class="table-responsive list_info">
+				<h6>Divergências</h6>
+				<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
+				<table class='table table-condensed'>
+					<thead>
+						<tr class='list_menu'>
+							<td><strong>Campo Divergente</strong></td>
+							<td><strong>IGSIS</strong></td>
+							<td><strong>MACAPAC</strong></td>
+							<td width='20%'></td>
+						</tr>
+					</thead>
+					<tbody>
+					<?php
+						if($Nome != $nome)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Nome</td>";
+							echo "<td class='list_description'>".$Nome."</td>";
+							echo "<td class='list_description'>".$nome."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Nome'  />
+										<input type='hidden' name='varCampo' value='".$nome."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($NomeArtistico != $nomeArtistico)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Nome Artístico</td>";
+							echo "<td class='list_description'>".$NomeArtistico."</td>";
+							echo "<td class='list_description'>".$nomeArtistico."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='NomeArtistico'  />
+										<input type='hidden' name='varCampo' value='".$nomeArtistico."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($RG != $rg)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>RG</td>";
+							echo "<td class='list_description'>".$RG."</td>";
+							echo "<td class='list_description'>".$rg."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='RG'  />
+										<input type='hidden' name='varCampo' value='".$rg."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($CCM != $ccm)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>CCM</td>";
+							echo "<td class='list_description'>".$CCM."</td>";
+							echo "<td class='list_description'>".$ccm."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='CCM'  />
+										<input type='hidden' name='varCampo' value='".$ccm."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($IdEstadoCivil != $idEstadoCivil)
+						{
+							$igEstadoCivil = recuperaDadosIgsis("sis_estado_civil","Id_EstadoCivil","$IdEstadoCivil");
+							$propEstadoCivil = recuperaDadosProp("estado_civil","id","$idEstadoCivil");
+							echo "<tr>";
+							echo "<td class='list_description'>Estado Civil</td>";
+							echo "<td class='list_description'>".$igEstadoCivil['EstadoCivil']."</td>";
+							echo "<td class='list_description'>".$propEstadoCivil['estadoCivil']."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='IdEstadoCivil'  />
+										<input type='hidden' name='varCampo' value='".$idEstadoCivil."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($DataNascimento != $dataNascimento)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Data de Nascimento</td>";
+							echo "<td class='list_description'>".exibirDataBr($DataNascimento)."</td>";
+							echo "<td class='list_description'>".exibirDataBr($dataNascimento)."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='DataNascimento'  />
+										<input type='hidden' name='varCampo' value='".$dataNascimento."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($LocalNascimento != $localNascimento)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Local de Nascimento</td>";
+							echo "<td class='list_description'>".$LocalNascimento."</td>";
+							echo "<td class='list_description'>".$localNascimento."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='LocalNascimento'  />
+										<input type='hidden' name='varCampo' value='".$localNascimento."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Nacionalidade != $nacionalidade)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Nacionalidade</td>";
+							echo "<td class='list_description'>".$Nacionalidade."</td>";
+							echo "<td class='list_description'>".$nacionalidade."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Nacionalidade'  />
+										<input type='hidden' name='varCampo' value='".$nacionalidade."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($CEP != $cep)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>CEP</td>";
+							echo "<td class='list_description'>".$CEP."</td>";
+							echo "<td class='list_description'>".$cep."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='CEP'  />
+										<input type='hidden' name='varCampo' value='".$cep."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Numero != $numero)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Número</td>";
+							echo "<td class='list_description'>".$Numero."</td>";
+							echo "<td class='list_description'>".$numero."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Numero'  />
+										<input type='hidden' name='varCampo' value='".$numero."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Complemento != $complemento)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Complemento</td>";
+							echo "<td class='list_description'>".$Complemento."</td>";
+							echo "<td class='list_description'>".$complemento."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Complemento'  />
+										<input type='hidden' name='varCampo' value='".$complemento."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Telefone1 != $telefone1)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Telefone #1</td>";
+							echo "<td class='list_description'>".$Telefone1."</td>";
+							echo "<td class='list_description'>".$telefone1."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Telefone1'  />
+										<input type='hidden' name='varCampo' value='".$telefone1."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Telefone2 != $telefone2)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Telefone #2</td>";
+							echo "<td class='list_description'>".$Telefone2."</td>";
+							echo "<td class='list_description'>".$telefone2."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Telefone2'  />
+										<input type='hidden' name='varCampo' value='".$telefone2."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Telefone3 != $telefone3)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Telefone #3</td>";
+							echo "<td class='list_description'>".$Telefone3."</td>";
+							echo "<td class='list_description'>".$telefone3."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Telefone3'  />
+										<input type='hidden' name='varCampo' value='".$telefone3."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Email != $email)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>E-mail</td>";
+							echo "<td class='list_description'>".$Email."</td>";
+							echo "<td class='list_description'>".$email."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Email'  />
+										<input type='hidden' name='varCampo' value='".$email."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($DRT != $drt)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>DRT</td>";
+							echo "<td class='list_description'>".$DRT."</td>";
+							echo "<td class='list_description'>".$drt."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='DRT'  />
+										<input type='hidden' name='varCampo' value='".$drt."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Funcao != $funcao)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Função</td>";
+							echo "<td class='list_description'>".$Funcao."</td>";
+							echo "<td class='list_description'>".$funcao."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Funcao'  />
+										<input type='hidden' name='varCampo' value='".$funcao."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Cbo != $cbo)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>CBO</td>";
+							echo "<td class='list_description'>".$Cbo."</td>";
+							echo "<td class='list_description'>".$cbo."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Cbo'  />
+										<input type='hidden' name='varCampo' value='".$cbo."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Pis != $pis)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>NIT</td>";
+							echo "<td class='list_description'>".$Pis."</td>";
+							echo "<td class='list_description'>".$pis."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Pis'  />
+										<input type='hidden' name='varCampo' value='".$pis."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($OMB != $omb)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>OMB</td>";
+							echo "<td class='list_description'>".$OMB."</td>";
+							echo "<td class='list_description'>".$omb."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='OMB'  />
+										<input type='hidden' name='varCampo' value='".$omb."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($codBanco != $codigoBanco)
+						{
+							$igNomeBanco = recuperaDadosIgsis("igsis_bancos","ID","$codBanco");
+							$propNomeBanco = recuperaDadosProp("banco","id","$codigoBanco");
+							echo "<tr>";
+							echo "<td class='list_description'>Banco</td>";
+							echo "<td class='list_description'>".$igNomeBanco['banco']."</td>";
+							echo "<td class='list_description'>".$propNomeBanco['banco']."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='codBanco'  />
+										<input type='hidden' name='varCampo' value='".$codigoBanco."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Agencia != $agencia)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Agência</td>";
+							echo "<td class='list_description'>".$Agencia."</td>";
+							echo "<td class='list_description'>".$agencia."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Agencia'  />
+										<input type='hidden' name='varCampo' value='".$agencia."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($Conta != $conta)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Conta</td>";
+							echo "<td class='list_description'>".$Conta."</td>";
+							echo "<td class='list_description'>".$conta."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='Conta'  />
+										<input type='hidden' name='varCampo' value='".$conta."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}
+						if($DataAtualizacao != $dataAtualizacao)
+						{
+							echo "<tr>";
+							echo "<td class='list_description'>Última Atualização</td>";
+							echo "<td class='list_description'>".exibirDataBr($DataAtualizacao)."</td>";
+							echo "<td class='list_description'>".exibirDataBr($dataAtualizacao)."</td>";
+							echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='campo' value='DataAtualizacao'  />
+										<input type='hidden' name='varCampo' value='".$dataAtualizacao."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+							echo "</tr>";
+						}							
+					?>
+					</tbody>
+				</table>
+			</div>	
 		</div>
 	</section>
 <?php	
