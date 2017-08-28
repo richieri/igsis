@@ -222,23 +222,6 @@ If($query1 != '' && $query2 != '')
 	?>
 	<section id="list_items" class="home-section bg-white">
 		<div class="container">
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-6">
-					<form method='POST' action='".$link."' enctype='multipart/form-data'>
-						<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
-					</form>				
-				</div>
-				<div class="col-md-6">
-					<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
-						<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Avançar'>
-					</form><br/>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-8"><br/></div>
-			</div>			
-			
 			<div class="table-responsive list_info">
 				<h6>Divergências</h6>
 				<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
@@ -621,6 +604,18 @@ If($query1 != '' && $query2 != '')
 					</tbody>
 				</table>
 			</div>	
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-6">
+				<form method='POST' action='".$link."' enctype='multipart/form-data'>
+					<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
+				</form>				
+			</div>
+			<div class="col-md-6">
+				<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
+					<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Avançar'>
+				</form><br/>
+			</div>
 		</div>
 	</section>
 <?php	
