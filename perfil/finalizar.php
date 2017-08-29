@@ -15,7 +15,7 @@
 			$query_data_envio = mysqli_query($con,$sql_data_envio);
 		}
 		$sql_atualiza_pedido = "UPDATE `igsis`.`igsis_pedido_contratacao` SET 
-			`estado` = '1'
+			`estado` = '2'
 			WHERE `igsis_pedido_contratacao`.`idEvento` = '$idEvento' AND `igsis_pedido_contratacao`.`publicado` = '1' ";
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_evento)

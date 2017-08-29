@@ -14,6 +14,7 @@ $id_ped=$_GET['id'];
 $pedido = siscontrat($id_ped);
 $id_parcela = $_GET['parcela'];
 
+
 $codPed = $id_ped;
 $objeto = $pedido["Objeto"];
 $local = $pedido["Local"];
@@ -25,6 +26,8 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 $periodoParcela = $parcelamento[$id_parcela]['periodo']; 
 $horas = $parcelamento[$id_parcela]['horas'];
 $dataPagamento = $parcelamento[$id_parcela]['pagamento'];
+$NumeroProcesso = $pedido["NumeroProcesso"];
+
 
 $dataAtual = date("d/m/Y");
 $ano=date('Y');
@@ -89,32 +92,24 @@ case 12: $mes = "Dezembro"; break;
 $sei = 
   "<p><strong><u><center>ATESTADO DE CONFIRMAÇÃO DE SERVIÇOS</strong></p></u></center>".
   "<p>&nbsp;</p>".
-  "<p>Informamos que os serviços prestados pelo(a): </p>".
+  "<p>Informamos que os serviços prestados por: ".$nome."</p>".
+  "<p><strong>PROCESSO: </strong> ".$NumeroProcesso." </p>".
   "<p><strong>EVENTO: </strong> ".$objeto." </p>".
-  "<p><strong>NO: </strong> ".$local."</p>".
-  "<P><strong>DIA(S) / HORÁRIO(S): </strong>".$periodoParcela."</p>".
+  "<P><strong>PERÍODO: </strong>".$periodoParcela."</p>".
   "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS</p>".
   "<p>( X ) FORAM REALIZADOS A CONTENTO</p>".
   "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS A CONTENTO, PELO SEGUINTE MOTIVO:</p>".
   "<p>&nbsp;</p>".
   "<p><strong>DADOS DO SERVIDOR (A) QUE ESTÁ CONFIRMANDO OU NÃO A REALIZAÇÃO DOS SERVIÇOS:</strong></p>".
-  "<p><strong>NOME LEGÍVEL:</strong> Valdilania Santana de Lima</p>".
-  "<p><strong>TELEFONE DE CONTATO:</strong> (11) 3397-0167</p>".
-  "<p><strong>LOTAÇÃO:</strong> SMC-DIVISÃO DE FORMAÇÃO</p>".
-  "<p><strong>REGISTRO FUNCIONAL:</strong> 836.627.6 </p>".
-  "<p><strong>SUPLENTE:</strong> Ilton T.H. Yogi</p>".
-  "<p><strong>TELEFONE DE CONTATO:</strong> (11) 3397-0167</p>".
-  "<p><strong>LOTAÇÃO:</strong> SMC-DIVISÃO DE FORMAÇÃO</p>".
-  "<p><strong>REGISTRO FUNCIONAL:</strong> 800.116.2 </p>".
+  "<p><strong>FISCAL:</strong> Ilton T. Hanashiro Yogi</p>".
+  "<p><strong>RF:</strong> 800.116-2 </p>".
+  "<p><strong>SUPLENTE:</strong> Aurélio Eduardo do Nascimento</p>".
+  "<p><strong>RF:</strong> 605.058-1 </p>".
   "<p>&nbsp;</p>".
-  "<p>Com base no Relatório de Horas Trabalhadas: (Documento SEI link ) atesto que os materiais/serviços prestados discriminados no documento fiscal (Documento SEI link )  foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia: ".$dataFinal.", dentro do prazo previsto. O prazo contratual é do dia ".$periodoParcela.". </p>".
+  "<p>Atesto que os serviços prestados discriminados no documento: link SEI, foram executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no(s) dia(s): ".$dataFinal.", dentro do prazo previsto.</p>".
+  "<p>O prazo contratual é do dia ".$periodoParcela.". <p>".
   "<p>&nbsp;</p>".
-  "<p><strong><center>INFORMAÇÕES COMPLEMENTARES</strong></p></center>".
-  "<p>À área gestora/de liquidação e pagamento:</p>".
-  "<p>Encaminho para prosseguimento.</p>".
-  "<p>São Paulo, ".$dia." de ".$mes." de ".$ano.".</p>"
-
-	 
+  "<p>À área gestora de liquidação e pagamento encaminho para prosseguimento.</p>" 
 
 ?>
 
