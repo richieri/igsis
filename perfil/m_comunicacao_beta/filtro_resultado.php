@@ -162,7 +162,8 @@ else
 }
 
 $con = bancoMysqli();
-$sql_busca_dic = "SELECT * FROM ig_comunicacao, ig_evento WHERE ig_comunicacao.idInstituicao = '$idInstituicao' AND ig_comunicacao.publicado = '1' AND ig_evento.publicado = '1' AND ig_comunicacao.ig_evento_idEvento = ig_evento.idEvento $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento.dataEnvio DESC";
+
+$sql_busca_dic = "SELECT * FROM ig_comunicacao, ig_evento WHERE ig_comunicacao.idInstituicao = '$idInstituicao' AND ig_evento.publicado = '1' AND ig_comunicacao.ig_evento_idEvento = ig_evento.idEvento $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento.dataEnvio DESC";
 
 $query_busca_dic = mysqli_query($con,$sql_busca_dic);
 //conta o total de itens
@@ -177,11 +178,13 @@ $numPaginas = ceil($total/$registros);
 //variavel para calcular o início da visualização com base na página atual
 $inicio = ($registros*$pagina)-$registros;		
 	
-//seleciona os itens por página
-$sql_busca_dic = "SELECT * FROM ig_comunicacao, ig_evento WHERE ig_comunicacao.idInstituicao = '$idInstituicao' AND ig_comunicacao.publicado = '1' AND ig_evento.publicado = '1' AND ig_comunicacao.ig_evento_idEvento = ig_evento.idEvento $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento.dataEnvio DESC limit $inicio,$registros ";
+//seleciona os itens por página 
+
+$sql_busca_dic = "SELECT * FROM ig_comunicacao, ig_evento WHERE ig_comunicacao.idInstituicao = '$idInstituicao' AND ig_evento.publicado = '1' AND ig_comunicacao.ig_evento_idEvento = ig_evento.idEvento $filtro_editado $filtro_revisado $filtro_site $filtro_publicacao $filtro_foto ORDER BY ig_evento.dataEnvio DESC limit $inicio,$registros ";
 $query_busca_dic = mysqli_query($con,$sql_busca_dic);
  //conta o total de itens
 $total = mysqli_num_rows($query_busca_dic);
+
 ?>
 
 	<section id="list_items" class="home-section bg-white">
