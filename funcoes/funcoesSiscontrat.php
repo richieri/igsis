@@ -144,8 +144,6 @@
 			$local_juridico = listaLocaisJuridico($pedido['idEvento']);
 			$duracao = retornaDuracao($pedido['idEvento']);
 			$proponente = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
-			$fiscal = recuperaUsuario($evento['idResponsavel']);
-			$suplente = recuperaUsuario($evento['suplente']);
 			$assinatura = recuperaDados("sis_assinatura",$pedido['instituicao'],"idInstituicao");
 			$penalidades = recuperaPenalidades($pedido['idPenalidade']);
 			$verba = recuperaVerba($pedido['idPenalidade']);
@@ -202,6 +200,12 @@
 				$carga = retornaCargaHoraria($pedido['idPedidoContratacao'],$pedido['parcelas'])." horas";
 				//$carga = "";
 				$justificativa = $cargo['justificativa'];
+				$recuperaFiscal = recuperaUsuario($formacao['fiscal']);
+				$recuperaSuplente = recuperaUsuario($formacao['suplente']);
+				$nomeFiscal = $recuperaFiscal['nomeCompleto'];
+				$rfFiscal = $recuperaFiscal['rf'];
+				$nomeSuplente = $recuperaSuplente['nomeCompleto'];
+				$rfSuplente = $recuperaSuplente['rf'];
 			}
 			elseif($pedido['tipoPessoa'] == 5)
 			{
@@ -216,6 +220,12 @@
 				$periodo = retornaPeriodoVigencia($idPedido);
 				$carga = retornaCargaHoraria($pedido['idPedidoContratacao'],$pedido['parcelas'])." horas";				
 				$justificativa = $cargo['justificativa'];
+				$recuperaFiscal = recuperaUsuario($emia['idResponsavel']);
+				$recuperaSuplente = recuperaUsuario($emia['suplente']);
+				$nomeFiscal = $recuperaFiscal['nomeCompleto'];
+				$rfFiscal = $recuperaFiscal['rf'];
+				$nomeSuplente = $recuperaSuplente['nomeCompleto'];
+				$rfSuplente = $recuperaSuplente['rf'];
 			}
 			else
 			{
@@ -225,6 +235,12 @@
 				$periodo = retornaPeriodo($pedido['idEvento']);
 				$carga = "";
 				$justificativa = $pedido['justificativa'];
+				$recuperaFiscal = recuperaUsuario($evento['idResponsavel']);
+				$recuperaSuplente = recuperaUsuario($evento['suplente']);
+				$nomeFiscal = $recuperaFiscal['nomeCompleto'];
+				$rfFiscal = $recuperaFiscal['rf'];
+				$nomeSuplente = $recuperaSuplente['nomeCompleto'];
+				$rfSuplente = $recuperaSuplente['rf'];
 			}
 			$x = array(
 				"idEvento" => $pedido['idEvento'], 
@@ -245,8 +261,8 @@
 				"ParecerTecnico" => $pedido['parecerArtistico'],
 				"DataCadastro" => $evento['dataEnvio'],
 				"nomeGrupo" => $evento['nomeGrupo'],
-				"Fiscal" => $fiscal['nomeCompleto'] ,
-				"Suplente" => $suplente['nomeCompleto'],
+				"Fiscal" => $nomeFiscal ,
+				"Suplente" => $nomeSuplente,
 				"Observacao"=> $pedido['observacao'], //verificar
 				"NotaEmpenho" => "",
 				"Horario" => "", //SPCultura
@@ -262,8 +278,8 @@
 				"Assinatura" => $assinatura['Assinatura'],
 				"Cargo" => $assinatura['Cargo'],
 				"parcelas" => $pedido['parcelas'],
-				"RfFiscal" => $fiscal['rf'],
-				"RfSuplente" => $suplente['rf'],
+				"RfFiscal" => $rfFiscal,
+				"RfSuplente" => $rfSuplente,
 				"AmparoLegal" => $pedido['AmparoLegal'],
 				"Finalizacao" => $pedido['Finalizacao'],
 				"ComplementoDotacao" => $pedido['ComplementoDotacao'],

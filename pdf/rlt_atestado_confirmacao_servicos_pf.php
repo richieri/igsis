@@ -12,15 +12,14 @@
 //CONSULTA 
 $id_ped=$_GET['id'];
 $pedido = siscontrat($id_ped);
-$pedido = siscontratFormacao($id_ped);
-$pessoa = siscontratDocs($pedido['IdProponente'],1);
 $id_parcela = $_GET['parcela'];
+
 
 $codPed = $id_ped;
 $objeto = $pedido["Objeto"];
 $local = $pedido["Local"];
 
-$pedido_pessoa = siscontratDocs($pedido['IdProponente'],1);
+$pedido_pessoa = siscontratDocs($pedido['IdProponente'],4);
 $nome = $pedido_pessoa["Nome"];
 
 $parcelamento = retornaParcelaPagamento($id_ped);
@@ -28,10 +27,10 @@ $periodoParcela = $parcelamento[$id_parcela]['periodo'];
 $horas = $parcelamento[$id_parcela]['horas'];
 $dataPagamento = $parcelamento[$id_parcela]['pagamento'];
 $NumeroProcesso = $pedido["NumeroProcesso"];
-$Fiscal = $pedido["Fiscal"];
-$RfFiscal = $pedido["RfFiscal"];
-$Suplente = $pedido["Suplente"];
-$RfSuplente = $pedido["RfSuplente"];
+$fiscal = $pedido["Fiscal"];
+$suplente = $pedido["Suplente"];
+$rfFiscal = $pedido["RfFiscal"];
+$rfSuplente = $pedido["RfSuplente"];
 
 
 $dataAtual = date("d/m/Y");
@@ -106,10 +105,10 @@ $sei =
   "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS A CONTENTO, PELO SEGUINTE MOTIVO:</p>".
   "<p>&nbsp;</p>".
   "<p><strong>DADOS DO SERVIDOR (A) QUE ESTÁ CONFIRMANDO OU NÃO A REALIZAÇÃO DOS SERVIÇOS:</strong></p>".
-  "<p><strong>FISCAL:</strong> ".$Fiscal."</p>".
-  "<p><strong>RF:</strong> ".$RfFiscal." </p>".
-  "<p><strong>SUPLENTE:</strong> ".$Suplente."</p>".
-  "<p><strong>RF:</strong> ".$RfSuplente." </p>".
+  "<p><strong>FISCAL:</strong> ".$fiscal."</p>".
+  "<p><strong>RF:</strong> ".$rfFiscal."</p>".
+  "<p><strong>SUPLENTE:</strong> ".$suplente."</p>".
+  "<p><strong>RF:</strong> ".$rfSuplente."</p>".
   "<p>&nbsp;</p>".
   "<p>Atesto que os serviços prestados discriminados no documento: link SEI, foram executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no(s) dia(s): ".$dataFinal.", dentro do prazo previsto.</p>".
   "<p>O prazo contratual é do dia ".$periodoParcela.". <p>".
