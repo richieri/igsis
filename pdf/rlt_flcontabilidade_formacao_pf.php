@@ -87,8 +87,6 @@ case 12: $mes = "Dezembro"; break;
 
 $sei = 
   "<p>&nbsp;</p>".
-  "<p><strong><center>Informação SMC/GP Nº 3115836</center></strong></p>".
-  "<p>&nbsp;</p>".
   "<p><strong>Interessado:</strong> ".$nome."</p>".
   "<p><strong>Do evento:</strong> ".$objeto."</p>".
   "<p>&nbsp;</p>".

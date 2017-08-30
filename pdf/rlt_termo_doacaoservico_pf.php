@@ -22,6 +22,7 @@ $ano=date('Y');
 $dataAtual = date("d/m/Y");
 
 $pedido = siscontrat($id_ped);
+$pedido = siscontratFormacao($id_ped);
 $pessoa = siscontratDocs($pedido['IdProponente'],1);
 
 $setor = $pedido["Setor"];
@@ -37,9 +38,9 @@ $ValorPorExtenso = valorPorExtenso($pedido["ValorGlobal"]);
 $FormaPagamento = $pedido["FormaPagamento"];
 $Justificativa = $pedido["Justificativa"];
 $Fiscal = $pedido["Fiscal"];
-$rfFiscal = $pedido["RfFiscal"];
+$RfFiscal = $pedido["RfFiscal"];
 $Suplente = $pedido["Suplente"];
-$rfSuplente = $pedido["RfSuplente"];
+$RfSuplente = $pedido["RfSuplente"];
 $NumeroProcesso = $pedido["NumeroProcesso"];
 $notaempenho = $pedido["NotaEmpenho"];
 $data_entrega_empenho = exibirDataBr($pedido['EntregaNE']);

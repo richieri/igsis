@@ -18,7 +18,7 @@ $codPed = $id_ped;
 $objeto = $pedido["Objeto"];
 $local = $pedido["Local"];
 
-$pedido_pessoa = siscontratDocs($pedido['IdProponente'],1);
+$pedido_pessoa = siscontratDocs($pedido['IdProponente'],5);
 $nome = $pedido_pessoa["Nome"];
 
 $parcelamento = retornaParcelaPagamento($id_ped);

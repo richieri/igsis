@@ -12,8 +12,9 @@
 //CONSULTA 
 $id_ped=$_GET['id'];
 $pedido = siscontrat($id_ped);
+$pedido = siscontratFormacao($id_ped);
+$pessoa = siscontratDocs($pedido['IdProponente'],1);
 $id_parcela = $_GET['parcela'];
-
 
 $codPed = $id_ped;
 $objeto = $pedido["Objeto"];
@@ -27,6 +28,10 @@ $periodoParcela = $parcelamento[$id_parcela]['periodo'];
 $horas = $parcelamento[$id_parcela]['horas'];
 $dataPagamento = $parcelamento[$id_parcela]['pagamento'];
 $NumeroProcesso = $pedido["NumeroProcesso"];
+$Fiscal = $pedido["Fiscal"];
+$RfFiscal = $pedido["RfFiscal"];
+$Suplente = $pedido["Suplente"];
+$RfSuplente = $pedido["RfSuplente"];
 
 
 $dataAtual = date("d/m/Y");
@@ -101,10 +106,10 @@ $sei =
   "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS A CONTENTO, PELO SEGUINTE MOTIVO:</p>".
   "<p>&nbsp;</p>".
   "<p><strong>DADOS DO SERVIDOR (A) QUE ESTÁ CONFIRMANDO OU NÃO A REALIZAÇÃO DOS SERVIÇOS:</strong></p>".
-  "<p><strong>FISCAL:</strong> Ilton T. Hanashiro Yogi</p>".
-  "<p><strong>RF:</strong> 800.116-2 </p>".
-  "<p><strong>SUPLENTE:</strong> Aurélio Eduardo do Nascimento</p>".
-  "<p><strong>RF:</strong> 605.058-1 </p>".
+  "<p><strong>FISCAL:</strong> ".$Fiscal."</p>".
+  "<p><strong>RF:</strong> ".$RfFiscal." </p>".
+  "<p><strong>SUPLENTE:</strong> ".$Suplente."</p>".
+  "<p><strong>RF:</strong> ".$RfSuplente." </p>".
   "<p>&nbsp;</p>".
   "<p>Atesto que os serviços prestados discriminados no documento: link SEI, foram executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no(s) dia(s): ".$dataFinal.", dentro do prazo previsto.</p>".
   "<p>O prazo contratual é do dia ".$periodoParcela.". <p>".
