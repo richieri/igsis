@@ -733,7 +733,7 @@ $con1 = bancoMysqli();
 $con2 = bancoMysqliProponente();
 
 // Endereço da página
-$link = "?perfil=contratados";
+$link = "?perfil=contratados&p=fisica";
 
 if(isset($_POST['pesquisar']))
 {
@@ -833,7 +833,7 @@ if(isset($_POST['pesquisar']))
 		if(mysqli_query($con1,$sql_update_nome))
 		{
 			$mensagem =	$nome." atualizado com sucesso!";
-			echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."'>";
+			//echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."'>";
 		}
 		else
 		{
@@ -1015,7 +1015,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Nome'  />
 											<input type='hidden' name='varCampo' value='".$nome."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1030,7 +1030,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='NomeArtistico'  />
 											<input type='hidden' name='varCampo' value='".$nomeArtistico."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1045,7 +1045,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='RG'  />
 											<input type='hidden' name='varCampo' value='".$rg."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1060,7 +1060,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='CCM'  />
 											<input type='hidden' name='varCampo' value='".$ccm."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1077,7 +1077,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='IdEstadoCivil'  />
 											<input type='hidden' name='varCampo' value='".$idEstadoCivil."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1092,7 +1092,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='DataNascimento'  />
 											<input type='hidden' name='varCampo' value='".$dataNascimento."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1107,7 +1107,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='LocalNascimento'  />
 											<input type='hidden' name='varCampo' value='".$localNascimento."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1122,7 +1122,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Nacionalidade'  />
 											<input type='hidden' name='varCampo' value='".$nacionalidade."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1137,7 +1137,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='CEP'  />
 											<input type='hidden' name='varCampo' value='".$cep."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1152,7 +1152,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Numero'  />
 											<input type='hidden' name='varCampo' value='".$numero."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1167,7 +1167,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Complemento'  />
 											<input type='hidden' name='varCampo' value='".$complemento."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1182,7 +1182,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Telefone1'  />
 											<input type='hidden' name='varCampo' value='".$telefone1."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1197,7 +1197,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Telefone2'  />
 											<input type='hidden' name='varCampo' value='".$telefone2."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1212,7 +1212,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Telefone3'  />
 											<input type='hidden' name='varCampo' value='".$telefone3."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1227,7 +1227,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Email'  />
 											<input type='hidden' name='varCampo' value='".$email."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1242,7 +1242,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='DRT'  />
 											<input type='hidden' name='varCampo' value='".$drt."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1257,7 +1257,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Funcao'  />
 											<input type='hidden' name='varCampo' value='".$funcao."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1272,7 +1272,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Cbo'  />
 											<input type='hidden' name='varCampo' value='".$cbo."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1287,7 +1287,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Pis'  />
 											<input type='hidden' name='varCampo' value='".$pis."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1302,7 +1302,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='OMB'  />
 											<input type='hidden' name='varCampo' value='".$omb."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1319,7 +1319,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='codBanco'  />
 											<input type='hidden' name='varCampo' value='".$codigoBanco."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1334,7 +1334,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Agencia'  />
 											<input type='hidden' name='varCampo' value='".$agencia."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1349,7 +1349,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='Conta'  />
 											<input type='hidden' name='varCampo' value='".$conta."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1364,7 +1364,7 @@ if(isset($_POST['pesquisar']))
 										<form method='POST' action='".$link."' enctype='multipart/form-data'>
 											<input type='hidden' name='campo' value='DataAtualizacao'  />
 											<input type='hidden' name='varCampo' value='".$dataAtualizacao."'  />
-											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-lg btn-block' value='Atualizar IGSIS'>
+											<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 										</form>
 									</td>";
 								echo "</tr>";
@@ -1376,14 +1376,16 @@ if(isset($_POST['pesquisar']))
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
-					<form method='POST' action='".$link."' enctype='multipart/form-data'>
-						<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
+					<form method='POST' action='?perfil=contratados&p=fisica'>
+						<input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro cpf'>
 					</form>				
 				</div>
 				<div class="col-md-6">
-					<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
-						<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Avançar'>
-					</form><br/>
+					<form method='POST' action='?perfil=contratados&p=lista'>
+						<input type='hidden' name='insereFisica' value='1'>
+						<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
+						<input type ='submit' class='btn btn-theme btn-lg btn-block' value='inserir'>
+					</form>
 				</div>
 			</div>
 		</section>
