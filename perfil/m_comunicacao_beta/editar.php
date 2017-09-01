@@ -151,7 +151,6 @@
 				{
 					//edição cinema
 					$_SESSION['cinema'] = 1;
-					$_SESSION['idEvento'] = $_GET['id'];
 					$_SESSION['com'] = 1;
 			?>
 								| <a href="?perfil=cinema" >Filmes </a>
@@ -248,17 +247,20 @@
 								<p>- a venda estará disponível na bilheteria em seu horário de funcionamento (terça a sábado, das 13h às 21h30; e domingos, das 13h às 20h30), e no site www.ingressorapido.com.br a partir de 30 dias antes do evento (mesmo no caso de temporadas longas)</p>
 								<br/>
 				<?php
-					$sub = verificaSubEvento($_GET['id']);
+					$sub = verificaSubEvento($idEvento);
+					
+					echo $sub;
+					
 					if($sub['num'] > 0)
 					{
 	?>
 								<strong>Sub-eventos</strong>
-								<?php echo listaSubEventosCom($_GET['id']); ?>
+								<?php echo listaSubEventosCom($idEvento); ?>
 				<?php
 					}
 				?>
 								<strong>Ocorrências</strong>	
-								<?php listaOcorrenciasTexto($_GET['id']); ?>
+								<?php listaOcorrenciasTexto($idEvento); ?>
 								<p></p>
 							</div>
 						</div>

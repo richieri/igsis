@@ -1053,7 +1053,7 @@
 		$sql = "SELECT * FROM ig_sub_evento WHERE ig_evento_idEvento = '$idEvento'";
 		$query = mysqli_query($con,$sql);
 		$num = mysqli_num_rows($query);
-		$subEvento['num'] = $num;
+		//$subEvento['num'] = $num;
 		if($num > 0)
 		{
 			$subEvento = mysql_fetch_array($query);	
