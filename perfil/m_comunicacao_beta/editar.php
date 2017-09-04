@@ -127,7 +127,8 @@
 		
 		$campo = recuperaDados("ig_comunicacao",$idCom,"idCom");
 		$idEvento = $campo['ig_evento_idEvento'];
-		$chamado = recuperaAlteracoesEvento($idEvento);	
+		$chamado = recuperaAlteracoesEvento($idEvento);
+		$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 ?>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
@@ -246,28 +247,25 @@
 								<p>Duração: <?php echo retornaDuracao($idEvento); ?> min.</p>
 								<p>- a venda estará disponível na bilheteria em seu horário de funcionamento (terça a sábado, das 13h às 21h30; e domingos, das 13h às 20h30), e no site www.ingressorapido.com.br a partir de 30 dias antes do evento (mesmo no caso de temporadas longas)</p>
 								<br/>
-				<?php
-					$sub = verificaSubEvento($idEvento);
-					
-					echo $sub;
-					
-					if($sub['num'] > 0)
-					{
-	?>
+						<?php
+							if($evento['subEvento'] == '1')
+							{ 
+							
+								
+						?>
 								<strong>Sub-eventos</strong>
 								<?php echo listaSubEventosCom($idEvento); ?>
-				<?php
-					}
-				?>
+									
 								<strong>Ocorrências</strong>	
 								<?php listaOcorrenciasTexto($idEvento); ?>
 								<p></p>
 							</div>
 						</div>
 					</div>	
-			<?php
-				} 
-			?>
+					<?php
+							}
+						} 
+					?>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 							<textarea name="observacao" class="form-control" rows="20" ><?php echo $campo['observacao'] ?></textarea>

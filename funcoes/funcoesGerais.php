@@ -1052,7 +1052,7 @@
 		$con = bancoMysqli();
 		$sql = "SELECT * FROM ig_sub_evento WHERE ig_evento_idEvento = '$idEvento'";
 		$query = mysqli_query($con,$sql);
-		$num = mysqli_num_rows($query);
+		//$num = mysqli_num_rows($query);
 		//$subEvento['num'] = $num;
 		if($num > 0)
 		{
