@@ -255,7 +255,7 @@
 						?>
 								<strong>Sub-eventos</strong>
 								<?php echo listaSubEventosCom($idEvento); ?>
-									
+						<?php } ?>
 								<strong>Ocorrências</strong>	
 								<?php listaOcorrenciasTexto($idEvento); ?>
 								<p></p>
@@ -263,7 +263,6 @@
 						</div>
 					</div>	
 					<?php
-							}
 						} 
 					?>
 					<div class="form-group">
