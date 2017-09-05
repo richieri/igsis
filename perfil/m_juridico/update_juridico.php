@@ -11,6 +11,7 @@ $http = $server."/pdf/";
 $link1=$http."rlt_despacho_padrao_pf.php";
 $link2=$http."rlt_despacho_vocacional_pf.php";
 $link3=$http."rlt_manifestacaojuridica_pf.php";
+$link6=$http."rlt_despacho_oficina_pf.php";
 $link4=$http."rlt_despacho_padrao_pj.php";
 $link5=$http."rlt_manifestacaojuridica_pj.php";
 
@@ -70,6 +71,9 @@ if(mysqli_stmt_execute($stmt))
 						<div class='col-md-offset-2 col-md-6'>
 							<a href='$link3?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Manifestação Jurídica</a>
 						</div>
+					<div class='col-md-6'>
+							<a href='$link6?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Despacho Oficinas</a>
+					</div>	
 					</div>
 				</form>
 				</div>
