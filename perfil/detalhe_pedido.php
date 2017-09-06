@@ -263,6 +263,7 @@
 					<br />
 					<h5>Histórico de envio</h5>
 					<?php
+						$con = bancoMysqli();
 						$dataHistorico = recuperaDados('ig_data_envio',$idEvento,'idEvento');
 						$sql_data_envio = "SELECT * FROM `ig_data_envio` WHERE idEvento = '$idEvento' ORDER BY dataEnvio DESC";
 						$query_data_envio = mysqli_query($con,$sql_data_envio);	
