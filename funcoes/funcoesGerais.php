@@ -1861,6 +1861,20 @@
 		}
 	}
 	*/
+	function retornaPrazo($id)
+	{
+		$con = bancoMysqli();
+		$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+		$query_anterior = mysqli_query($con,$sql_anterior);
+		$data = mysqli_fetch_array($query_anterior);
+		$data_inicio = $data['dataInicio'];
+		
+		//$dataPrazo = $data_inicio - $dias;
+		
+		//return $dataPrazo;
+		
+		return $data_inicio;
+	}
 	function retornaPeriodo($id)
 	{
 		//retorna o período

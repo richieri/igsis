@@ -13,8 +13,13 @@ $pasta = "?perfil=contratos&p=";
 					<li><a href="<?php echo $pasta ?>frm_lista_pj">Pessoa Jurídica</a></li>
 				</ul>
 			</li>
-			<li><a href="<?php echo $pasta ?>frm_sem_operador">Sem Operador</a></li>
 			<li><a href="<?php echo $pasta ?>frm_busca">Contratos</a></li>
+			<li><a href="#">Filtro por Operador</a>
+				<ul class="dl-submenu">
+					<li><a href="<?php echo $pasta ?>frm_sem_operador">Sem Operador</a></li>
+					<li><a href="<?php echo $pasta ?>frm_por_operador">Por Operador</a></li>
+				</ul>
+			</li>
 			<li><a href="<?php echo $pasta ?>frm_busca_periodo">Contratos por período</a></li>
 			<li><a href="<?php echo $pasta ?>frm_busca_dataenvio">Contratos por data de envio</a></li>
 			<li><a href="<?php echo $pasta ?>frm_lista_pedidocontratacao_pf&enviados=1">Formação</a></li>
