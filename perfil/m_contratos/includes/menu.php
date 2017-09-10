@@ -13,21 +13,25 @@ $pasta = "?perfil=contratos&p=";
 					<li><a href="<?php echo $pasta ?>frm_lista_pj">Pessoa Jurídica</a></li>
 				</ul>
 			</li>
-			<li><a href="<?php echo $pasta ?>frm_busca">Contratos</a></li>
+			<li><a href="<?php echo $pasta ?>frm_busca">Filtrar Contratos</a></li>
 			<li><a href="#">Filtro por Operador</a>
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>frm_sem_operador">Sem Operador</a></li>
 					<li><a href="<?php echo $pasta ?>frm_por_operador">Por Operador</a></li>
 				</ul>
 			</li>
-			<li><a href="<?php echo $pasta ?>frm_busca_periodo">Contratos por período</a></li>
-			<li><a href="<?php echo $pasta ?>frm_busca_dataenvio">Contratos por data de envio</a></li>
-			<li><a href="<?php echo $pasta ?>frm_lista_pedidocontratacao_pf&enviados=1">Formação</a></li>
-			<li><a href="#">Virada</a>
+			<li><a href="<?php echo $pasta ?>frm_busca_periodo">Filtro por Período</a></li>
+			<li><a href="<?php echo $pasta ?>frm_busca_dataenvio">Filtro por Data de Envio</a></li>
+			<li><a href="#">Especiais</a>
 				<ul class="dl-submenu">
-					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=0">Sem nº Processo</a>
-					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=1">Com nº Processo</a>
-					<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=3">Geral</a>
+					<li><a href="<?php echo $pasta ?>frm_lista_pedidocontratacao_pf&enviados=1">Formação</a></li>
+					<li><a href="#">Virada</a>
+						<ul class="dl-submenu">
+							<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=0">Sem nº Processo</a>
+							<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=1">Com nº Processo</a>
+							<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=3">Geral</a>
+						</ul>
+					</li>
 				</ul>
 			</li>
 			<li><a href="<?php echo $pasta ?>frm_chamados">Chamados</a></li>
