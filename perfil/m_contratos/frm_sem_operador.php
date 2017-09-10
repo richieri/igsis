@@ -4,7 +4,6 @@ include 'includes/menu.php';
 	
 $con = bancoMysqli();
 
-//$sql = "SELECT ped.idPedidoContratacao, ped.idEvento, valor, NumeroProcesso, idPessoa, estado FROM ig_evento AS eve INNER JOIN igsis_pedido_contratacao AS ped ONN eve.idEvento = ped.idEvento  WHERE eve.publicado = '1' AND ped.publicado = '1' AND eve.dataEnvio IS NOT NULL AND ped.estado NOT IN(11, 12, 15) AND idContratos IS NULL AND oco.dataInicio LIKE '2017%' ORDER BY eve.idEvento DESC";
 $sql = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.valor, ped.NumeroProcesso, ped.parcelas, ped.idPessoa, ped.estado FROM ig_evento AS eve INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento WHERE eve.publicado = '1' AND ped.publicado = '1' AND eve.dataEnvio IS NOT NULL AND ped.estado NOT IN (11,12,15) AND idContratos IS NULL ORDER BY eve.idEvento DESC";
 $query = mysqli_query($con,$sql);
 
