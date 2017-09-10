@@ -22,10 +22,9 @@ if(isset($_POST['pesquisar']))
 	$tipo = $_POST['tipo'];
 	$instituicao = $_POST['instituicao'];
 	$estado = $_POST['estado'];
-	$operador = $_POST['operador'];
 	$juridico = $_POST['juridico'];
 	$projeto = $_POST['projeto'];
-	if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $operador == 0 AND $juridico == 0 AND $projeto == 0)
+	if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $juridico == 0 AND $projeto == 0)
 	{ 
 ?>
 	<section id="services" class="home-section bg-white">
@@ -69,12 +68,7 @@ if(isset($_POST['pesquisar']))
 							<select class="form-control" name="estado" id="inputSubject" >
 								<option value='0'></option>
 								<?php echo geraOpcao("sis_estado","","") ?>
-							</select>	
-						<label>Operador do Contrato</label>
-							<select class="form-control" name="operador" id="inputSubject" >
-								<option value='0'></option>
-								<?php  geraOpcaoContrato(""); ?>
-							</select>	
+							</select>		
 						<label>Tipo de Relação Jurídica</label>
 							<select class="form-control" name="juridico" id="inputSubject" >
 								<option value='0'></option>
@@ -103,10 +97,13 @@ if(isset($_POST['pesquisar']))
 	else
 	{
 		$con = bancoMysqli();
-		$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idPedidoContratacao = '$id' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
+		$sql_existe = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.estado FROM igsis_pedido_contratacao AS ped 
+						INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento
+						WHERE idPedidoContratacao = '$id' AND ped.publicado = '1' AND eve.publicado = 1 AND estado IS NOT NULL AND dataEnvio LIKE '2017%'
+						ORDER BY idPedidoContratacao DESC";
 		$query_existe = mysqli_query($con, $sql_existe);
 		$num_registro = mysqli_num_rows($query_existe);
-		if($id != "" AND $num_registro > 0)
+		if($id != "")
 		{ // Foi inserido o número do pedido
 			$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
 			if($pedido['estado'] > 1)
@@ -214,16 +211,7 @@ if(isset($_POST['pesquisar']))
 			{
 				$filtro_status = " AND igsis_pedido_contratacao.estado = '$estado'  ";
 			}
-			
-			if($operador == 0)
-			{
-				$filtro_operador = "";	
-			}
-			else
-			{
-				$filtro_operador = " AND idContratos = '$operador'  ";
-			}
-			
+					
 			if($juridico == 0)
 			{
 				$filtro_juridico = "";
@@ -242,7 +230,7 @@ if(isset($_POST['pesquisar']))
 				$filtro_projeto = " AND ig_evento.projetoEspecial = '$projeto'  ";
 			}
 				
-			$sql_evento = "SELECT * FROM ig_evento, igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND igsis_pedido_contratacao.idEvento = ig_evento.idEvento $filtro_evento $filtro_fiscal $filtro_tipo $filtro_instituicao $filtro_juridico $filtro_projeto ORDER BY ig_evento.idEvento DESC ";
+			$sql_evento = "SELECT * FROM ig_evento, igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND igsis_pedido_contratacao.idEvento = ig_evento.idEvento AND dataEnvio LIKE '2017%' $filtro_evento $filtro_fiscal $filtro_tipo $filtro_instituicao $filtro_juridico $filtro_projeto ORDER BY ig_evento.idEvento DESC ";
 			$query_evento = mysqli_query($con,$sql_evento);
 			$i = 0;
 			while($evento = mysqli_fetch_array($query_evento))
@@ -265,7 +253,6 @@ if(isset($_POST['pesquisar']))
 						$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 						$fiscal = recuperaUsuario($evento['idResponsavel']);
 						$suplente = recuperaUsuario($evento['suplente']);
-						$protocolo = ""; //recuperaDados("sis_protocolo",$pedido['idEvento'],"idEvento");
 						$operador = recuperaUsuario($pedido['idContratos']);
 						if($pedido['parcelas'] > 1)
 						{
@@ -436,12 +423,6 @@ else
 								<?php echo geraOpcao("sis_estado","","") ?>
 							</select>
 						<br />
-						<label>Operador do Contrato</label>
-							<select class="form-control" name="operador" id="inputSubject" >
-								<option value='0'></option>
-								<?php  geraOpcaoContrato(""); ?>
-							</select>
-						<br />	
 						<label>Tipo de Relação Jurídica</label>
 							<select class="form-control" name="juridico" id="inputSubject" >
 								<option value='0'></option>
