@@ -296,7 +296,8 @@
 				"ingresso" => $ingresso['valorIngresso'],
 				"qtdApresentacoes" => $pedido['qtdApresentacoes'],
 				"tipoPessoa" => $pedido['tipoPessoa'],
-				"observacao" => $pedido['observacao']);
+				"observacao" => $pedido['observacao'],
+				"pendenciaDocumento" => $pedido['pendenciaDocumento']);
 			return $x;	
 		}
 		else

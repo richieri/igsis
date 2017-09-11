@@ -131,6 +131,7 @@ if(isset($_POST['atualizar']))
 	$suplente  = $_POST['Suplente'];
 	$parecer = addslashes($_POST['ParecerTecnico']);
 	$observacao = addslashes($_POST['Observacao']);
+	$pendenciaDocumento = addslashes($_POST['pendenciaDocumento']);
 	$parcelas = $_POST['parcelas'];
 	$processo = $_POST['NumeroProcesso'];
 	$dataAgora = date('Y-m-d H:i:s');
@@ -140,6 +141,7 @@ if(isset($_POST['atualizar']))
 			`parcelas` =  '$parcelas',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
+			pendenciaDocumento = '$pendenciaDocumento',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
 			NumeroProcesso = '$processo'
@@ -188,6 +190,7 @@ if(isset($_POST['atualizar']))
 			`parcelas` =  '$parcelas',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
+			pendenciaDocumento = '$pendenciaDocumento',
 			DataContrato = '$dataAgora',
 			parecerArtistico = '$parecer',
 			NumeroProcesso = '$processo'
@@ -445,6 +448,15 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 						<?php echo $linha_tabelas['CargaHoraria'];?><br/>
 					</div>
 				</div>
+				
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><br /></div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Relação Jurídica:</strong> 
+						<?php echo retornaRelacaoJuridica($evento['ig_modalidade_IdModalidade']);?></div>
+				</div>
 				  
 				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
                 <?php 
@@ -587,6 +599,12 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 						<textarea name="Observacao" cols="40" rows="2"><?php echo $pedido['Observacao'];?></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Pendência de Documentação:</strong><br/>
+					    <textarea name="pendenciaDocumento" cols="40" rows="3"><?php echo $linha_tabelas['pendenciaDocumento'];?></textarea>
 					</div>
 				</div>
                   
