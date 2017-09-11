@@ -85,7 +85,7 @@ $sei =
   "<p><strong>Data / Período:</strong> "."$periodo"."</p>".
   "<p><br><strong>Locais e Horários:</strong><br><br> ".$tudo."</p>".
   "<p><strong> Valor:</strong> "."R$ $ValorGlobal"."  "."($ValorPorExtenso)"."</p>".
-  "<p><strong>Forma de Pagamento:</strong> "."$FormaPagamento"."Os valores devidos aos prestadores de serviços serão apurados mensalmente e pagos a partir do 1º dia útil do mês subsequente da comprovada execução dos serviços, mediante confirmação pela unidade responsável pela fiscalização,</p>".
+  "<p><strong>Forma de Pagamento:</strong> "."$FormaPagamento"."Os valores devidos aos prestadores de serviços serão apurados mensalmente e pagos a partir do 1º dia útil do mês subsequente da comprovada execução dos serviços, mediante confirmação pela unidade responsável pela fiscalização.</p>".
   "<p><strong>Dotação Orçamentária:</strong> "."$dotacao"."</p>".
   "<p>&nbsp;</p>".
   "<p align='justify'>"."$final"."</p>".
