@@ -4,7 +4,7 @@ include 'includes/menu.php';
 	
 $con = bancoMysqli();
 
-$sql = "SELECT * FROM ig_evento AS eve 
+$sql = "SELECT DISTINCT idPedidoContratacao FROM  ig_evento AS eve
 		INNER JOIN ig_data_envio AS env ON eve.idEvento = env.idEvento 
 		INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento = ped.idEvento
 		WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.estado NOT IN (11,12,15) ORDER BY eve.idEvento DESC";
