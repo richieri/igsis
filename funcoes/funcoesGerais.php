@@ -1405,6 +1405,15 @@
 		$x = mysqli_fetch_array($query);		
 		return $x['tipoEvento'];
 	}
+	function retornaRelacaoJuridica($id)
+	{
+		//retorna o tipo de evento
+		$con = bancoMysqli();
+		$sql = "SELECT * FROM ig_modalidade WHERE idModalidade = '$id'";
+		$query = mysqli_query($con,$sql);
+		$x = mysqli_fetch_array($query);		
+		return $x['modalidade'];
+	}
 	function iniciaFormulario($idUsuario,$idInstituicao)
 	{
 		//inicia um evento zerado

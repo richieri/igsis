@@ -62,7 +62,7 @@ case 'inicial':
 		{
 			$con = bancoMysqli();
 			
-			$sql_evento = "SELECT * FROM ig_evento, igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND igsis_pedido_contratacao.idEvento = ig_evento.idEvento AND idContratos = '$operador' AND dataEnvio IS NOT NULL ORDER BY ig_evento.idEvento DESC";
+			$sql_evento = "SELECT * FROM ig_evento, igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND igsis_pedido_contratacao.idEvento = ig_evento.idEvento AND estado NOT IN (11,12,15) AND idContratos = '$operador' AND dataEnvio IS NOT NULL ORDER BY ig_evento.idEvento DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
 			$i = 0;
 	
@@ -76,8 +76,23 @@ case 'inicial':
 				$periodo = retornaPeriodo($pedido['idEvento']);
 				$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 				$operador = recuperaUsuario($pedido['idContratos']);
+				$dataPrazo = date('d/m/Y', strtotime('-5 days', strtotime(retornaPrazo($pedido['idEvento']))));
+	
+				$dataInicial = retornaPrazo($pedido['idEvento']);
+				$dataFinal = exibirDataMysql($dataPrazo);
+				
+				$hoje = date('d/m/y');
+				$today = exibirDataMysql($hoje);
+				
+				// Calcula a diferença em segundos entre as datas
+				$diferenca = strtotime($dataFinal) - strtotime($today);
+
+				//Calcula a diferença em dias
+				$dias = floor($diferenca / (60 * 60 * 24));
 				
 				$x[$i]['id']= $pedido['idPedidoContratacao'];
+				$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
+				$x[$i]['relacaoJuridica'] = retornaRelacaoJuridica($evento['ig_modalidade_IdModalidade']);
 				$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
 				switch($pedido['tipoPessoa'])
 				{
@@ -101,10 +116,12 @@ case 'inicial':
 					break;
 				}
 				$x[$i]['local'] = substr($local,1);
-				$x[$i]['instituicao'] = $instituicao['sigla'];
+				$x[$i]['valor'] = $pedido['valor'];
 				$x[$i]['periodo'] = $periodo;
-				$x[$i]['status'] = $pedido['estado'];	
-				$x[$i]['operador'] = $operador['nomeCompleto'];		
+				$x[$i]['status'] = $pedido['estado'];
+				$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];					
+				$x[$i]['operador'] = $operador['nomeCompleto'];	
+				$x[$i]['dias'] = $dias;				
 				$i++;			
 }
 			$x['num'] = $i;				
@@ -126,17 +143,20 @@ case 'inicial':
 				{ 
 				?>
 					<table class="table table-condensed">
-						<thead>
+						<thead><strong>Operador: <?php echo $operador['nomeCompleto'] ?></strong>
 							<tr class="list_menu">
 								<td>Codigo do Pedido</td>
+								<td>Nº Processo</td>
 								<td>Proponente</td>
 								<td>Tipo</td>
+								<td>Relação Jurídica</td>
 								<td>Objeto</td>
 								<td width="20%">Local</td>
-								<td>Instituição</td>
+								<td>Valor</td>
 								<td>Periodo</td>
+								<td>Pendências</td>
+								<td>Prazo (Dias)</td>
 								<td>Status</td>
-								<td>Operador</td>
 							</tr>
 						</thead>
 						<tbody>		
@@ -150,23 +170,34 @@ case 'inicial':
 								switch($x[$h]['pessoa'])
 								{
 									case 1:
-										echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+										echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".substr($x[$h]['id'],6,11)."</a></td>";
 									break;
 									case 2:
-										echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+										echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".substr($x[$h]['id'],6,11)."</a></td>";
 									break;
 									case 4:
-										echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_proposta_formacao&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+										echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_proposta_formacao&id_ped=".$x[$h]['id']."'>".substr($x[$h]['id'],6,11)."</a></td>";
 									break;	
 								}
-								echo '<td class="list_description">'.$x[$h]['proponente'].					'</td> ';
-								echo '<td class="list_description">'.$x[$h]['tipo'].					'</td> ';
-								echo '<td class="list_description">'.$x[$h]['objeto'].						'</td> ';
-								echo '<td class="list_description">'.$x[$h]['local'].				'</td> ';
-								echo '<td class="list_description">'.$x[$h]['instituicao'].				'</td> ';
-								echo '<td class="list_description">'.$x[$h]['periodo'].						'</td> ';
-								echo '<td class="list_description">'.$status['estado'].						'</td> ';
-								echo '<td class="list_description">'.$x[$h]['operador'].						'</td> </tr>';
+								echo '<td class="list_description">'.substr($x[$h]['NumeroProcesso'],10,20).'</td> ';
+								echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
+								echo '<td class="list_description">'.substr($x[$h]['tipo'],0,1).'</td> ';
+								echo '<td class="list_description">'.$x[$h]['relacaoJuridica'].'</td> ';
+								echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
+								echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
+								echo '<td class="list_description">'.dinheiroParaBr($x[$h]['valor']).'</td> ';
+								echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
+								echo '<td >'.$x[$h]['pendencia'].'</td> ';
+								if($x[$h]['status'] < 7)
+								{
+									echo '<td class="list_description">'.$x[$h]['dias'].'</td> ';
+								}
+								else
+								{
+									echo '<td class="list_description"></td>';
+								}								
+								echo '<td class="list_description">'.$status['estado'].'</td> ';
+								echo '</tr>';
 
 							}
 						?>
