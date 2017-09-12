@@ -110,7 +110,7 @@ if(isset($_POST['pesquisar']))
 		$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idPedidoContratacao = '$id' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
 		$query_existe = mysqli_query($con, $sql_existe);
 		$num_registro = mysqli_num_rows($query_existe);
-		if($id != "" AND $num_registro > 0)
+		if($id != "")
 		{ // Foi inserido o número do pedido
 			$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
 			if($pedido['estado'] != NULL)
