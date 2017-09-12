@@ -1314,7 +1314,7 @@
 			ped.idPedidoContratacao, 
 			ped.tipoPessoa, 
 			ped.idPessoa, 
-			ped.instituicao 
+			ped.instituicao
 			FROM igsis_pedido_contratacao 
 			AS ped
 			INNER JOIN ig_evento 
@@ -1322,7 +1322,7 @@
 			ON ped.idEvento = eve.idEvento
 			WHERE eve.dataEnvio IS NULL
 			AND eve.publicado = 1 
-			AND eve.statusEvento = Aguardando
+			AND eve.statusEvento = 'Aguardando'
 			ORDER BY eve.idEvento DESC";
 		$query_lista_total = mysqli_query($con,$sql_lista_total);
 		$total_registros = mysqli_num_rows($query_lista_total);
@@ -1333,8 +1333,7 @@
 			ped.idPedidoContratacao, 
 			ped.tipoPessoa, 
 			ped.idPessoa, 
-			ped.instituicao,
-			ped.estado
+			ped.instituicao
 			FROM igsis_pedido_contratacao 
 			AS ped
 			INNER JOIN ig_evento 
@@ -1342,7 +1341,6 @@
 			ON ped.idEvento = eve.idEvento
 			WHERE eve.dataEnvio IS NULL 
 			AND eve.publicado = 1 
-			AND ped.estado IS NULL
 			AND eve.statusEvento = 'Aguardando'
 			ORDER BY eve.idEvento 
 			DESC LIMIT $registro_inicial,$num_registro";
