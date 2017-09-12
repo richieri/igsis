@@ -73,7 +73,7 @@ case 'inicial':
 		else
 		{
 			$con = bancoMysqli();
-			$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idEvento = '$evento' AND publicado = '1' AND estado IS NOT NULL ORDER BY idEvento DESC";
+			$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idEvento = '$evento' AND publicado = '1' AND estado IS NULL ORDER BY idEvento DESC";
 			$query_existe = mysqli_query($con, $sql_existe);
 			$num_registro = mysqli_num_rows($query_existe);
 		
@@ -232,10 +232,8 @@ case 'inicial':
 							<label>Id do Evento</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Id do Evento" ><br />
 							
-							<?php if($_SESSION['perfil'] == 1){?>					
-								<label>Objeto/Evento</label>
-								<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
-							<?php } ?>
+							<label>Objeto/Evento</label>
+							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
 										  
 							<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
 							<select class="form-control" name="fiscal" id="inputSubject" >
