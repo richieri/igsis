@@ -1322,6 +1322,7 @@
 			ON ped.idEvento = eve.idEvento
 			WHERE eve.dataEnvio IS NULL
 			AND eve.publicado = 1 
+			AND ped.publicado = 1
 			AND eve.statusEvento = 'Aguardando'
 			ORDER BY eve.idEvento DESC";
 		$query_lista_total = mysqli_query($con,$sql_lista_total);
@@ -1341,6 +1342,7 @@
 			ON ped.idEvento = eve.idEvento
 			WHERE eve.dataEnvio IS NULL 
 			AND eve.publicado = 1 
+			AND ped.publicado = 1
 			AND eve.statusEvento = 'Aguardando'
 			ORDER BY eve.idEvento 
 			DESC LIMIT $registro_inicial,$num_registro";

@@ -73,23 +73,25 @@ case 'inicial':
 		else
 		{
 			$con = bancoMysqli();
-			$sql_existe = "SELECT idPedidoContratacao,idEvento,estado FROM igsis_pedido_contratacao WHERE idEvento = '$evento' AND publicado = '1' AND estado IS NULL ORDER BY idEvento DESC";
+			$sql_existe = "SELECT * FROM ig_evento WHERE ig_evento.idEvento = '$id' AND ig_evento.publicado = '1' AND dataEnvio IS NULL AND ig_evento.idEvento IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) ORDER BY ig_evento.idEvento DESC";
 			$query_existe = mysqli_query($con, $sql_existe);
 			$num_registro = mysqli_num_rows($query_existe);
 		
-			if($id != "" AND $num_registro > 0)
+			if($id != "")
 			{ // Foi inserido o número do pedido
-				$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idEvento");
 		
-				if($pedido['estado'] != NULL)
+				if($num_registro == 0)
 				{
-					$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
+					$x['num'] = 0;
+				}
+				else
+				{
+					$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idEvento");				
+					$evento = recuperaDados("ig_evento",$id,"idEvento"); //$tabela,$idEvento,$campo
 					$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
 					$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
 					$local = listaLocais($pedido['idEvento']);
-					$local_juridico = listaLocaisJuridico($pedido['idEvento']);
 					$periodo = retornaPeriodo($pedido['idEvento']);
-					$duracao = retornaDuracao($pedido['idEvento']);
 					$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 					$fiscal = recuperaUsuario($evento['idResponsavel']);
 					$x[0]['id']= $evento['idEvento'];
@@ -97,6 +99,7 @@ case 'inicial':
 					$x[0]['local'] = substr($local,1);
 					$x[0]['periodo'] = $periodo;
 					$x[0]['fiscal'] = $fiscal['nomeCompleto'];
+					$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
 					
 					if($pedido['tipoPessoa'] == 1)
 					{
@@ -109,13 +112,8 @@ case 'inicial':
 						$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
 						$x[0]['proponente'] = $pessoa['RazaoSocial'];
 						$x[0]['tipo'] = "Jurídica";
-					}
+					}				
 					$x['num'] = 1;
-					$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-				}
-					else
-				{
-					$x['num'] = 0;
 				}
 			}
 			else
@@ -138,7 +136,7 @@ case 'inicial':
 					$filtro_fiscal = "";	
 				}		
 				
-				$sql_evento = "SELECT * FROM ig_evento WHERE ig_evento.publicado = '1' AND dataEnvio IS NULL AND ig_evento.idEvento NOT IN (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) $filtro_evento $filtro_fiscal ORDER BY ig_evento.idEvento DESC";
+				$sql_evento = "SELECT * FROM ig_evento WHERE ig_evento.publicado = '1' AND dataEnvio IS NULL AND ig_evento.idEvento NOT (SELECT DISTINCT idEvento FROM igsis_pedido_contratacao WHERE publicado = 1) $filtro_evento $filtro_fiscal ORDER BY ig_evento.idEvento DESC";
 				$query_evento = mysqli_query($con,$sql_evento);
 				$i = 0;
 		
@@ -164,8 +162,8 @@ case 'inicial':
 ?>
 	<section id="list_items">
 		<div class="container">
-			<h3>Resultado da busca</h3>
-            <h5>Foram encontrados <?php echo $x['num']; ?> eventos.</h5>
+			<h3><br/></h3>
+            <h5>Foram encontrados <?php echo $x['num'] ?> eventos.</h5>
             <h5><a href="?perfil=gestao_prazos&p=frm_busca">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
 						
