@@ -4,10 +4,10 @@ include 'includes/menu.php';
 	
 $con = bancoMysqli();
 
-$sql = "SELECT DISTINCT idPedidoContratacao FROM  ig_evento AS eve
-		INNER JOIN ig_data_envio AS env ON eve.idEvento = env.idEvento 
+$sql = "SELECT DISTINCT ped.idPedidoContratacao FROM  ig_evento AS eve		
 		INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento = ped.idEvento
-		WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.estado NOT IN (11,12,15) ORDER BY eve.idEvento DESC";
+		INNER JOIN  ig_log_reabertura AS reab ON ped.idPedidoContratacao = reab.idPedido
+		WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND ped.estado IS NULL ORDER BY eve.idEvento DESC";
 $query = mysqli_query($con,$sql);
 
 $i = 0;
@@ -15,14 +15,23 @@ $i = 0;
 while($lista = mysqli_fetch_array($query))
 {
 	$pedido = recuperaDados("igsis_pedido_contratacao",$lista['idPedidoContratacao'],"idPedidoContratacao");
-	$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
+	$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); 
 	$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
 	$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
 	$loc = listaLocais($pedido['idEvento']);
 	$local = substr($loc,1); //retira a vírgula no começo do texto
 	$periodo = retornaPeriodo($pedido['idEvento']);
 	$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
-	$operador = recuperaUsuario($pedido['idContratos']);
+	
+	$recuperaOperador = recuperaUsuario($pedido['idContratos']);
+	$operadorNome = explode(" ",$recuperaOperador['nomeCompleto']);
+	$operador = $operadorNome[0];
+	
+	$reabertura = recuperaDados("ig_log_reabertura",$pedido['idPedidoContratacao'],"idPedido");
+	$reaberturaUsuario = recuperaUsuario($reabertura['idUsuario']);
+	$reabertoNome = explode(" ",$reaberturaUsuario['nomeCompleto']);
+	$reabertoPor = $reabertoNome[0];
+	
 	$dataPrazo = date('d/m/Y', strtotime('-5 days', strtotime(retornaPrazo($pedido['idEvento']))));
 	
 	$dataInicial = retornaPrazo($pedido['idEvento']);
@@ -59,12 +68,12 @@ while($lista = mysqli_fetch_array($query))
 		$x[$i]['proponente'] = $pessoa['RazaoSocial'];
 		$x[$i]['tipo'] = "Jurídica";
 	}
-	$x[$i]['dataEnvio'] = exibirDataBr($evento['dataEnvio']);
+	$x[$i]['dataReabertura'] = exibirDataBr($reabertura['data']);
+	$x[$i]['reabertoPor'] = $reabertoPor;
 	$x[$i]['instituicao'] = $instituicao['sigla'];
 	$x[$i]['periodo'] = $periodo;
 	$x[$i]['local'] = $local;
-	$x[$i]['operador'] = $operador['nomeCompleto'];	
-	$x[$i]['status'] = $pedido['estado'];
+	$x[$i]['operador'] = $operador;
 	$x[$i]['dias'] = $dias;
 	$i++;	
 }
@@ -85,11 +94,12 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 						<td>Codigo do Pedido</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
-						<td width="25%">Local</td>
+						<td width="20%">Local</td>
 						<td>Periodo</td>
+						<td>Data Reabertura</td>
+						<td>Reaberto Por</td>
 						<td>Prazo (Dias)</td>
 						<td>Operador</td>
-						<td>Status</td>
 						<td></td>
 					</tr>
 				</thead>
@@ -98,7 +108,6 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 					
 					for($h = 0; $h < $x['num']; $h++)
 					{
-						$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 						echo '<tr>';
 						/* REMOÇÃO DO LINK PARA EDIÇÃO
 						if($x[$h]['tipo'] == 'Física')
@@ -115,9 +124,10 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 						echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['dataReabertura'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['reabertoPor'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['dias'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['operador'].'</td> ';
-						echo '<td class="list_description">'.$status['estado'].'</td> ';
 						echo '</tr>';
 					}
 				?>
