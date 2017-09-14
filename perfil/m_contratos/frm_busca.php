@@ -17,6 +17,7 @@ case 'inicial':
 if(isset($_POST['pesquisar']))
 {
 	$id = trim($_POST['id']);
+	$idEvento = trim($_POST['idEvento']);
 	$evento = trim($_POST['evento']);
 	$fiscal = $_POST['fiscal'];
 	$tipo = $_POST['tipo'];
@@ -24,7 +25,7 @@ if(isset($_POST['pesquisar']))
 	$estado = $_POST['estado'];
 	$juridico = $_POST['juridico'];
 	$projeto = $_POST['projeto'];
-	if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $juridico == 0 AND $projeto == 0)
+	if($id == "" AND $idEvento == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $juridico == 0 AND $projeto == 0)
 	{ 
 ?>
 	<section id="services" class="home-section bg-white">
@@ -43,9 +44,11 @@ if(isset($_POST['pesquisar']))
 					<div class="col-md-offset-2 col-md-8">
 						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
 						<label>Código do Pedido</label>
-						<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+						<label>ID do Evento</label>
+							<input type="text" name="idEvento" class="form-control" id="palavras" placeholder="Insira o Código do Evento" ><br />
 						<label>Nome do Evento</label>
-						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
+							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
 						<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
 							<select class="form-control" name="fiscal" id="inputSubject" >
 								<option value="0"></option>	
@@ -97,14 +100,17 @@ if(isset($_POST['pesquisar']))
 	else
 	{
 		$con = bancoMysqli();
-		$sql_existe = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.estado FROM igsis_pedido_contratacao AS ped 
+		
+		if($id != "")
+		{ // Foi inserido o número do pedido
+			$sql_existe = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.estado 
+						FROM igsis_pedido_contratacao AS ped 
 						INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento
 						WHERE idPedidoContratacao = '$id' AND ped.publicado = '1' AND eve.publicado = 1 AND estado IS NOT NULL AND dataEnvio LIKE '2017%'
 						ORDER BY idPedidoContratacao DESC";
-		$query_existe = mysqli_query($con, $sql_existe);
-		$num_registro = mysqli_num_rows($query_existe);
-		if($id != "")
-		{ // Foi inserido o número do pedido
+			$query_existe = mysqli_query($con, $sql_existe);
+			$num_registro = mysqli_num_rows($query_existe);
+	
 			$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
 			if($pedido['estado'] > 1)
 			{
@@ -164,6 +170,80 @@ if(isset($_POST['pesquisar']))
 			{
 				$x['num'] = 0;
 			}
+		}
+		elseif($idEvento != "")
+		{ // Foi inserido o número do pedido
+			$sql_idEvento = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.estado 
+						FROM igsis_pedido_contratacao AS ped 
+						INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento
+						WHERE ped.idEvento = '$idEvento' AND 
+						(ped.publicado = '1' AND eve.publicado = 1 AND estado IS NOT NULL AND dataEnvio LIKE '2017%')
+						ORDER BY idPedidoContratacao DESC";
+			$query_idEvento = mysqli_query($con, $sql_idEvento);
+			$num_registro = mysqli_num_rows($query_idEvento);
+	
+			if($num_registro == 0)
+			{
+				$x['num'] = 0;
+			}
+			else
+			{
+				$i = 0;
+				while($lista = mysqli_fetch_array($query_idEvento))
+				{			
+					$pedido = recuperaDados("igsis_pedido_contratacao",$idEvento,"idEvento");
+				
+					$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); 
+					$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+					$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
+					$local = listaLocais($pedido['idEvento']);
+					$periodo = retornaPeriodo($pedido['idEvento']);
+					$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
+					$fiscal = recuperaUsuario($evento['idResponsavel']);
+					$suplente = recuperaUsuario($evento['suplente']);
+					$operador = recuperaUsuario($pedido['idContratos']);
+					if($pedido['parcelas'] > 1)
+					{
+						$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
+						$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
+					}
+					else
+					{
+						$valorTotal = $pedido['valor'];
+						$formaPagamento = $pedido['formaPagamento'];
+					}		
+					$x[$i]['id']= $pedido['idPedidoContratacao'];
+					$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+					switch($pedido['tipoPessoa'])
+					{
+						case 1:
+							$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+							$x[$i]['proponente'] = $pessoa['Nome'];
+							$x[$i]['tipo'] = "Física";
+							$x[$i]['pessoa'] = 1;
+						break;
+						case 2:
+							$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+							$x[$i]['proponente'] = $pessoa['RazaoSocial'];
+							$x[$i]['tipo'] = "Jurídica";
+							$x[$i]['pessoa'] = 2;
+						break;
+						case 4:
+							$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+							$x[$i]['proponente'] = $pessoa['Nome'];
+							$x[$i]['tipo'] = "Formação";
+							$x[$i]['pessoa'] = 4;
+						break;
+					}
+					$x[$i]['local'] = substr($local,1);
+					$x[$i]['instituicao'] = $instituicao['sigla'];
+					$x[$i]['periodo'] = $periodo;
+					$x[$i]['status'] = $pedido['estado'];
+					$x[$i]['operador'] = $operador['nomeCompleto'];
+					$i++;	
+				}	
+				$x['num'] = $i;
+			}		
 		}
 		else
 		{ //Não foi inserido o número do pedido
@@ -313,6 +393,11 @@ if(isset($_POST['pesquisar']))
 	<section id="list_items">
 		<div class="container">
 			<h3>Resultado da busca</h3>
+			<p><?php echo $sql_idEvento ?></p>
+			<p><?php var_dump($lista) ?></p>
+			<p><?php echo $lista ?></p>
+			<p><?php var_dump($query_idEvento) ?></p>
+			<p><?php // echo $query_idEvento ?></p>
             <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
             <h5><a href="?perfil=contratos&p=frm_busca">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
@@ -397,6 +482,8 @@ else
 						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>                        
 						<label>Código do Pedido</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+						<label>ID do Evento</label>
+							<input type="text" name="idEvento" class="form-control" id="palavras" placeholder="Insira o Código do Evento" ><br />
 						<label>Nome do Evento</label>
 							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />     
 						<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
