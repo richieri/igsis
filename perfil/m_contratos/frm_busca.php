@@ -393,10 +393,10 @@ if(isset($_POST['pesquisar']))
 	<section id="list_items">
 		<div class="container">
 			<h3>Resultado da busca</h3>
-			<p><?php echo $sql_idEvento ?></p>
-			<p><?php var_dump($lista) ?></p>
-			<p><?php echo $lista ?></p>
-			<p><?php var_dump($query_idEvento) ?></p>
+			<p><?php //echo $sql_idEvento ?></p>
+			<p><?php //var_dump($lista) ?></p>
+			<p><?php //echo $lista ?></p>
+			<p><?php//var_dump($query_idEvento) ?></p>
 			<p><?php // echo $query_idEvento ?></p>
             <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
             <h5><a href="?perfil=contratos&p=frm_busca">Fazer outra busca</a></h5>
@@ -482,7 +482,7 @@ else
 						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>                        
 						<label>Código do Pedido</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-						<label>ID do Evento</label>
+						<label>ID do Evento</label> <font size="2">(Em fase de testes)</font>
 							<input type="text" name="idEvento" class="form-control" id="palavras" placeholder="Insira o Código do Evento" ><br />
 						<label>Nome do Evento</label>
 							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />     
