@@ -155,8 +155,8 @@ case 'inicial':
 					AND statusEvento = 'Aguardando' 
 					AND (eve.publicado = 1 
 					AND eve.dataEnvio IS NULL
-					$filtro_evento 
-					$filtro_fiscal)
+					$filtro_evento) 
+					$filtro_fiscal
 					ORDER BY eve.idEvento DESC";
 				$query_evento = mysqli_query($con,$sql_evento);
 				$num_registro = mysqli_num_rows($query_evento);
@@ -179,24 +179,24 @@ case 'inicial':
 						$periodo = retornaPeriodo($pedido['idEvento']);
 						$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 						$fiscal = recuperaUsuario($evento['idResponsavel']);
-						$x[0]['id']= $evento['idEvento'];
-						$x[0]['id_ped']= $pedido['idPedidoContratacao'];
-						$x[0]['local'] = substr($local,1);
-						$x[0]['periodo'] = $periodo;
-						$x[0]['fiscal'] = $fiscal['nomeCompleto'];
-						$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+						$x[$i]['id']= $evento['idEvento'];
+						$x[$i]['id_ped']= $pedido['idPedidoContratacao'];
+						$x[$i]['local'] = substr($local,1);
+						$x[$i]['periodo'] = $periodo;
+						$x[$i]['fiscal'] = $fiscal['nomeCompleto'];
+						$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
 						
 						if($pedido['tipoPessoa'] == 1)
 						{
 							$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-							$x[0]['proponente'] = $pessoa['Nome'];
-							$x[0]['tipo'] = "Física";
+							$x[$i]['proponente'] = $pessoa['Nome'];
+							$x[$i]['tipo'] = "Física";
 						}
 						else
 						{
 							$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-							$x[0]['proponente'] = $pessoa['RazaoSocial'];
-							$x[0]['tipo'] = "Jurídica";
+							$x[$i]['proponente'] = $pessoa['RazaoSocial'];
+							$x[$i]['tipo'] = "Jurídica";
 						}
 						$i++;			
 					}
@@ -210,7 +210,6 @@ case 'inicial':
 		<div class="container">
 			<h3><br/></h3>
             <h5>Foram encontrados <?php echo $x['num'] ?> eventos.</h5>
-			<p><?php echo $sql_evento ?></p>
             <h5><a href="?perfil=gestao_prazos&p=frm_busca">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
 						
@@ -264,7 +263,7 @@ case 'inicial':
 			<div class="row">
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-						<h2><font color="red">EM MANUTENÇÃO</font></h2><br/>
+						<h4><font color="red">* Em Fase de Testes *</font></h4><br/>
 						<h3>Busca por evento</h1>
 					</div>
 				</div>
