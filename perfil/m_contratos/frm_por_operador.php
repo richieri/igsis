@@ -20,6 +20,7 @@ case 'inicial':
 	if(isset($_POST['pesquisar']))
 	{
 		$operador = $_POST['operador'];
+		$estado = $_POST['estado'];
 
 		if($operador == 0)
 		{ ?>
@@ -43,6 +44,12 @@ case 'inicial':
 									<option value='0'></option>
 									<?php  geraOpcaoContrato(""); ?>
 								</select>
+								<br />
+								<label>Status do pedido (opcional)</label>
+								<select class="form-control" name="estado" id="inputSubject" >
+									<option value=""></option>
+									<?php echo geraOpcao("sis_estado","","") ?>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
@@ -60,9 +67,18 @@ case 'inicial':
 		}
 		else
 		{
+			if($estado == "" OR $estado == 0)
+			{
+				$filtro_status = " AND igsis_pedido_contratacao.estado NOT IN (11,12,15)";		
+			}
+			else
+			{
+				$filtro_status = " AND igsis_pedido_contratacao.estado = '$estado'  ";
+			}
+			
 			$con = bancoMysqli();
 			
-			$sql_evento = "SELECT * FROM ig_evento, igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND igsis_pedido_contratacao.idEvento = ig_evento.idEvento AND estado NOT IN (11,12,15) AND idContratos = '$operador' AND dataEnvio IS NOT NULL ORDER BY ig_evento.idEvento DESC";
+			$sql_evento = "SELECT * FROM ig_evento, igsis_pedido_contratacao, sis_estado WHERE sis_estado.idEstado = igsis_pedido_contratacao.estado AND ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND igsis_pedido_contratacao.idEvento = ig_evento.idEvento $filtro_status AND idContratos = '$operador' AND dataEnvio IS NOT NULL ORDER BY ordem";
 			$query_evento = mysqli_query($con,$sql_evento);
 			$i = 0;
 	
@@ -195,7 +211,7 @@ case 'inicial':
 								else
 								{
 									echo '<td class="list_description"></td>';
-								}								
+								}
 								echo '<td class="list_description">'.$status['estado'].'</td> ';
 								echo '</tr>';
 
@@ -233,6 +249,12 @@ case 'inicial':
 						<select class="form-control" name="operador" id="inputSubject" >
 							<option value='0'></option>
 							<?php  geraOpcaoContrato(""); ?>
+						</select>
+						<br />
+						<label>Status do pedido (opcional)</label>
+						<select class="form-control" name="estado" id="inputSubject" >
+							<option value=""></option>
+							<?php echo geraOpcao("sis_estado","","") ?>
 						</select>
 					</div>
 				</div>
