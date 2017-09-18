@@ -35,7 +35,7 @@
                             </li>
                             <li><a href="?perfil=contratados">Contratados</a></li>
 
-                            <li><a href="?perfil=evento&p=enviar">Enviar</a> </li>
+                            <li><a href="?perfil=evento&p=enviar">Finalizar</a> </li>
  							<li><a href="#">Outras Opções</a> 
     
                                     <ul class="dl-submenu">
