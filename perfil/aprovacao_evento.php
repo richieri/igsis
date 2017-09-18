@@ -20,7 +20,7 @@
 		{
 			gravarLog($sql_atualiza_pedido);
 			$mensagem = "<h3>Solicitação enviada!</h3>
-				<p>Aguarde a liberação pelo responsável.</p>";
+				<p>Entre em contato através do email <strong>pedidosdecontratacao@gmail.com</strong> informando o <strong>Nº da IG, Nome do Evento </strong> e <strong>Número(s) do(s) Pedido(s) de Contratação.</strong></p>";
 		}
 		else
 		{
