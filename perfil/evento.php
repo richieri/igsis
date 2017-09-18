@@ -2826,10 +2826,11 @@
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
+						<td>Número de Processo</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
-						<td>Valor(em Reais)</td>
+						<td>Valor (R$)</td>
 						<td>Periodo</td>
 						<td>Status</td>
 						<td>Contratos</td>
@@ -2844,6 +2845,7 @@
 				$status = recuperaDados("sis_estado",$lista_pedido[$i]['Status'],"idEstado");
 				$lista_pf = siscontratDocs($lista_pedido[$i]['IdProponente'],$lista_pedido[$i]['TipoPessoa']);
 				echo "<tr><td class='lista'> <a target='_blank' href='?perfil=detalhe_pedido&id_ped=".$lista_pedido[$i]['idPedido']."'>".$lista_pedido[$i]['idPedido']."</a></td>";
+				echo '<td class="list_description">'.$lista_pedido[$i]['NumeroProcesso'].'</td> ';
 				echo '<td class="list_description">'.$lista_pf['Nome'].'</td> ';
 				echo '<td class="list_description">'.$lista_pedido[$i]['Objeto'].'</td> ';
 				echo '<td class="list_description">'.$lista_pedido[$i]['Local'].'</td> ';
