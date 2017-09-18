@@ -51,6 +51,7 @@ while($lista = mysqli_fetch_array($query))
 	$x[$i]['local'] = $local;
 	$x[$i]['operador'] = $operador['nomeCompleto'];	
 	$x[$i]['status'] = $pedido['estado'];
+	$x[$i]['parcelas'] = $pedido['parcelas'];
 	$i++;	
 }
 $x['num'] = $i;
