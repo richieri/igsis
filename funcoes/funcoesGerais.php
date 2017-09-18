@@ -736,6 +736,7 @@
 						<td>Nome do evento</td>
 						<td>Tipo de evento</td>
 						<td>Data/Período</td>
+						<td>Status do Evento</td>
 						<td width='10%'></td>
 						<td width='10%'></td>
 					</tr>
@@ -747,6 +748,22 @@
 				echo "<td class='list_description'>".$campo['nomeEvento']."</td>";
 				echo "<td class='list_description'>".retornaTipo($campo['ig_tipo_evento_idTipoEvento'])."</td>";
 				echo "<td class='list_description'>".retornaPeriodo($campo['idEvento'])."</td>";
+				If ($campo['statusEvento'] == "Aguardando")
+				{
+					echo "<td class='list_description'>Aguardando Aprovação";
+				}
+				elseif ($campo['statusEvento'] == "Enviado")
+				{
+					echo "<td class='list_description'>Aprovado</td>";
+				}
+				elseif ($campo['statusEvento'] == "Não Aprovado")
+				{
+					echo "<td class='list_description'>Não Aprovado</td>";
+				}
+				else
+				{
+					echo "<td class='list_description'>Em Elaboração</td>";
+				}
 				echo "
 					<td class='list_description'>
 						<form method='POST' action='?perfil=evento&p=basica'>

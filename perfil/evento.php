@@ -72,6 +72,17 @@
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 				</div>
 			</div>
+			<div class="col-md-offset-1 col-md-10"><hr/></div>
+			<div class="col-md-offset-1 col-md-10">
+				<p><strong>LEGENDA DO STATUS DO EVENTO</strong></p>
+				<p align="left">
+					<strong>Em Elaboração:</strong> significa que o programador ainda está inserindo as informações do evento.<br/>
+					<strong>Aguardando Aprovação:</strong> significa que o evento está fora do prazo e foi enviado ao setor de contratos uma solicitação para análise de aprovação do mesmo.<br/>
+					<strong>Aprovado:</strong> o setor de contratos aprovou a solicitação de envio.<br/>
+					<strong>Não Aprovado:</strong> a solicitação de aprovação foi recusada pelo setor de contratos.
+				</p>
+			</div>
+			<div class="col-md-offset-1 col-md-10"><hr/></div>
 		</div>  
 		<div class="table-responsive list_info">
 			<?php listaEventosGravados($_SESSION['idUsuario']); ?>
