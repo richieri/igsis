@@ -238,7 +238,7 @@ case "desaprovar":
 			<div class="row">
 				<div class="col-md-offset-2 col-md-8">
 					<div class="text-hide">
-						<h5>Apenas o pedido de contratação receberá o status de NÃO Aprovado!</h5>
+						<h5>O evento e o pedido de contratação receberão o status de NÃO Aprovado!</h5>
 					</div>
 				</div>
 			<div class="form-group">
@@ -261,22 +261,34 @@ case "desaprovado":
 
 <?php
 	if(isset($_POST['desaprovar']))
-{
+	{
 		$con = bancoMysqli();
 		$_SESSION['idEvento'] = $_POST['desaprovar'];
 		$datetime = date("Y-m-d H:i:s");	
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao AS ped SET estado = 15 WHERE ped.idEvento = '$idEvento' AND ped.publicado = 1 ";
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
-	if($query_atualiza_pedido){
-		gravarLog($sql_atualiza_pedido);
-		$mensagem = "<h1>Status alterado com sucesso!</h1>";	
-}
-	else
-{
-		$mensagem = "<h1>Erro ao gravar dados. Favor entrar em contato com o administrador do sistema</h1>";	
-}
+		if($query_atualiza_pedido)
+		{
+			gravarLog($sql_atualiza_pedido);
+			$mensagem = "<h1>Status alterado com sucesso!</h1>";
+			$sql_atualiza_evento = "UPDATE `ig_evento` SET `statusEvento` = 'Não Aprovado' WHERE `ig_evento`.`idEvento` = '$idEvento'";
+			$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
+			if($query_atualiza_evento)
+			{
+				gravarLog($sql_atualiza_evento);
+				$mensagem = "<h1>Status do evento e do pedido alterados com sucesso!</h1>";
+			}
+			else
+			{
+				$mensagem = "<h1>Erro ao atualizar o status do evento. Tente novamente!</h1>";
+			}
+		}
+		else
+		{
+			$mensagem = "<h1>Erro ao gravar dados. Favor entrar em contato com o administrador do sistema</h1>";	
+		}
 		$_SESSION['idEvento'] = NULL;
-}
+	}
 ?>
 	<section id="contact" class="home-section bg-white">
 		<div class="container">
