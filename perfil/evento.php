@@ -78,7 +78,6 @@
 				<p align="left">
 					<strong>Em Elaboração:</strong> significa que o programador ainda está inserindo as informações do evento.<br/>
 					<strong>Aguardando Aprovação:</strong> significa que o evento está fora do prazo e foi enviado ao setor de contratos uma solicitação para análise de aprovação do mesmo.<br/>
-					<strong>Aprovado:</strong> o setor de contratos aprovou a solicitação de envio.<br/>
 					<strong>Não Aprovado:</strong> a solicitação de aprovação foi recusada pelo setor de contratos.
 				</p>
 			</div>
@@ -90,6 +89,58 @@
 	</div>
 </section> <!--/#list_items-->
 	<?php
+		break;
+		case "naoaprovado":
+		
+		$con = bancoMysqli();
+		$idEvento = $_GET['idEvento'];
+		$sql_nao_aprovado = "SELECT * FROM `igsis_argumento` WHERE `idEvento` = '$idEvento' ORDER BY data DESC";
+		$query_nao_aprovado = mysqli_query($con,$sql_nao_aprovado);
+		$i = 0;
+		while($lista = mysqli_fetch_array($query_nao_aprovado))
+		{			
+			$operador = recuperaUsuario($lista['idContratos']);						
+			$x[$i]['argumento']= $lista['argumento'];
+			$x[$i]['idContratos'] = $operador['nomeCompleto'];
+			$x[$i]['data'] = exibirDataHoraBr($lista['data']);
+			$i++;				
+		}
+		$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
+	?>
+		<section id="list_items">
+			<div class="container">
+				<div class="section-heading">
+				</div>
+				<div align="justify">
+					<strong>Número do Evento:</strong> <?php echo $evento['idEvento'] ?> | 
+					<strong>Nome do Evento:</strong> <?php echo $evento['nomeEvento'] ?>
+				</div>		
+				<div class="table-responsive list_info">
+					<table class="table table-condensed">
+						<thead>
+							<tr class="list_menu">								
+								<td width="65%">Argumento</td>
+								<td>Operador de Cotratos</td>
+								<td>Data</td>								
+							</tr>
+						</thead>
+						<tbody>
+						<?php
+						for($h = 0; $h < $i; $h++)
+						{
+							echo '<tr>';
+							echo '<td class="list_description">'.$x[$h]['argumento'].'</td>';
+							echo '<td class="list_description">'.$x[$h]['idContratos'].'</td>';
+							echo '<td class="list_description">'.$x[$h]['data'].'</td>';
+							echo'</tr>';
+						}
+						?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>	
+	<?php 
 		break;
 		case "basica":
 			if(isset($_POST['carregar']))

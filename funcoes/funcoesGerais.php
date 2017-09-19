@@ -760,7 +760,7 @@
 				}
 				elseif ($campo['statusEvento'] == "Não Aprovado")
 				{
-					echo "<td class='list_description'>Não Aprovado</td>";
+					echo "<td class='list_description'><a href='?perfil=evento&p=naoaprovado&idEvento=".$campo['idEvento']."' target='_blank'><font color='red'>Não Aprovado</font></a></td>";
 				}
 				else
 				{
