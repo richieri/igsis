@@ -231,8 +231,7 @@ if($verifica == 0)
 
 <?php /* =========== INÍCIO NÃO APROVAR ===========*/
 case "desaprovar":
-?>
-
+?>		
 	<section id="contact" class="home-section bg-white">
 		<div class="container">
 			<div class="row">
@@ -241,14 +240,24 @@ case "desaprovar":
 						<h5>O evento e o pedido de contratação receberão o status de NÃO Aprovado!</h5>
 					</div>
 				</div>
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-8">
-<?php $con = bancoMysqli();	?>
-				<form method='POST' action='?perfil=gestao_prazos&p=detalhe_evento&pag=desaprovado&id_eve=<?php echo $idEvento;?>'>
-				<input type='hidden' name='desaprovar' value='<?php echo $idEvento ?>' />
-				<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Confirmar' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();"></form>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<p>Insira abaixo o argumento para a não aprovação: <i>(campo obrigatório)</i></p>
+					</div>
 				</div>
-			</div>
+				<form method='POST' role='form' action='?perfil=gestao_prazos&p=detalhe_evento&pag=desaprovado&id_eve=<?php echo $idEvento;?>'>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<textarea name="argumento" id='argumento' maxlength="250" class="form-control" rows="5"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8">
+							<input type='hidden' name='desaprovar' value='<?php echo $idEvento ?>' />
+							<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Confirmar' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">						
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</section>
@@ -260,34 +269,57 @@ case "desaprovado":
 ?>
 
 <?php
-	if(isset($_POST['desaprovar']))
+	
+	if(trim($_POST['argumento']) == '') 
+	{ 
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=gestao_prazos&p=detalhe_evento&pag=desaprovar&id_eve=".$idEvento."'>";
+	}
+	else
 	{
-		$con = bancoMysqli();
-		$_SESSION['idEvento'] = $_POST['desaprovar'];
-		$datetime = date("Y-m-d H:i:s");	
-		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao AS ped SET estado = 15 WHERE ped.idEvento = '$idEvento' AND ped.publicado = 1 ";
-		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
-		if($query_atualiza_pedido)
+		$argumento = $_POST['argumento'];	
+		
+		if(isset($_POST['desaprovar']))
 		{
-			gravarLog($sql_atualiza_pedido);
-			$mensagem = "<h1>Status alterado com sucesso!</h1>";
-			$sql_atualiza_evento = "UPDATE `ig_evento` SET `statusEvento` = 'Não Aprovado' WHERE `ig_evento`.`idEvento` = '$idEvento'";
-			$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
-			if($query_atualiza_evento)
+			$con = bancoMysqli();
+			$_SESSION['idEvento'] = $_POST['desaprovar'];
+			$idContratos = $_SESSION['idUsuario'];
+			$datetime = date("Y-m-d H:i:s");
+			
+			$sql_insere_argumento = "INSERT INTO `igsis_argumento`(`idEvento`, `argumento`, `idContratos`, `data`) VALUES ('$idEvento', '$argumento', '$idContratos', '$datetime')";
+			$query_insere_argumento = mysqli_query($con,$sql_insere_argumento);
+			if($query_insere_argumento)
 			{
-				gravarLog($sql_atualiza_evento);
-				$mensagem = "<h1>Status do evento e do pedido alterados com sucesso!</h1>";
+				gravarLog($sql_insere_argumento);
+				$mensagem = "<h1>Argumento gravado com sucesso!</h1>";
+				$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao AS ped SET estado = 15 WHERE ped.idEvento = '$idEvento' AND ped.publicado = 1 ";
+				$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
+				if($query_atualiza_pedido)
+				{
+					gravarLog($sql_atualiza_pedido);
+					$mensagem = "<h1>Status alterado com sucesso!</h1>";
+					$sql_atualiza_evento = "UPDATE `ig_evento` SET `statusEvento` = 'Não Aprovado' WHERE `ig_evento`.`idEvento` = '$idEvento'";
+					$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
+					if($query_atualiza_evento)
+					{
+						gravarLog($sql_atualiza_evento);
+						$mensagem = "<h3>Status do evento e do pedido alterados com sucesso!</h3>";
+					}
+					else
+					{
+						$mensagem = "<h1>Erro ao atualizar o status do evento. Tente novamente!</h1>";
+					}
+				}
+				else
+				{
+					$mensagem = "<h1>Erro ao gravar dados. Favor entrar em contato com o administrador do sistema</h1>";	
+				}
 			}
 			else
 			{
-				$mensagem = "<h1>Erro ao atualizar o status do evento. Tente novamente!</h1>";
-			}
+				$mensagem = "<h1>Erro ao gravar o argumento. Tente novamente!</h1>";
+			}		
+			$_SESSION['idEvento'] = NULL;
 		}
-		else
-		{
-			$mensagem = "<h1>Erro ao gravar dados. Favor entrar em contato com o administrador do sistema</h1>";	
-		}
-		$_SESSION['idEvento'] = NULL;
 	}
 ?>
 	<section id="contact" class="home-section bg-white">
@@ -295,8 +327,8 @@ case "desaprovado":
 			<div class="row">
 				<div class="col-md-offset-2 col-md-8">
 					<div class="text-hide">
-<?php echo $mensagem; ?>
-					<br/>
+						<?php echo $mensagem; ?>
+						<br/>
 						<a href="?perfil=gestao_prazos">Voltar à Gestão de Prazos</a><br/>
 						<a href="?secao=perfil">Carregar módulos</a><br/>
 						<a href="?p=inicio">Voltar ao início</a><br/>
