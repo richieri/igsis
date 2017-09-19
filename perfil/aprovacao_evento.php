@@ -32,14 +32,14 @@
 				$i++;				
 			}
 			$mensagem = "<h3>Solicitação enviada!</h3>
-				<p>Entre em contato através do email <strong>pedidosdecontratacao@gmail.com</strong> informando o <strong>Nº da IG, Nome do Evento </strong> e <strong>Número(s) do(s) Pedido(s) de Contratação.</strong></p>
-				<p></p>
-				";
-			
+				<p>Entre em contato através do email <strong><a href='mailto:pedidosdecontratacao@gmail.com'>pedidosdecontratacao@gmail.com</a></strong> com as seguintes informações:</p>
+				<p>&nbsp;</p>
+				<hr/>
+				<p align='justify'>Favor analisar a liberação dos seguintes pedidos:</p>";
 		}
 		else
 		{
-			$mensagem = "Erro ao enviar formulário";	
+			$mensagem = "Erro ao enviar formulário! Os seguintes pedidos não foram enviados:";	
 		}
 		$_SESSION['idEvento'] = NULL;
 	}
@@ -51,18 +51,19 @@
 				<div class="section-heading">
 					<h3></h3> 
 					<p><?php //var_dump($_SESSION); ?></p>
-					<?php if(isset($mensagem)){echo $mensagem;} ?>
-					<p>&nbsp;</p>
-					<?php
-					for($h = 0; $h < $i; $h++)
-					{
-						echo '<p>';
-						echo '<strong>Número do Evento:</strong> '.$x[$h]['idEvento'].'<br/>';
-						echo '<strong>Nome do Evento:</strong> '.$x[$h]['nomeEvento'].'<br/>';
-						echo '<strong>Número do Pedido:</strong> '.$x[$h]['idPedido'];
-						echo'</p>';
-					}
-					?>
+					<?php if(isset($mensagem)){echo $mensagem;} ?>					
+					<div align="justify">
+						<strong>Número do Evento:</strong> <?php echo $evento['idEvento'] ?><br/>
+						<strong>Nome do Evento:</strong> <?php echo $evento['nomeEvento'] ?><br/>
+						<?php
+						for($h = 0; $h < $i; $h++)
+						{
+							echo '<strong>Número do Pedido:</strong> '.$x[$h]['idPedido'];
+							echo'<br/>';
+						}
+						?>
+					</div>
+					<hr/>
 					<p><a href="?perfil=evento">Voltar ao módulo eventos?</a></p>
 				</div>
 			</div>
