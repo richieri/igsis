@@ -733,10 +733,11 @@
 			<table class='table table-condensed'>
 				<thead>
 					<tr class='list_menu'>
+						<td width='5%'>ID evento</td>
 						<td>Nome do evento</td>
 						<td>Tipo de evento</td>
 						<td>Data/Período</td>
-						<td>Status do Evento</td>
+						<td>Status do evento</td>
 						<td width='10%'></td>
 						<td width='10%'></td>
 					</tr>
@@ -745,6 +746,7 @@
 		while($campo = mysqli_fetch_array($query))
 		{
 				echo "<tr>";
+				echo "<td class='list_description'>".$campo['idEvento']."</td>";
 				echo "<td class='list_description'>".$campo['nomeEvento']."</td>";
 				echo "<td class='list_description'>".retornaTipo($campo['ig_tipo_evento_idTipoEvento'])."</td>";
 				echo "<td class='list_description'>".retornaPeriodo($campo['idEvento'])."</td>";
