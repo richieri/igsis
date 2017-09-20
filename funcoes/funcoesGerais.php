@@ -1095,15 +1095,16 @@
 	function descricaoEvento($idEvento)
 	{
 		//imprime dados de um evento
-		$evento = recuperaEvento($idEvento);
+		$evento = recuperaDados("ig_evento",$idEvento,"idEvento"); 
 		$tipoEvento = recuperaDados('ig_tipo_evento',$evento['ig_tipo_evento_idTipoEvento'],'idTipoEvento');
 		$programa = recuperaDados('ig_programa',$evento['ig_programa_idPrograma'],'idPrograma');
 		$projetoEspecial = recuperaDados('ig_projeto_especial',$evento['projetoEspecial'],'idProjetoEspecial');
+		$relacaojur = recuperaDados('ig_modalidade',$evento['ig_modalidade_IdModalidade'],'idModalidade');
 		$responsavel = recuperaUsuario($evento['idResponsavel']);
 		$suplente = recuperaUsuario($evento['suplente']);
 		$faixa = recuperaDados('ig_etaria',$evento['faixaEtaria'],'idIdade');
 		//exibe as informações principais
-		echo "Número da IG: <b>".$idEvento."</b><br />";
+		echo "ID do Evento: <b>".$idEvento."</b><br />";
 		if($evento['dataEnvio'] != NULL)
 		{
 			echo "Evento enviado em ".exibirDataHoraBr($evento['dataEnvio'])."<br />";
@@ -1120,6 +1121,10 @@
 		if($evento['projeto'] != "")
 		{
 			echo "<b>Projeto:</b> ".$evento['projeto']."<br />";
+		}
+		if($evento['ig_modalidade_IdModalidade'] != NULL)
+		{
+			echo "<b>Relação Jurídica:</b> ".$relacaojur['modalidade']."<br />";
 		}
 		echo "<br />";
 		echo "<b>Responsável pelo evento:</b> ".$responsavel['nomeCompleto']."<br />";
