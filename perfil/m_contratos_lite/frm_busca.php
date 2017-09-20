@@ -192,7 +192,7 @@ if(isset($_POST['pesquisar']))
 				$i = 0;
 				while($lista = mysqli_fetch_array($query_idEvento))
 				{			
-					$pedido = recuperaDados("igsis_pedido_contratacao",$idEvento,"idEvento");
+					$pedido = recuperaDados("igsis_pedido_contratacao",$lista['idPedidoContratacao'],"idPedidoContratacao");
 				
 					$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); 
 					$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
@@ -487,7 +487,7 @@ else
 						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>                        
 						<label>Código do Pedido</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-						<label>ID do Evento</label> <font size="2">(Em fase de testes)</font>
+						<label>ID do Evento</label>
 							<input type="text" name="idEvento" class="form-control" id="palavras" placeholder="Insira o Código do Evento" ><br />
 						<label>Nome do Evento</label>
 							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />     
