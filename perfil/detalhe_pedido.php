@@ -104,7 +104,7 @@
 					<p align="justify"><strong>Parecer:</strong> <?php echo $pedido['ParecerTecnico'];?></p>
 					<p align="justify"><strong>Nota de Empenho:</strong> <?php echo $pedido['NotaEmpenho'];?></p>
 					<p align="justify"><strong>Data de Emissão da N.E.:</strong> <?php 
-						if ($pedido['EmissaoNE'] == '0000-00-00')
+						if ($pedido['EmissaoNE'] == '0000-00-00' OR $pedido['EmissaoNE'] == NULL)
 						{
 							echo "Não há registro.";
 						}
@@ -114,7 +114,7 @@
 						}?>
 					</p>
 					<p align="justify"><strong>Data de Entrega de N.E.:</strong> <?php 
-						if ($pedido['EntregaNE'] == '0000-00-00')
+						if ($pedido['EntregaNE'] == '0000-00-00' OR $pedido['EntregaNE'] == NULL)
 						{
 							echo "Não há registro.";
 						}
@@ -209,7 +209,7 @@
 <?php 
 	if($chamado['numero'] == '0')
 	{
-		echo "Não há registro de chamado para este evento.";
+		echo "Não há registro de chamado para este evento.<br/><p>&nbsp</p>";
 	}
 	else
 	{	
@@ -218,7 +218,7 @@
 						<table class='table table-condensed'>
 							<thead>
 								<tr class='list_menu'>
-									<td width='10%'>ID</td>
+									<td width='5%'>ID</td>
 									<td>Chamado</td>
 									<td>Descrição</td>
 									<td>Data do envio</td>
@@ -261,6 +261,39 @@
 	} 
 ?>
 					<br />
+					<h5>Histórico de reabertura</h5>
+					<?php
+						$con = bancoMysqli();									
+						$sql_reabertura = "SELECT * FROM `ig_log_reabertura` WHERE idEveForm = '$idEvento' AND idPedido != '0' ORDER BY data DESC";
+						$query_reabertura = mysqli_query($con,$sql_reabertura);	
+						$row_cnt = mysqli_num_rows($query_reabertura);
+						
+						if($row_cnt > 0)
+						{
+					?>							
+							<table class='table table-condensed'>
+								<?php							
+								while($reabertura = mysqli_fetch_array($query_reabertura))
+								{ 									
+								?>	
+										<tr>
+											<td><?php echo $reabertura['descricao']; ?>
+											<td><?php  echo exibirDataHoraBr($reabertura['data']); ?></td>
+										</tr>
+								<?php
+								}
+								?>
+							</table>
+					<?php
+						}
+						else
+						{
+							echo "Não há registro para este evento.<p>&nbsp;</p>";
+						}	
+					?>
+					
+					
+					<br />
 					<h5>Histórico de envio</h5>
 					<?php
 						$con = bancoMysqli();
@@ -287,9 +320,55 @@
 						}
 						else
 						{
-							echo "Não há registro para este evento.";
+							echo "Não há registro para este evento.<p>&nbsp;</p>";
 						}	
-					?>	
+					?>
+					
+					<br/>
+					<?php 
+						$con = bancoMysqli();
+						$sql_nao_aprovado = "SELECT * FROM `igsis_argumento` WHERE `idEvento` = '$idEvento' ORDER BY data DESC";
+						$query_nao_aprovado = mysqli_query($con,$sql_nao_aprovado);
+						$i = 0;
+						while($lista = mysqli_fetch_array($query_nao_aprovado))
+						{			
+							$operador = recuperaUsuario($lista['idContratos']);						
+							$x[$i]['argumento']= $lista['argumento'];
+							$x[$i]['idContratos'] = $operador['nomeCompleto'];
+							$x[$i]['data'] = exibirDataHoraBr($lista['data']);
+							$i++;				
+						}
+						
+						if($i > 0)
+						{
+						?>	
+							<h5>Argumento da Não Aprovação por Contratos</h5>
+							<div class="table-responsive list_info">
+								<table class="table table-condensed">
+									<thead>
+										<tr class="list_menu">								
+											<td width="65%">Argumento</td>
+											<td>Operador de Contratos</td>
+											<td>Data</td>								
+										</tr>
+									</thead>
+									<tbody>
+									<?php
+									for($h = 0; $h < $i; $h++)
+									{
+										echo '<tr>';
+										echo '<td class="list_description">'.$x[$h]['argumento'].'</td>';
+										echo '<td class="list_description">'.$x[$h]['idContratos'].'</td>';
+										echo '<td class="list_description">'.$x[$h]['data'].'</td>';
+										echo'</tr>';
+									}
+									?>
+									</tbody>
+								</table>
+							</div>
+					<?php	
+						}
+					?>
 				</div>
 			</div>
 		</div>
