@@ -120,7 +120,7 @@
 						<thead>
 							<tr class="list_menu">								
 								<td width="65%">Argumento</td>
-								<td>Operador de Cotratos</td>
+								<td>Operador de Contratos</td>
 								<td>Data</td>								
 							</tr>
 						</thead>
