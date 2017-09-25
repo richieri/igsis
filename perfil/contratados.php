@@ -133,43 +133,22 @@
 						$idFisica = $id['Id_PessoaFisica'];
 						$idEvento = $_SESSION['idEvento'];	
 						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
-							(`idPedidoContratacao`, 
-							`idEvento`, 
-							`tipoPessoa`, 
-							`idPessoa`,  
-							`valor`, 
-							`valorPorExtenso`, 
-							`formaPagamento`, 
-							`idVerba`, 
-							`anexo`, 
-							`observacao`,
-							`qtdApresentacoes`,
-							`publicado`) 
-							VALUES (NULL, 
-							'$idEvento', 
-							'1', 
-							'$idFisica', 
-							NULL, 
-							NULL, 
-							NULL, 
-							NULL, 
-							NULL, 
-							NULL, 
-							'1')";
+							(`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`) VALUES 
+							('$idEvento', '1', '$idFisica', '1')";
 						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
 						if($query_insert_pedido)
 						{
 							gravarLog($sql_insert_pedido);
-							echo "<h1>Inserido com sucesso!</h1>";
+							echo "<h5>Inserido com sucesso!</h5>";
 						}
 						else
 						{
-							echo "<h1>Erro ao inserir!</h1>";
+							echo "<h5>Erro ao inserir![1]</h5>";
 						}
 					}
 					else
 					{
-						echo "<h1>Erro ao inserir!</h1>";
+						echo "<h5>Erro ao inserir![2]</h5>";
 					}
 				}
 			}
