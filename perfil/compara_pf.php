@@ -111,15 +111,16 @@ if(isset($_POST['atualizaIgsis']))
 {	
 	$campo = $_POST['campo'];
 	$varCampo = $_POST['varCampo'];
+	$nomeCampo = $_POST['nomeCampo'];
 	$sql_update_nome = "UPDATE sis_pessoa_fisica SET ".$campo." = '$varCampo' WHERE CPF = '$cpf'";
 	if(mysqli_query($con1,$sql_update_nome))
 	{
-		$mensagem =	$campo." atualizado com sucesso!";
+		$mensagem =	$nomeCampo." atualizado com sucesso!";
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."&busca=".$cpf_busca."'>";
 	}
 	else
 	{
-		$mensagem = "Erro ao atualizar ".$campo.". Tente novamente!";
+		$mensagem = "Erro ao atualizar ".$nomeCampo.". Tente novamente!";
 	}
 }
 
@@ -299,6 +300,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Nome."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Nome' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Nome'  />
 										<input type='hidden' name='varCampo' value='".$nome."'  />
@@ -315,6 +317,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$NomeArtistico."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Nome Artístico' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='NomeArtistico'  />
 										<input type='hidden' name='varCampo' value='".$nomeArtistico."'  />
@@ -331,6 +334,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$RG."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='RG' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='RG'  />
 										<input type='hidden' name='varCampo' value='".$rg."'  />
@@ -347,6 +351,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$CCM."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='CCM' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='CCM'  />
 										<input type='hidden' name='varCampo' value='".$ccm."'  />
@@ -365,6 +370,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$igEstadoCivil['EstadoCivil']."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Estado Civil' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='IdEstadoCivil'  />
 										<input type='hidden' name='varCampo' value='".$idEstadoCivil."'  />										
@@ -381,6 +387,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".exibirDataBr($DataNascimento)."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Data de Nascimento' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='DataNascimento'  />
 										<input type='hidden' name='varCampo' value='".$dataNascimento."'  />
@@ -397,6 +404,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$LocalNascimento."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Local de Nascimento' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='LocalNascimento'  />
 										<input type='hidden' name='varCampo' value='".$localNascimento."'  />
@@ -413,6 +421,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Nacionalidade."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Nacionalidade' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Nacionalidade'  />
 										<input type='hidden' name='varCampo' value='".$nacionalidade."'  />
@@ -429,6 +438,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$CEP."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='CEP' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='CEP'  />
 										<input type='hidden' name='varCampo' value='".$cep."'  />
@@ -445,6 +455,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Numero."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Número' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Numero'  />
 										<input type='hidden' name='varCampo' value='".$numero."'  />
@@ -461,6 +472,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Complemento."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Complemento' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Complemento'  />
 										<input type='hidden' name='varCampo' value='".$complemento."'  />
@@ -477,6 +489,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Telefone1."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Telefone #1' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Telefone1'  />
 										<input type='hidden' name='varCampo' value='".$telefone1."'  />
@@ -493,6 +506,8 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Telefone2."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Telefone #2</td>";
+							echo "<td class='list_description'>".$telefone' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Telefone2'  />
 										<input type='hidden' name='varCampo' value='".$telefone2."'  />
@@ -509,6 +524,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Telefone3."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Telefone #3' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Telefone3'  />
 										<input type='hidden' name='varCampo' value='".$telefone3."'  />
@@ -525,6 +541,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Email."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='E-mail' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Email'  />
 										<input type='hidden' name='varCampo' value='".$email."'  />
@@ -541,6 +558,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$DRT."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='DRT' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='DRT'  />
 										<input type='hidden' name='varCampo' value='".$drt."'  />
@@ -557,6 +575,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Funcao."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Função' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Funcao'  />
 										<input type='hidden' name='varCampo' value='".$funcao."'  />
@@ -573,6 +592,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Cbo."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='CBO' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Cbo'  />
 										<input type='hidden' name='varCampo' value='".$cbo."'  />
@@ -589,6 +609,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Pis."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='NIT' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Pis'  />
 										<input type='hidden' name='varCampo' value='".$pis."'  />
@@ -605,6 +626,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$OMB."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='OMB' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='OMB'  />
 										<input type='hidden' name='varCampo' value='".$omb."'  />
@@ -623,6 +645,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$igNomeBanco['banco']."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Banco' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='codBanco'  />
 										<input type='hidden' name='varCampo' value='".$codigoBanco."'  />
@@ -639,6 +662,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Agencia."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Agência' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Agencia'  />
 										<input type='hidden' name='varCampo' value='".$agencia."'  />
@@ -655,6 +679,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Conta."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Conta' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Conta'  />
 										<input type='hidden' name='varCampo' value='".$conta."'  />
@@ -671,6 +696,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".exibirDataBr($DataAtualizacao)."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='Última Atualização' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='DataAtualizacao'  />
 										<input type='hidden' name='varCampo' value='".$dataAtualizacao."'  />
