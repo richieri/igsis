@@ -506,8 +506,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td class='list_description'>".$Telefone2."</td>";
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
-										<input type='hidden' name='nomeCampo' value='Telefone #2</td>";
-							echo "<td class='list_description'>".$telefone' />
+										<input type='hidden' name='nomeCampo' value='Telefone #2' />
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Telefone2'  />
 										<input type='hidden' name='varCampo' value='".$telefone2."'  />
