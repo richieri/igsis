@@ -36,7 +36,7 @@
 		$con = bancoMysqli();
 		$erro = 0;
 		$mensagem = "";
-		$sql_reabrir = "UPDATE ig_evento SET dataEnvio = NULL WHERE idEvento = '$idEvento'";
+		$sql_reabrir = "UPDATE ig_evento SET dataEnvio = NULL, statusEvento = 'Em elaboração' WHERE idEvento = '$idEvento'";
 		$query_reabrir = mysqli_query($con,$sql_reabrir);
 		if($query_reabrir)
 		{
