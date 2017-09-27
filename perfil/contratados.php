@@ -1128,7 +1128,7 @@
 					$mensagem = "Líder do Grupo inserido com sucesso!";	
 					
 					$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
-					$nome = $pf['Nome'];
+					$nome = addslashes($pf['Nome']);
 					$rg = $pf['RG'];
 					$cpf = $pf['CPF'];
 					$sql_inserir = "INSERT INTO `igsis_grupos` 
@@ -2359,7 +2359,7 @@
 					$idPedido = $_POST['idPedido'];
 					if(isset($_POST['inserir']))
 					{
-						$nome = trim($_POST['nome']);
+						$nome = addslashes($_POST['nome']);
 						$rg = trim($_POST['rg']);
 						$cpf = $_POST['cpf'];
 						$sql_inserir = "INSERT INTO `igsis_grupos` 
