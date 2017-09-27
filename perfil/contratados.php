@@ -3015,6 +3015,13 @@
   	<div class="container">
 		<div class="form-group">
 			<h3>CADASTRO DE PESSOA FÍSICA</h3>
+			
+			<div class="col-md-offset-2 col-md-8">
+				<form method='POST' action='?perfil=compara_pf&busca=<?php echo $fisica['CPF']; ?>'>
+					<input type='hidden' name='edicaoPessoa' value='1'>
+					<input type='submit' class='btn btn-theme btn-md btn-block' value='Verifique aqui se há atualização no Cadastro de Proponente'>
+				</form>				
+			</div>
 			<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
         </div>
 	  	<div class="row">

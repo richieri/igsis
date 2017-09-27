@@ -750,20 +750,45 @@ If($query1 != '' && $query2 != '')
 				</div>
 			</div>			
 		</div>
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-6">
-				<form method='POST' action='?perfil=contratados&p=fisica'>
-					<input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro cpf'>
-				</form>				
-			</div>
-			<div class="col-md-6">
-				<form method='POST' action='?perfil=contratados&p=lista'>
-					<input type='hidden' name='insereFisica' value='1'>
-					<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
-					<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
-				</form>
-			</div>
-		</div>
+		
+		<?php
+			if(isset($_POST['edicaoPessoa']))
+			{
+				$edicaoPessoa = $_POST['edicaoPessoa'];			
+		?>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<form method='POST' action='?perfil=contratados'>
+							<input type='submit' class='btn btn-theme btn-lg btn-block' value='voltar para a lista de contratados'>
+						</form>				
+					</div>
+				</div>				
+		<?php	
+			}
+			else
+			{
+		?>		
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-6">
+						<form method='POST' action='?perfil=contratados&p=fisica'>
+							<input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro cpf'>
+						</form>				
+					</div>
+					<div class="col-md-6">
+						<form method='POST' action='?perfil=contratados&p=lista'>
+							<input type='hidden' name='insereFisica' value='1'>
+							<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
+							<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
+						</form>
+					</div>
+				</div>	
+		<?php	
+			}
+		
+		?>
+		
+		
+		
 	</section>
 <?php	
 }
