@@ -3015,6 +3015,27 @@
   	<div class="container">
 		<div class="form-group">
 			<h3>CADASTRO DE PESSOA FÍSICA</h3>
+			<?php 
+				$cpf_busca = $fisica['CPF'];
+				//Localiza no proponente
+				$con2 = bancoMysqliProponente();
+				$sql2 = $con2->query("SELECT * FROM usuario_pf where cpf = '$cpf_busca'");
+				$query2 = $sql2->fetch_array(MYSQLI_ASSOC);
+				
+				If($query2 != '')
+				{
+				?>
+					<div class="col-md-offset-1 col-md-10">
+						<div class="col-md-offset-2 col-md-8">
+							<form method='POST' action='?perfil=compara_pf&busca=<?php echo $fisica['CPF']; ?>'>
+								<input type='hidden' name='edicaoPessoa' value='1'>
+								<input type='submit' class='btn btn-theme btn-md btn-block' value='Verifique aqui se há atualização no Cadastro de Proponente'>
+							</form><br/>				
+						</div>
+					</div>
+				<?php
+				}	
+			?>			
 			<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
         </div>
 	  	<div class="row">
