@@ -4,8 +4,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-                <p><?php geraFrase(); ?></p>
-					<p>2016 @ Informações Gerais CCSP + Siscontrat DEC / Secretaria Municipal de Cultura / Prefeitura de São Paulo</p>
+                	<p><?php geraFrase(); ?></p>
+					<p><img src="visual/images/logo_cultura.png" />
+						<img src="images/logo_cultura.png" /><br/>
+						2015 @ Informações Gerais CCSP + Siscontrat DEC / Secretaria Municipal de Cultura / Prefeitura de São Paulo
+					</p>
 				</div>
 				<div class="col-md-12">
 					<?php
