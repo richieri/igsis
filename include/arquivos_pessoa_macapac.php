@@ -8,9 +8,9 @@ $path = "../../proponente/uploadsdocs/";
 
 $con = bancoMysqliProponente();
 $idPessoa = $_GET['idPessoa'];
-$tipo = 1;
+$tipo = $_GET['tipo'];
 
-$sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '1' AND publicado = '1'";
+$sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '$tipo' AND publicado = '1'";
 $query = mysqli_query($con,$sql);
 $data = date('YmdHis');
 $nome_arquivo = $data.".zip";

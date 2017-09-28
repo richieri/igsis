@@ -514,173 +514,14 @@
 	<?php
 		break; 
 		case 'juridica':
-		
-			
-			if(isset($_POST['pesquisar']))
-			{
-				// inicia a busca por Razao Social ou CNPJ
-				$busca = $_POST['busca'];
-				$sql_busca = "SELECT * 
-					FROM sis_pessoa_juridica 
-					WHERE RazaoSocial LIKE '%$busca%' 
-					OR CNPJ LIKE '%$busca%' 
-					ORDER BY RazaoSocial";
-				$query_busca = mysqli_query($con,$sql_busca); 
-				$num_busca = mysqli_num_rows($query_busca);
-				if($num_busca > 0)
-				{
-		// Se exisitr, lista a resposta.
-	?>
-<section id="services" class="home-section bg-white">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
-				<div class="section-heading">
-					<h2>Contratados - Pesso Jurídica</h2>
-                    <p>Você está inserindo pessoas jurídicas para serem contratadas para o evento <strong><?php echo $nomeEvento['nomeEvento']; ?></strong></p>
-					<p></p>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section id="list_items" class="home-section bg-white">
-	<div class="container">
-		<div class="table-responsive list_info">
-			<table class="table table-condensed">
-				<thead>
-					<tr class="list_menu">
-						<td>Razão Social</td>
-						<td>CNPJ</td>
-						<td width="25%"></td>
-						<td width="5%"></td>
-					</tr>
-				</thead>
-				<tbody>
-				<?php
-					while($descricao = mysqli_fetch_array($query_busca))
-					{			
-						echo "<tr>";
-						echo "<td class='list_description'><b>".$descricao['RazaoSocial']."</b></td>";
-						echo "<td class='list_description'>".$descricao['CNPJ']."</td>";
-						echo "
-							<td class='list_description'>
-							<form method='POST' action='?perfil=contratados&p=lista'>
-							<input type='hidden' name='insereJuridica' value='".$descricao['Id_PessoaJuridica']."'>
-							<input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'></td></form>"	;
-						echo "</tr>";
-					}
-				?>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</section>
-			<?php
-				}
-				else
-				{
-					// Se não existe, exibe um formulario para insercao.
-			?>
-		<!-- Contact -->
-<section id="contact" class="home-section bg-white">
-	<div class="container">
-		<div class="form-group">
-			<h3>CADASTRO DE PESSOA JURÍDICA</h3>
-			<p>Não foram encontradas nenhuma pessoa jurídica com referência <strong><?php echo $_POST['busca'] ?></strong></p> 
-		</div>
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form" action="?perfil=contratados&p=lista" method="post">
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Razão Social:</strong><br/>
-							<input type="text" class="form-control" id="RazaoSocial" name="RazaoSocial" placeholder="RazaoSocial" >
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>CNPJ:</strong><br/>
-							<input type="text" readonly class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ" value=<?php echo $_POST['busca'] ?> >
-						</div>
-						<div class="col-md-6"><strong>CCM:</strong><br/>
-							<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" >
-						</div>
-					</div>  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
-							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="XXXXX-XXX">
-						</div>				  
-						<div class=" col-md-6"><strong>Estado *:</strong><br/>
-							<input type="text" class="form-control" id="Estado" name="Estado" placeholder="Estado">
-						</div>
-					</div>  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Endereço *:</strong><br/>
-							<input type="text" class="form-control" id="Endereco" name="Endereco" placeholder="Endereço">
-						</div>
-					</div>  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
-							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero">
-						</div>				  
-						<div class=" col-md-6"><strong>Complemento:</strong><br/>
-							<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento">
-						</div>
-					</div>  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Bairro *:</strong><br/>
-							<input type="text" class="form-control" id="Bairro" name="Bairro" placeholder="Bairro">
-						</div>				  
-						<div class=" col-md-6"><strong>Cidade *:</strong><br/>
-							<input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade">
-						</div>
-					</div>  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Telefone:</strong><br/>
-							<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321">
-						</div>				  
-						<div class=" col-md-6"><strong>Telefone:</strong><br/>
-							<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321" >
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Telefone:</strong><br/>
-							<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321">
-						</div>				  
-						<div class=" col-md-6"><strong>E-mail:</strong><br/>
-							<input type="text" class="form-control" id="Email" name="Email" placeholder="E-mail">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Observações:</strong><br/>
-							<textarea name="Observacao" class="form-control" rows="10" placeholder=""></textarea>
-						</div>
-					</div>
-					<!-- Botão Gravar -->	
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<input type="hidden" name="cadastrarJuridica" value="1" />
-							<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
-						</div>
-					</div>
-				</form>
-			</div>	
-		</div>		
-	</div>
-</section>
-			<?php
-				}
-			}
-			else
-			{
-				// Se não existe pedido de busca, exibe campo de pesquisa.
-			?>    
+?>   
 <section id="services" class="home-section bg-white">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
 				<div class="section-heading">
 					<h2>Contratados - Pessoa Jurídica</h2>
-                    <p>Você está inserindo pessoas físicas para serem contratadas para o evento <strong><?php  echo $nomeEvento['nomeEvento']; ?></strong></p>
+                    <p>Você está inserindo pessoas jurídicas para serem contratadas para o evento <strong><?php  echo $nomeEvento['nomeEvento']; ?></strong></p>
 					<p></p>
 				</div>
 			</div>
@@ -688,9 +529,9 @@
 	    <div class="row">
             <div class="form-group">
             	<div class="col-md-offset-2 col-md-8">  
-                    <form method="POST" action="?perfil=contratados&p=juridica" class="form-horizontal" role="form">
+                    <form method="POST" action="?perfil=compara_pj" class="form-horizontal" role="form">
 						<label>Insira o CNPJ</label>
-						<input type="text" name="busca" class="form-control" id="CNPJ" placeholder="" ><br />
+						<input type="text" name="busca" class="form-control" id="CNPJ"><br />
 						<br />             
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
@@ -705,7 +546,7 @@
 	</div>
 </section>
 		<?php
-			}
+			
 		break;
 		case 'fisica':
 ?>    
@@ -3199,6 +3040,27 @@
 	<div class="container">
 		<div class="form-group">
 			<h3>CADASTRO DE PESSOA JURÍDICA</h3>
+			<?php 
+				$cnpj_busca = $juridica['CNPJ'];
+				//Localiza no proponente
+				$con2 = bancoMysqliProponente();
+				$sql2 = $con2->query("SELECT * FROM usuario_pj where cnpj = '$cnpj_busca'");
+				$query2 = $sql2->fetch_array(MYSQLI_ASSOC);
+				
+				If($query2 != '')
+				{
+				?>
+					<div class="col-md-offset-1 col-md-10">
+						<div class="col-md-offset-2 col-md-8">
+							<form method='POST' action='?perfil=compara_pj&busca=<?php echo $juridica['CNPJ']; ?>'>
+								<input type='hidden' name='edicaoPessoa' value='1'>
+								<input type='submit' class='btn btn-theme btn-md btn-block' value='Verifique aqui se há atualização no Cadastro de Proponente'>
+							</form><br/>				
+						</div>
+					</div>
+				<?php
+				}	
+			?>		
 			<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 		</div>
 		<div class="row">
