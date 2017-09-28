@@ -745,7 +745,7 @@ If($query1 != '' && $query2 != '')
 							echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
 						}				
 					?>
-						<a href="../include/arquivos_pessoa_macapac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo='1'" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+						<a href="../include/arquivos_pessoa_macapac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=1" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
 					</div>
 				</div>
 			</div>			
