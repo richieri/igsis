@@ -2872,7 +2872,7 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		}
 		
 		//Pedidos de Contratação publicados e enviados, mas com estado = 1
-		$sql_estado1 = "SELECT * FROM `igsis_pedido_contratacao` AS ped INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento WHERE ped.publicado = 1 AND eve.publicado = 1 AND estado = '1' AND dataEnvio IS NOT NULL ORDER BY `idPedidoContratacao` DESC";
+		$sql_estado1 = "SELECT * FROM `igsis_pedido_contratacao` AS ped INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento WHERE ped.publicado = 1 AND eve.publicado = 1 AND estado = '1' AND dataEnvio IS NOT NULL AND statusEvento = 'Enviado' ORDER BY `idPedidoContratacao` DESC";
 		$query_estado = mysqli_query($con,$sql_estado1);
 		$relatorio .="<p>&nbsp;</p><h4>Pedidos de Contratação publicados e enviados, mas com estado = 1</h4>
 		<p>$sql_estado1</p>";
