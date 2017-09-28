@@ -532,39 +532,41 @@ If($query1 != '' && $query2 != '')
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
-					<div class="table-responsive list_info">
-					<?php
-						$sql = "SELECT * 
-								FROM upload_lista_documento as list
-								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
-								WHERE arq.idPessoa = '$idPessoaMac' 
-								AND arq.idTipoPessoa = '2' 
-								AND arq.publicado = '1'";
-						$query = mysqli_query($con2,$sql);
-						$linhas = mysqli_num_rows($query);
-						
-						if ($linhas > 0)
-						{	
-							echo "
-								<table class='table table-condensed'>
-									
-									<tbody>";
-										while($arquivo = mysqli_fetch_array($query))
-										{					
-											echo "<tr>";
-											echo "<td class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
-											echo "</tr>";					
-										}
-							echo "
-									</tbody>
-								</table>";
-						}
-						else
-						{
-							echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
-						}				
-					?>
-						<a href="../include/arquivos_pessoa_macapac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+					<div align="left">
+						<div class="table-responsive list_info">
+						<?php
+							$sql = "SELECT * 
+									FROM upload_lista_documento as list
+									INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+									WHERE arq.idPessoa = '$idPessoaMac' 
+									AND arq.idTipoPessoa = '2' 
+									AND arq.publicado = '1'";
+							$query = mysqli_query($con2,$sql);
+							$linhas = mysqli_num_rows($query);
+							
+							if ($linhas > 0)
+							{	
+								echo "
+									<table class='table table-condensed'>
+										
+										<tbody>";
+											while($arquivo = mysqli_fetch_array($query))
+											{					
+												echo "<tr>";
+												echo "<td class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+												echo "</tr>";					
+											}
+								echo "
+										</tbody>
+									</table>";
+							}
+							else
+							{
+								echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+							}				
+						?>
+							<a href="../include/arquivos_pessoa_macapac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+						</div>
 					</div>
 				</div>
 			</div>			
