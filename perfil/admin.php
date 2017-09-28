@@ -2871,6 +2871,15 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 			$relatorio .= "Pedido: ".$pedido['idPedidoContratacao']."<br />";	
 		}
 		
+		//Pedidos de Contratação publicados e enviados, mas com estado = 1
+		$sql_estado1 = "SELECT * FROM `igsis_pedido_contratacao` AS ped INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento WHERE ped.publicado = 1 AND eve.publicado = 1 AND estado = '1' AND dataEnvio IS NOT NULL ORDER BY `idPedidoContratacao` DESC";
+		$query_estado = mysqli_query($con,$sql_estado1);
+		$relatorio .="<p>&nbsp;</p><h4>Pedidos de Contratação publicados e enviados, mas com estado = 1</h4>
+		<p>$sql_estado1</p>";
+		while($pedido = mysqli_fetch_array($query_estado)){
+			$relatorio .= "Pedido: ".$pedido['idPedidoContratacao']."<br />";	
+		}
+		
 		?>
 		<section id="contact" class="home-section bg-white">
 			<div class="container">
