@@ -742,7 +742,7 @@
 	</div>
 </section>  
 					<?php
-						var_dump($pessoa);
+						//var_dump($pessoa);
 					}
 				break;
 				case "busca":
