@@ -122,6 +122,7 @@ if(isset($_POST['periodo']))
 					if ( $pedido ['estado'] == 1 OR $pedido ['estado'] == 2 OR 	$pedido ['estado'] == 3 OR $pedido ['estado'] == 4 OR $pedido ['estado'] == 5 OR $pedido ['estado'] == 6 OR $pedido ['estado'] == 7 OR $pedido ['estado'] == 8 OR $pedido ['estado'] == 9 OR $pedido ['estado'] == 10 OR $pedido ['estado'] == 11 OR $pedido ['estado'] == 13 OR $pedido ['estado'] == 14 OR $pedido ['estado'] == 15) 
 					{
 						$x[$i]['id']= $pedido['idPedidoContratacao'];
+						$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
 						$x[$i]['objeto'] = retornaTipo($event['ig_tipo_evento_idTipoEvento'])." - ".$event['nomeEvento'];
 						if($pedido['tipoPessoa'] == 1)
 						{
@@ -163,6 +164,7 @@ if(isset($_POST['periodo']))
 					<thead>
 						<tr class="list_menu">
 							<td>Codigo do Pedido</td>
+							<td>Número Processo</td>
 							<td>Proponente</td>
 							<td>Tipo</td>
 							<td>Objeto</td>
@@ -188,6 +190,7 @@ if(isset($_POST['periodo']))
 							{
 								echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";								
 							}
+							echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['tipo'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
