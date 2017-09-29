@@ -18,6 +18,7 @@
 	switch($p)
 	{
 		case 'lista': 
+			unset($_SESSION['edicaoPessoa']);
 			if($_SESSION['idPedido'])
 			{
 				// fecha a session idPedido
@@ -514,6 +515,7 @@
 	<?php
 		break; 
 		case 'juridica':
+		unset($_SESSION['edicaoPessoa']);
 ?>   
 <section id="services" class="home-section bg-white">
 	<div class="container">
@@ -549,6 +551,7 @@
 			
 		break;
 		case 'fisica':
+		unset($_SESSION['edicaoPessoa']);
 ?>    
 	<section id="services" class="home-section bg-white">
 		<div class="container">

@@ -575,7 +575,12 @@ If($query1 != '' && $query2 != '')
 		<?php
 			if(isset($_POST['edicaoPessoa']))
 			{
-				$edicaoPessoa = $_POST['edicaoPessoa'];			
+				$_SESSION['edicaoPessoa'] = $_POST['edicaoPessoa'];
+			}				
+			$edicaoPessoa = $_SESSION['edicaoPessoa'];
+		
+			if($edicaoPessoa == 1)
+			{
 		?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
