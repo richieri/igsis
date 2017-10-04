@@ -19,58 +19,54 @@ $con = bancoMysqli();
 $idPedido = $_SESSION['idPedido'];
 
 if(isset($_POST['inserir']))
-{
-	$nome = trim($_POST['nome']);
-	$rg = trim($_POST['rg']);
-	$cpf = $_POST['cpf'];
-	$sql_inserir = "INSERT INTO `igsis_grupos` (`idGrupos`, `idPedido`, `nomeCompleto`, `rg`, `cpf`, `publicado`) VALUES (NULL, '$idPedido', '$nome', '$rg', '$cpf', '1')";
-	$query_inserir = mysqli_query($con,$sql_inserir);
-	if($query_inserir)
 	{
-		$mensagem = "Integrante inserido com sucesso!";	
+		$nome = addslashes($_POST['nome']);
+		$rg = trim($_POST['rg']);
+		$cpf = $_POST['cpf'];
+		$sql_inserir = "INSERT INTO `igsis_grupos` 
+			(`idGrupos`, 
+			`idPedido`, 
+			`nomeCompleto`, 
+			`rg`, 
+			`cpf`, 
+			`publicado`) 
+			VALUES (NULL, 
+			'$idPedido', 
+			'$nome', 
+			'$rg', 
+			'$cpf', 
+			'1')";
+		$query_inserir = mysqli_query($con,$sql_inserir);
+		if($query_inserir)
+		{
+			$mensagem = "Integrante inserido com sucesso!";	
+		}
+		else
+		{
+			$mensagem = "Erro ao inserir integrante. Tente novamente.";	
+		}	
 	}
-	else
+	
+	if(isset($_POST['apagar']))
 	{
-		$mensagem = "Erro ao inserir integrante. Tente novamente.";	
-	}	
-}
-
-if(isset($_POST['apagar']))
-{
-	$id = $_POST['apagar'];
-	$sql_apagar = "UPDATE igsis_grupos SET publicado = '0' WHERE idGrupos = '$id'";
-	$query_apagar = mysqli_query($con,$sql_apagar);
-	if($query_apagar)
-	{
-		$mensagem = "Integrante apagado com sucesso!";	
+		$id = $_POST['apagar'];
+		$sql_apagar = "UPDATE igsis_grupos SET publicado = '0' WHERE idGrupos = '$id'";
+		$query_apagar = mysqli_query($con,$sql_apagar);
+		if($query_apagar)
+		{
+			$mensagem = "Integrante apagado com sucesso!";	
+		}
+		else
+		{
+			$mensagem = "Erro ao apagar integrante. Tente novamente.";	
+		}
 	}
-	else
-	{
-		$mensagem = "Erro ao apagar integrante. Tente novamente.";			
-	}	
-}
-
-if(isset($_POST['atualizarIntegrante']))
-{	
-	$idGrupo = $_GET['idGrupo'];
-	$nomeCompleto = $_POST['nomeCompleto'];
-	$rg = trim($_POST['rg']);
-	$cpf = $_POST['cpf'];
-	$sql_update = "UPDATE igsis_grupos SET nomeCompleto = '$nomeCompleto', rg = '$rg', cpf = '$cpf'  WHERE idGrupos = '$idGrupo'";
-	$query_update = mysqli_query($con,$sql_update);
-	if($query_update)
-	{
-		$mensagem = "Integrante editado com sucesso!";	
-	}
-	else
-	{
-		$mensagem = "Erro ao editar integrante. Tente novamente.";			
-	}	
-}
-
-$sql_grupos = "SELECT * FROM igsis_grupos WHERE idPedido = '$idPedido' and publicado = '1'";
-$query_grupos = mysqli_query($con,$sql_grupos);
-$num = mysqli_num_rows($query_grupos);
+	$sql_grupos = "SELECT * 
+		FROM igsis_grupos 
+		WHERE idPedido = '$idPedido' 
+		AND publicado = '1'";
+	$query_grupos = mysqli_query($con,$sql_grupos);
+	$num = mysqli_num_rows($query_grupos);
 
 ?>
 
@@ -150,7 +146,7 @@ $num = mysqli_num_rows($query_grupos);
 						<a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $_SESSION['idPedido'] ?>" class="btn btn-theme btn-md btn-block">Voltar ao pedido</a>
 				<?php 
 					}
-					else
+					else 
 					{ 
 				?>
 						<a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $_SESSION['idPedido'] ?>" class="btn btn-theme btn-md btn-block">Voltar ao pedido</a>

@@ -15,9 +15,42 @@ if(isset($_POST['insereExecutante']))
 	$sql_atualiza_executante = "UPDATE `igsis_pedido_contratacao` SET `IdExecutante` = '$id_executante' WHERE `idPedidoContratacao` = '$idPedido';";
 	$query_atualiza_executante = mysqli_query($con,$sql_atualiza_executante);	
 	if($query_atualiza_executante)
-	{
-		$mensagem = "Líder do Grupo inserido com sucesso!";	
-	}
+		{
+			$mensagem = "Líder do Grupo inserido com sucesso!";	
+			
+			$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
+			$nome = addslashes($pf['Nome']);
+			$rg = $pf['RG'];
+			$cpf = $pf['CPF'];
+			$sql_inserir = "INSERT INTO `igsis_grupos` 
+				(`idGrupos`, 
+				`idPedido`, 
+				`nomeCompleto`, 
+				`rg`, 
+				`cpf`, 
+				`publicado`) 
+				VALUES (NULL, 
+				'$idPedido', 
+				'$nome', 
+				'$rg', 
+				'$cpf', 
+				'1')";
+			$query_inserir = mysqli_query($con,$sql_inserir);
+			if($query_inserir)
+			{
+				$mensagem = "Integrante inserido com sucesso!";	
+			}
+			else
+			{
+				$mensagem = "Erro ao inserir integrante. Tente novamente.";	
+			}	
+			
+		}
+		else
+		{
+			$mensagem = "Erro ao inserir Líder do Grupo. Tente novamente!";	
+		}
+
 }
 
 if(isset($_POST['cadastraExecutante']))
@@ -386,19 +419,18 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 					<div class="col-md-offset-2 col-md-8"><br/></div>
                 </div>
 
-                <div class="form-group"> 
-					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_grupos"  method="post">
-						<textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($_SESSION['idPedido']); ?></textarea>
-                    </div>
-                </div>  
+				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_grupos"  method="post">
+               <div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
+							<textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($_SESSION['idPedido']); ?>
+							</textarea>
+						</div>				
+						<div class="col-md-offset-2 col-md-8">
+							<input type="hidden" name="idPedido" value="<?php echo $_SESSION['idPedido']; ?>" >
+							<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
+						</div>  
                 
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
-                    </form>
-					</div>
-				</div>
+
+				</form>
 					
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
