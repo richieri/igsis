@@ -537,6 +537,7 @@
 						<br />             
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
+								<input type='hidden' name='edicaoPessoa' value='0'>
 								<input type="hidden" name="pesquisar" value="1" />
 								<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 							</div>
@@ -573,6 +574,7 @@
 							<br />             
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
+									<input type='hidden' name='edicaoPessoa' value='0'>
 									<input type="hidden" name="pesquisar" value="1" />
 									<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
 								</div>
