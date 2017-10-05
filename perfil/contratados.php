@@ -830,7 +830,7 @@
 							<input type="text" class="form-control" id="RG" name="RG" placeholder="RG">
 						</div>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF" readonly="readonly" value="<?php echo $_POST['busca']; ?>" >
+							<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF" readonly value="<?php echo $_POST['busca']; ?>" >
 						</div>
 					</div>
 					<div class="form-group">
@@ -1708,7 +1708,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-							<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF" value="<?php echo $busca; ?> ">
+							<input type="text" class="form-control" id="cpf" name="CPF" readonly placeholder="CPF" value="<?php echo $busca; ?> ">
 						</div>				  
 						<div class=" col-md-6"><strong>CCM *:</strong><br/>
 							<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" >
@@ -2352,7 +2352,7 @@
 							<input type="text" class="form-control" id="RG" name="rg" placeholder="RG">
 						</div>
 						<div class="col-md-6"><strong>CPF: *</strong><br/>
-							<input type="text" class="form-control" id="cpf" name="cpf"  placeholder="CPF">
+							<input type="text" class="form-control" id="cpf" name="cpf" readonly placeholder="CPF">
 						</div>
 					</div>
 					<!-- Botão Gravar -->	
@@ -2909,7 +2909,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-							<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF" value="<?php echo $fisica['CPF']; ?>">
+							<input type="text" readonly class="form-control" id="cpf" name="CPF" placeholder="CPF" value="<?php echo $fisica['CPF']; ?>">
 						</div>				  
 						<div class=" col-md-6"><strong>CCM *:</strong><br/>
 							<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" value="<?php echo $fisica['CCM']; ?>" >
@@ -3114,7 +3114,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>CNPJ:</strong><br/>
-								<input type="text" class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ" value="<?php echo $juridica['CNPJ']; ?>" >
+								<input type="text" class="form-control" id="CNPJ" name="CNPJ" readonly placeholder="CNPJ" value="<?php echo $juridica['CNPJ']; ?>" >
 							</div>
 							<div class="col-md-6"><strong>CCM:</strong><br/>
 								<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" value="<?php echo $juridica['CCM']; ?>">
@@ -3247,7 +3247,7 @@
 							<input type="text" class="form-control" id="RG" name="RG" placeholder="RG">
 						</div>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF">
+							<input type="text" class="form-control" id="cpf" name="CPF" readonly placeholder="CPF">
 						</div>
 					</div>
 					<div class="form-group">
