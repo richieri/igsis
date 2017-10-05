@@ -217,16 +217,16 @@ else
 							<input type="text" class="form-control" id="Email" name="Email" placeholder="E-mail" >
 						</div>	
 						<div class=" col-md-6"><strong>Telefone #1 *:</strong><br/>
-							<input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone" >
+							<input type="text" class="form-control" id="Telefone1" name="Telefone1" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Telefone #2:</strong><br/>
-							<input type="text" class="form-control" id="Telefone1" name="Telefone2" placeholder="Telefone" >
+							<input type="text" class="form-control" id="Telefone1" name="Telefone2" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 4568-4444" >
 						</div>				  
 						<div class="col-md-6"><strong>Telefone #3:</strong><br/>
-							<input type="text" class="form-control" id="Telefone2" name="Telefone3" placeholder="Telefone" >
+							<input type="text" class="form-control" id="Telefone2" name="Telefone3" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 94848-7070">
 						</div>
 					</div>
 							  
