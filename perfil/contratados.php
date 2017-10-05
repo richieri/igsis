@@ -35,16 +35,15 @@
 			if(isset($_POST['cadastrarFisica']))
 			{
 				//cadastra e insere pessoa física
-				$cpf = $_POST['CPF'];
+				$cpf = validaCPF($_POST['CPF']);
 				$verificaCPF = verificaExiste("sis_pessoa_fisica","CPF",$cpf,"");
-				if($verificaCPF['numero'] > 0)
+				if($cpf == false)
 				{
-					//verifica se o cpf já existe
-					$mensagem = "O CPF já consta no sistema. Faça uma busca e insira diretamente";
+					$mensagem = "<font color='red'>CPF inválido! Redirecionando...</font>";
+					echo "<script type=\"text/javascript\">window.setTimeout(\"location.href='verifica_pf.php';\", 3600);</script>";		
 				}
-				else
-				{
-					// o CPF não existe, inserir.
+			}
+			else if {// o CPF não existe, inserir.
 					$Nome = addslashes($_POST['Nome']);
 					$NomeArtistico = addslashes($_POST['NomeArtistico']);
 					$RG = $_POST['RG'];
