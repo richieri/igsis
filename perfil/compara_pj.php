@@ -553,7 +553,7 @@ If($query1 != '' && $query2 != '')
 											while($arquivo = mysqli_fetch_array($query))
 											{					
 												echo "<tr>";
-												echo "<td class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+												echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
 												echo "</tr>";					
 											}
 								echo "
