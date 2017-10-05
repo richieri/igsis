@@ -10,7 +10,18 @@
 		if($query_atualiza_evento)
 		{
 			gravarLog($sql_atualiza_evento);
-			atualizarAgenda($idEvento);	
+			atualizarAgenda($idEvento);
+
+						$titulo = "Reabertura do evento ".$evento['nomeEvento']." pela área de Contratos";
+						$idUsuario = $_SESSION['idUsuario'];
+						$event = $idEvento;
+						$descricao = "Evento fora do prazo!";	
+						$justificativa = "Solicitação de aprovação de evento fora do prazo.";
+						$data = date('Y-m-d H:i:s');
+						
+							$sql_inserir_chamado = "INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', '1', '13', '$event', '$justificativa')";
+							$query_inserir_chamado = mysqli_query($con,$sql_inserir_chamado);
+										
 		}
 		$sql_atualiza_pedido = "UPDATE `igsis`.`igsis_pedido_contratacao` SET 
 			`estado` = '1'
