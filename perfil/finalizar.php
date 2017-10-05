@@ -13,86 +13,50 @@
 			atualizarAgenda($idEvento);	
 			$sql_data_envio = "INSERT INTO `ig_data_envio`(`idEvento`, `dataEnvio`) VALUES ('$idEvento', '$datetime')";
 			$query_data_envio = mysqli_query($con,$sql_data_envio);
-		}
-		$sql_atualiza_pedido = "UPDATE `igsis`.`igsis_pedido_contratacao` SET 
-			`estado` = '2'
-			WHERE `igsis_pedido_contratacao`.`idEvento` = '$idEvento' AND `igsis_pedido_contratacao`.`publicado` = '1' ";
-		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
-		if($query_atualiza_evento)
-		{
-			gravarLog($sql_atualiza_pedido);
-			$sql_protocolo = "INSERT INTO `ig_protocolo` (`idProtocolo`, `ig_evento_idEvento`, `publicado`, `dataInsercao`) VALUES (NULL, '$idEvento', '1', '$datetime')";
-			$query_protocolo = mysqli_query($con,$sql_protocolo);
-			if($query_protocolo)
+		
+			if($query_data_envio)
 			{
-				gravarLog($sql_protocolo);
-				$protocolo = recuperaUltimo("ig_protocolo");
-				$mensagem = "O formulário de evento foi enviado com sucesso!<br/><h5>O número IG é ".$idEvento."</h5>
-					Refira-se a este número ao entrar em contato com as áreas de Comunicação e Produção.<br /><br /><br />";
-				$sql_recupera_pedidos = "SELECT * FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND publicado = '1'";
-				$query_recupera_pedidos = mysqli_query($con,$sql_recupera_pedidos);
-				$num_pedidos = mysqli_num_rows($query_recupera_pedidos);
-				//Envia Email
-				$evento = recuperaDados("ig_evento",$idEvento,"idEvento"); //$tabela,$idEvento,$campo
-				$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
-				$instituicao = recuperaDados("ig_instituicao",$usuario['idInstituicao'],"idInstituicao");
-				$local = listaLocais($idEvento);
-				$periodo = retornaPeriodo($idEvento);
-				$fiscal = recuperaUsuario($evento['idResponsavel']);
-				$suplente = recuperaUsuario($evento['suplente']);
-				$tipoEvento = recuperaDados('ig_tipo_evento',$evento['ig_tipo_evento_idTipoEvento'],'idTipoEvento');
-				$programa = recuperaDados('ig_programa',$evento['ig_programa_idPrograma'],'idPrograma');
-				$projetoEspecial = recuperaDados('ig_projeto_especial',$evento['projetoEspecial'],'idProjetoEspecial');
-				$conteudo_email = "Olá, <br /><br />
-					O evento <b>".$evento['nomeEvento']."</b> foi cadastrado no sistema por ".$usuario['nomeCompleto']." em ".exibirDataHoraBr($datetime).".<br /><br />
-					Número da IG: <b>".$idEvento."</b><br />
-					<b>Tipo de evento:</b> ".$tipoEvento['tipoEvento']."<br />";
-				if($evento['ig_programa_idPrograma'] != 0){ $conteudo_email .= "<b>Programa especial:</b> ".$programa['programa']."<br />";}
-				if($evento['projetoEspecial'] != 0){ $conteudo_email .= "<b>Projeto especial:</b> ".$projetoEspecial['projetoEspecial']."<br />";}
-				if($evento['projeto'] != ""){ $conteudo_email .= "<b>Projeto:</b> ".$evento['projeto']."<br />";}
-				$conteudo_email .= "
-					<br />
-					<b>Responsável pelo evento:</b> ".$fiscal['nomeCompleto']."<br />
-					<b>Suplente:</b> ".$suplente['nomeCompleto']."<br />
-					<br />
-					<b>Sinopse:</b><br />".nl2br($evento['sinopse'])."<br /><br />
-					<b>Local / Período: </br >".substr($local,1)." / ".$periodo."<br />
-					<br />
-					Saiba mais acessando: <a href='http://www.centrocultural.cc/igsis/'> centrocultural.cc/igsis </a>
-					<br />
-					<br />
-					<p>Atenciosamente,<br />
-					Equipe IGSIS</p>";
-				$subject = "O evento ".$evento['nomeEvento']." foi cadastrado no sistema.";
-				enviarEmail($conteudo_email, $_SESSION['idInstituicao'], $subject, $idEvento, $num_pedidos );
-				if($num_pedidos > 0)
+				$sql_atualiza_pedido = "UPDATE `igsis`.`igsis_pedido_contratacao` SET 
+				`estado` = '2'
+				WHERE `igsis_pedido_contratacao`.`idEvento` = '$idEvento' AND `igsis_pedido_contratacao`.`publicado` = '1' ";
+				$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
+			
+				if($query_atualiza_evento)
 				{
-					while($pedido = mysqli_fetch_array($query_recupera_pedidos))
-					{
-						$idPedido = $pedido['idPedidoContratacao'];
-						$idUsuario = $_SESSION['idUsuario'];
-						$sql_fecha_pedido = "INSERT INTO `sis_protocolo` (`idProtocolo`, `idPedido`, `data`, `userId`) VALUES (NULL, '$idPedido', '$datetime', '$idUsuario')";
-						$query_fecha_pedido = mysqli_query($con,$sql_fecha_pedido);
-						$i = 0;
-						if($sql_fecha_pedido)
+					gravarLog($sql_atualiza_pedido);						
+					$mensagem = "O formulário de evento foi enviado com sucesso!<br/><h5>O número IG é ".$idEvento."</h5>
+						Refira-se a este número ao entrar em contato com as áreas de Comunicação e Produção.<br /><br /><br />";
+					$sql_recupera_pedidos = "SELECT * FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND publicado = '1'";
+					$query_recupera_pedidos = mysqli_query($con,$sql_recupera_pedidos);
+					$num_pedidos = mysqli_num_rows($query_recupera_pedidos);
+					if($num_pedidos > 0)
+					{						
+						while($pedido = mysqli_fetch_array($query_recupera_pedidos))
 						{
-							gravarLog($sql_fecha_pedido);
-							$protoPedido = recuperaUltimo("sis_protocolo");
-							$pedidos[$i] = $idPedido;
-							$mensagem = $mensagem."Foi gerado um <strong>pedido de contratação</strong> com número <h5>".$pedidos[$i]."</h5>
-							Este número é a referência para as áreas de Contratos, Jurídico, Finanças, Contabilidade entre outros.<br />
-							<strong><a target='_blank' href='?perfil=detalhe_pedido&id_ped=".$pedidos[$i]."'>Clique aqui caso queira visualizar os detalhes desta contratação.</a></strong>
-							<br /><br />
-							<a href='http://www.centrocultural.cc/igsis/manual/index.php/introducao-ao-sistema-igsis/numero-igpedido-de-contratacao/' target='_blank'>Saiba mais sobre os números gerados no nosso <i>Manual do Sistema</i></a>.<br /><br /><br />
-							";
-							$i++;
+							$idPedido = $pedido['idPedidoContratacao'];
+							$i = 0;
+							if($sql_atualiza_pedido)
+							{								
+								$pedidos[$i] = $idPedido;
+								$mensagem = $mensagem."Foi gerado um <strong>pedido de contratação</strong> com número <h5>".$pedidos[$i]."</h5>
+								Este número é a referência para as áreas de Contratos, Jurídico, Finanças, Contabilidade entre outros.<br />
+								<strong><a target='_blank' href='?perfil=detalhe_pedido&id_ped=".$pedidos[$i]."'>Clique aqui caso queira visualizar os detalhes desta contratação.</a></strong>
+								<br /><br />
+								<a href='http://smcsistemas.prefeitura.sp.gpv.br/igsis/manual/index.php/introducao-ao-sistema-igsis/numero-igpedido-de-contratacao/' target='_blank'>Saiba mais sobre os números gerados no nosso <i>Manual do Sistema</i></a>.<br /><br /><br />
+								";
+								$i++;
+							}
 						}
 					}
+				}
+				else
+				{
+					$mensagem = "Erro ao enviar o pedido de contratação. Contacte o administrador do sistema.";
 				}
 			}
 			else
 			{
-				$mensagem = "Erro ao gerar protocolo";
+				$mensagem = "Erro ao registrar data de envio. Contacte o administrador do sistema.";
 			}
 		}
 		else
@@ -116,39 +80,7 @@
 				$mensagem_com = "Erro ao registrar evento na Divisão de Comunicação e Informação.";
 			}
 		}	
-		// Criar data para fechamento
-		// Criar Protocolo da IG
-		// Criar Protocolo dos Pedidos de Contratação
-		// Enviar e-mail para as áreas interessadas
-		/*
-		$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
-		$tipo = recuperaDados("ig_tipo_evento",$evento['ig_tipo_evento_idTipoEvento'],"idTipoEvento");
-		if($num_pedidos > 0)
-		{
-			$ped = "Há pedidos de contratação artística";	
-		}
-		else
-		{
-			$ped = "Não há pedidos de contratação artística";
-		}
-		$conteudo_email = "Olá,<br /><br />
-			Uma nova IGSIS foi enviada por ".$_SESSION['nomeCompleto']." em ".exibirDataHoraBr($evento['dataEnvio']).". <br /><br />
-			Nome do evento: <strong>".$evento['nomeEvento']." (".$tipo['tipoEvento'].")</strong><br />
-			Período/Locais: ".resumoOcorrencias($idEvento)."<br /><br />
-			$ped <br /><br />
-			Para saber mais, acesse: http://www.centrocultural.cc/igsis
-			<br />
-			<br />
-			Equipe IGSIS";
-		$instituicao = $_SESSION['idInstituicao']; 
-		$subject = "Uma nova IGSIS foi enviada por ".$_SESSION['nomeCompleto']." em ".exibirDataHoraBr($evento['dataEnvio']); 
-		$user = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
-		$email = $user['email']; 
-		$usuario = $user['nomeCompleto'];
-		$mensagem_email = enviarEmail($conteudo_email, $instituicao, $subject, $email, $usuario );
-		*/
-		// Fecha sessão
-		// Verificar datas
+		
 		$_SESSION['idEvento'] = NULL;
 	}
 ?>
