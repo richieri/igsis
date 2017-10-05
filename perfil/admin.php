@@ -2880,6 +2880,24 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 			$relatorio .= "Pedido: ".$pedido['idPedidoContratacao']."<br />";	
 		}
 		
+		//CPF duplicados
+		$sql_cpf_duplicado = "SELECT Nome, CPF, Count(*) FROM `sis_pessoa_fisica` GROUP BY CPF HAVING Count(*) > 1 ORDER By Nome";
+		$query_cpf_duplicado = mysqli_query($con,$sql_cpf_duplicado);
+		$relatorio .="<p>&nbsp;</p><h4>CPF's duplicados no cadastro de pessoa física.</h4>
+		<p>$sql_cpf_duplicado</p>";
+		while($pf = mysqli_fetch_array($query_cpf_duplicado)){
+			$relatorio .= "Nome: ".$pf['Nome']." | CPF: ".$pf['CPF']."<br />";	
+		}
+		
+		//CNPJ duplicados
+		$sql_cnpj_duplicado = "SELECT RazaoSocial, CNPJ, Count(*) FROM `sis_pessoa_juridica` GROUP BY CNPJ HAVING Count(*) > 1 ORDER By RazaoSocial";
+		$query_cnpj_duplicado = mysqli_query($con,$sql_cnpj_duplicado);
+		$relatorio .="<p>&nbsp;</p><h4>CNPJ's duplicados no cadastro de pessoa jurídica.</h4>
+		<p>$sql_cnpj_duplicado</p>";
+		while($pj = mysqli_fetch_array($query_cnpj_duplicado)){
+			$relatorio .= "Razão Social: ".$pj['RazaoSocial']." | CNPJ: ".$pj['CNPJ']."<br />";	
+		}
+		
 		?>
 		<section id="contact" class="home-section bg-white">
 			<div class="container">
