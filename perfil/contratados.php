@@ -3812,5 +3812,41 @@ function contarCaracteres3(box,valor,campospan){
 </section>	
 	<?php 
 		break;
+		case 'erro_pf':
+	?>
+		<section id="list_items" class="home-section bg-white">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-offset-2 col-md-8">
+						<div class="section-heading">
+							<h4><font color='red'>CPF inválido! por favor, insira o número correto!</font></h4> 
+							<h4><font color='red'>Redirecionando...</font></h4>
+							<p></p>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</section>
+	<?php 
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='3.5;URL=?perfil=contratados&p=fisica'>"; 
+		break;
+		case 'erro_pj':
+	?>
+		<section id="list_items" class="home-section bg-white">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-offset-2 col-md-8">
+						<div class="section-heading">
+							<h4><font color='red'>CNPJ inválido! por favor, insira o número correto!</font></h4> 
+							<h4><font color='red'>Redirecionando...</font></h4>
+							<p></p>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</section>
+	<?php 
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='3.5;URL=?perfil=contratados&p=juridica'>"; 
+		break;
 	} //fim da switch
 	?>

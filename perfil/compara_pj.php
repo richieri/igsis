@@ -6,19 +6,31 @@ $con2 = bancoMysqliProponente();
 // Endereço da página
 $link = "?perfil=compara_pj";
 
-// inicia a busca por CNPJ
-If($_GET['busca'] == '')
+//validação
+$validacao = validaCNPJ($_POST['busca']);
+if($validacao == false)
 {
-	$cnpj_busca = $_POST['busca'];//original
-	//$cnpj_busca = "88.888.888/0001-88";//Se existir no IGSIS e não no MACAPAC
-	//$cnpj_busca = "88.888.888/8888-88";//Se existir no MACAPAC e não no IGSIS
-	//$cnpj_busca = "00.000.000/0000-00";//Se existir no MACAPAC e também no IGSIS
-	//$cnpj_busca = "12.345.678/0001-99";//Se não existir no IGSIS e nem no MACAPAC
+	echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_pj'>";
+			
 }
 else
 {
-	$cnpj_busca = $_GET['busca'];
+	// inicia a busca por CNPJ
+	If($_GET['busca'] == '')
+	{
+		$cnpj_busca = $_POST['busca'];//original
+		//$cnpj_busca = "88.888.888/0001-88";//Se existir no IGSIS e não no MACAPAC
+		//$cnpj_busca = "88.888.888/8888-88";//Se existir no MACAPAC e não no IGSIS
+		//$cnpj_busca = "00.000.000/0000-00";//Se existir no MACAPAC e também no IGSIS
+		//$cnpj_busca = "12.345.678/0001-99";//Se não existir no IGSIS e nem no MACAPAC
+	}
+	else
+	{
+		$cnpj_busca = $_GET['busca'];
+	}
 }
+
+
 
 // Localiza no IGSIS
 $sql1 = $con1->query("SELECT * FROM sis_pessoa_juridica where CNPJ = '$cnpj_busca'");
