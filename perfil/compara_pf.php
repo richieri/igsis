@@ -6,20 +6,28 @@ $con2 = bancoMysqliProponente();
 // Endereço da página
 $link = "?perfil=compara_pf";
 
-// inicia a busca por CPF
-
-If($_GET['busca'] == '')
+//validação
+$validacao = validaCPF($_POST['busca']);
+if($validacao == false)
 {
-
-	$cpf_busca = $_POST['busca'];//original
-	//$cpf_busca = "320.692.848-67";//Se existir no IGSIS e não no MACAPAC
-	//$cpf_busca = "888.888.888-88";//Se existir no MACAPAC e não no IGSIS
-	//$cpf_busca = "000.000.000-00";//Se existir no MACAPAC e também no IGSIS
-	//$cpf_busca = "123.456.789-00";//Se não existir no IGSIS e nem no MACAPAC
+	echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_pf'>";
+			
 }
 else
-{
-	$cpf_busca = $_GET['busca'];
+{	
+	// inicia a busca por CPF
+	If($_GET['busca'] == '')
+	{
+		$cpf_busca = $_POST['busca'];//original
+		//$cpf_busca = "320.692.848-67";//Se existir no IGSIS e não no MACAPAC
+		//$cpf_busca = "888.888.888-88";//Se existir no MACAPAC e não no IGSIS
+		//$cpf_busca = "000.000.000-00";//Se existir no MACAPAC e também no IGSIS
+		//$cpf_busca = "123.456.789-00";//Se não existir no IGSIS e nem no MACAPAC
+	}
+	else
+	{
+		$cpf_busca = $_GET['busca'];
+	}
 }
 
 // Localiza no IGSIS
@@ -809,7 +817,7 @@ If($query1 == '' && $query2 == '')
 			<div class="form-group">
 				<h3>CADASTRO DE PESSOA FÍSICA</h3>
 				<p> O CPF nº <strong><?php echo $cpf_busca; ?></strong> não está cadastrado no nosso sistema. <br />Por favor, insira as informações da Pessoa Física a ser contratada. </p>
-				<p><a href="?perfil=contratados&p=fisica$pag=pesquisar"> Pesquisar outro CPF</a> </p>
+				<p><a href="?perfil=contratados&p=fisica&pag=pesquisar"> Pesquisar outro CPF</a> </p>
 			</div>
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
