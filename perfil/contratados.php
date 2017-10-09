@@ -622,6 +622,7 @@
 				<div class="section-heading">
 					<h2>CADASTRO DE REPRESENTANTE LEGAL</h2>
 					<p>A pessoa jurídica para quem você está cadastrando representantes legais é <strong><?php echo $pessoa['nome'];  ?></strong></p>  
+					<p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
 				</div>
 			</div>
 		</div>	  
@@ -686,7 +687,6 @@
 		<div class="form-group">
             <h2>CADASTRO DE REPRESENTANTE LEGAL</h2>
             <p>A pessoa jurídica para quem você está cadastrando representante legal é <strong><?php echo $empresa['Nome']; ?></strong></p>
-			<p><?php if(isset($mensagem)){echo $mensagem;} ?></p>	
 		</div>
 	  	<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">
@@ -747,13 +747,22 @@
 					}
 				break;
 				case "busca":
-					$busca = $_POST['busca'];
-					$sql_busca = "SELECT * FROM sis_representante_legal WHERE CPF LIKE '%$busca%' ORDER BY RepresentanteLegal";
-					$query_busca = mysqli_query($con,$sql_busca); 
-					$num_busca = mysqli_num_rows($query_busca);
-					if($num_busca > 0)
+					//validação
+					$validacao = validaCPF($_POST['busca']);
+					if($validacao == false)
 					{
-						// Se exisitr, lista a resposta.
+						echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_representante'>";
+						$mensagem = "CPF Inválido!";
+					}
+					else
+					{
+						$busca = $_POST['busca'];
+						$sql_busca = "SELECT * FROM sis_representante_legal WHERE CPF LIKE '%$busca%' ORDER BY RepresentanteLegal";
+						$query_busca = mysqli_query($con,$sql_busca); 
+						$num_busca = mysqli_num_rows($query_busca);
+						if($num_busca > 0)
+						{
+							// Se exisitr, lista a resposta.
 					?>
 <section id="services" class="home-section bg-white">
 	<div class="container">
@@ -805,11 +814,11 @@
         </div>
     </div>
 </section>
-				<?php
-					}
-					else
-					{
-				?>
+					<?php
+						}
+						else
+						{
+					?>
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
@@ -856,7 +865,8 @@
 	</div>
 </section>
 				<?php
-					}
+						}
+					}	
 				break;	
 			} //fecha a action
 		break;
@@ -1349,17 +1359,27 @@
 		case "edicaoProponente":
 			if(isset($_POST['pesquisar']))
 			{
-				// inicia a busca por Razao Social ou CNPJ
-				$busca = $_POST['busca'];
-				$sql_busca = "SELECT * 
-					FROM sis_pessoa_juridica 
-					WHERE RazaoSocial LIKE '%$busca%' 
-					OR CNPJ LIKE '%$busca%' 
-					ORDER BY RazaoSocial";
-				$query_busca = mysqli_query($con,$sql_busca); 
-				$num_busca = mysqli_num_rows($query_busca);
-				if($num_busca > 0)
+				$id_ped = $_GET['id_ped'];
+				//validação
+				$validacao = validaCNPJ($_POST['busca']);
+				if($validacao == false)
 				{
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_edicao_pj&id_ped=".$id_ped."'>";
+				}
+				else
+				{					
+				
+					// inicia a busca por Razao Social ou CNPJ
+					$busca = $_POST['busca'];
+					$sql_busca = "SELECT * 
+						FROM sis_pessoa_juridica 
+						WHERE RazaoSocial LIKE '%$busca%' 
+						OR CNPJ LIKE '%$busca%' 
+						ORDER BY RazaoSocial";
+					$query_busca = mysqli_query($con,$sql_busca); 
+					$num_busca = mysqli_num_rows($query_busca);
+					if($num_busca > 0)
+					{
 		// Se exisitr, lista a resposta.
 	?>
 <section id="list_items" class="home-section bg-white">
@@ -1394,12 +1414,12 @@
 		</div>
 	</div>
 </section>
-			<?php
-				}
-				else
-				{
-					// Se não existe, exibe um formulario para insercao.
-			?>
+				<?php
+					}
+					else
+					{
+						// Se não existe, exibe um formulario para insercao.
+				?>
 		<!-- Contact -->
 <section id="contact" class="home-section bg-white">
 	<div class="container">
@@ -1518,6 +1538,7 @@
 	</div>
 </section>
 			<?php
+					}
 				}
 			}
 			else
@@ -1617,13 +1638,22 @@
 				break;
 				case "pesquisar":
 					$idPedido = $_POST['idPedido'];
-					$busca = $_POST['busca'];
-					$sql_busca = "SELECT * FROM sis_pessoa_fisica WHERE CPF = '$busca' ORDER BY Nome";
-					$query_busca = mysqli_query($con,$sql_busca); 
-					$num_busca = mysqli_num_rows($query_busca);
-					if($num_busca > 0)
+					//validação
+					$validacao = validaCPF($_POST['busca']);
+					if($validacao == false)
 					{
-						// Se exisitr, lista a resposta.
+						echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_executante'>";
+						$mensagem = "CPF Inválido!";
+					}
+					else
+					{					
+						$busca = $_POST['busca'];
+						$sql_busca = "SELECT * FROM sis_pessoa_fisica WHERE CPF = '$busca' ORDER BY Nome";
+						$query_busca = mysqli_query($con,$sql_busca); 
+						$num_busca = mysqli_num_rows($query_busca);
+						if($num_busca > 0)
+						{
+							// Se exisitr, lista a resposta.
 			?>
 <section id="services" class="home-section bg-white">
 	<div class="container">
@@ -1670,10 +1700,10 @@
     </div>          
 </section>
 				<?php
-					}
-					else
-					{
-						// se não existir o cpf, imprime um formulário.
+						}
+						else
+						{
+							// se não existir o cpf, imprime um formulário.
 				?>
 <section id="contact" class="home-section bg-white">
 	<div class="container">
@@ -1807,6 +1837,7 @@
 	</div>
 </section>
 				<?php
+						}
 					}
 				break;
 				case "editar":
@@ -3847,6 +3878,61 @@ function contarCaracteres3(box,valor,campospan){
 		</section>
 	<?php 
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='3.5;URL=?perfil=contratados&p=juridica'>"; 
+		break;
+		case 'erro_representante':
+	?>
+		<section id="list_items" class="home-section bg-white">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-offset-2 col-md-8">
+						<div class="section-heading">
+							<h4><font color='red'>CPF inválido! por favor, insira o número correto!</font></h4> 
+							<h4><font color='red'>Redirecionando...</font></h4>
+							<p></p>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</section>
+	<?php 
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='3.5;URL=?perfil=contratados&p=representante&action=edita'>"; 
+		break;
+		case 'erro_executante':
+	?>
+		<section id="list_items" class="home-section bg-white">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-offset-2 col-md-8">
+						<div class="section-heading">
+							<h4><font color='red'>CPF inválido! por favor, insira o número correto!</font></h4> 
+							<h4><font color='red'>Redirecionando...</font></h4>
+							<p></p>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</section>
+	<?php 
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='3.5;URL=?perfil=contratados&p=edicaoExecutante&id_pf='>"; 
+		break;
+		case 'erro_edicao_pj':
+		$id_ped = $_GET['id_ped'];
+	?>
+		<section id="list_items" class="home-section bg-white">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-offset-2 col-md-8">
+						<div class="section-heading">
+							<h4><font color='red'>CNPJ inválido! por favor, insira o número correto!</font></h4> 
+							<h4><font color='red'>Redirecionando...</font></h4>
+							<p></p>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</section>
+	<?php 
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='3.5;URL=?perfil=contratados&p=edicaoProponente&id_ped=".$id_ped."'>"; 
 		break;
 	} //fim da switch
 	?>
