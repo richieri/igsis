@@ -29,12 +29,12 @@ if(isset($_POST['atualizar']))// atualiza o pedido
 				<div class='col-md-offset-2 col-md-6'>
 					<a href='$link1?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Pagamento Integral</a></div>
 				<div class='col-md-6'>
-					<a href='$link4' class='btn btn-theme btn-md btn-block' target='_blank'>Pagamento Parcelado</a><br/></div>
+					<a href='$link2' class='btn btn-theme btn-md btn-block' target='_blank'>Pagamento Parcelado</a><br/></div>
 			</div>
 			
 			<div class='form-group'>
 				<div class='col-md-offset-2 col-md-6'>
-					<a href='$link3?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Recibo de Pagamento</a>
+					<a href='$link4?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Recibo de Pagamento</a>
 				</div>
 				<div class='col-md-6'>
 					<a href='$link5?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Recibo de Documentação</a><br/>
