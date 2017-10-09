@@ -4642,7 +4642,6 @@ function validaCPF($cpf)
 		return false;
 	// Lista de CPFs inválidos
 	$invalidos = array(
-		'00000000000',
 		'11111111111',
 		'22222222222',
 		'33333333333',
@@ -4680,7 +4679,6 @@ function validaCNPJ($cnpj)
 		return false;
 	// Lista de CNPJs inválidos
 	$invalidos = array(
-		'00000000000000',
 		'11111111111111',
 		'22222222222222',
 		'33333333333333',
