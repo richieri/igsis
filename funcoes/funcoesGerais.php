@@ -1100,8 +1100,9 @@
 		$programa = recuperaDados('ig_programa',$evento['ig_programa_idPrograma'],'idPrograma');
 		$projetoEspecial = recuperaDados('ig_projeto_especial',$evento['projetoEspecial'],'idProjetoEspecial');
 		$relacaojur = recuperaDados('ig_modalidade',$evento['ig_modalidade_IdModalidade'],'idModalidade');
-		$responsavel = recuperaUsuario($evento['idResponsavel']);
-		$suplente = recuperaUsuario($evento['suplente']);
+		$usuarioCadastro = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+		$responsavel = recuperaDados("ig_usuario",$evento['idResponsavel'],"idUsuario");
+		$suplente = recuperaDados("ig_usuario",$evento['suplente'],"idUsuario");
 		$faixa = recuperaDados('ig_etaria',$evento['faixaEtaria'],'idIdade');
 		//exibe as informações principais
 		echo "ID do Evento: <b>".$idEvento."</b><br />";
@@ -1127,8 +1128,9 @@
 			echo "<b>Relação Jurídica:</b> ".$relacaojur['modalidade']."<br />";
 		}
 		echo "<br />";
-		echo "<b>Responsável pelo evento:</b> ".$responsavel['nomeCompleto']."<br />";
-		echo "<b>Suplente:</b> ".$suplente['nomeCompleto']."<br />";
+		echo "<p><b>Usuário que cadastrou o evento:</b> ".$usuarioCadastro['nomeCompleto']." <br/><b>Telefone:</b> ".$usuarioCadastro['telefone']." <br/><b>E-mail:</b> ".$usuarioCadastro['email']."</p><br/>";
+		echo "<p><b>Responsável pelo evento:</b> ".$responsavel['nomeCompleto']."<br/><b>Telefone:</b> ".$responsavel['telefone']." <br/><b>E-mail:</b> ".$responsavel['email']."</p><br/>";
+		echo "<p><b>Suplente:</b> ".$suplente['nomeCompleto']."<br/><b>Telefone:</b> ".$suplente['telefone']." <br/><b>E-mail:</b> ".$suplente['email']."</p>";
 		echo "<br />";
 		echo "<b>Autor:</b><br />".$evento['autor']."<br /><br />";
 		echo "<b>Ficha técnica:</b><br />".nl2br($evento['fichaTecnica'])."<br /><br />";
@@ -2458,9 +2460,9 @@
 		$produtor = recuperaDados("ig_produtor",$evento['ig_produtor_idProdutor'],"idProdutor");
 		if($produtor)
 		{
-			echo "Produtor responsável: <strong>".$produtor['nome']."</strong><br />";	
-			echo "E-mail: <strong>".$produtor['email']."</strong><br />";	
-			echo "Telefone: <strong>".$produtor['telefone']."</strong><br />";	
+			echo "<strong>Produtor responsável:</strong> ".$produtor['nome']."<br />";	
+			echo "<strong>E-mail:</strong> ".$produtor['email']."<br />";	
+			echo "<strong>Telefone:</strong> ".$produtor['telefone']." / ".$produtor['telefone2']."<br />";	
 			echo "<br />"; 
 		}
 		if($interno)
