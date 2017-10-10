@@ -1128,9 +1128,9 @@
 			echo "<b>Relação Jurídica:</b> ".$relacaojur['modalidade']."<br />";
 		}
 		echo "<br />";
-		echo "<p><b>Usuário que cadastrou o evento:</b> ".$usuarioCadastro['nomeCompleto']." <br/><b>Telefone:</b> ".$usuarioCadastro['telefone']." <br/><b>E-mail:</b> ".$usuarioCadastro['email']."</p><br/>";
-		echo "<p><b>Responsável pelo evento:</b> ".$responsavel['nomeCompleto']."<br/><b>Telefone:</b> ".$responsavel['telefone']." <br/><b>E-mail:</b> ".$responsavel['email']."</p><br/>";
-		echo "<p><b>Suplente:</b> ".$suplente['nomeCompleto']."<br/><b>Telefone:</b> ".$suplente['telefone']." <br/><b>E-mail:</b> ".$suplente['email']."</p>";
+		echo "<p align='left'><b>Usuário que cadastrou o evento:</b> ".$usuarioCadastro['nomeCompleto']." <br/><b>Telefone:</b> ".$usuarioCadastro['telefone']." <br/><b>E-mail:</b> ".$usuarioCadastro['email']."</p><br/>";
+		echo "<p align='left'><b>Responsável pelo evento:</b> ".$responsavel['nomeCompleto']."<br/><b>Telefone:</b> ".$responsavel['telefone']." <br/><b>E-mail:</b> ".$responsavel['email']."</p><br/>";
+		echo "<p align='left'><b>Suplente:</b> ".$suplente['nomeCompleto']."<br/><b>Telefone:</b> ".$suplente['telefone']." <br/><b>E-mail:</b> ".$suplente['email']."</p>";
 		echo "<br />";
 		echo "<b>Autor:</b><br />".$evento['autor']."<br /><br />";
 		echo "<b>Ficha técnica:</b><br />".nl2br($evento['fichaTecnica'])."<br /><br />";

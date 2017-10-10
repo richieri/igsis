@@ -2530,9 +2530,9 @@
 		<h5>Dados do evento | <a href="?perfil=evento&p=enviar&action=servicos">Solicitação de serviços</a> | <a href="?perfil=evento&p=enviar&action=pedidos">Pedidos de contratação</a> |  <a href="?perfil=evento&p=enviar&action=pendencias">Pendências</a></h5>
 		<div class="table-responsive list_info" >
             <h4><?php echo $evento['nomeEvento'] ?></h4>
-            <p align="left">
+            <div align="left">
 				<?php descricaoEvento($_SESSION['idEvento']); ?>
-            </p>      
+            </div>      
             <h5>Ocorrências</h5>
             <?php echo resumoOcorrencias($_SESSION['idEvento']); ?><br /><br />
             <?php listaOcorrenciasTexto($_SESSION['idEvento']); ?>
