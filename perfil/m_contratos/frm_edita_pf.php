@@ -124,7 +124,7 @@ $fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 				
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-						<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF" value="<?php echo $fisica['CPF']; ?>">
+						<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF" readonly value="<?php echo $fisica['CPF']; ?>">
 					</div>				  
 					<div class=" col-md-6"><strong>CCM *:</strong><br/>
 						<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" value="<?php echo $fisica['CCM']; ?>" >

@@ -219,7 +219,7 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>CNPJ *:</strong><br/>
-						<input type="text" class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ" value="<?php echo $pj['CNPJ']; ?>" >
+						<input type="text" class="form-control" readonly id="CNPJ" name="CNPJ" placeholder="CNPJ" value="<?php echo $pj['CNPJ']; ?>" >
 					</div>
 					<div class="col-md-6"><strong>CCM:</strong><br/>
 						<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" value="<?php echo $pj['CCM']; ?>">
