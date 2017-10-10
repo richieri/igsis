@@ -282,7 +282,7 @@
 			{
 				//insere pessoa jurídica
 				$idInstituicao = $_SESSION['idInstituicao'];
-				$idPessoa = $_POST['insereJuridica'];
+				$idPessoa = $_POST['Id_PessoaJuridica'];
 				$idEvento = $_SESSION['idEvento'];
 				$sql_verifica_cnpj = "SELECT * 
 					FROM igsis_pedido_contratacao 
