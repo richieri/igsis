@@ -3,11 +3,52 @@
 include "funcoes/funcoesGerais.php";
 require "funcoes/funcoesConecta.php";
 
+//autentica usuario e cria inicia uma session
+
+
 if(isset($_POST['usuario']))
 {
 	$usuario = $_POST['usuario'];
 	$senha = $_POST['senha'];
-	autenticaUsuario($usuario,$senha);	
+	$sql = "SELECT * FROM ig_usuario, ig_instituicao, ig_papelusuario WHERE ig_usuario.nomeUsuario = '$usuario' AND ig_instituicao.idInstituicao = ig_usuario.idInstituicao AND ig_papelusuario.idPapelUsuario = ig_usuario.ig_papelusuario_idPapelUsuario AND ig_usuario.publicado = '1' LIMIT 0,1";
+	$con = bancoMysqli();
+	$query = mysqli_query($con,$sql);
+	//query que seleciona os campos que voltarão para na matriz
+	if($query)
+	{
+		//verifica erro no banco de dados
+		if(mysqli_num_rows($query) > 0)
+		{
+			// verifica se retorna usuário válido
+			$user = mysqli_fetch_array($query);
+			if($user['senha'] == md5($_POST['senha']))
+			{
+				// compara as senhas
+				session_start();
+				$_SESSION['usuario'] = $user['nomeUsuario'];
+				$_SESSION['perfil'] = $user['idPapelUsuario'];
+				$_SESSION['instituicao'] = $user['instituicao'];
+				$_SESSION['nomeCompleto'] = $user['nomeCompleto'];
+				$_SESSION['idUsuario'] = $user['idUsuario'];
+				$_SESSION['idInstituicao'] = $user['idInstituicao'];
+				$log = "Fez login.";
+				gravarLog($log);
+				header("Location: visual/index.php");
+			}
+			else
+			{
+				$mensagem = "A senha está incorreta.";
+			}
+		}
+		else
+		{
+			$mensagem = "O usuário não existe.";
+		}
+	}
+	else
+	{
+		$mensagem = "Erro no banco de dados";
+	}		
 }
 ?>
 
@@ -27,7 +68,7 @@ if(isset($_POST['usuario']))
 					<div class="col-md-offset-2 col-md-8">
 						<div class="text-hide">
 							<h2>IGSIS - SMC</h2>
-							<p>É preciso ter um login válido. Dúvidas? Envie um email para sistema.igsis@gmail.com </p>
+							<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
 						</div>
 					</div>
 				</div>
@@ -93,6 +134,19 @@ if(isset($_POST['usuario']))
 				</div>
 			</div>
 		</section>   
-		<?php include "visual/rodape.php" ?>
+		<footer>
+			<div class="container">
+				<div class="row">					
+					<p><?php geraFrase(); ?></p>
+					<table width="100%">
+						<tr>
+							<td width="20%"><img src="visual/images/logo_cultura_q.png" align="left"/></td>
+							<td align="center"><font color="#ccc">2017 @ IGSIS - Cadastro de Artistas e Profissionais de Arte e Cultura<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
+							<td width="20%"><img src="visual/images/logo_igsis_azul.png" align="right"/></td>
+						</tr>
+					</table>									
+				</div>		
+			</div>	
+		</footer>
     </body>
 </html>

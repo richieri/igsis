@@ -46,49 +46,7 @@
 		}
 	}
 	// Framework
-	//autentica usuario e cria inicia uma session
-	function autenticaUsuario($usuario, $senha)
-	{	
-		$sql = "SELECT * FROM ig_usuario, ig_instituicao, ig_papelusuario WHERE ig_usuario.nomeUsuario = '$usuario' AND ig_instituicao.idInstituicao = ig_usuario.idInstituicao AND ig_papelusuario.idPapelUsuario = ig_usuario.ig_papelusuario_idPapelUsuario AND ig_usuario.publicado = '1' LIMIT 0,1";
-		$con = bancoMysqli();
-		$query = mysqli_query($con,$sql);
-		//query que seleciona os campos que voltarão para na matriz
-		if($query)
-		{
-			//verifica erro no banco de dados
-			if(mysqli_num_rows($query) > 0)
-			{
-				// verifica se retorna usuário válido
-				$user = mysqli_fetch_array($query);
-				if($user['senha'] == md5($_POST['senha']))
-				{
-					// compara as senhas
-					session_start();
-					$_SESSION['usuario'] = $user['nomeUsuario'];
-					$_SESSION['perfil'] = $user['idPapelUsuario'];
-					$_SESSION['instituicao'] = $user['instituicao'];
-					$_SESSION['nomeCompleto'] = $user['nomeCompleto'];
-					$_SESSION['idUsuario'] = $user['idUsuario'];
-					$_SESSION['idInstituicao'] = $user['idInstituicao'];
-					$log = "Fez login.";
-					gravarLog($log);
-					header("Location: visual/index.php");
-				}
-				else
-				{
-					echo "A senha está incorreta.";
-				}
-			}
-			else
-			{
-				echo "O usuário não existe.";
-			}
-		}
-		else
-		{
-			echo "Erro no banco de dados";
-		}	
-	}
+	
 	//saudacao inicial
 	function saudacao()
 	{ 
