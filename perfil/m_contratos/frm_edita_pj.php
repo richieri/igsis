@@ -137,13 +137,33 @@ $pj = recuperaDados("sis_pessoa_juridica",$ultimo,"Id_PessoaJuridica");
 $res01 = siscontratDocs($pj['IdRepresentanteLegal1'],3);
 $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 
+//Localiza no proponente
+$con2 = bancoMysqliProponente();
+$cnpj = $pj['CNPJ'];
+$sql2 = $con2->query("SELECT * FROM usuario_pj where cnpj = '$cnpj'");
+$query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 ?>
 
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
 			<h3>CADASTRO DE PESSOA JURÍDICA</h3>
-            <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+            <?php
+			If($query2 != '')
+				{
+				?>
+					<div class="col-md-offset-1 col-md-10">
+						<div class="col-md-offset-2 col-md-8">
+							<form method='POST' action='?perfil=contratos&p=frm_compara_pj&busca=<?php echo $cnpj; ?>&id_ped=<?php echo $id_ped; ?>'>
+								<input type='hidden' name='edicaoPessoa' value='1'>
+								<input type='submit' class='btn btn-theme btn-md btn-block' value='Verifique aqui se há atualização no Cadastro de Proponente'>
+							</form><br/>				
+						</div>
+					</div>
+				<?php
+				}	
+			?>		
+			<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
         </div>
 		<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">
