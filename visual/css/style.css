@@ -581,7 +581,8 @@ more media queries
 
 #bar{
 	
-	background: #529abb;
+	/*background: #529abb;*/
+	background: #2b2b2b;
 	height:50px;
 	line-height:100px;
 	position:fixed;
