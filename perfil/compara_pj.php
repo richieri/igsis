@@ -6,17 +6,17 @@ $con2 = bancoMysqliProponente();
 // Endereço da página
 $link = "?perfil=compara_pj";
 
-//validação
-$validacao = validaCNPJ($_POST['busca']);
-if($validacao == false)
+// inicia a busca por CNPJ
+If($_GET['busca'] == '')
 {
-	echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_pj'>";
-			
-}
-else
-{
-	// inicia a busca por CNPJ
-	If($_GET['busca'] == '')
+	//validação
+	$validacao = validaCNPJ($_POST['busca']);
+	if($validacao == false)
+	{
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_pj'>";
+				
+	}
+	else
 	{
 		$cnpj_busca = $_POST['busca'];//original
 		//$cnpj_busca = "88.888.888/0001-88";//Se existir no IGSIS e não no MACAPAC
@@ -24,12 +24,11 @@ else
 		//$cnpj_busca = "00.000.000/0000-00";//Se existir no MACAPAC e também no IGSIS
 		//$cnpj_busca = "12.345.678/0001-99";//Se não existir no IGSIS e nem no MACAPAC
 	}
-	else
-	{
-		$cnpj_busca = $_GET['busca'];
-	}
 }
-
+else
+{
+	$cnpj_busca = $_GET['busca'];
+}
 
 
 // Localiza no IGSIS

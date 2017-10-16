@@ -5,7 +5,6 @@ $con2 = bancoMysqliProponente();
 
 // Endereço da página
 $link = "?perfil=compara_pf";
-
 	
 // inicia a busca por CPF
 If($_GET['busca'] == '')
