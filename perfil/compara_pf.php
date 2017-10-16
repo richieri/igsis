@@ -6,29 +6,31 @@ $con2 = bancoMysqliProponente();
 // Endereço da página
 $link = "?perfil=compara_pf";
 
-//validação
-$validacao = validaCPF($_POST['busca']);
-if($validacao == false)
+	
+// inicia a busca por CPF
+If($_GET['busca'] == '')
 {
-	echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_pf'>";
-			
-}
-else
-{	
-	// inicia a busca por CPF
-	If($_GET['busca'] == '')
+	//validação
+	$validacao = validaCPF($_POST['busca']);
+	if($validacao == false)
 	{
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_pf'>";
+				
+	}
+	else
+	{		
 		$cpf_busca = $_POST['busca'];//original
 		//$cpf_busca = "320.692.848-67";//Se existir no IGSIS e não no MACAPAC
 		//$cpf_busca = "888.888.888-88";//Se existir no MACAPAC e não no IGSIS
 		//$cpf_busca = "000.000.000-00";//Se existir no MACAPAC e também no IGSIS
 		//$cpf_busca = "123.456.789-00";//Se não existir no IGSIS e nem no MACAPAC
 	}
-	else
-	{
-		$cpf_busca = $_GET['busca'];
-	}
 }
+else
+{
+	$cpf_busca = $_GET['busca'];
+}
+
 
 // Localiza no IGSIS
 $sql1 = $con1->query("SELECT * FROM sis_pessoa_fisica where CPF = '$cpf_busca'");
