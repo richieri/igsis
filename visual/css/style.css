@@ -169,7 +169,8 @@ Spacer
 ============================= */
 
 #spacer1{	
-	background-image: url(../img/spacer/1.jpg);
+	background-image: url(../images/header.jpg);
+	height: 100px;
 }
 #spacer2{	
 	background-image: url(../img/spacer/2.jpg);
