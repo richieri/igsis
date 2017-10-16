@@ -86,7 +86,7 @@ function recuperaDadosIgsis($tabela_dados_ig,$campo_dados_ig,$variavelCampo_dado
 	return $campo_dados_ig;		
 }
 
-//retorna uma array com os dados de qualquer tabela do MACAPAC. Serve apenas para 1 registro.
+//retorna uma array com os dados de qualquer tabela do CAPAC. Serve apenas para 1 registro.
 function recuperaDadosProp($tabela,$campo,$variavelCampo)
 {
 	$con2 = bancoMysqliProponente();
@@ -115,7 +115,7 @@ if(isset($_POST['atualizaIgsis']))
 }
 
 
-//Se existir no MACAPAC e também no IGSIS
+//Se existir no CAPAC e também no IGSIS
 If($query1 != '' && $query2 != '')
 {		
 	?>
@@ -129,7 +129,7 @@ If($query1 != '' && $query2 != '')
 					<thead>
 						<tr class='list_menu'>
 							<td><strong>Campo Divergente</strong></td>
-							<td><strong>MACAPAC</strong></td>
+							<td><strong>CAPAC</strong></td>
 							<td><strong>IGSIS</strong></td>
 							<td width='20%'></td>
 						</tr>
@@ -588,7 +588,7 @@ If($query1 != '' && $query2 != '')
 							echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
 						}				
 					?>
-						<a href="../include/arquivos_pessoa_macapac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=1" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+						<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=1" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
 						</div>
 					</div>
 				</div>

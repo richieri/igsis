@@ -19,10 +19,10 @@ If($_GET['busca'] == '')
 	else
 	{
 		$cnpj_busca = $_POST['busca'];//original
-		//$cnpj_busca = "88.888.888/0001-88";//Se existir no IGSIS e não no MACAPAC
-		//$cnpj_busca = "88.888.888/8888-88";//Se existir no MACAPAC e não no IGSIS
-		//$cnpj_busca = "00.000.000/0000-00";//Se existir no MACAPAC e também no IGSIS
-		//$cnpj_busca = "12.345.678/0001-99";//Se não existir no IGSIS e nem no MACAPAC
+		//$cnpj_busca = "88.888.888/0001-88";//Se existir no IGSIS e não no CAPAC
+		//$cnpj_busca = "88.888.888/8888-88";//Se existir no CAPAC e não no IGSIS
+		//$cnpj_busca = "00.000.000/0000-00";//Se existir no CAPAC e também no IGSIS
+		//$cnpj_busca = "12.345.678/0001-99";//Se não existir no IGSIS e nem no CAPAC
 	}
 }
 else
@@ -86,7 +86,7 @@ function recuperaDadosIgsis($tabela_dados_ig,$campo_dados_ig,$variavelCampo_dado
 	return $campo_dados_ig;		
 }
 
-//retorna uma array com os dados de qualquer tabela do MACAPAC. Serve apenas para 1 registro.
+//retorna uma array com os dados de qualquer tabela do CAPAC. Serve apenas para 1 registro.
 function recuperaDadosProp($tabela,$campo,$variavelCampo)
 {
 	$con2 = bancoMysqliProponente();
@@ -114,7 +114,7 @@ if(isset($_POST['atualizaIgsis']))
 	}
 }
 
-if(isset($_POST['importarMacapacIgsis']))
+if(isset($_POST['importarCapacIgsis']))
 {
 	$sql_insere_pf = "INSERT INTO `sis_pessoa_juridica`(`RazaoSocial`, `CNPJ`, `CCM`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `IdRepresentanteLegal1`, `IdRepresentanteLegal2`, `DataAtualizacao`, `codBanco`, `agencia`, `conta`) VALUES ('$razaoSocial', '$cnpj', '$ccm', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$idRepresentanteLegal1', '$idRepresentanteLegal2', '$dataAtualizacao', '$codigoBanco', '$agencia', '$conta')";
 
@@ -148,7 +148,7 @@ if(isset($_POST['importarMacapacIgsis']))
 	}	  
 }	
 
-//Se existir no IGSIS e não no MACAPAC
+//Se existir no IGSIS e não no CAPAC
 If($query1 != '' && $query2 == '')
 {
 ?>
@@ -192,7 +192,7 @@ If($query1 != '' && $query2 == '')
 <?php
 }
 
-//Se existir no MACAPAC e não no IGSIS
+//Se existir no CAPAC e não no IGSIS
 If($query1 == '' && $query2 != '')
 {
 	?>
@@ -214,7 +214,7 @@ If($query1 == '' && $query2 != '')
 				<div class="col-md-6">
 					<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
 							<input type='hidden' name='busca' value='<?php echo $cnpj_busca ?>'>
-							<input type='submit' name='importarMacapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
+							<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
 						</form>					
 				</div>
 			</div>
@@ -253,7 +253,7 @@ If($query1 == '' && $query2 != '')
 <?php
 }
 
-//Se existir no MACAPAC e também no IGSIS
+//Se existir no CAPAC e também no IGSIS
 If($query1 != '' && $query2 != '')
 {		
 	?>
@@ -267,7 +267,7 @@ If($query1 != '' && $query2 != '')
 					<thead>
 						<tr class='list_menu'>
 							<td><strong>Campo Divergente</strong></td>
-							<td><strong>MACAPAC</strong></td>
+							<td><strong>CAPAC</strong></td>
 							<td><strong>IGSIS</strong></td>
 							<td width='20%'></td>
 						</tr>
@@ -576,7 +576,7 @@ If($query1 != '' && $query2 != '')
 								echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
 							}				
 						?>
-							<a href="../include/arquivos_pessoa_macapac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+							<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
 						</div>
 					</div>
 				</div>
@@ -627,7 +627,7 @@ If($query1 != '' && $query2 != '')
 <?php	
 }
 
-//Se não existir no IGSIS e nem no MACAPAC
+//Se não existir no IGSIS e nem no CAPAC
 If($query1 == '' && $query2 == '')
 {
 	$ultimo = cadastroPessoa($_SESSION['idEvento'],$CNPJ,'2'); 
