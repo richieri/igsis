@@ -703,9 +703,10 @@
 				<tbody>";
 		while($campo = mysqli_fetch_array($query))
 		{
+				$chamado = recuperaAlteracoesEvento($campo['idEvento']);
 				echo "<tr>";
 				echo "<td class='list_description'>".$campo['idEvento']."</td>";
-				echo "<td class='list_description'>".$campo['nomeEvento']."</td>";
+				echo "<td class='list_description'>".$campo['nomeEvento']." <a href='?perfil=chamado&p=evento&id=".$campo['idEvento']."' target='_blank'>[".$chamado['numero']."]</a></td>";
 				echo "<td class='list_description'>".retornaTipo($campo['ig_tipo_evento_idTipoEvento'])."</td>";
 				echo "<td class='list_description'>".retornaPeriodo($campo['idEvento'])."</td>";
 				If ($campo['statusEvento'] == "Aguardando")
