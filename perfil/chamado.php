@@ -503,12 +503,8 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 							<p>Atenciosamente,<br />
 							Equipe IGSIS</p>";
 						$subject = "O usuário ".$usuario['nomeCompleto']." fez um comentário sobre o chamado ".$chamado['titulo']." - ".$tipo01['chamado'];
-					}
-					if(enviarEmail($conteudo_email, $_SESSION['idInstituicao'], $subject, $evento, $num_pedidos ))
-					{
-						$mensagem = "Email enviado com sucesso. <br />";
-					}
-					$mensagem .= "Comentário inserido com sucesso.";	
+					}					
+					$mensagem = "Comentário inserido com sucesso!";	
 				}
 				else
 				{
@@ -517,6 +513,7 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 			}
 			$chamado = recuperaDados("igsis_chamado",$_GET['id'],"idChamado");
 			$tipo = recuperaDados("igsis_tipo_chamado",$chamado['tipo'],"idTipoChamado");
+			$usuarioChamado = recuperaDados("ig_usuario",$chamado['idUsuario'],"idUsuario");
 	?>
 <section id="list_items" class="home-section bg-white">
 	<div class="container">
@@ -533,29 +530,32 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<div class="left">
-						<p>Chamado: <strong><?php echo $tipo['chamado']." - ".$chamado['titulo'];
+						<p><strong>Chamado:</strong> <?php echo $tipo['chamado']." - ".$chamado['titulo'];
 						if($chamado['idEvento'] != NULL)
 						{
 							$evento = recuperaDados("ig_evento",$chamado['idEvento'],"idEvento");
 							echo "<br />".$evento['nomeEvento'];
 						}?>
-						</strong></p>
-						<p>Descrição:<br />
-							<strong><?php echo nl2br($chamado['descricao']) ?></strong>
+						</p>
+						<p><strong>Descrição:</strong><br />
+							<?php echo nl2br($chamado['descricao']) ?>
+						</p>
+						<p><strong>Responsável pelo chamado:</strong><br />
+							<?php echo $usuarioChamado['nomeCompleto'] ?>
 						</p>
 						<?php
 						if($chamado['tipo']== 12)
 						{
-							echo "<p><a href='#'>Clique aqui para ver os arquivos de Contratos.</a></p>";
+							echo "<p><a href='#'>Clique aqui para ver os arquivos de Contratos.</a></p><br />";
 						}
-						?>	
-						<br />
-						<p>Justificativa:<br />
-							<strong><?php echo nl2br($chamado['justificativa']) ?></strong>
+						?>							
+						<p><strong>Justificativa:</strong><br />
+							<?php echo nl2br($chamado['justificativa']) ?>
 						</p> 
 						<br />
-						<p>Aberto em: <strong><?php echo exibirDataHoraBr($chamado['data']) ?></strong></p>
-						<p>Status: <strong><?php 
+						<p><strong>Aberto em:</strong> <?php echo exibirDataHoraBr($chamado['data']) ?></p>
+						<p><strong>Status do chamado:</strong>
+						<?php 
 							if ($chamado['estado'] == 1)
 							{
 								echo "Aberto";
@@ -564,7 +564,7 @@ $evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 							{
 								echo "Fechado";
 							}	
-						?></strong> </p><br />
+						?> </p><br />
 					</div>
 					<div class="left">
 						<label>Deixe um comentário</label>
