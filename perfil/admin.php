@@ -2833,9 +2833,10 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 
 		$relatorio .= "<p>&nbsp;</p><h4>Pedidos que possuem status válido mas tem eventos como não enviados</h4>
 		<p>$sql_evento</p>
+		<p>PEDIDO(S):</p>
 		";
 		while($pedido = mysqli_fetch_array($query_evento)){
-			$relatorio .= "Pedido: ".$pedido['idPedidoContratacao']."<br />";	
+			$relatorio .= "".$pedido['idPedidoContratacao'].",<br />";	
 		}
 		
 
@@ -2846,9 +2847,10 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		$query_agenda = mysqli_query($con,$sql_agenda);
 		$relatorio .= "<p>&nbsp;</p><h4>Eventos que estão na Agenda mas não são válidos </h4>
 		<p>$sql_agenda</p>
+		<p>EVENTO(S):</p>
 		";
 		while($agenda = mysqli_fetch_array($query_agenda)){
-			$relatorio .= "Evento: ".$agenda['idEvento']."<br />";	
+			$relatorio .= "".$agenda['idEvento'].",<br />";	
 		}
 
 		//Busca eventos que não estão na agenda 
@@ -2856,9 +2858,10 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		$query_agenda = mysqli_query($con,$sql_agenda);
 		$relatorio .= "<p>&nbsp;</p><h4>Eventos que não estão na agenda</h4>
 		<p>$sql_agenda</p>
+		<p>EVENTO(S):</p>
 		";
 		while($agenda = mysqli_fetch_array($query_agenda)){
-			$relatorio .= "Evento: ".$agenda['idEvento']."<br />";	
+			$relatorio .= "".$agenda['idEvento'].",<br />";	
 		}
 
 		//Pedidos de Contratação Aprovados por Finanças, mas não tiveram seu status alterado
