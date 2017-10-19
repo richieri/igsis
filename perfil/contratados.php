@@ -2382,7 +2382,7 @@
 							<input type="text" class="form-control" id="RG" name="rg" placeholder="RG">
 						</div>
 						<div class="col-md-6"><strong>CPF: *</strong><br/>
-							<input type="text" class="form-control" id="cpf" name="cpf" readonly placeholder="CPF">
+							<input type="text" class="form-control" id="cpf" name="cpf"  placeholder="CPF">
 						</div>
 					</div>
 					<!-- Botão Gravar -->	
