@@ -265,7 +265,6 @@ case 'inicial':
 			<div class="row">
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-						<h4><font color="red">* Em Fase de Testes *</font></h4><br/>
 						<h3>Busca por evento</h1>
 					</div>
 				</div>
