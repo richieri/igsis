@@ -6,14 +6,14 @@ if(isset($_GET['pag']))
 }
 else
 {
-	$p = 'inicial';	
+	$p = 'inicial';
 }
 
 switch($p)
 {
 /* =========== INICIAL ===========*/
 case 'inicial':
-	
+
 function retornaDataInicio($idEvento)
 { //retorna o período
 	$con = bancoMysqli();
@@ -26,16 +26,16 @@ function retornaDataInicio($idEvento)
 	$query_anterior01 = mysqli_query($con,$sql_posterior01);
 	$data = mysqli_fetch_array($query_anterior01);
 	$num = mysqli_num_rows($query_anterior01);
-	
+
 	if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL))
 	{  //se existe uma data final e que é diferente de NULO
-		$dataFinal01 = $data['dataFinal'];	
+		$dataFinal01 = $data['dataFinal'];
 	}
-	
+
 	$query_anterior02 = mysqli_query($con,$sql_posterior02); //recupera a data única mais tarde
 	$data = mysqli_fetch_array($query_anterior02);
 	$dataFinal02 = $data['dataInicio'];
-			
+
 	if(isset($dataFinal01))
 	{ //se existe uma temporada, compara com a última data única
 		if($dataFinal01 > $dataFinal02)
@@ -49,105 +49,78 @@ function retornaDataInicio($idEvento)
 	}
 	else
 	{
-		$dataFinal = $dataFinal02;		
+		$dataFinal = $dataFinal02;
 	}
-	
+
 	if($data_inicio == $dataFinal)
-	{ 
+	{
 		return $data_inicio;
 	}
 	else
 	{
 		return $data_inicio;
-	}	
+	}
 }
 
-	
 
 if(isset($_POST['periodo']))
 {
 	$inicio = exibirDataMysql($_POST['inicio']);
-	$final = exibirDataMysql($_POST['final']);	
+	$final = exibirDataMysql($_POST['final']);
 	$idContratos = $_POST['operador'];
-	
+
 	if($idContratos == 0)
 	{
-		$operador = " ";	
+		$operador = " ";
 	}
 	else
 	{
 		$operador = "AND ped.idContratos = '$idContratos'";
 	}
-	
+
 	$con = bancoMysqli();
-	$sql_evento = "SELECT DISTINCT age.idEvento FROM igsis_agenda AS age
+	$sql_evento = "SELECT DISTINCT age.idEvento, ped.idPedidoContratacao FROM igsis_agenda AS age
 		INNER JOIN igsis_pedido_contratacao AS ped ON ped.idEvento = age.idEvento
-		WHERE data BETWEEN '$inicio' AND '$final' $operador ORDER BY data ASC ";
+		WHERE data BETWEEN '$inicio' AND '$final' $operador AND ped.estado IN (1,2,3,4,5,8,9,10,13,14,15) ORDER BY data ASC ";
 	$query_evento = mysqli_query($con,$sql_evento);
 	$num = mysqli_num_rows($query_evento);
 	$i = 0;
 	while($evento = mysqli_fetch_array($query_evento))
 	{
-		$idEvento = $evento['idEvento'];
-		$dataInicio = strtotime(retornaDataInicio($idEvento));
-		if($dataInicio >= strtotime($inicio) AND $dataInicio <= strtotime($final))
-		{
-			$event = recuperaDados("ig_evento",$idEvento,"idEvento");
-			if($event['dataEnvio'] != NULL AND $event['publicado'])
-			{ // se o evento estiver publicado e tiver sido enviado 
-				$sql_pedido = "SELECT * FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND publicado ='1' 
-				ORDER BY idPedidoContratacao DESC";
-				$query_pedido = mysqli_query($con,$sql_pedido);
-				while($pedido = mysqli_fetch_array($query_pedido))
-				{
-					$usuario = recuperaDados("ig_usuario",$event['idUsuario'],"idUsuario");
-					$instituicao = recuperaDados("ig_instituicao",$event['idInstituicao'],"idInstituicao");
-					$local = listaLocais($pedido['idEvento']);
-					$periodo = retornaPeriodo($pedido['idEvento']);
-					$operador = recuperaUsuario($pedido['idContratos']);
-					if($pedido['parcelas'] > 1)
-					{
-						$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
-						$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
-					}
-					else
-					{
-						$valorTotal = $pedido['valor'];
-						$formaPagamento = $pedido['formaPagamento'];
-					}
+		$pedido = recuperaDados("igsis_pedido_contratacao",$evento['idPedidoContratacao'],"idPedidoContratacao");
+		$event = recuperaDados("ig_evento",$evento['idEvento'],"idEvento");
+		$usuario = recuperaDados("ig_usuario",$event['idUsuario'],"idUsuario");
+		$instituicao = recuperaDados("ig_instituicao",$event['idInstituicao'],"idInstituicao");
+		$local = listaLocais($pedido['idEvento']);
+		$periodo = retornaPeriodo($pedido['idEvento']);
+		$operador = recuperaUsuario($pedido['idContratos']);
 
-					if ( $pedido ['estado'] == 1 OR $pedido ['estado'] == 2 OR 	$pedido ['estado'] == 3 OR $pedido ['estado'] == 4 OR $pedido ['estado'] == 5 OR $pedido ['estado'] == 6 OR $pedido ['estado'] == 7 OR $pedido ['estado'] == 8 OR $pedido ['estado'] == 9 OR $pedido ['estado'] == 10 OR $pedido ['estado'] == 13 OR $pedido ['estado'] == 14 OR $pedido ['estado'] == 15) 
-					{
-						$x[$i]['id']= $pedido['idPedidoContratacao'];
-						$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
-						$x[$i]['objeto'] = retornaTipo($event['ig_tipo_evento_idTipoEvento'])." - ".$event['nomeEvento'];
-						if($pedido['tipoPessoa'] == 1)
-						{
-							$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-							$x[$i]['proponente'] = $pessoa['Nome'];
-							$x[$i]['tipo'] = "Física";
-						}
-						else
-						{
-							$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-							$x[$i]['proponente'] = $pessoa['RazaoSocial'];
-							$x[$i]['tipo'] = "Jurídica";
-						}
-					$x[$i]['local'] = substr($local,1);
-					$x[$i]['instituicao'] = $instituicao['sigla'];
-					$x[$i]['periodo'] = $periodo;
-					$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
-					$x[$i]['status'] = $pedido['estado'];	
-					$x[$i]['operador'] = $operador['nomeCompleto'];		
-					$i++;
-					}
-				}
-			}
+		$x[$i]['id']= $pedido['idPedidoContratacao'];
+		$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
+		$x[$i]['objeto'] = retornaTipo($event['ig_tipo_evento_idTipoEvento'])." - ".$event['nomeEvento'];
+		if($pedido['tipoPessoa'] == 1)
+		{
+			$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+			$x[$i]['proponente'] = $pessoa['Nome'];
+			$x[$i]['tipo'] = "Física";
 		}
+		else
+		{
+			$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+			$x[$i]['proponente'] = $pessoa['RazaoSocial'];
+			$x[$i]['tipo'] = "Jurídica";
+		}
+		$x[$i]['local'] = substr($local,1);
+		$x[$i]['instituicao'] = $instituicao['sigla'];
+		$x[$i]['periodo'] = $periodo;
+		$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
+		$x[$i]['status'] = $pedido['estado'];
+		$x[$i]['operador'] = $operador['nomeCompleto'];
+		$i++;
 	}
 	$x['num'] = $i;
 	if($num > 0)
-	{ 
+	{
 ?>
 
 	<br />
@@ -187,7 +160,7 @@ if(isset($_POST['periodo']))
 							}
 							else
 							{
-								echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";								
+								echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
 							}
 							echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
@@ -199,9 +172,8 @@ if(isset($_POST['periodo']))
 							echo '<td class="list_description">'.$x[$h]['pendencia'].'</td> ';
 							echo '<td class="list_description">'.$status['estado'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
-
 						}
-					?>   
+					?>
 					</tbody>
 				</table>
 			</div>
@@ -219,7 +191,7 @@ if(isset($_POST['periodo']))
 					<div class="col-md-offset-2 col-md-8">
 						<h5>| Busca por período | <a href="?perfil=contratos&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
 						<div class="section-heading">
-							<h2>Busca por período / operador</h2>
+							<h2>Busca por período / operador</h2>
 							<p><?php if(isset($mensagem)){ echo $num; }?></p>
 							<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 						</div>
@@ -251,7 +223,7 @@ if(isset($_POST['periodo']))
 							</select>
 						</div>
 					</div>
-					<br />             
+					<br />
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="periodo" value="1" />
@@ -260,9 +232,9 @@ if(isset($_POST['periodo']))
 					</div>
 				</form>
 				</div>
-			</div>	
+			</div>
 		</section>
-<?php 
+<?php
 	}
 }
 else
@@ -299,8 +271,8 @@ else
 							<?php  geraOpcaoContrato(""); ?>
 						</select>
 					</div>
-				</div>				
-				<br />             
+				</div>
+				<br />
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<input type="hidden" name="periodo" value="1" />
@@ -312,9 +284,8 @@ else
 		</div>
 	</section>
 <?php
-}	
- /* =========== INICIAL ===========*/ break; 
- 
- 
-} //fim da switch 
+}
+ /* =========== INICIAL ===========*/ break;
+
+} //fim da switch
 ?>
