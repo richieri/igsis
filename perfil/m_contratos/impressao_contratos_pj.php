@@ -37,7 +37,7 @@ $link28 = $http."rlt_pedido_reserva_existente_pj.php";
 $link29 = $http."rlt_pedido_reserva_transferencia_virada_pj.php";
 $link30 = $http."rlt_pedido_reserva_transferencia_virada_centro_pj.php";
 $link32 = $http."rlt_normas_internas_teatros_pj.php"."?id=".$id_ped;
-$link33 = $http."rlt_proposta_exposicao_edital_pj.php"."?id=".$id_ped."&penal=22";
+$link33 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal=22";
 $link34 = $http."rlt_proposta_mediacao_edital_pj.php"."?id=".$id_ped."&penal=24";
 $link35 = $http."rlt_proposta_contadores_edital_pj.php"."?id=".$id_ped."&penal=26";
 $link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal=28";

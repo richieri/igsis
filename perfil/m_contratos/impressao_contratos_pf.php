@@ -24,7 +24,7 @@ $link09 = $http."rlt_proposta_oficinassemedital_pf.php"."?id=".$id_ped."&penal=1
 $link10 = $http."rlt_proposta_palestra_pf.php"."?id=".$id_ped."&penal=15";
 $link11 = $http."rlt_proposta_formacao.php"."?id=".$id_ped."&penal=20";
 $link12 = $http."rlt_proposta_formacao.php"."?id=".$id_ped."&penal=21";
-$link13 = $http."rlt_proposta_exposicao_edital_pf.php"."?id=".$id_ped."&penal=23";
+$link13 = $http."rlt_proposta_exposicao_edital_word_pf.php"."?id=".$id_ped."&penal=23";
 $link14 = $http."rlt_proposta_mediacao_edital_pf.php"."?id=".$id_ped."&penal=25";
 $link15 = $http."rlt_proposta_contadores_edital_pf.php"."?id=".$id_ped."&penal=26";
 $link16 = $http."rlt_proposta_galadeballet_edital_pf.php"."?id=".$id_ped."&penal=29";
