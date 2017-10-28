@@ -48,7 +48,7 @@ if(isset($_POST['usuario']))
 	else
 	{
 		$mensagem = "Erro no banco de dados";
-	}		
+	}
 }
 ?>
 
@@ -62,22 +62,22 @@ if(isset($_POST['usuario']))
 		<script src="visual/js/modernizr.custom.js"></script>
 	</head>
 	<body>
-		<section id="spacer1" class="home-section spacer">	
+		<section id="spacer1" class="home-section spacer">
            <div class="container">
 				<div class="color-light">
-					<h1 class="wow bounceInDown" data-wow-delay="1s">IGSIS - SMC</h1>							
+					<h1 class="wow bounceInDown" data-wow-delay="1s">IGSIS - SMC</h1>
 				</div>
             </div>
 		</section>
 		<section id="contact" class="home-section bg-white">
-			<div class="container">			
-				<div class="col-md-offset-1 col-md-10">	
+			<div class="container">
+				<div class="col-md-offset-1 col-md-10">
 					<h5><?php if(isset($mensagem)){ echo $mensagem; } ?></h5>
 					<form method="POST" action="index.php"class="form-horizontal" role="form">
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6">
 								<input type="text" name="usuario" class="form-control" id="inputName" placeholder="Usuário">
-							</div>				  
+							</div>
 							<div class=" col-md-6">
 								<input type="password" name="senha" class="form-control" id="inputEmail" placeholder="Senha">
 							</div>
@@ -89,9 +89,9 @@ if(isset($_POST['usuario']))
 							</div>
 						</div>
 					</form>
-					
+
 					<br /><br />
-				
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<h4><p>Não possui cadastro?<strong><a href="https://goo.gl/lHLdnI" target="_blank"> CLIQUE AQUI!</strong></a></p></h4>
@@ -99,9 +99,9 @@ if(isset($_POST['usuario']))
 							<p>Dúvidas? Envie e-mail para: <strong>sistema.igsis@gmail.com</strong></p>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
-		</section>   
+		</section>
 		<footer>
 			<div class="container">
 				<div class="row">
@@ -111,9 +111,9 @@ if(isset($_POST['usuario']))
 							<td align="center"><font color="#ccc">2017 @ IGSIS - Cadastro de Artistas e Profissionais de Arte e Cultura<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
 							<td width="20%"><img src="visual/images/logo_igsis_azul.png" align="right"/></td>
 						</tr>
-					</table>									
-				</div>		
-			</div>	
+					</table>
+				</div>
+			</div>
 		</footer>
     </body>
 </html>
