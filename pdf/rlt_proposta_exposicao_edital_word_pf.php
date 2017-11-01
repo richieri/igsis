@@ -91,6 +91,11 @@ echo "<body>";
 		"<p><strong>Justificativa:</strong> ".$Justificativa."</p>".
 		"<p>&nbsp;</p>".
 		"<p>&nbsp;</p>".
+		"<p>___________________________</p>".
+		"<p>".$Nome."</p>".
+		"<p>RG: ".$RG."</p>".
+		"<p>&nbsp;</p>".
+		"<p>&nbsp;</p>".
 		"<p>(C)</p>".
 		"<p align='center'><strong>OBSERVAÇÃO</strong></p>".
 		"<p>As idéias e opiniões expressas durante as apresentações artísticas e culturais não representam a posição da Secretaria Municipal de Cultura, sendo os artistas e seus representantes os únicos e exclusivos responsáveis pelo conteúdo de suas manifestações, ficando a Municipalidade de São Paulo com direito de regresso sobre os mesmos, inclusive em caso de indenização por dano material, moral ou à imagem de terceiros.</p>".

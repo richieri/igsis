@@ -30,6 +30,8 @@ $link15 = $http."rlt_proposta_contadores_edital_pf.php"."?id=".$id_ped."&penal=2
 $link16 = $http."rlt_proposta_galadeballet_edital_pf.php"."?id=".$id_ped."&penal=29";
 $link17 = $http."rlt_normas_internas_teatros_pf.php"."?id=".$id_ped;
 $link44 = $http."rlt_proposta_emia.php"."?id=".$id_ped."&penal=31";
+$link48 = $http."rlt_proposta_pesquisador_formacao.php"."?id=".$id_ped."&penal=32";
+
 
 $link18 = $http."rlt_declaracao_iss_pf.php";
 $link19 = $http."rlt_declaracao_naoservidor_pf.php";
@@ -123,6 +125,10 @@ echo "
 						<tr>
 							<td><a href='$link17' target='_blank'><strong>NORMAS INTERNAS - Teatros Municipais</strong></a></td>
 							<td><a href='$link44' target='_blank'><strong>EMIA</strong></a></td>
+						</tr>
+						
+						<tr>
+							<td><a href='$link48' target='_blank'><strong>Pesquisador Formação</strong></a></td>
 						</tr>
 						
 						<tr><td class='list_description'><br/></td></tr>

@@ -137,6 +137,7 @@ if(isset($_POST['pesquisar']))
 					$formaPagamento = $pedido['formaPagamento'];
 				}		
 				$x[0]['id']= $pedido['idPedidoContratacao'];
+				$x[0]['NumeroProcesso']= $pedido['NumeroProcesso'];
 				$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
 				switch($pedido['tipoPessoa'])
 				{
@@ -162,6 +163,7 @@ if(isset($_POST['pesquisar']))
 				$x[0]['local'] = substr($local,1);
 				$x[0]['instituicao'] = $instituicao['sigla'];
 				$x[0]['periodo'] = $periodo;
+				$x[0]['pendencia'] = $pedido['pendenciaDocumento'];
 				$x[0]['status'] = $pedido['estado'];
 				$x[0]['operador'] = $operador['nomeCompleto'];	
 				$x['num'] = 1;
@@ -213,6 +215,7 @@ if(isset($_POST['pesquisar']))
 						$formaPagamento = $pedido['formaPagamento'];
 					}		
 					$x[$i]['id']= $pedido['idPedidoContratacao'];
+					$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
 					$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
 					switch($pedido['tipoPessoa'])
 					{
@@ -238,6 +241,7 @@ if(isset($_POST['pesquisar']))
 					$x[$i]['local'] = substr($local,1);
 					$x[$i]['instituicao'] = $instituicao['sigla'];
 					$x[$i]['periodo'] = $periodo;
+					$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
 					$x[$i]['status'] = $pedido['estado'];
 					$x[$i]['operador'] = $operador['nomeCompleto'];
 					$i++;	
@@ -348,6 +352,7 @@ if(isset($_POST['pesquisar']))
 						if($pedido['publicado'] == 1)
 						{		
 							$x[$i]['id']= $pedido['idPedidoContratacao'];
+							$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
 							$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
 							switch($pedido['tipoPessoa'])
 							{
@@ -373,6 +378,7 @@ if(isset($_POST['pesquisar']))
 							$x[$i]['local'] = substr($local,1);
 							$x[$i]['instituicao'] = $instituicao['sigla'];
 							$x[$i]['periodo'] = $periodo;
+							$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
 							$x[$i]['status'] = $pedido['estado'];	
 							$x[$i]['operador'] = $operador['nomeCompleto'];		
 							$i++;
@@ -407,12 +413,14 @@ if(isset($_POST['pesquisar']))
 						<thead>
 							<tr class="list_menu">
 								<td>Codigo do Pedido</td>
+								<td>Número Processo</td>
 								<td>Proponente</td>
 								<td>Tipo</td>
 								<td>Objeto</td>
 								<td width="20%">Local</td>
 								<td>Instituição</td>
 								<td>Periodo</td>
+								<td>Pendências</td>
 								<td>Status</td>
 								<td>Operador</td>
 							</tr>
@@ -436,15 +444,16 @@ if(isset($_POST['pesquisar']))
 									echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_proposta_formacao&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
 								break;	
 							}
+							echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].			'</td> ';
 							echo '<td class="list_description">'.$x[$h]['proponente'].					'</td> ';
 							echo '<td class="list_description">'.$x[$h]['tipo'].					'</td> ';
 							echo '<td class="list_description">'.$x[$h]['objeto'].						'</td> ';
 							echo '<td class="list_description">'.$x[$h]['local'].				'</td> ';
 							echo '<td class="list_description">'.$x[$h]['instituicao'].				'</td> ';
 							echo '<td class="list_description">'.$x[$h]['periodo'].						'</td> ';
+							echo '<td class="list_description">'.$x[$h]['pendencia'].				'</td> ';
 							echo '<td class="list_description">'.$status['estado'].						'</td> ';
 							echo '<td class="list_description">'.$x[$h]['operador'].						'</td> </tr>';
-
 						}
 					?>
 						</tbody>

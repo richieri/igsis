@@ -20,6 +20,7 @@
 							<td>Local</td>
 							<td>Periodo</td>
                             <td>Fiscal</td>
+							<td>Operador</td>
 							</tr>
 						</thead>
 				<tbody>
@@ -28,8 +29,10 @@
 		$data=date('Y');
 	for($i = 0; $i < count($lista); $i++)
 {
+		$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
 		$pf = recuperaDados("sis_pessoa_fisica",$lista[$i]['IdProponente'],"Id_PessoaFisica");
 		$chamado = recuperaAlteracoesEvento($lista[$i]['idEvento']);	 
+		$operador = recuperaUsuario("igsis_pedido_contratacao",$pedido['idContratos	'],"idContratos");
 			echo "<tr><td class='lista'> <a href='".$link.$lista[$i]['idEvento']."'>".$lista[$i]['idEvento']."</a></td>";
 			echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$lista[$i]['idPedido']."'>".$lista[$i]['idPedido']."</a></td>";
 			echo '<td class="list_description">'.$pf['Nome'].'</td> ';
@@ -47,6 +50,8 @@
 			echo '<td class="list_description">'.$lista[$i]['Local'].'</td> ';
 			echo '<td class="list_description">'.$lista[$i]['Periodo'].'</td> ';
 			echo '<td class="list_description">'.$lista[$i]['Fiscal'].'</td> </tr>';
+			echo '<td class="list_description">'.$operador['nomeCompleto'].'</td> </tr>';
+
 }
 			echo "<br/><h5>Foram encontrados ".$i." registros</h5>";
 ?>
