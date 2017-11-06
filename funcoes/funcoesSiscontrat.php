@@ -1314,7 +1314,8 @@
 			ped.idPedidoContratacao, 
 			ped.tipoPessoa, 
 			ped.idPessoa, 
-			ped.instituicao
+			ped.instituicao,
+			ped.idContratos
 			FROM igsis_pedido_contratacao 
 			AS ped
 			INNER JOIN ig_evento 
@@ -1334,7 +1335,8 @@
 			ped.idPedidoContratacao, 
 			ped.tipoPessoa, 
 			ped.idPessoa, 
-			ped.instituicao
+			ped.instituicao,
+			ped.idContratos
 			FROM igsis_pedido_contratacao 
 			AS ped
 			INNER JOIN ig_evento 
@@ -1359,6 +1361,7 @@
 			$duracao = retornaDuracao($pedido['idEvento']);
 			$pessoa = recuperaPessoa($pedido['idPessoa'],$tipoPessoa);
 			$fiscal = recuperaUsuario($evento['idResponsavel']);
+			$operador = recuperaUsuario($pedido['idContratos']);
 			$x[$i] = array(
 				"idPedido" => $pedido['idPedidoContratacao'],
 				"idEvento" => $pedido['idEvento'], 
@@ -1371,6 +1374,7 @@
 				"DataCadastro" => $evento['dataEnvio'],
 				"Fiscal" => $fiscal['nomeCompleto'] ,
 				"Horario" => "", //SPCultura
+				"Operador" => $operador['nomeCompleto'],
 				"IdProponente" => $pedido['idPessoa']);
 			$i++;
 		}
