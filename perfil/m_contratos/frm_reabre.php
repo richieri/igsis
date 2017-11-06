@@ -91,7 +91,7 @@ else
 								{
 									$dados = siscontrat($outros[$i]);
 							?>
-								<p align="left"><b>Número do Pedido de Contratação:</b> <a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $outros[$i]; ?>"><?php echo $outros[$i]; ?></a><br /></p>
+								<p align="left"><b>Número do Pedido de Contratação:</b> <?php echo $outros[$i]; ?><br /></p>
 							<?php 
 								} 
 							?>
