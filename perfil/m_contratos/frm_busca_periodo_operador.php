@@ -87,36 +87,41 @@ if(isset($_POST['periodo']))
 	$i = 0;
 	while($evento = mysqli_fetch_array($query_evento))
 	{
-		$pedido = recuperaDados("igsis_pedido_contratacao",$evento['idPedidoContratacao'],"idPedidoContratacao");
-		$event = recuperaDados("ig_evento",$evento['idEvento'],"idEvento");
-		$usuario = recuperaDados("ig_usuario",$event['idUsuario'],"idUsuario");
-		$instituicao = recuperaDados("ig_instituicao",$event['idInstituicao'],"idInstituicao");
-		$local = listaLocais($pedido['idEvento']);
-		$periodo = retornaPeriodo($pedido['idEvento']);
-		$operador = recuperaUsuario($pedido['idContratos']);
+		$idEvento = $evento['idEvento'];
+		$dataInicio = strtotime(retornaDataInicio($idEvento));
+		if($dataInicio >= strtotime($inicio) AND $dataInicio <= strtotime($final))
+		{
+			$pedido = recuperaDados("igsis_pedido_contratacao",$evento['idPedidoContratacao'],"idPedidoContratacao");
+			$event = recuperaDados("ig_evento",$evento['idEvento'],"idEvento");
+			$usuario = recuperaDados("ig_usuario",$event['idUsuario'],"idUsuario");
+			$instituicao = recuperaDados("ig_instituicao",$event['idInstituicao'],"idInstituicao");
+			$local = listaLocais($pedido['idEvento']);
+			$periodo = retornaPeriodo($pedido['idEvento']);
+			$operador = recuperaUsuario($pedido['idContratos']);
 
-		$x[$i]['id']= $pedido['idPedidoContratacao'];
-		$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
-		$x[$i]['objeto'] = retornaTipo($event['ig_tipo_evento_idTipoEvento'])." - ".$event['nomeEvento'];
-		if($pedido['tipoPessoa'] == 1)
-		{
-			$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-			$x[$i]['proponente'] = $pessoa['Nome'];
-			$x[$i]['tipo'] = "Física";
+			$x[$i]['id']= $pedido['idPedidoContratacao'];
+			$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
+			$x[$i]['objeto'] = retornaTipo($event['ig_tipo_evento_idTipoEvento'])." - ".$event['nomeEvento'];
+			if($pedido['tipoPessoa'] == 1)
+			{
+				$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+				$x[$i]['proponente'] = $pessoa['Nome'];
+				$x[$i]['tipo'] = "Física";
+			}
+			else
+			{
+				$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+				$x[$i]['proponente'] = $pessoa['RazaoSocial'];
+				$x[$i]['tipo'] = "Jurídica";
+			}
+			$x[$i]['local'] = substr($local,1);
+			$x[$i]['instituicao'] = $instituicao['sigla'];
+			$x[$i]['periodo'] = $periodo;
+			$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
+			$x[$i]['status'] = $pedido['estado'];
+			$x[$i]['operador'] = $operador['nomeCompleto'];
+			$i++;
 		}
-		else
-		{
-			$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-			$x[$i]['proponente'] = $pessoa['RazaoSocial'];
-			$x[$i]['tipo'] = "Jurídica";
-		}
-		$x[$i]['local'] = substr($local,1);
-		$x[$i]['instituicao'] = $instituicao['sigla'];
-		$x[$i]['periodo'] = $periodo;
-		$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
-		$x[$i]['status'] = $pedido['estado'];
-		$x[$i]['operador'] = $operador['nomeCompleto'];
-		$i++;
 	}
 	$x['num'] = $i;
 	if($num > 0)
