@@ -12,7 +12,7 @@ $pasta = "?perfil=juridico&p=";
 			<li><a href="<?php echo $pasta ?>agenda">Relatório por Período</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Carregar Módulos</a></li>
-			<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-juridico/">Ajuda</a></li>
+			<li><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/index.php/modulo-juridico/">Ajuda</a></li>
 			<li><a href="../index.php">Sair</a></li>
 		</ul>
 	</div>

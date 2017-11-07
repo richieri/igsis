@@ -41,7 +41,7 @@
                                     <ul class="dl-submenu">
 										<li><a href="?perfil=evento">Voltar aos Eventos</a></li>
 										<li><a href="?secao=perfil">Carregar Módulos</a></li>
-										<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-evento/">Ajuda</a></li>
+										<li><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/index.php/modulo-evento/">Ajuda</a></li>
                                         <li><a href="../include/logoff.php">Sair</a></li>
                                     </ul>
                                 </li>

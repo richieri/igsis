@@ -46,7 +46,7 @@ $pasta = "?perfil=contratos&p=";
 			<li><a href="<?php echo $pasta ?>frm_chamados">Chamados</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Carregar módulos</a></li>
-			<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-contratos/">Ajuda</a></li>
+			<li><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/index.php/modulo-contratos/">Ajuda</a></li>
 			<li><a href="../index.php">Sair</a></li>
 		</ul>
 	</div>

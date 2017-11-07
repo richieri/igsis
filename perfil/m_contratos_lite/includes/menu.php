@@ -20,7 +20,7 @@ $usuario = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
 			</li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Carregar Módulos</a></li>
-			<li><a href="http://www.centrocultural.cc/igsis/manual/index.php/contratos-lite/">Ajuda</a></li>
+			<li><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/index.php/contratos-lite/">Ajuda</a></li>
 			<li><a href="../index.php">Sair</a></li>
 		</ul>
 	</div>

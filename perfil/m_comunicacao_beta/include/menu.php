@@ -20,7 +20,7 @@ $link = $http."rlt_comunicacao_fotos.php";
 				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li> 			
 				<li style="color:white;">-------------------------</li>
 				<li><a href="?secao=perfil">Carregar módulo</a></li>
-				<li selected><a href="http://www.centrocultural.cc/igsis/manual/index.php/modulo-comunicacao/">Ajuda</a></li>
+				<li selected><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/index.php/modulo-comunicacao/">Ajuda</a></li>
 				<li><a href="../include/logoff.php">Sair</a></li>
 			</ul>
 	</div>
