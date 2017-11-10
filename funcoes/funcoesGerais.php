@@ -1610,7 +1610,7 @@
 			echo "<td class='list_description'><a href='../uploadsdocs/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
 			echo "
 				<td class='list_description'>
-					<form method='POST' action='?perfil=contratados&p=arq_pedidos&id_ped=$idPedido'>
+					<form method='POST' action='?perfil=contratos&p=frm_arquivos_pedidos&id_ped=$idPedido'>
 						<input type='hidden' name='apagar' value='".$campo['idArquivosPedidos']."' />
 						<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
 			echo "</tr>";
