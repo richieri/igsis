@@ -69,7 +69,7 @@ if(isset($_POST['parcela']))
 				$instituicao = recuperaDados("ig_instituicao",$event['idInstituicao'],"idInstituicao");
 				$local = listaLocais($pedido['idEvento']);
 				$periodo = retornaPeriodo($pedido['idEvento']);
-				$operador = recuperaUsuario($pedido['idContratos']);
+				$operador = recuperaUsuario($pedido['idPagamentos']);
 				$parcela = recuperaDados("igsis_parcelas",$pedido['idPedidoContratacao'],"idPedido");
 				if($pedido['parcelas'] > 1)
 				{
@@ -100,6 +100,7 @@ if(isset($_POST['parcela']))
 				$x[$i]['local'] = substr($local,1);
 				$x[$i]['instituicao'] = $instituicao['sigla'];
 				$x[$i]['periodo'] = $periodo;
+				$x[$i]['valor'] = $pedido['valor'];
 				$x[$i]['status'] = $pedido['estado'];
 				$x[$i]['operador'] = $operador['nomeCompleto'];
 				$i++;
@@ -123,13 +124,15 @@ if($num > 0){ ?>
 					<thead>
 						<tr class="list_menu">
 							<td>Processo</td>
-							<td>Código do Pedido</td>
+							<td>Codigo do Pedido</td>
 							<td>Proponente</td>
 							<td>Tipo</td>
 							<td>Objeto</td>
 							<td>Período</td>
+							<td>Valor</td>
 							<td>Status</td>
-							<td>Data Parcela</td>
+							<td>Operador</td>
+							<td>Data Pagto</td>
 							<td colspan="7">GERAR</td>
 						</tr>
 					</thead>
@@ -137,31 +140,44 @@ if($num > 0){ ?>
 
 <?php
 $data=date('Y');
+$server = "http://".$_SERVER['SERVER_NAME']."/igsis"; //mudar para pasta do igsis
+$http = $server."/pdf/";
+$link0 = $http."rlt_pedido_contratacao_pf.php";
+$link1 = $http."rlt_pedido_contratacao_pj.php";
+
 for($h = 0; $h < $x['num']; $h++)
 {
 	$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 	
 	echo '<tr><td class="list_description">'.$x[$h]['NumeroProcesso'].'</td>';
-	echo '<td class="list_description">'.$x[$h]['id'].'</td>';
+	if($x[$h]['tipo'] == 'Física' OR $x[$h]['tipo'] == 'Formação' )
+	{
+		echo '<td class="list_description"><a target="_blank" href="'.$link0.'?id='.$x[$h]['id'].'">'.substr($x[$h]['id'],6,11).'</a></td>';
+	}
+	else
+	{
+		echo '<td class="list_description"><a target="_blank" href="'.$link1.'?id='.$x[$h]['id'].'">'.substr($x[$h]['id'],6,11).'</a></td>';
+	}
 	echo '<td class="list_description">'.$x[$h]['proponente'].'</td>';
-	echo '<td class="list_description">'.$x[$h]['tipo'].'</td>';
+	echo '<td class="list_description">'.substr($x[$h]['tipo'],0,1).'</td>';
 	echo '<td class="list_description">'.$x[$h]['objeto'].'</td>';
 	echo '<td class="list_description">'.$x[$h]['periodo'].'</td>';
+	echo '<td class="list_description">'.$x[$h]['valor'].'</td>';
 	echo '<td class="list_description">'.$status['estado'].'</td>';
+	echo '<td class="list_description">'.$x[$h]['operador'].'</td>';
 	echo '<td class="list_description">'.exibirDataBr($x[$h]['vencimento']).'</td>';
 	
 	if($x[$h]['tipo'] == 'Física')
 	{
-		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pf&id_ped=".$x[$h]['id']."'>NOTA DE EMPENHO</a><td>";
-		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pf&id_ped=".$x[$h]['id']."'>PAGAMENTO</a><td>";
-		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUIDAÇÃO</a><td>";
+		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pf&id_ped=".$x[$h]['id']."'>N.E.</a><td>";
+		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pf&id_ped=".$x[$h]['id']."'>PAGTO</a><td>";
+		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUID.</a><td>";
 	}
 	else
 	{
-		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pj&id_ped=".$x[$h]['id']."'>NOTA DE EMPENHO</a><td>";
-		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pj&id_ped=".$x[$h]['id']."'>PAGAMENTO</a><td>";
-		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUIDAÇÃO</a><td>";
-		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_emissao_nf&id_ped=".$x[$h]['id']."'>EMISSÃO N.F.</a><td>";
+		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pj&id_ped=".$x[$h]['id']."'>N.E.</a><td>";
+		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pj&id_ped=".$x[$h]['id']."'>PAGTO</a><td>";
+		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUID.</a><td>";
 	}
 	echo "</tr>";
 }

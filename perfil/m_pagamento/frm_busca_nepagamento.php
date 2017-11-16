@@ -125,7 +125,7 @@ if(isset($_POST['pesquisar']))
 				$fiscal = recuperaUsuario($evento['idResponsavel']);
 				$suplente = recuperaUsuario($evento['suplente']);
 				$protocolo = ""; //recuperaDados("sis_protocolo",$pedido['idEvento'],"idEvento");
-				$operador = recuperaUsuario($pedido['idContratos']);
+				$operador = recuperaUsuario($pedido['idPagamentos']);
 				if($pedido['parcelas'] > 1)
 				{
 					$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
@@ -161,6 +161,7 @@ if(isset($_POST['pesquisar']))
 				$x[0]['instituicao'] = $instituicao['sigla'];
 				$x[0]['periodo'] = $periodo;
 				$x[0]['status'] = $pedido['estado'];
+				$x[0]['valor'] = $pedido['valor'];
 				$x[0]['operador'] = $operador['nomeCompleto'];	
 				$x['num'] = 1;
 			}
@@ -264,7 +265,7 @@ if(isset($_POST['pesquisar']))
 						$fiscal = recuperaUsuario($evento['idResponsavel']);
 						$suplente = recuperaUsuario($evento['suplente']);
 						$protocolo = ""; //recuperaDados("sis_protocolo",$pedido['idEvento'],"idEvento");
-						$operador = recuperaUsuario($pedido['idContratos']);
+						$operador = recuperaUsuario($pedido['idPagamentos']);
 						if($pedido['parcelas'] > 1)
 						{
 							$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
@@ -276,7 +277,7 @@ if(isset($_POST['pesquisar']))
 							$formaPagamento = $pedido['formaPagamento'];
 						}
 						if($pedido['publicado'] == 1)
-						{		
+						{
 							$x[$i]['id']= $pedido['idPedidoContratacao'];
 							$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
 							$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
@@ -295,7 +296,8 @@ if(isset($_POST['pesquisar']))
 							$x[$i]['local'] = substr($local,1);
 							$x[$i]['instituicao'] = $instituicao['sigla'];
 							$x[$i]['periodo'] = $periodo;
-							$x[$i]['status'] = $pedido['estado'];	
+							$x[$i]['status'] = $pedido['estado'];
+							$x[$i]['valor'] = $pedido['valor'];
 							$x[$i]['operador'] = $operador['nomeCompleto'];		
 							$i++;
 						}
@@ -319,7 +321,11 @@ if(isset($_POST['pesquisar']))
 					{
 					}
 					else
-					{ 
+					{
+						$server = "http://".$_SERVER['SERVER_NAME']."/igsis"; //mudar para pasta do igsis
+						$http = $server."/pdf/";
+						$link0 = $http."rlt_pedido_contratacao_pf.php";
+						$link1 = $http."rlt_pedido_contratacao_pj.php";
 				?>
 						<table class="table table-condensed">
 							<thead>
@@ -329,7 +335,11 @@ if(isset($_POST['pesquisar']))
 									<td>Proponente</td>
 									<td>Tipo</td>
 									<td>Objeto</td>
+									<td>Período</td>
+									<td>Valor</td>
 									<td>Status</td>
+									<td>Operador</td>
+									<td>Data Pagto</td>
 									<td colspan="7">GERAR</td>
 								</tr>
 							</thead>
@@ -340,24 +350,33 @@ if(isset($_POST['pesquisar']))
 								{
 									$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 									echo '<tr><td class="list_description">'.$x[$h]['NumeroProcesso'].			'</td>';
-									echo '<td class="list_description"><a target="_blank" href="?perfil=detalhe_pedido&id_ped='.$x[$h]['id'].'">'.$x[$h]['id'].'</a></td>';
-									echo '<td class="list_description">'.$x[$h]['proponente'].					'</td>';
-									echo '<td class="list_description">'.$x[$h]['tipo'].						'</td>';
-									echo '<td class="list_description">'.$x[$h]['objeto'].						'</td>';
-									echo '<td class="list_description">'.$status['estado'].						'</td>';
 									if($x[$h]['tipo'] == 'Física' OR $x[$h]['tipo'] == 'Formação' )
 									{
-										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pf&id_ped=".$x[$h]['id']."'>NOTA DE EMPENHO</a><td>";
-										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pf&id_ped=".$x[$h]['id']."'>PAGAMENTO</a><td>";
-										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUIDAÇÃO</a><td>";
-										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_emissao_nf&id_ped=".$x[$h]['id']."'>EMISSÃO N.F.</a><td>";
+										echo '<td class="list_description"><a target="_blank" href="'.$link0.'?id='.$x[$h]['id'].'">'.substr($x[$h]['id'],6,11).'</a></td>';
+									}
+									else
+									{
+										echo '<td class="list_description"><a target="_blank" href="'.$link1.'?id='.$x[$h]['id'].'">'.substr($x[$h]['id'],6,11).'</a></td>';
+									}
+									echo '<td class="list_description">'.$x[$h]['proponente'].					'</td>';
+									echo '<td class="list_description">'.substr($x[$h]['tipo'],0,1).						'</td>';
+									echo '<td class="list_description">'.$x[$h]['objeto'].						'</td>';
+									echo '<td class="list_description">'.$x[$h]['periodo'].						'</td>';
+									echo '<td class="list_description">'.$x[$h]['valor'].'</td>';
+									echo '<td class="list_description">'.$status['estado'].						'</td>';
+									echo '<td class="list_description">'.$x[$h]['operador'].'</td>';
+									echo '<td class="list_description">xx/xx/xxxx</td>';
+									if($x[$h]['tipo'] == 'Física' OR $x[$h]['tipo'] == 'Formação' )
+									{
+										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pf&id_ped=".$x[$h]['id']."'>N.E.</a><td>";
+										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pf&id_ped=".$x[$h]['id']."'>PAGTO</a><td>";
+										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUID.</a><td>";
 									}
 									else
 									{
 										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pj&id_ped=".$x[$h]['id']."'>NOTA DE EMPENHO</a><td>";
 										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pj&id_ped=".$x[$h]['id']."'>PAGAMENTO</a><td>";
 										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUIDAÇÃO</a><td>";
-										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_emissao_nf&id_ped=".$x[$h]['id']."'>EMISSÃO N.F.</a><td>";
 									}
 									echo "</tr>";
 								}
