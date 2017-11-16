@@ -3,7 +3,6 @@ include 'includes/menu.php';
 
 $con = bancoMysqli();
 $_SESSION['idPedido'] = $_GET['id_ped'];
-$idContratos = $_SESSION['idUsuario'];
 $id_ped = $_GET['id_ped'];
 $ano=date('Y');
 
@@ -86,22 +85,6 @@ if(isset($_POST['cadastraExecutante']))
 	}
 }
 
-if(isset($_POST['idContrato']))
-{
-	$con = bancoMysqli();
-	$idContratos = $_POST['contratos'];
-	$idPedido = $_POST['idContrato'];
-	$sql_atualiza_contratos = "UPDATE igsis_pedido_contratacao SET idContratos = '$idContratos' WHERE idPedidoContratacao = '$idPedido'";
-	$query_atualiza_contratos = mysqli_query($con,$sql_atualiza_contratos);
-	if($query_atualiza_contratos)
-	{
-		$mensagem = "Responsável por contrato atualizado.";
-	}
-	else
-	{
-		$mensagem = "Erro.";
-	}
-}
 
 /* Atualiza Grupo */
 if(isset($_POST['atualizaGrupo']))
@@ -143,8 +126,7 @@ if(isset($_POST['atualizar']))
 			observacao = '$observacao',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
-			NumeroProcesso = '$processo',
-			idContratos = '$idContratos'
+			NumeroProcesso = '$processo'
 			WHERE idPedidoContratacao = '$ped'";
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_pedido)
@@ -192,8 +174,7 @@ if(isset($_POST['atualizar']))
 			observacao = '$observacao',
 			DataContrato = '$dataAgora',
 			parecerArtistico = '$parecer',
-			NumeroProcesso = '$processo',
-			idContratos = '$idContratos'
+			NumeroProcesso = '$processo'
 			WHERE idPedidoContratacao = '$ped'";
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_pedido)

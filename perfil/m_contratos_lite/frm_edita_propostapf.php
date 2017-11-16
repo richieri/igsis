@@ -8,23 +8,6 @@ $ano=date('Y');
 
 $link1="index.php?perfil=contratos_lite&p=impressao_contratos_pf&id_ped=".$id_ped;
 
-if(isset($_POST['idContrato']))
-{
-	$con = bancoMysqli();
-	$idContratos = $_POST['contratos'];
-	$idPedido = $_POST['idContrato'];
-	$sql_atualiza_contratos = "UPDATE igsis_pedido_contratacao SET idContratos = '$idContratos' WHERE idPedidoContratacao = '$idPedido'";
-	$query_atualiza_contratos = mysqli_query($con,$sql_atualiza_contratos);
-	if($query_atualiza_contratos)
-	{
-		$mensagem = "Responsável por contrato atualizado.";
-	}
-	else
-	{
-		$mensagem = "Erro.";
-	}
-}
-
 if(isset($_POST['atualizaGrupo']))
 { // atualiza o grupo
 	$con = bancoMysqli();
