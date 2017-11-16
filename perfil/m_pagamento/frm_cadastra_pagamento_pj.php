@@ -179,8 +179,8 @@ include 'includes/menu.php';
 								<td>2 Representantes</td>
 							</tr>
 						</thead>
-						<tbody>	
-						<?php				
+						<tbody>
+						<?php
 							for($i = 1; $i < count($parcelamento); $i++)
 							{
 								echo '<tr><td class="list_description">'.$i.'</td> ';
@@ -190,24 +190,31 @@ include 'includes/menu.php';
 										<a target="_blank" href='.$link3.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
 										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
-										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a></td>';							
+										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a></td>';
 								echo '<td class="list_description">
 										<a target="_blank" href='.$link4.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
 										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
 										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a></td>';
-							} 
-						?>	
+							}
+						?>
 						</tbody>
 					</table>
-				</div>	     
-			</div>			 			
-		</div>	
-<?php 
+					<div class="col-md-offset-1 col-md-10">
+						<form class="form-horizontal" role="form" action="?perfil=pagamento&p=frm_edicao_parcelas&id_ped=<?php echo $id_ped; ?>" method="post">
+							<div class="col-md-offset-2 col-md-8">
+								 <input type="submit" class="btn btn-theme btn-md btn-block" value="Editar parcelas">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+<?php
 	}
 	else
-	{ 
-?>	
+	{
+?>
 		<div class="col-md-offset-2 col-md-8">
 			<form class="form-horizontal" role="form" action="?perfil=pagamento&p=frm_cadastra_pagamento_pj&id_ped=<?php echo $id_ped; ?>" method="post">
 				<div class="col-md-offset-2 col-md-8">

@@ -173,8 +173,8 @@ include 'includes/menu.php';
 								<td></td>
 							</tr>
 						</thead>
-						<tbody>					
-						<?php				
+						<tbody>
+						<?php
 							for($i = 1; $i < count($parcelamento); $i++)
 							{
 								echo '<tr><td class="list_description">'.$i.'</td> ';
@@ -184,20 +184,25 @@ include 'includes/menu.php';
 								echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Recibo</a></td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link5.'?id='.$id_ped.' >Documentação</a></td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link6.'?id='.$id_ped.' >Ateste de Confirmação</a></td></tr>';
-							} 
-						?>	
+							}
+						?>
 						</tbody>
 					</table>
-				</div>	     
-			</div>			 			
-		</div>	
-		
-	<?php 
+					<div class="col-md-offset-1 col-md-10">
+						<form class="form-horizontal" role="form" action="?perfil=pagamento&p=frm_edicao_parcelas&id_ped=<?php echo $id_ped; ?>" method="post">
+							<div class="col-md-offset-2 col-md-8">
+								 <input type="submit" class="btn btn-theme btn-md btn-block" value="Editar parcelas">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php
 	}
 	else
-	{ 
-	?>	
-
+	{
+	?>
 		<div class="col-md-offset-2 col-md-8">
 			<form class="form-horizontal" role="form" action="?perfil=pagamento&p=frm_cadastra_pagamento_pf&id_ped=<?php echo $id_ped; ?>" method="post">
 				<div class="col-md-offset-2 col-md-8">
