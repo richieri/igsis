@@ -241,7 +241,14 @@ case 'inicial':
 							for($h = 0; $h < $x['num']; $h++)
 							{
 								echo "<tr><td class='list_description'> <a href='".$link.$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
-								echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id_ped']."'>".$x[$h]['id_ped']."</a></td>";
+								if($pedido['tipoPessoa'] == 2)
+								{
+									echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id_ped']."'>".$x[$h]['id_ped']."</a></td>";
+								}
+								else
+								{
+									echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id_ped']."'>".$x[$h]['id_ped']."</a></td>";
+								}
 								echo '<td class="list_description">'.$x[$h]['objeto'].				'</td> ';
 								echo '<td class="list_description">'.$x[$h]['local'].				'</td> ';
 								echo '<td class="list_description">'.$x[$h]['periodo'].				'</td> ';

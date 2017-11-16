@@ -1,5 +1,5 @@
 <?php
-	$lista = lista_prazo("todos",1000,1,"DESC"); //esse gera uma array com os pedidos
+	$lista = lista_prazo(1000,1,"DESC"); //esse gera uma array com os pedidos
 	$link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
 ?>
 
@@ -30,8 +30,16 @@
 						$pf = recuperaDados("sis_pessoa_fisica",$lista[$i]['IdProponente'],"Id_PessoaFisica");
 						$chamado = recuperaAlteracoesEvento($lista[$i]['idEvento']);
 						echo "<tr><td class='lista'> <a href='".$link.$lista[$i]['idEvento']."'>".$lista[$i]['idEvento']."</a></td>";
-						echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$lista[$i]['idPedido']."'>".$lista[$i]['idPedido']."</a></td>";
-						echo '<td class="list_description">'.$pf['Nome'].'</td> ';
+						if($lista[$i]['TipoPessoa'] == 2)
+						{
+							echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$lista[$i]['idPedido']."'>".$lista[$i]['idPedido']."</a></td>";
+						}
+						else
+						{
+							echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$lista[$i]['idPedido']."'>".$lista[$i]['idPedido']."</a></td>";
+						}
+						echo '<td class="list_description">'.$lista[$i]['Proponente'].'</td> ';
+
 						echo '<td class="list_description">'.$lista[$i]['Objeto'].' [';
 
 						if($chamado['numero'] == '0')

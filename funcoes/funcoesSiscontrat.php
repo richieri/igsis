@@ -1299,17 +1299,9 @@
 			}
 		}
 	}
-	function lista_prazo($tipoPessoa,$num_registro,$pagina,$ordem)
+	function lista_prazo($num_registro,$pagina,$ordem)
 	{
 		$con = bancoMysqli();
-		if($tipoPessoa == "todos")
-		{
-			$tipo = "";	
-		}
-		else
-		{
-			$tipo = " AND tipoPessoa = '$tipoPessoa' ";
-		}
 		$sql_lista_total = "SELECT ped.idEvento, 
 			ped.idPedidoContratacao, 
 			ped.tipoPessoa, 
@@ -1359,7 +1351,7 @@
 			$local_juridico = listaLocaisJuridico($pedido['idEvento']);
 			$periodo = retornaPeriodo($pedido['idEvento']);
 			$duracao = retornaDuracao($pedido['idEvento']);
-			$pessoa = recuperaPessoa($pedido['idPessoa'],$tipoPessoa);
+			$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 			$fiscal = recuperaUsuario($evento['idResponsavel']);
 			$operador = recuperaUsuario($pedido['idContratos']);
 			$x[$i] = array(
@@ -1373,9 +1365,9 @@
 				"Duracao" => $duracao, 			
 				"DataCadastro" => $evento['dataEnvio'],
 				"Fiscal" => $fiscal['nomeCompleto'] ,
-				"Horario" => "", //SPCultura
 				"Operador" => $operador['nomeCompleto'],
-				"IdProponente" => $pedido['idPessoa']);
+				"IdProponente" => $pedido['idPessoa'],
+				"Proponente" => $pessoa['nome']);
 			$i++;
 		}
 		return $x;
