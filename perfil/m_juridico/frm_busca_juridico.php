@@ -1,9 +1,9 @@
-﻿<?php 
+﻿<?php
 include 'includes/menu.php';
 
 if(isset($_GET['b']))
 {
-	$b = $_GET['b'];	
+	$b = $_GET['b'];
 }
 else
 {
@@ -25,7 +25,7 @@ if(isset($_POST['pesquisar']))
 	$processo = $_POST['NumeroProcesso'];
 
 	if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $processo == 0)
-	{ 
+	{
 ?>
 		<section id="services" class="home-section bg-white">
 			<div class="container">
@@ -44,50 +44,50 @@ if(isset($_POST['pesquisar']))
 							<form method="POST" action="?perfil=juridico&p=frm_busca_juridico" class="form-horizontal" role="form">
 							<label>Código do Pedido</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-							
+
 							<label>Número do Processo</label>
 							<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />
-							
+
 							<label>Objeto/Evento</label>
-							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />   
-							
+							<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
+
 							<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
 							<select class="form-control" name="fiscal" id="inputSubject" >
-								<option value="0"></option>	
+								<option value="0"></option>
 								<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
 							</select><br />
-							
+
 							<label>Tipo de evento</label>
 							<select class="form-control" name="tipo" id="inputSubject" >
-								<option value="0"></option>		                
+								<option value="0"></option>
 								<?php echo geraOpcao("ig_tipo_evento","","") ?>
 							</select><br />
-							
+
 							<label>Instituição</label>
 							<select class="form-control" name="instituicao" id="inputSubject" >
 								<option value="0"></option>
 								<?php echo geraOpcao("ig_instituicao","","") ?>
 							</select><br />
-							
+
 							<label>Status do pedido</label>
 							<select class="form-control" name="estado" id="inputSubject" >
 								<option value='0'></option>
 								<?php echo geraOpcao("sis_estado","","") ?>
 							</select><br />
-							
+
 							<label>Operador do Contrato</label>
 							<select class="form-control" name="operador" id="inputSubject" >
 								<option value='0'></option>
 								<?php  geraOpcaoContrato(""); ?>
 							</select><br />
-							
+
 							<label>Tipo de Relação Jurídica</label>
 							<select class="form-control" name="juridico" id="inputSubject" >
 								<option value='0'></option>
 								<?php  geraOpcao("ig_modalidade","",""); ?>
-							</select>	
+							</select>
 						</div>
-					</div><br />             
+					</div><br />
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="pesquisar" value="1" />
@@ -123,7 +123,7 @@ if(isset($_POST['pesquisar']))
 				if($pedido['parcelas'] > 1)
 				{
 					$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
-					$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
+					$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);
 				}
 				else
 				{
@@ -148,6 +148,7 @@ if(isset($_POST['pesquisar']))
 				$x[0]['local'] = substr($local,1);
 				$x[0]['instituicao'] = $instituicao['sigla'];
 				$x[0]['periodo'] = $periodo;
+				$x[0]['pendencia'] = $pedido['pendenciaDocumento'];
 				$x[0]['status'] = $pedido['estado'];
 				$x['num'] = 1;
 			}
@@ -164,9 +165,9 @@ if(isset($_POST['pesquisar']))
 			}
 			else
 			{
-				$filtro_evento = "";	
+				$filtro_evento = "";
 			}
-			
+
 			if($fiscal != 0)
 			{
 				$filtro_fiscal = " AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )";	
@@ -264,6 +265,7 @@ if(isset($_POST['pesquisar']))
 							$x[$i]['local'] = substr($local,1);
 							$x[$i]['instituicao'] = $instituicao['sigla'];
 							$x[$i]['periodo'] = $periodo;
+							$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
 							$x[$i]['status'] = $pedido['estado'];
 							$i++;
 						}
@@ -297,6 +299,7 @@ if(isset($_POST['pesquisar']))
 								<td>Proponente</td>
 								<td>Tipo</td>
 								<td>Objeto</td>
+								<td>Pendências</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -305,11 +308,12 @@ if(isset($_POST['pesquisar']))
 						for($h = 0; $h < $x['num']; $h++)
 						{
 							$status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
-							echo "<tr><td class='lista'> <a href='?perfil=juridico&p=frm_lista_modelo&id_ped=".$x[$h]['id']."'>".$x[$h]['NumeroProcesso']."</a></td>";							
+							echo "<tr><td class='lista'> <a href='?perfil=juridico&p=frm_lista_modelo&id_ped=".$x[$h]['id']."'>".$x[$h]['NumeroProcesso']."</a></td>";
 							echo '<td class="list_description">'.$x[$h]['id'].'</td>';
 							echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['tipo'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
+							echo '<td class="list_description">'.$x[$h]['pendencia'].'</td> ';
 						}
 					?>
 						</tbody>
