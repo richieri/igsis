@@ -2657,45 +2657,52 @@
 						<br />
 						<p><?php echo $prazo['mensagem'];?><p>
 				<?php
-					$pedido = listaPedidoContratacao($_SESSION['idEvento']);
-					if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
+					if($evento['ig_produtor_idProdutor'] == 0)
 					{
-				?>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<form method='POST' action='?perfil=aprovacao_evento'>
-									<input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
-									<br />
-									<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
-								</form>
+						echo "<h6>Preencha os dados do produtor para habilitar o botão de envio!</h6>";
+					}
+					else
+					{
+						$pedido = listaPedidoContratacao($_SESSION['idEvento']);
+						if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
+						{
+					?>
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8">
+									<form method='POST' action='?perfil=aprovacao_evento'>
+										<input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
+										<br />
+										<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+									</form>
+								</div>
 							</div>
-						</div>
-				<?php
-					}
-					else if($prazo['fora'] == 0) //Não tem pedido e está dentro do prazo
-					{
-				?>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<form method='POST' action='?perfil=evento&p=finalizar'>
-									<input type='hidden' name='carregar' value='".$campo['idEvento']."' />
-									<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Enviar'>
-								</form>
+					<?php
+						}
+						else if($prazo['fora'] == 0) //Não tem pedido e está dentro do prazo
+						{
+					?>
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8">
+									<form method='POST' action='?perfil=evento&p=finalizar'>
+										<input type='hidden' name='carregar' value='".$campo['idEvento']."' />
+										<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Enviar'>
+									</form>
+								</div>
 							</div>
-						</div>
-				<?php
+					<?php
+						}
+						/*else if($pedido =! null) //Tem pedido
+						{
+							?><div class="col-md-offset-1 col-md-10">
+								<h4><font color="red">Sistema fechado para envio de programação com pedido de contratação.</font></h4>
+								<p><strong>Dúvidas entrar em contato com a Débora através do e-mail dsbueno@prefeitura.sp.gov.br</strong></p>
+							</div>
+							
+								 
+							<?php
+						}
+						*/
 					}
-					/*else if($pedido =! null) //Tem pedido
-					{
-						?><div class="col-md-offset-1 col-md-10">
-							<h4><font color="red">Sistema fechado para envio de programação com pedido de contratação.</font></h4>
-							<p><strong>Dúvidas entrar em contato com a Débora através do e-mail dsbueno@prefeitura.sp.gov.br</strong></p>
-						</div>
-						
-							 
-						<?php
-					}
-					*/
 				break;
 			} // fecha a switch action ?>	
 					</div>
