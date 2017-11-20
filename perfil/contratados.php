@@ -131,10 +131,15 @@
 						$id_evento = mysqli_query($con,$sql_ultimo);
 						$id = mysqli_fetch_array($id_evento);
 						$idFisica = $id['Id_PessoaFisica'];
-						$idEvento = $_SESSION['idEvento'];	
+						$idEvento = $_SESSION['idEvento'];
+						$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+						$query_anterior = mysqli_query($con,$sql_anterior);
+						$data = mysqli_fetch_array($query_anterior);
+						$data_inicio = $data['dataInicio'];
+						$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
 						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
-							(`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`) VALUES 
-							('$idEvento', '1', '$idFisica', '1')";
+							(`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`, `dataKitPagamento`) VALUES 
+							('$idEvento', '1', '$idFisica', '1', '$dataKitPagamento')";
 						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
 						if($query_insert_pedido)
 						{
@@ -172,17 +177,26 @@
 				}
 				else
 				{
+					$idEvento = $_SESSION['idEvento'];
+					$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+					$query_anterior = mysqli_query($con,$sql_anterior);
+					$data = mysqli_fetch_array($query_anterior);
+					$data_inicio = $data['dataInicio'];
+					$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
+
 					$sql_insere_pf = "INSERT INTO igsis_pedido_contratacao 
 						(idPessoa, 
 						tipoPessoa, 
 						publicado,
 						idEvento,
-						instituicao) 
+						instituicao,
+						dataKitPagamento)
 						VALUES ('$idPessoa',
 						'1',
 						'1',
 						'$idEvento',
-						'$idInstituicao')";
+						'$idInstituicao',
+						'$dataKitPagamento')";
 					$query_insere_pf = mysqli_query($con,$sql_insere_pf);
 					if($query_insere_pf)
 					{
@@ -193,12 +207,10 @@
 					{
 						$mensagem = "Erro ao criar pedido. Tente novamente.";
 					}
-						
 				}
 			}
 			if(isset($_POST['cadastrarJuridica']))
 			{
-				
 				//cadastra e insere pessoa jurídica
 				$verificaCNPJ = verificaExiste("sis_pessoa_juridica","CNPJ",$_POST['CNPJ'],"");
 				if($verificaCNPJ['numero'] > 0)
@@ -231,36 +243,24 @@
 						$id_evento = mysqli_query($con,$sql_ultimo);
 						$id = mysqli_fetch_array($id_evento);
 						$idJuridica = $id['Id_PessoaJuridica'];
-						$idEvento = $_SESSION['idEvento'];	
+						$idEvento = $_SESSION['idEvento'];
+						$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+						$query_anterior = mysqli_query($con,$sql_anterior);
+						$data = mysqli_fetch_array($query_anterior);
+						$data_inicio = $data['dataInicio'];
+						$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
 						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
-							(`idPedidoContratacao`, 
-							`idEvento`, 
-							`tipoPessoa`, 
-							`idRepresentante01`, 
-							`idPessoa`, 
-							`valor`, 
-							`valorPorExtenso`, 
-							`formaPagamento`, 
-							`idVerba`, 
-							`anexo`, 
-							`observacao`,
-							`qtdApresentacoes`,
-							`publicado`, 
-							`idRepresentante02`) 
-							VALUES (NULL, 
-							'$idEvento', 
-							'2', 
-							'NULL', 
-							'$idJuridica', 
-							NULL, 
-							NULL, 
-							NULL, 
-							NULL, 
-							NULL, 
-							NULL,
-							NULL,
-							'1', 
-							'NULL')";
+							(`idEvento`,
+							`tipoPessoa`,
+							`idPessoa`,
+							`dataKitPagamento`,
+							`publicado`)
+							VALUES (
+							'$idEvento',
+							'2',
+							'$idJuridica',
+							'$dataKitPagamento'
+							'1')";
 						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
 						if($query_insert_pedido)
 						{
@@ -291,17 +291,25 @@
 					AND publicado = '1' 
 					AND idEvento = '$idEvento' ";
 				$query_verifica_cnpj = mysqli_query($con,$sql_verifica_cnpj);
-				$sql_insere_cnpj = "INSERT INTO igsis_pedido_contratacao 
-					(idPessoa, 
-					tipoPessoa, 
-					publicado, 
-					idEvento, 
-					instituicao) 
+
+				$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+				$query_anterior = mysqli_query($con,$sql_anterior);
+				$data = mysqli_fetch_array($query_anterior);
+				$data_inicio = $data['dataInicio'];
+				$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
+				$sql_insere_cnpj = "INSERT INTO igsis_pedido_contratacao
+					(idPessoa,
+					tipoPessoa,
+					publicado,
+					idEvento,
+					instituicao,
+					dataKitPagamento)
 					VALUES ('$idPessoa',
 					'2',
 					'1',
 					'$idEvento',
-					'$idInstituicao')";
+					'$idInstituicao',
+					'$dataKitPagamento')";
 				$query_insere_cnpj = mysqli_query($con,$sql_insere_cnpj);
 				if($query_insere_cnpj)
 				{
@@ -376,50 +384,21 @@
 						echo "<h1>Erro ao inserir(2)!</h1>";
 					}
 				}
-					
 			}
-			/*
-			if(isset($_POST['insereJuridica']))
-			{
-				//insere pessoa jurídica
-				$idInstituicao = $_SESSION['idInstituicao'];
-				$idPessoa = $_POST['insereJuridica'];
-				$idEvento = $_SESSION['idEvento'];
-				$sql_verifica_cnpj = "SELECT * FROM igsis_pedido_contratacao WHERE idPessoa = '$idPessoa' AND tipoPessoa = '2' AND publicado = '1' AND idEvento = '$idEvento' ";
-				$query_verifica_cnpj = mysqli_query($con,$sql_verifica_cnpj);
-				$num_rows = mysqli_num_rows($query_verifica_cnpj);
-				if($num_rows > 0)
-				{
-					$mensagem = "A pessoa jurídica já está na lista de pedido de contratação.";	
-				}
-				else
-				{
-					$sql_insere_cnpj = "INSERT INTO igsis_pedido_contratacao (idPessoa, tipoPessoa, publicado, idEvento, instituicao) VALUES ('$idPessoa','2','1','$idEvento','$idInstituicao')";
-					$query_insere_cnpj = mysqli_query($con,$sql_insere_cnpj);
-					if($query_insere_cnpj)
-					{
-						$mensagem = "Pedido inserido com sucesso!";
-					}
-					else
-					{
-						$mensagem = "Erro ao criar pedido. Tente novamente.";
-					} 	
-				}
-			}
-			*/
+
 			if(isset($_POST['apagarPedido']))
-			{	
+			{
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
 				$sql_apagar_pedido = "UPDATE igsis_pedido_contratacao SET publicado = '0' WHERE idPedidoContratacao = '$idPedidoContratacao'";
 				$query_apagar_pedido = mysqli_query($con,$sql_apagar_pedido);
 				if($query_apagar_pedido)
 				{
 					gravarLog($sql_apagar_pedido);
-					$mensagem = "Pedido apagado com sucesso.";	
+					$mensagem = "Pedido apagado com sucesso.";
 				}
 				else
 				{
-					$mensagem = "Erro ao apagar o pedido. Tente novamente.";	
+					$mensagem = "Erro ao apagar o pedido. Tente novamente.";
 				}
 			}
 ?>
@@ -966,7 +945,7 @@
 			{
 				$_SESSION['idPedido'] = $_POST['idPedidoContratacao'];
 			}
-			if($_SESSION['numero'])
+			if(isset($_SESSION['numero']))
 			{
 				unset($_SESSION['numero']);
 			}
@@ -1007,8 +986,7 @@
 					else
 					{
 						$mensagem = "Erro ao inserir integrante. Tente novamente.";	
-					}	
-					
+					}
 				}
 				else
 				{
@@ -1017,28 +995,30 @@
 			}
 			if(isset($_POST['atualizar']))
 			{
-				
 				$Observacao = addslashes($_POST['Observacao']);
 				$parcelas = $_POST['parcelas'];
 				$Verba = $_POST['verba'];
 				$parecer = addslashes($_POST['parecerArtistico']);
 				$justificativa = addslashes($_POST['justificativa']);
 				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
+				$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
 				$formaPagamento = $_POST['formaPagamento'];
+
 				if($_POST['atualizar'] >= '2')
 				{
-					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` 
+					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao`
 						SET `observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
 						`qtdApresentacoes` =  '$qtdApresentacoes',
+						`dataKitPagamento` = '$dataKitPagamento',
 						`idVerba` =  '$Verba'
 						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
 				}
 				else
-				{	
+				{
 					$Valor = dinheiroDeBr($_POST['Valor']);
 					$sql_atualizar_pedido = "UPDATE  	`igsis_pedido_contratacao` 
 						SET `valor` =  '$Valor',
@@ -1048,6 +1028,7 @@
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
 						`qtdApresentacoes` =  '$qtdApresentacoes',
+						`dataKitPagamento` = '$dataKitPagamento',
 						`idVerba` =  '$Verba'
 						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
 				}
@@ -1065,7 +1046,7 @@
 			include "../funcoes/funcoesSiscontrat.php";
 			$pedido = recuperaDados("igsis_pedido_contratacao",$_SESSION['idPedido'],"idPedidoContratacao");
 			$executante = siscontratDocs($pedido['IdExecutante'],1);
-				?>
+		?>
 <!-- Contact -->
 <section id="contact" class="home-section bg-white">
 	<div class="container">
@@ -1074,14 +1055,14 @@
             <p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
 		</div>
 	  	<div class="row">
-	  		<div class="col-md-offset-1 col-md-10">    
+	  		<div class="col-md-offset-1 col-md-10">
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<p class="left">
 							<?php $evento = recuperaEvento($_SESSION['idEvento']); ?>
 							<strong>Setor:</strong> <?php echo $_SESSION['instituicao']; ?> - 
 							<strong>Categoria de contratação:</strong> <?php recuperaModalidade($evento['ig_modalidade_IdModalidade']); ?> <br />
-							<?php 
+							<?php
 							$fisica = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 							$juridica = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
 							if($pedido['tipoPessoa'] == 1)
@@ -1091,7 +1072,7 @@
 							else
 							{
 								echo "<strong>Proponente:</strong> ".$juridica['RazaoSocial']."<br />";
-							}	
+							}
 							?>
 							<strong>Objeto:</strong> <?php echo retornaTipo($evento['ig_tipo_evento_idTipoEvento']) ?> -  <?php echo $evento['nomeEvento']; ?> <br />
 							<strong>Local:</strong> <?php echo listaLocais($_SESSION['idEvento']); ?><br />
@@ -1110,19 +1091,19 @@
 			{
 		?>
                 <!-- Executante -->
-                <div class="form-group">                  
+                <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br/>
 					</div>
                 </div>
 				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoProponente&id_ped=<?php echo $pedido['idPedidoContratacao']?>"  method="post">
-					<div class="col-md-offset-2 col-md-8"><strong>Proponente:</strong><br/>						
+					<div class="col-md-offset-2 col-md-8"><strong>Proponente:</strong><br/>
 						<input type='text' readonly class='form-control' name='proponente' id='proponente' value="<?php echo $juridica['RazaoSocial'];?>">
 						<input type="submit" class="btn btn-theme btn-med btn-block" value="Mudar Proponente">
 					</div>
 				</form>
 				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoExecutante&id_pf=<?php echo $pedido['IdExecutante']?>"  method="post">
-					<div class="form-group">						
-						<div class="col-md-offset-2 col-md-8"><strong>Líder do Grupo:</strong><br/>						
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Líder do Grupo:</strong><br/>
 							<input type='text' readonly class='form-control' name='Executante' id='Executante' value="<?php echo $executante['Nome']; ?>">
 						</div>	
 						<div class="col-md-offset-2 col-md-8">
@@ -1149,16 +1130,16 @@
 			}
 		?>	
 				<!-- Grupo -->
-				<div class="form-group">                  
+				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br/>
 					</div>
                 </div>
 				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo"  method="post">
-					<div class="form-group"> 
+					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
 							<textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($pedido['idPedidoContratacao']); ?>
 							</textarea>
-						</div>				
+						</div>
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>" >
 							<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
@@ -1325,8 +1306,11 @@
 						</div>
 						
 						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Quantidade de Apresentações:</strong><br/>
+							<div class="col-md-offset-2 col-md-6"><strong>Quantidade de Apresentações:</strong><br/>
 								<input type='text' name="qtdApresentacoes" id='qtdApresentacoes' class='form-control' value="<?php echo $pedido['qtdApresentacoes'] ?>" >
+							</div>
+							<div class="col-md-6"><strong>Data do Kit de Pagamento:</strong><br/>
+								<input type='text' name="dataKitPagamento" id="datepicker01" class='form-control' value="<?php echo exibirDataBr($pedido['dataKitPagamento']) ?>" >
 							</div>
 						</div>
 						
@@ -2291,7 +2275,7 @@
 					<h4>Integrantes de grupos</h4>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 				</div>
-			</div>				
+			</div>
 		</div>
 				<?php
 					if($num > 0)
@@ -2449,14 +2433,19 @@
 					if($query_atualiza_parcela)
 					{
 						gravarLog($sql_atualiza_parcela);
-						$mensagem = $mensagem." Parcela $i atualizada.<br />"; 
+						$mensagem = $mensagem." Parcela $i atualizada.<br />";
+
+						$sql_recuperaParcela = "SELECT vencimento FROM igsis_parcelas WHERE numero = '1' AND idPedido = '$idPedido'";
+						$query_recuperaParcela = mysqli_query($con,$sql_recuperaParcela);
+						$recuperaParcela = mysqli_fetch_array($query_recuperaParcela);
+						$dataParcela = $recuperaParcela['vencimento'];
 						$soma = somaParcela($idPedido,$pedido['parcelas']);
-						$sql_atualiza_valor = "UPDATE igsis_pedido_contratacao SET valor = '$soma' WHERE idPedidoContratacao = '$idPedido'";
+						$sql_atualiza_valor = "UPDATE igsis_pedido_contratacao SET valor = '$soma', dataKitPagamento = '$dataParcela' WHERE idPedidoContratacao = '$idPedido'";
 						$query_atualiza_valor = mysqli_query($con,$sql_atualiza_valor);
 						if($query_atualiza_valor)
 						{
 							gravarLog($sql_atualiza_valor);
-							$mensagem = $mensagem." Valor total atualizado. ";	
+							$mensagem = $mensagem." Valor total atualizado. ";
 						}
 					}
 					else
