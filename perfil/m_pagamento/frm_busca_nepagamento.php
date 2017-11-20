@@ -151,18 +151,19 @@ if(isset($_POST['pesquisar']))
 						$x[0]['proponente'] = $pessoa['RazaoSocial'];
 						$x[0]['tipo'] = "Jurídica";
 					break;
-					case 4: 			
+					case 4:
 						$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 						$x[0]['proponente'] = $pessoa['Nome'];
 						$x[0]['tipo'] = "Formação";
 					break;
-				}				
+				}
 				$x[0]['local'] = substr($local,1);
 				$x[0]['instituicao'] = $instituicao['sigla'];
 				$x[0]['periodo'] = $periodo;
 				$x[0]['status'] = $pedido['estado'];
 				$x[0]['valor'] = $pedido['valor'];
-				$x[0]['operador'] = $operador['nomeCompleto'];	
+				$x[0]['dataKitPagamento'] = exibirDataBr($pedido['dataKitPagamento']);
+				$x[0]['operador'] = $operador['nomeCompleto'];
 				$x['num'] = 1;
 			}
 			else
@@ -298,6 +299,7 @@ if(isset($_POST['pesquisar']))
 							$x[$i]['periodo'] = $periodo;
 							$x[$i]['status'] = $pedido['estado'];
 							$x[$i]['valor'] = $pedido['valor'];
+							$x[$i]['dataKitPagamento'] = exibirDataBr($pedido['dataKitPagamento']);
 							$x[$i]['operador'] = $operador['nomeCompleto'];		
 							$i++;
 						}
@@ -365,7 +367,7 @@ if(isset($_POST['pesquisar']))
 									echo '<td class="list_description">'.$x[$h]['valor'].'</td>';
 									echo '<td class="list_description">'.$status['estado'].						'</td>';
 									echo '<td class="list_description">'.$x[$h]['operador'].'</td>';
-									echo '<td class="list_description">xx/xx/xxxx</td>';
+									echo '<td class="list_description">'.$x[$h]['dataKitPagamento'].'</td>';
 									if($x[$h]['tipo'] == 'Física' OR $x[$h]['tipo'] == 'Formação' )
 									{
 										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pf&id_ped=".$x[$h]['id']."'>N.E.</a><td>";
@@ -374,9 +376,9 @@ if(isset($_POST['pesquisar']))
 									}
 									else
 									{
-										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pj&id_ped=".$x[$h]['id']."'>NOTA DE EMPENHO</a><td>";
-										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pj&id_ped=".$x[$h]['id']."'>PAGAMENTO</a><td>";
-										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUIDAÇÃO</a><td>";
+										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pj&id_ped=".$x[$h]['id']."'>N.E</a><td>";
+										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_pagamento_pj&id_ped=".$x[$h]['id']."'>PAGTO</a><td>";
+										echo "<td><a href='?perfil=pagamento&p=frm_cadastra_liquidacao&id_ped=".$x[$h]['id']."'>LIQUID.</a><td>";
 									}
 									echo "</tr>";
 								}

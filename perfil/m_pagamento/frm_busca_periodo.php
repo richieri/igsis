@@ -107,7 +107,8 @@ $i = 0;
 			$x[$i]['instituicao'] = $instituicao['sigla'];
 			$x[$i]['periodo'] = $periodo;
 			$x[$i]['valor'] = $pedido['valor'];
-			$x[$i]['status'] = $pedido['estado'];	
+			$x[$i]['status'] = $pedido['estado'];
+			$x[$i]['dataKitPagamento'] = exibirDataBr($pedido['dataKitPagamento']);
 			$x[$i]['operador'] = $operador['nomeCompleto'];		
 			$i++;
 
@@ -175,7 +176,7 @@ for($h = 0; $h < $x['num']; $h++)
 	echo '<td class="list_description">'.$x[$h]['valor'].'</td>';
 	echo '<td class="list_description">'.$status['estado'].'</td>';
 	echo '<td class="list_description">'.$x[$h]['operador'].'</td>';
-	echo '<td class="list_description">xx/xx/xxxx</td>';
+	echo '<td class="list_description">'.$x[$h]['dataKitPagamento'].'</td>';
 	if($x[$h]['tipo'] == 'Física')
 	{
 		echo "<td><a href='?perfil=pagamento&p=frm_cadastra_notaempenho_pf&id_ped=".$x[$h]['id']."'>N.E.</a><td>";

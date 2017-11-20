@@ -32,6 +32,23 @@ if(isset($_POST['idPagamentos']))
 	}
 }
 
+if(isset($_POST['kitPagamento']))
+{
+	$con = bancoMysqli();
+	$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
+	$idPedido = $_POST['kitPagamento'];
+	$sql_atualiza_kit = "UPDATE igsis_pedido_contratacao SET dataKitPagamento = '$dataKitPagamento' WHERE idPedidoContratacao = '$idPedido'";
+	$query_atualiza_kit = mysqli_query($con,$sql_atualiza_kit);
+	if($query_atualiza_kit)
+	{
+		$mensagem = "Data atualizada.";
+	}
+	else
+	{
+		$mensagem = "Erro ao gravar! Tente novamente.";
+	}
+}
+
 if(isset($_POST['atualizar']))// atualiza o pedido
 {
 	$ped = $_GET['id_ped'];
@@ -79,6 +96,7 @@ if(isset($_POST['atualizar']))// atualiza o pedido
 $ano=date('Y');
 $id_ped = $_GET['id_ped'];
 $linha_tabelas = siscontrat($id_ped);
+$pedido = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
 $fisico = siscontratDocs($linha_tabelas['IdProponente'],1);
 $parcelamento = retornaParcelaPagamento($id_ped);
 
@@ -120,6 +138,18 @@ include 'includes/menu.php';
 					<div class="col-md-3"><br/>
 						<input type="hidden" name="idPagamentos" value="<?php echo $id_ped; ?>" />
 						<input type="submit" class="btn btn-theme  btn-block" value="Atualizar responsável">
+					</div>
+				</div>
+				</form>
+
+				<form class="form-horizontal" role="form" action="?perfil=pagamento&p=frm_cadastra_pagamento_pf&id_ped=<?php echo $id_ped; ?>" method="post">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-5"><strong>Data de Entrega do Kit de Pagamentos:</strong><br/>
+						<input type='text' name="dataKitPagamento" id="datepicker01" class='form-control' value="<?php echo exibirDataBr($pedido['dataKitPagamento']) ?>">
+					</div>
+					<div class="col-md-3"><br/>
+						<input type="hidden" name="kitPagamento" value="<?php echo $id_ped; ?>" />
+						<input type="submit" class="btn btn-theme  btn-block" value="Atualizar">
 					</div>
 				</div>
 				</form>
