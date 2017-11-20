@@ -202,7 +202,14 @@ if(isset($_POST['periodo']))
 							<label>Operador do Pagamento</label>
 							<select class="form-control" name="operador" id="inputSubject" >
 								<option value='0'></option>
-								<?php  geraOpcaoContrato(""); ?>
+								<?php
+								$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 295, 393, 424, 445, 655) ORDER BY nomeCompleto";
+								$query_operador = mysqli_query($con,$sql_operador);
+								while($user = mysqli_fetch_array($query_operador))
+								{
+									echo "<option value='".$user['idUsuario']."'>".$user['nomeCompleto']."</option>";
+								}
+								?>
 							</select>
 						</div>
 					</div>
@@ -251,7 +258,14 @@ else
 						<label>Operador do Pagamento</label>
 						<select class="form-control" name="operador" id="inputSubject" >
 							<option value='0'></option>
-							<?php  geraOpcaoContrato(""); ?>
+							<?php
+							$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 295, 393, 424, 445, 655) ORDER BY nomeCompleto";
+							$query_operador = mysqli_query($con,$sql_operador);
+							while($user = mysqli_fetch_array($query_operador))
+							{
+								echo "<option value='".$user['idUsuario']."'>".$user['nomeCompleto']."</option>";
+							}
+							?>
 						</select>
 					</div>
 				</div>
