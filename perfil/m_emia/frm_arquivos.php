@@ -4,8 +4,9 @@ include 'includes/menu.php';
 $con = bancoMysqli();
 $idPessoa = $_REQUEST['idPessoa'];
 $tipoPessoa = $_REQUEST['tipoPessoa'];
+$id = $_SESSION['id'];
 
-if(isset($_POST['fisica']) OR ($_GET['tipoPessoa'] == 4))
+if(isset($_POST['fisica']) OR ($_GET['tipoPessoa'] == 5))
 {
 	$form = "<form method='POST' action='?perfil=emia&p=frm_edita_pf&id_pf=$idPessoa' />
 				<input type='hidden' name='fisica' value='1'>";
@@ -76,7 +77,7 @@ $campo = recuperaPessoa($_REQUEST['idPessoa'],$_REQUEST['tipoPessoa']);
 					<p><strong>Se na lista abaixo, o seu arquivo começar com "http://", por favor, clique, grave em seu computador, faça o upload novamente e apague a ocorrência citada.</p></strong>
 				</div>
 				<div class="table-responsive list_info">
-					<?php listaArquivosPessoaSiscontratFormacao($idPessoa,$tipoPessoa,"",$p,"emia"); ?>
+<?php listaArquivosPessoaSiscontratEmia($idPessoa,$tipoPessoa,"",$p,"emia"); ?>
 				</div>
 			</div>
 		</div>  
@@ -136,18 +137,7 @@ $campo = recuperaPessoa($_REQUEST['idPessoa'],$_REQUEST['tipoPessoa']);
 						<br/>
 					</div>
 					</form>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-<?php
-	if($_SESSION['id'] > 0)
-	{
-?>
-						<a href="?perfil=emia&p=frm_cadastra_dadoscontratacao&id=<?php echo $_SESSION['id'] ?>"><input type="submit" value="Voltar aos dados de contratação" class="btn btn-theme btn-block"></a>
-<?php
-	}
-?>
-						</div>
-					</div>
+
 					<br />
 				</div>
 			</div>

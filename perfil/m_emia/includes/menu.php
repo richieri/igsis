@@ -30,7 +30,7 @@ $pasta = "?perfil=emia&p=";
 			<li><a href="<?php echo $pasta ?>frm_concluir_emia">Concluir Processo IGSIS</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Carregar Módulos</a></li>
-			<li><a href="<?php echo $pasta ?>ajuda">Ajuda</a></li>
+			<li><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/">Ajuda</a></li>
 			<li><a href="../index.php">Sair</a></li>
 		</ul>
 	</div>

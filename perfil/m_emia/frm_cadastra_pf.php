@@ -147,15 +147,15 @@
 					</div>	  
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 *:</strong><br/>
-							<input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone">
+							<input type="text" class="form-control" id="Telefone1" name="Telefone1" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321">
 						</div>
 						<div class="col-md-6"><strong>Telefone #2:</strong><br/>
-							<input type="text" class="form-control" id="Telefone1" name="Telefone2" placeholder="Telefone">
+							<input type="text" class="form-control" id="Telefone1" name="Telefone2" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98755-9876">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Telefone #3:</strong><br/>
-							<input type="text" class="form-control" id="Telefone2" name="Telefone3" placeholder="Telefone">
+							<input type="text" class="form-control" id="Telefone2" name="Telefone3" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 4321-4321">
 						</div>
 						<div class="col-md-6"><strong>DRT:</strong><br/>
 							<input type="text" class="form-control" id="DRT" name="DRT" placeholder="DRT">
@@ -294,11 +294,11 @@
 			if($query_insert_pf)
 			{
 				gravarLog($sql_insert_pf);
-				echo "<h1>Inserido com sucesso!</h1>";
+				echo "<h3>Inserido com sucesso!</h3>";
 			}
 			else
 			{
-				echo "<h1>Erro ao inserir!</h1>";
+				echo "<h3>Erro ao inserir!</h3>";
 			}
 		}
 	}

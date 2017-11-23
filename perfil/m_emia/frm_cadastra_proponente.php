@@ -28,7 +28,9 @@
 						<tr class="list_menu">
 							<td>Nome</td>
 							<td>CPF</td>
-							<td width="25%"></td>
+							<td>Infos adicionais</td>
+							<td width="15%"></td>
+							<td width="25%"></td>						
 						</tr>
 					</thead>
 					<tbody>
@@ -40,11 +42,18 @@
 							echo "<tr>";
 							echo "<td class='list_description'><b>".$descricao['Nome']."</b></td>";
 							echo "<td class='list_description'>".$descricao['CPF']."</td>";
+							echo "<td class='list_description'>".$for."</td>";
+
+							echo "
+								<td class='list_description'>
+								<form method='POST' action='?perfil=formacao&p=frm_edita_pf&id_pf=".$descricao['Id_PessoaFisica']."'>
+								<input type='hidden' name='detalhe' value='".$descricao['Id_PessoaFisica']."'>
+								<input type ='submit' class='btn btn-theme btn-md btn-block' value='Editar INFOS'></td></form>"	;
 							echo "
 								<td class='list_description'>
 								<form method='POST' action='?perfil=emia&p=frm_cadastra_dadoscontratacao&id_pf=".$descricao['Id_PessoaFisica']."&novo=1'>
 								<input type='hidden' name='novo' value='".$descricao['Id_PessoaFisica']."'>
-								<input type ='submit' class='btn btn-theme btn-md btn-block' value='Novo cadastro formação'></td></form>"	;
+								<input type ='submit' class='btn btn-theme btn-md btn-block' value='Novo cadastro emia'></td></form>"	;
 							echo "</tr>";
 						}
 					?>		

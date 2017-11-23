@@ -220,7 +220,7 @@
 				$periodo = retornaPeriodoVigencia($idPedido);
 				$carga = retornaCargaHoraria($pedido['idPedidoContratacao'],$pedido['parcelas'])." horas";				
 				$justificativa = $cargo['justificativa'];
-				$recuperaFiscal = recuperaUsuario($emia['idResponsavel']);
+				$recuperaFiscal = recuperaUsuario($emia['fiscal']);
 				$recuperaSuplente = recuperaUsuario($emia['suplente']);
 				$nomeFiscal = $recuperaFiscal['nomeCompleto'];
 				$rfFiscal = $recuperaFiscal['rf'];
@@ -627,6 +627,45 @@
 		while($campo = mysqli_fetch_array($query))
 		{
 			$tipoDoc = recuperaDados("sis_formacao_upload",$campo['tipo'],"idTipoDoc");
+				echo "<tr>";
+				echo "<td class='list_description'>".$tipoDoc['documento']."</td>";
+				echo "<td class='list_description'><a href='../uploadsdocs/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
+				echo "
+					<td class='list_description'>
+						<form method='POST' action='?perfil=".$pag."&p=frm_arquivos&id=".$idPessoa."&tipo=".$tipo."'>
+							<input type='hidden' name='idPessoa' value='".$idPessoa."' />
+							<input type='hidden' name='tipoPessoa' value='".$tipo."' />
+							<input type='hidden' name='$form' value='1' />
+							<input type='hidden' name='apagar' value='".$campo['idArquivosPessoa']."' />
+							<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
+				echo "</tr>";		
+		}
+		echo "
+			</tbody>
+			</table>";
+	}
+	function listaArquivosPessoaSiscontratEmia($idPessoa,$tipo,$pedido,$form,$pag)
+	{
+		$con = bancoMysqli();
+		$sql = "SELECT * 
+			FROM igsis_arquivos_pessoa 
+			WHERE idPessoa = '$idPessoa' 
+			AND idTipoPessoa = '$tipo' 
+			AND publicado = '1'";
+		$query = mysqli_query($con,$sql);
+		echo "
+			<table class='table table-condensed'>
+				<thead>
+					<tr class='list_menu'>
+						<td width='30%'>Tipo</td>
+						<td>Nome do arquivo</td>
+						<td width='10%'></td>
+					</tr>
+				</thead>
+				<tbody>";
+		while($campo = mysqli_fetch_array($query))
+		{
+			$tipoDoc = recuperaDados("sis_emia_upload",$campo['tipo'],"idTipoDoc");
 				echo "<tr>";
 				echo "<td class='list_description'>".$tipoDoc['documento']."</td>";
 				echo "<td class='list_description'><a href='../uploadsdocs/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";

@@ -35,7 +35,7 @@
 					}
 					else
 					{
-						$mensagem = $mensagem."<br /> Erro ao atualizar tabela formação com o número de Pedido de Contratacao";	
+						$mensagem = $mensagem."<br /> Erro ao atualizar tabela emia com o número de Pedido de Contratacao";	
 					}
 					//cria as parcela e atualiza a tabela pedido com os valores
 					$sql_cria_parcelas = "SELECT * FROM sis_emia_parcelas WHERE Id_Vigencia = '$vigencia' ORDER BY N_Parcela ASC";
@@ -87,6 +87,8 @@
 			case "atualizar":
 				$idPedidoContratacao = $_POST['idPedido'];
 				$Observacao = addslashes($_POST['Observacao']);
+				$Suplente  = $_POST['Suplente']; 
+				$Fiscal  = $_POST['Fiscal'];
 				$Parecer  = addslashes($_POST['Parecer']);
 				$Justificativa  = addslashes($_POST['Justificativa']);
 				$Verba = "39";
@@ -101,8 +103,8 @@
 				if($query_atualiza_pedido)
 				{
 					$sql_atualiza_emia = "UPDATE sis_emia SET
-						fiscal = '420',
-						suplente = '717'
+						fiscal = '$Fiscal',
+						suplente = '$Suplente'
 						WHERE idPedidoContratacao = '$idPedidoContratacao'";
 					$query_atualiza_emia = mysqli_query($con,$sql_atualiza_emia);
 					if($query_atualiza_emia)
@@ -225,10 +227,14 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-6"><strong>Fiscal:</strong>
-									<input type='text' readonly class='form-control' value="Antonio Francisco da Silva Junior" />
+									<select class="form-control" name="Fiscal" id="Fiscal">
+										<?php opcaoUsuario($_SESSION['idInstituicao'],$emia['fiscal']); ?>
+									</select>
 								</div>
 								<div class="col-md-6"><strong>Suplente:</strong>
-								  <input type='text' readonly class='form-control' value="Evandro Brito da Silveira" />
+								  <select class="form-control" name="Suplente" id="Fiscal">
+										<?php opcaoUsuario($_SESSION['idInstituicao'],$emia['suplente']); ?>
+								  </select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -268,8 +274,7 @@
 	</div>
 <?php
 	}
-?>
-					
+?>		
 				
 			</div>
 		</div>

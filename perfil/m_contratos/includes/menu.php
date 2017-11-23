@@ -34,6 +34,7 @@ $pasta = "?perfil=contratos&p=";
 			<li><a href="#">Especiais</a>
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>frm_lista_pedidocontratacao_pf&enviados=1">Formação</a></li>
+					<li><a href="<?php echo $pasta ?>frm_lista_pedidocontratacao_emia_pf&enviados=1">Emia</a></li>
 					<li><a href="#">Virada</a>
 						<ul class="dl-submenu">
 							<li><a href="<?php echo $pasta ?>frm_lista_projeto&atribuido=0">Sem nº Processo</a>

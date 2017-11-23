@@ -45,6 +45,7 @@
 						<p align="justify"><strong>Status do Pedido:</strong> <?php echo $status['estado'];?></p>
 					</div>
 				</div>
+
 				<form class="form-horizontal" role="form" action="?perfil=emia&p=frm_concluir_final_emia&id_ped=<?php echo $id_ped; ?>" method="post">
 					<div class="col-md-offset-2 col-md-8">
 						<input type="submit" name="atualizar" class="btn btn-theme btn-lg btn-block" value="Concluir Pedido">

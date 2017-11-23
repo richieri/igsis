@@ -25,6 +25,10 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 $periodoParcela = $parcelamento[$id_parcela]['periodo']; 
 $horas = $parcelamento[$id_parcela]['horas'];
 $dataPagamento = $parcelamento[$id_parcela]['pagamento'];
+$fiscal = $pedido["Fiscal"];
+$suplente = $pedido["Suplente"];
+$rfFiscal = $pedido["RfFiscal"];
+$rfSuplente = $pedido["RfSuplente"];
 
 $dataAtual = date("d/m/Y");
 $ano=date('Y');
@@ -93,14 +97,14 @@ $sei =
   "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS A CONTENTO, PELO SEGUINTE MOTIVO:</p>".
   "<p>&nbsp;</p>".
   "<p><strong>DADOS DO SERVIDOR (A) QUE ESTÁ CONFIRMANDO OU NÃO A REALIZAÇÃO DOS SERVIÇOS:</strong></p>".
-  "<p><strong>NOME LEGÍVEL:</strong> Antonio Francisco da Silva Junior</p>".
+  "<p><strong>NOME LEGÍVEL:</strong> ".$fiscal."</p>".
   "<p><strong>TELEFONE DE CONTATO:</strong> (11) 5017-2192</p>".
   "<p><strong>LOTAÇÃO:</strong> EMIA-Escola Municipal de Iniciação Artística</p>".
-  "<p><strong>REGISTRO FUNCIONAL:</strong>840.968/4</p>".
-  "<p><strong>SUPLENTE:</strong> Evandro Brito da Silveira</p>".
+  "<p><strong>REGISTRO FUNCIONAL:</strong>".$rfFiscal."</p>".
+  "<p><strong>SUPLENTE:</strong> ".$suplente."</p>".
   "<p><strong>TELEFONE DE CONTATO:</strong> (11) 5017-2192</p>".
   "<p><strong>LOTAÇÃO:</strong> EMIA-Escola Municipal de Iniciação Artística</p>".
-  "<p><strong>REGISTRO FUNCIONAL:</strong> 755.179.7 </p>".
+  "<p><strong>REGISTRO FUNCIONAL:</strong> ".$rfSuplente."</p>".
   "<p>&nbsp;</p>".
   "<p>Com base na Folha de Frequência Individual: (Documento SEI link ) atesto que os materiais/serviços prestados discriminados no documento fiscal (Documento SEI link )  foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia: ".$dataFinal.", dentro do prazo previsto. O prazo contratual é do dia ".$periodoParcela.". </p>".
   "<p>&nbsp;</p>".

@@ -1,7 +1,6 @@
 <?php
 	include 'includes/menu.php';
 	$ultimo = $_GET['id_pf']; //recupera o id da pessoa
-	$id = $_GET['id']; //recupera o id de Dados para Contratação
 	if(isset($_POST['idPedido']))
 	{
 		$id_pedido = $_POST['idPedido']; //recupera o id do pedido
@@ -55,12 +54,12 @@
 			if($query_insert_pf)
 			{
 				gravarLog($sql_insert_pf);
-				echo "<h1>Inserido com sucesso!</h1>";
+				echo "<h3>Inserido com sucesso!</h3>";
 				$ultimo = mysqli_insert_id($con);
 			}
 			else
 			{
-				echo "<h1>Erro ao inserir!</h1>";
+				echo "<h3>Erro ao inserir!</h3>";
 			}
 		}
 	}
@@ -173,7 +172,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
-							<input type="text" class="form-control" id="cpf" name="CPF" placeholder="CPF" value="<?php echo $fisica['CPF']; ?>">
+							<input type="text" readonly class="form-control" id="cpf" name="CPF" placeholder="CPF" value="<?php echo $fisica['CPF']; ?>">
 						</div>	
 						<div class=" col-md-6"><strong>CCM *:</strong><br/>
 							<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" value="<?php echo $fisica['CCM']; ?>" >
@@ -228,15 +227,15 @@
 					</div>	  
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 *:</strong><br/>
-							<input type="text" class="form-control" id="Telefone1" name="Telefone1" placeholder="Telefone" value="<?php echo $fisica['Telefone1']; ?>">
+							<input type="text" class="form-control" id="Telefone1" name="Telefone1" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone1']; ?>">
 						</div>
 						<div class="col-md-6"><strong>Telefone #2:</strong><br/>
-							<input type="text" class="form-control" id="Telefone1" name="Telefone2" placeholder="Telefone" value="<?php echo $fisica['Telefone2']; ?>">
+							<input type="text" class="form-control" id="Telefone1" name="Telefone2" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 98755-9876" value="<?php echo $fisica['Telefone2']; ?>">
 						</div>
 					</div>  
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Telefone #3:</strong><br/>
-							<input type="text" class="form-control" id="Telefone2" name="Telefone3" placeholder="Telefone"value="<?php echo $fisica['Telefone3']; ?>" >
+							<input type="text" class="form-control" id="Telefone3" name="Telefone3" onkeyup="mascara( this, mtel );" maxlength="15" placeholder="Exemplo: (11) 4321-4321" value="<?php echo $fisica['Telefone3']; ?>" >
 						</div>
 						<div class="col-md-6"><strong>DRT:</strong><br/>
 							<input type="text" class="form-control" id="DRT" name="DRT" placeholder="DRT" value="<?php echo $fisica['DRT']; ?>">
@@ -321,30 +320,7 @@
 				
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-<?php
-	if(isset($id_pedido))
-	{
-?>
-						<a href="?perfil=emia&p=frm_edita_pedidocontratacaopf&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
-<?php
-	}
-?>
-					</div>
-				</div>
-				
-				<div class="form-group">	
-					<div class="col-md-offset-2 col-md-8"><br/><div>
-				</div>
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-<?php
-	if($id != NULL)
-	{
-?>
-						<a href="?perfil=emia&p=frm_cadastra_dadoscontratacao&id=<?php echo $_SESSION['id'] ?>"><input type="submit" value="Voltar aos dados de contratação" class="btn btn-theme btn-block"></a>
-<?php
-	}
-?>
+
 					</div>
 				</div>	
 			</div>
