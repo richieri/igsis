@@ -3301,7 +3301,7 @@
 			$mensagem = $idPessoa." - ".$tipoPessoa;
 			if(isset($_POST["enviar"]))
 			{
-				$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa'";
+				$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa' AND publicado = '1'";
 				$query_arquivos = mysqli_query($con,$sql_arquivos);
 				while($arq = mysqli_fetch_array($query_arquivos))
 				{ 
@@ -3401,7 +3401,7 @@
 									<td width="50%"><td>
 								</tr>
 		<?php 
-			$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa'";
+			$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa' AND publicado = '1'";
 			$query_arquivos = mysqli_query($con,$sql_arquivos);
 			while($arq = mysqli_fetch_array($query_arquivos))
 			{
@@ -3433,7 +3433,7 @@
 			$pedido = siscontrat($idPedido);
 			if(isset($_POST["enviar"]))
 			{
-				$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '3'";
+				$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '3' AND publicado = '1'";
 				$query_arquivos = mysqli_query($con,$sql_arquivos);
 				while($arq = mysqli_fetch_array($query_arquivos))
 				{ 
@@ -3528,7 +3528,7 @@
 									<td width="50%"><td>
 								</tr>
 		<?php 
-			$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '3'";
+			$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '3' AND publicado = '1'";
 			$query_arquivos = mysqli_query($con,$sql_arquivos);
 			while($arq = mysqli_fetch_array($query_arquivos))
 			{
