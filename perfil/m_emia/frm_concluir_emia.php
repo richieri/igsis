@@ -24,7 +24,7 @@ if(isset($_POST['pesquisar']))
 				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="section-heading">
-							<h2>Busca Formação</h2>
+							<h2>Busca EMIA</h2>
 							<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 						</div>
 					</div>
@@ -211,7 +211,7 @@ else
 	<div class="row">
 		<div class="col-md-offset-2 col-md-8">
 			<div class="section-heading">
-				<h2>Busca Formação</h2>
+				<h2>Busca EMIA</h2>
 			</div>
 		</div>
 	</div>		  

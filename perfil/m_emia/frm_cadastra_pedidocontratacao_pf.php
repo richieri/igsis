@@ -186,7 +186,7 @@
 					</div>
                   	<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Local:</strong><br/>
-							<input type='text' readonly class='form-control' value="<?php echo $pedido['Local']; ?>">
+							<input type='text' readonly class='form-control' value="EMIA">
 						</div>
 					</div>       
 					<div class="form-group">
