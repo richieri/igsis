@@ -4,7 +4,7 @@
 error_reporting(E_ALL); 
 
 require_once "../funcoes/funcoesConecta.php";
-$path = "../../proponente/uploadsdocs/";
+$path = "../../igsiscapac/uploadsdocs/";
 
 $con = bancoMysqliProponente();
 $idPessoa = $_GET['idPessoa'];
@@ -21,7 +21,7 @@ $z = new ZipArchive();
 
 // Criando o pacote chamado "teste.zip"
 $criou = $z->open($nome_arquivo, ZipArchive::CREATE);
-if ($criou === true) 
+if ($criou === true)
 {
     // Criando um diretorio chamado "teste" dentro do pacote
     //$z->addEmptyDir('teste');
@@ -44,7 +44,6 @@ if ($criou === true)
 
     // Salvando o arquivo
     $z->close();
-	
 
 	//SETANDO OS HEADERS NECESSARIOS
 	// Enviando para o cliente fazer download
@@ -63,10 +62,10 @@ if ($criou === true)
 	flush();
 
 	readfile($nome_arquivo);
-	
-	//ABRINDO O ARQUIVO 
-} 
-else 
+
+	//ABRINDO O ARQUIVO
+}
+else
 {
     echo 'Erro: '.$criou;
 }
