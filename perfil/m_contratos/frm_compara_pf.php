@@ -44,7 +44,7 @@ $Cbo = $query1["cbo"];
 
 
 //Localiza no proponente
-$sql2 = $con2->query("SELECT * FROM usuario_pf where cpf = '$cpf_busca'");
+$sql2 = $con2->query("SELECT * FROM pessoa_fisica where cpf = '$cpf_busca'");
 $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 
 $idPessoaMac = $query2['id'];

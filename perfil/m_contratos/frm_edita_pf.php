@@ -91,7 +91,7 @@ $pf = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
 //Localiza no proponente
 $con2 = bancoMysqliProponente();
 $cpf = $pf['CPF'];
-$sql2 = $con2->query("SELECT * FROM usuario_pf where cpf = '$cpf'");
+$sql2 = $con2->query("SELECT * FROM pessoa_fisica where cpf = '$cpf'");
 $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 ?>
 
