@@ -2884,7 +2884,7 @@
 				$cpf_busca = $fisica['CPF'];
 				//Localiza no proponente
 				$con2 = bancoMysqliProponente();
-				$sql2 = $con2->query("SELECT * FROM usuario_pf where cpf = '$cpf_busca'");
+				$sql2 = $con2->query("SELECT * FROM pessoa_fisica where cpf = '$cpf_busca'");
 				$query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 				
 				If($query2 != '')
@@ -3068,7 +3068,7 @@
 				$cnpj_busca = $juridica['CNPJ'];
 				//Localiza no proponente
 				$con2 = bancoMysqliProponente();
-				$sql2 = $con2->query("SELECT * FROM usuario_pj where cnpj = '$cnpj_busca'");
+				$sql2 = $con2->query("SELECT * FROM pessoa_juridica where cnpj = '$cnpj_busca'");
 				$query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 				
 				If($query2 != '')
