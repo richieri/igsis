@@ -183,7 +183,6 @@
 					$data = mysqli_fetch_array($query_anterior);
 					$data_inicio = $data['dataInicio'];
 					$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
-
 					$sql_insere_pf = "INSERT INTO igsis_pedido_contratacao 
 						(idPessoa, 
 						tipoPessoa, 
@@ -291,7 +290,6 @@
 					AND publicado = '1' 
 					AND idEvento = '$idEvento' ";
 				$query_verifica_cnpj = mysqli_query($con,$sql_verifica_cnpj);
-
 				$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
 				$query_anterior = mysqli_query($con,$sql_anterior);
 				$data = mysqli_fetch_array($query_anterior);
@@ -385,7 +383,6 @@
 					}
 				}
 			}
-
 			if(isset($_POST['apagarPedido']))
 			{
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
@@ -1004,7 +1001,6 @@
 				$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
 				$formaPagamento = $_POST['formaPagamento'];
-
 				if($_POST['atualizar'] >= '2')
 				{
 					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao`
@@ -2434,7 +2430,6 @@
 					{
 						gravarLog($sql_atualiza_parcela);
 						$mensagem = $mensagem." Parcela $i atualizada.<br />";
-
 						$sql_recuperaParcela = "SELECT vencimento FROM igsis_parcelas WHERE numero = '1' AND idPedido = '$idPedido'";
 						$query_recuperaParcela = mysqli_query($con,$sql_recuperaParcela);
 						$recuperaParcela = mysqli_fetch_array($query_recuperaParcela);
@@ -3658,7 +3653,6 @@ function mostrarResultado(box,num_max,campospan){
 		document.getElementById(campospan).innerHTML = "Ainda não temos nada digitado...";
 	}
 }
-
 function contarCaracteres(box,valor,campospan){
 	var conta = valor - box.length;
 	document.getElementById(campospan).innerHTML = "Faltam " + conta + " caracteres";
@@ -3666,7 +3660,6 @@ function contarCaracteres(box,valor,campospan){
 		document.getElementById(campospan).innerHTML = "Quantidade mínima de caracteres atingida!";
 	}	
 }
-
 function mostrarResultado3(box,num_max,campospan){
 	var contagem_carac = box.length;
 	if (contagem_carac != 0){

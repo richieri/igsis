@@ -55,12 +55,15 @@ while($lista = mysqli_fetch_array($query))
 		$x[$i]['proponente'] = $pessoa['RazaoSocial'];
 		$x[$i]['tipo'] = "Jurídica";
 	}
+	
 	$x[$i]['dataEnvio'] = exibirDataBr($evento['dataEnvio']);
 	$x[$i]['instituicao'] = $instituicao['sigla'];
 	$x[$i]['periodo'] = $periodo;
 	$x[$i]['local'] = $local;
 	$x[$i]['status'] = $pedido['estado'];
 	$x[$i]['dias'] = $dias;
+	$x[$i]['valor'] = $pedido['valor'];
+
 	$i++;	
 }
 $x['num'] = $i;
@@ -80,6 +83,7 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 						<td>Codigo do Pedido</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
+						<td>Valor</td>
 						<td>Local</td>
 						<td>Periodo</td>
 						<td>Data Envio</td>
@@ -105,6 +109,7 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 						}
 						echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['valor'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['dataEnvio'].'</td> ';

@@ -160,6 +160,7 @@ if(isset($_POST['pesquisar']))
 						$x[0]['pessoa'] = 4;
 					break;
 				}
+				$x[0]['valor'] = $pedido['valor'];
 				$x[0]['local'] = substr($local,1);
 				$x[0]['instituicao'] = $instituicao['sigla'];
 				$x[0]['periodo'] = $periodo;
@@ -238,6 +239,7 @@ if(isset($_POST['pesquisar']))
 							$x[$i]['pessoa'] = 4;
 						break;
 					}
+					$x[$i]['valor'] = $pedido['valor'];
 					$x[$i]['local'] = substr($local,1);
 					$x[$i]['instituicao'] = $instituicao['sigla'];
 					$x[$i]['periodo'] = $periodo;
@@ -375,6 +377,7 @@ if(isset($_POST['pesquisar']))
 								$x[$i]['pessoa'] = 4;
 							break;
 							}
+							$x[$i]['valor'] = $pedido['valor'];
 							$x[$i]['local'] = substr($local,1);
 							$x[$i]['instituicao'] = $instituicao['sigla'];
 							$x[$i]['periodo'] = $periodo;
@@ -417,6 +420,7 @@ if(isset($_POST['pesquisar']))
 								<td>Proponente</td>
 								<td>Tipo</td>
 								<td>Objeto</td>
+								<td>Valor</td>
 								<td width="20%">Local</td>
 								<td>Instituição</td>
 								<td>Periodo</td>
@@ -448,6 +452,7 @@ if(isset($_POST['pesquisar']))
 							echo '<td class="list_description">'.$x[$h]['proponente'].					'</td> ';
 							echo '<td class="list_description">'.$x[$h]['tipo'].					'</td> ';
 							echo '<td class="list_description">'.$x[$h]['objeto'].						'</td> ';
+							echo '<td class="list_description">'.$x[$h]['valor'].						'</td> ';
 							echo '<td class="list_description">'.$x[$h]['local'].				'</td> ';
 							echo '<td class="list_description">'.$x[$h]['instituicao'].				'</td> ';
 							echo '<td class="list_description">'.$x[$h]['periodo'].						'</td> ';

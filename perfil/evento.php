@@ -508,7 +508,7 @@
 			if(isset($_POST['atualizar']))
 			{
 				//gera as variáveis
-				$ig_produtor_nome = $_POST['ig_produtor_nome'];
+				$ig_produtor_nome = addslashes ($_POST['ig_produtor_nome']);
 				$ig_produtor_telefone = $_POST['ig_produtor_telefone'];
 				$ig_produtor_telefone2 = $_POST['ig_produtor_telefone2'];
 				$ig_produtor_email = $_POST['ig_produtor_email'];

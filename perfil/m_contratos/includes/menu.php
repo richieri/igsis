@@ -21,7 +21,6 @@ $pasta = "?perfil=contratos&p=";
 				</ul>
 			</li>
 			<li><a href="<?php echo $pasta ?>frm_evento_sem_reenvio">Eventos Sem Reenvios</a></li>
-			<li><a href="<?php echo $pasta ?>frm_busca_periodo">Filtro por Período</a></li>
 			<?php 
 			if($_SESSION['perfil'] == 1 || $_SESSION['perfil'] == 84)
 			{

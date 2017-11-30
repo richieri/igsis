@@ -78,6 +78,7 @@ if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
 				$x[$i]['proponente'] = $pessoa['RazaoSocial'];
 				$x[$i]['tipo'] = "Jurídica";
 			}
+			$x[$i]['valor'] = $pedido['valor'];	
 			$x[$i]['dataEnvio'] = exibirDataBr($evento['dataEnvio']);
 			$x[$i]['instituicao'] = $instituicao['sigla'];
 			$x[$i]['periodo'] = $periodo;
@@ -112,6 +113,7 @@ if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
 								<td>Proponente</td>
 								<td>Tipo</td>
 								<td>Objeto</td>
+								<td>Valor</td>
 								<td>Data de Cadastro</td>
 								<td>Instituição</td>
 								<td>Periodo</td>
@@ -137,6 +139,7 @@ if(isset($_POST['inicio']) AND $_POST['inicio'] != "")
 						echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['tipo'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
+						echo '<td class="list_description">'.$x[$h]['valor'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['dataEnvio'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['instituicao'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
