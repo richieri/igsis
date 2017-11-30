@@ -101,7 +101,7 @@ if(isset($_POST['pesquisar']))
 								echo '<td class="list_description">'.$x[$h]['nomeEvento'].'</td>';
 								echo '<td class="list_description">'.$x[$h]['nomeGrupo'].'</td>';
 								echo '<td class="list_description">'.$x[$h]['dataCadastro'].'</td>';
-								echo "<td><a class='btn btn-theme btn-md btn-block' href='?perfil=capac_detalhes&id_capac=".$x[$h]['id']."'>CARREGAR</a></td>";
+								echo "<td><a class='btn btn-theme btn-md btn-block' target='_blank' href='?perfil=capac_detalhes&id_capac=".$x[$h]['id']."'>CARREGAR</a></td>";
 								echo '</tr>';
 							}
 							?>
