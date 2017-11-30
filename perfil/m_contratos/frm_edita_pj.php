@@ -140,7 +140,7 @@ $res02 = siscontratDocs($pj['IdRepresentanteLegal2'],3);
 //Localiza no proponente
 $con2 = bancoMysqliProponente();
 $cnpj = $pj['CNPJ'];
-$sql2 = $con2->query("SELECT * FROM usuario_pj where cnpj = '$cnpj'");
+$sql2 = $con2->query("SELECT * FROM pessoa_juridica where cnpj = '$cnpj'");
 $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 ?>
 

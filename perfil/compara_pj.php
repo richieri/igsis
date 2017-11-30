@@ -54,7 +54,7 @@ $Conta = $query1["conta"];
 
 
 //Localiza no proponente
-$sql2 = $con2->query("SELECT * FROM usuario_pj where cnpj = '$cnpj_busca'");
+$sql2 = $con2->query("SELECT * FROM pessoa_juridica where cnpj = '$cnpj_busca'");
 $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 
 $idPessoaMac = $query2['id'];
@@ -215,51 +215,51 @@ If($query1 == '' && $query2 != '')
 					<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
 							<input type='hidden' name='busca' value='<?php echo $cnpj_busca ?>'>
 							<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
-						</form>					
+						</form>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8"><hr/></div>
 			</div>
-			
+
 			<div align="left">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<strong>Razão Social:</strong> <?php echo $razaoSocial ?><br/>
-						<strong>CNPJ:</strong> <?php echo $cnpj ?> | 
-						<strong>CCM:</strong> <?php echo $ccm ?><br/>						
-						<strong>CEP:</strong> <?php echo $cep ?> | 
-						<strong>Número:</strong> <?php echo $numero ?> | 
+						<strong>CNPJ:</strong> <?php echo $cnpj ?> |
+						<strong>CCM:</strong> <?php echo $ccm ?><br/>
+						<strong>CEP:</strong> <?php echo $cep ?> |
+						<strong>Número:</strong> <?php echo $numero ?> |
 						<strong>Complemento:</strong> <?php echo $complemento ?><br/>
 						<strong>Telefone #1:</strong> <?php echo $telefone1 ?> / <?php echo $telefone2 ?> / <?php echo $telefone3 ?><br/>
 						<strong>E-mail:</strong> <?php echo $email ?><br/>
 						<strong>Representante Legal #1:</strong> <?php echo $idRepresentanteLegal1 ?><br/>
 						<strong>Representante Legal #2:</strong> <?php echo $idRepresentanteLegal2 ?><br/>
 						<strong>Banco:</strong> <?php echo $codigoBanco ?><br/>
-						<strong>Agência:</strong> <?php echo $agencia ?> | 
+						<strong>Agência:</strong> <?php echo $agencia ?> |
 						<strong>Conta:</strong> <?php echo $conta ?><br/>
 						<strong>Última Atualização:</strong> <?php echo exibirDataBr($dataAtualizacao) ?>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8"><hr/></div>
 			</div>
-			
-		</div>	
-	</section>	
+
+		</div>
+	</section>
 <?php
 }
 
 //Se existir no CAPAC e também no IGSIS
 If($query1 != '' && $query2 != '')
-{		
+{
 	?>
 	<section id="list_items" class="home-section bg-white">
 		<div class="container">
-		<p>O CNPJ nº <strong><?php echo $cnpj_busca ?></strong> possui cadastro no sistema de proponente e no IGSIS. Abaixo está a lista com as divergências apontadas o cadastro.</p>
+		<p>O CNPJ nº <strong><?php echo $cnpj_busca ?></strong> possui cadastro no CAPAC e no IGSIS. Abaixo está a lista com as divergências apontadas o cadastro.</p>
 			<div class="table-responsive list_info">
 				<h6>Divergências</h6>
 				<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
@@ -283,7 +283,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Razão Social' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='RazaoSocial'  />
 										<input type='hidden' name='varCampo' value='".$razaoSocial."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -300,7 +300,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='CCM' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='CCM'  />
 										<input type='hidden' name='varCampo' value='".$ccm."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -317,7 +317,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='CEP' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='CEP'  />
 										<input type='hidden' name='varCampo' value='".$cep."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -385,7 +385,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Telefone #2' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='Telefone2'  />
 										<input type='hidden' name='varCampo' value='".$telefone2."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -402,7 +402,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Telefone #3' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='Telefone3'  />
 										<input type='hidden' name='varCampo' value='".$telefone3."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -419,7 +419,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='E-mail' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='Email'  />
 										<input type='hidden' name='varCampo' value='".$email."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -430,7 +430,7 @@ If($query1 != '' && $query2 != '')
 						if($IdRepresentanteLegal1 != $idRepresentanteLegal1)
 						{
 							$NomeRepresentante1 = recuperaDadosIgsis("sis_representante_legal","Id_RepresentanteLegal","$IdRepresentanteLegal1");
-							$nomeRepresentante1 = recuperaDadosProp("representante_legal","id","$idRepresentanteLegal1");						
+							$nomeRepresentante1 = recuperaDadosProp("representante_legal","id","$idRepresentanteLegal1");
 							echo "<tr>";
 							echo "<td class='list_description'>Representante Legal #1</td>";
 							echo "<td class='list_description'>".$nomeRepresentante1['nome']."</td>";
@@ -438,7 +438,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Representante Legal #1' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='IdRepresentanteLegal1'  />
 										<input type='hidden' name='varCampo' value='".$idRepresentanteLegal1."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -457,7 +457,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Representante Legal #2' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='IdRepresentanteLegal2'  />
 										<input type='hidden' name='varCampo' value='".$idRepresentanteLegal2."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -476,7 +476,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Banco' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='codBanco'  />
 										<input type='hidden' name='varCampo' value='".$codigoBanco."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -493,7 +493,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Agência' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='Agencia'  />
 										<input type='hidden' name='varCampo' value='".$agencia."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -510,7 +510,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Conta' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='Conta'  />
 										<input type='hidden' name='varCampo' value='".$conta."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -527,7 +527,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Última Atualização' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='DataAtualizacao'  />
 										<input type='hidden' name='varCampo' value='".$dataAtualizacao."'  />
 										<input type='hidden' name='busca' value='".$cnpj."'  />
@@ -535,37 +535,36 @@ If($query1 != '' && $query2 != '')
 									</form>
 								</td>";
 							echo "</tr>";
-						}							
+						}
 					?>
 					</tbody>
-				</table>				
-			</div>			
+				</table>
+			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
 					<div align="left">
 						<div class="table-responsive list_info">
 						<?php
-							$sql = "SELECT * 
+							$sql = "SELECT *
 									FROM upload_lista_documento as list
 									INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
-									WHERE arq.idPessoa = '$idPessoaMac' 
-									AND arq.idTipoPessoa = '2' 
+									WHERE arq.idPessoa = '$idPessoaMac'
+									AND arq.idTipoPessoa = '2'
 									AND arq.publicado = '1'";
 							$query = mysqli_query($con2,$sql);
 							$linhas = mysqli_num_rows($query);
-							
+
 							if ($linhas > 0)
-							{	
+							{
 								echo "
 									<table class='table table-condensed'>
-										
 										<tbody>";
 											while($arquivo = mysqli_fetch_array($query))
-											{					
+											{
 												echo "<tr>";
-												echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
-												echo "</tr>";					
+												echo "<td align = 'left' class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+												echo "</tr>";
 											}
 								echo "
 										</tbody>
@@ -574,22 +573,22 @@ If($query1 != '' && $query2 != '')
 							else
 							{
 								echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
-							}				
+							}
 						?>
-							<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+							<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
 						</div>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
-		
+
 		<?php
 			if(isset($_POST['edicaoPessoa']))
 			{
 				$_SESSION['edicaoPessoa'] = $_POST['edicaoPessoa'];
-			}				
+			}
 			$edicaoPessoa = $_SESSION['edicaoPessoa'];
-		
+
 			if($edicaoPessoa == 1)
 			{
 		?>
@@ -597,19 +596,19 @@ If($query1 != '' && $query2 != '')
 					<div class="col-md-offset-2 col-md-8">
 						<form method='POST' action='?perfil=contratados'>
 							<input type='submit' class='btn btn-theme btn-lg btn-block' value='voltar para a lista de contratados'>
-						</form>				
+						</form>
 					</div>
-				</div>				
-		<?php	
+				</div>
+		<?php
 			}
 			else
 			{
-		?>		
+		?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
 						<form method='POST' action='?perfil=contratados&p=juridica'>
 							<input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro cnpj'>
-						</form>				
+						</form>
 					</div>
 					<div class="col-md-6">
 						<form method='POST' action='?perfil=contratados&p=lista'>
@@ -618,19 +617,18 @@ If($query1 != '' && $query2 != '')
 							<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
 						</form>
 					</div>
-				</div>	
-		<?php	
+				</div>
+		<?php
 			}
-		
-		?>		
+		?>
 	</section>
-<?php	
+<?php
 }
 
 //Se não existir no IGSIS e nem no CAPAC
 If($query1 == '' && $query2 == '')
 {
-	$ultimo = cadastroPessoa($_SESSION['idEvento'],$CNPJ,'2'); 
+	$ultimo = cadastroPessoa($_SESSION['idEvento'],$CNPJ,'2');
 	$campo = recuperaDados("sis_pessoa_juridica",$ultimo,"Id_PessoaJuridica");
 ?>
 	<section id="contact" class="home-section bg-white">
@@ -651,7 +649,7 @@ If($query1 == '' && $query2 == '')
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>CNPJ *:</strong><br/>
 								<input type="text" class="form-control" id="cnpj" name="CNPJ" placeholder="CNPJ" readonly value="<?php echo $cnpj_busca; ?> ">
-							</div>				  
+							</div>
 							<div class=" col-md-6"><strong>CCM *:</strong><br/>
 								<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" >
 							</div>
@@ -659,36 +657,36 @@ If($query1 == '' && $query2 == '')
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>CEP *:</strong><br/>
 								<input type="text" class="form-control" id="CEP" name="CEP" placeholder="XXXXX-XXX">
-							</div>				  
+							</div>
 							<div class=" col-md-6"><strong>Estado *:</strong><br/>
 								<input type="text" class="form-control" id="Estado" name="Estado" placeholder="Estado">
 							</div>
-						</div>  
+						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Endereço *:</strong><br/>
 								<input type="text" class="form-control" id="Endereco" name="Endereco" placeholder="Endereço">
 							</div>
-						</div>  
+						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
 								<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero">
-							</div>				  
+							</div>
 							<div class=" col-md-6"><strong>Complemento:</strong><br/>
 								<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento">
 							</div>
-						</div>  
+						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>Bairro *:</strong><br/>
 								<input type="text" class="form-control" id="Bairro" name="Bairro" placeholder="Bairro">
-							</div>				  
+							</div>
 							<div class=" col-md-6"><strong>Cidade *:</strong><br/>
 								<input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade">
 							</div>
-						</div>  
+						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>E-mail *:</strong><br/>
 								<input type="text" class="form-control" id="Email" name="Email" placeholder="E-mail" >
-							</div>				  
+							</div>
 							<div class=" col-md-6"><strong>Telefone #1 *:</strong><br/>
 								<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321" >
 							</div>
@@ -696,7 +694,7 @@ If($query1 == '' && $query2 == '')
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>Telefone #2:</strong><br/>
 								<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321" >
-							</div>				  
+							</div>
 							<div class="col-md-6"><strong>Telefone #3:</strong><br/>
 								<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321" >
 							</div>
@@ -714,7 +712,7 @@ If($query1 == '' && $query2 == '')
 							</div>
 						</div>
 					</form>
-				</div>	
+				</div>
 			</div>
 		</div>
 	</section>

@@ -33,7 +33,7 @@ $Agencia = $query1["agencia"];
 $Conta = $query1["conta"];
 
 //Localiza no proponente
-$sql2 = $con2->query("SELECT * FROM usuario_pj where cnpj = '$cnpj_busca'");
+$sql2 = $con2->query("SELECT * FROM pessoa_juridica where cnpj = '$cnpj_busca'");
 $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 
 $idPessoaMac = $query2['id'];
