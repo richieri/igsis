@@ -1828,24 +1828,11 @@
 						$NomeArtistico = addslashes($_POST['NomeArtistico']);
 						$RG = $_POST['RG'];
 						$CPF = $_POST['CPF'];
-						$CCM = $_POST['CCM'];
-						$IdEstadoCivil = $_POST['IdEstadoCivil'];
-						$DataNascimento = exibirDataMysql($_POST['DataNascimento']);
-						$Nacionalidade = $_POST['Nacionalidade'];
-						$CEP = $_POST['CEP'];
-						//$Endereco = $_POST['Endereco'];
-						$Numero = $_POST['Numero'];
-						$Complemento = $_POST['Complemento'];
-						$Bairro = $_POST['Bairro'];
-						$Cidade = $_POST['Cidade'];
 						$Telefone1 = $_POST['Telefone1'];
 						$Telefone2 = $_POST['Telefone2'];
 						$Telefone3 = $_POST['Telefone3'];
 						$Email = $_POST['Email'];
 						$DRT = $_POST['DRT'];
-						$Funcao = $_POST['Funcao'];
-						$InscricaoINSS = $_POST['InscricaoINSS'];
-						$OMB = $_POST['OMB'];
 						$Observacao = addslashes($_POST['Observacao']);
 						$tipoDocumento = $_POST['tipoDocumento'];
 						$Pis = 0;
@@ -1856,22 +1843,11 @@
 							`NomeArtistico` = '$NomeArtistico',
 							`RG` = '$RG', 
 							`CPF` = '$CPF', 
-							`CCM` = '$CCM', 
-							`IdEstadoCivil` = '$IdEstadoCivil' , 
-							`DataNascimento` = '$DataNascimento', 
-							`Nacionalidade` = '$Nacionalidade', 
-							`CEP` = '$CEP', 
-							`Numero` = '$Numero', 
-							`Complemento` = '$Complemento', 
 							`Telefone1` = '$Telefone1', 
 							`Telefone2` = '$Telefone2',  
 							`Telefone3` = '$Telefone3', 
 							`Email` = '$Email', 
 							`DRT` = '$DRT', 
-							`Funcao` = '$Funcao', 
-							`InscricaoINSS` = '$InscricaoINSS', 
-							`Pis` = '$Pis', 
-							`OMB` = '$OMB', 
 							`DataAtualizacao` = '$data', 
 							`Observacao` = '$Observacao', 
 							`IdUsuario` = '$idUsuario', 
@@ -1921,86 +1897,27 @@
 						<div class="col-md-offset-2 col-md-6"><strong>CPF *:</strong><br/>
 							<input type="text" readonly class="form-control" id="cpf" name="CPF" placeholder="CPF" value="<?php echo $fisica['CPF']; ?>">
 						</div>				  
-						<div class=" col-md-6"><strong>CCM *:</strong><br/>
-							<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" value="<?php echo $fisica['CCM']; ?>" >
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Estado civil:</strong><br/>
-							<select class="form-control" id="IdEstadoCivil" name="IdEstadoCivil" >
-								<?php geraOpcao("sis_estado_civil",$fisica['IdEstadoCivil'],""); ?>
-							</select>
-						</div>				  
-						<div class=" col-md-6"><strong>Data de nascimento:</strong><br/>
-							<input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento" value="<?php echo exibirDataBr($fisica['DataNascimento']); ?>">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Nacionalidade:</strong><br/>
-							<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade" value="<?php echo $fisica['Nacionalidade']; ?>">
-						</div>				  
-						<div class=" col-md-6"><strong>CEP:</strong><br/>
-							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $fisica['CEP']; ?>">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Endereço *:</strong><br/>
-							<input type="text" class="form-control" id="Endereco" name="Endereco" placeholder="Endereço">
-						</div>
-					</div>
-                  	<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
-							<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $fisica['Numero']; ?>">
-						</div>				  
-						<div class=" col-md-6"><strong>Bairro:</strong><br/>
-							<input type="text" class="form-control" id="Bairro" name="Bairro" placeholder="Bairro">
-						</div>
-					</div>
-                  	<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Complemento *:</strong><br/>
-							<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" value="<?php echo $fisica['Complemento']; ?>">
-						</div>
-					</div>		
-                  	<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Cidade *:</strong><br/>
-							<input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade">
-						</div>				  
-						<div class=" col-md-6"><strong>Estado *:</strong><br/>
-							<input type="text" class="form-control" id="Estado" name="Estado" placeholder="Estado">
-						</div>
-					</div>		  
-					<div class="form-group">
-                  		<div class="col-md-offset-2 col-md-6"><strong>E-mail *:</strong><br/>
+						<div class="col-md-6"><strong>E-mail *:</strong><br/>
 							<input type="text" class="form-control" id="Email" name="Email" placeholder="E-mail" value="<?php echo $fisica['Email']; ?>" >
 						</div>
-						<div class=" col-md-6"><strong>Telefone #1 *:</strong><br/>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>Celular *:</strong><br/>
 							<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone1" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone1']; ?>">
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Telefone #2:</strong><br/>
+						<div class="col-md-6"><strong>Telefone #2:</strong><br/>
 							<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone2" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone2']; ?>">
 						</div>
-						<div class="col-md-6"><strong>Telefone #3:</strong><br/>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-6"><strong>Telefone #3:</strong><br/>
 							<input type="text" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" name="Telefone3" placeholder="Exemplo: (11) 98765-4321" value="<?php echo $fisica['Telefone3']; ?>" >
 						</div>
-					</div>	  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>DRT:</strong><br/>
+							<div class="col-md-6"><strong>DRT:</strong><br/>
 							<input type="text" class="form-control" id="DRT" name="DRT" placeholder="DRT" value="<?php echo $fisica['DRT']; ?>">
-						</div>				  
-						<div class=" col-md-6"><strong>Função:</strong><br/>
-							<input type="text" class="form-control" id="Funcao" name="Funcao" placeholder="Função" value="<?php echo $fisica['Funcao']; ?>">
-						</div>
-					</div>  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Inscrição do INSS ou PIS/PASEP:</strong><br/>
-							<input type="text" class="form-control" id="InscricaoINSS" name="InscricaoINSS" placeholder="Inscrição no INSS ou PIS/PASEP" value="<?php echo $fisica['InscricaoINSS']; ?>">
-						</div>				  
-						<div class=" col-md-6"><strong>OMB:</strong><br/>
-							<input type="text" class="form-control" id="OMB" name="OMB" placeholder="OMB" value="<?php echo $fisica['OMB']; ?>">
-						</div>
-					</div>
+						</div>	
+					</div>	  
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 							<textarea name="Observacao" class="form-control" rows="10" placeholder=""></textarea>
@@ -3007,6 +2924,8 @@
 					</div>  
 					<!-- Dados Bancários -->
 					<div class="form-group">
+					<font color="#FF0000"><strong>Realizamos pagamentos de valores acima de R$ 5.000,00 *SOMENTE COM CONTA CORRENTE NO BANCO DO BRASIL*.<br /></strong></font>
+					<br />
 						<div class="col-md-offset-2 col-md-8"><strong>Banco:</strong><br/>
 							<select class="form-control" name="codBanco" id="codBanco">
 								<option value='32'>Banco do Brasil S.A.</option>
@@ -3181,6 +3100,8 @@
 						</div>  
 						<!-- Dados Bancários -->
 						<div class="form-group">
+						<font color="#FF0000"><strong>Realizamos pagamentos de valores acima de R$ 5.000,00 *SOMENTE COM CONTA CORRENTE NO BANCO DO BRASIL*.</strong></font><br />
+						<br />
 							<div class="col-md-offset-2 col-md-8"><strong>Banco:</strong><br/>
 								<select class="form-control" name="codBanco" id="codBanco">
 									<option value='32'>Banco do Brasil S.A.</option>
