@@ -22,7 +22,7 @@ $pasta = "?perfil=contratos&p=";
 			</li>
 			<li><a href="<?php echo $pasta ?>frm_evento_sem_reenvio">Eventos Sem Reenvios</a></li>
 			<?php 
-			if($_SESSION['perfil'] == 1 || $_SESSION['perfil'] == 84)
+			if($_SESSION['perfil'] == 1 || $_SESSION['perfil'] == 84 || $_SESSION['perfil'] == 95 )
 			{
 			?>	
 				<li><a href="<?php echo $pasta ?>frm_busca_periodo_operador">Filtro por Período/Operador</a></li>
