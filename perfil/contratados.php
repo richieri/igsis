@@ -265,7 +265,16 @@
 						$query_anterior = mysqli_query($con,$sql_anterior);
 						$data = mysqli_fetch_array($query_anterior);
 						$data_final = $data['dataFinal'];
+						if ($data_final != '0000-00-00')
+						{
 						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
+						}else{
+						$sql_unica = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicio 
+						$query_unica = mysqli_query($con,$sql_unica);
+						$data = mysqli_fetch_array($query_unica);
+						$data_inicio = $data['dataInicio'];	
+						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_inicio)));
+						}
 						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
 							(`idEvento`,
 							`tipoPessoa`,
@@ -312,7 +321,16 @@
 				$query_anterior = mysqli_query($con,$sql_anterior);
 				$data = mysqli_fetch_array($query_anterior);
 				$data_final = $data['dataFinal'];
+				if ($data_final != '0000-00-00')
+				{
 				$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
+				}else{
+				$sql_unica = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicio 
+				$query_unica = mysqli_query($con,$sql_unica);
+				$data = mysqli_fetch_array($query_unica);
+				$data_inicio = $data['dataInicio'];	
+				$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_inicio)));
+				}				
 				$sql_insere_cnpj = "INSERT INTO igsis_pedido_contratacao
 					(idPessoa,
 					tipoPessoa,
