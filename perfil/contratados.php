@@ -132,11 +132,20 @@
 						$id = mysqli_fetch_array($id_evento);
 						$idFisica = $id['Id_PessoaFisica'];
 						$idEvento = $_SESSION['idEvento'];
-						$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+						$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1"; //a data final 
 						$query_anterior = mysqli_query($con,$sql_anterior);
 						$data = mysqli_fetch_array($query_anterior);
-						$data_inicio = $data['dataInicio'];
-						$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
+						$data_final = $data['dataFinal'];
+						if ($data_final != '0000-00-00')
+						{
+						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
+						}else{
+						$sql_unica = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicio 
+						$query_unica = mysqli_query($con,$sql_unica);
+						$data = mysqli_fetch_array($query_unica);
+						$data_inicio = $data['dataInicio'];	
+						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_inicio)));
+						}
 						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
 							(`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`, `dataKitPagamento`) VALUES 
 							('$idEvento', '1', '$idFisica', '1', '$dataKitPagamento')";
@@ -144,7 +153,7 @@
 						if($query_insert_pedido)
 						{
 							gravarLog($sql_insert_pedido);
-							echo "<h5>Inserido com sucesso!</h5>";
+							echo "<h5>Inserido com sucesso!</h5>"; 
 						}
 						else
 						{
@@ -178,12 +187,21 @@
 				else
 				{
 					$idEvento = $_SESSION['idEvento'];
-					$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+					$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1"; //a data final 
 					$query_anterior = mysqli_query($con,$sql_anterior);
 					$data = mysqli_fetch_array($query_anterior);
-					$data_inicio = $data['dataInicio'];
-					$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
-					$sql_insere_pf = "INSERT INTO igsis_pedido_contratacao 
+					$data_final = $data['dataFinal'];
+						if ($data_final != '0000-00-00')
+						{
+						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
+						}else{
+						$sql_unica = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicio 
+						$query_unica = mysqli_query($con,$sql_unica);
+						$data = mysqli_fetch_array($query_unica);
+						$data_inicio = $data['dataInicio'];	
+						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_inicio)));
+						}
+						$sql_insere_pf = "INSERT INTO igsis_pedido_contratacao 
 						(idPessoa, 
 						tipoPessoa, 
 						publicado,
@@ -243,11 +261,11 @@
 						$id = mysqli_fetch_array($id_evento);
 						$idJuridica = $id['Id_PessoaJuridica'];
 						$idEvento = $_SESSION['idEvento'];
-						$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+						$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY datFinal ASC LIMIT 0,1"; //a data final mais antecedente
 						$query_anterior = mysqli_query($con,$sql_anterior);
 						$data = mysqli_fetch_array($query_anterior);
-						$data_inicio = $data['dataInicio'];
-						$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
+						$data_final = $data['dataFinal'];
+						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
 						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
 							(`idEvento`,
 							`tipoPessoa`,
@@ -290,11 +308,11 @@
 					AND publicado = '1' 
 					AND idEvento = '$idEvento' ";
 				$query_verifica_cnpj = mysqli_query($con,$sql_verifica_cnpj);
-				$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
+				$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1"; //a data inicial mais antecedente
 				$query_anterior = mysqli_query($con,$sql_anterior);
 				$data = mysqli_fetch_array($query_anterior);
-				$data_inicio = $data['dataInicio'];
-				$dataKitPagamento = date('Y/m/d', strtotime("+2 days",strtotime($data_inicio)));
+				$data_final = $data['dataFinal'];
+				$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
 				$sql_insere_cnpj = "INSERT INTO igsis_pedido_contratacao
 					(idPessoa,
 					tipoPessoa,
@@ -2924,7 +2942,7 @@
 					</div>  
 					<!-- Dados Bancários -->
 					<div class="form-group">
-					<font color="#FF0000"><strong>Realizamos pagamentos de valores acima de R$ 5.000,00 *SOMENTE COM CONTA CORRENTE NO BANCO DO BRASIL*.<br /></strong></font>
+					<font color="#FF0000"><strong>Pagamentos parcelados ou de valores acima de R$ 5.000,00 *SOMENTE COM CONTA CORRENTE NO BANCO DO BRASIL*.<br /></strong></font>
 					<br />
 						<div class="col-md-offset-2 col-md-8"><strong>Banco:</strong><br/>
 							<select class="form-control" name="codBanco" id="codBanco">
@@ -3100,7 +3118,7 @@
 						</div>  
 						<!-- Dados Bancários -->
 						<div class="form-group">
-						<font color="#FF0000"><strong>Realizamos pagamentos de valores acima de R$ 5.000,00 *SOMENTE COM CONTA CORRENTE NO BANCO DO BRASIL*.</strong></font><br />
+						<font color="#FF0000"><strong>Pagamentos parcelados ou de valores acima de R$ 5.000,00 *SOMENTE COM CONTA CORRENTE NO BANCO DO BRASIL*.</strong></font><br />
 						<br />
 							<div class="col-md-offset-2 col-md-8"><strong>Banco:</strong><br/>
 								<select class="form-control" name="codBanco" id="codBanco">
