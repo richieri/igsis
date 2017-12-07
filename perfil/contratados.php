@@ -153,16 +153,16 @@
 						if($query_insert_pedido)
 						{
 							gravarLog($sql_insert_pedido);
-							echo "<h5>Inserido com sucesso!</h5>"; 
+							echo "<h2>Inserido com sucesso!</h2>"; 
 						}
 						else
 						{
-							echo "<h5>Erro ao inserir![1]</h5>";
+							echo "<h2>Erro ao inserir![1]</h2>";
 						}
 					}
 					else
 					{
-						echo "<h5>Erro ao inserir![2]</h5>";
+						echo "<h5>Erro ao inserir![2]</h2>";
 					}
 				}
 			}
@@ -1133,7 +1133,7 @@
 						<input type="submit" class="btn btn-theme btn-med btn-block" value="Mudar Proponente">
 					</div>
 				</form>
-				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoExecutante&id_pf=<?php echo $pedido['IdExecutante']?>"  method="post">
+				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoExecutante&id_pf="  method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Líder do Grupo:</strong><br/>
 							<input type='text' readonly class='form-control' name='Executante' id='Executante' value="<?php echo $executante['Nome']; ?>">
@@ -1150,7 +1150,7 @@
 				else
 				{
 			?>
-									<input type="submit" class="btn btn-theme btn-med btn-block" value="Abrir Líder do Grupo">
+									<input type="submit" class="btn btn-theme btn-med btn-block" value="Mudar Líder do Grupo">
             <?php
 				}
 			?>
