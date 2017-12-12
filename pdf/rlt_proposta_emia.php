@@ -73,6 +73,7 @@ $ano=date('Y');
 $pedido = siscontrat($id_ped);
 $pessoa = siscontratDocs($pedido['IdProponente'],1);
 
+
 $id = $pedido['idEvento'];
 $Objeto = $pedido["Objeto"];
 $Periodo = $pedido["Periodo"];
@@ -102,7 +103,7 @@ $Endereco = $pessoa["Endereco"];
 $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
-
+$cronograma_emia = $pessoa["cronograma_emia"];
 
 /* variáveis novas a criar */
 $formacao = pdfFormacao($id_ped);
@@ -326,52 +327,16 @@ $pdf->SetXY( $x , 37 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 $l=5; //DEFINE A ALTURA DA LINHA 
 
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 12);
-   $pdf->Cell(170,5,utf8_decode('CRONOGRAMA'),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 12);
-   $pdf->MultiCell(170,$l,utf8_decode($Objeto));
-   
    $pdf->Ln();	 
 
-	$ocor = listaOcorrenciasContrato($id);
-
-	for($i = 0; $i < $ocor['numero']; $i++){
-	
-	$tipo = $ocor[$i]['tipo'];
-	$dia = $ocor[$i]['data'];
-	$hour = $ocor[$i]['hora'];
-	$lugar = $ocor[$i]['espaco'];
-
-  
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,utf8_decode('Tipo:'),0,0,'L');
+   $pdf->Cell(40,$l,'CRONOGRAMA:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(158,$l,utf8_decode($tipo));
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(22,$l,utf8_decode('Data/Perído:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(148,$l,utf8_decode($dia));
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(15,$l,utf8_decode('Horário:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(155,$l,utf8_decode($hour));
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,utf8_decode('Local:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(158,$l,utf8_decode($lugar));
+   $pdf->MultiCell(140,5,utf8_decode($cronograma_emia));
    
    $pdf->Ln(); 
-	}
+
 
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
