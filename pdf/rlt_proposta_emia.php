@@ -124,7 +124,7 @@ $pdf->AddPage();
 $x=20;
 $l=7; //DEFINE A ALTURA DA LINHA   
    
-   $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+   $pdf->SetXY( $x , 25 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
@@ -264,6 +264,8 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(140,5,utf8_decode($FormaPagamento));
    
+   $pdf->Ln();
+
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(25,$l,'Justificativa:',0,0,'L');
