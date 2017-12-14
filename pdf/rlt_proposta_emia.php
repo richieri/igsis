@@ -335,8 +335,6 @@ $l=5; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(140,5,utf8_decode($cronograma_emia));
    
-   $pdf->Ln(); 
-
 
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
@@ -346,8 +344,9 @@ $l=5; //DEFINE A ALTURA DA LINHA
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(100,$l,"RG: ".$RG,0,0,'L');
+    
+   $pdf->Ln(); 
    
-
 //for($i=1;$i<=20;$i++)
    // $pdf->Cell(0,10,'Printing line number '.$i,0,1);
 
