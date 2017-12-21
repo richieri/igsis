@@ -35,6 +35,7 @@ if(isset($_POST['atualizar']))
 	$ano = $_POST['ano'];
 	$status  = $_POST['status'];	
 	$cargo  = $_POST['cargo'];
+	$cronograma = addslashes($_POST['cronograma']);
 	$obs = addslashes($_POST['obs']);	
 	$vigencia = $_POST['vigencia'];
 	$sql_atualiza_emia = "UPDATE sis_emia SET
@@ -44,6 +45,7 @@ if(isset($_POST['atualizar']))
 	`Status` = '$status', 
 	`publicado` = '1',
 	`IdVigencia` = '$vigencia',
+	`cronograma` = '$cronograma',
 	`Observacao` = '$obs',
 	`IdUsuario` = $idUsuario
 	WHERE idEmia = '$id'";
@@ -98,6 +100,7 @@ $_SESSION['id']= $id;
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Ano:</strong>
 						<select class="form-control" name="ano" id="Status">
+							<option value='2018'<?php if($emia['Ano'] == 2018){echo " selected ";} ?>>2018</option>
 							<option value='2017'<?php if($emia['Ano'] == 2017){echo " selected ";} ?>>2017</option>
 							<option value='2016'<?php if($emia['Ano'] == 2016){echo " selected ";} ?>>2016</option>
 						</select>
@@ -149,6 +152,12 @@ $_SESSION['id']= $id;
 						</select>
 					</div>
 				</div>  
+								
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Cronograma:</strong><br/>
+						<textarea name="cronograma" class="form-control" cols="40" rows="5"><?php echo $emia['cronograma']; ?></textarea>
+					</div>
+				</div>
 				
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>

@@ -539,6 +539,12 @@
 					$ig_comunicacao_registroAudio = 0;
 				}
 				$idEvento = $_SESSION['idEvento'];
+				if($ig_produtor_email == '')
+			{
+				$mensagem = "Por favor, preencha todos os campos obrigatórios!";
+			}
+			else
+			{
 				//Produtor
 				//verifica se há produtor
 				$ver = recuperaEvento($_SESSION['idEvento']);
@@ -570,6 +576,7 @@
 						$mensagem = "Erro ao atualizar!";
 					}	
 				}
+			}
 				//Produção
 				//Verifica se já existe o registro na tabela
 				$ver = verificaExiste("ig_producao","ig_evento_idEvento",$_SESSION['idEvento'],0);
@@ -667,13 +674,13 @@
 				<form method="POST" action="?perfil=evento&p=internos" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Nome do produtor do evento</label>
+							<label>Nome do produtor do evento*</label>
 							<input type="text" name="ig_produtor_nome" class="form-control" id="ig_produtor_nome" value="<?php echo $produtor['nome'] ?>"/>
 						</div> 
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6">
-							<label>Telefone #1: </label>
+							<label>Telefone #1*: </label>
 							<input type="text" name="ig_produtor_telefone" class="form-control" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" value="<?php echo $produtor['telefone'] ?>"/>
 						</div>
 						<div class="col-md-6">
@@ -683,7 +690,7 @@
 					</div>       		 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Email</label>
+							<label>Email*</label>
 							<input type="text" name="ig_produtor_email" class="form-control" id="inputSubject" value="<?php echo $produtor['email'] ?>"/>
 						</div> 
 					</div>            

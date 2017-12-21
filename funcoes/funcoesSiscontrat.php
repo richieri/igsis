@@ -428,7 +428,6 @@
 						"CodigoBanco" => $banco['codigo'],
 						"cbo" => $x['cbo'] ,	
 						"Funcao" => $x['Funcao'],
-						"cronograma_emia" => $x['cronograma_emia'],
 						"Representante01" => "",
 						"Representante02" => "");
 					return $y;

@@ -73,8 +73,8 @@ $ano=date('Y');
 $pedido = siscontrat($id_ped);
 $pessoa = siscontratDocs($pedido['IdProponente'],1);
 
-
 $id = $pedido['idEvento'];
+$emia = recuperaDados("sis_emia",$id,"idEmia");
 $Objeto = $pedido["Objeto"];
 $Periodo = $pedido["Periodo"];
 $Duracao = $pedido["Duracao"];
@@ -103,7 +103,7 @@ $Endereco = $pessoa["Endereco"];
 $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
-$cronograma_emia = $pessoa["cronograma_emia"];
+$cronograma = $emia["cronograma"];
 
 /* variáveis novas a criar */
 $formacao = pdfFormacao($id_ped);
@@ -112,7 +112,6 @@ $programa = $formacao['Programa'];
 $descricaoPrograma = $formacao['descricaoPrograma'];
 $edital = $formacao['edital'];
 $linguagem = $formacao['linguagem'];
-
 
 
 // GERANDO O PDF:
@@ -335,7 +334,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(40,$l,'CRONOGRAMA:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(140,5,utf8_decode($cronograma_emia));
+   $pdf->MultiCell(140,5,utf8_decode($cronograma));
    
 
 //RODAPÉ PERSONALIZADO

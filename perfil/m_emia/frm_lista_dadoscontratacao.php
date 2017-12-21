@@ -16,6 +16,7 @@
 	<div class="container">
 		<div class="sub-title"><br/><br/>
 			<h4>Escolha o ano<br/> 
+				| <a href="<?php echo $pasta?><?php echo $ano + 1; ?>"><?php echo $ano + 1; ?></a> 
 				| <a href="<?php echo $pasta?><?php echo $ano;?>"><?php echo $ano; ?></a> 
 				| <a href="<?php echo $pasta?><?php echo $ano - 1; ?>"><?php echo $ano - 1; ?></a> |
 			</h4>
@@ -42,6 +43,9 @@
 <?php
 	switch($p)
 	{
+		case $ano + 1:
+			$sql_lista_emia = "SELECT * FROM sis_emia WHERE publicado = '1' AND Ano = $ano + 1";
+		break;
 		case $ano:
 			$sql_lista_emia = "SELECT * FROM sis_emia WHERE publicado = '1' AND Ano = $ano";
 		break;
