@@ -3,6 +3,20 @@ $con = bancoMysqli();
 $idPedido = $_GET['id_ped'];
 $pedido = recuperaDados("igsis_pedido_contratacao",$idPedido,"idPedidoContratacao");
 
+//verifica se há dados na tabela igsis_parcelas
+$idPedido = $_GET['id_ped'];
+$sql_verifica_parcela = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido'";
+$query_verifica_parcela = mysqli_query($con,$sql_verifica_parcela);
+$num_parcelas = mysqli_num_rows($query_verifica_parcela);
+if($num_parcelas == 0)
+{
+	for($i = 1; $i <= 12; $i++)
+	{ // se não há, insere 12 parcelas vazias.
+		$insert_parcela = "INSERT INTO `igsis_parcelas` (`idParcela`, `idPedido`, `numero`, `valor`, `vencimento`, `publicado`, `descricao`) VALUES (NULL, '$idPedido', '$i', '', NULL, '0', '')";
+		mysqli_query($con,$insert_parcela);
+	}
+}
+
 if(isset($_POST['atualizar']))
 {
 	for($i = 1; $i <= $pedido['parcelas']; $i++)
