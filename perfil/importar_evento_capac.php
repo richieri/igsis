@@ -3,6 +3,9 @@
 $con1 = bancoMysqli();
 $con2 = bancoMysqliProponente();
 
+$idInsituicao = $_SESSION['idInstituicao'];
+$idUsuario = $_SESSION['idUsuario'];
+
 $idCapac = $_POST['idCapac'];
 
 //Recupera o evento
@@ -123,7 +126,9 @@ if(isset($_POST['importar']))
 			$sql_ultimo_evento = "SELECT * FROM ig_evento ORDER BY idEvento DESC LIMIT 0,1";
 			$query_ultimo_evento = mysqli_query($con1,$sql_ultimo_evento);
 			$array_evento = mysqli_fetch_array($query_ultimo_evento);
-			$idEventoIg = $array_evento['idProdutor'];
+			$idEventoIg = $array_evento['idEvento'];
+
+			
 		}
 	}
 
