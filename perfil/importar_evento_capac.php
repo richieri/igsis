@@ -82,7 +82,7 @@ if($idTipoPessoa == 2)
 
 
 // recupera pf
-$sqlPf = $con2->query("SELECT * FROM pessoa_juridica where id = '$idPf'");
+$sqlPf = $con2->query("SELECT * FROM pessoa_fisica where id = '$idPf'");
 $pf = $sqlPf->fetch_array(MYSQLI_ASSOC);
 
 $nomePf = $pf["nome"];
@@ -108,28 +108,62 @@ $contaPf = $pf["conta"];
 
 
 
-if(isset($_POST['importar']))
+if(isset($_POST['idCapac']))
 {
-	$sql_insere_produtor = "INSERT INTO `ig_produtor`(``nome`, `email`, `telefone`, `telefone2`) VALUES ('$nomeProdutor', '$emailProdutor', '$telefone1Produtor', '$telefone2Produtor')";
+	$sql_insere_produtor = "INSERT INTO `ig_produtor`(`nome`, `email`, `telefone`, `telefone2`) VALUES ('$nomeProdutor', '$emailProdutor', '$telefone1Produtor', '$telefone2Produtor')";
 	if(mysqli_query($con1,$sql_insere_produtor))
 	{
-		$mensagem = "Produtor importado com sucesso!";
+		$mensagem = "Produtor importado com sucesso!<br/>";
 		$sql_ultimo_produtor = "SELECT * FROM ig_produtor ORDER BY idProdutor DESC LIMIT 0,1";
 		$query_ultimo_produtor = mysqli_query($con1,$sql_ultimo_produtor);
 		$array_produtor = mysqli_fetch_array($query_ultimo_produtor);
 		$idProdutorIg = $array_produtor['idProdutor'];
 
 		$sql_insere_evento = "INSERT INTO `ig_evento`(`ig_produtor_idProdutor`, `ig_tipo_evento_idTipoEvento`, `nomeEvento`, `nomeGrupo`, `fichaTecnica`, `faixaEtaria`, `sinopse`, `releaseCom`, `publicado`, `idUsuario`, `linksCom`, `idInstituicao`, `statusEvento`) VALUES ('$idProdutorIg', '$idTipoEvento', '$nomeEvento', '$nomeGrupo', '$fichaTecnica', '$idFaixaEtaria', '$sinopse', '$releaseCom', '1', '$idUsuario', '$link', 'idInstituicao', 'Em elaboração')";
-		if(mysqli_query($con1,$sql_insere_produtor))
+		if(mysqli_query($con1,$sql_insere_evento))
 		{
-			$mensagem = "Evento inserido com sucesso!";
+			$mensagem = $mensagem."Evento inserido com sucesso!<br/>";
 			$sql_ultimo_evento = "SELECT * FROM ig_evento ORDER BY idEvento DESC LIMIT 0,1";
 			$query_ultimo_evento = mysqli_query($con1,$sql_ultimo_evento);
 			$array_evento = mysqli_fetch_array($query_ultimo_evento);
 			$idEventoIg = $array_evento['idEvento'];
+			$_SESSION['idEvento'] = $idEventoIg;
+			$_SESSION['edicaoPessoa'] = 0;
 
-			
+			$sql_insere_igsis = "INSERT INTO `igsis_capac`(`idEventoCapac`, `idEventoIgsis`) VALUES ('$idCapac', '$idEventoIg')";
+			if(mysqli_query($con1,$sql_insere_igsis))
+			{
+				if($idTipoPessoa == 2)
+				{
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pj&busca=".$cnpj."'>";
+				}
+				else
+				{
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pf&busca=".$cpfPf."'>";
+				}
+			}
+			else
+			{
+				$mensagem = $mensagem."Erro ao gravar equivalência!<br/>";
+			}
+		}
+		else
+		{
+			$mensagem = $mensagem."Erro ao importar o evento!<br/>";
 		}
 	}
-
+	else
+	{
+		$mensagem = $mensagem."Erro ao importar produtor!<br/>";
+	}
 }
+?>
+<section id="list_items" class="home-section bg-white">
+	<div class="container">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8">
+				<h5><?php if(isset($mensagem)){ echo $mensagem; } ?></h5>
+			</div>
+		</div>
+	</div>
+</section>

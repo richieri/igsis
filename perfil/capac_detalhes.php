@@ -146,8 +146,10 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					<br/>
 				</div>
 				<div class="col-md-offset-2 col-md-8">
-					<input type="hidden" name="idCapac" value="<?php echo $idCapac ?>" />
-					<input type="submit" class="btn btn-theme btn-lg btn-block" name="Importar">
+					<form method='POST' action='?perfil=importar_evento_capac'>
+						<input type="hidden" name="idCapac" value="<?php echo $idCapac ?>" />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Importar">
+					</form>
 				</div>
 			</div>
 		</div>
