@@ -14,7 +14,6 @@ If($_GET['busca'] == '')
 	if($validacao == false)
 	{
 		echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=erro_pj'>";
-				
 	}
 	else
 	{
@@ -78,12 +77,12 @@ $conta = $query2["conta"];
 
 //retorna uma array com os dados de qualquer tabela do IGSIS. Serve apenas para 1 registro.
 function recuperaDadosIgsis($tabela_dados_ig,$campo_dados_ig,$variavelCampo_dados_ig)
-{	
+{
 	$con1 = bancoMysqli();
 	$sql_dados_ig = "SELECT * FROM $tabela_dados_ig WHERE ".$campo_dados_ig." = '$variavelCampo_dados_ig' LIMIT 0,1";
 	$query_dados_ig = mysqli_query($con1,$sql_dados_ig);
 	$campo_dados_ig = mysqli_fetch_array($query_dados_ig);
-	return $campo_dados_ig;		
+	return $campo_dados_ig;
 }
 
 //retorna uma array com os dados de qualquer tabela do CAPAC. Serve apenas para 1 registro.
@@ -93,12 +92,11 @@ function recuperaDadosProp($tabela,$campo,$variavelCampo)
 	$sql = "SELECT * FROM $tabela WHERE ".$campo." = '$variavelCampo' LIMIT 0,1";
 	$query = mysqli_query($con2,$sql);
 	$campo = mysqli_fetch_array($query);
-	return $campo;		
+	return $campo;
 }
-	
 
 if(isset($_POST['atualizaIgsis']))
-{	
+{
 	$campo = $_POST['campo'];
 	$varCampo = $_POST['varCampo'];
 	$nomeCampo = $_POST['nomeCampo'];
@@ -118,17 +116,16 @@ if(isset($_POST['importarCapacIgsis']))
 {
 	$sql_insere_pf = "INSERT INTO `sis_pessoa_juridica`(`RazaoSocial`, `CNPJ`, `CCM`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `IdRepresentanteLegal1`, `IdRepresentanteLegal2`, `DataAtualizacao`, `codBanco`, `agencia`, `conta`) VALUES ('$razaoSocial', '$cnpj', '$ccm', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$idRepresentanteLegal1', '$idRepresentanteLegal2', '$dataAtualizacao', '$codigoBanco', '$agencia', '$conta')";
 
-	 
 	if(mysqli_query($con1,$sql_insere_pf))
 	{
 		$mensagem = "Importado com sucesso!";
-		
+
 		//gravarLog($sql_insert_pf);
 		$sql_ultimo = "SELECT * FROM sis_pessoa_juridica ORDER BY Id_PessoaJuridica DESC LIMIT 0,1"; //recupera ultimo id
 		$query_ultimo = mysqli_query($con1,$sql_ultimo);
 		$id = mysqli_fetch_array($query_ultimo);
 		$idJuridica = $id['Id_PessoaJuridica'];
-		$idEvento = $_SESSION['idEvento'];	
+		$idEvento = $_SESSION['idEvento'];
 		$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`) VALUES ('$idEvento', '2', '$idJuridica', '1')";
 		$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
 		if($query_insert_pedido)
@@ -139,14 +136,14 @@ if(isset($_POST['importarCapacIgsis']))
 		}
 		else
 		{
-			$mensagem = "Erro ao importar! Tente novamente. [COD-01]";			
-		}				
+			$mensagem = "Erro ao importar! Tente novamente. [COD-01]";
+		}
 	}
 	else
 	{
 		$mensagem = "Erro ao importar! Tente novamente.";
-	}	  
-}	
+	}
+}
 
 //Se existir no IGSIS e não no CAPAC
 If($query1 != '' && $query2 == '')
@@ -157,12 +154,12 @@ If($query1 != '' && $query2 == '')
 			<div class="row">
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-						<h4>Contratados - Pessoa Jurídica</h4>                      
+						<h4>Contratados - Pessoa Jurídica</h4>
 						<p></p>
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="table-responsive list_info">
 				<table class="table table-condensed">
 					<thead>
@@ -183,7 +180,7 @@ If($query1 != '' && $query2 == '')
 								<input type='hidden' name='Id_PessoaJuridica' value='<?php echo $query1['Id_PessoaJuridica'] ?>'>
 								<input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'></form>
 							</td>
-						</tr>							
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -204,7 +201,7 @@ If($query1 == '' && $query2 != '')
 					<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
 					<form method='POST' action='?perfil=contratados&p=juridica' enctype='multipart/form-data'>
@@ -334,7 +331,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Número' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='Numero'  />
 										<input type='hidden' name='varCampo' value='".$numero."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -351,7 +348,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Complemento' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='Complemento'  />
 										<input type='hidden' name='varCampo' value='".$complemento."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -368,7 +365,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cnpj_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Telefone #1' />
-										<input type='hidden' name='busca' value='".$cnpj_busca."'  />	
+										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='Telefone1'  />
 										<input type='hidden' name='varCampo' value='".$telefone1."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
