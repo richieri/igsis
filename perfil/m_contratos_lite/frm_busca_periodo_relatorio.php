@@ -67,21 +67,11 @@ if(isset($_POST['periodo']))
 {
 	$inicio = exibirDataMysql($_POST['inicio']);
 	$final = exibirDataMysql($_POST['final']);
-	$idContratos = $_POST['operador'];
-
-	if($idContratos == 0)
-	{
-		$operador = " ";
-	}
-	else
-	{
-		$operador = "AND ped.idContratos = '$idContratos'";
-	}
 
 	$con = bancoMysqli();
 	$sql_evento = "SELECT DISTINCT age.idEvento, ped.idPedidoContratacao FROM igsis_agenda AS age
 		INNER JOIN igsis_pedido_contratacao AS ped ON ped.idEvento = age.idEvento
-		WHERE data BETWEEN '$inicio' AND '$final' $operador AND ped.estado IN (1,2,3,4,5,6,7,8,9,10,13,14,15) ORDER BY data ASC ";
+		WHERE data BETWEEN '$inicio' AND '$final'  AND ped.estado IN (1,2,3,4,5,6,7,8,9,10,13,14,15) ORDER BY data ASC ";
 	$query_evento = mysqli_query($con,$sql_evento);
 	$num = mysqli_num_rows($query_evento);
 	$i = 0;
@@ -97,7 +87,6 @@ if(isset($_POST['periodo']))
 			$instituicao = recuperaDados("ig_instituicao",$event['idInstituicao'],"idInstituicao");
 			$local = listaLocais($pedido['idEvento']);
 			$periodo = retornaPeriodo($pedido['idEvento']);
-			$operador = recuperaUsuario($pedido['idContratos']);
 
 			$x[$i]['id']= $pedido['idPedidoContratacao'];
 			$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
@@ -118,9 +107,7 @@ if(isset($_POST['periodo']))
 			$x[$i]['instituicao'] = $instituicao['sigla'];
 			$x[$i]['periodo'] = $periodo;
 			$x[$i]['valor']= $pedido['valor'];
-			$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
 			$x[$i]['status'] = $pedido['estado'];
-			$x[$i]['operador'] = $operador['nomeCompleto'];
 			$i++;
 		}
 	}
@@ -151,7 +138,6 @@ if(isset($_POST['periodo']))
 							<td>Valor</td>
 							<td>Pendências</td>
 							<td>Status</td>
-   							<td>Operador</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -177,9 +163,7 @@ if(isset($_POST['periodo']))
 							echo '<td class="list_description">'.$x[$h]['instituicao'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['valor'].'</td> ';
-							echo '<td class="list_description">'.$x[$h]['pendencia'].'</td> ';
 							echo '<td class="list_description">'.$status['estado'].'</td> ';
-							echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
 						}
 					?>
 					</tbody>
@@ -199,7 +183,7 @@ if(isset($_POST['periodo']))
 					<div class="col-md-offset-2 col-md-8">
 						<h5>| Busca por período | <a href="?perfil=contratos_lite&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
 						<div class="section-heading">
-							<h2>Busca por período / operador</h2>
+							<h2>Busca por período</h2>
 							<p><?php if(isset($mensagem)){ echo $num; }?></p>
 							<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 						</div>

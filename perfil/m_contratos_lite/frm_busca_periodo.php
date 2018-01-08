@@ -159,7 +159,7 @@ if(isset($_POST['periodo']))
 		<div class="container">
 			<h3>Resultado da busca</3>
             <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
-            <h5><a href="?perfil=contratos&p=frm_busca_periodo">Fazer outra busca</a></h5>
+            <h5><a href="?perfil=contratos_lite&p=frm_busca_periodo">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
 				<table class="table table-condensed">
 					<thead>
@@ -186,11 +186,11 @@ if(isset($_POST['periodo']))
 							 $status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 							if($x[$h]['tipo'] == 'Física')
 							{
-								echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+								echo "<tr><td class='lista'> <a href='?perfil=contratos_lite&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
 							}
 							else
 							{
-								echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";								
+								echo "<tr><td class='lista'> <a href='?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";								
 							}
 							echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
@@ -228,7 +228,7 @@ if(isset($_POST['periodo']))
 					</div>
 				</div>
 				<div class="row">
-				<form method="POST" action="?perfil=contratos&p=frm_busca_periodo" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=contratos_lite&p=frm_busca_periodo" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
@@ -291,7 +291,7 @@ else
 	<section id="services" class="home-section bg-white">
 		<div class="container">
 			<div class="row">
-				<h5>| Busca por período | <a href="?perfil=contratos&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
+				<h5>| Busca por período | <a href="?perfil=contratos_lite&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
 						<h2>Busca por período</h2>
@@ -300,7 +300,7 @@ else
 				</div>
 			</div>
 			<div class="row">
-			<form method="POST" action="?perfil=contratos&p=frm_busca_periodo" class="form-horizontal" role="form">
+			<form method="POST" action="?perfil=contratos_lite&p=frm_busca_periodo" class="form-horizontal" role="form">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
 						<label>Data início *</label>
@@ -378,7 +378,7 @@ case 'relatorio':
 	<section id="services" class="home-section bg-white">
 		<div class="container">			
 			<div class="row">
-				<h5>| <a href="?perfil=contratos&p=frm_busca_periodo">Busca por período</a> | Relatório por período | </h5>
+				<h5>| <a href="?perfil=contratos_lite&p=frm_busca_periodo">Busca por período</a> | Relatório por período | </h5>
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
 						<h2>Relatório por período</h2>
