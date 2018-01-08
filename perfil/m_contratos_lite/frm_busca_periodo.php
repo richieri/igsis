@@ -1,6 +1,18 @@
-﻿<?php include 'includes/menu.php';?>
+﻿<?php include 'includes/menu.php';
 
-<?php 
+if(isset($_GET['pag']))
+{
+	$p = $_GET['pag'];
+}
+else
+{
+	$p = 'inicial';	
+}
+
+switch($p)
+{
+/* =========== INICIAL ===========*/
+case 'inicial':
 	
 function retornaDataInicio($idEvento)
 { //retorna o período
@@ -49,13 +61,31 @@ function retornaDataInicio($idEvento)
 		return $data_inicio;
 	}	
 }
+if(isset($_POST['local']) AND trim($_POST['local']))
+{
+	$idLocal = trim($_POST['local']);
+	$local = " AND idLocal = '$idLocal' ";	
+}
+else
+{
+	$local = "";	
+}
+if(isset($_POST['instituicao']) AND trim($_POST['instituicao']))
+{
+	$idInstituicao = $_POST['instituicao'];
+	$instituicao = " AND idInstituicao = '$idInstituicao' ";	
+}
+else
+{
+	$instituicao = "";	
+}
 
 if(isset($_POST['periodo']))
 {
 	$inicio = exibirDataMysql($_POST['inicio']);
 	$final = exibirDataMysql($_POST['final']);	
 	$con = bancoMysqli();
-	$sql_evento = "SELECT DISTINCT idEvento FROM igsis_agenda WHERE data BETWEEN '$inicio' AND '$final'  ORDER BY data ASC ";
+	$sql_evento = "SELECT DISTINCT idEvento FROM igsis_agenda WHERE data BETWEEN '$inicio' AND '$final' $instituicao $local  ORDER BY data ASC ";
 	$query_evento = mysqli_query($con,$sql_evento);
 	$num = mysqli_num_rows($query_evento);
 	$i = 0;
@@ -89,9 +119,10 @@ if(isset($_POST['periodo']))
 						$formaPagamento = $pedido['formaPagamento'];
 					}
 
-					if ( $pedido ['estado'] == 1 OR $pedido ['estado'] == 2 OR 	$pedido ['estado'] == 3 OR $pedido ['estado'] == 4 OR $pedido ['estado'] == 5 OR $pedido ['estado'] == 6 OR $pedido ['estado'] == 7 OR $pedido ['estado'] == 8 OR $pedido ['estado'] == 9 OR $pedido ['estado'] == 10 OR $pedido ['estado'] == 11 OR $pedido ['estado'] == 13) 
+					if ( $pedido ['estado'] == 1 OR $pedido ['estado'] == 2 OR 	$pedido ['estado'] == 3 OR $pedido ['estado'] == 4 OR $pedido ['estado'] == 5 OR $pedido ['estado'] == 6 OR $pedido ['estado'] == 7 OR $pedido ['estado'] == 8 OR $pedido ['estado'] == 9 OR $pedido ['estado'] == 10 OR $pedido ['estado'] == 11 OR $pedido ['estado'] == 13 OR $pedido ['estado'] == 14 OR $pedido ['estado'] == 15) 
 					{
 						$x[$i]['id']= $pedido['idPedidoContratacao'];
+						$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
 						$x[$i]['objeto'] = retornaTipo($event['ig_tipo_evento_idTipoEvento'])." - ".$event['nomeEvento'];
 						if($pedido['tipoPessoa'] == 1)
 						{
@@ -108,6 +139,7 @@ if(isset($_POST['periodo']))
 					$x[$i]['local'] = substr($local,1);
 					$x[$i]['instituicao'] = $instituicao['sigla'];
 					$x[$i]['periodo'] = $periodo;
+					$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
 					$x[$i]['status'] = $pedido['estado'];	
 					$x[$i]['operador'] = $operador['nomeCompleto'];		
 					$i++;
@@ -115,30 +147,32 @@ if(isset($_POST['periodo']))
 				}
 			}
 		}
-		
 	}
 	$x['num'] = $i;
 	if($num > 0)
 	{ 
 ?>
+
 	<br />
 	<br />
 	<section id="list_items">
 		<div class="container">
 			<h3>Resultado da busca</3>
             <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
-            <h5><a href="?perfil=contratos_lite&p=frm_busca_periodo">Fazer outra busca</a></h5>
+            <h5><a href="?perfil=contratos&p=frm_busca_periodo">Fazer outra busca</a></h5>
 			<div class="table-responsive list_info">
 				<table class="table table-condensed">
 					<thead>
 						<tr class="list_menu">
 							<td>Codigo do Pedido</td>
+							<td>Número Processo</td>
 							<td>Proponente</td>
 							<td>Tipo</td>
 							<td>Objeto</td>
 							<td width="20%">Local</td>
                             <td>Instituição</td>
 							<td>Periodo</td>
+							<td>Pendências</td>
 							<td>Status</td>
    							<td>Operador</td>
 						</tr>
@@ -152,18 +186,20 @@ if(isset($_POST['periodo']))
 							 $status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 							if($x[$h]['tipo'] == 'Física')
 							{
-								echo "<tr><td class='lista'> <a href='?perfil=contratos_lite&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
+								echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
 							}
 							else
 							{
-								echo "<tr><td class='lista'> <a href='?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";								
+								echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";								
 							}
+							echo '<td class="list_description">'.$x[$h]['NumeroProcesso'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['tipo'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['instituicao'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
+							echo '<td class="list_description">'.$x[$h]['pendencia'].'</td> ';
 							echo '<td class="list_description">'.$status['estado'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
 
@@ -192,7 +228,7 @@ if(isset($_POST['periodo']))
 					</div>
 				</div>
 				<div class="row">
-				<form method="POST" action="?perfil=contratos_lite&p=frm_busca_periodo" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=contratos&p=frm_busca_periodo" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
@@ -225,9 +261,37 @@ if(isset($_POST['periodo']))
 else
 {
 ?>
+<script type="application/javascript">
+	$(function()
+	{
+		$('#instituicao').change(function()
+		{
+			if( $(this).val() )
+			{
+				$('#local').hide();
+				$('.carregando').show();
+				$.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
+				{
+					var options = '<option value="0"></option>';	
+					for (var i = 0; i < j.length; i++)
+					{
+						options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+					}	
+					$('#local').html(options).show();
+					$('.carregando').hide();
+				});
+			}
+			else
+			{
+				$('#local').html('<option value="">-- Escolha uma instituição --</option>');
+			}
+		});
+	});
+</script>
 	<section id="services" class="home-section bg-white">
 		<div class="container">
 			<div class="row">
+				<h5>| Busca por período | <a href="?perfil=contratos&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
 						<h2>Busca por período</h2>
@@ -236,12 +300,7 @@ else
 				</div>
 			</div>
 			<div class="row">
-			<form method="POST" action="?perfil=contratos_lite&p=frm_busca_periodo" class="form-horizontal" role="form">
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<h5><?php if(isset($mensagem)){ echo $mensagem; } ?>
-					</div>
-				</div>
+			<form method="POST" action="?perfil=contratos&p=frm_busca_periodo" class="form-horizontal" role="form">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
 						<label>Data início *</label>
@@ -250,6 +309,108 @@ else
 					<div class=" col-md-6">
 						<label>Data encerramento *</label>
 							<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<label>Instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
+						<select class="form-control" name="instituicao" id="instituicao" >
+							<option value="">Selecione</option>
+							<?php geraOpcao("ig_instituicao","","") ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<label>Sala / espaço (antes selecione a instituição)</label>
+						<select class="form-control" name="local" id="local" ></select>
+					</div>
+				</div>
+				<br />             
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<input type="hidden" name="periodo" value="1" />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+	</section>
+<?php
+}	
+ /* =========== INICIAL ===========*/ break; 
+ 
+ 
+/* =========== RELATÓRIO ===========*/
+case 'relatorio':
+	$server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; //mudar para pasta do igsis
+	$http = $server."/pdf/";
+?>	
+<script type="application/javascript">
+	$(function()
+	{
+		$('#instituicao').change(function()
+		{
+			if( $(this).val() )
+			{
+				$('#local').hide();
+				$('.carregando').show();
+				$.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
+				{
+					var options = '<option value="0"></option>';	
+					for (var i = 0; i < j.length; i++)
+					{
+						options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+					}	
+					$('#local').html(options).show();
+					$('.carregando').hide();
+				});
+			}
+			else
+			{
+				$('#local').html('<option value="">-- Escolha uma instituição --</option>');
+			}
+		});
+	});
+</script>
+
+	<section id="services" class="home-section bg-white">
+		<div class="container">			
+			<div class="row">
+				<h5>| <a href="?perfil=contratos&p=frm_busca_periodo">Busca por período</a> | Relatório por período | </h5>
+				<div class="col-md-offset-2 col-md-8">
+					<div class="section-heading">
+						<h2>Relatório por período</h2>
+						<p><?php if(isset($mensagem)){ echo $num; }?></p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			<form method="POST" action="<?php echo $http ?>rlt_busca_periodo.php" class="form-horizontal" role="form">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-6">
+						<label>Data início *</label>
+							<input type="text" name="inicio" class="form-control" id="datepicker03" placeholder="">
+					</div>
+					<div class=" col-md-6">
+						<label>Data encerramento *</label>
+							<input type="text" name="final" class="form-control" id="datepicker04"  placeholder="">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<label>Instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
+						<select class="form-control" name="instituicao" id="instituicao" >
+							<option value="">Selecione</option>
+							<?php geraOpcao("ig_instituicao","","") ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8">
+						<label>Sala / espaço (antes selecione a instituição)</label>
+						<select class="form-control" name="local" id="local" ></select>
 					</div>
 				</div>
 				<br />             
@@ -264,5 +425,7 @@ else
 		</div>
 	</section>
 <?php 
-} 
+ break; 
+
+ } //fim da switch 
 ?>
