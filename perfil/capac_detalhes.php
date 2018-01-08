@@ -44,7 +44,6 @@ $tipoPessoa = recuperaDadosCapac("tipo_pessoa",$evento['idTipoPessoa'],"id");
 $pessoaJuridica = recuperaDadosCapac("pessoa_juridica",$evento['idPj'],"id");
 $representante1 = recuperaDadosCapac("representante_legal",$pessoaJuridica['idRepresentanteLegal1'],"id");
 $representante2 = recuperaDadosCapac("representante_legal",$pessoaJuridica['idRepresentanteLegal2'],"id");
-
 $pessoaFisica = recuperaDadosCapac("pessoa_fisica",$evento['idPf'],"id");
 $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 
@@ -68,11 +67,12 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					<br/>
 					<h5>Informações de Produção</h5>
 					<p align="justify"><strong>Nome do Produtor:</strong> <?php echo $produtor['nome'] ?></p>
-					<p align="justify"><strong></strong> <?php echo $produtor['email'] ?></p>
-					<p align="justify"><strong></strong> <?php echo $produtor['telefone1']." | ".$produtor['telefone2'] ?></p>
+					<p align="justify"><strong>E-mail:</strong> <?php echo $produtor['email'] ?></p>
+					<p align="justify"><strong>Telefone:</strong> <?php echo $produtor['telefone1']." | ".$produtor['telefone2'] ?></p>
 					<br/>
 					<h5>Informações de Contratação</h5>
 					<p align="justify"><strong>Tipo:</strong> <?php echo $tipoPessoa['tipoPessoa'] ?></p>
+					<br/>
 					<?php
 					if($evento['idTipoPessoa'] == 2)
 					{
@@ -121,9 +121,35 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					<p align="justify"><strong>Nome Artístico:</strong> <?php echo $pessoaFisica['nomeArtistico'] ?></p>
 					<p align="justify"><strong>RG:</strong> <?php echo $pessoaFisica['rg'] ?></p>
 					<p align="justify"><strong>CPF:</strong> <?php echo $pessoaFisica['cpf'] ?></p>
-					<p align="justify"><strong>Estado Civil:</strong> <?php echo recuperaEstadoCivilCapac($pessoaFisica['idEstadoCivil']) ?></p>
-					<!--
-					<p align="justify"><strong></strong> <?php //echo   ?></p>-->
+					<p align="justify"><strong>Telefone:</strong> <?php echo $pessoaFisica['telefone1']." | ".$pessoaFisica['telefone2']." | ".$pessoaFisica['telefone3'] ?></p>
+					<p align="justify"><strong>E-mail:</strong> <?php echo $pessoaFisica['email'] ?></p>
+					<p align="justify"><strong>DRT:</strong> <?php echo $pessoaFisica['drt'] ?></p>
+					<?php
+					if($evento['idTipoPessoa'] == 1)
+					{
+					?>
+						<p align="justify"><strong>Estado Civil:</strong> <?php echo recuperaEstadoCivilCapac($pessoaFisica['idEstadoCivil']) ?></p>
+						<p align="justify"><strong>Data de Nascimento:</strong> <?php echo exibirDataBr($pessoaFisica['dataNascimento']) ?></p>
+						<p align="justify"><strong>Nacionalidade:</strong> <?php echo $pessoaFisica['nacionalidade'] ?></p>
+						<p align="justify"><strong>PIS / PASEP / NIT:</strong> <?php echo $pessoaFisica['pis'] ?></p>
+						<p align="justify"><strong>CEP:</strong> <?php echo $pessoaFisica['cep'] ?></p>
+						<p align="justify"><strong>Número:</strong> <?php echo $pessoaFisica['numero'] ?></p>
+						<p align="justify"><strong>Complemento:</strong> <?php echo $pessoaFisica['complemento'] ?></p>
+						<p align="justify"><strong>Banco:</strong> <?php echo recuperaBanco($pessoaFisica['codigoBanco']) ?></p>
+						<p align="justify"><strong>Agência:</strong> <?php echo $pessoaFisica['agencia'] ?></p>
+						<p align="justify"><strong>Conta:</strong> <?php echo $pessoaFisica['conta'] ?></p>
+						<p align="justify"><strong>Data da última atualização do cadastro:</strong> <?php echo exibirDataHoraBr($pessoaFisica['dataAtualizacao']) ?></p>
+						<p align="justify"><strong>Usuário que inseriu no sistema:</strong> <?php echo recuperaUsuarioCapac($pessoaFisica['idUsuario']) ?></p>
+					<?php
+					}
+					?>
+					<br/>
+				</div>
+				<div class="col-md-offset-2 col-md-8">
+					<form method='POST' action='?perfil=importar_evento_capac'>
+						<input type="hidden" name="idCapac" value="<?php echo $idCapac ?>" />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Importar">
+					</form>
 				</div>
 			</div>
 		</div>
