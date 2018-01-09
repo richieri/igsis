@@ -132,6 +132,14 @@ if(isset($_POST['importarCapacIgsis']))
 		{
 			gravarLog($sql_insert_pedido);
 			$mensagem = "Inserido com sucesso!";
+			if(isset($_SESSION['edicaoPessoa']))
+			{
+				if($_SESSION['edicaoPessoa']) = 2)
+				{
+					$cpfPf = $_GET['cpfPf'];
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_executante$busca=".$cpfPf."'>";
+				}
+			}
 			echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=contratados'>";
 		}
 		else

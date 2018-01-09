@@ -142,7 +142,14 @@ if(isset($_POST['idCapac']))
 			{
 				if($idTipoPessoa == 2)
 				{
-					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pj&busca=".$cnpj."'>";
+					if($idPf > 0)
+					{
+						echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pj&busca=".$cnpj."cpfPf=".$cpfPf."'>";
+					}
+					else
+					{
+						echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pj&busca=".$cnpj."'>";
+					}
 				}
 				else
 				{
