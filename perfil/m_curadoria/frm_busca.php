@@ -143,14 +143,15 @@ if(isset($_POST['pesquisar']))
 				$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
 				$local = listaLocais($idEvento);
 				$periodo = retornaPeriodo($idEvento);
-				$fiscal = recuperaUsuario($evento['idResponsavel']);			
+				$fiscal = recuperaUsuario($evento['idResponsavel']);	
+				$pedido = recuperaDados("igsis_pedido_contratacao",$ped['idPedidoContratacao'],"idPedidoContratacao");
+				
 				
 				$x[$i]['id']= $evento['idEvento'];
 				$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
 				$x[$i]['local'] = substr($local,1);
 				$x[$i]['periodo'] = $periodo;
 				$x[$i]['fiscal'] = $fiscal['nomeCompleto'];	
-				$x[$i]['valor'] = $valor['valor'];
 				$i++;			
 			
 			}
@@ -190,7 +191,6 @@ if(isset($_POST['pesquisar']))
 							<td>Local</td>
 							<td>Periodo</td>
 							<td>Fiscal</td>
-							<td>Valor</td>
 							</tr>
 						</thead>
 					<tbody>
@@ -204,7 +204,6 @@ if(isset($_POST['pesquisar']))
 						echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
 						echo '<td class="list_description">'.$x[$h]['fiscal'].'</td> </tr>';
-						echo '<td class="list_description">'.$x[$h]['valor'].'</td> </tr>';
 					}
 				?>					
 					</tbody>

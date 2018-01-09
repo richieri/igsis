@@ -26,7 +26,7 @@ $query_lista = mysqli_query($con,$sql_lista);
 						<td>Responsável</td>
 						<td width="20%">Local</td>
 						<td>Período</td>
-						<td width="10%">Contrato</td>
+						<td width="10%">Valor do Contrato</td>
 					</tr>
 				</thead>
 				<tbody>
