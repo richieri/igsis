@@ -128,7 +128,14 @@ if(isset($_POST['idCapac']))
 			$array_evento = mysqli_fetch_array($query_ultimo_evento);
 			$idEventoIg = $array_evento['idEvento'];
 			$_SESSION['idEvento'] = $idEventoIg;
-			$_SESSION['edicaoPessoa'] = 0;
+			if($idPf > 0)
+			{
+				$_SESSION['edicaoPessoa'] = 2;
+			}
+			else
+			{
+				$_SESSION['edicaoPessoa'] = 0;
+			}
 
 			$sql_insere_igsis = "INSERT INTO `igsis_capac`(`idEventoCapac`, `idEventoIgsis`) VALUES ('$idCapac', '$idEventoIg')";
 			if(mysqli_query($con1,$sql_insere_igsis))
