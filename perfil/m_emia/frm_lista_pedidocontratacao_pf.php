@@ -21,7 +21,6 @@
 		<div class="sub-title">
 			<br/><br/>
 			<h4>Escolha o ano<br/> 
-			| <a href="<?php echo $pasta?><?php echo $ano + 1;?>"><?php echo $ano + 1; ?></a> 
 			| <a href="<?php echo $pasta?><?php echo $ano;?>"><?php echo $ano; ?></a> 
 			| <a href="<?php echo $pasta?><?php echo $ano - 1; ?>"><?php echo $ano - 1; ?></a> |
 			</h4>
@@ -47,9 +46,6 @@
 					<?php
 			switch($p)
 			{
-				case $ano + 1:
-					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '5' AND ped.publicado = '1' AND Ano = $ano + 1  ORDER BY idPedidoContratacao DESC";
-				break;
 				case $ano:
 					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '5' AND ped.publicado = '1' AND Ano = $ano ORDER BY idPedidoContratacao DESC";
 				break;
