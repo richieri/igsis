@@ -175,7 +175,7 @@ If($query1 == '' && $query2 != '')
 
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
-					<form method='POST' action='?perfil=compara_pf' enctype='multipart/form-data'>
+					<form method='POST' action='?perfil=compara_executante' enctype='multipart/form-data'>
 							<input type='hidden' name='busca' value='<?php echo $cpf_busca ?>'>
 							<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
 						</form><br/>
@@ -197,25 +197,10 @@ If($query1 == '' && $query2 != '')
 						<strong>Nome:</strong> <?php echo $nome ?><br/>
 						<strong>Nome Artístico:</strong> <?php echo $nomeArtistico ?><br/>
 						<strong>RG:</strong> <?php echo $rg ?> |
-						<strong>CPF:</strong> <?php echo $cpf ?> |
-						<strong>CCM:</strong> <?php echo $ccm ?><br/>
-						<strong>Estado Civil:</strong> <?php echo $idEstadoCivil ?><br/>
-						<strong>Data de Nascimento:</strong> <?php echo exibirDataBr($dataNascimento) ?><br/>
-						<strong>Local de Nascimento:</strong> <?php echo $localNascimento ?> |
-						<strong>Nacionalidade:</strong> <?php echo $nacionalidade ?><br/>
-						<strong>CEP:</strong> <?php echo $cep ?><br/>
-						<strong>Número:</strong> <?php echo $numero ?> |
-						<strong>Complemento:</strong> <?php echo $complemento ?><br/>
+						<strong>CPF:</strong> <?php echo $cpf ?> |<br/>
 						<strong>Telefone #1:</strong> <?php echo $telefone1 ?> / <?php echo $telefone2 ?> / <?php echo $telefone3 ?><br/>
 						<strong>E-mail:</strong> <?php echo $email ?><br/>
 						<strong>DRT:</strong> <?php echo $drt ?><br/>
-						<strong>Função:</strong> <?php echo $funcao ?> |
-						<strong>CBO:</strong> <?php echo $cbo ?><br/>
-						<strong>NIT:</strong> <?php echo $pis ?><br/>
-						<strong>OMB:</strong> <?php echo $omb ?><br/>
-						<strong>Banco:</strong> <?php echo $codigoBanco ?><br/>
-						<strong>Agência:</strong> <?php echo $agencia ?> |
-						<strong>Conta:</strong> <?php echo $conta ?><br/>
 						<strong>Última Atualização:</strong> <?php echo exibirDataBr($dataAtualizacao) ?>
 					</div>
 				</div>
