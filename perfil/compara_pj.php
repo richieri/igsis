@@ -134,7 +134,8 @@ if(isset($_POST['importarCapacIgsis']))
 			$mensagem = "Inserido com sucesso!";
 			if(isset($_SESSION['edicaoPessoa']))
 			{
-				if($_SESSION['edicaoPessoa']) = 2)
+				$edicaoPessoa = $_SESSION['edicaoPessoa'];
+				if($edicaoPessoa = 2)
 				{
 					$cpfPf = $_GET['cpfPf'];
 					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_executante$busca=".$cpfPf."'>";
@@ -608,13 +609,14 @@ If($query1 != '' && $query2 != '')
 			}
 			elseif($edicaoPessoa == 2)
 			{
+				$cpfPf = $_GET['cpfPf'];
 		?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<form method='POST' action='?perfil=compara_executante'>
 							<input type='hidden' name='insereFisica' value='1'>
 							<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaJuridica'] ?>'>
-							<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
+							<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Ir para o executante'>
 						</form>
 					</div>
 				</div>
