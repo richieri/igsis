@@ -1238,7 +1238,7 @@
 								<input type="text" name="rf" class="form-control"id="rf" value="" />
 							</div> 
 							<div class="col-md-offset-2 col-md-8">
-								<label>Usuario:</label>
+								<label>Usuário:</label>
 								<input type="text" name="usuario" class="form-control"id="usuario" />
 							</div>  <!-- // SENHA !-->
 							<div class="col-md-offset-2 col-md-8">
@@ -1248,7 +1248,7 @@
 							<div class="col-md-offset-2 col-md-8">	
 								<label>telefone:</label>
 								<input type="text" name="telefone" class="form-control"id="departamento" />
-							</div>  <!-- // ig_instituicao Puxada pela SESSASION do "CRIADOR" - Admin Local !-->
+							</div>  <!-- // ig_instituicao Puxada pela SESSION do "CRIADOR" - Admin Local !-->
 							<!-- // Perfil de Usuario !-->
 							<div class="col-md-offset-2 col-md-8">
 								<label>Instituição:</label>
@@ -1263,7 +1263,7 @@
 								</select>
 							</div>
 							<div class="col-md-offset-2 col-md-8">
-								<label>Acesso aos Perfil's:</label>
+								<label>Perfil:</label>
 								<select name="papelusuario" class="form-control"  >
 									<?php acessoPerfilUser("ig_papelusuario","3",""); ?>
 								</select>
@@ -1306,7 +1306,7 @@
 				$con = bancoMysqli();
 				if(mysqli_query ($con,$sql_atualizar))
 				{
-					$mensagem = "Senha reiniciado com sucesso";
+					$mensagem = "Senha reiniciada com sucesso!";
 				}
 				else
 				{
