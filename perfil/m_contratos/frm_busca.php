@@ -423,7 +423,7 @@ if(isset($_POST['pesquisar']))
 								<td>Valor</td>
 								<td width="20%">Local</td>
 								<td>Instituição</td>
-								<td>Periodo</td>
+								<td>Período</td>
 								<td>Pendências</td>
 								<td>Status</td>
 								<td>Operador</td>
