@@ -2836,13 +2836,12 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		<p>PEDIDO(S):</p>
 		";
 		while($pedido = mysqli_fetch_array($query_evento)){
-			$relatorio .= "".$pedido['idPedidoContratacao'].",<br />";	
+			$relatorio .= "<font color='red'>".$pedido['idPedidoContratacao'].",<br /></font>";
 		}
-		
 
 		//Busca eventos que estão na agenda mas não são válidos
 		$sql_agenda = "SELECT DISTINCT idEvento FROM igsis_agenda WHERE idEvento NOT IN
-		( SELECT idEvento FROM ig_evento WHERE ( dataEnvio IS NOT NULL ) OR 
+		( SELECT idEvento FROM ig_evento WHERE ( dataEnvio IS NOT NULL ) OR
 		( dataEnvio IS NULL AND ocupacao = 1))";
 		$query_agenda = mysqli_query($con,$sql_agenda);
 		$relatorio .= "<p>&nbsp;</p><h4>Eventos que estão na Agenda mas não são válidos </h4>
@@ -2850,18 +2849,18 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		<p>EVENTO(S):</p>
 		";
 		while($agenda = mysqli_fetch_array($query_agenda)){
-			$relatorio .= "".$agenda['idEvento'].",<br />";	
+			$relatorio .= "<font color='red'>".$agenda['idEvento'].",<br /></font>";
 		}
 
-		//Busca eventos que não estão na agenda 
-		$sql_agenda = "SELECT idEvento FROM ig_evento WHERE idEvento NOT IN ( SELECT DISTINCT idEvento FROM igsis_agenda ) AND dataEnvio IS NOT NULL AND (ocupacao IS NULL OR ocupacao = '') AND publicado = 1"; 
+		//Busca eventos que não estão na agenda
+		$sql_agenda = "SELECT idEvento FROM ig_evento WHERE idEvento NOT IN ( SELECT DISTINCT idEvento FROM igsis_agenda ) AND dataEnvio IS NOT NULL AND (ocupacao IS NULL OR ocupacao = '') AND publicado = 1";
 		$query_agenda = mysqli_query($con,$sql_agenda);
 		$relatorio .= "<p>&nbsp;</p><h4>Eventos que não estão na agenda</h4>
 		<p>$sql_agenda</p>
 		<p>EVENTO(S):</p>
 		";
 		while($agenda = mysqli_fetch_array($query_agenda)){
-			$relatorio .= "".$agenda['idEvento'].",<br />";	
+			$relatorio .= "<font color='red'>".$agenda['idEvento'].",<br /></font>";
 		}
 
 		//Pedidos de Contratação Aprovados por Finanças, mas não tiveram seu status alterado
@@ -2871,41 +2870,41 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		<p>$sql_financa </p>
 		";
 		while($pedido = mysqli_fetch_array($query_evento)){
-			$relatorio .= "Pedido: ".$pedido['idPedidoContratacao']."<br />";	
+			$relatorio .= "<font color='red'>Pedido: ".$pedido['idPedidoContratacao']."<br /></font>";
 		}
-		
+
 		//Pedidos de Contratação publicados e enviados, mas com estado = 1
 		$sql_estado1 = "SELECT * FROM `igsis_pedido_contratacao` AS ped INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento WHERE ped.publicado = 1 AND eve.publicado = 1 AND estado = '1' AND dataEnvio IS NOT NULL AND statusEvento = 'Enviado' ORDER BY `idPedidoContratacao` DESC";
 		$query_estado = mysqli_query($con,$sql_estado1);
 		$relatorio .="<p>&nbsp;</p><h4>Pedidos de Contratação publicados e enviados, mas com estado = 1</h4>
 		<p>$sql_estado1</p>";
 		while($pedido = mysqli_fetch_array($query_estado)){
-			$relatorio .= "Pedido: ".$pedido['idPedidoContratacao']."<br />";	
+			$relatorio .= "<font color='red'>Pedido: ".$pedido['idPedidoContratacao']."<br /></font>";
 		}
-		
+
 		//CPF duplicados
 		$sql_cpf_duplicado = "SELECT Nome, CPF, Count(*) FROM `sis_pessoa_fisica` GROUP BY CPF HAVING Count(*) > 1 ORDER By Nome";
 		$query_cpf_duplicado = mysqli_query($con,$sql_cpf_duplicado);
 		$relatorio .="<p>&nbsp;</p><h4>CPF's duplicados no cadastro de pessoa física.</h4>
 		<p>$sql_cpf_duplicado</p>";
 		while($pf = mysqli_fetch_array($query_cpf_duplicado)){
-			$relatorio .= "Nome: ".$pf['Nome']." | CPF: ".$pf['CPF']."<br />";	
+			$relatorio .= "<font color='red'>Nome: ".$pf['Nome']." | CPF: ".$pf['CPF']."<br /></font>";
 		}
-		
+
 		//CNPJ duplicados
 		$sql_cnpj_duplicado = "SELECT RazaoSocial, CNPJ, Count(*) FROM `sis_pessoa_juridica` GROUP BY CNPJ HAVING Count(*) > 1 ORDER By RazaoSocial";
 		$query_cnpj_duplicado = mysqli_query($con,$sql_cnpj_duplicado);
 		$relatorio .="<p>&nbsp;</p><h4>CNPJ's duplicados no cadastro de pessoa jurídica.</h4>
 		<p>$sql_cnpj_duplicado</p>";
 		while($pj = mysqli_fetch_array($query_cnpj_duplicado)){
-			$relatorio .= "Razão Social: ".$pj['RazaoSocial']." | CNPJ: ".$pj['CNPJ']."<br />";	
+			$relatorio .= "<font color='red'>Razão Social: ".$pj['RazaoSocial']." | CNPJ: ".$pj['CNPJ']."<br /></font>";
 		}
-		
+
 		?>
 		<section id="contact" class="home-section bg-white">
 			<div class="container">
 				<div class="form-group">
-					<h4>RELATÓRIO DE ANOMALIAS EM <?php echo $data ?></h4>					
+					<h4>RELATÓRIO DE ANOMALIAS EM <?php echo $data ?></h4>
 				</div>
 				<div class="row">
 					<div class="col-md-offset-1 col-md-10">
@@ -2915,8 +2914,7 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 					</div>
 				</div>
 			</div>
-		</section>		
-				
+		</section>
 		<?php
 		break;
 	}
