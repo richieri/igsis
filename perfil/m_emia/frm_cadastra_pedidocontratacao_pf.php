@@ -92,11 +92,13 @@
 				$Parecer  = addslashes($_POST['Parecer']);
 				$Justificativa  = addslashes($_POST['Justificativa']);
 				$Verba = "39";
+				$processo = $_POST['NumeroProcesso'];
 				$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
 					observacao = '$Observacao',
 					parecerArtistico = '$Parecer',
 					justificativa = '$Justificativa', 
-					idVerba = '$Verba'
+					idVerba = '$Verba',
+					NumeroProcesso = '$processo'
 					WHERE idPedidoContratacao = '$idPedidoContratacao'";
 				$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 				//verificaMysql($sql_atualiza_pedido);
@@ -235,6 +237,11 @@
 								  <select class="form-control" name="Suplente" id="Fiscal">
 										<?php opcaoUsuario($_SESSION['idInstituicao'],$emia['suplente']); ?>
 								  </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-8"><strong>Número do Processo:</strong>
+									<input type="text" class="form-control" id="NumeroProcesso" name="NumeroProcesso" placeholder="Número do Processo"  value="<?php echo $pedido['NumeroProcesso']; ?>" /> 
 								</div>
 							</div>
 							<div class="form-group">
