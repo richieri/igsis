@@ -132,6 +132,7 @@ if(isset($_POST['importarCapacIgsis']))
 		{
 			gravarLog($sql_insert_pedido);
 			$mensagem = "Inserido com sucesso!";
+			$
 			if(isset($_SESSION['edicaoPessoa']))
 			{
 				$edicaoPessoa = $_SESSION['edicaoPessoa'];
@@ -246,6 +247,47 @@ If($query1 == '' && $query2 != '')
 						<strong>Agência:</strong> <?php echo $agencia ?> |
 						<strong>Conta:</strong> <?php echo $conta ?><br/>
 						<strong>Última Atualização:</strong> <?php echo exibirDataBr($dataAtualizacao) ?>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
+					<div align="left">
+						<div class="table-responsive list_info">
+						<?php
+							$sql = "SELECT *
+									FROM upload_lista_documento as list
+									INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+									WHERE arq.idPessoa = '$idPessoaMac'
+									AND arq.idTipoPessoa = '2'
+									AND arq.publicado = '1'";
+							$query = mysqli_query($con2,$sql);
+							$linhas = mysqli_num_rows($query);
+
+							if ($linhas > 0)
+							{
+								echo "
+									<table class='table table-condensed'>
+										<tbody>";
+											while($arquivo = mysqli_fetch_array($query))
+											{
+												echo "<tr>";
+												echo "<td align = 'left' class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+												echo "</tr>";
+											}
+								echo "
+										</tbody>
+									</table>";
+							}
+							else
+							{
+								echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+							}
+						?>
+							<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -613,8 +655,9 @@ If($query1 != '' && $query2 != '')
 		?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<form method='POST' action='?perfil=compara_executante'>
+						<form method='POST' action='?perfil=compara_executante&busca="<?php echo $cpfPf ?>"'>
 							<input type='hidden' name='insereFisica' value='1'>
+							<input type='hidden' name='idPedido' value='1'>
 							<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaJuridica'] ?>'>
 							<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Ir para o executante'>
 						</form>

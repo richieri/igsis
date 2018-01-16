@@ -128,7 +128,7 @@ if(isset($_POST['idCapac']))
 			$array_evento = mysqli_fetch_array($query_ultimo_evento);
 			$idEventoIg = $array_evento['idEvento'];
 			$_SESSION['idEvento'] = $idEventoIg;
-			if($idPf > 0)
+			if($idPf > 0) //Se existir um executante cadastrado no CAPAC
 			{
 				$_SESSION['edicaoPessoa'] = 2;
 			}
