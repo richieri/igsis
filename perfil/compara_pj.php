@@ -132,7 +132,6 @@ if(isset($_POST['importarCapacIgsis']))
 		{
 			gravarLog($sql_insert_pedido);
 			$mensagem = "Inserido com sucesso!";
-			$
 			if(isset($_SESSION['edicaoPessoa']))
 			{
 				$edicaoPessoa = $_SESSION['edicaoPessoa'];
