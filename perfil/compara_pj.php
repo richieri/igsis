@@ -654,7 +654,7 @@ If($query1 != '' && $query2 != '')
 		?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<form method='POST' action='?perfil=compara_executante&busca="<?php echo $cpfPf ?>"'>
+						<form method='POST' action='?perfil=compara_executante&busca=<?php echo $cpfPf ?>'>
 							<input type='hidden' name='insereFisica' value='1'>
 							<input type='hidden' name='idPedido' value='1'>
 							<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaJuridica'] ?>'>
