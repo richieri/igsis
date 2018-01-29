@@ -6,6 +6,8 @@ $con2 = bancoMysqliProponente();
 $cpf_busca = $_GET['busca'];
 $id_ped = $_GET['id_ped'];
 
+unset($_SESSION['cpfPf']);
+
 // Endereço da página
 $link = "?perfil=compara_executante";
 
@@ -176,9 +178,9 @@ If($query1 == '' && $query2 != '')
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
 					<form method='POST' action='?perfil=compara_executante' enctype='multipart/form-data'>
-							<input type='hidden' name='busca' value='<?php echo $cpf_busca ?>'>
-							<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
-						</form><br/>
+						<input type='hidden' name='busca' value='<?php echo $cpf_busca ?>'>
+						<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
+					</form><br/>
 				</div>
 				<div class="col-md-6">
 					<form method='POST' action='?perfil=contratados&p=fisica' enctype='multipart/form-data'>
@@ -397,6 +399,7 @@ If($query1 != '' && $query2 != '')
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
+					<p><i>Obs.: Os arquivos não são importados automaticamente. Faça o download e verifique os mesmos antes de efetuar o upload.</i></p>
 					<div class="table-responsive list_info">
 					<?php
 						$sql = "SELECT *

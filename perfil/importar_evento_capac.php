@@ -144,7 +144,8 @@ if(isset($_POST['idCapac']))
 				{
 					if($idPf > 0)
 					{
-						echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pj&busca=".$cnpj."&cpfPf=".$cpfPf."'>";
+						$_SESSION['cpfPf'] = $cpfPf;
+						echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pj&busca=".$cnpj."'>";
 					}
 					else
 					{

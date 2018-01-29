@@ -137,7 +137,7 @@ if(isset($_POST['importarCapacIgsis']))
 				$edicaoPessoa = $_SESSION['edicaoPessoa'];
 				if($edicaoPessoa = 2)
 				{
-					$cpfPf = $_GET['cpfPf'];
+					$cpfPf = $_SESSION['cpfPf'];
 					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_executante$busca=".$cpfPf."'>";
 				}
 			}
@@ -253,6 +253,7 @@ If($query1 == '' && $query2 != '')
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
+					<p><i>Obs.: Os arquivos não são importados automaticamente. Faça o download e verifique os mesmos antes de efetuar o upload.</i></p>
 					<div align="left">
 						<div class="table-responsive list_info">
 						<?php
@@ -590,6 +591,7 @@ If($query1 != '' && $query2 != '')
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
+					<p><i>Obs.: Os arquivos não são importados automaticamente. Faça o download e verifique os mesmos antes de efetuar o upload.</i></p>
 					<div align="left">
 						<div class="table-responsive list_info">
 						<?php
@@ -650,7 +652,7 @@ If($query1 != '' && $query2 != '')
 			}
 			elseif($edicaoPessoa == 2)
 			{
-				$cpfPf = $_GET['cpfPf'];
+				$cpfPf = $_SESSION['cpfPf'];
 		?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
