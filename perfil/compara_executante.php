@@ -117,51 +117,6 @@ if(isset($_POST['importarCapacIgsis']))
 }
 
 
-//Se existir no IGSIS e não no CAPAC
-If($query1 != '' && $query2 == '')
-{
-?>
-	<section id="list_items" class="home-section bg-white">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-						<h4>Contratados - Pessoa Física</h4>
-						<p></p>
-					</div>
-				</div>
-			</div>
-
-			<div class="table-responsive list_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="list_menu">
-							<td>Nome</td>
-							<td>CPF</td>
-							<td width="25%"></td>
-							<td width="5%"></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class='list_description'><b><?php echo $Nome ?></b></td>
-							<td class='list_description'><b><?php echo $CPF ?></b></td>
-							<td class='list_description'>
-								<form method='POST' action='?perfil=contratados&p=lista'>
-								<input type='hidden' name='insereFisica' value='1'>
-								<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
-								<input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'></form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</section>
-<?php
-}
-
-
 //Se existir no CAPAC e não no IGSIS
 If($query1 == '' && $query2 != '')
 {
@@ -176,16 +131,12 @@ If($query1 == '' && $query2 != '')
 			</div>
 
 			<div class="form-group">
-				<div class="col-md-offset-2 col-md-6">
+				<div class="col-md-offset-2 col-md-8">
 					<form method='POST' action='?perfil=compara_executante' enctype='multipart/form-data'>
 						<input type='hidden' name='busca' value='<?php echo $cpf_busca ?>'>
-						<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
+						<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block'>
+						<input type='submit' class='btn btn-theme btn-lg btn-block' value='Importar'>
 					</form><br/>
-				</div>
-				<div class="col-md-6">
-					<form method='POST' action='?perfil=contratados&p=fisica' enctype='multipart/form-data'>
-						<input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
-					</form>
 				</div>
 			</div>
 
@@ -443,7 +394,7 @@ If($query1 != '' && $query2 != '')
 					</form>
 				</div>
 				<div class="col-md-6">
-					<form method='POST' action='?perfil=contratados&p=lista'>
+					<form method='POST' action='?perfil=compara_executante'>
 						<input type='hidden' name='insereFisica' value='1'>
 						<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
 						<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
