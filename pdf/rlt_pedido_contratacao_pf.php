@@ -35,6 +35,8 @@ $Suplente = $pedido["Suplente"];
 $rfSuplente = $pedido["RfSuplente"];
 $dataAtual = exibirDataBr($pedido["DataCadastro"]);
 $qtdApresentacoes = $pedido["qtdApresentacoes"];
+$NumeroProcesso = $pedido["NumeroProcesso"];
+
 
 
 $verba = recuperaVerba($pedido['Verba']);
@@ -87,6 +89,7 @@ $sei =
 "<p>Solicitamos a contratação a seguir:</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Pedido de Contratação nº:</strong> "."$ano-$id_ped"."</p>".
+"<p><strong>Processo SEI nº:</strong> "."$NumeroProcesso"."</p>".
 "<p><strong>Setor  solicitante:</strong> "."$setor"."</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Nome:</strong> "."$Nome"." <br />".

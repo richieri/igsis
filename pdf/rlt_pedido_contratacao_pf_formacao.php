@@ -27,6 +27,8 @@ $ValorGlobal = dinheiroParaBr($pedido["ValorGlobal"]);
 $ValorPorExtenso = valorPorExtenso($pedido["ValorGlobal"]);
 $FormaPagamento = $pedido["FormaPagamento"];
 $Justificativa = $pedido["Justificativa"];
+$NumeroProcesso = $pedido["NumeroProcesso"];
+
 /*
 $Fiscal = $pedido["Fiscal"];
 $rfFiscal = $pedido["RfFiscal"];
@@ -85,6 +87,7 @@ $sei =
 "<p>Solicitamos a contratação a seguir:</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Pedido de Contratação nº:</strong> "."$ano-$id_ped"."</p>".
+"<p><strong>Processo SEI nº:</strong> "."$NumeroProcesso"."</p>".
 "<p><strong>Setor  solicitante:</strong> Divisão de Formação</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Nome:</strong> "."$Nome"." <br />".

@@ -2369,15 +2369,22 @@
 				for($i = 1; $i <= $pedido['parcelas']; $i++)
 				{
 					$valor = dinheiroDeBr($_POST['valor'.$i]);
-					$data = exibirDataMysql($_POST['data'.$i]);
+					$data = exibirDataMysql($_POST['vencimento'.$i]);
 					$descricao = $_POST['descricao'.$i];
 					$mensagem = "";
+					$horas = $_POST['horas'.$i];
+					$vigencia_inicio = exibirDataMysql($_POST['vigencia_inicio'.$i]);
+					$vigencia_final = exibirDataMysql($_POST['vigencia_final'.$i]);
+					
 					$sql_atualiza_parcela = "UPDATE igsis_parcelas 
 						SET valor = '$valor', 
 						vencimento = '$data', 
-						descricao = '$descricao' 
+						descricao = '$descricao',
+						horas = '$horas',
+						vigencia_inicio =  '$vigencia_inicio',
+						vigencia_final = '$vigencia_final'
 						WHERE idPedido = '$idPedido' 
-						AND numero = '$i'";
+						AND numero = '$i'";	
 					$query_atualiza_parcela = mysqli_query($con,$sql_atualiza_parcela);
 					if($query_atualiza_parcela)
 					{
@@ -2431,6 +2438,36 @@
 				$query_rec_parcela = mysqli_query($con,$sql_rec_parcela);
 				$parcela = mysqli_fetch_array($query_rec_parcela);
 		?>
+		
+		<?php
+			if ($evento['ig_tipo_evento_idTipoEvento'] == 4) {
+		?>
+					<div class="form-group">
+						<div class="col-xs-6 col-sm-1"><strong>Parcela</strong><br/>
+							<input type='text' disabled name="Valor" id='valor' class='form-control' value="<?php echo $i; ?>" >
+						</div>					
+						<div class="col-xs-6 col-sm-2"><strong>Valor</strong><br/>
+							<input type='text'  name="valor<?php echo $i; ?>" id='valor' class='form-control valor' value="<?php echo dinheiroParaBr($parcela['valor']); ?>">
+						</div>
+						<div class="col-xs-6 col-sm-2"><strong>Data Inicial</strong><br/>
+							<input type='text' name="vigencia_inicio<?php echo $i; ?>" id='datepicker1<?php echo $i; ?>' class='form-control datepicker' value="<?php 	echo exibirDataBr($parcela['vigencia_inicio']); ?>">
+						</div>
+						<div class="col-xs-6 col-sm-2"><strong>Data Final</strong>
+							<input type='text' name="vigencia_final<?php echo $i; ?>" id='datepicker2<?php echo $i; ?>' class='form-control datepicker' value="<?php 	echo exibirDataBr($parcela['vigencia_final']); ?>">
+						</div>
+						<div class="col-xs-6 col-sm-2"><strong>Data Pagamento</strong>
+							<input type='text' name="vencimento<?php echo $i; ?>" id='datepicker3<?php echo $i; ?>' class='form-control datepicker' value="<?php 	echo exibirDataBr($parcela['vencimento']); ?>">
+						</div>
+						<div class="col-xs-6 col-sm-2"><strong>Descrição</strong>
+							<input type='text'  name="descricao<?php echo $i; ?>" id='' class='form-control' value="<?php echo $parcela['descricao']; ?>">
+						</div>
+						<div class="col-xs-6 col-sm-1"><strong>Horas</strong>
+							<input type='text'  name="horas<?php echo $i; ?>" id='horas' class='form-control' value="<?php echo $parcela['horas']; ?>">
+						</div>
+					</div>	
+		<?php
+			} else{
+		?>
 					<div class="form-group">
 						<div class="col-xs-6 col-sm-1"><strong>Parcela</strong><br/>
 							<input type='text' disabled name="Valor" id='valor' class='form-control' value="<?php echo $i; ?>" >
@@ -2438,13 +2475,17 @@
 						<div class="col-xs-6 col-sm-3"><strong>Valor</strong><br/>
 							<input type='text'  name="valor<?php echo $i; ?>" id='valor' class='form-control valor' value="<?php echo dinheiroParaBr($parcela['valor']); ?>">
 						</div>
-						<div class="col-xs-6 col-sm-3"><strong>Data do Kit de Pagamento:</strong><br/>
-							<input type='text' name="data<?php echo $i; ?>" id='datepicker1<?php echo $i; ?>' class='form-control datepicker' value="<?php 	echo exibirDataBr($parcela['vencimento']); ?>">
+						<div class="col-xs-6 col-sm-3"><strong>Data do Kit de Pagamento</strong><br/>
+							<input type='text' name="vencimento<?php echo $i; ?>" id='datepicker1<?php echo $i; ?>' class='form-control datepicker' value="<?php 	echo exibirDataBr($parcela['vencimento']); ?>">
 						</div>
-						<div class="col-xs-6 col-sm-3"><strong>Descrição:</strong><br/>
+						<div class="col-xs-6 col-sm-3"><strong>Descrição</strong><br/>
 							<input type='text'  name="descricao<?php echo $i; ?>" id='' class='form-control' value="<?php echo $parcela['descricao']; ?>">
 						</div>
 					</div>
+			<?php
+			}
+			?>						
+						
             <?php 
 				$soma = $soma + $parcela['valor'];
 			}
@@ -2465,7 +2506,7 @@
 				</form>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<a href="?perfil=contratados&p=edicaoPedido" value="VOLTAR" class="btn btn-theme btn-lg btn-block">VOLTAR para area de pedidos de contratação</a>
+						<a href="?perfil=contratados&p=edicaoPedido" value="VOLTAR" class="btn btn-theme btn-lg btn-block">VOLTAR para área de pedidos de contratação</a>
 					</div>
 				</div>	
 	  		</div>
