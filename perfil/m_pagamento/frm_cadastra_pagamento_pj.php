@@ -14,6 +14,8 @@ $link8=$http."rlt_recibo_pagamento_parcelado_1rep_pj.php";
 $link9=$http."rlt_recibo_pagamento_parcelado_2rep_pj.php";
 $link10=$http."rlt_recibo_documentacao_pj.php";
 $link11=$http."rlt_ateste_confirmacao_pj.php";
+$link12=$http."rlt_emissao_nf_integral.php";
+$link13=$http."rlt_emissao_nf_parcelado_PDF.php";
 
 $data = date('Y-m-d H:i:s');
 
@@ -87,6 +89,11 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 				<td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Documentação</a></td>
 				<td class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Ateste de Confirmação</a></td>
 			</tr>
+			<tr>
+				<td class='list_description'><strong>Emissão de Nota Fiscal</strong></td>
+				<td class='list_description'><a href='$link12?id=$id_ped' target='_blank'>Integral</a></td>
+				<td class='list_description'><a href='$link13?id=$id_ped'  target='_blank'>Parcelado</a></td>
+			</tr>	
 		</table>
 		
 		
