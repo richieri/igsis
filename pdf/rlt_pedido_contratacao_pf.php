@@ -95,7 +95,8 @@ $sei =
 "<p><strong>Nome:</strong> "."$Nome"." <br />".
   "<strong>CPF:</strong> "."$CPF"."<br />".
    "<strong>Telefone:</strong> "."$Telefones"."<br />".
-   "<strong>E-mail:</strong> "."$Email"."</p>".
+   "<strong>Email:</strong> "."$Email"."<br />".
+   "<strong>Email do Produtor:</strong> "."$Email"."</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Objeto:</strong> "."$Objeto"."</p>".
 "<p><strong>Data / Período:</strong> "."$Periodo".", totalizando "."$qtdApresentacoes"." apresentações conforme proposta/cronograma.</p>".

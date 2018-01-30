@@ -15,7 +15,7 @@ $link9=$http."rlt_recibo_pagamento_parcelado_2rep_pj.php";
 $link10=$http."rlt_recibo_documentacao_pj.php";
 $link11=$http."rlt_ateste_confirmacao_pj.php";
 $link12=$http."rlt_emissao_nf_integral.php";
-$link13=$http."rlt_emissao_nf_parcelado_PDF.php";
+$link13=$http."rlt_emissao_nf_parcelado.php";
 
 $data = date('Y-m-d H:i:s');
 

@@ -37,6 +37,7 @@ $descricaoNF = $pedido["descricaoNF"];
 $notaempenho = $pedido["NotaEmpenho"];
 $data_entrega_empenho = exibirDataBr($pedido['EntregaNE']);
 $verba = $pedido['Verba'];
+$NumeroProcesso = $pedido['NumeroProcesso'];
 //PessoaJuridica
 
 $pjRazaoSocial = $pj["Nome"];

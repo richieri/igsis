@@ -15,6 +15,9 @@ $ano=date('Y');
 
 $pedido = siscontrat($id_ped);
 $pj = siscontratDocs($pedido['IdProponente'],2);
+$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
+$produtor = recuperaDados("ig_produtor",$evento['ig_produtor_idProdutor'],"idProdutor");
+
 
 $Objeto = $pedido["Objeto"];
 $Periodo = $pedido["Periodo"];
@@ -33,6 +36,7 @@ $dataAtual = exibirDataBr($pedido["DataCadastro"]);
 $setor = $pedido["Setor"];
 $qtdApresentacoes = $pedido["qtdApresentacoes"];
 $NumeroProcesso = $pedido["NumeroProcesso"];
+$EmailProdutor = $produtor["email"];
 
 
 $verba = recuperaVerba($pedido['Verba']);
@@ -83,7 +87,8 @@ $sei =
 "<p><strong>Razão Social:</strong> "."$pjRazaoSocial"." <br />".
   "<strong>CNPJ:</strong> "."$pjCNPJ"."<br />".
    "<strong>Telefone:</strong> "."$pjTelefones"."<br />".
-   "<strong>E-mail:</strong> "."$pjEmail"."</p>".
+   "<strong>Email:</strong> "."$pjEmail"."<br />".
+   "<strong>Email do Produtor:</strong> "."$EmailProdutor"."</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Objeto:</strong> "."$Objeto"."</p>".
 "<p><strong>Data / Período:</strong> "."$Periodo".", totalizando "."$qtdApresentacoes"." apresentações conforme proposta/cronograma.</p>".
