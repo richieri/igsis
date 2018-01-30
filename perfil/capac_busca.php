@@ -123,7 +123,6 @@ else
 	<section id="list_items" class="home-section bg-white">
 		<div class="container">
 			<div class="form-group">
-				<h1><font color="red">EM CONSTRUÇÃO</font></h1>
 				<h3>BUSCAR EVENTOS NO CAPAC</h3>
 				<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 				<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
