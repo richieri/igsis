@@ -65,6 +65,45 @@ function recuperaDadosProp($tabela,$campo,$variavelCampo)
 	return $campo;
 }
 
+if(isset($_POST['inserePedido']))
+{
+	$idJuridica = $_POST['Id_PessoaJuridica'];
+	$idEvento = $_SESSION['idEvento'];
+	$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`) VALUES ('$idEvento', '2', '$idJuridica', '1')";
+	$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
+	if($query_insert_pedido)
+	{
+		gravarLog($sql_insert_pedido);
+		$mensagem = "Inserido com sucesso!";
+		$sql_pedido = "SELECT  * FROM igsis_pedido_contratacao ORDER BY idPedidoContratacao DESC LIMIT 0,1";
+		$query_pedido = mysqli_query($con1,$sql_pedido);
+		$pedido = mysqli_fetch_array($query_pedido);
+		$id_ped = $pedido['idPedidoContratacao'];
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='0.5;URL=?perfil=compara_executante&busca=".$cpf_busca."&id_ped=".$id_ped."'>";
+	}
+	else
+	{
+		$mensagem = "Erro ao criar pedido! Tente novamente.";
+	}
+}
+
+if(isset($_POST['inserirExecutante']))
+{
+	$idFisica = $_POST['Id_PessoaFisica'];
+	$sql_insert_pedido = "UPDATE igsis_pedido_contratacao SET idExecutante = '$idFisica' WHERE idPedidoContratacao = '$id_ped'";
+	$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
+	if($query_insert_pedido)
+	{
+		gravarLog($sql_insert_pedido);
+		$mensagem = "Executante inserido com sucesso!";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=contratados'>";
+	}
+	else
+	{
+		$mensagem = "Erro ao inserir o executante no pedido! Tente novamente.";
+	}
+}
+
 if(isset($_POST['atualizaIgsis']))
 {
 	$campo = $_POST['campo'];
@@ -74,7 +113,7 @@ if(isset($_POST['atualizaIgsis']))
 	if(mysqli_query($con1,$sql_update_nome))
 	{
 		$mensagem =	$nomeCampo." atualizado com sucesso!";
-		echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."&busca=".$cpf_busca."'>";
+		echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."&busca=".$cpf_busca."&id_ped=".$id_ped."'>";
 	}
 	else
 	{
@@ -96,7 +135,6 @@ if(isset($_POST['importarCapacIgsis']))
 		$id = mysqli_fetch_array($query_ultimo);
 		$idFisica = $id['Id_PessoaFisica'];
 
-		/* Verificar*/
 		$sql_insert_pedido = "UPDATE igsis_pedido_contratacao SET idExecutante = '$idFisica' WHERE idPedidoContratacao = '$id_ped'";
 		$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
 		if($query_insert_pedido)
@@ -389,15 +427,15 @@ If($query1 != '' && $query2 != '')
 		</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
-					<form method='POST' action='?perfil=contratados&p=fisica'>
-						<input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro cpf'>
+					<form method='POST' action='?perfil=contratados'>
+						<input type='submit' class='btn btn-theme btn-lg btn-block' value='Ir para Contratados'>
 					</form>
 				</div>
 				<div class="col-md-6">
-					<form method='POST' action='?perfil=compara_executante'>
-						<input type='hidden' name='insereFisica' value='1'>
+					<form method='POST' action='?perfil=compara_executante&busca=<?php echo $cpf_busca ?>&id_ped=<?php echo $id_ped?>'>
+						<input type='hidden' name='inserirExecutante'>
 						<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
-						<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
+						<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Inserir Executante no Pedido'>
 					</form>
 				</div>
 			</div>

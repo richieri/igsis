@@ -138,7 +138,11 @@ if(isset($_POST['importarCapacIgsis']))
 				if($edicaoPessoa = 2)
 				{
 					$cpfPf = $_SESSION['cpfPf'];
-					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_executante$busca=".$cpfPf."'>";
+					$sql_pedido = "SELECT  * FROM igsis_pedido_contratacao ORDER BY idPedidoContratacao DESC LIMIT 0,1";
+					$query_pedido = mysqli_query($con1,$sql_pedido);
+					$pedido = mysqli_fetch_array($query_pedido);
+					$id_ped = $pedido['idPedidoContratacao'];
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_executante$busca=".$cpfPf."&id_ped=".$id_ped."'>";
 				}
 			}
 			echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=contratados'>";
@@ -219,9 +223,9 @@ If($query1 == '' && $query2 != '')
 				</div>
 				<div class="col-md-6">
 					<form method='POST' action='<?php echo $link ?>' enctype='multipart/form-data'>
-							<input type='hidden' name='busca' value='<?php echo $cnpj_busca ?>'>
-							<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
-						</form>
+						<input type='hidden' name='busca' value='<?php echo $cnpj_busca ?>'>
+						<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
+					</form>
 				</div>
 			</div>
 
@@ -657,10 +661,8 @@ If($query1 != '' && $query2 != '')
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<form method='POST' action='?perfil=compara_executante&busca=<?php echo $cpfPf ?>'>
-							<input type='hidden' name='insereFisica' value='1'>
-							<input type='hidden' name='idPedido' value='1'>
-							<input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaJuridica'] ?>'>
-							<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Ir para o executante'>
+							<input type='hidden' name='Id_PessoaJuridica' value='<?php echo $query1['Id_PessoaJuridica'] ?>'>
+							<input type ='submit' name='inserePedido' class='btn btn-theme btn-lg btn-block' value='Ir para o executante'>
 						</form>
 					</div>
 				</div>
