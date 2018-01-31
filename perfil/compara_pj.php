@@ -582,7 +582,6 @@ If($query1 != '' && $query2 != '')
 										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='DataAtualizacao'  />
 										<input type='hidden' name='varCampo' value='".$dataAtualizacao."'  />
-										<input type='hidden' name='busca' value='".$cnpj."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 									</form>
 								</td>";
