@@ -51,6 +51,7 @@ $Endereco = $pessoa["Endereco"];
 $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
+$NumeroProcesso = $pedido["NumeroProcesso"];
 
 $ano=date('Y');
 $dataAtual = date("d/m/Y");

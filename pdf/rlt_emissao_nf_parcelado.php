@@ -7,30 +7,27 @@ require_once("../funcoes/funcoesSiscontrat.php");
 
 //CONEXÃO COM BANCO DE DADOS 
 $conexao = bancoMysqli();
-
+   
 //CONSULTA 
 $id_ped=$_GET['id'];
 $ano=date('Y');
+$dataAtual = date("d/m/Y");
 
 dataPagamento($id_ped);
 
 $pedido = siscontrat($id_ped);
-$pj = siscontratDocs($pedido['IdProponente'],2);
-$ex = siscontratDocs($pedido['IdExecutante'],1);
-$rep01 = siscontratDocs($pj['Representante01'],3);
-$rep02 = siscontratDocs($pj['Representante02'],3);
+$pessoa = siscontratDocs($pedido['IdProponente'],1);
 $parcelamento = retornaParcelaPagamento($id_ped);
 
 $id_parcela = $_GET['parcela'];
-
 $valorParcela = $parcelamento[$id_parcela]['valor'];
-$ValorPorExtenso = valorPorExtenso(($parcelamento[$id_parcela]['valor']));
+$ValorPorExtenso = valorPorExtenso(dinheiroDeBr($parcelamento[$id_parcela]['valor']));
 
 
 $id = $pedido['idEvento'];
 $Objeto = $pedido["Objeto"];
 $Periodo = $pedido["Periodo"];
-$ValorGlobal = dinheiroParaBr($pedido["ValorGlobal"]);
+
 $FormaPagamento = $pedido["FormaPagamento"];
 $notaFiscal = $pedido["notaFiscal"];
 $descricaoNF = $pedido["descricaoNF"];
@@ -123,7 +120,7 @@ switch($verba)
 <p><strong>Município:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Estado:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>I. Est. Nº</strong>: Isento </p>
 <p>&nbsp;</p>
 <p><strong>Nota Fiscal:</strong> <?php echo $notaFiscal?></p>
-<p align="justify"><strong>Valor:</strong> R$<?php echo $valorParcela?> (<?php echo $ValorPorExtenso?> )</p>
+<p align="justify"><strong>Valor:</strong> R$ <?php echo $valorParcela?> (<?php echo $ValorPorExtenso?> )</p>
 <p align="justify"><strong>Descrição:</strong> <?php echo $descricaoNF?></p>
 <p align="justify">Pagamento referente ao <?php echo $Objeto?></p>
 <p>&nbsp;</p>   

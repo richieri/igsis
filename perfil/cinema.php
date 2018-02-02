@@ -98,13 +98,18 @@
 							</div>
 						</div>			  
 						<div class="form-group">
-							<div class="col-md-offset-2 col-md-6"><strong>Minutagem (em minutos):</strong><br/>
+							<div class="col-md-offset-2 col-md-6"><strong>Duração (em minutos):</strong><br/>
 								<input type="text" class="form-control" id="minutagem" name="minutagem" placeholder="">
 							</div>				  
 							<div class=" col-md-6"><strong>Link para trailer</strong><br/>
 								<input type="text" class="form-control" id="link" name="link" placeholder="link">
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><strong>Classificação etária:</strong><br/>
+								<input type="text" class="form-control" id="indicacaoEtaria" name="indicacaoEtaria" placeholder="(em anos; 0 para livre)">
+							</div>				  
+						</div>						
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<input type="hidden" name="inserirFilme" value="1" />
@@ -142,7 +147,7 @@
 					$linkTrailer = $_POST['link'];
 					$elenco = addslashes($_POST['elenco']);
 					$pais2 = $_POST['pais2'];
-					$classificao = $_POST['classificacao'];
+					$indicacaoEtaria = $_POST['indicacaoEtaria'];
 					$sql_inserir_filme = "INSERT INTO `ig_cinema` 
 						(`idCinema`, 
 						`ig_pais_idPais`, 
@@ -175,7 +180,7 @@
 						'$elenco',
 						'$pais2',
 						'1', 
-						'$classificao')";
+						'$indicacaoEtaria')";
 					if(mysqli_query($con,$sql_inserir_filme))
 					{
 						$mensagem = "Filme inserido com sucesso";
@@ -203,7 +208,7 @@
 					$linkTrailer = $_POST['link'];
 					$elenco = addslashes($_POST['elenco']);
 					$pais2 = $_POST['pais2'];
-					$classificacao = $_POST['classificacao'];
+					$indicacaoEtaria = $_POST['indicacaoEtaria'];
 					$idCinema = $_POST['editarFilme'];
 					$sql_atualizar_filme = "UPDATE ig_cinema 
 						SET `ig_pais_idPais` = '$pais1' ,
@@ -218,7 +223,7 @@
 						`minutagem` = '$minutagem' ,
 						`linkTrailer` = '$linkTrailer' ,
 						`elenco` = '$elenco' ,
-						`indicacaoEtaria` = '$classificacao' ,
+						`indicacaoEtaria` = '$indicacaoEtaria' ,
 						`ig_pais_IdPais_2` = '$pais2'
 						WHERE `idCinema` = '$idCinema'";
 					verificaMysql($sql_atualizar_filme);
@@ -257,9 +262,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Direção:</strong><br/>
-								<input type="text" class="form-control" id="direcao" name="direcao" placeholder="" value="<?php echo $filme['direcao']; ?>" >
-							</div>
+							
 						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6"><strong>País de origem*:</strong><br/>
@@ -286,8 +289,8 @@
 							<div class="col-md-offset-2 col-md-6"><strong>Bitola:</strong><br/>
 								<input type="text" class="form-control" id="bitola" name="bitola" placeholder="" value="<?php echo $filme['bitola']; ?>">
 							</div>				  
-							<div class="col-md-6"><strong>Minutagem (em minutos):</strong><br/>
-								<input type="text" class="form-control" id="minutagem" name="minutagem" placeholder="" value="<?php echo $filme['minutagem']; ?>">
+							<div class="col-md-6"><strong>Direção:</strong><br/>
+								<input type="text" class="form-control" id="direcao" name="direcao" placeholder="" value="<?php echo $filme['direcao']; ?>" >
 							</div>	
 						</div>
 						<div class="form-group">
@@ -301,12 +304,18 @@
 							</div>
 						</div>			  
 						<div class="form-group">
-							<div class="col-md-offset-2 col-md-6"><strong>Classificação etária (em anos; 0 para livre):</strong><br/>
-								<input type="text" class="form-control" id="classificacao" name="classificacao" placeholder="Somente numeros" value="<?php echo $filme['indicacaoEtaria']; ?>">
-							</div>				  
-							<div class=" col-md-6"><strong>Link para trailer</strong><br/>
+							<div class="col-md-offset-2 col-md-6"><strong>Duração (em minutos):</strong><br/>
+								<input type="text" class="form-control" id="minutagem" name="minutagem" placeholder="" value="<?php echo $filme['minutagem']; ?>">
+							</div>
+							<div class="col-md-6"><strong>Link para trailer</strong><br/>
 								<input type="text" class="form-control" id="link" name="link" placeholder="link" value="<?php echo $filme['linkTrailer']; ?>">
 							</div>
+			  
+						</div>
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><strong>Classificação etária:</strong><br/>
+								<input type="text" class="form-control" id="indicacaoEtaria" name="indicacaoEtaria" placeholder="(em anos; 0 para livre)" value="<?php echo $filme['indicacaoEtaria']; ?>">
+							</div>				  
 						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
