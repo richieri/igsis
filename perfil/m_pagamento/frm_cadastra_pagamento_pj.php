@@ -228,14 +228,14 @@ include 'includes/menu.php';
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
 										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
 										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a><br/>
-										<a target="_blank" href='.$link13.'?id='.$id_ped.'>Nota Fiscal</a></td>';
+										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a></td>';
 
 								echo '<td class="list_description">
 										<a target="_blank" href='.$link4.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
 										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
 										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a><br/>
-										<a target="_blank" href='.$link13.'?id='.$id_ped.'>Nota Fiscal</a></td>';
+										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a></td>';
 							}
 						?>
 						</tbody>
