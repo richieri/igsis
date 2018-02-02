@@ -9,8 +9,6 @@ $link3=$http."rlt_recibo_pagamento_pf.php?id=".$id_ped."";
 $link4=$http."rlt_recibo_pagamento_parcelado_pf.php?id=".$id_ped."";
 $link5=$http."rlt_recibo_documentacao_pf.php?id=".$id_ped."";
 $link6=$http."rlt_ateste_confirmacao_pf.php?id=".$id_ped."";
-$link7=$http."rlt_emissao_nf_parcelado.php?id=".$id_ped."";
-$link8=$http."rlt_emissao_nf_integral.php?id=".$id_ped."";
 
 
 $data = date('Y-m-d H:i:s');
@@ -83,9 +81,6 @@ if(isset($_POST['atualizar']))// atualiza o pedido
 			<div class='form-group'>
 				<div class='col-md-offset-4 col-md-6'>
 					<a href='$link6?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Ateste de Confirmação</a>
-				</div>
-				<div class='col-md-offset-4 col-md-6'>
-					<a href='$link7?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>N.F.</a>
 				</div>
 			</div>
 
@@ -207,7 +202,6 @@ include 'includes/menu.php';
 								<td></td>
 								<td></td>
 								<td></td>
-								<td></td>
 							</tr>
 						</thead>
 						<tbody>
@@ -221,7 +215,6 @@ include 'includes/menu.php';
 								echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Recibo</a></td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link5.'?id='.$id_ped.' >Documentação</a></td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link6.'?id='.$id_ped.' >Ateste de Confirmação</a></td>';
-								echo '<td class="list_description"><a target="_blank" href='.$link7.'?id='.$id_ped.' >N.F.</a></td></tr>';
 							}
 						?>
 						</tbody>
