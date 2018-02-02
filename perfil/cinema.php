@@ -226,7 +226,6 @@
 						`indicacaoEtaria` = '$indicacaoEtaria' ,
 						`ig_pais_IdPais_2` = '$pais2'
 						WHERE `idCinema` = '$idCinema'";
-					verificaMysql($sql_atualizar_filme);
 					if(mysqli_query($con,$sql_atualizar_filme))
 					{
 						$mensagem = "Filme atualizado com sucesso.";
