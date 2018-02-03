@@ -35,6 +35,7 @@
 				//"CargaHoraria" => $carga , //fazer a funcao
 				"Proponente" => $pessoa['nome'],
 				"Verba" => $pedido['idVerba'] ,
+				"OperadorPagamentos" => $pedido['idPagamentos'],
 				"Justificativa" => $evento['justificativa'] ,
 				"ParecerTecnico" => $evento['parecerArtistico'],
 				"DataCadastro" => exibirDataBr($evento['dataEnvio']),
@@ -61,6 +62,7 @@
 			$proponente = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 			$fiscal = recuperaUsuario($evento['idResponsavel']);
 			$suplente = recuperaUsuario($evento['suplente']);
+			$operadorpagamentos = recuperaUsuario($pedido['idPagamentos']);
 			$x = array(
 				"idSetor" => $usuario['idInstituicao'],
 				"Setor" => $instituicao['instituicao'],
@@ -79,6 +81,7 @@
 				"DataCadastro" => $evento['dataEnvio'],
 				"Fiscal" => $fiscal['nomeCompleto'] ,
 				"Suplente" => $suplente['nomeCompleto'],
+				"OperadorPagamentos" => $operadorpagamentos['nomeCompleto'],
 				"Observacao"=> $pedido['observacao'], //verificar
 				"DataCadastro"=> $evento['dataEnvio'],
 				"Proponente"=> $proponente['nome'],

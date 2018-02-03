@@ -18,6 +18,7 @@ dataPagamento($id_ped);
 
 $id = $pedido['idEvento'];
 $Objeto = $pedido["Objeto"];
+$NumeroProcesso = $pedido["NumeroProcesso"];
 
 $ano=date('Y');
 
@@ -26,7 +27,7 @@ $codPed = "";
 
 // GERANDO O WORD:
 header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Integral.doc");
+header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - EmailAnexoNE.doc"); 
 
 ?>
 
@@ -36,9 +37,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 
 <p align="justify">Boa tarde,</p>
 <p align="justify">Tendo em vista a apresentação <?php echo $Objeto?>, encaminhamos em anexo a Nota de Empenho e o Anexo da Nota de Empenho da referida contratação (documento esse que é o contrato devidamente formalizado) para conhecimento e fins de arquivamento da contratada.</p>
-<p>&nbsp;</p>
 <p align="justify">Informamos que em breve será enviado o Kit de Pagamento.</p>
-<p>&nbsp;</p>
 <p align="justify">Atenciosamente,</p>
 <p>Contratos Artísticos / Pagamento</p>
 <p>Secretaria Municipal da Cultura</p>

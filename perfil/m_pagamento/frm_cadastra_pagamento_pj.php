@@ -16,6 +16,9 @@ $link10=$http."rlt_recibo_documentacao_pj.php";
 $link11=$http."rlt_ateste_confirmacao_pj.php";
 $link12=$http."rlt_emissao_nf_integral.php";
 $link13=$http."rlt_emissao_nf_parcelado.php";
+$link14=$http."rlt_email_kit_pagamento.php";
+$link15=$http."rlt_email_anexo_ne.php";
+
 
 $data = date('Y-m-d H:i:s');
 
@@ -93,6 +96,11 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 				<td class='list_description'><strong>Emissão de Nota Fiscal</strong></td>
 				<td class='list_description'><a href='$link12?id=$id_ped' target='_blank'>Integral</a></td>
 				<td class='list_description'><a href='$link13?id=$id_ped'  target='_blank'>Parcelado</a></td>
+			</tr>
+			<tr>
+				<td class='list_description'><strong>Email</strong></td>
+				<td class='list_description'><a href='$link14?id=$id_ped' target='_blank'>Kit de Pagamento</a></td>
+				<td class='list_description'><a href='$link15?id=$id_ped' target='_blank'>Anexo e Nota de Empenho</a></td>
 			</tr>	
 		</table>
 		
@@ -228,15 +236,16 @@ include 'includes/menu.php';
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
 										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
 										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a><br/>
-										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a></td>';
+										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a><br />
+										<a target="_blank" href='.$link14.'?id='.$id_ped.'&parcela='.$i.'>Email Kit</a><br />
+										<a target="_blank" href='.$link15.'?id='.$id_ped.'&parcela='.$i.'>Email NE</a></td>';
 
 								echo '<td class="list_description">
 										<a target="_blank" href='.$link4.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
 										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
 										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a><br/>
-										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a></td>';
-							}
+										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a></td>';						}
 						?>
 						</tbody>
 					</table>
