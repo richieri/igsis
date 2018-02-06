@@ -4,9 +4,9 @@
 				<ul class="dl-menu">
 					<?php
 					if(isset($_SESSION['com'])){ ?>
-					<li><a href="?perfil=comunicacao&p=edicao&id=<?php echo $_SESSION['idEvento'] ?>">< Voltar</a></li>
+					<li><a href="?perfil=comunicacao&p=editar&idCom=<?php echo $_GET['idCom'] ?>">Voltar</a></li>
 					<?php }else{ ?>
-				   <li><a href="?perfil=evento&p=area">< Voltar</a></li>
+				   <li><a href="?perfil=evento&p=area">Voltar</a></li>
 				   <?php } ?>
 					<li><a href="?perfil=cinema&p=inserir">Inserir novo filme</a></li>
 					<li><a href="?perfil=cinema&p=listar">Listar filmes</a></li>

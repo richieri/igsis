@@ -1,6 +1,6 @@
 ﻿<?php
 //geram o insert pro framework da igsis
-$pasta = "?perfil=comunicacao_beta&p=";
+$pasta = "?perfil=comunicacao&p=";
 $perfil = $_SESSION['perfil'];
 
 $server = "http://".$_SERVER['SERVER_NAME']."/igsis/";

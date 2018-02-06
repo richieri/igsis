@@ -98,7 +98,7 @@
 						
 					<tr>
 					<td><?php echo retornaProtoEvento($evento['idEvento']) ?></td>
-					<td><a href="?perfil=comunicacao&p=edicao&id=<?php echo $evento['idEvento']  ?>"><?php echo $event['nomeEvento'] ?></a>  [<?php 
+					<td><a href="?perfil=comunicacao&p=editar&id=<?php echo $evento['idEvento']  ?>"><?php echo $event['nomeEvento'] ?></a>  [<?php 
 					if($chamado['numero'] == '0'){
 						echo "0";
 					}else{

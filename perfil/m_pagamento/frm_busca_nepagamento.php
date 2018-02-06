@@ -341,7 +341,7 @@ if(isset($_POST['pesquisar']))
 									<td>Valor</td>
 									<td>Status</td>
 									<td>Operador</td>
-									<td>Data Pagto</td>
+									<td>Data Envio Kit</td>
 									<td colspan="7">GERAR</td>
 								</tr>
 							</thead>

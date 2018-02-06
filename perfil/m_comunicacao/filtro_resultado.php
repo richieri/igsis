@@ -193,7 +193,7 @@ $total = mysqli_num_rows($query_busca_dic);
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
 						<h3>Comunicação</h3>								
-						<h6><a href="?perfil=comunicacao_beta&p=filtro">Efetuar outro filtro</a></h6>	
+						<h6><a href="?perfil=comunicacao&p=filtro">Efetuar outro filtro</a></h6>	
 					</div>
 				</div>
 			</div>	
@@ -220,7 +220,7 @@ $total = mysqli_num_rows($query_busca_dic);
 					?>	
 							<tr>
 								<td><?php echo $evento['ig_evento_idEvento'] ?></td>
-								<td><a href="?perfil=comunicacao_beta&p=editar&idCom=<?php echo $evento['idCom'] ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
+								<td><a href="?perfil=comunicacao&p=editar&idCom=<?php echo $evento['idCom'] ?>"><?php echo $evento['nomeEvento'] ?></a>  [<?php 
 							if($chamado['numero'] == '0')
 							{
 								echo "0";
@@ -265,7 +265,7 @@ $total = mysqli_num_rows($query_busca_dic);
 								echo "<strong>Páginas</strong>";
 								for($i = 1; $i < $numPaginas + 1; $i++) 
 								{
-									echo "<a href='?perfil=comunicacao_beta&p=filtro_resultado&pagina=$i'> [".$i."]</a> ";
+									echo "<a href='?perfil=comunicacao&p=filtro_resultado&pagina=$i'> [".$i."]</a> ";
 								}
 							?>
 							</td>

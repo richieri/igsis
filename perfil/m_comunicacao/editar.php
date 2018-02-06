@@ -44,7 +44,8 @@
 				$mensagem = "Erro ao apagar.";
 			}
 		}	
-		
+
+	
 		if(isset($_POST['atualizar']))
 		{
 			if(isset($_POST['editado']))
@@ -129,6 +130,7 @@
 		$idEvento = $campo['ig_evento_idEvento'];
 		$chamado = recuperaAlteracoesEvento($idEvento);
 		$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
+
 ?>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
@@ -143,15 +145,16 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form method="POST" action="?perfil=comunicacao_beta&p=editar&idCom=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=comunicacao&p=editar&idCom=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">	
-							<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $campo['ig_evento_idEvento'] ?>" target="_blank">Documento enviado </a> | Edição | <a href="?perfil=comunicacao_beta&p=spcultura&id=<?php echo $idEvento; ?>" >SPCultura</a> 
+							<h6><a href="?perfil=busca&p=detalhe&evento=<?php echo $campo['ig_evento_idEvento'] ?>" target="_blank">Documento enviado </a> | Edição | <a href="?perfil=comunicacao&p=spcultura&id=<?php echo $idEvento; ?>" >SPCultura</a> 
 			<?php 
 				if($campo['ig_tipo_evento_idTipoEvento'] == 1)
 				{
 					//edição cinema
 					$_SESSION['cinema'] = 1;
+					$_SESSION['idEvento'] = $campo['ig_evento_idEvento'];
 					$_SESSION['com'] = 1;
 			?>
 								| <a href="?perfil=cinema" >Filmes </a>
@@ -277,7 +280,7 @@
 						</div>
 					</div>
 				</form>
-				<form method="POST" action="?perfil=comunicacao_beta&p=editar&idCom=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
+				<form method="POST" action="?perfil=comunicacao&p=editar&idCom=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-4 col-md-4">
 							<input type="hidden" name="apagar" value="<?php echo $campo['idCom'] ?>" />
