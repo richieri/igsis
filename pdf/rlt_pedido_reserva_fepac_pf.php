@@ -88,10 +88,10 @@ $sei =
   "<p><strong>Sr(a). Supervisor</strong></p>".
   "<p>&nbsp;</p>".
   "<p>O presente processo trata da contratação de ".$objeto.", no valor de R$ ".$ValorGlobal." ( ".$ValorPorExtenso." ), conforme solicitação LINK, tendo sido anexados os documentos necessários e incluido o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a ".$qtdApresentacoes." ( ".$qtdApresentacoesPorExtenso." ) apresentação(ões), no período de ".$Periodo.".</p>".
-   "<p>Autorizo a reserva que deverá onerar recursos do FEPAC, dotação 95.10.13.392.3001.6354.3390.3600.08 (Pessoa Física), mediante RESERVA COM TRANSFERÊNCIA PARA U.O. ".$uo.".</p>". 
+   "<p>Autorizo a reserva que deverá onerar recursos do FEPAC, dotação 95.10.13.392.3001.6354.3390.3900.08 (Pessoa Jurídica), mediante RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10 - Fonte 08.</p>". 
   "<p>&nbsp;</p>".
   "<p>&nbsp;</p>".
-  "<p>Após, enviar para SMC/Assessoria Jurídica para prosseguimento. </p>".
+  "<p>Após, enviar para SMC/AJ para prosseguimento.</p>".
   "<p>&nbsp;</p>"
 
 ?>

@@ -73,9 +73,9 @@ $sei =
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
   "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentações, no período de "."$Periodo".".</p>".
-  "<p>Assim, solicito a reserva de recursos que deverá onerar a dotação 1870 – Programação de Atividades Culturais (Pessoa Jurídica) da U.O. 25.30.</p>".
+  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6356 – Programação de Atividades Culturais(Pessoa Jurídica) da U.O. 25.10 - Fonte 00. </p>".
   "<p>&nbsp;</p>".
-  "<p>Após, enviar para SMC/APE para prosseguimento.</p>".
+  "<p>Após, enviar para SMC/AJ para prosseguimento.</p>".
   "<p>&nbsp;</p>".
   "<p>Chefe de Gabinete</p>".  
   "<p>&nbsp;</p>"

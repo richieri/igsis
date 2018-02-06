@@ -70,20 +70,15 @@ $sei =
   "<p><strong>INTERESSADO:</strong> "."$nome"."  </span></p>".
   "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
   "<p>&nbsp;</p>".
-  "<p><strong>SMC/Chefia de Gabinete</strong></p>".
-  "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, foram anexados os documentos necessários, ratificando o caráter referente a XX hora/aula, no valor de R$ 70,00 cada hora/aula, como previsto no Edital LINK, no período de "."$periodo".". Diante disso, encaminho para reserva de recursos.</p>".
-  "<p>Supervisão de Contratação Artística</p>".
-  "<p>&nbsp;</p>".
-  "<p>_________________________________________________________________________________________________________________________________</p>".
-  "<p>&nbsp;</p>".
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>Autorizo a reserva de recursos no valor de R$ ".$ValorGlobal."  (".$ValorPorExtenso." ) na Dotação 25.70.13.392.3001.1860.3390.3600.00 (Pessoa Física) visando possibilitar a contratação acima mencionada.</p>".
-  "<p>Chefe de Gabinete</p>".
+  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." apresentações , no período de "."$periodo".".</p>".
+  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6372  – Programação de Atividades Culturais(Pessoa Física) da U.O. 25.10 - Fonte 00.</p>".
   "<p>&nbsp;</p>".
-  "<p>Após, encaminhar para SMC / Assessoria Jurídica para prosseguimento. </p>".
+  "<p>Após, enviar para SMC/AJ para prosseguimento.</p>".
+  "<p>&nbsp;</p>".
+  "<p>Chefe de Gabinete</p>".  
   "<p>&nbsp;</p>"
 
 ?>

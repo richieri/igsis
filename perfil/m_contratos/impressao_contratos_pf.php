@@ -42,8 +42,6 @@ $link23 = $http."rlt_direitos_conexos.php";
 
 $link24 = $http."rlt_pedido_reserva_fepac_pf.php";
 $link25 = $http."rlt_pedido_reserva_vocacional_pf.php";
-$link27 = $http."rlt_pedido_reserva_transferencia_pf.php";
-$link28 = $http."rlt_pedido_reserva_transferencia_virada_pf.php";
 $link29 = $http."rlt_pedido_reserva_centrosculturais_pf.php";
 $link30 = $http."rlt_pedido_reserva_gabinete_pf.php";
 $link31 = $http."rlt_pedido_reserva_dph_pf.php";
@@ -51,7 +49,7 @@ $link32 = $http."rlt_pedido_reserva_csmb_pf.php";
 $link33 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
 $link41 = $http."rlt_pedido_reserva_ccsp_pf.php";
 $link42 = $http."rlt_pedido_reserva_oficina.php";
-$link43 = $http."rlt_pedido_reserva_virada_pf.php";
+$link43 = $http."rlt_pedido_reserva_bma_pf.php";
 
 
 $link34 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
@@ -174,11 +172,6 @@ echo "
 						<tr><td class='list_description'><br/></td></tr>
 						
 						<tr class='list_menu'><td colspan='2'><strong>PEDIDO DE RESERVA</strong></td></tr>
-												
-						<tr>
-							<td><a href='$link27?id=$id_ped' target='_blank'><strong>Verba com Transferência</strong></a></td>
-							<td><a href='$link28?id=$id_ped' target='_blank'><strong>Verba com Transferência - VIRADA</strong></a></td>
-						</tr>
 						
 						<tr>
 							<td><a href='$link25?id=$id_ped' target='_blank'><strong>Formação</strong></a></td>
@@ -200,7 +193,7 @@ echo "
 						
 						<tr>
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
-							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Virada</strong></a></td>
+							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
 						</tr>
 						
 					</tbody>

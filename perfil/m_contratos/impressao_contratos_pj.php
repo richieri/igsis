@@ -34,8 +34,6 @@ $link25 = $http."rlt_proposta_exposicao_pj.php"."?id=".$id_ped."&penal=10";
 $link26 = $http."rlt_termo_doacao_pj.php";
 $link27 = $http."rlt_termo_parceria_pj.php";
 $link28 = $http."rlt_pedido_reserva_existente_pj.php";
-$link29 = $http."rlt_pedido_reserva_transferencia_virada_pj.php";
-$link30 = $http."rlt_pedido_reserva_transferencia_virada_centro_pj.php";
 $link32 = $http."rlt_normas_internas_teatros_pj.php"."?id=".$id_ped;
 $link33 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal=22";
 $link34 = $http."rlt_proposta_mediacao_edital_pj.php"."?id=".$id_ped."&penal=24";
@@ -54,9 +52,8 @@ $link47 = $http."rlt_pedido_reserva_csmb_pj.php";
 $link48 = $http."rlt_pedido_reserva_casasdecultura_pj.php";
 $link49 = $http."rlt_pedido_reserva_ccsp_pj.php";
 $link50 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal=30";
-$link51 = $http."rlt_pedido_reserva_virada_pj.php";
 $link52 = $http."rlt_minuta_acima80k.php";
-
+$link53 = $http."rlt_pedido_reserva_bma_pj.php";
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -153,27 +150,25 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>PEDIDO DE RESERVA</strong></td></tr>
 						
 						<tr>
-							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva de Verba com Transferência - VIRADA</strong></a></td>		
 							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais</strong></a></td>
-						</tr>
-						
-						<tr>
 							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
+						</tr>
+						
+						<tr>
 							<td><a href='$link46?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
-						</tr>
-						
-						<tr>
 							<td><a href='$link47?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
-							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura </strong></a></td>
 						</tr>
 						
 						<tr>
+							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura </strong></a></td>
 							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
-							<td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
 						</tr>
+						
 						<tr>
-							<td><a href='$link51?id=$id_ped' target='_blank'><strong>Virada</strong></a></td>
-						</tr>	
+							<td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
+							<td><a href='$link53?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
+						</tr>
+
 					</tbody>
 				</table>
 			</div>	

@@ -12,30 +12,28 @@
 //CONSULTA 
 $id_ped=$_GET['id'];
 dataReserva($id_ped);
-$ano=date('Y');
-
+$linha_tabelas = siscontrat($id_ped);
 $pedido = siscontrat($id_ped);
-$pj = siscontratDocs($pedido['IdProponente'],2);
-$ex = siscontratDocs($pedido['IdExecutante'],1);
-$rep01 = siscontratDocs($pj['Representante01'],3);
-$rep02 = siscontratDocs($pj['Representante02'],3);
+
 $codPed = $id_ped;
-$objeto = $pedido["Objeto"];
-$ValorGlobal = $pedido["ValorGlobal"];
-$ValorPorExtenso = valorPorExtenso($pedido["ValorGlobal"]); 
+$objeto = $linha_tabelas["Objeto"];
+$ValorGlobal = $linha_tabelas["ValorGlobal"];
+$ValorPorExtenso = valorPorExtenso($linha_tabelas["ValorGlobal"]); 
+$periodo = $linha_tabelas["Periodo"];
+$duracao = $linha_tabelas["Duracao"];
 $dataAtual = date("d/m/Y");
-$NumeroProcesso = $pedido["NumeroProcesso"];
-$assinatura = $pedido["Assinatura"];
-$cargo = $pedido["Cargo"];
+$NumeroProcesso = $linha_tabelas["NumeroProcesso"];
+$assinatura = $linha_tabelas["Assinatura"];
+$cargo = $linha_tabelas["Cargo"];
 $qtdApresentacoes = $pedido["qtdApresentacoes"];
 $qtdApresentacoesPorExtenso = qtdApresentacoesPorExtenso ($pedido["qtdApresentacoes"]);
-$Periodo = $pedido["Periodo"];
 
 
-//PessoaJuridica
+$linha_tabelas_pessoa = siscontratDocs($linha_tabelas['IdProponente'],1);
+$nome = $linha_tabelas_pessoa["Nome"];
+$cpf = $linha_tabelas_pessoa["CPF"];
 
-$pjRazaoSocial = $pj["Nome"];
-$pjCNPJ = $pj['CNPJ'];
+$setor = $linha_tabelas["Setor"];
 
 $ano=date('Y');
   
@@ -67,19 +65,20 @@ $ano=date('Y');
 
 $sei = 
   "<p>&nbsp;</p>".
-  "<p><strong>INTERESSADO:</strong> "."$pjRazaoSocial"."</span></p>".
+  "<p><strong>INTERESSADO:</strong> "."$nome"."  </span></p>".
   "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
   "<p>&nbsp;</p>".
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentações, no período de "."$Periodo".".</p>".
-  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6354 – Programação de Atividades Culturais(Pessoa Jurídica) da U.O. 25.10 - Fonte 00. </p>".
+  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentações, no período de "."$periodo".".</p>".
+  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 2026 – Programação de Atividades Culturais(Pessoa Jurídica) da U.O. 25.10 - Fonte 00. </p>".
   "<p>&nbsp;</p>".
-  "<p>Após, enviar para SMC/AJ para prosseguimento. </p>".
+  "<p>Após, enviar para SMC/AJ para prosseguimento.</p>".
   "<p>&nbsp;</p>".
   "<p>Chefe de Gabinete</p>".  
   "<p>&nbsp;</p>"
+
 
 ?>
 
