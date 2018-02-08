@@ -175,7 +175,7 @@ if(isset($_POST['pesquisar']))
 			}
 		}
 		elseif($idEvento != "")
-		{ // Foi inserido o número do pedido
+		{ // Foi inserido o número do evento
 			$sql_idEvento = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.estado 
 						FROM igsis_pedido_contratacao AS ped 
 						INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento
@@ -316,7 +316,21 @@ if(isset($_POST['pesquisar']))
 				$filtro_projeto = " AND ig_evento.projetoEspecial = '$projeto'  ";
 			}
 				
-			$sql_evento = "SELECT * FROM ig_evento, igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND igsis_pedido_contratacao.idEvento = ig_evento.idEvento AND dataEnvio LIKE '2017%' $filtro_evento $filtro_fiscal $filtro_tipo $filtro_instituicao $filtro_juridico $filtro_projeto ORDER BY ig_evento.idEvento DESC ";
+			$sql_evento = "SELECT * 
+							FROM ig_evento,
+							igsis_pedido_contratacao 
+							WHERE ig_evento.publicado = '1' 
+							AND igsis_pedido_contratacao.publicado = '1' 
+							AND ig_evento.idEvento = igsis_pedido_contratacao.idEvento 
+							$filtro_evento 
+							$filtro_fiscal 
+							$filtro_tipo 
+							$filtro_instituicao 
+							$filtro_processo 
+							$filtro_juridico
+							$filtro_projeto
+							AND estado IS NOT NULL 
+							ORDER BY idPedidoContratacao DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
 			$i = 0;
 			while($evento = mysqli_fetch_array($query_evento))
