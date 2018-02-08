@@ -106,7 +106,7 @@ if(isset($_POST['pesquisar']))
 			$sql_existe = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.estado 
 						FROM igsis_pedido_contratacao AS ped 
 						INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento
-						WHERE idPedidoContratacao = '$id' AND ped.publicado = '1' AND eve.publicado = 1 AND estado IS NOT NULL AND dataEnvio LIKE '2017%'
+						WHERE idPedidoContratacao = '$id' AND ped.publicado = '1' AND eve.publicado = 1 AND estado IS NOT NULL 
 						ORDER BY idPedidoContratacao DESC";
 			$query_existe = mysqli_query($con, $sql_existe);
 			$num_registro = mysqli_num_rows($query_existe);
@@ -180,7 +180,7 @@ if(isset($_POST['pesquisar']))
 						FROM igsis_pedido_contratacao AS ped 
 						INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento
 						WHERE ped.idEvento = '$idEvento' AND 
-						(ped.publicado = '1' AND eve.publicado = 1 AND estado IS NOT NULL AND dataEnvio LIKE '2017%')
+						(ped.publicado = '1' AND eve.publicado = 1 AND estado IS NOT NULL)
 						ORDER BY idPedidoContratacao DESC";
 			$query_idEvento = mysqli_query($con, $sql_idEvento);
 			$num_registro = mysqli_num_rows($query_idEvento);
