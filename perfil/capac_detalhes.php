@@ -1,7 +1,13 @@
 <?php
 
+unset($_SESSION['idCapac']);
+unset($_SESSION['nomeEvento']);
+unset($_SESSION['nomeGrupo']);
+unset($_SESSION['tipoEvento']);
+
 $idCapac = $_GET['id_capac'];
 $con = bancoMysqliProponente();
+
 
 include '../include/menuEventoInicial.php';
 
