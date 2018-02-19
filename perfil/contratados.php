@@ -3392,9 +3392,15 @@
 							<table>
 								<tr>
 									<td width="50%"><td>
+									<?php $evento = recuperaEvento($_SESSION['idEvento']); ?>
 								</tr>
+		
+		<?php
+			if ($evento['ig_tipo_evento_idTipoEvento'] == 4 OR $evento['ig_tipo_evento_idTipoEvento'] == 5 OR $evento['ig_tipo_evento_idTipoEvento'] == 28 OR $evento['ig_tipo_evento_idTipoEvento'] == 34) {
+		?>
+		
 		<?php 
-			$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa' AND publicado = '1'";
+			$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa' AND publicado = '1' AND oficina = '1'";
 			$query_arquivos = mysqli_query($con,$sql_arquivos);
 			while($arq = mysqli_fetch_array($query_arquivos))
 			{
@@ -3405,7 +3411,28 @@
 		<?php
 			}
 		?>
-							</table>
+		
+		<?php
+			} else {
+		?>	
+		
+		<?php 
+			$sql_arquivos = "SELECT * FROM igsis_upload_docs WHERE tipoUpload = '$tipoPessoa' AND publicado = '1' AND teatro = '1' AND musica = '1' ";
+			$query_arquivos = mysqli_query($con,$sql_arquivos);
+			while($arq = mysqli_fetch_array($query_arquivos))
+			{
+		?>
+								<tr>
+									<td><label><?php echo $arq['documento']?></label></td><td><input type='file' name='arquivo[<?php echo $arq['sigla']; ?>]'></td>
+								</tr>
+		<?php
+			}
+		?>
+		
+		<?php
+			}
+		?>	
+			</table>
 							<br>
 							<input type="hidden" name="idPessoa" value="<?php echo $_REQUEST['idPessoa']; ?>"  />
 							<input type="hidden" name="tipoPessoa" value="<?php echo $_REQUEST['tipoPessoa']; ?>"  />
