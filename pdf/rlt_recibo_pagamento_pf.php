@@ -1,37 +1,13 @@
 <?php 
-   
-      
-   // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
-	require_once("../include/lib/fpdf/fpdf.php");
-	
-   //require '../include/';
-   require_once("../funcoes/funcoesConecta.php");
-   require_once("../funcoes/funcoesGerais.php");
-   require_once("../funcoes/funcoesSiscontrat.php");
 
-   //CONEXÃO COM BANCO DE DADOS 
-   $conexao = bancoMysqli();
+//require '../include/';
+require_once("../funcoes/funcoesConecta.php");
+require_once("../funcoes/funcoesGerais.php");
+require_once("../funcoes/funcoesSiscontrat.php");
 
-   
-class PDF extends FPDF
-{
-/*
-// Page header
-function Header()
-{
-	session_start();
-	$inst = recuperaDados("ig_instituicao",$_SESSION['idInstituicao'],"idInstituicao");
-	$logo = "../visual/img/".$inst['logo']; 
-    // Logo
-    $this->Image($logo,20,20,50);
-    // Move to the right
-    $this->Cell(80);
-    $this->Image('../visual/img/logo_smc.jpg',170,10);
-    // Line break
-    $this->Ln(20);
-}
-*/
-}
+
+//CONEXÃO COM BANCO DE DADOS 
+$conexao = bancoMysqli();
 
 
 //CONSULTA 
@@ -54,6 +30,7 @@ $Fiscal = $pedido["Fiscal"];
 $Suplente = $pedido["Suplente"];
 $NumeroProcesso = $pedido["NumeroProcesso"];
 
+
 $Nome = $pessoa["Nome"];
 $NomeArtistico = $pessoa["NomeArtistico"];
 $EstadoCivil = $pessoa["EstadoCivil"];
@@ -74,139 +51,39 @@ $INSS = $pessoa["INSS"];
 $ano=date('Y');
 
 
-// GERANDO O PDF:
-$pdf = new PDF('P','mm','A4'); //CRIA UM NOVO ARQUIVO PDF NO TAMANHO A4
-$pdf->AliasNbPages();
-$pdf->AddPage();
-
-   
-$x=20;
-$l=7; //DEFINE A ALTURA DA LINHA   
-   
-   $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
-
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 14);
-   $pdf->Cell(180,5,utf8_decode("RECIBO DE PAGAMENTO"),0,1,'C');
-   
-   $pdf->Ln();
-   $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 11.5);
-   $pdf->MultiCell(180,$l,utf8_decode("Recebi da Prefeitura de São Paulo - Secretaria Municipal de Cultura a importância de R$ ".$ValorGlobal." (".$ValorPorExtenso." ) referente à serviços prestados por meio do Processo Administrativo ".$NumeroProcesso."."));
-   
-   $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,'Nome:',0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(168,$l,utf8_decode($Nome));
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(23,$l,utf8_decode('Estado Civil:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(35,$l,utf8_decode($EstadoCivil),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(28,$l,utf8_decode('Nacionalidade:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(35,$l,utf8_decode($Nacionalidade),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(10,$l,utf8_decode('CCM:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(45,$l,utf8_decode($CCM),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(8,$l,utf8_decode('RG:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(50,$l,utf8_decode($RG),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(10,$l,utf8_decode('CPF:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(53,$l,utf8_decode($CPF),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(160,$l,utf8_decode($Endereco));
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(87,$l,utf8_decode($Telefones),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(13,$l,utf8_decode('E-mail:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(53,$l,utf8_decode($Email),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(64,$l,utf8_decode('Inscrição no INSS ou nº PIS / PASEP:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(50,$l,utf8_decode($INSS),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(36,$l,utf8_decode('Data de Nascimento:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(45,$l,utf8_decode($DataNascimento),0,1,'L');
-   
-   $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(31,$l,utf8_decode('Serviço Prestado:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(149,$l,utf8_decode($Objeto));
-  
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(27,$l,utf8_decode('Data / Período:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(153,$l,utf8_decode($Periodo));
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(16,$l,utf8_decode('Duração:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(164,$l,utf8_decode($Duracao."utos"));
-   
-   $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(16,$l,utf8_decode('Observações:'),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode('A validade deste recibo fica condicionada ao efetivo recebimento por ordem de pagamento ou credito em conta corrente no Banco do Brasil pelo contratado, ou na falta deste, ao recebimento no Departamento do Tesouro da Secretaria de fianças e Desenvolvimento Econômico, situado á Rua Pedro Américo, 32.'));
-   
-   $pdf->Ln();
-   $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("São Paulo, _______ de ________________________ de ".$ano."."));
-   
-   
-//RODAPÉ PERSONALIZADO
-   $pdf->SetXY($x,255);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(100,$l,utf8_decode($Nome),'T',1,'L');
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(100,$l,"RG: ".$RG,0,1,'L');
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(100,$l,"CPF: ".$CPF,0,1,'L');
-
-$pdf->Output();
-
+// GERANDO O WORD:
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Parcela $id_parcela.doc");
 
 ?>
+
+<html>
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<body>
+
+<p align="center"><strong>RECIBO DE PAGAMENTO</strong></p>
+<p>&nbsp;</p>
+<p align="justify">Recebi da Prefeitura de São Paulo - Secretaria Municipal de Cultura a importância de R$ <?php echo $ValorGlobal ?> (<?php echo $ValorPorExtenso?>  ) referente à serviços prestados por meio do Processo Administrativo <?php echo $NumeroProcesso ?>.</p>
+<p align="justify"><strong>Nome:</strong> <?php echo $Nome?></p>
+<p><strong>Estado Civil:</strong> <?php echo $EstadoCivil?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Nacionalidade:</strong> <?php echo $Nacionalidade?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CCM:</strong> <?php echo $CCM?></p> 
+<p><strong>RG:</strong> <?php echo $RG?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CPF:</strong> <?php echo $CPF?></p>
+<p><strong>Endereço:</strong> <?php echo $Endereco?></p>
+<p><strong>Telefone:</strong> <?php echo $Telefones?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>E-mail:</strong> <?php echo $Email?></p> 
+<p><strong>Inscrição no INSS ou nº PIS / PASEP:</strong> <?php echo $INSS?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Data de Nascimento:</strong> <?php echo $DataNascimento?></p>   
+<p align="justify"><strong>Serviço Prestado:</strong> <?php echo $Objeto?></p>
+<p align="justify"><strong>Data / Período:</strong> <?php echo $Periodo?></p>
+<p align="justify"><strong>Duração:</strong> <?php echo $Duracao?>utos</p>
+<p align="justify"><strong>Local:</strong> <?php echo $Local?></p>
+<p>&nbsp;</p>
+<p align="justify">São Paulo, _______ de ________________________ de <?php echo $ano?>.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table width="100%" border="0">
+<p>________________________</p>
+<p><?php echo $Nome?><br/>
+   RG: <?php echo $RG ?> <br/>
+   CPF: <?php echo $CPF ?></p>
+<p align="justify"><strong>OBSERVAÇÃO:</strong> A validade deste recibo fica condicionada ao efetivo por ordem de pagamento ou depósito na conta corrente no Banco do Brasil, indicada pelo contratado, ou na falta deste, ao recebimento no Departamento do Tesouro da Secretaria das Finanças e Desenvolvimento Econômico, situado à Rua Pedro Américo, 32.</p>
+
+</body>
+</html>

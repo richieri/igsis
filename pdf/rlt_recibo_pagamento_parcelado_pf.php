@@ -57,8 +57,8 @@ $ano=date('Y');
 $dataAtual = date("d/m/Y");
 
 // GERANDO O WORD:
-header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Parcela $id_parcela.doc");
+/*header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Parcela $id_parcela.doc");*/
 
 ?>
 

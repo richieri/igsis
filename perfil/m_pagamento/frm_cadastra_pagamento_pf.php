@@ -71,7 +71,7 @@ if(isset($_POST['atualizar']))// atualiza o pedido
 
 			<div class='form-group'>
 				<div class='col-md-offset-2 col-md-6'>
-					<a href='$link4?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Recibo de Pagamento</a>
+					<a href='$link3?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Recibo de Pagamento Integral</a>
 				</div>
 				<div class='col-md-6'>
 					<a href='$link5?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Recibo de Documentação</a><br/>
