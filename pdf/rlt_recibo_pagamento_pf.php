@@ -52,6 +52,7 @@ $FormaPagamento = $pedido["FormaPagamento"];
 $Justificativa = $pedido["Justificativa"];
 $Fiscal = $pedido["Fiscal"];
 $Suplente = $pedido["Suplente"];
+$NumeroProcesso = $pedido["NumeroProcesso"];
 
 $Nome = $pessoa["Nome"];
 $NomeArtistico = $pessoa["NomeArtistico"];
