@@ -61,7 +61,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
 <body>
 
-<p align="center"><strong>PEDIDO DE PAGAMENTO DE PESSOA JURÍDICA</strong></p>
+<p align="center"><strong>PEDIDO DE PAGAMENTO DE PESSOA FÍSICA</strong></p>
 <p>&nbsp;</p>
 <p><strong>
 	Senhor(a) Diretor(a)</br>

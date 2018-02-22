@@ -94,7 +94,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11.5);
-   $pdf->MultiCell(180,$l,utf8_decode("Recebi da Prefeitura de São Paulo - Secretaria Municipal de Cultura a importância de R$ ".$ValorGlobal." (".$ValorPorExtenso." ) referente à serviços prestados ".$Periodo."."));
+   $pdf->MultiCell(180,$l,utf8_decode("Recebi da Prefeitura de São Paulo - Secretaria Municipal de Cultura a importância de R$ ".$ValorGlobal." (".$ValorPorExtenso." ) referente à serviços prestados por meio do Processo Administrativo ".$NumeroProcesso."."));
    
    $pdf->Ln();
    
@@ -103,13 +103,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(12,$l,'Nome:',0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(168,$l,utf8_decode($Nome));
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(28,$l,utf8_decode('Nome Artístico:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(152,$l,utf8_decode($NomeArtistico));
-   
+
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(23,$l,utf8_decode('Estado Civil:'),0,0,'L');
@@ -132,25 +126,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(10,$l,utf8_decode('CPF:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(53,$l,utf8_decode($CPF),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(12,$l,utf8_decode('OMB:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(45,$l,utf8_decode($OMB),0,1,'L');
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(10,$l,utf8_decode('DRT:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(40,$l,utf8_decode($DRT),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(15,$l,utf8_decode('C.B.O.:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(30,$l,utf8_decode($cbo),0,0,'L');
-   $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(15,$l,utf8_decode('Função:'),0,0,'L');
-   $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(45,$l,utf8_decode($Funcao),0,1,'L');
+   $pdf->Cell(53,$l,utf8_decode($CPF),0,1,'L');
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);

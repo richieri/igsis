@@ -68,12 +68,10 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 
 <p align="center"><strong>RECIBO DE PAGAMENTO</strong></p>
 <p>&nbsp;</p>
-<p align="justify">Recebi da Prefeitura de São Paulo - Secretaria Municipal de Cultura a importância de R$ <?php echo $valorParcela?> (<?php echo $ValorPorExtenso?>  ) referente à serviços prestados <?php echo $Periodo?>.</p>
+<p align="justify">Recebi da Prefeitura de São Paulo - Secretaria Municipal de Cultura a importância de R$ <?php echo $valorParcela?> (<?php echo $ValorPorExtenso?>  ) referente à serviços prestados por meio do Processo Administrativo <?php echo $NumeroProcesso ?>.</p>
 <p align="justify"><strong>Nome:</strong> <?php echo $Nome?></p>
-<p align="justify"><strong>Nome Artístico:</strong> <?php echo $NomeArtistico?></p>
 <p><strong>Estado Civil:</strong> <?php echo $EstadoCivil?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Nacionalidade:</strong> <?php echo $Nacionalidade?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CCM:</strong> <?php echo $CCM?></p> 
-<p><strong>RG:</strong> <?php echo $RG?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CPF:</strong> <?php echo $CPF?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>OMB:</strong> <?php echo $OMB?></p>
-<p><strong>DRT:</strong> <?php echo $DRT?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>C.B.O.:</strong> <?php echo $cbo?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Função:</strong> <?php echo $Funcao?></p>   
+<p><strong>RG:</strong> <?php echo $RG?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CPF:</strong> <?php echo $CPF?></p>
 <p><strong>Endereço:</strong> <?php echo $Endereco?></p>
 <p><strong>Telefone:</strong> <?php echo $Telefones?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>E-mail:</strong> <?php echo $Email?></p> 
 <p><strong>Inscrição no INSS ou nº PIS / PASEP:</strong> <?php echo $INSS?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Data de Nascimento:</strong> <?php echo $DataNascimento?></p>   
