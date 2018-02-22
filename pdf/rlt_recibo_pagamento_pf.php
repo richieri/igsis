@@ -82,7 +82,7 @@ $pdf->AddPage();
 $x=20;
 $l=7; //DEFINE A ALTURA DA LINHA   
    
-   $pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+   $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
    
    $pdf->SetX($x);
@@ -217,14 +217,18 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    
 //RODAPÉ PERSONALIZADO
-   $pdf->SetXY($x,262);
+   $pdf->SetXY($x,255);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(100,$l,utf8_decode($Nome),'T',1,'L');
-   
+
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(100,$l,"RG: ".$RG,0,0,'L');   
-   
+   $pdf->Cell(100,$l,"RG: ".$RG,0,1,'L');
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(100,$l,"CPF: ".$CPF,0,1,'L');
+
 $pdf->Output();
 
 

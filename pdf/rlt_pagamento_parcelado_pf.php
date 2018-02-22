@@ -94,8 +94,8 @@ Nestes termos, encaminho para deferimento.</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>________________________</p>
-<p><?php echo $Nome?></p>
-<p>RG: <?php echo $RG?></p>   
-
+<p><?php echo $Nome?><br/>
+	RG: <?php echo $RG ?> <br/>
+	CPF: <?php echo $CPF ?></p>
 </body>
 </html>

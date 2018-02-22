@@ -87,8 +87,9 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p>&nbsp;</p>
 <table width="100%" border="0">
 <p>________________________</p>
-<p><?php echo $Nome?></p>
-<p>RG: <?php echo $RG?></p>    
+<p><?php echo $Nome?><br/>
+	RG: <?php echo $RG ?> <br/>
+	CPF: <?php echo $CPF ?></p>
 <p align="justify"><strong>OBSERVAÇÃO:</strong> A validade deste recibo fica condicionada ao efetivo por ordem de pagamento ou depósito na conta corrente no Banco do Brasil, indicada pelo contratado, ou na falta deste, ao recebimento no Departamento do Tesouro da Secretaria das Finanças e Desenvolvimento Econômico, situado à Rua Pedro Américo, 32.</p>
 
 </body>
