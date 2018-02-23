@@ -102,7 +102,7 @@ echo "
 
 						<tr>
 							<td><a href='$link04' target='_blank'><strong>Curta Temporada</strong></a></td>
-							<td><a href='$link03' target='_blank'><strong>Reversão Longa Temporada</strong></a></td>
+							<td><a href='$link03' target='_blank'><strong>Longa Temporada</strong></a></td>
 						</tr>
 
 						<tr>
