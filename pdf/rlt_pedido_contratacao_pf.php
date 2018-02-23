@@ -13,7 +13,6 @@
 
 //CONSULTA 
 $id_ped=$_GET['id'];
-
 $ano=date('Y');
 
 $pedido = siscontrat($id_ped);
@@ -99,7 +98,7 @@ $sei =
 "<p>&nbsp;</p>".
 "<p><strong>Objeto:</strong> "."$Objeto"."</p>".
 "<p><strong>Data / Período:</strong> "."$Periodo".", totalizando "."$qtdApresentacoes"." apresentações conforme proposta/cronograma.</p>".
-"<p><strong>Tempo Aproximado de Duração do Espetáculo:</strong> "."$Duracao"." minutos </p>".
+"<p><strong>Tempo Aproximado de Duração do Espetáculo:</strong> "."$Duracao"."</p>".
 "<p><strong>Carga Horária:</strong> "."$CargaHoraria"."</p>".
 "<p align='justify'><strong>Local:</strong> "."$Local"."</p>".
 "<p><strong>Valor: </strong> R$ "."$ValorGlobal"."  ("."$ValorPorExtenso". " )</p>".
