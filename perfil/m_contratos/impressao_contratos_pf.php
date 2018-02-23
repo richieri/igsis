@@ -19,7 +19,7 @@ $link04 = $http."rlt_proposta_reversaocurta_pf.php"."?id=".$id_ped."&penal=16";
 $link05 = $http."rlt_proposta_doacao_pf.php"."?id=".$id_ped."&penal=6";
 $link06 = $http."rlt_proposta_cinema_pf.php"."?id=".$id_ped."&penal=3";
 $link07 = $http."rlt_proposta_comissaojulgadora_pf.php"."?id=".$id_ped."&penal=5";
-$link08 = $http."rlt_proposta_exposicao_pf.php"."?id=".$id_ped."&penal=10";
+//$link08 = $http."rlt_proposta_exposicao_pf.php"."?id=".$id_ped."&penal=10";
 $link09 = $http."rlt_proposta_oficinassemedital_pf.php"."?id=".$id_ped."&penal=12";
 $link10 = $http."rlt_proposta_palestra_pf.php"."?id=".$id_ped."&penal=15";
 $link11 = $http."rlt_proposta_formacao.php"."?id=".$id_ped."&penal=20";
@@ -92,12 +92,7 @@ echo "
 
 						<tr>
 							<td><a href='$link05' target='_blank'><strong>Doação de Serviços</strong></a></td>
-							<td><a href='$link08' target='_blank'><strong>Exposição | Outros</strong></a></td>
-						</tr>
-
-						<tr>
 							<td><a href='$link09' target='_blank'><strong>Oficinas sem Edital</strong></a></td>
-							<td><a href='$link10' target='_blank'><strong>Palestra | Debate | Workshop</strong></a></td>
 						</tr>
 
 						<tr>
@@ -122,10 +117,11 @@ echo "
 
 						<tr>
 							<td><a href='$link44' target='_blank'><strong>EMIA</strong></a></td>
+							<td><a href='$link48' target='_blank'><strong>Pesquisador Formação</strong></a></td>
 						</tr>
 
 						<tr>
-							<td><a href='$link48' target='_blank'><strong>Pesquisador Formação</strong></a></td>
+							<td colspan='2'><a href='$link10' target='_blank'><strong>Palestra | Debate | Workshop | Exposição | Outros</strong></a></td>
 						</tr>
 
 						<tr><td class='list_description'><br/></td></tr>
