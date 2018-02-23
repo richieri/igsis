@@ -68,6 +68,30 @@ if(isset($_POST['inserir']))
 	$query_grupos = mysqli_query($con,$sql_grupos);
 	$num = mysqli_num_rows($query_grupos);
 
+
+	if(isset($_POST['atualizarIntegrante']))
+	{
+		$id = $_POST['atualizarIntegrante'];
+		$nomeCompleto = addslashes($_POST['nomeCompleto']);
+		$rg = trim($_POST['rg']);
+		$cpf = $_POST['cpf'];
+		$sql_atualizar = "UPDATE igsis_grupos SET
+			nomeCompleto = '$nomeCompleto',
+			rg = '$rg',
+			cpf = '$cpf'
+			WHERE idGrupos = '$id'";
+		$query_atualizar = mysqli_query($con,$sql_atualizar);
+		if($query_atualizar)
+		{
+			$mensagem = "Integrante editado com sucesso!";
+			echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratos&p=frm_grupos&idGrupo=$id'>";
+		}
+		else
+		{
+			$mensagem = "Erro ao editar integrante. Tente novamente.";
+		}
+	}
+
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -234,7 +258,7 @@ $integrateGrupo = recuperaDados("igsis_grupos",$idGrupo,"idGrupos");
                 <!-- Botão Gravar -->	
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="atualizarIntegrante" value="1" />
+						<input type="hidden" name="atualizarIntegrante" value="<?php echo $idGrupo ?>" />
 						<input type="submit" name="enviar" value="CADASTRAR" class="btn btn-theme btn-lg btn-block">
 					</div>
                 </div>
