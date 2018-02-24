@@ -33,9 +33,9 @@ class PDF extends FPDF
        // Read text file
        $txt = file_get_contents($file);
        // Arial 10
-       $this->SetFont('Arial','',10);
+       $this->SetFont('Arial','',8);
        // Output justified text
-       $this->MultiCell(0,5,$txt);
+       $this->MultiCell(0,4,$txt);
        // Line break
        $this->Ln();
    }
@@ -275,8 +275,6 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetX($x);
    $pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
 
-   $pdf->Ln();
-
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,$l,'',0,0,'L');
@@ -284,7 +282,7 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->Cell(160,$l,utf8_decode('DECLARAÇÕES'),0,1,'C');
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
+   $pdf->SetFont('Arial','', 9);
    $pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
 
    $pdf->Ln();

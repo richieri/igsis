@@ -33,9 +33,9 @@ class PDF extends FPDF
        // Read text file
        $txt = file_get_contents($file);
        // Arial 10
-       $this->SetFont('Arial','',10);
+       $this->SetFont('Arial','',8);
        // Output justified text
-       $this->MultiCell(0,5,$txt);
+       $this->MultiCell(0,4,$txt);
        // Line break
        $this->Ln();
    }
@@ -414,8 +414,8 @@ $l=5; //DEFINE A ALTURA DA LINHA
 	$pdf->Cell(160,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 10);
-	$pdf->MultiCell(0,$l,utf8_decode($txtPenalidade),0,'J');
+	$pdf->SetFont('Arial','', 8);
+	$pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
 
 	$pdf->Ln();
 

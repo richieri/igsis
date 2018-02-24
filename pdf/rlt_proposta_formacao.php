@@ -40,9 +40,9 @@ class PDF extends FPDF
        // Read text file
        $txt = file_get_contents($file);
        // Arial 10
-       $this->SetFont('Arial','',10);
+       $this->SetFont('Arial','',8);
        // Output justified text
-       $this->MultiCell(0,5,$txt);
+       $this->MultiCell(0,4,$txt);
        // Line break
        $this->Ln();
    }
@@ -285,8 +285,8 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->Ln();
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(0,5,utf8_decode($txtPenalidade),0,'J');
+   $pdf->SetFont('Arial','', 8);
+   $pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
 
    $pdf->Ln();
 

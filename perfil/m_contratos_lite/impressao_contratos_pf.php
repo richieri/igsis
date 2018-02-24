@@ -17,7 +17,7 @@ $link02 = $http."rlt_pedido_contratacao_pf_formacao.php";
 $link03 = $http."rlt_proposta_padrao_pf.php"."?id=".$id_ped."&penal";
 $link04 = $http."rlt_proposta_formacao.php"."?id=".$id_ped."&penal";
 $link05 = $http."rlt_proposta_exposicao_edital_word_pf.php"."?id=".$id_ped."&penal";
-$link06 = $http."rlt_proposta_emia.php"."?id=".$id_ped."&penal=";
+$link06 = $http."rlt_proposta_emia.php"."?id=".$id_ped."&penal";
 $link07 = $http."rlt_proposta_pesquisador_formacao.php"."?id=".$id_ped;
 
 $link18 = $http."rlt_declaracao_iss_pf.php";
