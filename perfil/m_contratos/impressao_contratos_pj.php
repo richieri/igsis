@@ -9,10 +9,10 @@ $server = "http://".$_SERVER['SERVER_NAME']."/igsis"; //mudar para pasta do igsi
 $http = $server."/pdf/";
 
 $link0 = $http."rlt_pedido_contratacao_pj.php";
-$link1 = $http."rlt_proposta_padrao_pj.php";
-$link2 = $http."rlt_proposta_artistico_pj.php";
-$link3 = $http."rlt_proposta_comunicado_001-15_pj.php";
-$link4 = $http."rlt_proposta_eventoexterno_pj.php";
+$link02 = $http."rlt_proposta_padrao_pj.php"."?id=".$id_ped."&penal";
+$link03 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal";
+$link04 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal";
+
 $link5 = $http."rlt_fac_pj.php";
 $link6 = $http."rlt_evento_pj.php";
 $link7 = $http."rlt_direitos_conexos.php";
@@ -22,23 +22,14 @@ $link11 = $http."rlt_pedido_reserva_fepac_pj.php";
 $link12 = $http."rlt_pedido_reserva_atividadecultural_pj.php";
 $link13 = $http."rlt_pedido_reserva_atividadecultural_cooperativa_pj.php";
 $link14 = $http."rlt_pedido_reserva_vocacional_pj.php";
-$link15 = $http."rlt_proposta_reversaolonga_pj.php"."?id=".$id_ped."&penal=18";
-$link16 = $http."rlt_proposta_reversaocurta_pj.php"."?id=".$id_ped."&penal=16";
 $link17 = $http."rlt_declaracao_iss_pj.php?id=".$id_ped;
 $link19 = $http."rlt_declaracao_exclusividade_pj.php?id=".$id_ped;
-$link21 = $http."rlt_proposta_doacao_pj.php"."?id=".$id_ped."&penal=6";
 $link22 = $http."rlt_ordemservico_pj.php";
 $link23 = $http."rlt_ordemservico_pj_word.php";
-$link24 = $http."rlt_proposta_cinema_pj.php"."?id=".$id_ped."&penal=3";
-$link25 = $http."rlt_proposta_exposicao_pj.php"."?id=".$id_ped."&penal=10";
 $link26 = $http."rlt_termo_doacao_pj.php";
 $link27 = $http."rlt_termo_parceria_pj.php";
 $link28 = $http."rlt_pedido_reserva_existente_pj.php";
 $link32 = $http."rlt_normas_internas_teatros_pj.php"."?id=".$id_ped;
-$link33 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal=22";
-$link34 = $http."rlt_proposta_mediacao_edital_pj.php"."?id=".$id_ped."&penal=24";
-$link35 = $http."rlt_proposta_contadores_edital_pj.php"."?id=".$id_ped."&penal=26";
-$link36 = $http."rlt_proposta_galadeballet_edital_pj.php"."?id=".$id_ped."&penal=28";
 $link37 = $http."rlt_ordemservico_pj_assinatura_word.php";
 $link38 = $http."rlt_termo_doacao_pj_assinatura_word.php";
 $link39 = $http."rlt_pedido_reserva_centrosculturais_pj.php";
@@ -79,28 +70,28 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>PROPOSTA</strong></td></tr>
 
 						<tr>
-							<td><a href='$link24' target='_blank'><strong>Cinema</strong></a></td>
-							<td><a href='$link21' target='_blank'><strong>Doação de Serviços</strong></a></td>
+							<td><a href='$link02=3' target='_blank'><strong>Cinema</strong></a></td>
+							<td><a href='$link02=6' target='_blank'><strong>Doação de Serviços</strong></a></td>
 						</tr>
 
 						<tr>
-							<td><a href='$link15' target='_blank'><strong>Longa Temporada</strong></a></td>
-							<td><a href='$link16' target='_blank'><strong>Curta Temporada</strong></a></td>
+							<td><a href='$link02=18' target='_blank'><strong>Longa Temporada</strong></a></td>
+							<td><a href='$link02=16' target='_blank'><strong>Curta Temporada</strong></a></td>
 						</tr>
 
 						<tr>
-							<td><a href='$link25' target='_blank'><strong>Exposição | Outros</strong></a></td>
-							<td><a href='$link33?id=$id_ped' target='_blank'><strong>Edital - Exposição</strong></a></td>
+							<td><a href='$link02=10' target='_blank'><strong>Exposição | Outros</strong></a></td>
+							<td><a href='$link03=22' target='_blank'><strong>Edital - Exposição</strong></a></td>
 						</tr>
 
 						<tr>
-							<td><a href='$link34?id=$id_ped' target='_blank'><strong>Edital - Mediação</strong></a></td>
-							<td><a href='$link35?id=$id_ped' target='_blank'><strong>Edital - Contação de Histórias </strong></a></td>
+							<td><a href='$link02=24' target='_blank'><strong>Edital - Mediação</strong></a></td>
+							<td><a href='$link02=26' target='_blank'><strong>Edital - Contação de Histórias </strong></a></td>
 						</tr>
 
 						<tr>
-							<td><a href='$link36?id=$id_ped' target='_blank'><strong>Edital - Gala de Balé</strong></a></td>
-							<td><a href='$link50' target='_blank'><strong>Virada 2017</strong></a></td>
+							<td><a href='$link02=28' target='_blank'><strong>Edital - Gala de Balé</strong></a></td>
+							<td><a href='$link04=30' target='_blank'><strong>Virada 2017</strong></a></td>
 						</tr>
 
 						<tr><td class='list_description'><br/></td></tr>

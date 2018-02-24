@@ -1,16 +1,15 @@
 <?php
 
 //require '../include/';
-require_once("../funcoes/funcoesConecta.php");
-require_once("../funcoes/funcoesGerais.php");
-require_once("../funcoes/funcoesSiscontrat.php");
+   require_once("../funcoes/funcoesConecta.php");
+   require_once("../funcoes/funcoesGerais.php");
+   require_once("../funcoes/funcoesSiscontrat.php");
+
+//CONEXÃO COM BANCO DE DADOS 
+   $conexao = bancoMysqli();
 
 
-//CONEXÃO COM BANCO DE DADOS
-$conexao = bancoMysqli();
-
-
-//CONSULTA
+//CONSULTA 
 $id_ped=$_GET['id'];
 $idPenalidade = $_GET['penal'];
 dataProposta($id_ped);
@@ -51,13 +50,14 @@ $Endereco = $pessoa["Endereco"];
 $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
-
+  
 header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment;Filename=$id_ped.doc");
 echo "<html>";
 echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
 echo "<body>";
 
+  
 	echo 
 		"<p>(A)</p>".
 		"<p align='center'><strong>CONTRATADO</strong></p>".
@@ -70,7 +70,7 @@ echo "<body>";
 		"<p><strong>CPF:</strong> ".$CPF."</p>".
 		"<p><strong>CCM:</strong> ".$CCM."</p>".
 		"<p><strong>OMB:</strong> ".$OMB."</p>".
-		"<p><strong>DRT:</strong> ".$DRT."</p>".
+		"<p><strong>DRT:</strong> ".$DRT."</p>".		
 		"<p><strong>Função:</strong> ".$Funcao."</p>".
 		"<p><strong>Endereço:</strong> ".$Endereco."</p>".
 		"<p><strong>Telefone:</strong> ".$Telefones."</p>".
@@ -118,30 +118,30 @@ echo "<body>";
 		"<p align='center'><strong>CRONOGRAMA</strong></p>".
 		"<p>".$Objeto."</p>".
 		"<p>&nbsp;</p>";
-
+		
 		$ocor = listaOcorrenciasContrato($id);
 
 			for($i = 0; $i < $ocor['numero']; $i++)
-			{
-				$tipo = $ocor[$i]['tipo'];
-				$dia = $ocor[$i]['data'];
-				$hour = $ocor[$i]['hora'];
-				$lugar = $ocor[$i]['espaco'];
-
-				echo "<p><strong>Tipo:</strong> ".$tipo."</p>";
-				echo "<p><strong>Data/Período:</strong> ".$dia."</p>";
-				echo "<p><strong>Horário:</strong> ".$hour."</p>";
-				echo "<p><strong>Local:</strong> ".$lugar."</p>";
-				echo "<p>&nbsp;</p>";
+			{			
+			$tipo = $ocor[$i]['tipo'];
+			$dia = $ocor[$i]['data'];
+			$hour = $ocor[$i]['hora'];
+			$lugar = $ocor[$i]['espaco'];
+			
+		echo "<p><strong>Tipo:</strong> ".$tipo."</p>";
+		echo "<p><strong>Data/Período:</strong> ".$dia."</p>";
+		echo "<p><strong>Horário:</strong> ".$hour."</p>";
+		echo "<p><strong>Local:</strong> ".$lugar."</p>";
+		echo "<p>&nbsp;</p>";
 
 			}
-		echo
+		echo	
 		"<p>&nbsp;</p>".
 		"<p>___________________________</p>".
 		"<p>".$Nome."</p>".
 		"<p>RG:".$RG."</p>".
 		"<p>&nbsp;</p>";
-
+		
 	echo "</body>";
-echo "</html>";
+echo "</html>";	
 ?>
