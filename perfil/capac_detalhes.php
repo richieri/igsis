@@ -290,7 +290,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 							<?php listaArquivoCamposMultiplos($pessoaJuridica['id'],2); ?>
 						</div>
 
-						<div class="table-responsive list_info"><h6>Arquivo(s) Reprsentante Legal</h6>
+						<div class="table-responsive list_info"><h6>Arquivo(s) Representante Legal</h6>
 							<?php listaArquivoCamposMultiplos($pessoaJuridica['id'],3); ?>
 						</div>
 					<?php
