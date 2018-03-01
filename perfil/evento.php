@@ -165,7 +165,6 @@
 				$ig_modalidade_IdModalidade = $_POST['ig_modalidade_IdModalidade'];
 				$projetoEspecial = $_POST['projetoEspecial']; 
 				$nomeEvento = addslashes($_POST['nomeEvento']);
-				$projeto = addslashes($_POST['projeto']);
 				$ig_tipo_evento_idTipoEvento = $_POST['ig_tipo_evento_idTipoEvento'];
 				$idResponsavel = $_POST['nomeResponsavel'];
 				$idSuplente = $_POST['suplente'];
@@ -179,13 +178,12 @@
 				}
 				$sql_atualizar = "UPDATE `ig_evento` SET 
 				`nomeEvento` = '$nomeEvento', 
-				`projeto` = '$projeto', 
 				`projetoEspecial` = '$projetoEspecial', 
 				`idResponsavel` = '$idResponsavel', 
 				`suplente` = '$idSuplente', 
 				`ig_modalidade_IdModalidade` = 	'$ig_modalidade_IdModalidade',
 				`ig_tipo_evento_idTipoEvento` = '$ig_tipo_evento_idTipoEvento',
-				`subEvento` = '$subEvento'
+				`subEvento` = '$subEvento',
 				`nomeGrupo` = '$nomeGrupo', 
 				`fichaTecnica` = '$fichaTecnica', 
 				`faixaEtaria` = '$faixaEtaria', 
