@@ -31,7 +31,7 @@
 				$instituicao = recuperaDados("ig_instituicao",$usuario['idInstituicao'],"idInstituicao");				
 		?>
 							<li><p><strong><?php echo $evento['nomeEvento'] ?> </strong>(<?php echo retornaTipo($evento['ig_tipo_evento_idTipoEvento']) ?>) </p>
-								<p><i><?php echo $evento['autor'] ?></i> - enviado por: <?php echo $usuario['nomeCompleto'] ?> (<?php echo $instituicao['instituicao'] ?>) em: <?php echo exibirDataBr($evento['dataEnvio']) ?></p>
+								<p>Enviado por: <?php echo $usuario['nomeCompleto'] ?> (<?php echo $instituicao['instituicao'] ?>) em: <?php echo exibirDataBr($evento['dataEnvio']) ?></p>
 								<p><?php echo resumoOcorrencias($evento['idEvento']); ?></p>
 								<br />				
 							</li>
@@ -158,9 +158,7 @@
 				// Atualiza o banco
 				$sinopse = addslashes($_POST['sinopse']);
 				$releaseCom = addslashes($_POST['releaseCom']); 
-				$linksCom = addslashes($_POST['linksCom']); 
-				$autor = addslashes($_POST['autor']);
-				$autor = addslashes($_POST['autor']);
+				$linksCom = addslashes($_POST['linksCom']);
 				$nomeGrupo = addslashes($_POST['nomeGrupo']);
 				$fichaTecnica = addslashes($_POST['fichaTecnica']); 
 				$faixaEtaria = $_POST['faixaEtaria'];
@@ -187,8 +185,7 @@
 				`suplente` = '$idSuplente', 
 				`ig_modalidade_IdModalidade` = 	'$ig_modalidade_IdModalidade',
 				`ig_tipo_evento_idTipoEvento` = '$ig_tipo_evento_idTipoEvento',
-				`subEvento` = '$subEvento',
-				`autor` = '$autor', 
+				`subEvento` = '$subEvento'
 				`nomeGrupo` = '$nomeGrupo', 
 				`fichaTecnica` = '$fichaTecnica', 
 				`faixaEtaria` = '$faixaEtaria', 
@@ -357,31 +354,28 @@
 			</div>
 		</div>
 	</div>
-</section>  
-	<?php 
+</section>
+	<?php
 		break;
 		case "detalhe" :
 			if(isset($_POST['atualizar']))
-			{	
+			{
 				// Atualiza o banco
-				$autor = addslashes($_POST['autor']);
-				$fichaTecnica = addslashes($_POST['fichaTecnica']); 
+				$fichaTecnica = addslashes($_POST['fichaTecnica']);
 				$faixaEtaria = $_POST['faixaEtaria'];
-				$sql_atualizar = "UPDATE `ig_evento` SET 
-				`autor` = '$autor', 
-				`fichaTecnica` = '$fichaTecnica', 
-				`faixaEtaria` = '$faixaEtaria' 
+				$sql_atualizar = "UPDATE `ig_evento` SET
+				`fichaTecnica` = '$fichaTecnica',
+				`faixaEtaria` = '$faixaEtaria'
 				WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
 				$con = bancoMysqli();
 				if(mysqli_query($con,$sql_atualizar))
 				{
 					$mensagem = "Atualizado com sucesso!";
-					gravarLog($sql_atualizar);	
+					gravarLog($sql_atualizar);
 				}
 				else
 				{
 					$mensagem = "Erro ao atualizar... tente novamente";
-					
 				}
 			}
 			$campo = recuperaEvento($_SESSION['idEvento']); //carrega os dados do evento em questão
@@ -401,12 +395,6 @@
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="POST" action="?perfil=evento&p=detalhe" class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<label>Autor*</label>
-							<textarea name="autor" class="form-control" rows="10" placeholder="artista, banda, coletivo, companhia, palestrantes, etc"><?php echo $campo["autor"] ?></textarea>
-						</div> 
-					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Ficha técnica completa*</label>
