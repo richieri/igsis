@@ -342,7 +342,9 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Links </label>
-							<textarea name="linksCom" class="form-control" rows="10" placeholder="Links para auxiliar a divulgação e o jurídico. Site oficinal, vídeos, clipping, artigos, etc "><?php echo $campo["linksCom"] ?></textarea>
+							<label>Esse campo deve conter os links relacionados ao espetáculo, ao artista/grupo que auxiliem na divulgação do evento.</i></strong></label>
+							<p align="justify"><font color="gray"><strong><i>Links de exemplo:</i></strong></strong><br/> https://www.facebook.com/anacanasoficial/<br/></strong>https://www.youtube.com/user/anacanasoficial</font></i></p>
+							<textarea name="linksCom" class="form-control" rows="10"><?php echo $campo["linksCom"] ?></textarea>
 						</div> 
 					</div>
 					<div class="form-group">
