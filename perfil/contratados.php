@@ -1023,11 +1023,12 @@
 				}
 				else
 				{
-					$mensagem = "Erro ao inserir Líder do Grupo. Tente novamente!";	
+					$mensagem = "Erro ao inserir Líder do Grupo. Tente novamente!";
 				}
 			}
 			if(isset($_POST['atualizar']))
 			{
+				$integrantes = addslashes($_POST['integrantes']);
 				$Observacao = addslashes($_POST['Observacao']);
 				$parcelas = $_POST['parcelas'];
 				$Verba = $_POST['verba'];
@@ -1039,8 +1040,9 @@
 				$formaPagamento = $_POST['formaPagamento'];
 				if($_POST['atualizar'] >= '2')
 				{
-					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao`
-						SET `observacao` =  '$Observacao',
+					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
+						`integrantes` = '$integrantes',
+						`observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
@@ -1058,6 +1060,7 @@
 						`observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
 						`parecerArtistico` =  '$parecer',
+						`integrantes` = '$integrantes',
 						`justificativa` =  '$justificativa',
 						`qtdApresentacoes` =  '$qtdApresentacoes',
 						`dataKitPagamento` = '$dataKitPagamento',
@@ -1068,11 +1071,11 @@
 				if($query_atualizar_pedido)
 				{
 					gravarLog($sql_atualizar_pedido);
-					$mensagem = "Atualizado com sucesso";	
+					$mensagem = "Atualizado com sucesso";
 				}
 				else
 				{
-					$mensagem = "Erro ao atualizar(5)."	;
+					$mensagem = "Erro ao atualizar(5).".$sql_atualizar_pedido	;
 				}
 			}
 			include "../funcoes/funcoesSiscontrat.php";
@@ -1109,7 +1112,7 @@
 							<strong>Objeto:</strong> <?php echo retornaTipo($evento['ig_tipo_evento_idTipoEvento']) ?> -  <?php echo $evento['nomeEvento']; ?> <br />
 							<strong>Local:</strong> <?php echo listaLocais($_SESSION['idEvento']); ?><br />
 							<strong>Período:</strong> <?php echo retornaPeriodo($_SESSION['idEvento']); ?><br /> 
-							<?php 
+							<?php
 								$fiscal = recuperaUsuario($evento['idResponsavel']);
 								$suplente = recuperaUsuario($evento['suplente']);
 								$representante01 = siscontratDocs($pedido['idRepresentante01'],3);
@@ -1160,24 +1163,21 @@
 				<!-- /Executante -->
 		<?php
 			}
-		?>	
+		?>
 				<!-- Grupo -->
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br/>
 					</div>
                 </div>
-				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo"  method="post">
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-							<textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($pedido['idPedidoContratacao']); ?>
-							</textarea>
-						</div>
-						<div class="col-md-offset-2 col-md-8">
-							<input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>" >
-							<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
-						</div>
-					</div>				
-				</form>
+
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
+						<label>Esse campo deve conter a listagem de pessoas envolvidas no espetáculo, apenas o nome civil de quem irá se apresentar, excluindo técnicos.</i></strong></label>
+						<p align="justify"><font color="gray"><strong><i>Elenco de exemplo:</strong><br/>José Carlos da Silva<br/>João Gonçalves<br/>Maria Eduarda de Oliveira</br>Fabio Silva Santos</font></i></p>
+						<textarea name="integrantes" class='form-control' cols="40" rows="5"><?php echo $pedido['integrantes'] ?></textarea>
+					</div>
+				</div>
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
