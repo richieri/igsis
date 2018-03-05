@@ -65,6 +65,7 @@ $id_ped=$_GET['id'];
 $pedido = siscontrat($id_ped);
 $pessoa = siscontratDocs($pedido['IdProponente'],1);
 $grupo = grupos($id_ped);
+$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
 
 $setor = $pedido["Setor"];
 
@@ -92,7 +93,7 @@ $Endereco = $pessoa["Endereco"];
 $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
-
+$grupo = $evento["nomeGrupo"];
 
 
 
@@ -117,58 +118,43 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(170,$l,utf8_decode("Nós, abaixo assinados, declaramos, que somos representados COM EXCLUSIVIDADE por "."$Nome".", CPF nº "."$CPF"."."));
+   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$Nome".", RG "."$RG".", CPF "."$CPF".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado exclusivamente por mim."));
    
    $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(170,$l,utf8_decode("Declaramos, sob as penas da Lei, que não somos servidores públicos municipais; que não nos encontramos em impedimento para contratar com a Prefeitura do Município de São Paulo / Secretaria Municipal de Cultura, mediante recebimento de cachê e/ou bilheteria, quando for o caso."));
-   
    $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(170,$l,utf8_decode("Declaramos, ainda, neste ato, que autorizamos, a título gratuito, por prazo indeterminado, a Municipalidade de São Paulo, através da SMC, o uso de nossa imagem, nas suas publicações em papel e qualquer mídia digital ou internet existentes ou que venha a existir como também para os fins de arquivo e material de pesquisa e consulta."));
-   
    $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(170,$l,utf8_decode("A representante fica autorizada a celebrar contrato, inclusive receber o cachê e/ou bilheteria quando for o caso, outorgando quitação."));
-   
    $pdf->Ln();
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(170,$l,utf8_decode("Estamos cientes de que o pagamento dos valores decorrentes de meus serviços é de responsabilidade da nossa representante, não nos cabendo pleitear à Prefeitura quaisquer valores eventualmente não repassados."));
-   
-   $pdf->Ln();
-   
+
+
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
    $pdf->Cell(128,$l,utf8_decode("São Paulo, _______ / _______ / " .$ano."."),0,1,'L');
-      
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   
-   // Column headings
-   $header = array('NOME', 'RG', 'CPF','ASSINATURA');
-   $data = array($grupo);
-   
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','',8);
 
-   $pdf->Cabecalho($header,$data);
+   $pdf->Ln();
+   $pdf->Ln();
+   $pdf->Ln();
    
-   
-   
-	for($i = 0;$i < $grupo['numero']; $i++){
-	$data = array(utf8_decode(sobrenome($grupo[$i]['nomeCompleto'])), $grupo[$i]['rg'],$grupo[$i]['cpf'],"");	
+
     $pdf->SetX($x);
-	$pdf->Tabela($header,$data);
-	}
+   $pdf->SetFont('Arial','', 11);
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("_______________________________"),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("Nome do Líder do Grupo: "."$Nome".""),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("RG: "."$RG".""),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("CPF: "."$CPF".""),0,1,'L');
+
+   $pdf->Ln();
+   $pdf->Ln();
+   $pdf->Ln();
+   
+
 	
 
 
