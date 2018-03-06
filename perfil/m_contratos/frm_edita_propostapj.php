@@ -159,6 +159,7 @@ if(isset($_POST['atualizar']))
 { // atualiza o pedido
 	$con = bancoMysqli();
 	$ped = $_GET['id_ped'];
+	$integrantes= addslashes($_POST['integrantes']);
 	$justificativa = addslashes($_POST['Justificativa']);
 	$fiscal = $_POST['Fiscal'];
 	$suplente  = $_POST['Suplente'];
@@ -171,6 +172,7 @@ if(isset($_POST['atualizar']))
 	if($_POST['atualizar'] > '1')
 	{
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+			`integrantes` = '$integrantes',
 			`parcelas` =  '$parcelas',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
@@ -218,6 +220,7 @@ if(isset($_POST['atualizar']))
 		$valor = dinheiroDeBr($_POST['Valor']); 
 		$forma_pagamento = $_POST['FormaPagamento'];
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+			`integrantes` = '$integrantes',
 			valor = '$valor',
 			formaPagamento = '$forma_pagamento',
 			`parcelas` =  '$parcelas',
@@ -419,23 +422,6 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 					<div class="col-md-offset-2 col-md-8"><br/></div>
                 </div>
 
-				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_grupos"  method="post">
-               <div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-							<textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($_SESSION['idPedido']); ?>
-							</textarea>
-						</div>				
-						<div class="col-md-offset-2 col-md-8">
-							<input type="hidden" name="idPedido" value="<?php echo $_SESSION['idPedido']; ?>" >
-							<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
-						</div>  
-                
-
-				</form>
-					
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><br /></div>
-				</div>
-				  
 				<!-- Atualiza Grupo -->			  
 				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>&idEvento=<?php echo $pedido['idEvento']; ?>" method="post">
 				<div class="form-group">
@@ -449,9 +435,16 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 					</div>				
 				</div>
 				</form>
+				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
 				
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
+						<textarea name="integrantes" class='form-control' cols="40" rows="5"><?php echo $ped['integrantes'] ?></textarea>
+					</div>
 				</div>
 				  
                 <div class="form-group">                  
@@ -490,7 +483,6 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 						<?php echo retornaRelacaoJuridica($evento['ig_modalidade_IdModalidade']);?></div>
 				</div>
 				  
-				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
                 <?php 
 					if($ped['parcelas'] > 1)
 					{ 
