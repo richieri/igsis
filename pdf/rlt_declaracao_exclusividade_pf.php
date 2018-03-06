@@ -119,7 +119,32 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
    $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$Nome".", RG "."$RG".", CPF "."$CPF".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado exclusivamente por mim."));
-   
+
+   $pdf->Ln();
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->MultiCell(170,$l,utf8_decode("Declaro sob as penas da Lei que não sou servidor público municipal e que não me encontro em impedimento para contratar com a Prefeitura do Município de São Paulo / Secretaria Municipal de Cultura, mediante recebimento de cachê e/ou bilheteria, quando for o caso."));
+
+   $pdf->Ln();
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->MultiCell(170,$l,utf8_decode("Declaro, ainda, neste ato que autorizo, a título gratuito, por prazo indeterminado, a Municipalidade de São Paulo, através da SMC, o uso da nossa imagem, nas suas publicações em papel e qualquer mídia digital ou internet existentes ou que venha a existir como também para os fins de arquivo e material de pesquisa e consulta."));
+
+    $pdf->Ln();
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->MultiCell(170,$l,utf8_decode("Fico autorizado a celebrar contrato, inclusive receber cachê e/ou bilheteria quando for o caso, outorgando quitação."));
+
+
+    $pdf->Ln();
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->MultiCell(170,$l,utf8_decode("Estou ciente de que o pagamento dos valores decorrentes dos serviços é de minha responsabilidade, não cabendo pleitear à Prefeitura quaisquer valores eventualmente não repassados."));
+
    $pdf->Ln();
    $pdf->Ln();
    $pdf->Ln();
