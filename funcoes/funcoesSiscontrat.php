@@ -263,6 +263,7 @@
 				"nomeGrupo" => $evento['nomeGrupo'],
 				"Fiscal" => $nomeFiscal ,
 				"Suplente" => $nomeSuplente,
+				"integrantes"=> $pedido['integrantes'],
 				"Observacao"=> $pedido['observacao'], //verificar
 				"NotaEmpenho" => "",
 				"Horario" => "", //SPCultura
