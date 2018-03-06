@@ -48,6 +48,7 @@ if(isset($_POST['atualizar']))
 { // atualiza o pedido
 	$con = bancoMysqli();
 	$ped = $_GET['id_ped'];
+	$integrantes= addslashes($_POST['integrantes']);
 	$justificativa = addslashes($_POST['Justificativa']);
 	$fiscal = $_POST['Fiscal'];
 	$suplente  = $_POST['Suplente'];
@@ -60,6 +61,7 @@ if(isset($_POST['atualizar']))
 	if($_POST['atualizar'] > '1')
 	{
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+			`integrantes` = '$integrantes',
 			`parcelas` =  '$parcelas',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
@@ -109,6 +111,7 @@ if(isset($_POST['atualizar']))
 		$valor = dinheiroDeBr($_POST['Valor']); 
 		$forma_pagamento = $_POST['FormaPagamento'];	
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+			`integrantes` = '$integrantes',
 			valor = '$valor',
 			formaPagamento = '$forma_pagamento',
 			`parcelas` =  '$parcelas',
@@ -305,8 +308,20 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 						<input type="submit" class="btn btn-theme  btn-block" value="Atualizar Grupo">
 					</div>				
 				</div>
-				</form>	
-                                      				
+				</form>
+
+				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
+				
+                <div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><br /></div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
+						<textarea name="integrantes" class='form-control' cols="40" rows="5"><?php echo $ped['integrantes'] ?></textarea>
+					</div>
+				</div>
+
                 <div class="form-group">                  
 					<div class="col-md-offset-2 col-md-8" align="left"><strong>Objeto:</strong> 
 						<?php echo $linha_tabelas['Objeto'];?><br/><br/>
@@ -346,8 +361,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
-				  
-                <form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
+
                 <?php 
 					if($pedido['parcelas'] > 1)
 					{ 
