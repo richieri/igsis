@@ -310,7 +310,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				</div>
 				</form>
 
-				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
+				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
 				
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
