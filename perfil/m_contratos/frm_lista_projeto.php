@@ -36,7 +36,7 @@ switch($_GET['atribuido'])
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IN (NULL, '') AND eve.projetoEspecial IN (41) 
+					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IN (NULL, '') AND eve.projetoEspecial IN (54) 
 					ORDER BY idPedidoContratacao DESC";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
@@ -100,7 +100,7 @@ case 1:
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IS NOT NULL AND eve.projetoEspecial IN (41) 
+					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IS NOT NULL AND eve.projetoEspecial IN (54) 
 					ORDER BY idPedidoContratacao DESC";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
@@ -164,7 +164,7 @@ case 3:
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND eve.projetoEspecial = 41 
+					WHERE eve.publicado=1 AND ped.publicado=1 AND eve.projetoEspecial = 54
 					ORDER BY idPedidoContratacao DESC";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
