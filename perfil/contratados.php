@@ -1164,19 +1164,6 @@
 		<?php
 			}
 		?>
-				<!-- Grupo -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><br/>
-					</div>
-                </div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-						<label>Esse campo deve conter a listagem de pessoas envolvidas no espetáculo, apenas o nome civil de quem irá se apresentar, excluindo técnicos.</i></strong></label>
-						<p align="justify"><font color="gray"><strong><i>Elenco de exemplo:</strong><br/>José Carlos da Silva<br/>João Gonçalves<br/>Maria Eduarda de Oliveira</br>Fabio Silva Santos</font></i></p>
-						<textarea name="integrantes" class='form-control' cols="40" rows="5"><?php echo $pedido['integrantes'] ?></textarea>
-					</div>
-				</div>
 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
@@ -1293,6 +1280,21 @@
 								<p><?php echo comparaValores($_SESSION['idPedido']); ?></p>
 							</div>
 						</div>
+
+						<!-- Grupo -->
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><br/>
+							</div>
+		                </div>
+
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
+								<label>Esse campo deve conter a listagem de pessoas envolvidas no espetáculo, apenas o nome civil de quem irá se apresentar, excluindo técnicos.</i></strong></label>
+								<p align="justify"><font color="gray"><strong><i>Elenco de exemplo:</strong><br/>José Carlos da Silva<br/>João Gonçalves<br/>Maria Eduarda de Oliveira</br>Fabio Silva Santos</font></i></p>
+								<textarea name="integrantes" class='form-control' cols="40" rows="5"><?php echo $pedido['integrantes'] ?></textarea>
+							</div>
+						</div>
+						
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Justificativa*</label>
