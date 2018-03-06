@@ -158,7 +158,22 @@ $l=6; //DEFINE A ALTURA DA LINHA
   
 	   $pdf->SetX($x);
 	   $pdf->SetFont('Arial','', 11);
-	   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exRG".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado exclusivamente pela empresa "."$pjRazaoSocial"."."));
+	   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exRG".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado neste evento exclusivamente pela empresa "."$pjRazaoSocial"."."));
+
+     $pdf->Ln();
+
+     if ($rep02Nome != '')
+     {
+     $pdf->SetX($x);
+     $pdf->SetFont('Arial','', 11);   
+     $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." e "."$rep02Nome".", RG "."$rep02RG".", CPF "."$rep02CPF".", declara sob penas da lei ser representante do grupo "."$grupo"." para a realização do evento "."$Objeto"." conforme cronograma."));
+      } 
+      else 
+      {
+       $pdf->SetX($x);
+       $pdf->SetFont('Arial','', 11);   
+       $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." declara sob penas da lei ser representante do grupo "."$grupo"." para a realização do evento "."$Objeto"." conforme cronograma."));
+      }
 
    $pdf->Ln();
    $pdf->Ln();
@@ -189,12 +204,50 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 11);
    $pdf->Cell(128,$l,utf8_decode("CPF: "."$exCPF".""),0,1,'L');
 
+   $pdf->Ln();
+   $pdf->Ln();
+   $pdf->Ln();
 
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("_______________________________"),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("Representante Legal 1: "."$rep01Nome".""),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("RG: "."$rep01RG".""),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("CPF: "."$rep01CPF".""),0,1,'L');
 
    $pdf->Ln();
    $pdf->Ln();
    $pdf->Ln();
+
+   if ($rep02Nome != '')
+   {
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("_______________________________"),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("Representante Legal 2: "."$rep02Nome".""),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("RG: "."$rep02RG".""),0,1,'L');
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->Cell(128,$l,utf8_decode("CPF: "."$rep02CPF".""),0,1,'L');
+   }
    
+
+
 $pdf->Output();
 
 
