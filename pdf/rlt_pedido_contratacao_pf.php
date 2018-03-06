@@ -35,8 +35,7 @@ $rfSuplente = $pedido["RfSuplente"];
 $dataAtual = exibirDataBr($pedido["DataCadastro"]);
 $qtdApresentacoes = $pedido["qtdApresentacoes"];
 $NumeroProcesso = $pedido["NumeroProcesso"];
-
-
+$integrantes = $pedido["integrantes"];
 
 $verba = recuperaVerba($pedido['Verba']);
 $vocativo = $verba["vocativo"];
@@ -103,6 +102,7 @@ $sei =
 "<p align='justify'><strong>Local:</strong> "."$Local"."</p>".
 "<p><strong>Valor: </strong> R$ "."$ValorGlobal"."  ("."$ValorPorExtenso". " )</p>".
 "<p align='justify'><strong>Forma de Pagamento:</strong> "."$FormaPagamento "."</p>".
+"<p align='justify'><strong>Integrantes do Elenco:</strong> "."$integrantes "."</p>".
 "<p align='justify'><strong>Justificativa: </strong> "."$Justificativa"."</p>".
 "<p align='justify'>Nos termos do art. 6º do decreto 54.873/2014, fica designado como fiscal desta contratação artística o(a) servidor(a) "."$Fiscal".", RF "."$rfFiscal"." e, como substituto, "."$Suplente".", RF "."$rfSuplente".". Diante do exposto, solicitamos autorização para prosseguimento do presente."."</p>";
 
