@@ -37,6 +37,8 @@ $link33 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
 $link41 = $http."rlt_pedido_reserva_ccsp_pf.php";
 $link42 = $http."rlt_pedido_reserva_oficina.php";
 $link43 = $http."rlt_pedido_reserva_bma_pf.php";
+$link44 = $http."rlt_reserva_pf.php";
+
 
 $link17 = $http."rlt_normas_internas_teatros_pf.php"."?id=".$id_ped;
 $link34 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
@@ -177,6 +179,10 @@ echo "
 						<tr>
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
 							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
+						</tr>
+
+						<tr>
+							<td><a href='$link44?id=$id_ped' target='_blank'><strong>Reserva Pessoa Física</strong></a></td>
 						</tr>
 
 					</tbody>
