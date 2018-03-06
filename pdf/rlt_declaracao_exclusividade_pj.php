@@ -158,7 +158,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
   
 	   $pdf->SetX($x);
 	   $pdf->SetFont('Arial','', 11);
-	   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exRG".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado neste evento exclusivamente pela empresa "."$pjRazaoSocial"."."));
+	   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exCPF".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado neste evento exclusivamente pela empresa "."$pjRazaoSocial"."."));
 
      $pdf->Ln();
 
