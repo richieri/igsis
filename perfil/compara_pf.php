@@ -123,7 +123,7 @@ if(isset($_SESSION['idEvento']))
 	$array_evento = mysqli_fetch_array($query_evento);
 	$idEventoCapac = $array_evento['idEventoCapac'];
 
-	$eventoCapac = recuperaDadosProp("evento","id",$idEventoCapac)
+	$eventoCapac = recuperaDadosProp("evento","id",$idEventoCapac);
 	$integrantes = $eventoCapac['integrantes'];
 }
 
