@@ -277,21 +277,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
-										
-				<div class="form-group"> 
-					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_grupos"  method="post">
-						<textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($_SESSION['idPedido']); ?></textarea>
-					</div>
-                </div>  
-                
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
-                    </form>
-					</div>
-				</div>
-				  
+													  
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
