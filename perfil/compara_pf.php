@@ -157,8 +157,8 @@ if(isset($_POST['importarCapacIgsis']))
 		$query_ultimo = mysqli_query($con1,$sql_ultimo);
 		$id = mysqli_fetch_array($query_ultimo);
 		$idFisica = $id['Id_PessoaFisica'];
-		$idEvento = $_SESSION['idEvento'];	
-		$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantes`, `publicado`) VALUES ('$idEvento', '1', '$idFisica', $interantes, '1')";
+		$idEvento = $_SESSION['idEvento'];
+		$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantes`, `publicado`) VALUES ('$idEvento', '1', '$idFisica', $integrantes, '1')";
 		$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
 		if($query_insert_pedido)
 		{
