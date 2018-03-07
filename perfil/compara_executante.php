@@ -68,7 +68,7 @@ function recuperaDadosProp($tabela,$campo,$variavelCampo)
 if(isset($_SESSION['idEvento']))
 {
 	$idEvento = $_SESSION['idEvento'];
-	$sql_evento = "SELECT * FROM igsis_capac WHERE idEventoIgsis = '$idEventoCapac'";
+	$sql_evento = "SELECT * FROM igsis_capac WHERE idEventoIgsis = '$idEvento'";
 	$query_evento = mysqli_query($con1,$sql_evento);
 	$array_evento = mysqli_fetch_array($query_evento);
 	$idEventoCapac = $array_evento['idEventoCapac'];
