@@ -182,9 +182,8 @@ If($query1 == '' && $query2 != '')
 
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<form method='POST' action='?perfil=compara_executante' enctype='multipart/form-data'>
-						<input type='hidden' name='busca' value='<?php echo $cpf_busca ?>'>
-						<input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block'>
+					<form method='POST' action='?perfil=compara_executante&busca=<?php echo $cpf_busca ?>&id_ped=<?php echo $id_ped ?>' enctype='multipart/form-data'>
+						<input type='hidden' name='importarCapacIgsis'>
 						<input type='submit' class='btn btn-theme btn-lg btn-block' value='Importar'>
 					</form><br/>
 				</div>
