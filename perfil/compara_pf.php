@@ -115,6 +115,18 @@ function recuperaDadosProp($tabela,$campo,$variavelCampo)
 	return $campo;
 }
 
+if(isset($_SESSION['idEvento']))
+{
+	$idEvento = $_SESSION['idEvento'];
+	$sql_evento = "SELECT * FROM igsis_capac WHERE idEventoIgsis = '$idEventoCapac'";
+	$query_evento = mysqli_query($con2,$sql_evento);
+	$array_evento = mysqli_fetch_array($query_evento);
+	$idEventoCapac = $array_evento['idEventoCapac'];
+
+	$eventoCapac = recuperaDadosProp("evento","id",$idEventoCapac)
+	$integrantes = $eventoCapac['integrantes'];
+}
+
 if(isset($_POST['atualizaIgsis']))
 {
 	$campo = $_POST['campo'];
@@ -146,7 +158,7 @@ if(isset($_POST['importarCapacIgsis']))
 		$id = mysqli_fetch_array($query_ultimo);
 		$idFisica = $id['Id_PessoaFisica'];
 		$idEvento = $_SESSION['idEvento'];	
-		$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`) VALUES ('$idEvento', '1', '$idFisica', '1')";
+		$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantes`, `publicado`) VALUES ('$idEvento', '1', '$idFisica', $interantes, '1')";
 		$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
 		if($query_insert_pedido)
 		{

@@ -188,6 +188,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					<p align="justify"><strong>Tipo de evento:</strong> <?php echo $tipoEvento['tipoEvento'] ?></p>
 					<p align="justify"><strong>Nome de Grupo:</strong> <?php echo $evento['nomeGrupo'] ?></p>
 					<p align="justify"><strong>Ficha Técnica:</strong> <?php echo $evento['fichaTecnica'] ?></p>
+					<p align="justify"><strong>Integrantes do elenco:</strong> <?php echo $evento['integrantes'] ?></p>
 					<p align="justify"><strong>Faixa Etária:</strong> <?php echo $faixaEtaria['faixaEtaria'] ?></p>
 					<p align="justify"><strong>Sinopse:</strong> <?php echo $evento['sinopse'] ?></p>
 					<p align="justify"><strong>Release:</strong> <?php echo $evento['releaseCom'] ?></p>
