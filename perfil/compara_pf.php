@@ -425,7 +425,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Local de Nascimento' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='busca' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='LocalNascimento'  />
 										<input type='hidden' name='varCampo' value='".$localNascimento."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -442,7 +442,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Nacionalidade' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='busca' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='Nacionalidade'  />
 										<input type='hidden' name='varCampo' value='".$nacionalidade."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -459,7 +459,7 @@ If($query1 != '' && $query2 != '')
 							echo "<td>
 									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='CEP' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='busca' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='CEP'  />
 										<input type='hidden' name='varCampo' value='".$cep."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -723,36 +723,36 @@ If($query1 != '' && $query2 != '')
 									</form>
 								</td>";
 							echo "</tr>";
-						}							
+						}
 					?>
 					</tbody>
-				</table>				
-			</div>			
+				</table>
+			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
 					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
 					<div class="table-responsive list_info">
 					<?php
-						$sql = "SELECT * 
+						$sql = "SELECT *
 								FROM upload_lista_documento as list
 								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
-								WHERE arq.idPessoa = '$idPessoaMac' 
-								AND arq.idTipoPessoa = '1' 
+								WHERE arq.idPessoa = '$idPessoaMac'
+								AND arq.idTipoPessoa = '1'
 								AND arq.publicado = '1'";
 						$query = mysqli_query($con2,$sql);
 						$linhas = mysqli_num_rows($query);
-						
+
 						if ($linhas > 0)
-						{	
+						{
 							echo "
 								<table class='table table-condensed'>
-									
+
 									<tbody>";
 										while($arquivo = mysqli_fetch_array($query))
-										{					
+										{
 											echo "<tr>";
 											echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
-											echo "</tr>";					
+											echo "</tr>";
 										}
 							echo "
 									</tbody>
@@ -761,41 +761,41 @@ If($query1 != '' && $query2 != '')
 						else
 						{
 							echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
-						}				
+						}
 					?>
 						<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=1" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
-		
+
 		<?php
 			if(isset($_POST['edicaoPessoa']))
 			{
 				$_SESSION['edicaoPessoa'] = $_POST['edicaoPessoa'];
-			}				
+			}
 			$edicaoPessoa = $_SESSION['edicaoPessoa'];
-		
+
 			if($edicaoPessoa == 1)
-			{		
+			{
 		?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<form method='POST' action='?perfil=contratados'>
 							<input type='submit' class='btn btn-theme btn-lg btn-block' value='voltar para a lista de contratados'>
-						</form>				
+						</form>
 					</div>
-				</div>				
-		<?php	
+				</div>
+		<?php
 			}
 			else
 			{
-		?>		
+		?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
 						<form method='POST' action='?perfil=contratados&p=fisica'>
 							<input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro cpf'>
-						</form>				
+						</form>
 					</div>
 					<div class="col-md-6">
 						<form method='POST' action='?perfil=contratados&p=lista'>
@@ -804,16 +804,12 @@ If($query1 != '' && $query2 != '')
 							<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
 						</form>
 					</div>
-				</div>	
-		<?php	
+				</div>
+		<?php
 			}
-		
 		?>
-		
-		
-		
 	</section>
-<?php	
+<?php
 }
 
 //Se não existir no IGSIS e nem no CAPAC
