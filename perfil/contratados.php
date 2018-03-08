@@ -187,18 +187,6 @@
 				else
 				{
 					$idEvento = $_SESSION['idEvento'];
-					/*
-					se o número de linhas for maior que 0
-					pegar o código do capac
-					com o código do capac retornar o campo de integrantes daquele código
-
-					caso o numero de linhas for = 0, colocar a variável de integrantes como vazia
-
-					colocar o campo $sql_insere_pf
-
-					FIM
-
-					*/
 					$con2 = bancoMysqliProponente();
 					//retorna uma array com os dados de qualquer tabela do CAPAC. Serve apenas para 1 registro.
 					function recuperaDadosProp($tabela,$campo,$variavelCampo)
@@ -217,8 +205,6 @@
 					$eventoCapac = recuperaDadosProp("evento","id",$idEventoCapac);
 					$integrantes = $eventoCapac['integrantes'];
 					
-					/*fim das instruções*/
-
 					$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1"; //a data final 
 					$query_anterior = mysqli_query($con,$sql_anterior);
 					$data = mysqli_fetch_array($query_anterior);
