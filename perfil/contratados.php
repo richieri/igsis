@@ -188,9 +188,6 @@
 				{
 					$idEvento = $_SESSION['idEvento'];
 					/*
-					1º passo, verificar se tem registro na tabela 
-					$sql_evento = "SELECT * FROM igsis_capac WHERE idEventoIgsis = '$idEvento'";
-
 					se o número de linhas for maior que 0
 					pegar o código do capac
 					com o código do capac retornar o campo de integrantes daquele código
@@ -201,7 +198,7 @@
 
 					FIM
 
-
+					*/
 					$con2 = bancoMysqliProponente();
 					//retorna uma array com os dados de qualquer tabela do CAPAC. Serve apenas para 1 registro.
 					function recuperaDadosProp($tabela,$campo,$variavelCampo)
@@ -215,11 +212,12 @@
 					$sql_evento = "SELECT * FROM igsis_capac WHERE idEventoIgsis = '$idEvento'";
 					$query_evento = mysqli_query($con,$sql_evento);
 					$array_evento = mysqli_fetch_array($query_evento);
-					$idEventoCapac = $array_evento['idEventoCapac'];
 
+					$idEventoCapac = $array_evento['idEventoCapac'];
 					$eventoCapac = recuperaDadosProp("evento","id",$idEventoCapac);
 					$integrantes = $eventoCapac['integrantes'];
-					*/
+					
+					/*fim das instruções*/
 
 					$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1"; //a data final 
 					$query_anterior = mysqli_query($con,$sql_anterior);
@@ -245,8 +243,8 @@
 						dataKitPagamento)
 						VALUES ('$idPessoa',
 						'1',
-						'1',
 						'$integrantes',
+						'1',
 						'$idEvento',
 						'$idInstituicao',
 						'$dataKitPagamento')";
