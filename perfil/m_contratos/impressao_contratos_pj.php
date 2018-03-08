@@ -23,7 +23,8 @@ $link12 = $http."rlt_pedido_reserva_atividadecultural_pj.php";
 $link13 = $http."rlt_pedido_reserva_atividadecultural_cooperativa_pj.php";
 $link14 = $http."rlt_pedido_reserva_vocacional_pj.php";
 $link17 = $http."rlt_declaracao_iss_pj.php?id=".$id_ped;
-$link19 = $http."rlt_declaracao_exclusividade_pj.php?id=".$id_ped;
+$link19 = $http."rlt_declaracao_exclusividade_grupo_pj.php?id=".$id_ped;
+$link54 = $http."rlt_declaracao_exclusividade_1pessoa_pj.php?id=".$id_ped;
 $link22 = $http."rlt_ordemservico_pj.php";
 $link23 = $http."rlt_ordemservico_pj_word.php";
 $link26 = $http."rlt_termo_doacao_pj.php";
@@ -100,11 +101,14 @@ echo "
 
 						<tr>
 							<td><a href='$link17' target='_blank'><strong>ISS</strong></a></td>
-							<td><a href='$link19' target='_blank'><strong>Exclusividade</strong></a></td>
+							<td><a href='$link19' target='_blank'><strong>Exclusividade (Grupo)</strong></a></td>
 						</tr>
 
 						<tr>
 							<td><a href='$link40' target='_blank'><strong>Convênio 500</strong></a></td>
+							<td><a href='$link54?id=$id_ped' target='_blank'><strong>Exclusividade (1 pessoa)</strong></a></td>
+						</tr>
+						<tr>	
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Abertura de Conta - Banco do Brasil</strong></a></td>
 						</tr>
 
