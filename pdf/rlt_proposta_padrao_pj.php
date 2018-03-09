@@ -513,6 +513,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 		$pdf->MultiCell(158,$l,utf8_decode($lugar));
 
 		$pdf->Ln();
+		$pdf->Ln();
 	}
 
 //RODAPÉ PERSONALIZADO
