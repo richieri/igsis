@@ -14,12 +14,7 @@ $pasta = "?perfil=contratos&p=";
 				</ul>
 			</li>
 			<li><a href="<?php echo $pasta ?>frm_busca">Filtrar Contratos</a></li>
-			<li><a href="#">Filtro por Operador</a>
-				<ul class="dl-submenu">
-					<li><a href="<?php echo $pasta ?>frm_sem_operador">Sem Operador</a></li>
-					<li><a href="<?php echo $pasta ?>frm_por_operador">Por Operador</a></li>
-				</ul>
-			</li>
+			<li><a href="<?php echo $pasta ?>frm_sem_operador">Filtro Sem Operador</a></li>
 			<li><a href="<?php echo $pasta ?>frm_evento_sem_reenvio">Eventos Sem Reenvios</a></li>
 			<li><a href="<?php echo $pasta ?>frm_busca_periodo_operador">Filtro por Período/Operador</a></li>
 			<li><a href="<?php echo $pasta ?>frm_busca_dataenvio">Filtro por Data de Envio</a></li>
