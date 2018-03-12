@@ -125,7 +125,7 @@ $rep02Email = $rep02["Email"];
 $rep02INSS = $rep02["INSS"];
 
 header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment;Filename=termo de parceria.doc");
+header("Content-Disposition: attachment;Filename=minuta_80k.doc");
 
 //contando parcelas
 $con = bancoMysqli();
