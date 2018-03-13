@@ -44,41 +44,6 @@
 			gravarLog($sql_reabrir);
 			$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 			$mensagem = $mensagem."O evento ".$evento['nomeEvento']." foi reaberto.<br />";
-			$sql_pedido = "UPDATE igsis_pedido_contratacao SET estado = NULL WHERE idEvento = '$idEvento'";
-			$query_pedido = mysqli_query($con,$sql_pedido);
-			if($query_pedido)
-			{
-				$mensagem = $mensagem."Os pedidos foram reabertos.<br />";
-				$sql_recupera_pedidos_abertos = "SELECT * 
-					FROM igsis_pedido_contratacao 
-					WHERE publicado = '1' 
-					AND idEvento = $idEvento 
-					AND estado IS NULL";
-				$query_recupera_pedidos_abertos = mysqli_query($con,$sql_recupera_pedidos_abertos);
-				$n_recupera = mysqli_num_rows($query_recupera_pedidos_abertos);
-				if($n_recupera > 0)
-				{
-					$mensagem = "O evento ".$evento['nomeEvento']."foi reaberto.";
-					$pedidos = "";
-					while($x = mysqli_fetch_array($query_recupera_pedidos_abertos))
-					{
-						$pedidos = $pedidos." ".$x['idPedidoContratacao'].","; 	
-					}
-					$conteudo_email = "
-						Olá,<br />
-						Por solicitação, o(s) pedido(s) ".trim(substr($pedidos,0,-1))." foi(foram) reaberto(s) e não aparecerá(ão) em suas listas no Módulo Contratação até que seja(m) reenviado(s).<br /><br />
-						Att,<br />
-						Equipe IGSIS<br />";
-					$instituicao = 4;
-					$subject = "O evento '".$evento['nomeEvento']."' foi reaberto";
-					$email = "sistema.igsis@gmail.com";
-					$usuario = "IGSIS";
-				}
-			}
-			else
-			{
-				$erro++;	
-			}
 		}
 		else
 		{
