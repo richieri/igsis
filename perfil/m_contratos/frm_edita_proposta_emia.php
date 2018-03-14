@@ -51,7 +51,6 @@ if(isset($_POST['atualizar']))
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_pedido)
 		{
-			atualizaEstado($ped);
 			$recupera = recuperaDados("igsis_pedido_contratacao",$ped,"idPedidoContratacao");
 			$idEvento = $recupera['idEvento'];
 			$sql_atualiza_evento = "UPDATE ig_evento SET
