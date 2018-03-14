@@ -81,7 +81,7 @@ if(isset($_POST['periodo']))
 	$con = bancoMysqli();
 	$sql_evento = "SELECT DISTINCT age.idEvento, ped.idPedidoContratacao FROM igsis_agenda AS age
 		INNER JOIN igsis_pedido_contratacao AS ped ON ped.idEvento = age.idEvento
-		WHERE data BETWEEN '$inicio' AND '$final' $operador AND ped.estado IN (1,2,3,4,5,6,7,8,9,10,13,14,15,18) ORDER BY data ASC ";
+		WHERE data BETWEEN '$inicio' AND '$final' $operador AND ped.estado IN (1,2,3,4,5,6,7,8,9,10,13,14,15,16,17,18) ORDER BY data ASC ";
 	$query_evento = mysqli_query($con,$sql_evento);
 	$num = mysqli_num_rows($query_evento);
 	$i = 0;
