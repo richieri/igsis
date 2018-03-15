@@ -63,8 +63,13 @@ function retornaDataInicio($idEvento)
 }
 
 
+/*POST*/
 if(isset($_POST['periodo']))
 {
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
+
 	$inicio = exibirDataMysql($_POST['inicio']);
 	$final = exibirDataMysql($_POST['final']);
 	$idContratos = $_POST['operador'];
@@ -79,14 +84,30 @@ if(isset($_POST['periodo']))
 	}
 
 	$con = bancoMysqli();
-	$sql_evento = "SELECT DISTINCT age.idEvento, ped.idPedidoContratacao FROM igsis_agenda AS age
-		INNER JOIN igsis_pedido_contratacao AS ped ON ped.idEvento = age.idEvento
-		WHERE data BETWEEN '$inicio' AND '$final' $operador AND ped.estado IN (1,2,3,4,5,6,7,8,9,10,13,14,15,16,17,18) ORDER BY data ASC ";
-	$query_evento = mysqli_query($con,$sql_evento);
-	$num = mysqli_num_rows($query_evento);
-	$i = 0;
-	while($evento = mysqli_fetch_array($query_evento))
-	{
+	$sql_evento = 
+	  "SELECT DISTINCT 
+	     age.idEvento, 
+	     ped.idPedidoContratacao 
+	   FROM 
+	     igsis_agenda AS age
+	   INNER JOIN 
+	     igsis_pedido_contratacao AS ped 
+	     ON ped.idEvento = age.idEvento
+	   INNER JOIN ig_evento as eve
+         ON eve.idEvento = age.idEvento  
+	   WHERE data BETWEEN '$inicio' 
+	   AND '$final' $operador 
+	   AND ped.estado 	   
+	   IN (1,2,3,4,5,6,7,8,9,10,13,14,16,17,18) 
+	   AND eve.dataEnvio IS NOT NULL
+	   ORDER BY data ASC ";
+	   
+	   $query_evento = mysqli_query($con,$sql_evento);
+	   $num = mysqli_num_rows($query_evento);	   
+	   $i = 0;
+	   
+	   while($evento = mysqli_fetch_array($query_evento))
+	   {
 		$idEvento = $evento['idEvento'];
 		$dataInicio = strtotime(retornaDataInicio($idEvento));
 		if($dataInicio >= strtotime($inicio) AND $dataInicio <= strtotime($final))
