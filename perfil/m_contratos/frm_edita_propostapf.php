@@ -133,7 +133,6 @@ if(isset($_POST['atualizar']))
 			$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
 			if($query_atualiza_evento)
 			{
-				atualizaEstado($ped);
 				$mensagem = "Pedido atualizado com sucesso. <br/> <br><br>
 					<div class='row'>
 						<div class='col-md-offset-1 col-md-10'>	
