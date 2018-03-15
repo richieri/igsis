@@ -66,9 +66,6 @@ function retornaDataInicio($idEvento)
 /*POST*/
 if(isset($_POST['periodo']))
 {
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
 
 	$inicio = exibirDataMysql($_POST['inicio']);
 	$final = exibirDataMysql($_POST['final']);
