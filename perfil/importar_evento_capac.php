@@ -13,13 +13,13 @@ $sqlEvento = $con2->query("SELECT * FROM evento where id = '$idCapac'");
 $eventoC = $sqlEvento->fetch_array(MYSQLI_ASSOC);
 
 $idTipoEvento = $eventoC['idTipoEvento'];
-$nomeEvento = $eventoC['nomeEvento'];
-$nomeGrupo = $eventoC['nomeGrupo'];
-$fichaTecnica = $eventoC['fichaTecnica'];
+$nomeEvento = addslashes($eventoC['nomeEvento']);
+$nomeGrupo = addslashes($eventoC['nomeGrupo']);
+$fichaTecnica = addslashes($eventoC['fichaTecnica']);
 $idFaixaEtaria = $eventoC['idFaixaEtaria'];
-$sinopse = $eventoC['sinopse'];
-$releaseCom = $eventoC['releaseCom'];
-$link = $eventoC['link'];
+$sinopse = addslashes($eventoC['sinopse']);
+$releaseCom = addslashes($eventoC['releaseCom']);
+$link = addslashes($eventoC['link']);
 $idProdutor = $eventoC['idProdutor'];
 $idTipoPessoa = $eventoC['idTipoPessoa'];
 $idPj = $eventoC['idPj'];
@@ -30,7 +30,7 @@ $idPf = $eventoC['idPf'];
 $sqlProdutor = $con2->query("SELECT * FROM produtor where id = '$idProdutor'");
 $produtorC = $sqlProdutor->fetch_array(MYSQLI_ASSOC);
 
-$nomeProdutor = $produtorC['nome'];
+$nomeProdutor = addslashes($produtorC['nome']);
 $emailProdutor = $produtorC['email'];
 $telefone1Produtor = $produtorC['telefone1'];
 $telefone2Produtor = $produtorC['telefone2'];
@@ -63,7 +63,7 @@ if($idTipoPessoa == 2)
 	$sqlRep1 = $con2->query("SELECT * FROM representante_legal where id = '$idRepresentanteLegal1'");
 	$rep1 = $sqlRep1->fetch_array(MYSQLI_ASSOC);
 
-	$nomeRep1 = $rep1['nome'];
+	$nomeRep1 = addslashes($rep1['nome']);
 	$rgRep1 = $rep1['rg'];
 	$cpfRep1 = $rep1['cpf'];
 	$nacionalidadeRep1 = $rep1['nacionalidade'];
@@ -73,7 +73,7 @@ if($idTipoPessoa == 2)
 	$sqlRep2 = $con2->query("SELECT * FROM representante_legal where id = '$idRepresentanteLegal2'");
 	$rep2 = $sqlRep2->fetch_array(MYSQLI_ASSOC);
 
-	$nomeRep2 = $rep2['nome'];
+	$nomeRep2 = addslashes($rep2['nome']);
 	$rgRep2 = $rep2['rg'];
 	$cpfRep2 = $rep2['cpf'];
 	$nacionalidadeRep2 = $rep2['nacionalidade'];
@@ -85,8 +85,8 @@ if($idTipoPessoa == 2)
 $sqlPf = $con2->query("SELECT * FROM pessoa_fisica where id = '$idPf'");
 $pf = $sqlPf->fetch_array(MYSQLI_ASSOC);
 
-$nomePf = $pf["nome"];
-$nomeArtistico = $pf["nomeArtistico"];
+$nomePf = addslashes($pf["nome"]);
+$nomeArtistico = addslashes($pf["nomeArtistico"]);
 $rgPf = $pf["rg"];
 $cpfPf = $pf["cpf"];
 $ccmPf= $pf["ccm"];
