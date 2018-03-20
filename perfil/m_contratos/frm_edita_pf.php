@@ -299,20 +299,20 @@ $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 						<input type="submit" value="Anexos" class="btn btn-theme btn-block">
 					</form>
 					</div>
-					<div class=" col-md-6">
-					<?php 
-						if(isset($id_pedido))
-						{ 
+					<div class="col-md-6">
+                    <?php
+						if($id_ped != '')
+						{
 					?>
-							<a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_pedido ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
-					<?php 
-						} 
-						elseif($id_ped <> "")
-						{ 
-					?>
-							<a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>
-					<?php 
-						} 
+							<br/><a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped ?>"><input type="submit" value="Voltar ao pedido" class="btn btn-theme btn-block"></a>	
+					<?php	
+						}
+						else
+						{
+							?>
+							<br/><a href="?perfil=contratos&p=frm_lista_pf"><input type="submit" value="Voltar" class="btn btn-theme btn-block"></a>
+							<?php
+						}
 					?>
 					</div>
 				</div>
