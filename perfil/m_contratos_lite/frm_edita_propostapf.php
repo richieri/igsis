@@ -8,6 +8,23 @@ $ano=date('Y');
 
 $link1="index.php?perfil=contratos_lite&p=impressao_contratos_pf&id_ped=".$id_ped;
 
+if(isset($_POST['idContrato']))
+{
+	$con = bancoMysqli();
+	$idContratos = $_POST['contratos'];
+	$idPedido = $_POST['idContrato'];
+	$sql_atualiza_contratos = "UPDATE igsis_pedido_contratacao SET idContratos = '$idContratos' WHERE idPedidoContratacao = '$idPedido'";
+	$query_atualiza_contratos = mysqli_query($con,$sql_atualiza_contratos);
+	if($query_atualiza_contratos)
+	{
+		$mensagem = "Responsável por contrato atualizado.";
+	}
+	else
+	{
+		$mensagem = "Erro.";
+	}
+}
+
 if(isset($_POST['atualizaGrupo']))
 { // atualiza o grupo
 	$con = bancoMysqli();
@@ -31,20 +48,24 @@ if(isset($_POST['atualizar']))
 { // atualiza o pedido
 	$con = bancoMysqli();
 	$ped = $_GET['id_ped'];
+	$integrantes= addslashes($_POST['integrantes']);
 	$justificativa = addslashes($_POST['Justificativa']);
 	$fiscal = $_POST['Fiscal'];
 	$suplente  = $_POST['Suplente'];
 	$parecer = addslashes($_POST['ParecerTecnico']);
 	$observacao = addslashes($_POST['Observacao']);
+	$pendenciaDocumento = addslashes($_POST['pendenciaDocumento']);
 	$parcelas = $_POST['parcelas'];
 	$processo = $_POST['NumeroProcesso'];
 	$dataAgora = date('Y-m-d H:i:s');
 	if($_POST['atualizar'] > '1')
 	{
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+			`integrantes` = '$integrantes',
 			`parcelas` =  '$parcelas',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
+			pendenciaDocumento = '$pendenciaDocumento',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
 			NumeroProcesso = '$processo'
@@ -52,7 +73,6 @@ if(isset($_POST['atualizar']))
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_pedido)
 		{
-			atualizaEstado($ped);
 			$recupera = recuperaDados("igsis_pedido_contratacao",$ped,"idPedidoContratacao");
 			$idEvento = $recupera['idEvento'];
 			$sql_atualiza_evento = "UPDATE ig_evento SET
@@ -90,11 +110,13 @@ if(isset($_POST['atualizar']))
 		$valor = dinheiroDeBr($_POST['Valor']); 
 		$forma_pagamento = $_POST['FormaPagamento'];	
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+			`integrantes` = '$integrantes',
 			valor = '$valor',
 			formaPagamento = '$forma_pagamento',
 			`parcelas` =  '$parcelas',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
+			pendenciaDocumento = '$pendenciaDocumento',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
 			NumeroProcesso = '$processo'
@@ -111,7 +133,6 @@ if(isset($_POST['atualizar']))
 			$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
 			if($query_atualiza_evento)
 			{
-				atualizaEstado($ped);
 				$mensagem = "Pedido atualizado com sucesso. <br/> <br><br>
 					<div class='row'>
 						<div class='col-md-offset-1 col-md-10'>	
@@ -165,11 +186,18 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
-			<h2>PEDIDO DE CONTRATAÇÃO DE PESSOA FÍSICA</h2>
-            <h4><?php if(isset($mensagem)){ echo $mensagem; } ?></h4>
-        </div>
-	  	<div class="row">
+			<div class="sub-title"><h2>PEDIDO DE CONTRATAÇÃO DE PESSOA JURÍDICA</h2>
+			</div>
+            <h5><?php if(isset($mensagem)){echo $mensagem;}?> </h5>
+		</div>
+		<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">
+				
+					<div class="form-group">                  
+						<div class="col-md-offset-2 col-md-8"><hr/></div>
+					</div> 
+			
+				  
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Código do Pedido de Contratação:</strong><br/> <?php echo "$ano-$id_ped"; ?><br/>	  
 					</div>
@@ -209,21 +237,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
-										
-				<div class="form-group"> 
-					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-					<form class="form-horizontal" role="form" action="?perfil=contratos_lite&p=frm_grupos"  method="post">
-						<textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($_SESSION['idPedido']); ?></textarea>
-					</div>
-                </div>  
-                
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
-                    </form>
-					</div>
-				</div>
-				  
+													  
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
@@ -233,15 +247,27 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-5">
 						<label>Nome do Grupo</label>
-						<input type="text" name="nomeGrupo" id="nomeGrupo" class="form-control" value="<?php echo $evento['nomeGrupo'] ?>" >
+						<input type="text" name="nomeGrupo" id="nomeGrupo" readonly class="form-control" value="<?php echo $evento['nomeGrupo'] ?>" >
 					</div>
 					<div class="col-md-3"><br/>
 						<input type="hidden" name="atualizaGrupo" value="<?php echo $pedido['idEvento']; ?>" />
 						<input type="submit" class="btn btn-theme  btn-block" value="Atualizar Grupo">
 					</div>				
 				</div>
-				</form>	
-                                      				
+				</form>
+
+				<form class="form-horizontal" role="form" action="?perfil=contratos_lite&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
+				
+                <div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><br /></div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
+						<textarea name="integrantes" readonly class='form-control' cols="40" rows="5"><?php echo $ped['integrantes'] ?></textarea>
+					</div>
+				</div>
+
                 <div class="form-group">                  
 					<div class="col-md-offset-2 col-md-8" align="left"><strong>Objeto:</strong> 
 						<?php echo $linha_tabelas['Objeto'];?><br/><br/>
@@ -268,19 +294,27 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 						<?php echo $linha_tabelas['CargaHoraria'];?><br/>
 					</div>
 				</div>
+				
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><br /></div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Relação Jurídica:</strong> 
+						<?php echo retornaRelacaoJuridica($evento['ig_modalidade_IdModalidade']);?></div>
+				</div>	
                   
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
-				  
-                <form class="form-horizontal" role="form" action="?perfil=contratos_lite&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
+
                 <?php 
 					if($pedido['parcelas'] > 1)
 					{ 
 				?>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Valor:</strong><br/>
-								<input type='text' disabled name="valor_parcela" id='valor' class='form-control' value="<?php echo dinheiroParaBr($pedido['valor']) ?>" >
+								<input type='text' disabled name="valor_parcela" id='valor' readonly class='form-control' value="<?php echo dinheiroParaBr($pedido['valor']) ?>" >
 							</div>
 						</div>
 				<?php 
@@ -290,7 +324,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				?>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Valor:</strong><br/>
-								<input type='text' name="Valor" id='valor' class='form-control' value="<?php echo dinheiroParaBr($pedido['valor']) ?>" >
+								<input type='text' name="Valor" id='valor' readonly class='form-control' value="<?php echo dinheiroParaBr($pedido['valor']) ?>" >
 							</div>
 						</div>							
 				<?php 
@@ -321,7 +355,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Parcelas (antes de editar as parcelas, é preciso salvar o pedido)</strong><br/>
-							<select class="form-control" id="parcelas" name="parcelas" >
+							<select class="form-control" id="parcelas" name="parcelas" readonly class='form-control' >
 								<option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
 								<option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
 								<option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
@@ -386,12 +420,12 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Fiscal:</strong>
-						<select class="form-control" name="Fiscal" id="Fiscal">
+						<select class="form-control" name="Fiscal" id="Fiscal" readonly class='form-control'>
 							<?php opcaoUsuario($_SESSION['idInstituicao'],$evento['idResponsavel']); ?>
 						</select>
 					</div>					
 					<div class="col-md-6"><strong>Suplente:</strong>
-						<select class="form-control" name="Suplente" id="Fiscal">
+						<select class="form-control" name="Suplente" id="Fiscal" readonly class='form-control'>
 							<?php opcaoUsuario($_SESSION['idInstituicao'],$evento['suplente']); ?>
 						</select>
 					</div>
@@ -410,8 +444,14 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				</div>
 				  
                 <div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
+					<div class="col-md-offset-2 col-md-8"><strong>Observação do Programador:</strong><br/>
 					    <textarea name="Observacao" cols="40" rows="2"><?php echo $linha_tabelas['Observacao'];?></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8"><strong>Pendência(s) no Setor de Contratos Artísticos:</strong><br/>
+					    <textarea name="pendenciaDocumento" cols="40" rows="3"><?php echo $linha_tabelas['pendenciaDocumento'];?></textarea>
 					</div>
 				</div>
                   
@@ -425,7 +465,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				  
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
-						<a href="?perfil=detalhe_pedido&id_ped=<?php echo $id_ped; ?>" class="btn btn-theme btn-block" target="_blank" >Abrir detalhes do evento</a>
+						<a href="?perfil=detalhe_pedido&id_ped=<?php echo $pedido['idPedidoContratacao']; ?>" class="btn btn-theme btn-block" target="_blank" >Abrir detalhes do evento</a>
 					</div>			
 					<div class="col-md-6">
 						<a href="?perfil=contratos_lite&p=frm_arquivos_pedidos&id_ped=<?php echo  $_GET['id_ped']; ?>" class="btn btn-theme btn-block" target="_blank" >Abrir Anexos do Pedido</a>
@@ -438,27 +478,14 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<a href="../perfil/m_contratos_lite/frm_arquivos_todos_pedidos.php?idPedido=<?php echo $_GET['id_ped'];  ?>&all=true" class="btn btn-theme btn-block" >Baixar todos os arquivos do pedido e do proponente</a>
+						<a href="../perfil/m_contratos/frm_arquivos_todos_pedidos.php?idPedido=<?php echo $_GET['id_ped'];  ?>&all=true" class="btn btn-theme btn-block" >Baixar todos os arquivos do pedido e do proponente</a>
 					</div>	
 				</div>
 					
 				<div class="form-group">
                     <div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
-				
-				<div class="form-group">
-                    <div class="col-md-offset-2 col-md-8"><br /></div>
-				</div>
-				
-	            <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<a href="?perfil=contratos_lite&p=frm_chamados&pag=evento&idEvento=<?php echo $pedido['idEvento'];  ?>" class="btn btn-theme btn-block" target="_blank" >Chamados</a>
-					</div>	
-				</div>
-				
-				<div class="form-group">
-                    <div class="col-md-offset-2 col-md-8"><br /></div>
-				</div>
+
 				
 				<div class="form-group">
                     <div class="col-md-offset-2 col-md-8">
@@ -487,4 +514,4 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 	  		</div>
 	  	</div>
 	</div>	
-</section>
+</section>  

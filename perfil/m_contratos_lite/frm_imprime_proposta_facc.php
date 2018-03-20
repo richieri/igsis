@@ -19,7 +19,7 @@ $link="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=";
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.idContratos = '' AND eve.projetoEspecial IN (41) 
+					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.idContratos = '' AND eve.projetoEspecial IN (54) 
 					ORDER BY idPedidoContratacao DESC";
 			$query_lista = mysqli_query($con,$sql_lista);
 			
@@ -40,7 +40,7 @@ $link="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=";
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.idPessoa IS NOT NULL AND eve.projetoEspecial IN (41) 
+					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.idPessoa IS NOT NULL AND eve.projetoEspecial IN (54) 
 					ORDER BY idPedidoContratacao DESC limit $inicio,$registros ";
 			$query_lista = mysqli_query($con,$sql_lista);
 			//conta o total de itens

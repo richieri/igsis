@@ -9,7 +9,6 @@ $usuario = recuperaDados("ig_usuario",$_SESSION['idUsuario'],"idUsuario");
 		<button class="dl-trigger">Open Menu</button>
 		<ul class="dl-menu">
 			<li><a href="<?php echo $pasta ?>frm_busca">Contratos</a></li>
-			<li><a href="<?php echo $pasta ?>frm_busca_periodo">Contratos por período</a></li>
 			<li><a href="<?php echo $pasta ?>frm_busca_periodo_relatorio">Busca / Relatório por Período</a></li>
 			<li><a href="#">Virada</a>
 				<ul class="dl-submenu">
