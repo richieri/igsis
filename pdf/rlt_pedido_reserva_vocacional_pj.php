@@ -32,6 +32,7 @@ $cargo = $pedido["Cargo"];
 $pjRazaoSocial = $pj["Nome"];
 $pjCNPJ = $pj['CNPJ'];
 
+
 $codPed = "";
   
  ?>
@@ -69,12 +70,14 @@ $sei =
   "<p><strong>CONTABILIDADE</strong></p>".
   "<p><strong>Sr(a). Responsável</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>À vista do contido às fls. retro e, uma vez que se trata de recursos transferidos da Secretaria Municipal de Educação,  encaminhamos o presente para providências do(a) senhor(a).</p>".
+  "<p>O presente processo trata de "."$pjRazaoSocial".", "."$objeto".", no valor de "."R$ $ValorGlobal"."  "."($ValorPorExtenso)".", conforme solicitação (link da solicitação), foram anexados os documentos necessários exigidos no edital, no período de "."$periodo"." </p>".
   "<p>&nbsp;</p>".
-  "<p> Valor: "."R$ $ValorGlobal"."  "."($ValorPorExtenso)"."</p>".
+  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6375  – Dotação 25.10.13.392.3001.6375</p>".
   "<p>&nbsp;</p>".
-  "<p>Após, enviar para SMC/Assessoria Jurídica para prosseguimento. </p>".
+  "<p>Após, enviar para SMC/AJ,  para prosseguimento.</p>".
   "<p>&nbsp;</p>"
+  
+
 
 ?>
 

@@ -4,7 +4,6 @@
    require_once("../funcoes/funcoesConecta.php");
    require_once("../funcoes/funcoesGerais.php");
    require_once("../funcoes/funcoesSiscontrat.php");
-   require_once("../funcoes/funcoesFormacao.php");
 
 //CONEXÃO COM BANCO DE DADOS 
    $conexao = bancoMysqli();
@@ -12,26 +11,28 @@
 //CONSULTA 
 $id_ped=$_GET['id'];
 dataReserva($id_ped);
-$linha_tabelas = siscontrat($id_ped);
-
-$codPed = $id_ped;
-$objeto = $linha_tabelas["Objeto"];
-$ValorGlobal = $linha_tabelas["ValorGlobal"];
-$ValorPorExtenso = valorPorExtenso($linha_tabelas["ValorGlobal"]); 
-$periodo = $linha_tabelas["Periodo"];
-$duracao = $linha_tabelas["Duracao"];
-$dataAtual = date("d/m/Y");
-$NumeroProcesso = $linha_tabelas["NumeroProcesso"];
-$assinatura = $linha_tabelas["Assinatura"];
-$cargo = $linha_tabelas["Cargo"];
-
-$linha_tabelas_pessoa = siscontratDocs($linha_tabelas['IdProponente'],1);
-$nome = $linha_tabelas_pessoa["Nome"];
-$cpf = $linha_tabelas_pessoa["CPF"];
-
-$setor = $linha_tabelas["Setor"];
-
 $ano=date('Y');
+
+$pedido = siscontrat($id_ped);
+$pj = siscontratDocs($pedido['IdProponente'],2);
+$ex = siscontratDocs($pedido['IdExecutante'],1);
+$rep01 = siscontratDocs($pj['Representante01'],3);
+$rep02 = siscontratDocs($pj['Representante02'],3);
+$codPed = $id_ped;
+$objeto = $pedido["Objeto"];
+$ValorGlobal = $pedido["ValorGlobal"];
+$ValorPorExtenso = valorPorExtenso($pedido["ValorGlobal"]); 
+$dataAtual = date("d/m/Y");
+$NumeroProcesso = $pedido["NumeroProcesso"];
+$assinatura = $pedido["Assinatura"];
+$cargo = $pedido["Cargo"];
+
+//PessoaJuridica
+
+$pjRazaoSocial = $pj["Nome"];
+$pjCNPJ = $pj['CNPJ'];
+
+$codPed = "";
   
  ?>
  
@@ -62,19 +63,20 @@ $ano=date('Y');
 $sei = 
   "<p><strong>Do processo nº:</strong> "."$NumeroProcesso"."</p>".
   "<p>&nbsp;</p>".
-  "<p><strong>INTERESSADO:</strong> "."$nome"."  </span></p>".
+  "<p><strong>INTERESSADO:</strong> "."$pjRazaoSocial"."  </span></p>".
   "<p><strong>ASSUNTO:</strong> "."$objeto"."  </p>".
   "<p>&nbsp;</p>".
   "<p><strong>CONTABILIDADE</strong></p>".
   "<p><strong>Sr(a). Responsável</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata de "."$nome".", "."$objeto".", no valor de "."R$ $ValorGlobal"."  "."($ValorPorExtenso)".", conforme solicitação (link da solicitação), foram anexados os documentos necessários exigidos no edital, no período de "."$periodo"." </p>".
+  "<p>O presente processo trata de "."$pjRazaoSocial".", "."$objeto".", no valor de "."R$ $ValorGlobal"."  "."($ValorPorExtenso)".", conforme solicitação (link da solicitação), foram anexados os documentos necessários exigidos no edital, no período de "."$periodo"." </p>".
   "<p>&nbsp;</p>".
-  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6375  – Dotação 25.10.13.392.3001.6375</p>".
+  "<p></p>".
   "<p>&nbsp;</p>".
+  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6374  – Dotação 25.10.13.392.3001.6374</p>".
+    "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/AJ,  para prosseguimento.</p>".
   "<p>&nbsp;</p>"
-
 ?>
 
 <div align="center">
