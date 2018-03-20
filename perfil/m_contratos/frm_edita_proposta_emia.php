@@ -52,13 +52,13 @@ if(isset($_POST['atualizar']))
 		if($query_atualiza_pedido)
 		{
 			$recupera = recuperaDados("igsis_pedido_contratacao",$ped,"idPedidoContratacao");
-			$idEvento = $recupera['idEvento'];
-			$sql_atualiza_evento = "UPDATE ig_evento SET
-				idResponsavel = '$fiscal',
+			$idPedidoContratacao = $recupera['idPedidoContratacao'];
+			$sql_atualiza_fiscal_suplente = "UPDATE sis_emia SET
+				fiscal = '$fiscal',
 				suplente = '$suplente'
-				WHERE idEvento = '$idEvento'";
-			$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
-			if($query_atualiza_evento)
+				WHERE idPedidoContratacao = '$idPedidoContratacao'";
+			$query_atualiza_fiscal_suplente = mysqli_query($con,$sql_atualiza_fiscal_suplente);
+			if($query_atualiza_fiscal_suplente)
 			{
 				$mensagem = "Pedido atualizado com sucesso. <br/> <br>
 					<div class='row'>
@@ -380,12 +380,12 @@ $emia = recuperaDados("sis_emia",$id_ped,"idPedidoContratacao");
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Fiscal:</strong>
 							<select class="form-control" name="Fiscal" id="Fiscal">
-								<?php opcaoUsuario($_SESSION['idInstituicao'],$evento['idResponsavel']); ?>
+								<?php opcaoUsuario($_SESSION['idInstituicao'],$emia['fiscal']); ?>
 							</select>
 						</div>
 						<div class="col-md-6"><strong>Suplente:</strong>
-							<select class="form-control" name="Suplente" id="Fiscal">
-								<?php opcaoUsuario($_SESSION['idInstituicao'],$evento['suplente']); ?>
+							<select class="form-control" name="Suplente" id="Suplente">
+								<?php opcaoUsuario($_SESSION['idInstituicao'],$emia['suplente']); ?>
 							</select>
 						</div>
 					</div>
