@@ -156,7 +156,7 @@ $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 						<div class="col-md-offset-2 col-md-8">
 							<form method='POST' action='?perfil=contratos&p=frm_compara_pj&busca=<?php echo $cnpj; ?>&id_ped=<?php echo $id_ped; ?>'>
 								<input type='hidden' name='edicaoPessoa' value='1'>
-								<input type='submit' class='btn btn-theme btn-md btn-block' value='Verifique aqui se há atualização no Cadastro de Proponente'>
+								<input type='submit' class='btn btn-theme btn-md btn-block' value='Verifique aqui se há atualização no CAPAC'>
 							</form><br/>				
 						</div>
 					</div>
