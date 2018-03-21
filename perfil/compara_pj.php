@@ -210,7 +210,7 @@ If($query1 == '' && $query2 != '')
 		<div class="container">
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<h6>Não foi encontrado registro com o CNPJ <strong><?php echo $cnpj_busca ?></strong> no IGSIS. Deseja importar do Cadastro de Proponente?</h6>
+					<h6>Não foi encontrado registro com o CNPJ <strong><?php echo $cnpj_busca ?></strong> no IGSIS. Deseja importar do CAPAC?</h6>
 					<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 				</div>
 			</div>
@@ -256,7 +256,7 @@ If($query1 == '' && $query2 != '')
 
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
+					<h5>Lista de Arquivos Anexados pelo CAPAC</h5>
 					<p><i>Obs.: Os arquivos não são importados automaticamente. Faça o download e verifique os mesmos antes de efetuar o upload.</i></p>
 					<div align="left">
 						<div class="table-responsive list_info">
@@ -593,7 +593,7 @@ If($query1 != '' && $query2 != '')
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
+					<h5>Lista de Arquivos Anexados pelo CAPAC</h5>
 					<p><i>Obs.: Os arquivos não são importados automaticamente. Faça o download e verifique os mesmos antes de efetuar o upload.</i></p>
 					<div align="left">
 						<div class="table-responsive list_info">

@@ -175,7 +175,7 @@ If($query1 == '' && $query2 != '')
 		<div class="container">
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<h6>Não foi encontrado registro com o CPF <strong><?php echo $cpf_busca ?></strong> no IGSIS. Deseja importar do Cadastro de Proponente?</h6>
+					<h6>Não foi encontrado registro com o CPF <strong><?php echo $cpf_busca ?></strong> no IGSIS. Deseja importar do CAPAC?</h6>
 					<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
 				</div>
 			</div>
@@ -223,7 +223,7 @@ If($query1 != '' && $query2 != '')
 	?>
 	<section id="list_items" class="home-section bg-white">
 		<div class="container">
-		<p>O CPF nº <strong><?php echo $cpf_busca ?></strong> possui cadastro no sistema de proponente e no IGSIS. Abaixo está a lista com as divergências apontadas o cadastro.</p>
+		<p>O CPF nº <strong><?php echo $cpf_busca ?></strong> possui cadastro no sistema CAPAC e no IGSIS. Abaixo está a lista com as divergências apontadas o cadastro.</p>
 			<div class="table-responsive list_info">
 				<h6>Divergências</h6>
 				<h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
@@ -398,7 +398,7 @@ If($query1 != '' && $query2 != '')
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-8">
-					<h5>Lista de Arquivos Anexados Pelo Proponente</h5>
+					<h5>Lista de Arquivos Anexados pelo CAPAC</h5>
 					<p><i>Obs.: Os arquivos não são importados automaticamente. Faça o download e verifique os mesmos antes de efetuar o upload.</i></p>
 					<div class="table-responsive list_info">
 					<?php
