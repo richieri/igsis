@@ -50,6 +50,7 @@ switch($_GET['enviados'])
 						<td>Objeto</td>
 						<td>Local</td>
 						<td>Periodo</td>
+						<td>Pendências</td>
 						<td>Operador</td>
 						<td>Status</td>
 						<td></td>
@@ -73,6 +74,7 @@ switch($_GET['enviados'])
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
+					<td class="list_description">'.$ped['pendenciaDocumento'].'</td> 
 					<td class="list_description">'.$operador['nomeCompleto'].'</td> 
 					<td class="list_description">'.retornaEstado($ped['Status']).'</td>'; 
 					echo "
@@ -109,6 +111,7 @@ case 2:
 							<td>Objeto</td>
 							<td>Local</td>
 							<td>Periodo</td>
+							<td>Pendências</td>
 							<td>Operador</td>
 							<td>Status</td>
 						</tr>
@@ -130,6 +133,7 @@ case 2:
 						<td class="list_description">'.$ped['Objeto'].'</td> 
 						<td class="list_description">'.$ped['Local'].'</td> 
 						<td class="list_description">'.$ped['Periodo'].'</td> 
+						<td class="list_description">'.$ped['pendenciaDocumento'].'</td> 
 						<td class="list_description">'.retornaEstado($ped['Status']).'</td>'; 
 						echo "
 						<td class='list_description'>
