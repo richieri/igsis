@@ -34,6 +34,7 @@ if(isset($_POST['atualizar']))
 	$suplente  = $_POST['Suplente'];
 	$parecer = addslashes($_POST['ParecerTecnico']);
 	$observacao = addslashes($_POST['Observacao']);
+	$pendenciaDocumento = addslashes($_POST['pendenciaDocumento']);
 	$parcelas = $_POST['parcelas'];
 	$processo = $_POST['NumeroProcesso'];
 	$dataAgora = date('Y-m-d H:i:s');
@@ -44,6 +45,7 @@ if(isset($_POST['atualizar']))
 			`parcelas` =  '$parcelas',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
+			pendenciaDocumento = '$pendenciaDocumento',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
 			NumeroProcesso = '$processo'
@@ -93,6 +95,7 @@ if(isset($_POST['atualizar']))
 			`parcelas` =  '$parcelas',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
+			pendenciaDocumento = '$pendenciaDocumento',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
 			NumeroProcesso = '$processo'
@@ -403,8 +406,14 @@ $emia = recuperaDados("sis_emia",$id_ped,"idPedidoContratacao");
 					</div>
 				  
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
+						<div class="col-md-offset-2 col-md-8"><strong>Observação do Programador:</strong><br/>
 							<textarea name="Observacao" cols="40" rows="2"><?php echo $linha_tabelas['Observacao'];?></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-8"><strong>Pendência(s) no Setor de Contratos Artísticos:</strong><br/>
+						    <textarea name="pendenciaDocumento" cols="40" rows="3"><?php echo $linha_tabelas['pendenciaDocumento'];?></textarea>
 						</div>
 					</div>
                   
