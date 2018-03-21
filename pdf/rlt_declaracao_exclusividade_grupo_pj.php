@@ -132,6 +132,7 @@ $rep02CPF = $rep02["CPF"];
 $setor = $pedido["Setor"];
 
 $grupo = $evento["nomeGrupo"];
+$integrantes = $pedido["integrantes"];
 
 $ano=date('Y');
 
@@ -203,7 +204,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
 
      $pdf->SetX($x);
      $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Integrantes do grupo: ".""));
+     $pdf->MultiCell(170,$l,utf8_decode("Integrantes do grupo: "."$integrantes".""));
 
 
    $pdf->Ln();

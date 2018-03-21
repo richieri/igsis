@@ -132,6 +132,7 @@ $rep02CPF = $rep02["CPF"];
 $setor = $pedido["Setor"];
 
 $grupo = $evento["nomeGrupo"];
+$integrantes = $pedido["integrantes"];
 
 $ano=date('Y');
 
@@ -158,7 +159,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
   
 	   $pdf->SetX($x);
 	   $pdf->SetFont('Arial','', 11);
-	   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exCPF".", sob penas da lei, declaro que sou representado neste evento exclusivamente pela empresa "."$pjRazaoSocial".""));
+	   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exCPF".", sob penas da lei, declaro que sou representado exclusivamente pela empresa "."$pjRazaoSocial".""));
 
      $pdf->Ln();
 
@@ -172,26 +173,26 @@ $l=6; //DEFINE A ALTURA DA LINHA
      {
      $pdf->SetX($x);
      $pdf->SetFont('Arial','', 11);   
-     $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." e "."$rep02Nome".", RG "."$rep02RG".", CPF "."$rep02CPF".", declara sob penas da lei ser representante de "."$exNome"." para a realização do evento "."$Objeto"." conforme cronograma."));
+     $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." e "."$rep02Nome".", RG "."$rep02RG".", CPF "."$rep02CPF".", declara sob penas da lei ser representante de "."$exNome"."."));
       } 
       else 
       {
        $pdf->SetX($x);
        $pdf->SetFont('Arial','', 11);   
-       $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." declara sob penas da lei ser representante de "."$exNome"." para a realização do evento "."$Objeto"." conforme cronograma."));
+       $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." declara sob penas da lei ser representante de "."$exNome"."."));
       }
 
      $pdf->Ln();
 
      $pdf->SetX($x);
      $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Declaramos sob as penas da Lei que não somos servidores públicos municipais e que não nos encontramos em impedimento para contratar com a Prefeitura do Município de São Paulo / Secretaria Municipal de Cultura, mediante recebimento de cachê e/ou bilheteria, quando for o caso."));
+     $pdf->MultiCell(170,$l,utf8_decode("Declaro, sob as penas da lei, que não sou servidor público municipal e que não me encontro em impedimento para contratar com a Prefeitura do Município de São Paulo / Secretaria Municipal de Cultura, mediante recebimento de cachê e/ou bilheteria, quando for o caso."));
 
      $pdf->Ln();
 
      $pdf->SetX($x);
      $pdf->SetFont('Arial','', 11);
-     $pdf->MultiCell(170,$l,utf8_decode("Declaramos, ainda, neste ato, que autorizamos, a título gratuito, por prazo indeterminado, a Municipalidade de São Paulo, através da SMC, o uso de nossa imagem, nas suas publicações em papel e qualquer mídia digital ou internet existentes ou que venha a existir como também para os fins de arquivo e material de pesquisa e consulta."));
+     $pdf->MultiCell(170,$l,utf8_decode("Declaro, ainda, neste ato, que autorizo, a título gratuito, por prazo indeterminado, a Municipalidade de São Paulo, através da SMC, o uso de minha imagem, nas suas publicações em papel e qualquer mídia digital ou internet existentes ou que venha a existir como também para os fins de arquivo e material de pesquisa e consulta."));
 
      $pdf->Ln();
 
