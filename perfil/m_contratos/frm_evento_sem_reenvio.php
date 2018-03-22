@@ -7,7 +7,7 @@ $con = bancoMysqli();
 $sql = "SELECT DISTINCT ped.idPedidoContratacao FROM  ig_evento AS eve		
 		INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento = ped.idEvento
 		INNER JOIN  ig_log_reabertura AS reab ON ped.idPedidoContratacao = reab.idPedido
-		WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND ped.estado IS NULL ORDER BY eve.idEvento DESC";
+		WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 ORDER BY eve.idEvento DESC";
 $query = mysqli_query($con,$sql);
 
 $i = 0;
