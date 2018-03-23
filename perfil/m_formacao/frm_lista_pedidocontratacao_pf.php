@@ -35,6 +35,7 @@
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
+						<td>Processo</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -58,8 +59,9 @@
 			while($pedido = mysqli_fetch_array($query_enviados))
 			{
 				$linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-				$ped = siscontrat($pedido['idPedidoContratacao']);	 
+				$ped = siscontrat($pedido['idPedidoContratacao']);
 				echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
+				echo '<td class="list_description">'.$ped['NumeroProcesso'].						'</td> ';
 				echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].					'</td> ';
 				echo '<td class="list_description">'.$ped['Objeto'].						'</td> ';
 				echo '<td class="list_description">'.$ped['Local'].				'</td> ';
