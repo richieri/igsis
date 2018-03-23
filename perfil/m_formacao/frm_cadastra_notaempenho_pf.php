@@ -26,15 +26,15 @@ if(isset($_POST['atualizar'])){ // atualiza o pedido
 	if(mysqli_query($con,$sql_atualiza_pedido)){
 			$mensagem = "<h5>Deseja gerar o recibo?</h5>
 			
-			<div class='col-md-offset-2 col-md-6'>
-				<a href='$link2?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Recibo Formação</a>	
-			</div>			 
-		
-			<div class='col-md-offset-2 col-md-8'>
-				<br/>
-			</div>
-				
-	";	
+			<div class='row'>
+				<div class='col-md-offset-1 col-md-10'>	
+					<div class='form-group'>
+						<div class='col-md-offset-2 col-md-8'>
+							<a href='$link2?id=$id_ped' class='btn btn-theme btn-lg btn-block' target='_blank'>Recibo Formação</a>
+						</div>
+					</div>
+				</div>
+		    </div><br /></center>";	
 		}else{
 			$mensagem = "Erro ao atualizar! Tente novamente.";
 		}
