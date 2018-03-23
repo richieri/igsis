@@ -159,19 +159,13 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->MultiCell(170,$l,utf8_decode("Integrantes do grupo: "."$integrantes".""));
 
    $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
 
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
    $pdf->Cell(128,$l,utf8_decode("São Paulo, _______ / _______ / " .$ano."."),0,1,'L');
 
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   
+   $pdf->Ln();   
 
     $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
@@ -189,13 +183,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(128,$l,utf8_decode("CPF: "."$CPF".""),0,1,'L');
 
    $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   
-
-	
-
-
+ 
    
 $pdf->Output();
 
