@@ -126,6 +126,13 @@ $l=6; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 11);
    $pdf->MultiCell(170,$l,utf8_decode("Declaro, sob as penas da Lei, que não sou servidor público municipal e que não me encontro em impedimento para contratar com a Prefeitura do Município de São Paulo / Secretaria Municipal de Cultura, mediante recebimento de cachê e/ou bilheteria, quando for o caso. "));
 
+    $pdf->Ln();
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 11);
+   $pdf->MultiCell(170,$l,utf8_decode("Declaro, sob as penas da lei, dentre os integrantes abaixo listados não há crianças e adolescentes. Quando houver, estamos cientes que é de nossa responsabilidade a adoção das providências de obtenção  de  decisão judicial  junto à Vara da Infância e Juventude."));
+
+
    $pdf->Ln();
 
    $pdf->SetX($x);
