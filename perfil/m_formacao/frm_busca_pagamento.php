@@ -181,6 +181,7 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 							<td>Codigo do Pedido</td>
 							<td>Proponente</td>
 							<td>Status</td>
+							<td colspan="7">GERAR</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -193,6 +194,8 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 							echo '<td class="list_description">'.$x[$h]['id'].		  '</td>';
 							echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
 							echo '<td class="list_description">'.$status['estado'].	  '</td> ';
+							echo "<td><a href='?perfil=formacao&p=frm_cadastra_notaempenho_pf&id_ped=".$x[$h]['id']."'>N.E.</a><td>";
+							echo "<td><a href='?perfil=formacao&p=frm_cadastra_pagamento_pf&id_ped=".$x[$h]['id']."'>PAGTO</a><td>";
 						}
 					?>						
 					</tbody>
