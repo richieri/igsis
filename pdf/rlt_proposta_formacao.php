@@ -60,6 +60,7 @@ $idPenalidade = $_GET['penal'];
 dataProposta($id_ped);
 gravaPenalidade($id_ped,$idPenalidade);
 $penal = recuperaDados("sis_penalidades",$idPenalidade,"idPenalidades");
+$Observacao = "Todas as atividades dos programas da Supervisão de Formação são inteiramente gratuitas e é terminantemente proibido cobrar por elas sob pena de multa e rescisão de contrato.";
 $txtPenalidade = $penal['txt'];
 $ano=date('Y');
 
@@ -280,7 +281,8 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->Cell(160,$l,utf8_decode('OBSERVAÇÃO'),0,1,'C');
 
    $pdf->SetX($x);
-   $pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(0,4,utf8_decode($Observacao),0,'J');
 
    $pdf->Ln();
 
