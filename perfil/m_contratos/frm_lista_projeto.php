@@ -24,7 +24,7 @@ switch($_GET['atribuido'])
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
-						<td>Periodo</td>
+						<td>Período</td>
 						<td>Pendências</td>
 						<td>Operador</td>
 						<td>Status</td>

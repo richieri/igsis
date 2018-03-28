@@ -45,7 +45,8 @@ switch($_GET['enviados'])
 			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
-						<td>Codigo do Pedido</td>
+						<td>Código do Pedido</td>
+						<td>Número do Processo</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -70,7 +71,8 @@ switch($_GET['enviados'])
 					$ped = siscontrat($pedido['idPedidoContratacao']);
 					$operador = recuperaUsuario($pedido['idContratos']);
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-					echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].'</td> 
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>
+					<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].'</td> 
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
@@ -106,11 +108,12 @@ case 2:
 				<table class="table table-condensed">
 					<thead>
 						<tr class="list_menu">
-							<td>Codigo do Pedido</td>
+							<td>Código do Pedido</td>
+							<td>Número do Processo</td>
 							<td>Proponente</td>
 							<td>Objeto</td>
 							<td>Local</td>
-							<td>Periodo</td>
+							<td>Período</td>
 							<td>Pendências</td>
 							<td>Operador</td>
 							<td>Status</td>
@@ -129,7 +132,8 @@ case 2:
 						$linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
 						$ped = siscontrat($pedido['idPedidoContratacao']);	 
 						echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-						echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].'</td> 
+						echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>
+						<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].'</td> 
 						<td class="list_description">'.$ped['Objeto'].'</td> 
 						<td class="list_description">'.$ped['Local'].'</td> 
 						<td class="list_description">'.$ped['Periodo'].'</td> 
