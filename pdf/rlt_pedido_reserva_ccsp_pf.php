@@ -79,7 +79,7 @@ $sei =
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/AJ para prosseguimento.</p>".
   "<p>&nbsp;</p>".
-  "<p>Direção do Centro Cultural da Cidade de São Paulo</p>".  
+  "<p>Chefe de Gabinete</p>".  
   "<p>&nbsp;</p>"
 
 ?>
