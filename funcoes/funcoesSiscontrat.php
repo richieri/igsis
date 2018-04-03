@@ -1059,6 +1059,7 @@
 			else
 			{
 				// Se não há um Número de Empenho Válido
+				/*
 				if(trim($pedido['DataReserva']) != "" && $pedido['DataReserva'] != NULL && $pedido['DataReserva'] != '0000-00-00')
 				{
 					//Se há um pedido de reserva
@@ -1067,6 +1068,7 @@
 				}
 				else
 				{
+				*/
 					// Se não há um Pedido de Reserva
 					if(trim($pedido['DataProposta']) != "" && $pedido['DataProposta'] != NULL && $pedido['DataProposta'] != '0000-00-00')
 					{
