@@ -72,7 +72,7 @@ include '../include/menuEventoInicial.php';
 								<td>Nome</td>
 								<td>CPF</td>
 								<td>Data do Cadastro</td>
-								<td width="20%"></td>
+								<td width="10%"></td>
 							</tr>
 						</thead>
 						<tbody>
