@@ -12,11 +12,25 @@ unset($_SESSION['tipoEvento']);
 	<div class="container">
 		<div class="form-group">
 			<h3>BUSCAR EVENTOS NO CAPAC</h3>
-			<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
-			<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-6">
+				<form method="POST" action="?perfil=capac_lista_pf" class="form-horizontal" role="form">
+					<input type="submit" class="btn btn-theme btn-md btn-block" Value="Todos PF">
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form method="POST" action="?perfil=capac_lista_pj" class="form-horizontal" role="form">
+					<input type="submit" class="btn btn-theme btn-md btn-block" Value="Todos PJ">
+				</form>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
+				<br/>
+				<h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
+				<p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
+
 				<form method="POST" action="?perfil=capac_busca_resultado" class="form-horizontal" role="form">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Código do cadastro no CAPAC</strong><br/>
