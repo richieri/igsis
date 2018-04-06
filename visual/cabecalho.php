@@ -22,6 +22,7 @@ if(!isset ($_SESSION['usuario']) == true) //verifica se há uma sessão, se não
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
     <link href="color/default.css" rel="stylesheet" media="screen">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
 
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
