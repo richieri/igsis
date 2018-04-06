@@ -34,7 +34,7 @@
 	else
 	{
 		$data_inicio = date('Y-m-d');
-		$data_final = date('Y-m-d', strtotime("+30 days",strtotime($data_inicio)));
+		$data_final = date('Y-m-d', strtotime("+0 days",strtotime($data_inicio)));
 		$mensagem = "Filtro aplicado: eventos de ".exibirDataBr($data_inicio)." a ".exibirDataBr($data_final);
 	}	
 	if(isset($_POST['local']) AND trim($_POST['local']))
