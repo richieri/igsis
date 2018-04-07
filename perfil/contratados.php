@@ -5,6 +5,7 @@
 	+ funcao que retornam os periodos
 	*/
 	$con = bancoMysqli();
+	$conn = bancoPDO();
 	if(isset($_GET['p']))
 	{
 		$p = $_GET['p'];
@@ -3594,98 +3595,130 @@
 		</div>
 	</div>
 </section>
-	<?php 
-		break;
-		case "edicaoParecer":
-		
-		include "../funcoes/funcoesSiscontrat.php";
-		
-		$id_ped = $_SESSION['idPedido'];
-		$artista = $_GET['artista'];
-		
-		if(isset($_POST['insereParecer']))
-		{
-			$id_ped = $_SESSION['idPedido'];				
-			$topico1 = addslashes($_POST['topico1']);
-			$topico2 = addslashes($_POST['topico2']);
-			$topico3 = addslashes($_POST['topico3']);
-			$topico4 = addslashes($_POST['topico4']);
-					
-			$sql_insere_parecer = "INSERT INTO `igsis_parecer_artistico`( `idPedidoContratacao`, `topico1`, `topico2`, `topico3`, `topico4`) VALUES ('$id_ped','$topico1','$topico2','$topico3','$topico4')";
-			if(mysqli_query($con,$sql_insere_parecer))
-			{
-				gravarLog($sql_insere_parecer);
-				$mensagem = "Atualizado com sucesso!";
-				$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
-				$topicos = $parecer['topico1'].'\n'.$parecer['topico2'].'\n'.$parecer['topico3'].'\n'.$parecer['topico4'];
-				$sql_pedido = "UPDATE igsis_pedido_contratacao SET parecerArtistico ='$topicos' WHERE idPedidoContratacao = '$id_ped'";
-				if(mysqli_query($con,$sql_pedido))
-				{
-					$mensagem = "Atualizado com sucesso!";
-				}
-				else
-				{
-					$mensagem = "Erro ao atualizar!";
-				}
-			}
-			else
-			{
-				$mensagem = "Erro ao atualizar! Tente novamente.";
-			}
-		}
-		
-		if(isset($_POST['editaParecer']))
-		{
-			$id_ped = $_SESSION['idPedido'];				
-			$topico1 = addslashes($_POST['topico1']);
-			$topico2 = addslashes($_POST['topico2']);
-			$topico3 = addslashes($_POST['topico3']);
-			$topico4 = addslashes($_POST['topico4']);
-						
-			$sql_edita_parecer = "UPDATE `igsis_parecer_artistico` SET `topico1`='$topico1', `topico2`='$topico2', `topico3`='$topico3', `topico4`='$topico4' WHERE idPedidoContratacao = '$id_ped'";
-			if(mysqli_query($con,$sql_edita_parecer))
-			{
-				gravarLog($sql_edita_parecer);
-				$mensagem = "Atualizado com sucesso!";
-				$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
-				$topicos = $parecer['topico1'].'\n'.$parecer['topico2'].'\n'.$parecer['topico3'].'\n'.$parecer['topico4'];
-				$sql_pedido = "UPDATE igsis_pedido_contratacao SET parecerArtistico ='$topicos' WHERE idPedidoContratacao = '$id_ped'";
-				if(mysqli_query($con,$sql_pedido))
-				{
-					$mensagem = "Atualizado com sucesso!";
-				}
-				else
-				{
-					$mensagem = "Erro ao atualizar!";
-				}	
-				
-			}
-			else
-			{
-				$mensagem = "Erro ao atualizar! Tente novamente.";
-			}
-		}
+<?php 
+break;
+case "edicaoParecer":
+
+include "../funcoes/funcoesSiscontrat.php";
+
+$id_ped = $_SESSION['idPedido'];
+$artista = $_GET['artista'];
+
+if(isset($_POST['insereParecer']))
+{
+	$id_ped = $_SESSION['idPedido'];				
+	$topico1 = $_POST['topico1'];
+	$topico2 = $_POST['topico2'];
+	$topico3 = $_POST['topico3'];
+	$topico4 = $_POST['topico4'];
+			
+	$sql_insere_parecer = "INSERT INTO igsis_parecer_artistico(idPedidoContratacao, topico1, topico2, topico3, topico4) VALUES (:id_ped, :topico1, :topico2, :topico3, :topico4)";
+
+	$stmt = $conn->prepare($sql_insere_parecer);
+
+	$stmt->bindParam(':topico1', $topico1);
+	$stmt->bindParam(':topico2', $topico2);
+	$stmt->bindParam(':topico3', $topico3);
+	$stmt->bindParam(':topico4', $topico4);
+ 	$stmt->bindParam(':id_ped', $id_ped);
+
+	if ($stmt->execute()) 
+	{
+		echo 'Inserido com sucesso!';
+		gravarLog($sql_insere_parecer);
+		$mensagem = "Atualizado com sucesso!";
 		$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
-					
-		$pedido = siscontrat($id_ped);
-		$Objeto = $pedido["Objeto"];
-		$Periodo = $pedido["Periodo"];
-		
-		if ($pedido['TipoPessoa'] == 2)
+		$topicos = $parecer['topico1']."\n".$parecer['topico2']."\n".$parecer['topico3']."\n".$parecer['topico4'];
+
+		$sql_pedido = "UPDATE igsis_pedido_contratacao 
+		SET parecerArtistico = :topicos WHERE idPedidoContratacao = :id_ped";
+
+		$stmt = $conn->prepare($sql_pedido);
+
+		$stmt->bindParam(':topicos', $topicos);
+		$stmt->bindParam(':id_ped', $id_ped);
+
+		if ($stmt->execute())
 		{
-			$pj = siscontratDocs($pedido['IdProponente'],2);
-			$ex = siscontratDocs($pedido['IdExecutante'],1);
-			$rep01 = siscontratDocs($pj['Representante01'],3);
-			$rep02 = siscontratDocs($pj['Representante02'],3);
-			$t1 = "Esta comissão ratifica o pedido de contratação de ".$ex["Nome"]." por intermédio da ".$pj["Nome"].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido["ValorGlobal"]." (".valorPorExtenso($pedido["ValorGlobal"]).").";
+			echo $id_ped;
+			$mensagem = "Atualizado com sucesso!";
 		}
 		else
 		{
-			$pf = siscontratDocs($pedido['IdProponente'],1);
-			$t1 = "Esta comissão ratifica o pedido de contratação de ".$pf["Nome"].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido["ValorGlobal"]." (".valorPorExtenso($pedido["ValorGlobal"]).").";			
+			$mensagem = "Erro ao atualizar!";
 		}
-		
-	?>
+	}
+	else
+	{
+		$mensagem = "Erro ao atualizar! Tente novamente.";
+	}
+}
+if(isset($_POST['editaParecer']))
+{
+	$id_ped = $_SESSION['idPedido'];				
+	$topico1 = $_POST['topico1'];
+	$topico2 = $_POST['topico2'];
+	$topico3 = $_POST['topico3'];
+	$topico4 = $_POST['topico4'];
+				
+	$sql_edita_parecer = "UPDATE igsis_parecer_artistico SET topico1 = :topico1, topico2 = :topico2, topico3 = :topico3, topico4 = :topico4 WHERE idPedidoContratacao = :id_ped";
+	$conn = bancoPDO();
+	$stmt = $conn->prepare($sql_edita_parecer);
+	$stmt->bindParam(":topico1", $topico1);
+	$stmt->bindParam(":topico2", $topico2);
+	$stmt->bindParam(":topico3", $topico3);
+	$stmt->bindParam(":topico4", $topico4);
+ 	$stmt->bindParam(":id_ped", $id_ped);
+
+ 	if ($stmt->execute()) 
+ 	{
+ 		gravarLog($sql_edita_parecer);
+		$mensagem = "Atualizado com sucesso!";
+		$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
+		$topicos = $parecer['topico1']."\n".$parecer['topico2']."\n".$parecer['topico3']."\n".$parecer['topico4'];
+
+		$sql_pedido = "UPDATE igsis_pedido_contratacao SET parecerArtistico = :topicos WHERE idPedidoContratacao = :id_ped";
+
+		$stmt = $conn->prepare($sql_pedido);
+		$stmt->bindParam(':topicos', $topicos);
+		$stmt->bindParam(':id_ped', $id_ped);
+
+ 		if ($stmt->execute()) 
+ 		{
+			$mensagem = "Atualizado com sucesso!";
+			echo $id_ped;
+		}
+		else
+		{
+			$mensagem = "Erro ao atualizar!";
+		}	
+ 	}
+	else
+	{
+		$mensagem = "Erro ao atualizar! Tente novamente.";
+	}
+}
+$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
+			
+$pedido = siscontrat($id_ped);
+$Objeto = $pedido["Objeto"];
+$Periodo = $pedido["Periodo"];
+
+if ($pedido['TipoPessoa'] == 2)
+{
+	$pj = siscontratDocs($pedido['IdProponente'],2);
+	$ex = siscontratDocs($pedido['IdExecutante'],1);
+	$rep01 = siscontratDocs($pj['Representante01'],3);
+	$rep02 = siscontratDocs($pj['Representante02'],3);
+	$t1 = "Esta comissão ratifica o pedido de contratação de ".$ex["Nome"]." por intermédio da ".$pj["Nome"].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido["ValorGlobal"]." (".valorPorExtenso($pedido["ValorGlobal"]).").";
+}
+else
+{
+	$pf = siscontratDocs($pedido['IdProponente'],1);
+	$t1 = "Esta comissão ratifica o pedido de contratação de ".$pf["Nome"].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido["ValorGlobal"]." (".valorPorExtenso($pedido["ValorGlobal"]).").";			
+}
+
+?>
 <script>
 function mostrarResultado(box,num_max,campospan){
 	var contagem_carac = box.length;
