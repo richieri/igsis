@@ -3662,7 +3662,7 @@ if(isset($_POST['editaParecer']))
 	$topico4 = $_POST['topico4'];
 				
 	$sql_edita_parecer = "UPDATE igsis_parecer_artistico SET topico1 = :topico1, topico2 = :topico2, topico3 = :topico3, topico4 = :topico4 WHERE idPedidoContratacao = :id_ped";
-	$conn = bancoPDO();
+	
 	$stmt = $conn->prepare($sql_edita_parecer);
 	$stmt->bindParam(":topico1", $topico1);
 	$stmt->bindParam(":topico2", $topico2);
