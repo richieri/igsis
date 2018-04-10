@@ -23,10 +23,6 @@ class PDF extends FPDF
    // Page header
    function Header()
    {
-      $inst = recuperaDados("ig_instituicao",$_SESSION['idInstituicao'],"idInstituicao");
-      $logo = "../visual/img/".$inst['logo'];
-       // Logo
-       $this->Image($logo,20,20,50);
        // Move to the right
        $this->Cell(80);
        $this->Image('../visual/img/logo_smc.jpg',170,10);
