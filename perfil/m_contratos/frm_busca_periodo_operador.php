@@ -97,6 +97,7 @@ if(isset($_POST['periodo']))
 	   AND ped.estado 	   
 	   IN (1,2,3,4,5,6,7,8,9,10,13,14,16,17,18) 
 	   AND eve.dataEnvio IS NOT NULL
+	   AND ped.publicado = '1'
 	   ORDER BY data ASC ";
 	   
 	   $query_evento = mysqli_query($con,$sql_evento);
