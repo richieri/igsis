@@ -37,7 +37,7 @@ switch($_GET['atribuido'])
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IN (NULL, '') AND eve.projetoEspecial IN (54) 
+					WHERE eve.publicado=1 AND ped.publicado=1 AND ped.NumeroProcesso IS NULL AND eve.projetoEspecial IN (54)
 					ORDER BY idPedidoContratacao DESC";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
@@ -47,8 +47,8 @@ switch($_GET['atribuido'])
 					$operador = recuperaUsuario($pedido['idContratos']);
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
 					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>
-					<td class="list_description">'.$pj['CNPJ'].'</td> 
-					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
+					<td class="list_description">'.$pj['CNPJ'].'</td>
+					<td class="list_description">'.$pj['RazaoSocial'].'</td>
 					<td class="list_description">'.$ped['Objeto'].'</td> 
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 

@@ -2822,6 +2822,7 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		}
 
 		//Busca todos os pedidos que tem data de envio válido mas tem eventos como não enviados
+		/*
 		$sql_evento = "SELECT ig_evento.idEvento,idPedidoContratacao FROM ig_evento,igsis_pedido_contratacao WHERE 
 			 ig_evento.publicado ='1' 
 			 AND igsis_pedido_contratacao.estado IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14)
@@ -2838,6 +2839,7 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		while($pedido = mysqli_fetch_array($query_evento)){
 			$relatorio .= "<font color='red'>".$pedido['idPedidoContratacao'].",<br /></font>";
 		}
+		*/
 
 		//Busca eventos que estão na agenda mas não são válidos
 		$sql_agenda = "SELECT DISTINCT idEvento FROM igsis_agenda WHERE idEvento NOT IN
