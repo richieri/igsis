@@ -1,7 +1,6 @@
 <?php
-include 'includes/menu.php';	
+include 'includes/menu.php';
 $con = bancoMysqli();
-$link="?perfil=contratos&p=frm_edita_propostapj&id_ped=";
 switch($_GET['atribuido'])
 {
 	case 0:
@@ -11,16 +10,16 @@ switch($_GET['atribuido'])
 <br /><br /><br />
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO DE PESSOA JURÍDICA</h6>
+		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6>
 		</div>
-		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>	
+		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
 						<td>Número do Processo</td>
-						<td>CNPJ</td>
+						<td>Documento</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -45,11 +44,30 @@ switch($_GET['atribuido'])
 					$pj = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
 					$ped = siscontrat($pedido['idPedidoContratacao']);
 					$operador = recuperaUsuario($pedido['idContratos']);
+					if($ped['tipoPessoa'] == 1)
+					{
+						$link="?perfil=contratos&p=frm_edita_propostapf&id_ped=";
+					}
+					else
+					{
+						$link="?perfil=contratos&p=frm_edita_propostapj&id_ped=";
+					}
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>
-					<td class="list_description">'.$pj['CNPJ'].'</td>
-					<td class="list_description">'.$pj['RazaoSocial'].'</td>
-					<td class="list_description">'.$ped['Objeto'].'</td> 
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>';
+					if($ped['tipoPessoa'] == 1)
+					{
+						$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+						echo '<td class="list_description">'.$pessoa['CPF'].'</td>';
+						echo '<td class="list_description">'.$pessoa['Nome'].'</td>';
+					}
+					else
+					{
+						$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+						echo '<td class="list_description">'.$pessoa['CNPJ'].'</td>';
+						echo '<td class="list_description">'.$pessoa['RazaoSocial'].'</td>';
+					}
+					echo '
+					<td class="list_description">'.$ped['Objeto'].'</td>
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
 					<td class="list_description">'.$ped['pendenciaDocumento'].'</td> 
@@ -76,16 +94,16 @@ case 1:
 <br /><br /><br />
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO DE PESSOA JURÍDICA</h6>
+		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6>
 		</div>
-		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>	
+		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
 						<td>Número do Processo</td>
-						<td>CNPJ</td>
+						<td>Documento</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -111,11 +129,30 @@ case 1:
 					$pj = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
 					$ped = siscontrat($pedido['idPedidoContratacao']);
 					$operador = recuperaUsuario($pedido['idContratos']);
+					if($ped['tipoPessoa'] == 1)
+					{
+						$link="?perfil=contratos&p=frm_edita_propostapf&id_ped=";
+					}
+					else
+					{
+						$link="?perfil=contratos&p=frm_edita_propostapj&id_ped=";
+					}
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>
-					<td class="list_description">'.$pj['CNPJ'].'</td> 
-					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
-					<td class="list_description">'.$ped['Objeto'].'</td> 
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>';
+					if($ped['tipoPessoa'] == 1)
+					{
+						$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+						echo '<td class="list_description">'.$pessoa['CPF'].'</td>';
+						echo '<td class="list_description">'.$pessoa['Nome'].'</td>';
+					}
+					else
+					{
+						$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+						echo '<td class="list_description">'.$pessoa['CNPJ'].'</td>';
+						echo '<td class="list_description">'.$pessoa['RazaoSocial'].'</td>';
+					}
+					echo '
+					<td class="list_description">'.$ped['Objeto'].'</td>
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
 					<td class="list_description">'.$ped['pendenciaDocumento'].'</td> 
@@ -142,7 +179,7 @@ case 3:
 <br /><br /><br />
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO DE PESSOA JURÍDICA</h6>
+		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6>
 		</div>
 		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>	
 		<div class="table-responsive list_info">
@@ -151,7 +188,7 @@ case 3:
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
 						<td>Número do Processo</td>
-						<td>CNPJ</td>
+						<td>Documento</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
@@ -177,11 +214,30 @@ case 3:
 					$pj = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
 					$ped = siscontrat($pedido['idPedidoContratacao']);
 					$operador = recuperaUsuario($pedido['idContratos']);
+					if($ped['tipoPessoa'] == 1)
+					{
+						$link="?perfil=contratos&p=frm_edita_propostapf&id_ped=";
+					}
+					else
+					{
+						$link="?perfil=contratos&p=frm_edita_propostapj&id_ped=";
+					}
 					echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>
-					<td class="list_description">'.$pj['CNPJ'].'</td> 
-					<td class="list_description">'.$pj['RazaoSocial'].'</td> 
-					<td class="list_description">'.$ped['Objeto'].'</td> 
+					echo '<td class="list_description">'.$ped['NumeroProcesso'].'</td>';
+					if($ped['tipoPessoa'] == 1)
+					{
+						$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+						echo '<td class="list_description">'.$pessoa['CPF'].'</td>';
+						echo '<td class="list_description">'.$pessoa['Nome'].'</td>';
+					}
+					else
+					{
+						$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+						echo '<td class="list_description">'.$pessoa['CNPJ'].'</td>';
+						echo '<td class="list_description">'.$pessoa['RazaoSocial'].'</td>';
+					}
+					echo '
+					<td class="list_description">'.$ped['Objeto'].'</td>
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
 					<td class="list_description">'.$ped['pendenciaDocumento'].'</td> 
