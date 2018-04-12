@@ -1320,7 +1320,7 @@
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Justificativa*</label>
-								<textarea name="justificativa" class="form-control" rows="10" placeholder="Texto usado fins jurídicos e confecção de contratos."><?php echo $pedido["justificativa"] ?></textarea>
+								<textarea name="justificativa" required class="form-control" rows="10" placeholder="Texto usado fins jurídicos e confecção de contratos."><?php echo $pedido["justificativa"] ?></textarea>
 							</div> 
 						</div>
 				<?php
