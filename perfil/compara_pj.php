@@ -51,6 +51,22 @@ $codBanco = $query1["codBanco"];
 $Agencia = $query1["agencia"];
 $Conta = $query1["conta"];
 
+//Recupera representante 1
+$sqlRep1 = $con1->query("SELECT * FROM sis_representante_legal where Id_RepresentanteLegal = '$IdRepresentanteLegal1'");
+$rep1 = $sqlRep1->fetch_array(MYSQLI_ASSOC);
+
+$NomeRep1 = addslashes($rep1['RepresentanteLegal']);
+$RgRep1 = $rep1['RG'];
+$CpfRep1 = $rep1['CPF'];
+
+//Recupera representante 2
+$sqlRep2 = $con1->query("SELECT * FROM sis_representante_legal where Id_RepresentanteLegal = '$IdRepresentanteLegal2'");
+$rep2 = $sqlRep2->fetch_array(MYSQLI_ASSOC);
+
+$NomeRep2 = addslashes($rep2['RepresentanteLegal']);
+$RgRep2 = $rep2['RG'];
+$CpfRep2 = $rep2['CPF'];
+
 
 //Localiza no proponente
 $sql2 = $con2->query("SELECT * FROM pessoa_juridica where cnpj = '$cnpj_busca'");
@@ -73,6 +89,22 @@ $dataAtualizacao = $query2["dataAtualizacao"];
 $codigoBanco = $query2["codigoBanco"];
 $agencia = $query2["agencia"];
 $conta = $query2["conta"];
+
+//Recupera representante 1
+$sqlRep1 = $con2->query("SELECT * FROM representante_legal where id = '$idRepresentanteLegal1'");
+$rep1 = $sqlRep1->fetch_array(MYSQLI_ASSOC);
+
+$nomeRep1 = addslashes($rep1['nome']);
+$rgRep1 = $rep1['rg'];
+$cpfRep1 = $rep1['cpf'];
+
+//Recupera representante 2
+$sqlRep2 = $con2->query("SELECT * FROM representante_legal where id = '$idRepresentanteLegal2'");
+$rep2 = $sqlRep2->fetch_array(MYSQLI_ASSOC);
+
+$nomeRep2 = addslashes($rep2['nome']);
+$rgRep2 = $rep2['rg'];
+$cpfRep2 = $rep2['cpf'];
 
 
 //retorna uma array com os dados de qualquer tabela do IGSIS. Serve apenas para 1 registro.
@@ -112,49 +144,176 @@ if(isset($_POST['atualizaIgsis']))
 	}
 }
 
-if(isset($_POST['importarCapacIgsis']))
+if(isset($_POST['importarRep01']))
 {
-	$sql_insere_pf = "INSERT INTO `sis_pessoa_juridica`(`RazaoSocial`, `CNPJ`, `CCM`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `IdRepresentanteLegal1`, `IdRepresentanteLegal2`, `DataAtualizacao`, `codBanco`, `agencia`, `conta`) VALUES ('$razaoSocial', '$cnpj', '$ccm', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$idRepresentanteLegal1', '$idRepresentanteLegal2', '$dataAtualizacao', '$codigoBanco', '$agencia', '$conta')";
+	$campo = $_POST['campo'];
+	$varCampo = $_POST['varCampo'];
+	$nomeCampo = $_POST['nomeCampo'];
+	$rep1 = recuperaDadosProp("representante_legal","id",$varCampo);
+	$nomeRep1 = addslashes($rep1['nome']);
+	$rgRep1 = $rep1['rg'];
+	$cpfRep1 = $rep1['cpf'];
 
-	if(mysqli_query($con1,$sql_insere_pf))
+	$sql_verifica = "SELECT * FROM sis_representante_legal WHERE CPF = '$cpfRep1'";
+	$query_verifica = mysqli_query($con1,$sql_verifica);
+	$num = mysqli_num_rows($query_verifica);
+	if($num > 0)
 	{
-		$mensagem = "Importado com sucesso!";
-
-		//gravarLog($sql_insert_pf);
-		$sql_ultimo = "SELECT * FROM sis_pessoa_juridica ORDER BY Id_PessoaJuridica DESC LIMIT 0,1"; //recupera ultimo id
+		$sql_insere_rep01 = "UPDATE sis_representante_legal SET RepresentanteLegal = '$nomeRep1', RG = '$rgRep1' WHERE CPF = '$cpfRep1'";
+		//recupera id
+		$sql_ultimo = "SELECT * FROM sis_representante_legal WHERE CPF = '$cpfRep1'";
 		$query_ultimo = mysqli_query($con1,$sql_ultimo);
 		$id = mysqli_fetch_array($query_ultimo);
-		$idJuridica = $id['Id_PessoaJuridica'];
-		$idEvento = $_SESSION['idEvento'];
-		$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`) VALUES ('$idEvento', '2', '$idJuridica', '1')";
-		$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
-		if($query_insert_pedido)
+		$idRepresentanteLegal1 = $id['Id_RepresentanteLegal'];
+	}
+	else
+	{
+		$sql_insere_rep01 = "INSERT INTO `sis_representante_legal`(`RepresentanteLegal`, `RG`, `CPF`) VALUES ('$nomeRep1', '$rgRep1', '$cpfRep1')";
+		//recupera ultimo id
+		$sql_ultimo = "SELECT * FROM sis_representante_legal WHERE CPF = '$cpfRep1'";
+		$query_ultimo = mysqli_query($con1,$sql_ultimo);
+		$id = mysqli_fetch_array($query_ultimo);
+		$idRepresentanteLegal1 = $id['Id_RepresentanteLegal'];
+	}
+
+	if(mysqli_query($con1,$sql_insere_rep01))
+	{
+		$sql_update_nome = "UPDATE sis_pessoa_juridica SET ".$campo." = '$idRepresentanteLegal1' WHERE CNPJ = '$cnpj'";
+		if(mysqli_query($con1,$sql_update_nome))
 		{
-			gravarLog($sql_insert_pedido);
-			$mensagem = "Inserido com sucesso!";
-			if(isset($_SESSION['edicaoPessoa']))
-			{
-				$edicaoPessoa = $_SESSION['edicaoPessoa'];
-				if($edicaoPessoa = 2)
-				{
-					$cpfPf = $_SESSION['cpfPf'];
-					$sql_pedido = "SELECT  * FROM igsis_pedido_contratacao ORDER BY idPedidoContratacao DESC LIMIT 0,1";
-					$query_pedido = mysqli_query($con1,$sql_pedido);
-					$pedido = mysqli_fetch_array($query_pedido);
-					$id_ped = $pedido['idPedidoContratacao'];
-					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_executante$busca=".$cpfPf."&id_ped=".$id_ped."'>";
-				}
-			}
-			echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=contratados'>";
+			$mensagem =	$nomeCampo." atualizado com sucesso!";
+			echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."&busca=".$cnpj_busca."'>";
 		}
 		else
 		{
-			$mensagem = "Erro ao importar! Tente novamente. [COD-01]";
+			$mensagem = "Erro ao atualizar ".$nomeCampo.". Tente novamente!";
 		}
 	}
 	else
 	{
-		$mensagem = "Erro ao importar! Tente novamente.";
+		$mensagem = "Erro ao atualizar ".$nomeCampo.". Tente novamente!";
+	}
+}
+
+if(isset($_POST['importarRep02']))
+{
+	$campo = $_POST['campo'];
+	$varCampo = $_POST['varCampo'];
+	$nomeCampo = $_POST['nomeCampo'];
+	$rep2 = recuperaDadosProp("representante_legal","id",$varCampo);
+	$nomeRep2 = addslashes($rep1['nome']);
+	$rgRep2 = $rep1['rg'];
+	$cpfRep2 = $rep1['cpf'];
+
+	$sql_verifica = "SELECT * FROM sis_representante_legal WHERE CPF = '$cpfRep2'";
+	$query_verifica = mysqli_query($con1,$sql_verifica);
+	$num = mysqli_num_rows($query_verifica);
+	if($num > 0)
+	{
+		$sql_insere_rep02 = "UPDATE sis_representante_legal SET RepresentanteLegal = '$nomeRep2', RG = '$rgRep2' WHERE CPF = '$cpfRep2'";
+		//recupera id
+		$sql_ultimo = "SELECT * FROM sis_representante_legal WHERE CPF = '$cpfRep2'";
+		$query_ultimo = mysqli_query($con1,$sql_ultimo);
+		$id = mysqli_fetch_array($query_ultimo);
+		$idRepresentanteLegal2 = $id['Id_RepresentanteLegal'];
+	}
+	else
+	{
+		$sql_insere_rep02 = "INSERT INTO `sis_representante_legal`(`RepresentanteLegal`, `RG`, `CPF`) VALUES ('$nomeRep2', '$rgRep2', '$cpfRep2')";
+		//recupera ultimo id
+		$sql_ultimo = "SELECT * FROM sis_representante_legal WHERE CPF = '$cpfRep2'";
+		$query_ultimo = mysqli_query($con1,$sql_ultimo);
+		$id = mysqli_fetch_array($query_ultimo);
+		$idRepresentanteLegal2 = $id['Id_RepresentanteLegal'];
+	}
+
+	if(mysqli_query($con1,$sql_insere_rep02))
+	{
+		$sql_update_nome = "UPDATE sis_pessoa_juridica SET ".$campo." = '$idRepresentanteLegal2' WHERE CNPJ = '$cnpj'";
+		if(mysqli_query($con1,$sql_update_nome))
+		{
+			$mensagem =	$nomeCampo." atualizado com sucesso!";
+			echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."&busca=".$cnpj_busca."'>";
+		}
+		else
+		{
+			$mensagem = "Erro ao atualizar ".$nomeCampo.". Tente novamente!".$sql_update_nome;
+		}
+	}
+	else
+	{
+		$mensagem = "Erro ao atualizar ".$nomeCampo.". Tente novamente!".$sql_insere_rep01;
+	}
+}
+
+if(isset($_POST['importarCapacIgsis']))
+{
+	$sql_insere_rep01 = "INSERT INTO `sis_representante_legal`(`RepresentanteLegal`, `RG`, `CPF`) VALUES ('$nomeRep1', '$rgRep1', '$cpfRep1')";
+	if(mysqli_query($con1,$sql_insere_rep01))
+	{
+		//recupera ultimo id
+		$sql_ultimo = "SELECT * FROM sis_representante_legal ORDER BY Id_RepresentanteLegal DESC LIMIT 0,1";
+		$query_ultimo = mysqli_query($con1,$sql_ultimo);
+		$id = mysqli_fetch_array($query_ultimo);
+		$idRepresentanteLegal1 = $id['Id_RepresentanteLegal'];
+
+		if($nomeRep2 != '')
+		{
+			$sql_insere_rep02 = "INSERT INTO `sis_representante_legal`(`RepresentanteLegal`, `RG`, `CPF`) VALUES ('$nomeRep2', '$rgRep2', '$cpfRep2')";
+			$sql_ultimo = "SELECT * FROM sis_representante_legal ORDER BY Id_RepresentanteLegal DESC LIMIT 0,1"; //recupera ultimo id
+			$query_ultimo = mysqli_query($con1,$sql_ultimo);
+			$id = mysqli_fetch_array($query_ultimo);
+			$idRepresentanteLegal2 = $id['Id_RepresentanteLegal'];
+		}
+		else
+		{
+			$idRepresentanteLegal2 == NULL;
+		}
+		$sql_insere_pj = "INSERT INTO `sis_pessoa_juridica`(`RazaoSocial`, `CNPJ`, `CCM`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `IdRepresentanteLegal1`, `IdRepresentanteLegal2`, `DataAtualizacao`, `codBanco`, `agencia`, `conta`) VALUES ('$razaoSocial', '$cnpj', '$ccm', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$idRepresentanteLegal1', '$idRepresentanteLegal2', '$dataAtualizacao', '$codigoBanco', '$agencia', '$conta')";
+		if(mysqli_query($con1,$sql_insere_pj))
+		{
+			$mensagem = "Importado com sucesso!";
+
+			//gravarLog($sql_insert_pf);
+			$sql_ultimo = "SELECT * FROM sis_pessoa_juridica ORDER BY Id_PessoaJuridica DESC LIMIT 0,1"; //recupera ultimo id
+			$query_ultimo = mysqli_query($con1,$sql_ultimo);
+			$id = mysqli_fetch_array($query_ultimo);
+			$idJuridica = $id['Id_PessoaJuridica'];
+			$idEvento = $_SESSION['idEvento'];
+			$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`) VALUES ('$idEvento', '2', '$idJuridica', '1')";
+			$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
+			if($query_insert_pedido)
+			{
+				gravarLog($sql_insert_pedido);
+				$mensagem = "Inserido com sucesso!";
+				if(isset($_SESSION['edicaoPessoa']))
+				{
+					$edicaoPessoa = $_SESSION['edicaoPessoa'];
+					if($edicaoPessoa = 2)
+					{
+						$cpfPf = $_SESSION['cpfPf'];
+						$sql_pedido = "SELECT  * FROM igsis_pedido_contratacao ORDER BY idPedidoContratacao DESC LIMIT 0,1";
+						$query_pedido = mysqli_query($con1,$sql_pedido);
+						$pedido = mysqli_fetch_array($query_pedido);
+						$id_ped = $pedido['idPedidoContratacao'];
+						echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_executante$busca=".$cpfPf."&id_ped=".$id_ped."'>";
+					}
+				}
+				echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=contratados'>";
+			}
+			else
+			{
+				$mensagem = "Erro ao importar! Tente novamente. [COD-01]";
+			}
+		}
+		else
+		{
+			$mensagem = "Erro ao importar! Tente novamente.";
+		}
+	}
+	else
+	{
+		$mensagem = "Erro ao importar! Tente novamente. [COD-02]";
 	}
 }
 
@@ -479,7 +638,7 @@ If($query1 != '' && $query2 != '')
 								</td>";
 							echo "</tr>";
 						}
-						if($IdRepresentanteLegal1 != $idRepresentanteLegal1)
+						if($NomeRep1 != $nomeRep1)
 						{
 							$NomeRepresentante1 = recuperaDadosIgsis("sis_representante_legal","Id_RepresentanteLegal","$IdRepresentanteLegal1");
 							$nomeRepresentante1 = recuperaDadosProp("representante_legal","id","$idRepresentanteLegal1");
@@ -493,12 +652,12 @@ If($query1 != '' && $query2 != '')
 										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='IdRepresentanteLegal1'  />
 										<input type='hidden' name='varCampo' value='".$idRepresentanteLegal1."'  />
-										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
+										<input type='submit' name='importarRep01' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 									</form>
 								</td>";
 							echo "</tr>";
 						}
-						if($IdRepresentanteLegal2 != $idRepresentanteLegal2)
+						if($NomeRep2 != $nomeRep2)
 						{
 							$NomeRepresentante2 = recuperaDadosIgsis("sis_representante_legal","Id_RepresentanteLegal","$IdRepresentanteLegal2");
 							$nomeRepresentante2 = recuperaDadosProp("representante_legal","id","$idRepresentanteLegal2");
@@ -512,7 +671,7 @@ If($query1 != '' && $query2 != '')
 										<input type='hidden' name='busca' value='".$cnpj_busca."'  />
 										<input type='hidden' name='campo' value='IdRepresentanteLegal2'  />
 										<input type='hidden' name='varCampo' value='".$idRepresentanteLegal2."'  />
-										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
+										<input type='submit' name='importarRep02' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 									</form>
 								</td>";
 							echo "</tr>";
