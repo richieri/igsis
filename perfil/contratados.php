@@ -368,6 +368,7 @@
 				$query_insere_cnpj = mysqli_query($con,$sql_insere_cnpj);
 				if($query_insere_cnpj)
 				{
+			 		gravarLog($sql_insere_cnpj);
 					$mensagem = "Pedido inserido com sucesso!";
 				}
 				else
@@ -1013,6 +1014,7 @@
 				$query_atualiza_executante = mysqli_query($con,$sql_atualiza_executante);	
 				if($query_atualiza_executante)
 				{
+		 			gravarLog($sql_atualiza_executante);
 					$mensagem = "Líder do Grupo inserido com sucesso!";	
 					
 					$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
@@ -1034,7 +1036,8 @@
 						'1')";
 					$query_inserir = mysqli_query($con,$sql_inserir);
 					if($query_inserir)
-					{
+					{	
+				 		gravarLog($sql_inserir);
 						$mensagem = "Integrante inserido com sucesso!";	
 					}
 					else
@@ -1915,6 +1918,7 @@
 							WHERE `Id_PessoaFisica` = '$idPessoaFisica'";		
 						if(mysqli_query($con,$sql_atualizar_pessoa))
 						{
+					 		gravarLog($sql_atualizar_pessoa);
 							$mensagem = "Atualizado com sucesso!";	
 						}
 						else
@@ -2079,6 +2083,7 @@
 							$query = mysqli_query($con,$sql_insere_arquivo);
 							if($query)
 							{
+						 		gravarLog($sql_insere_arquivo);
 								$mensagem = "Arquivo recebido com sucesso";
 							}
 							else
@@ -2210,7 +2215,8 @@
 							'1')";
 						$query_inserir = mysqli_query($con,$sql_inserir);
 						if($query_inserir)
-						{
+						{	
+					 		gravarLog($sql_inserir);
 							$mensagem = "Integrante inserido com sucesso!";	
 						}
 						else
@@ -2224,7 +2230,8 @@
 						$sql_apagar = "UPDATE igsis_grupos SET publicado = '0' WHERE idGrupos = '$id'";
 						$query_apagar = mysqli_query($con,$sql_apagar);
 						if($query_apagar)
-						{
+						{	
+					 		gravarLog($sql_apagar);
 							$mensagem = "Integrante apagado com sucesso!";	
 						}
 						else
@@ -3352,6 +3359,7 @@
 							$query = mysqli_query($con,$sql_insere_arquivo);
 							if($query)
 							{
+						 		gravarLog($sql_insere_arquivo);
 								$mensagem = "Arquivo recebido com sucesso";
 							}
 							else
@@ -3509,6 +3517,7 @@
 							$query = mysqli_query($con,$sql_insere_arquivo);
 							if($query)
 							{
+ 								gravarLog($sql_insere_arquivo);
 								$mensagem = "Arquivo recebido com sucesso";
 							}
 							else
@@ -3642,6 +3651,7 @@ if(isset($_POST['insereParecer']))
 		{
 			echo $id_ped;
 			$mensagem = "Atualizado com sucesso!";
+			gravarLog($sql_pedido);
 		}
 		else
 		{
@@ -3685,6 +3695,7 @@ if(isset($_POST['editaParecer']))
 
  		if ($stmt->execute()) 
  		{
+	 		gravarLog($sql_pedido);
 			$mensagem = "Atualizado com sucesso!";
 			echo $id_ped;
 		}
