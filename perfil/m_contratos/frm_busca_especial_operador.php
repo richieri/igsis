@@ -31,7 +31,7 @@ if(isset($_POST['periodo']))
 
 	if($processo == 0)
 	{
-		$filtro_processo = "AND ped.NumeroProcesso IS NULL";
+		$filtro_processo = "AND (ped.NumeroProcesso IS NULL OR ped.NumeroProcesso = '')";
 	}
 	else
 	{
