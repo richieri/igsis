@@ -98,6 +98,7 @@ if(isset($_POST['periodo']))
 	   NOT IN (11, 12)
 	   AND eve.dataEnvio IS NOT NULL
 	   AND ped.publicado = '1'
+	   AND eve.projetoEspecial != 54
 	   ORDER BY data ASC ";
 
 	   $query_evento = mysqli_query($con,$sql_evento);
