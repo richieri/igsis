@@ -17,7 +17,6 @@ case 'inicial':
 /*POST*/
 if(isset($_POST['periodo']))
 {
-	$processo = $_POST['processo'];
 	$idContratos = $_POST['operador'];
 
 	if($idContratos == 0)
@@ -29,22 +28,13 @@ if(isset($_POST['periodo']))
 		$operador = "AND ped.idContratos = '$idContratos'";
 	}
 
-	if($processo == 0)
-	{
-		$filtro_processo = "AND (ped.NumeroProcesso = NULL OR ped.NumeroProcesso = '')";
-	}
-	else
-	{
-		$filtro_processo = "AND (ped.NumeroProcesso != NULL OR ped.NumeroProcesso != '')";
-	}
-
 	$con = bancoMysqli();
 	$sql_evento =
 	  	"SELECT eve.idEvento, ped.idPedidoContratacao, ped.idPessoa, eve.nomeEvento, ped.valor, proj.projetoEspecial, ped.idContratos
 		FROM ig_evento AS eve
 		INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 		INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-		WHERE eve.publicado=1 AND ped.publicado=1 AND eve.projetoEspecial IN (54) $operador $filtro_processo";
+		WHERE eve.publicado=1 AND ped.publicado=1 AND eve.projetoEspecial IN (54) $operador";
 
 	   $query_evento = mysqli_query($con,$sql_evento);
 	   $num = mysqli_num_rows($query_evento);
@@ -166,25 +156,16 @@ if(isset($_POST['periodo']))
 					<form method="POST" action="?perfil=contratos&p=frm_busca_especial_operador" class="form-horizontal" role="form">
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6">
-								<label>Número de processo:</label>
-								<select class="form-control" name="processo" id="inputSubject" >
-									<option value='0'>Sem número</option>
-									<option value='1'>Com número</option>
-								</select>
-							</div>
-							<div class=" col-md-6">
 								<label>Operador do Contrato</label>
 								<select class="form-control" name="operador" id="inputSubject" >
 									<option value='0'></option>
 									<?php  geraOpcaoContrato(""); ?>
 								</select>
 							</div>
-						</div>
-						<br />
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
+							<div class=" col-md-6">
+								<label><br/></label>
 								<input type="hidden" name="periodo" value="1" />
-								<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+								<input type="submit" class="btn btn-theme btn-md btn-block" value="Pesquisar">
 							</div>
 						</div>
 					</form>
@@ -211,25 +192,16 @@ else
 			<form method="POST" action="?perfil=contratos&p=frm_busca_especial_operador" class="form-horizontal" role="form">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
-						<label>Número de processo:</label>
-						<select class="form-control" name="processo" id="inputSubject" >
-							<option value='0'>Sem número</option>
-							<option value='1'>Com número</option>
-						</select>
-					</div>
-					<div class=" col-md-6">
 						<label>Operador do Contrato</label>
 						<select class="form-control" name="operador" id="inputSubject" >
 							<option value='0'></option>
 							<?php  geraOpcaoContrato(""); ?>
 						</select>
 					</div>
-				</div>
-				<br />
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
+					<div class=" col-md-6">
+						<label><br/></label>
 						<input type="hidden" name="periodo" value="1" />
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Pesquisar">
+						<input type="submit" class="btn btn-theme btn-md btn-block" value="Pesquisar">
 					</div>
 				</div>
 			</form>
