@@ -31,11 +31,11 @@ if(isset($_POST['periodo']))
 
 	if($processo == 0)
 	{
-		$filtro_processo = "AND (ped.NumeroProcesso IS NULL OR ped.NumeroProcesso = '')";
+		$filtro_processo = "AND (ped.NumeroProcesso = NULL OR ped.NumeroProcesso = '')";
 	}
 	else
 	{
-		$filtro_processo = "AND ped.NumeroProcesso IS NOT NULL";
+		$filtro_processo = "AND (ped.NumeroProcesso != NULL OR ped.NumeroProcesso != '')";
 	}
 
 	$con = bancoMysqli();
