@@ -93,7 +93,6 @@ echo "
 
 						<tr>
 							<td><a href='$link02=28' target='_blank'><strong>Edital - Gala de Balé</strong></a></td>
-							<td><a href='$link04=30' target='_blank'><strong>Virada 2017</strong></a></td>
 						</tr>
 
 						<tr><td class='list_description'><br/></td></tr>
