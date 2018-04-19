@@ -157,7 +157,7 @@ function listaArquivosComProd($idEvento)
 	while($campo = mysqli_fetch_array($query))
 	{
 		echo "<tr>";
-		echo "<td class='list_description'><a href='../uploads/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
+		echo "<td class='list_description'><a href='../../igsiscapac/uploads/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
 		echo "</tr>";
 	}
 	echo "
