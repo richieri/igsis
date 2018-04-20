@@ -281,7 +281,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					if($evento['idTipoPessoa'] == 2)
 					{
 					?>
-						<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Jurídica <?php echo $pessoaJuridica['id'] ?></h6>
+						<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Jurídica</h6>
 							<?php listaArquivoCamposMultiplos($pessoaJuridica['id'],2); ?>
 						</div>
 
@@ -307,7 +307,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 				{
 				?>
 					<div class="col-md-offset-2 col-md-8">
-						<a href="../include/arquivos_evento_capac.php?idEvento=<?php echo $idCapac ?>&idPj=<?php echo $pessoaJuridica['id'] ?>&idPf=<?php echo $pessoaFisica['id'] ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
+						<a href="../include/arquivos_capac.php?idEvento=<?php echo $idCapac ?>&idPj=<?php echo $pessoaJuridica['id'] ?>&idPf=<?php echo $pessoaFisica['id'] ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
 					</div>
 				<?php
 				}
@@ -315,7 +315,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 				{
 				?>
 					<div class="col-md-offset-2 col-md-8">
-						<a href="../include/arquivos_evento_capac.php?idEvento=<?php echo $idCapac ?>&idPf=<?php echo $pessoaFisica['id'] ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
+						<a href="../include/arquivos_capac.php?idEvento=<?php echo $idCapac ?>&idPf=<?php echo $pessoaFisica['id'] ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
 					</div>
 				<?php
 				}
