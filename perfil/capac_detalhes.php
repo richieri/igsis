@@ -91,18 +91,12 @@ function listaArquivoCamposMultiplos($idPessoa,$pf)
 				AND arq.publicado = '1'";
 		break;
 		case 5: //evento
-			$arq1 = "AND (list.id = '23' OR ";
-			$arq2 = "list.id = '65' OR";
-			$arq3 = "list.id = '78' OR";
-			$arq4 = "list.id = '96' OR";
-			$arq5 = "list.id = '97' OR";
-			$arq6 = "list.id = '98')";
 			$sql = "SELECT *
 				FROM upload_lista_documento as list
 				INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
 				WHERE arq.idPessoa = '$idPessoa'
 				AND arq.idTipoPessoa = '3'
-				$arq1 $arq2 $arq3 $arq4 $arq5 $arq6
+				AND edital = 0
 				AND arq.publicado = '1'";
 		break;
 		default:
@@ -157,7 +151,7 @@ function listaArquivosComProd($idEvento)
 	while($campo = mysqli_fetch_array($query))
 	{
 		echo "<tr>";
-		echo "<td class='list_description'><a href='../../igsiscapac/uploads/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
+		echo "<td class='list_description'><a href='../igsiscapac/uploads/".$campo['arquivo']."' target='_blank'>".$campo['arquivo']."</a></td>";
 		echo "</tr>";
 	}
 	echo "
@@ -287,7 +281,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					if($evento['idTipoPessoa'] == 2)
 					{
 					?>
-						<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Jurídica</h6>
+						<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Jurídica <?php echo $pessoaJuridica['id'] ?></h6>
 							<?php listaArquivoCamposMultiplos($pessoaJuridica['id'],2); ?>
 						</div>
 
@@ -307,6 +301,25 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					</div>
 
 				</div>
+
+				<?php
+				if($evento['idTipoPessoa'] == 2)
+				{
+				?>
+					<div class="col-md-offset-2 col-md-8">
+						<a href="../include/arquivos_evento_capac.php?idEvento=<?php echo $idCapac ?>&idPj=<?php echo $pessoaJuridica['id'] ?>&idPf=<?php echo $pessoaFisica['id'] ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
+					</div>
+				<?php
+				}
+				else
+				{
+				?>
+					<div class="col-md-offset-2 col-md-8">
+						<a href="../include/arquivos_evento_capac.php?idEvento=<?php echo $idCapac ?>&idPf=<?php echo $pessoaFisica['id'] ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
+					</div>
+				<?php
+				}
+				?>
 
 				<div class="col-md-offset-2 col-md-8">
 					<form method='POST' action='?perfil=importar_evento_capac'>
