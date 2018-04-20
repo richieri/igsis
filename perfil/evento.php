@@ -2149,7 +2149,7 @@
 					</div>
 					<div class="form-group">         			
 						<div class="col-md-offset-2 col-md-8">
-							<input type="checkbox" name="virada" id="virada" onclick="habilitar()" <?php checar($ocor['virada']) ?>/><label  style="padding:0 20px 0 5px;">Virada 2017</label>
+							<input type="checkbox" name="virada" id="virada" onclick="habilitar()" <?php checar($ocor['virada']) ?>/><label  style="padding:0 20px 0 5px;">Virada 2018</label>
 						</div>                     
 					</div>
 					<div class="form-group">
