@@ -2155,7 +2155,7 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-2">
 							<label>Horário de início</label>
-							<input type="text" name="hora" class="form-control"id="hora" placeholder="hh:mm" value="<?php echo $ocor['horaInicio'] ?>"/>
+							<input type="text" name="hora" class="form-control" id="hora" placeholder="hh:mm" value="<?php echo $ocor['horaInicio'] ?>"/>
 						</div> 
 						<div class="col-md-3">
 							<label>Valor ingresso *</label>
