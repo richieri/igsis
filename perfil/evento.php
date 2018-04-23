@@ -1634,6 +1634,14 @@
 				{
 					$domingo = 0;
 				}
+				if(isset($_POST['virada']))
+				{
+					$virada = 1;
+				}
+				else
+				{
+					$virada = 0;
+				}
 				if ($segunda == 0 AND $terca == 0 AND $quarta == 0 AND $quinta == 0 AND $sexta == 0 AND $sabado == 0 AND $domingo == 0)
 				{
 					$segunda = 1;
@@ -1641,6 +1649,16 @@
 					$quarta = 1;
 					$quinta = 1;
 					$sexta = 1;
+					$sabado = 1;
+					$domingo = 1;
+				}
+				if ($virada == 1) 
+				{
+					$segunda = 0;
+					$terca = 0;
+					$quarta = 0;
+					$quinta = 0;
+					$sexta = 0;
 					$sabado = 1;
 					$domingo = 1;
 				}
@@ -1683,14 +1701,6 @@
 				else
 				{
 					$duracao = 0;
-				}
-				if(isset($_POST['virada']))
-				{
-					$virada = 1;
-				}
-				else
-				{
-					$virada = 0;
 				}
 				$hora = $_POST['hora'];
 				$horaInicio = $hora.":00"; //completa os segundos
