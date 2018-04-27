@@ -39,6 +39,8 @@ $link42 = $http."rlt_pedido_reserva_oficina.php";
 $link43 = $http."rlt_pedido_reserva_bma_pf.php";
 $link44 = $http."rlt_reserva_pf.php";
 $link45 = $http."rlt_pedido_reserva_pia_pf.php";
+$link46 = $http."rlt_pedido_reserva_vocacional_sme_pf.php";
+
 
 
 $link17 = $http."rlt_normas_internas_teatros_pf.php"."?id=".$id_ped;
@@ -164,11 +166,13 @@ echo "
 							<td><a href='$link25?id=$id_ped' target='_blank'><strong>FORMAÇÃO - Vocacional</strong></a></td>
 							<td><a href='$link45?id=$id_ped' target='_blank'><strong>FORMAÇÃO - PIÁ</strong></a></td>
 						</tr>
+
+						<tr>
+							<td><a href='$link46?id=$id_ped' target='_blank'><strong>VOCACIONAL/PIÁ - SME</strong></a></td>
 							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais</strong></a></td>
-							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
 						</tr>
 
-						</tr>
+						<tr>
 							<td><a href='$link32?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
 							<td><a href='$link33?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura</strong></a></td>
 						</tr>
@@ -186,8 +190,12 @@ echo "
 						<tr>
 							<td><a href='$link44?id=$id_ped' target='_blank'><strong>Reserva Pessoa Física</strong></a></td>
 							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
-
 						</tr>
+
+						<tr>
+							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
+						</tr>
+
 
 					</tbody>
 				</table>
