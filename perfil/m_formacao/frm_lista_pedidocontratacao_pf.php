@@ -3,6 +3,23 @@
 	$con = bancoMysqli();
 	$ano = date('Y');
 	$pasta = "?perfil=formacao&p=frm_lista_pedidocontratacao_pf&enviados=1&pag=";
+
+	if(isset($_POST['apagarPedido']))
+			{
+				$idPedidoContratacao = $_POST['idPedidoContratacao'];
+				$sql_apagar_pedido = "UPDATE igsis_pedido_contratacao SET publicado = '0' WHERE idPedidoContratacao = '$idPedidoContratacao'";
+				$query_apagar_pedido = mysqli_query($con,$sql_apagar_pedido);
+				if($query_apagar_pedido)
+				{
+					gravarLog($sql_apagar_pedido);
+					$mensagem = "Pedido apagado com sucesso.";
+				}
+				else
+				{
+					$mensagem = "Erro ao apagar o pedido! Tente novamente.";
+				}
+			}
+
 	if(isset($_GET['pag']))
 	{
 		$p = $_GET['pag'];
@@ -34,12 +51,12 @@
 			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
-						<td>Codigo do Pedido</td>
+						<td>Código do Pedido</td>
 						<td>Processo</td>
 						<td>Proponente</td>
 						<td>Objeto</td>
 						<td>Local</td>
-						<td>Periodo</td>
+						<td>Período</td>
 						<td>Status</td>
 					</tr>
 				</thead>
@@ -87,12 +104,12 @@
 			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
-					<td>Codigo do Pedido</td>
+					<td>Código do Pedido</td>
 					<td>Proponente</td>
 					<td>Objeto</td>
 					<td>Local</td>
-					<td>Periodo</td>
-					<td>Status</td>
+					<td>Período</td>
+					<td></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -109,8 +126,14 @@
 				echo '<td class="list_description">'.$ped['Objeto'].						'</td> ';
 				echo '<td class="list_description">'.$ped['Local'].				'</td> ';
 				echo '<td class="list_description">'.$ped['Periodo'].						'</td> ';
-				//echo '<td class="list_description">'.$ped['Status'].						'</td> </tr>';
-				echo '<td class="list_description"></td> </tr>';
+				echo "
+						<td class='list_description'>
+						<form method='POST' action='?perfil=formacao&p=frm_lista_pedidocontratacao_pf&enviados=0'>
+						<input type='hidden' name=apagarPedido value='1'>
+						<input type='hidden' name='idPedidoContratacao' value='".$pedido['idPedidoContratacao']."'>
+						<input type ='submit' class='btn btn-theme btn-sm btn-block'";
+					echo " value='apagar'></td></form>"	; //botão de apagar
+					echo "</tr>";
 			}
 ?>
 				</tbody>
