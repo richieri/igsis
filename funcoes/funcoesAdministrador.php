@@ -262,7 +262,7 @@
 	function espacoExistente ($idUsuario)
 	{
 		$con = bancoMysqli();
-		$sql = "SELECT local.sala, local.idLocal , local.idInstituicao, inst.instituicao
+		$sql = "SELECT local.sala, local.idLocal , local.idInstituicao, inst.instituicao, local.rua, local.cidade, local.estado, local.cep
 			FROM ig_local local
 			INNER JOIN ig_instituicao inst 
 			ON local.idInstituicao = inst.idInstituicao 
@@ -276,9 +276,13 @@
 						<tr class='list_menu'> 
 							<td>Nome do Espaço</td>
 							<td>Instituição</td>
+							<td>Endereço</td>
+							<td>Cidade</td>
+							<td>Estado</td>
+							<td>CEP</td>
+							<td width='1%'></td>
+							<td width='1%'></td>
 							<td></td>
-							<td width='1%'></td>
-							<td width='1%'></td>
 						</tr>	
 					</thead>
 				</div>
@@ -288,6 +292,10 @@
 		{
 			echo "<td class='list_description'>".$campo['sala']."</td>";
 			echo "<td class='list_description'>".$campo['instituicao']."</td>";
+			echo "<td class='list_description'>".$campo['rua']."</td>";
+			echo "<td class='list_description'>".$campo['cidade']."</td>";
+			echo "<td class='list_description'>".$campo['estado']."</td>";
+			echo "<td class='list_description'>".$campo['cep']."</td>";
 			echo "
 				<td class='list_description'>
 				<form method='POST' action='?perfil=admin&p=espacos'>

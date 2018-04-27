@@ -1485,9 +1485,14 @@
 			{
 				$espaco = $_POST['espaco'];	
 				$instituicao = $_POST['instituicao'];
+				$rua = $_POST['rua'];
+				$cidade = $_POST['cidade'];
+				$estado = $_POST['estado'];
+				$cep = $_POST['cep'];
+
 				if($espaco == '')
 				{  
-					$mensagem = "<p>O campo espaco, está em branco e é obrigatório. Tente novamente.</a></p>"; 
+					$mensagem = "<p>O campo espaço é obrigatório! Preencha e tente novamente.</a></p>"; 
 				}
 				else
 				{
@@ -1497,16 +1502,16 @@
 					if ($existe == 0) // caso não esteja vazio
 					{
 						//inserir no banco
-						$sqlinserir= "INSERT INTO `ig_local` (`idLocal`,`sala`,`idInstituicao`,`publicado`) VALUES (NULL, '$espaco','$instituicao', 1)";
+						$sqlinserir = "INSERT INTO `ig_local` (`idLocal`,`sala`,`idInstituicao`,`rua`,`cidade`,`estado`,`cep`,`publicado`) VALUES (NULL, '$espaco', '$instituicao', '$rua', '$cidade', '$estado', '$cep', 1)";
 						$queryinserir = mysqli_query($con,$sqlinserir);
 						if($queryinserir)
 						{
-							$mensagem = "Inserido com sucesso.";
+							$mensagem = "Inserido com sucesso!";
 						}
 						else
 						{
 							// erro ao inserir
-							$mensagem= "Erro ao inserir.";
+							 $mensagem= "Erro ao inserir!";
 						}
 					}
 					else
@@ -1534,8 +1539,8 @@
 					<div class="col-md-offset-1 col-md-10">  
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
-								<label>Adicionar novo Espaço:</label>
-								<input type="text" name="espaco" class="form-control"id="espaco" value="" />
+								<label>Nome do Espaço:</label>
+								<input type="text" name="espaco" class="form-control" id="espaco" value="" />
 							</div>  
 							<div class="col-md-offset-2 col-md-8">
 								<label>Instituição:</label>
@@ -1543,25 +1548,41 @@
 									<?php acessoInstituicao("ig_instituicao","",""); ?>
 								</select>
 							</div>
+							<div class="col-md-offset-2 col-md-8">
+								<label>Endereço:</label>
+								<input type="text" name="rua" class="form-control" id="rua" value="" />
+							</div> 
+							<div class="col-md-offset-2 col-md-8">
+								<label>Cidade:</label>
+								<input type="text" name="cidade" class="form-control" id="cidade" value="" />
+							</div> 
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-6"><strong>Estado:</strong><br/>
+									<input type="text" class="form-control" id="estado" name="estado" value="" />
+								</div>
+								<div class=" col-md-6"><strong>CEP:</strong><br/>
+									<input type="text" id= "CEP" name="CEP" class="form-control" " value="" />
+								</div>
+							</div>
 							<div class="col-md-offset-2 col-md-8"> 
 								<label></label> <!-- Adicionar novo espaço !-->
 							</div>
 							<!-- Botão de gravar !-->
 							<div class="col-md-offset-2 col-md-8">
 								<input type="hidden" name="cadastrar" value="1"  />
-								<input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir"  />
+								<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar"  />
 							</div>
 						</div>
 					</div>
 				</form>
 				<form method="POST" action="?perfil=admin&p=espacos" class="form-horizontal"  role="form">
 					<div class="col-md-offset-2 col-md-8">
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="lista de espaço"/>
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="listar espaços"/>
 					</div>
 				</form>
 			</div>
 		</div>
-    </div>  <!-- // FIM DE INSERIR ESPACOS !-->
+ <!-- // FIM DE INSERIR ESPACOS !-->
 </section>
 	<?php
 		break; // FIM ADICIONAR NOVO ESPACO
@@ -1579,7 +1600,7 @@
 				}
 				else
 				{
-					$mensagem = "Erro ao apagar o evento...";	
+					$mensagem = "Erro ao apagar o evento!.";	
 				}
 			}// EDITAR / APAGAR ESPACOS
 	?>
@@ -1614,7 +1635,7 @@
 				$instituicao = $_POST['instituicao'];
 				if($projetoEspecial == '')
 				{  
-					$mensagem = "<p>O campo projeto especial, está em branco e é obrigatório. Tente novamente.</a></p>"; 
+					$mensagem = "<p>O campo projeto especial é obrigatório! Preencha e tente novamente.</a></p>"; 
 				}
 				else
 				{
