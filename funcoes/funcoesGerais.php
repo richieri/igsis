@@ -1,16 +1,5 @@
 <?php
-	/*
-	igSmc v0.1 - 2015
-	ccsplab.org - centro cultural são paulo
-	Esta é a página para as funções gerais do sistema.
-	> Testes e verificações
-	> Conexão de Banco MySQLi
-	> Framework
-	> Formatação de datas, valores
-	> Outras bibliotecas: email, pdf, etc
-	*/
-	// Testes e verificações
-	// Conecta-se ao banco de dados MySQL
+	date_default_timezone_set("Brazil/East");
 	function verificaMysql($sql_inserir)
 	{
 		//Verifica erro na string/query
