@@ -33,13 +33,13 @@
 ?>
 					<p align="justify"><?php descricaoEvento($idEvento); ?></p>
 					<br/>
-					<h5>Ocorrências</h5>
-					<p align="justify"><?php echo resumoOcorrencias($idEvento); ?></p>
-					<p align="justify"><?php listaOcorrenciasTexto($idEvento); ?></p>				
-					<br />
 					<h5>Especificidades</h5>
 					<p align="justify"><?php descricaoEspecificidades($idEvento,$evento['ig_tipo_evento_idTipoEvento']); ?></p>
 					<br/>
+					<h5>Ocorrências</h5>
+					<p align="justify"><?php echo resumoOcorrencias($idEvento); ?></p>
+					<p align="justify"><?php listaOcorrenciasTexto($idEvento); ?></p>
+					<br />
 					<h5>Sub-eventos</h5>
 	<?php
 		if($evento['subEvento'] == '1')
