@@ -10,7 +10,7 @@
 		<li><a href="http://smcsistemas.prefeitura.sp.gov.br/smcproducao/" target = "_blank">Informações de produção / riders / mapas de luz</a></li>
 		<li style="color:white;">-------------------------</li>
                 <li><a href="?secao=perfil">Carregar Módulos</a></li>
-			 <li><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/index.php/modulo-evento/">Ajuda</a></li>
+			 <li><a href="../pdf/manual_eventos.pdf">Ajuda</a></li>
                 <li><a href="../include/logoff.php">Sair</a></li>
             </ul>
         </li>
