@@ -843,7 +843,7 @@
 					<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
 						<input type='hidden' name='apagar' value='".$campo['idOcorrencia']."' />
 						<input type ='submit' class='btn btn-theme  btn-block' value='Apagar'></td></form>";
-			echo "</tr>";		
+			echo "</tr>";	
 		}
 		echo "
 			</tbody>
@@ -912,20 +912,15 @@
 				$inst = recuperaDados("ig_instituicao",$local['idInstituicao'],"idInstituicao");
 				$instituicao = $inst['instituicao'];
 				$id = $campo['idOcorrencia'];
-				$ocorrencia = "<div class='left'>$tipo_de_evento $dia_especial ".
-				$sub['titulo']
-					."<br />
-					Data: $data $semana <br />
-					Horário: $hora<br />
-					Duração: $duracao min<br />
-					Local: $espaco - $instituicao<br />
-					Retirada de ingresso: $retirada  - Valor: $valor <br />
-					Observações: $observacao</br></div>";  
-				if($campo['virada'] == 1)
-				{
-					$ocorrencia = "<div class='left'>Virada Cultural</br></div>";
-				}	
-				echo $ocorrencia;	
+				$ocorrencia = "<div class='left'>
+					<strong>$tipo_de_evento $dia_especial ".$sub['titulo']."</strong><br />
+					<strong>Data:</strong> $data $semana <br />
+					<strong>Horário:</strong> $hora<br />
+					<strong>Duração:</strong> $duracao min<br />
+					<strong>Local:</strong> $espaco - $instituicao<br />
+					<strong>Retirada de ingresso:</strong> $retirada  - Valor: $valor <br />
+					<strong>Observações:</strong> $observacao</br></br></div>";
+				echo $ocorrencia;
 			}
 		}
 	}
