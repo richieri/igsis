@@ -67,15 +67,15 @@
 				</div>
 			</div>
 		</div> 
-		<form method="" action="../pdf/rlt_gera_revista_local.php" target="_blank" class="form-horizontal" role="form">
+		<form  action="../pdf/rlt_gera_revista_local.php" method="GET" target="_blank" class="form-horizontal" role="form">
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-6">
 					<label>Data início *</label>
-					<input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="">
+					<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
 				</div>	
 				<div class=" col-md-6">
 					<label>Data encerramento *</label>
-					<input type="text" name="dataFinal" class="form-control" id="datepicker02"  placeholder="">
+					<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
 				</div>
 			</div>
 
