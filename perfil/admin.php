@@ -1561,7 +1561,7 @@
 									<input type="text" class="form-control" id="estado" name="estado" value="" />
 								</div>
 								<div class=" col-md-6"><strong>CEP:</strong><br/>
-									<input type="text" id= "CEP" name="CEP" class="form-control" " value="" />
+									<input type="text" id= "CEP" name="cep" class="form-control" " value="" />
 								</div>
 							</div>
 							<div class="col-md-offset-2 col-md-8"> 
