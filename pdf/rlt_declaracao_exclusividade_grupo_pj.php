@@ -142,7 +142,7 @@ $f=9; //tamanho da fonte
 
   $pdf->SetX($x);
   $pdf->SetFont('Arial','', $f);
-  $pdf->MultiCell(180,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exCPF".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado exclusivamente pela empresa "."$pjRazaoSocial".". Estou ciente de que o pagamento dos valores decorrentes dos serviços do grupo é de responsabilidade da nossa representante, não nos cabendo pleitear à Prefeitura quaisquer valores eventualmente não repassados."));
+  $pdf->MultiCell(180,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exCPF".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado exclusivamente pela empresa "."$pjRazaoSocial".", CNPJ "."$pjCNPJ".". Estou ciente de que o pagamento dos valores decorrentes dos serviços do grupo é de responsabilidade da nossa representante, não nos cabendo pleitear à Prefeitura quaisquer valores eventualmente não repassados."));
 
   $pdf->SetX($x);
   $pdf->SetFont('Arial','', $f);
@@ -152,13 +152,13 @@ $f=9; //tamanho da fonte
   {
     $pdf->SetX($x);
     $pdf->SetFont('Arial','', $f);
-    $pdf->MultiCell(180,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." e "."$rep02Nome".", RG "."$rep02RG".", CPF "."$rep02CPF".", declara sob penas da lei ser representante do grupo "."$grupo".""));
+    $pdf->MultiCell(180,$l,utf8_decode(""."$pjRazaoSocial".", CNPJ "."$pjCNPJ"." representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." e "."$rep02Nome".", RG "."$rep02RG".", CPF "."$rep02CPF".", declara sob penas da lei ser representante do grupo "."$grupo".""));
   }
   else
   {
     $pdf->SetX($x);
     $pdf->SetFont('Arial','', $f);
-    $pdf->MultiCell(180,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." declara sob penas da lei ser representante do grupo "."$grupo"."."));
+    $pdf->MultiCell(180,$l,utf8_decode(""."$pjRazaoSocial".", CNPJ "."$pjCNPJ"." representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." declara sob penas da lei ser representante do grupo "."$grupo"."."));
   }
 
   $pdf->SetX($x);

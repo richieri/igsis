@@ -159,7 +159,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
   
 	   $pdf->SetX($x);
 	   $pdf->SetFont('Arial','', 11);
-	   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exCPF".", sob penas da lei, declaro que sou representado exclusivamente pela empresa "."$pjRazaoSocial".""));
+	   $pdf->MultiCell(170,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exCPF".", sob penas da lei, declaro que sou representado exclusivamente pela empresa "."$pjRazaoSocial".", CNPJ "."$pjCNPJ".""));
 
      $pdf->Ln();
 
@@ -173,13 +173,13 @@ $l=6; //DEFINE A ALTURA DA LINHA
      {
      $pdf->SetX($x);
      $pdf->SetFont('Arial','', 11);   
-     $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." e "."$rep02Nome".", RG "."$rep02RG".", CPF "."$rep02CPF".", declara sob penas da lei ser representante de "."$exNome"."."));
+     $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", CNPJ "."$pjCNPJ"." representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." e "."$rep02Nome".", RG "."$rep02RG".", CPF "."$rep02CPF".", declara sob penas da lei ser representante de "."$exNome"."."));
       } 
       else 
       {
        $pdf->SetX($x);
        $pdf->SetFont('Arial','', 11);   
-       $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." declara sob penas da lei ser representante de "."$exNome"."."));
+       $pdf->MultiCell(170,$l,utf8_decode(""."$pjRazaoSocial".", CNPJ "."$pjCNPJ"." representada por "."$rep01Nome".", RG "."$rep01RG".", CPF "."$rep01CPF"." declara sob penas da lei ser representante de "."$exNome"."."));
       }
 
      $pdf->Ln();
