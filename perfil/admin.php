@@ -1483,7 +1483,7 @@
 			include "../include/menuAdministradorLocal.php";
 			if(isset($_POST['cadastrar']))
 			{
-				$espaco = $_POST['espaco'];	
+				$espaco = $_POST['sala'];	
 				$instituicao = $_POST['instituicao'];
 				$rua = $_POST['rua'];
 				$cidade = $_POST['cidade'];
@@ -1540,7 +1540,7 @@
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Nome do Espaço:</label>
-								<input type="text" name="espaco" class="form-control" id="espaco" value="" />
+								<input type="text" name="sala" class="form-control" id="sala" value="" />
 							</div>  
 							<div class="col-md-offset-2 col-md-8">
 								<label>Instituição:</label>
@@ -1591,13 +1591,13 @@
 			include "../include/menuAdministradorLocal.php";
 			if(isset($_POST['editar']))
 			{
-				$espaco = $_POST['espaco'];	
+				$espaco = $_POST['sala'];	
 				$instituicao = $_POST['instituicao'];
 				$rua = $_POST['rua'];
 				$cidade = $_POST['cidade'];
 				$estado = $_POST['estado'];
 				$cep = $_POST['cep'];
-				$idEditar = $_POST['editar'];
+				$idLocal = $_POST['idLocal'];
 
 				if($espaco == '')
 				{  
@@ -1606,7 +1606,7 @@
 				else 
 				{
 					//editar no banco
-					$sqleditar = "UPDATE `ig_local` SET `sala` = '$espaco' , `idInstituicao` = '$instituicao' ,`rua` = '$rua',`cidade` = '$cidade' ,`estado` = '$estado' ,`cep` = '$cep' WHERE `idLocal` = '$idEditar'";
+					$sqleditar = "UPDATE `ig_local` SET `sala` = '$espaco' , `idInstituicao` = '$instituicao' ,`rua` = '$rua',`cidade` = '$cidade' ,`estado` = '$estado' ,`cep` = '$cep' WHERE `idLocal` = '$idLocal'";
 					$queryeditar = mysqli_query($con,$sqleditar);
 					if($queryeditar)
 					{
@@ -1636,12 +1636,13 @@
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
 				<form method="POST" action="?perfil=admin&p=editarEspaco" class="form-horizontal" role="form">
+					<input type="hidden" name="idLocal"  value=<?php  echo $recuperaEspaco['idLocal'] ?> />
 					<!-- // Espaço existente !-->
 					<div class="col-md-offset-1 col-md-10">  
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Nome do Espaço:</label>
-								<input type="text" name="espaco" class="form-control" id="espaco" value="<?php echo $recuperaEspaco['sala'] ?>" />
+								<input type="text" name="sala" class="form-control" id="sala" value="<?php echo $recuperaEspaco['sala'] ?>" />
 							</div>  
 							<div class="col-md-offset-2 col-md-8">
 								<label>Instituição:</label>
