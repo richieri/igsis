@@ -271,7 +271,7 @@
 		$query = mysqli_query($con,$sql); 
 		echo " 
 			<table class='table table-condensed'>	
-				<div class='col-md-offset-2 col-md-8'>
+				<div class='col-md-offset-2 col-md-12'>
 					<thead>						
 						<tr class='list_menu'> 
 							<td>Nome do Espaço</td>
@@ -301,10 +301,15 @@
 				<form method='POST' action='?perfil=admin&p=espacos'>
 				<input type='hidden' name='apagar' value='".$campo['idLocal']."' />
 				<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
+			echo "
+				<td class='list_description'>
+				<form method='POST' action='?perfil=admin&p=editarEspaco'>
+				<input type='hidden' name='editarEspaco' value='".$campo['idLocal']."' />
+				<input type='submit' class='btn btn-theme btn-block' value='editar'></td></form>";
 			echo "</tr>";		
-		}
-		echo "</tbody>
-			</table>";
+			}
+			echo "</tbody>
+				</table>";
 	}
 	function projetoEspecialExistente ($idUsuario)
 	{

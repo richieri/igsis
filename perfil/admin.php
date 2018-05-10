@@ -1383,27 +1383,27 @@
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Nome Completo:</label>
-								<input type="text" name="nomeCompleto" class="form-control"id="nomeCompleto" value="<?php echo $recuperaUsuario['nomeCompleto'] ?>" />
+								<input type="text" name="nomeCompleto" class="form-control" id="nomeCompleto" value="<?php echo $recuperaUsuario['nomeCompleto'] ?>" />
 							</div> 
 							<div class="col-md-offset-2 col-md-8">
 								<label>Usuario:</label>
-								<input type="text" name="nomeUsuario" class="form-control"id="nomeUsuario" value="<?php echo $recuperaUsuario['nomeUsuario'] ?>" />
+								<input type="text" name="nomeUsuario" class="form-control" id="nomeUsuario" value="<?php echo $recuperaUsuario['nomeUsuario'] ?>" />
 							</div>  <!-- // SENHA !-->
 							<!-- // Departamento !-->
 							<div class="col-md-offset-2 col-md-8">	
 								<label>telefone:</label>
-								<input type="text" name="telefone" class="form-control"id="departamento" value="<?php echo $recuperaUsuario['telefone'] ?>" />
+								<input type="text" name="telefone" class="form-control" id="departamento" value="<?php echo $recuperaUsuario['telefone'] ?>" />
 							</div>  <!-- // Perfil de Usuario !-->
 							<div class="col-md-offset-2 col-md-8">
 								<label>Instituição:</label>
 								<select name="ig_instituicao_idInstituicao" class="form-control"  >
-									<?php instituicaoLocal("ig_instituicao",$recuperaUsuario['idInstituicao'],""); ?>
+									<?php instituicaoLocal("ig_instituicao", $recuperaUsuario['idInstituicao'],""); ?>
 								</select>
 							</div>  <!-- // Perfil de Usuario !-->
 							<div class="col-md-offset-2 col-md-8">
 								<label>Local:</label>
 								<select name="local" class="form-control"  >
-									<?php acessoLocal("ig_local",$recuperaUsuario['local'],""); ?>
+									<?php acessoLocal("ig_local", $recuperaUsuario['local'],""); ?>
 								</select>
 							</div>
 							<div class="col-md-offset-2 col-md-8">
@@ -1584,6 +1584,108 @@
 		</div>
  <!-- // FIM DE INSERIR ESPACOS !-->
 </section>
+
+<?php
+		break; // FIM LISTA USUARIOS / INSERIR / ATUALIZAR
+		case "editarEspaco": // EDITAR ESPACO
+			include "../include/menuAdministradorLocal.php";
+			if(isset($_POST['editar']))
+			{
+				$espaco = $_POST['espaco'];	
+				$instituicao = $_POST['instituicao'];
+				$rua = $_POST['rua'];
+				$cidade = $_POST['cidade'];
+				$estado = $_POST['estado'];
+				$cep = $_POST['cep'];
+				$idEditar = $_POST['editar'];
+
+				if($espaco == '')
+				{  
+					$mensagem = "<p>O campo espaço é obrigatório! Preencha e tente novamente.</a></p>"; 
+				}
+				else 
+				{
+					//editar no banco
+					$sqleditar = "UPDATE `ig_local` SET `sala` = '$espaco' , `idInstituicao` = '$instituicao' ,`rua` = '$rua',`cidade` = '$cidade' ,`estado` = '$estado' ,`cep` = '$cep' WHERE `idLocal` = '$idEditar'";
+					$queryeditar = mysqli_query($con,$sqleditar);
+					if($queryeditar)
+					{
+						$mensagem = "Editado com sucesso!";
+					}
+					else
+					{
+						// erro ao editar
+						 $mensagem= "Erro ao editar!";
+					}	
+				}
+			}				 
+			
+			$recuperaEspaco = recuperaDados("ig_local",$_POST['editarEspaco'],"idLocal"); 
+
+	?>    
+<section id="inserirUser" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="text-hide">
+                    <h3>Administrativo </h3> <h2> Editar Espaço</h3>
+                    <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+                </div>
+            </div>
+    	</div>
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<form method="POST" action="?perfil=admin&p=editarEspaco" class="form-horizontal" role="form">
+					<!-- // Espaço existente !-->
+					<div class="col-md-offset-1 col-md-10">  
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8">
+								<label>Nome do Espaço:</label>
+								<input type="text" name="espaco" class="form-control" id="espaco" value="<?php echo $recuperaEspaco['sala'] ?>" />
+							</div>  
+							<div class="col-md-offset-2 col-md-8">
+								<label>Instituição:</label>
+								<select name="instituicao" class="form-control"  >
+									<?php instituicaoLocal("ig_instituicao", $recuperaEspaco['idInstituicao'],""); ?>
+								</select>
+							</div>
+							<div class="col-md-offset-2 col-md-8">
+								<label>Endereço:</label>
+								<input type="text" name="rua" class="form-control" id="rua" value="<?php echo $recuperaEspaco['rua'] ?>" />
+							</div> 
+							<div class="col-md-offset-2 col-md-8">
+								<label>Cidade:</label>
+								<input type="text" name="cidade" class="form-control" id="cidade" value="<?php echo $recuperaEspaco['cidade'] ?>" />
+							</div> 
+							<div class="col-md-offset-2 col-md-8">
+								<label>Estado:</label>
+								<input type="text" name="estado" class="form-control" id="estado" value="<?php echo $recuperaEspaco['estado'] ?>" />
+							</div>
+							<div class="col-md-offset-2 col-md-8">
+								<label>CEP:</label>
+								<input type="text" name="cep" class="form-control" id="CEP" value="<?php echo $recuperaEspaco['cep'] ?>" />
+							</div>
+							<div class="col-md-offset-2 col-md-8"> 
+								<label></label> <!-- Adicionar novo espaço !-->
+							</div>
+							<!-- Botão de gravar !-->
+							<div class="col-md-offset-2 col-md-8">
+								<input type="hidden" name="editar" value="1"  />
+								<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar"  />
+							</div>
+						</div>
+					</div>
+				</form>
+				<form method="POST" action="?perfil=admin&p=espacos" class="form-horizontal"  role="form">
+					<div class="col-md-offset-2 col-md-8">
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="listar espaços"/>
+					</div>
+				</form>
+			</div>
+		</div>
+ <!-- // FIM DE INSERIR ESPACOS !-->
+</section>
+
 	<?php
 		break; // FIM ADICIONAR NOVO ESPACO
 		case "espacos":
