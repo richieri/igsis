@@ -298,14 +298,14 @@
 			echo "<td class='list_description'>".$campo['cep']."</td>";
 			echo "
 				<td class='list_description'>
-				<form method='POST' action='?perfil=admin&p=espacos'>
-				<input type='hidden' name='apagar' value='".$campo['idLocal']."' />
-				<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
-			echo "
-				<td class='list_description'>
 				<form method='POST' action='?perfil=admin&p=editarEspaco'>
 				<input type='hidden' name='editarEspaco' value='".$campo['idLocal']."' />
 				<input type='submit' class='btn btn-theme btn-block' value='editar'></td></form>";
+			echo "
+				<td class='list_description'>
+				<form method='POST' action='?perfil=admin&p=espacos'>
+				<input type='hidden' name='apagar' value='".$campo['idLocal']."' />
+				<input type ='submit' class='btn btn-theme  btn-block' value='apagar'></td></form>"	;
 			echo "</tr>";		
 			}
 			echo "</tbody>
