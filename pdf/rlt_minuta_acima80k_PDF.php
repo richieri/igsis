@@ -173,7 +173,7 @@ $l=6; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("                       A PREFEITURA DO MUNICÍPIO DE SÃO PAULO doravante denominada simplesmente PREFEITURA, através da SECRETARIA MUNICIPAL DE CULTURA, neste ato representada pela Chefe de Gabinete, Giovanna de Moura Rocha Lima, e ".$pjRazaoSocial.", CNPJ  ".$pjCNPJ.", com endereço ".$pjEndereco.", neste ato representada por ".$rep01Nome.", RG n° ".$rep01RG.", CPF Nº ".$rep01CPF.", doravante denominada CONTRATADA, com fundamento no artigo 25, inciso III da Lei Federal nº 8.666/93 e conforme consta do processo administrativo em referência, tem justo e acordado o que segue:"));
+   $pdf->MultiCell(180,$l,utf8_decode("                       A PREFEITURA DO MUNICÍPIO DE SÃO PAULO doravante denominada simplesmente PREFEITURA, através da SECRETARIA MUNICIPAL DE CULTURA, neste ato representada pela Chefe de Gabinete, Juliana Velho, e ".$pjRazaoSocial.", CNPJ  ".$pjCNPJ.", com endereço ".$pjEndereco.", neste ato representada por ".$rep01Nome.", RG n° ".$rep01RG.", CPF Nº ".$rep01CPF.", doravante denominada CONTRATADA, com fundamento no artigo 25, inciso III da Lei Federal nº 8.666/93 e conforme consta do processo administrativo em referência, tem justo e acordado o que segue:"));
    
    $pdf->Ln();
    $pdf->Ln();
@@ -329,7 +329,7 @@ E, para constar, o presente Termo foi digitado em três vias, de igual teor, o q
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(40,$l,'',0,0,'C');
-   $pdf->Cell(100,$l,utf8_decode('GIOVANNA DE MOURA ROCHA LIMA'),'T',0,'C');
+   $pdf->Cell(100,$l,utf8_decode('JULIANA VELHO'),'T',0,'C');
    $pdf->Cell(40,$l,'',0,1,'C');
    
    $pdf->SetX($x);
@@ -338,7 +338,7 @@ E, para constar, o presente Termo foi digitado em três vias, de igual teor, o q
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(180,$l,utf8_decode('Secretria Municipal de Cultura'),0,0,'C');
+   $pdf->Cell(180,$l,utf8_decode('Secretaria Municipal de Cultura'),0,0,'C');
 
    $pdf->Ln();
    $pdf->Ln();
