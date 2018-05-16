@@ -175,11 +175,14 @@ case 1:
 <?php 
 break;
 case 3:
+$server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; //mudar para pasta do igsis
+$http = $server."/pdf/";
+$link01 = $http."relatorio_virada.php";
 ?>
 <br /><br /><br />
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6>
+		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6> <a href="<?php echo $link01 ?>"><strong>Gerar Excel</strong></a>
 		</div>
 		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>	
 		<div class="table-responsive list_info">
