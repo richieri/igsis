@@ -117,6 +117,7 @@ switch($verba)
 <p>Segue abaixo os dados para emissão da Nota Fiscal:  </p>
 <p>&nbsp;</p>
 <p><strong>Sacado:</strong> Secretaria Municipal de Cultura </p>
+<p><strong>Unidade:</strong></p>
 <p><strong>CNPJ:</strong> <?php echo $cnpj?></p>
 <p><strong>Endereço:</strong> <?php echo $endereco?></p>
 <p><strong>Município:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Estado:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>I. Est. Nº</strong>: Isento </p>
