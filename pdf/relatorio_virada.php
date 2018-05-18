@@ -20,6 +20,7 @@ $con = bancoMysqli();
 			<tr class="list_menu">
 				<td>Codigo do Pedido</td>
 				<td>Número do Processo</td>
+				<td>Tipo Pessoa</td>
 				<td>Documento</td>
 				<td>Proponente</td>
 				<td>Objeto</td>
@@ -33,7 +34,7 @@ $con = bancoMysqli();
 		</thead>
 		<tbody>
 	<?php
-		$sql_enviados = "SELECT eve.idEvento, ped.idPedidoContratacao, ped.idPessoa, eve.nomeEvento, ped.valor, proj.projetoEspecial, ped.idContratos
+		$sql_enviados = "SELECT eve.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, eve.nomeEvento, ped.valor, proj.projetoEspecial, ped.idContratos
 			FROM ig_evento AS eve
 			INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 			INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
@@ -58,26 +59,28 @@ $con = bancoMysqli();
 			if($ped['tipoPessoa'] == 1)
 			{
 				$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+				echo '<td class="list_description">Física</td>';
 				echo '<td class="list_description">'.$pessoa['CPF'].'</td>';
 				echo '<td class="list_description">'.$pessoa['Nome'].'</td>';
 			}
 			else
 			{
 				$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+				echo '<td class="list_description">Jurídica</td>';
 				echo '<td class="list_description">'.$pessoa['CNPJ'].'</td>';
 				echo '<td class="list_description">'.$pessoa['RazaoSocial'].'</td>';
 			}
 			echo '
 			<td class="list_description">'.$ped['Objeto'].'</td>
-			<td class="list_description">'.$ped['Local'].'</td> 
-			<td class="list_description">'.$ped['Periodo'].'</td> 
-			<td class="list_description">'.$ped['pendenciaDocumento'].'</td> 
-			<td class="list_description">'.dinheiroParaBr($ped['ValorGlobal']).'</td> 
-			<td class="list_description">'.$operador['nomeCompleto'].'</td> 
+			<td class="list_description">'.$ped['Local'].'</td>
+			<td class="list_description">'.$ped['Periodo'].'</td>
+			<td class="list_description">'.$ped['pendenciaDocumento'].'</td>
+			<td class="list_description">'.dinheiroParaBr($ped['ValorGlobal']).'</td>
+			<td class="list_description">'.$operador['nomeCompleto'].'</td>
 			<td class="list_description">'.retornaEstado($ped['Status']).'</td>';
 			echo "</tr>";
 		}
-	?>	
+	?>
 		</tbody>
 	</table>
 </body>
