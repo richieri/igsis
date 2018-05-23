@@ -144,10 +144,6 @@ $f=9; //tamanho da fonte
   $pdf->SetFont('Arial','', $f);
   $pdf->MultiCell(180,$l,utf8_decode("Eu, "."$exNome".", RG "."$exRG".", CPF "."$exCPF".", sob penas da lei, declaro que sou líder do grupo "."$grupo"." e que o mesmo é representado exclusivamente pela empresa "."$pjRazaoSocial".", CNPJ "."$pjCNPJ".". Estou ciente de que o pagamento dos valores decorrentes dos serviços do grupo é de responsabilidade da nossa representante, não nos cabendo pleitear à Prefeitura quaisquer valores eventualmente não repassados."));
 
-  $pdf->SetX($x);
-  $pdf->SetFont('Arial','', $f);
-  $pdf->MultiCell(180,$l,utf8_decode("Estou ciente de que o pagamento dos valores decorrentes dos serviços do grupo é de responsabilidade da nossa representante, não nos cabendo pleitear à Prefeitura quaisquer valores eventualmente não repassados."));
-
   if ($rep02Nome != '')
   {
     $pdf->SetX($x);
