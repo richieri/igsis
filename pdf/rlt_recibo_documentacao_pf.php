@@ -80,9 +80,8 @@ $sei =
   "<p><strong>Recibo de pagamento:</strong> </p>".
   "<p><strong>NIT/PIS/PASEP:</strong> ".$INSS."</p>".
   "<p><strong>CND:</strong> </p>".
-  "<p><strong>CNDT:</strong> </p>".
   "<p><strong>FDC-CCM:</strong> </p>".
-  "<p><strong>CTMU:</strong> </p>".
+  "<p><strong>CTM:</strong> </p>".
   "<p><strong>Declaração ISS:</strong> </p>". 
   "<p><strong>CADIN:</strong> </p>".
   "<p><strong>FACC:</strong> </p>". 

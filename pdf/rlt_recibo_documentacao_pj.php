@@ -80,10 +80,9 @@ $sei =
   "<p><strong>Guia DAS/DAMSP:</strong> </p>".
   "<p><strong>DAS/DAMSP Comprovante:</strong> </p>".
   "<p><strong>CND:</strong> </p>".
-  "<p><strong>CNDT:</strong> </p>".
   "<p><strong>CRF-FGTS:</strong> </p>".
   "<p><strong>FDC-CCM:</strong> </p>".
-  "<p><strong>CTMU:</strong> </p>".
+  "<p><strong>CTM:</strong> </p>".
   "<p><strong>CADIN:</strong> </p>".
   "<p><strong>FACC:</strong> </p>". 
   "<p>&nbsp;</p>"
