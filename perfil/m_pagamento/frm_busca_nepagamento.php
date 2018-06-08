@@ -243,7 +243,7 @@ if(isset($_POST['pesquisar']))
 			{
 				$filtro_juridico = " AND ig_evento.ig_modalidade_IdModalidade = '$juridico'  ";	
 			}			
-			$sql_evento = "SELECT * FROM ig_evento,igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND ig_evento.idEvento = igsis_pedido_contratacao.idEvento $filtro_evento $filtro_fiscal $filtro_tipo $filtro_instituicao $filtro_processo $filtro_operador $filtro_juridico  AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
+			$sql_evento = "SELECT * FROM ig_evento,igsis_pedido_contratacao WHERE ig_evento.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND ig_evento.dataEnvio IS NOT NULL AND  ig_evento.idEvento = igsis_pedido_contratacao.idEvento $filtro_evento $filtro_fiscal $filtro_tipo $filtro_instituicao $filtro_processo $filtro_operador $filtro_juridico  AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
 			$i = 0;
 			while($evento = mysqli_fetch_array($query_evento))
