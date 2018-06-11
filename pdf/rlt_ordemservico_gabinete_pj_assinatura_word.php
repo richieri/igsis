@@ -203,9 +203,9 @@ echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-125
 echo "<body>";
 echo 
 	"<p align='center'><strong>PROCESSO SEI Nº ".$NumeroProcesso."</strong></p>".
-	"<p align='center'><strong>ORDEM DE EXECUÇÃO DE SERVIÇO Nº ______/2017</strong></p>".
+	"<p align='center'><strong>ORDEM DE EXECUÇÃO DE SERVIÇO</strong></p>".
 	"<p>&nbsp;</p>".
-	"<p><strong>Emanada de:</strong> Divisão Administrativa</p>".
+	"<p><strong>Emanada de:</strong> Secretaria Municipal de Cultura</p>".
 	"<p><strong>Suporte Legal:</strong> Artigo 25, inciso III, da Lei Federal nº 8.666/93 e alterações posteriores e artigo 1º da Lei Municipal nº 13.278/02, nos termos dos artigos 16 e 17 do Decreto nº 44.279/03.</p>".
 	"<p>&nbsp;</p>".
 	"<p><strong>Prestador e/ou executor do serviço</strong></p>".
@@ -215,8 +215,6 @@ echo
 	"<p><strong>Representante Legal:</strong> ".$rep01Nome."</p>".
 	"<p><strong>RG:</strong> ".$rep01RG."</p>".
 	"<p><strong>CPF:</strong> ".$rep01CPF."</p>".
-	"<p><strong>Estado Civil:</strong> ".$rep01EstadoCivil."</p>".
-	"<p><strong>Nacionalidade:</strong> ".$rep01Nacionalidade."</p>".
 	"<p>&nbsp;</p>".
 	"<p><strong>Serviço</strong></p>".
 	"<p>Especificações: Contratação dos serviços profissionais de natureza artística de ".$Objeto." através de ".$exNome." e demais integrantes mencionados na Declaração de Exclusividade, por intermédio da empresa ".$pjRazaoSocial. ", CNPJ: ".$pjCNPJ. ", representada legalmente por ".$rep01Nome. ", CPF: ".$rep01CPF.", para realização de evento no(s) local(is) ".$Local." no período ".$Periodo." conforme proposta e cronograma.</p>".
@@ -226,6 +224,7 @@ echo
 	"<p>&nbsp;</p>".
 	"<p><strong>Pagamento</strong></p>".
 	"<p>O pagamento do cachê corresponderá à reversão integral da renda obtida na bilheteria a/o contratada/o, deduzidos os impostos e taxas pertinentes.</p>".
+	"<p>".$FormaPagamento."</p>".
 	"<p><strong>Penalidades</strong></p>".
 	"<p>- Multa de 10% (dez por cento) sobre o valor do contrato ou sobre o valor integral da venda de todos os ingressos disponíveis por atraso de até 30 (trinta) minutos no evento. Ultrapassado esse tempo, e independentemente da aplicação de penalidade, fica a critério do equipamento da Secretaria Municipal de Cultura autorizar a realização do evento, visando evitar prejuízos à grade de programação. Não sendo autorizada a realização do evento, será considerada inexecução total do contrato, com aplicação de multa prevista por inexecução total.</p>".
 	"<p>- Multa de 10% (dez por cento) para casos de infração de cláusula contratual e/ou inexecução parcial do ajuste e de 30% (trinta por cento) para casos de inexecução total do ajuste. O valor da multa será calculado sobre o valor do contrato ou sobre o valor integral da venda de todos os ingressos disponíveis.</p>".
@@ -245,7 +244,6 @@ echo
 	"<p>- Quaisquer outras despesas não ressalvadas aqui serão de responsabilidade da contratada, que se compromete a adotar as providências necessárias junto à OMB.</p>".
 	"<p>- As providências administrativas para liberação da autorização do ECAD serão de responsabilidade da contratada, assim como eventuais pagamentos.</p>".
 	"<p>- A Municipalidade não é responsável por qualquer material ou equipamento que não lhe pertence utilizado no espetáculo, devendo esse material ser retirado no seu término.</p>".
-	"<p>- A renda integral apurada na bilheteria, com ingressos vendidos ao preço único de ".$ingresso." ( ".$ingressoExtenso." ), será revertida a/o contratada/o, já deduzidos os impostos pertinentes, podendo ter preços reduzidos em face de promoções realizadas pela produção do evento.</p>".
 	"<p>- Compete, ainda, à Municipalidade, o fornecimento da sonorização necessária à realização de espetáculos e dos equipamentos de iluminação disponíveis no local do evento, assim como providências quanto à divulgação de praxe (confecção de cartaz a ser afixado no equipamento cultural e encaminhamento de release à mídia impressa e televisiva).</p>".
 	"<p>- Serão reservados ingressos aos funcionários da PMSP, até 10% (dez por cento) da lotação da sala.</p>".
 	"<p>- A/o contratada/o se compromete a realizar o espetáculo para um número mínimo de 10 (dez) pagantes.</p>".
