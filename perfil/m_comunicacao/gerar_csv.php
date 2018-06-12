@@ -46,8 +46,8 @@ if(isset($_POST['filtrar']))
     $sql = "SELECT
                 E.nomeEvento AS 'nome',
                 TE.tipoEvento AS 'categoria',
-                O.dataInicio AS 'data',
-                O.horaInicio AS 'horario_inicial',
+                DATE_FORMAT(O.dataInicio, '%d/%m/%Y') AS 'data',
+                DATE_FORMAT(O.horaInicio, '%H:%i') AS 'horario_inicial',
                 O.valorIngresso AS 'valor',
                 E.sinopse AS 'descricao',
                 L.sala AS 'nome_local'
@@ -153,7 +153,7 @@ if(isset($_POST['filtrar']))
                                 <td class="list_description"><?=$linha['categoria']?></td>
                                 <td class="list_description">
                                     <?php
-                                        echo exibirDataBr($linha['data']) . " " . exibirHora($linha['horario_inicial']);
+                                        echo $linha['data'] . " " . $linha['horario_inicial'];
                                     ?>
                                 </td>
                                 <td class="list_description"><?=($linha['valor'] == 0 ? "Gratuito" : $linha['valor'])?></td>

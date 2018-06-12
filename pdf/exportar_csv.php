@@ -6,14 +6,14 @@ require_once("../funcoes/funcoesGerais.php");
 $con = bancoMysqli();
 
 if(isset($_POST['exportar'])) {
-    $datainicio = exibirDataMysql($_POST['dataInicio']);
+    $datainicio = $_POST['dataInicio'];
     $datafim = $_POST['dataFim'];
     $local = $_POST['local'];
 
     if ($datainicio != '') {
         if ($datafim != '') {
 
-            $datafim = exibirDataMysql($_POST['datafim']);
+            $datafim = $_POST['datafim'];
             $filtro_data = " AND O.dataInicio BETWEEN '$datainicio' AND '$datafim'";
         } else {
             $filtro_data = " AND O.dataInicio > '$datainicio'";
@@ -30,7 +30,7 @@ if(isset($_POST['exportar'])) {
                 E.nomeEvento AS 'nome',
                 TE.tipoEvento AS 'categoria',
                 O.dataInicio AS 'data',
-                O.horaInicio AS 'horario_inicial',
+                DATE_FORMAT(O.horaInicio, '%H:%i') AS 'horario_inicial',
                 O.valorIngresso AS 'valor',
                 E.sinopse AS 'descricao',
                 L.sala AS 'nome_local'
