@@ -70,97 +70,104 @@
 					$Pis = 0;
 					$data = date('Y-m-d');
 					$idUsuario = $_SESSION['idUsuario'];
-					$sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` 
-						(`Id_PessoaFisica`, 
-						`Foto`, 
-						`Nome`, 
-						`NomeArtistico`, 
-						`RG`, 
-						`CPF`, 
-						`CCM`, 
-						`DataNascimento`, 
-						`LocalNascimento`, 
-						`Nacionalidade`, 
-						`CEP`, 
-						`Numero`, 
-						`Complemento`, 
-						`Telefone1`, 
-						`Telefone2`, 
-						`Telefone3`, 
-						`Email`, 
-						`DRT`, 
-						`Funcao`, 
-						`InscricaoINSS`, 
-						`Pis`, 
-						`OMB`, 
-						`DataAtualizacao`, 
-						`Observacao`, 
-						`IdUsuario`) 
-						VALUES (NULL, 
-						NULL, 
-						'$Nome', 
-						'$NomeArtistico', 
-						'$RG', 
-						'$CPF', 
-						'$CCM', 
-						'$DataNascimento', 
-						NULL, 
-						'$Nacionalidade', 
-						'$CEP', 
-						'$Numero', 
-						'$Complemento', 
-						'$Telefone1', 
-						'$Telefone2', 
-						'$Telefone3', 
-						'$Email', 
-						'$DRT', 
-						'$Funcao', 
-						'$InscricaoINSS', 
-						'$Pis', 
-						'$OMB', 
-						'$data', 
-						'$Observacao', 
-						'$idUsuario');";
-					$query_insert_pf = mysqli_query($con,$sql_insert_pf);
-					if($query_insert_pf)
+					if($DataNascimento == '31/12/1969')
 					{
-						gravarLog($sql_insert_pf);
-						$sql_ultimo = "SELECT * FROM sis_pessoa_fisica ORDER BY Id_PessoaFisica DESC LIMIT 0,1"; //recupera ultimo id
-						$id_evento = mysqli_query($con,$sql_ultimo);
-						$id = mysqli_fetch_array($id_evento);
-						$idFisica = $id['Id_PessoaFisica'];
-						$idEvento = $_SESSION['idEvento'];
-						$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1"; //a data final 
-						$query_anterior = mysqli_query($con,$sql_anterior);
-						$data = mysqli_fetch_array($query_anterior);
-						$data_final = $data['dataFinal'];
-						if ($data_final != '0000-00-00')
-						{
-						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
-						}else{
-						$sql_unica = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicio 
-						$query_unica = mysqli_query($con,$sql_unica);
-						$data = mysqli_fetch_array($query_unica);
-						$data_inicio = $data['dataInicio'];	
-						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_inicio)));
-						}
-						$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
-							(`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`, `dataKitPagamento`) VALUES 
-							('$idEvento', '1', '$idFisica', '1', '$dataKitPagamento')";
-						$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
-						if($query_insert_pedido)
-						{
-							gravarLog($sql_insert_pedido);
-							echo "<h2>Inserido com sucesso!</h2>"; 
-						}
-						else
-						{
-							echo "<h2>Erro ao inserir![1]</h2>";
-						}
+						$mensagem = "Por favor, preencha o campo DATA DE NASCIMENTO!";
 					}
 					else
 					{
-						echo "<h5>Erro ao inserir![2]</h2>";
+						$sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` 
+							(`Id_PessoaFisica`, 
+							`Foto`, 
+							`Nome`, 
+							`NomeArtistico`, 
+							`RG`, 
+							`CPF`, 
+							`CCM`, 
+							`DataNascimento`, 
+							`LocalNascimento`, 
+							`Nacionalidade`, 
+							`CEP`, 
+							`Numero`, 
+							`Complemento`, 
+							`Telefone1`, 
+							`Telefone2`, 
+							`Telefone3`, 
+							`Email`, 
+							`DRT`, 
+							`Funcao`, 
+							`InscricaoINSS`, 
+							`Pis`, 
+							`OMB`, 
+							`DataAtualizacao`, 
+							`Observacao`, 
+							`IdUsuario`) 
+							VALUES (NULL, 
+							NULL, 
+							'$Nome', 
+							'$NomeArtistico', 
+							'$RG', 
+							'$CPF', 
+							'$CCM', 
+							'$DataNascimento', 
+							NULL, 
+							'$Nacionalidade', 
+							'$CEP', 
+							'$Numero', 
+							'$Complemento', 
+							'$Telefone1', 
+							'$Telefone2', 
+							'$Telefone3', 
+							'$Email', 
+							'$DRT', 
+							'$Funcao', 
+							'$InscricaoINSS', 
+							'$Pis', 
+							'$OMB', 
+							'$data', 
+							'$Observacao', 
+							'$idUsuario');";
+						$query_insert_pf = mysqli_query($con,$sql_insert_pf);
+						if($query_insert_pf)
+						{
+							gravarLog($sql_insert_pf);
+							$sql_ultimo = "SELECT * FROM sis_pessoa_fisica ORDER BY Id_PessoaFisica DESC LIMIT 0,1"; //recupera ultimo id
+							$id_evento = mysqli_query($con,$sql_ultimo);
+							$id = mysqli_fetch_array($id_evento);
+							$idFisica = $id['Id_PessoaFisica'];
+							$idEvento = $_SESSION['idEvento'];
+							$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1"; //a data final 
+							$query_anterior = mysqli_query($con,$sql_anterior);
+							$data = mysqli_fetch_array($query_anterior);
+							$data_final = $data['dataFinal'];
+							if ($data_final != '0000-00-00')
+							{
+							$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
+							}else{
+							$sql_unica = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicio 
+							$query_unica = mysqli_query($con,$sql_unica);
+							$data = mysqli_fetch_array($query_unica);
+							$data_inicio = $data['dataInicio'];	
+							$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_inicio)));
+							}
+							$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` 
+								(`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`, `dataKitPagamento`) VALUES 
+								('$idEvento', '1', '$idFisica', '1', '$dataKitPagamento')";
+							$query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
+							if($query_insert_pedido)
+							{
+								gravarLog($sql_insert_pedido);
+								echo "<h2>Inserido com sucesso!</h2>"; 
+							}
+							else
+							{
+								echo "<h2>Erro ao inserir![1]</h2>";
+							}
+						}
+						else
+						{
+							echo "<h5>Erro ao inserir![2]</h2>";
+						}
 					}
 				}
 			}
@@ -2769,43 +2776,50 @@
 				$codBanco = $_POST['codBanco'];
 				$agencia = $_POST['agencia'];
 				$conta = $_POST['conta'];
-				$sql_atualizar_pessoa = "UPDATE sis_pessoa_fisica 
-					SET `Nome` = '$Nome',
-					`NomeArtistico` = '$NomeArtistico',
-					`RG` = '$RG', 
-					`CPF` = '$CPF', 
-					`CCM` = '$CCM', 
-					`DataNascimento` = '$DataNascimento', 
-					`Nacionalidade` = '$Nacionalidade', 
-					`CEP` = '$CEP', 
-					`codBanco` = '$codBanco', 
-					`agencia` = '$agencia', 
-					`conta` = '$conta', 
-					`Numero` = '$Numero', 
-					`Complemento` = '$Complemento', 
-					`Telefone1` = '$Telefone1', 
-					`Telefone2` = '$Telefone2',  
-					`Telefone3` = '$Telefone3', 
-					`Email` = '$Email', 
-					`DRT` = '$DRT', 
-					`Funcao` = '$Funcao', 
-					`InscricaoINSS` = '$InscricaoINSS', 
-					`Pis` = '$Pis', 
-					`OMB` = '$OMB', 
-					`DataAtualizacao` = '$data', 
-					`Observacao` = '$Observacao', 
-					`IdUsuario` = '$idUsuario', 
-					`tipoDocumento` = '$tipoDocumento' 
-					WHERE `Id_PessoaFisica` = '$idPessoaFisica'";	
-				if(mysqli_query($con,$sql_atualizar_pessoa))
+				if($DataNascimento == '31/12/1969')
 				{
-					gravarLog($sql_atualizar_pessoa);
-					$mensagem = "Atualizado com sucesso!";	
+					$mensagem = "Por favor, preencha o campo DATA DE NASCIMENTO!";
 				}
 				else
 				{
-					$mensagem = "Erro ao atualizar! Tente novamente.";
-				}
+					$sql_atualizar_pessoa = "UPDATE sis_pessoa_fisica 
+						SET `Nome` = '$Nome',
+						`NomeArtistico` = '$NomeArtistico',
+						`RG` = '$RG', 
+						`CPF` = '$CPF', 
+						`CCM` = '$CCM', 
+						`DataNascimento` = '$DataNascimento', 
+						`Nacionalidade` = '$Nacionalidade', 
+						`CEP` = '$CEP', 
+						`codBanco` = '$codBanco', 
+						`agencia` = '$agencia', 
+						`conta` = '$conta', 
+						`Numero` = '$Numero', 
+						`Complemento` = '$Complemento', 
+						`Telefone1` = '$Telefone1', 
+						`Telefone2` = '$Telefone2',  
+						`Telefone3` = '$Telefone3', 
+						`Email` = '$Email', 
+						`DRT` = '$DRT', 
+						`Funcao` = '$Funcao', 
+						`InscricaoINSS` = '$InscricaoINSS', 
+						`Pis` = '$Pis', 
+						`OMB` = '$OMB', 
+						`DataAtualizacao` = '$data', 
+						`Observacao` = '$Observacao', 
+						`IdUsuario` = '$idUsuario', 
+						`tipoDocumento` = '$tipoDocumento' 
+						WHERE `Id_PessoaFisica` = '$idPessoaFisica'";	
+					if(mysqli_query($con,$sql_atualizar_pessoa))
+					{
+						gravarLog($sql_atualizar_pessoa);
+						$mensagem = "Atualizado com sucesso!";	
+					}
+					else
+					{
+						$mensagem = "Erro ao atualizar! Tente novamente.";
+					}
+				}	
 			}
 			if(isset($_POST['editaJuridica']))
 			{

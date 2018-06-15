@@ -289,16 +289,23 @@
 			$Pis = 0;
 			$data = date('Y-m-d');
 			$idUsuario = $_SESSION['idUsuario'];
-			$sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` (`Id_PessoaFisica`, `Foto`, `Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `DataNascimento`, `LocalNascimento`, `Nacionalidade`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`, `Funcao`, `InscricaoINSS`, `Pis`, `OMB`, `DataAtualizacao`, `Observacao`, `IdUsuario`) VALUES (NULL, NULL, '$Nome', '$nomeArtistico', '$RG', '$CPF', '$CCM', '$DataNascimento', NULL, '$Nacionalidade', '$CEP', '$Numero', '$Complemento', '$Telefone1', '$Telefone2', '$Telefone3', '$Email', '$DRT', '$Funcao', '$InscricaoINSS', '$Pis', '$OMB', '$data', '$Observacao', '$idUsuario');";
-			$query_insert_pf = mysqli_query($con,$sql_insert_pf);
-			if($query_insert_pf)
+			if($DataNascimento == 'NULL')
 			{
-				gravarLog($sql_insert_pf);
-				echo "<h1>Inserido com sucesso!</h1>";
+				$mensagem = "Por favor, preencha o campo DATA DE NASCIMENTO!";
 			}
 			else
 			{
-				echo "<h1>Erro ao inserir!</h1>";
+				$sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` (`Id_PessoaFisica`, `Foto`, `Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `DataNascimento`, `LocalNascimento`, `Nacionalidade`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`, `Funcao`, `InscricaoINSS`, `Pis`, `OMB`, `DataAtualizacao`, `Observacao`, `IdUsuario`) VALUES (NULL, NULL, '$Nome', '$nomeArtistico', '$RG', '$CPF', '$CCM', '$DataNascimento', NULL, '$Nacionalidade', '$CEP', '$Numero', '$Complemento', '$Telefone1', '$Telefone2', '$Telefone3', '$Email', '$DRT', '$Funcao', '$InscricaoINSS', '$Pis', '$OMB', '$data', '$Observacao', '$idUsuario');";
+				$query_insert_pf = mysqli_query($con,$sql_insert_pf);
+				if($query_insert_pf)
+				{
+					gravarLog($sql_insert_pf);
+					echo "<h1>Inserido com sucesso!</h1>";
+				}
+				else
+				{
+					echo "<h1>Erro ao inserir!</h1>";
+				}
 			}
 		}
 	}
