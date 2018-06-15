@@ -50,7 +50,6 @@
 					$RG = $_POST['RG'];
 					$CPF = $_POST['CPF'];
 					$CCM = $_POST['CCM'];
-					$IdEstadoCivil = $_POST['IdEstadoCivil'];
 					$DataNascimento = exibirDataMysql($_POST['DataNascimento']);
 					$Nacionalidade = $_POST['Nacionalidade'];
 					$CEP = $_POST['CEP'];
@@ -79,7 +78,6 @@
 						`RG`, 
 						`CPF`, 
 						`CCM`, 
-						`IdEstadoCivil`, 
 						`DataNascimento`, 
 						`LocalNascimento`, 
 						`Nacionalidade`, 
@@ -105,7 +103,6 @@
 						'$RG', 
 						'$CPF', 
 						'$CCM', 
-						'$IdEstadoCivil', 
 						'$DataNascimento', 
 						NULL, 
 						'$Nacionalidade', 
@@ -692,13 +689,11 @@
 							$representante = addslashes($_POST['RepresentanteLegal']);
 							$rg = $_POST['RG'];
 							$nacionalidade = $_POST['Nacionalidade'];
-							$civil = $_POST['IdEstadoCivil'];
 							$sql_atualiza_dados = "UPDATE `igsis`.
 								`sis_representante_legal` 
 								SET `RepresentanteLegal` = '$representante',
 								`RG` = '$rg', 
-								`Nacionalidade` = '$nacionalidade', 
-								`IdEstadoCivil` = '$civil' 
+								`Nacionalidade` = '$nacionalidade' 
 								WHERE `sis_representante_legal`.
 								`Id_RepresentanteLegal` = '$idRepresentante'";
 							$query_atualiza_dados = mysqli_query($con,$sql_atualiza_dados);
@@ -739,13 +734,8 @@
 						</div>
 					</div>  
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6">
+						<div class="col-md-offset-2 col-md-8">
 							<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade" value="<?php echo $pessoa['Nacionalidade'] ?>">
-						</div>
-						<div class="col-md-6">
-							<select class="form-control" name="IdEstadoCivil" id="IdEstadoCivil"><option>Estado Civil</option>
-								<?php geraOpcao("sis_estado_civil",$pessoa['IdEstadoCivil'],""); ?> 
-							</select>
 						</div>
 					</div>
 					<!-- Botão Gravar -->	
@@ -876,13 +866,8 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6">
+						<div class="col-md-offset-2 col-md-8">
 							<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade">
-						</div>
-						<div class="col-md-6">
-							<select class="form-control" name="IdEstadoCivil" id="IdEstadoCivil"><option>Estado Civil</option>
-								<?php geraOpcao("sis_estado_civil","",""); ?>  
-							</select>
 						</div>
 					</div>
 					<!-- Botão Gravar -->	
@@ -1786,21 +1771,16 @@
 							<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" >
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Estado civil:</strong><br/>
-							<select class="form-control" id="IdEstadoCivil" name="IdEstadoCivil" >
-								<?php geraOpcao("sis_estado_civil","",""); ?>  
-							</select>
-						</div>				  
-						<div class=" col-md-6"><strong>Data de nascimento:</strong><br/>
+					<div class="form-group">			  
+						<div class="col-md-offset-2 col-md-6"><strong>Data de nascimento:</strong><br/>
 							<input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento" >
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Nacionalidade:</strong><br/>
+						<div class="col-md-6"><strong>Nacionalidade:</strong><br/>
 							<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade">
-						</div>				  
-						<div class=" col-md-6"><strong>CEP:</strong><br/>
+						</div>
+					</div>
+					<div class="form-group">				  
+						<div class="col-md-offset-2 col-md-8"><strong>CEP:</strong><br/>
 							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP">
 						</div>
 					</div>
@@ -2696,7 +2676,6 @@
 				$rg = $_POST['RG'];
 				$cpf = $_POST['CPF'];
 				$nacionalidade = $_POST['Nacionalidade'];
-				$estado_civil = $_POST['IdEstadoCivil'];
 				$idPessoaJuridica = $_SESSION['idPessoaJuridica'];
 				$sql_insere_representante =  "INSERT INTO `sis_representante_legal` 
 					(`Id_RepresentanteLegal`, 
@@ -2704,14 +2683,12 @@
 					`RG`, 
 					`CPF`, 
 					`Nacionalidade`, 
-					`IdEstadoCivil`, 
 					`idEvento`) 
 					VALUES (NULL, 
 					'$representante', 
 					'$rg', 
 					'$cpf', 
 					'$nacionalidade', 
-					'$estado_civil', 
 					NULL)";
 				$con = bancoMysqli();
 				$query_insere_representante = mysqli_query($con,$sql_insere_representante);
@@ -2768,7 +2745,6 @@
 				$RG = $_POST['RG'];
 				$CPF = $_POST['CPF'];
 				$CCM = $_POST['CCM'];
-				$IdEstadoCivil = $_POST['IdEstadoCivil'];
 				$DataNascimento = exibirDataMysql($_POST['DataNascimento']);
 				$Nacionalidade = $_POST['Nacionalidade'];
 				$CEP = $_POST['CEP'];
@@ -2799,7 +2775,6 @@
 					`RG` = '$RG', 
 					`CPF` = '$CPF', 
 					`CCM` = '$CCM', 
-					`IdEstadoCivil` = '$IdEstadoCivil' , 
 					`DataNascimento` = '$DataNascimento', 
 					`Nacionalidade` = '$Nacionalidade', 
 					`CEP` = '$CEP', 
@@ -2954,21 +2929,16 @@
 							<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" value="<?php echo $fisica['CCM']; ?>" >
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Estado civil:</strong><br/>
-							<select class="form-control" id="IdEstadoCivil" name="IdEstadoCivil" >
-								<?php geraOpcao("sis_estado_civil",$fisica['IdEstadoCivil'],""); ?>  
-							</select>
-						</div>				  
-						<div class=" col-md-6"><strong>Data de nascimento:</strong><br/>
+					<div class="form-group">				  
+						<div class="col-md-offset-2  col-md-6"><strong>Data de nascimento:</strong><br/>
 							<input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento" value="<?php echo exibirDataBr($fisica['DataNascimento']); ?>">
 						</div>
-					</div>  
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6"><strong>Nacionalidade:</strong><br/>
+						<div class="col-md-6"><strong>Nacionalidade:</strong><br/>
 							<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade" value="<?php echo $fisica['Nacionalidade']; ?>">
-						</div>				  
-						<div class=" col-md-6"><strong>CEP:</strong><br/>
+						</div>	
+					</div>  
+					<div class="form-group">			  
+						<div class="col-md-offset-2  col-md-8"><strong>CEP:</strong><br/>
 							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $fisica['CEP']; ?>">
 						</div>
 					</div>
@@ -3100,7 +3070,7 @@
 						<div class="col-md-offset-2 col-md-8">
 							<form method='POST' action='?perfil=compara_pj&busca=<?php echo $juridica['CNPJ']; ?>'>
 								<input type='hidden' name='edicaoPessoa' value='1'>
-								<input type='submit' class='btn btn-theme btn-md btn-block' value='Verifique aqui se há atualização no Cadastro de Proponente'>
+								<input type='submit' class='btn btn-theme btn-md btn-block' value='Verifique aqui se há atualização no CAPAC'>
 							</form><br/>				
 						</div>
 					</div>
@@ -3294,13 +3264,8 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-offset-2 col-md-6">
+						<div class="col-md-offset-2 col-md-8">
 							<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade">
-						</div>
-						<div class="col-md-6">
-							<select class="form-control" name="IdEstadoCivil" id="IdEstadoCivil"><option>Estado Civil</option>
-								<?php geraOpcao("sis_estado_civil","",""); ?>  
-							</select>
 						</div>
 					</div>
 					<!-- Botão Gravar -->	

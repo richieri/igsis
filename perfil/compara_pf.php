@@ -39,7 +39,6 @@ $NomeArtistico = $query1["NomeArtistico"];
 $RG = $query1["RG"];
 $CPF = $query1["CPF"];
 $CCM = $query1["CCM"];
-$IdEstadoCivil = $query1["IdEstadoCivil"];
 $DataNascimento = $query1["DataNascimento"];
 $LocalNascimento = $query1["LocalNascimento"];
 $Nacionalidade = $query1["Nacionalidade"];
@@ -72,7 +71,6 @@ $nomeArtistico = $query2["nomeArtistico"];
 $rg = $query2["rg"];
 $cpf = $query2["cpf"];
 $ccm = $query2["ccm"];
-$idEstadoCivil = $query2["idEstadoCivil"];
 $dataNascimento = $query2["dataNascimento"];
 $localNascimento = $query2["localNascimento"];
 $nacionalidade = $query2["nacionalidade"];
@@ -146,7 +144,7 @@ if(isset($_POST['atualizaIgsis']))
 
 if(isset($_POST['importarCapacIgsis']))
 {
-	$sql_insere_pf = "INSERT INTO sis_pessoa_fisica (`Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `IdEstadoCivil`, `DataNascimento`, `LocalNascimento`,	`Nacionalidade`, `CEP`,	`Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`,	`Funcao`, `Pis`, `OMB`, `DataAtualizacao`,`tipoDocumento`, `codBanco`, `agencia`, `conta`, `cbo`) VALUES ('$nome', '$nomeArtistico', '$rg', '$cpf', '$ccm', '$idEstadoCivil', '$dataNascimento', '$localNascimento', '$nacionalidade', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$drt', '$funcao', '$pis', '$omb', '$dataAtualizacao', '$idTipoDocumento', '$codigoBanco', '$agencia', '$conta', '$cbo')";
+	$sql_insere_pf = "INSERT INTO sis_pessoa_fisica (`Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `DataNascimento`, `LocalNascimento`,	`Nacionalidade`, `CEP`,	`Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`,	`Funcao`, `Pis`, `OMB`, `DataAtualizacao`,`tipoDocumento`, `codBanco`, `agencia`, `conta`, `cbo`) VALUES ('$nome', '$nomeArtistico', '$rg', '$cpf', '$ccm', '$dataNascimento', '$localNascimento', '$nacionalidade', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$drt', '$funcao', '$pis', '$omb', '$dataAtualizacao', '$idTipoDocumento', '$codigoBanco', '$agencia', '$conta', '$cbo')";
 
 	if(mysqli_query($con1,$sql_insere_pf))
 	{
@@ -260,7 +258,6 @@ If($query1 == '' && $query2 != '')
 						<strong>RG:</strong> <?php echo $rg ?> | 
 						<strong>CPF:</strong> <?php echo $cpf ?> | 
 						<strong>CCM:</strong> <?php echo $ccm ?><br/>
-						<strong>Estado Civil:</strong> <?php echo $idEstadoCivil ?><br/>
 						<strong>Data de Nascimento:</strong> <?php echo exibirDataBr($dataNascimento) ?><br/>
 						<strong>Local de Nascimento:</strong> <?php echo $localNascimento ?> | 
 						<strong>Nacionalidade:</strong> <?php echo $nacionalidade ?><br/>
@@ -375,25 +372,6 @@ If($query1 != '' && $query2 != '')
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='CCM'  />
 										<input type='hidden' name='varCampo' value='".$ccm."'  />
-										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
-									</form>
-								</td>";
-							echo "</tr>";
-						}
-						if($IdEstadoCivil != $idEstadoCivil)
-						{
-							$igEstadoCivil = recuperaDadosIgsis("sis_estado_civil","Id_EstadoCivil","$IdEstadoCivil");
-							$propEstadoCivil = recuperaDadosProp("estado_civil","id","$idEstadoCivil");
-							echo "<tr>";
-							echo "<td class='list_description'>Estado Civil</td>";
-							echo "<td class='list_description'>".$propEstadoCivil['estadoCivil']."</td>";
-							echo "<td class='list_description'>".$igEstadoCivil['EstadoCivil']."</td>";
-							echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
-										<input type='hidden' name='nomeCampo' value='Estado Civil' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
-										<input type='hidden' name='campo' value='IdEstadoCivil'  />
-										<input type='hidden' name='varCampo' value='".$idEstadoCivil."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 									</form>
 								</td>";
@@ -856,21 +834,16 @@ If($query1 == '' && $query2 == '')
 								<input type="text" class="form-control" id="CCM" name="CCM" placeholder="CCM" >
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-6"><strong>Estado civil:</strong><br/>
-								<select class="form-control" id="IdEstadoCivil" name="IdEstadoCivil" >
-									<?php geraOpcao("sis_estado_civil","",""); ?>  
-								</select>
-							</div>				  
-							<div class=" col-md-6"><strong>Data de nascimento:</strong><br/>
+						<div class="form-group">			  
+							<div class="col-md-offset-2 col-md-6"><strong>Data de nascimento:</strong><br/>
 								<input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento" >
 							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-6"><strong>Nacionalidade:</strong><br/>
+							<div class="col-md-6"><strong>Nacionalidade:</strong><br/>
 								<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade">
-							</div>				  
-							<div class=" col-md-6"><strong>CEP:</strong><br/>
+							</div>
+						</div>
+						<div class="form-group">				  
+							<div class="col-md-offset-2 col-md-8"><strong>CEP:</strong><br/>
 								<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP">
 							</div>
 						</div>

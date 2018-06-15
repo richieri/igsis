@@ -49,9 +49,8 @@ if(isset($_POST['cadastraRepresentante']))
 		$RG = $_POST['RG'];
 		$CPF = $_POST['CPF'];
 		$Nacionalidade = $_POST['Nacionalidade'];
-		$IdEstadoCivil = $_POST['IdEstadoCivil'];
 		$idUsuario = $_SESSION['idUsuario'];
-		$sql_insert_representante = "INSERT INTO `sis_representante_legal` (`Id_RepresentanteLegal`, `RepresentanteLegal`, `RG`, `CPF`, `Nacionalidade`, `IdEstadoCivil`, `idEvento`) VALUES (NULL, '$RepresentanteLegal', '$RG', '$CPF', '$Nacionalidade', '$IdEstadoCivil', NULL);";
+		$sql_insert_representante = "INSERT INTO `sis_representante_legal` (`Id_RepresentanteLegal`, `RepresentanteLegal`, `RG`, `CPF`, `Nacionalidade`, `idEvento`) VALUES (NULL, '$RepresentanteLegal', '$RG', '$CPF', '$Nacionalidade', NULL);";
 		$query_insert_representante = mysqli_query($con,$sql_insert_representante);
 		if($query_insert_representante)
 		{

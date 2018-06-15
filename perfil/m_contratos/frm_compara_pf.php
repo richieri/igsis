@@ -20,7 +20,6 @@ $NomeArtistico = $query1["NomeArtistico"];
 $RG = $query1["RG"];
 $CPF = $query1["CPF"];
 $CCM = $query1["CCM"];
-$IdEstadoCivil = $query1["IdEstadoCivil"];
 $DataNascimento = $query1["DataNascimento"];
 $LocalNascimento = $query1["LocalNascimento"];
 $Nacionalidade = $query1["Nacionalidade"];
@@ -53,7 +52,6 @@ $nomeArtistico = $query2["nomeArtistico"];
 $rg = $query2["rg"];
 $cpf = $query2["cpf"];
 $ccm = $query2["ccm"];
-$idEstadoCivil = $query2["idEstadoCivil"];
 $dataNascimento = $query2["dataNascimento"];
 $localNascimento = $query2["localNascimento"];
 $nacionalidade = $query2["nacionalidade"];
@@ -199,25 +197,6 @@ If($query1 != '' && $query2 != '')
 										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='CCM'  />
 										<input type='hidden' name='varCampo' value='".$ccm."'  />
-										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
-									</form>
-								</td>";
-							echo "</tr>";
-						}
-						if($IdEstadoCivil != $idEstadoCivil)
-						{
-							$igEstadoCivil = recuperaDadosIgsis("sis_estado_civil","Id_EstadoCivil","$IdEstadoCivil");
-							$propEstadoCivil = recuperaDadosProp("estado_civil","id","$idEstadoCivil");
-							echo "<tr>";
-							echo "<td class='list_description'>Estado Civil</td>";
-							echo "<td class='list_description'>".$propEstadoCivil['estadoCivil']."</td>";
-							echo "<td class='list_description'>".$igEstadoCivil['EstadoCivil']."</td>";
-							echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
-										<input type='hidden' name='nomeCampo' value='Estado Civil' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
-										<input type='hidden' name='campo' value='IdEstadoCivil'  />
-										<input type='hidden' name='varCampo' value='".$idEstadoCivil."'  />										
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 									</form>
 								</td>";

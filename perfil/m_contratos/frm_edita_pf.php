@@ -19,7 +19,6 @@ if(isset($_POST['cadastrarFisica']))
 	$RG = $_POST['RG'];
 	$CPF = $_POST['CPF'];
 	$CCM = $_POST['CCM'];
-	$IdEstadoCivil = $_POST['IdEstadoCivil'];
 	$DataNascimento = exibirDataMysql($_POST['DataNascimento']);
 	$Nacionalidade = $_POST['Nacionalidade'];
 	$CEP = $_POST['CEP'];
@@ -51,7 +50,6 @@ if(isset($_POST['cadastrarFisica']))
 	`RG` = '$RG', 
 	`CPF` = '$CPF', 
 	`CCM` = '$CCM', 
-	`IdEstadoCivil` = '$IdEstadoCivil' , 
 	`DataNascimento` = '$DataNascimento', 
 	`Nacionalidade` = '$Nacionalidade', 
 	`CEP` = '$CEP', 
@@ -150,22 +148,17 @@ $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 					</div>
 				</div>
 		  
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Estado civil:</strong><br/>
-						<select class="form-control" id="IdEstadoCivil" name="IdEstadoCivil" >
-							<?php geraOpcao("sis_estado_civil",$pf['IdEstadoCivil'],""); ?>  
-						</select>
-					</div>				  
-					<div class=" col-md-6"><strong>Data de nascimento:</strong><br/>
+				<div class="form-group">			  
+					<div class="col-md-offset-2 col-md-6"><strong>Data de nascimento:</strong><br/>
 						<input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento" value="<?php echo exibirDataBr($pf['DataNascimento']); ?>">
 					</div>
+					<div class="col-md-6"><strong>Nacionalidade:</strong><br/>
+						<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade" value="<?php echo $pf['Nacionalidade']; ?>">
+					</div>	
 				</div>
 		  
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Nacionalidade:</strong><br/>
-						<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade" value="<?php echo $pf['Nacionalidade']; ?>">
-					</div>				  
-					<div class=" col-md-6"><strong>CEP *:</strong><br/>
+				<div class="form-group">			  
+					<div class="col-md-offset-2 col-md-"><strong>CEP *:</strong><br/>
 						<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" value="<?php echo $pf['CEP']; ?>">
 					</div>
 				</div>
