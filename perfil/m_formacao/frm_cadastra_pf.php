@@ -104,15 +104,20 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-offset-2 c col-md-6"><strong>Data de nascimento:</strong><br/>
-							<input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento">
+						<div class="col-md-offset-2 col-md-6"><strong>Estado civil:</strong><br/>
+							<select class="form-control" id="IdEstadoCivil" name="IdEstadoCivil" >
+								<?php geraOpcao("sis_estado_civil","",""); ?>  
+							</select>
 						</div>
-						<div class="col-md-6"><strong>Nacionalidade:</strong><br/>
-							<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade">
+						<div class="col-md-6"><strong>Data de nascimento:</strong><br/>
+							<input type="text" class="form-control" id="datepicker01" name="DataNascimento" placeholder="Data de Nascimento">
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-md-offset-2 c col-md-8"><strong>CEP *:</strong><br/>
+						<div class="col-md-offset-2 col-md-6"><strong>Nacionalidade:</strong><br/>
+							<input type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Nacionalidade">
+						</div>
+						<div class="col-md-6"><strong>CEP *:</strong><br/>
 							<input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP">
 						</div>
 					</div>
@@ -269,6 +274,7 @@
 			$RG = $_POST['RG'];
 			$CPF = $_POST['CPF'];
 			$CCM = $_POST['CCM'];
+			$IdEstadoCivil = $_POST['IdEstadoCivil'];
 			$DataNascimento = exibirDataMysql($_POST['DataNascimento']);
 			$Nacionalidade = $_POST['Nacionalidade'];
 			$CEP = $_POST['CEP'];
@@ -295,7 +301,7 @@
 			}
 			else
 			{
-				$sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` (`Id_PessoaFisica`, `Foto`, `Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `DataNascimento`, `LocalNascimento`, `Nacionalidade`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`, `Funcao`, `InscricaoINSS`, `Pis`, `OMB`, `DataAtualizacao`, `Observacao`, `IdUsuario`) VALUES (NULL, NULL, '$Nome', '$nomeArtistico', '$RG', '$CPF', '$CCM', '$DataNascimento', NULL, '$Nacionalidade', '$CEP', '$Numero', '$Complemento', '$Telefone1', '$Telefone2', '$Telefone3', '$Email', '$DRT', '$Funcao', '$InscricaoINSS', '$Pis', '$OMB', '$data', '$Observacao', '$idUsuario');";
+				$sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` (`Id_PessoaFisica`, `Foto`, `Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `DataNascimento`, `LocalNascimento`, `Nacionalidade`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`, `Funcao`, `InscricaoINSS`, `Pis`, `OMB`, `DataAtualizacao`, `Observacao`, `IdUsuario`) VALUES (NULL, NULL, '$Nome', '$nomeArtistico', '$RG', '$CPF', '$CCM', '$IdEstadoCivil' '$DataNascimento', NULL, '$Nacionalidade', '$CEP', '$Numero', '$Complemento', '$Telefone1', '$Telefone2', '$Telefone3', '$Email', '$DRT', '$Funcao', '$InscricaoINSS', '$Pis', '$OMB', '$data', '$Observacao', '$idUsuario');";
 				$query_insert_pf = mysqli_query($con,$sql_insert_pf);
 				if($query_insert_pf)
 				{
