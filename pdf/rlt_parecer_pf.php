@@ -85,7 +85,7 @@ $sei =
 "<p>&nbsp;</p>".
 "<p>&nbsp;</p>".
 "<p align='center'><strong>PARECER DA COMISSÃO TÉCNICA DE ATIVIDADES ARTÍSTICAS E CULTURAIS<br/> 
-							(Instituído pela Portaria nº 008/2018-SMC-G)</strong></p>".
+							(Instituído pela Portaria nº 088/2018-SMC-G)</strong></p>".
 "<p>&nbsp;</p>".
 
 "<p align='justify'>"."$Parecer"."</p>".
