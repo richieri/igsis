@@ -12,7 +12,7 @@
 									</ul>
 							</li>
 					
-                            <li><a href="?perfil=evento&p=area">Espeficidades</a></li>
+                            <li><a href="?perfil=evento&p=area">Especificidades</a></li>
 
                             <?php if($_SESSION['subEvento'] == 1){ ?>
                             <li><a href="#">Sub-eventos</a>	

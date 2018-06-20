@@ -785,7 +785,7 @@
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                    <h3>Evento - Espeficidades de Área</h3>
+                    <h3>Evento - Especificidades de Área</h3>
                     <h1><?php echo $campo["nomeEvento"] ?></h1>
                     <h4><?php if(isset($mensagem)){echo $mensagem;} ?></h4>
                 </div>
