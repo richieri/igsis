@@ -237,7 +237,7 @@
 					?>	
 								<tr>
 									<td><?php echo $chamado['idChamado']; ?></td>
-									<td><a href="?perfil=chamado&p=detalhe&id=<?php echo $chamado['idChamado'] ?>" ><?php echo $tipo['chamado']; ?></a></td>
+									<td><a href="?perfil=contratos&p=frm_chamados&pag=editar&id=<?php echo $chamado['idChamado'] ?>" target="_blank" ><?php echo $chamado['titulo']; ?>
 									<td><?php echo nl2br($chamado['descricao']) ?></td>
 									<td><?php echo exibirDataHoraBr($chamado['data']) ?></td>
 									<td><?php
