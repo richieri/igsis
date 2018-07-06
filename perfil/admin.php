@@ -1386,7 +1386,7 @@
 								<input type="text" name="nomeCompleto" class="form-control" id="nomeCompleto" value="<?php echo $recuperaUsuario['nomeCompleto'] ?>" />
 							</div> 
 							<div class="col-md-offset-2 col-md-8">
-								<label>Usuario:</label>
+								<label>Usuário:</label>
 								<input type="text" name="nomeUsuario" class="form-control" id="nomeUsuario" value="<?php echo $recuperaUsuario['nomeUsuario'] ?>" />
 							</div>  <!-- // SENHA !-->
 							<!-- // Departamento !-->
