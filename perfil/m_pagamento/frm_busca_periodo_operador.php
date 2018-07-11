@@ -204,7 +204,7 @@ if(isset($_POST['periodo']))
 								<option value='0'></option>
 								<?php
 								$con = bancoMysqli();
-								$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 295, 393, 424, 445, 655, 848, 895) ORDER BY nomeCompleto";
+								$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 295, 393, 424, 445, 655, 848, 895, 1007) ORDER BY nomeCompleto";
 								$query_operador = mysqli_query($con,$sql_operador);
 								while($user = mysqli_fetch_array($query_operador))
 								{
