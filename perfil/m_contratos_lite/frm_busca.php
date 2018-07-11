@@ -23,6 +23,8 @@ switch($b)
     $estado = $_POST['estado'];
     $juridico = $_POST['juridico'];
     $projeto = $_POST['projeto'];
+    $valor_inicial = $_POST['valor_inicial'];
+	$valor_final = $_POST['valor_final'];
   
     /*VALIDA DE O POST TEM VALOR, CASO NÃO TENHA UM NOVO FORM É APRESENTADO*/
     if($id == "" AND 
@@ -33,7 +35,9 @@ switch($b)
       $instituicao == 0 AND 
       $estado == 0 AND 
       $juridico == 0 AND 
-      $projeto == 0){ ?>
+      $projeto == 0 AND 
+  	  $valor_inicial == 0 AND
+  	  $valor_final == 0){ ?>
 	
 	 <!--FORM QUE É APRESENTADO CASO O POST ESTEJA VAZIO-->
 	 <section id="services" class="home-section bg-white">
@@ -95,6 +99,15 @@ switch($b)
 				  <option value='0'></option>
 				  <?php  geraOpcao("ig_projeto_especial","",""); ?>
 			    </select>
+			    <br />
+			    <label>Valor</label>
+			    <div class="col-md-offset-2 col-md-6">
+					<input type="number" name="valor_inicial" class="form-control" placeholder="Valor Inicial" > 
+				</div>
+				<div class="col-md-6">
+					<input type="number" name="valor_final" class="form-control" placeholder="Valor Final">
+				</div> 
+				<br />
 			   </div>
 			 </div>
 			 <br />             
@@ -353,6 +366,14 @@ switch($b)
 			{
 				$filtro_projeto = " AND ig_evento.projetoEspecial = '$projeto'  ";
 			}
+			if($valor_inicial == 0 || $valor_final == 0)
+			{
+				$filtro_valor = " ";
+			}
+			else
+			{
+				$filtro_valor = "AND igsis_pedido_contratacao.valor BETWEEN '$valor_inicial' AND '$valor_final'";
+			}
 				
 			$sql_evento = "SELECT * 
 							FROM ig_evento,
@@ -368,6 +389,7 @@ switch($b)
 							$filtro_processo 
 							$filtro_juridico
 							$filtro_projeto
+							$filtro_valor
 							AND estado IS NOT NULL 
 							ORDER BY idPedidoContratacao DESC";
 			$query_evento = mysqli_query($con,$sql_evento);
@@ -583,6 +605,15 @@ else
 								<option value='0'></option>
 								<?php  geraOpcao("ig_projeto_especial","",""); ?>
 							</select>
+						<br />							
+						<label>Valor</label>
+							<div class="col-md-offset-2 col-md-6">
+								<input type="number" name="valor_inicial" class="form-control" placeholder="Valor Inicial" > 
+							</div>
+							<div class="col-md-6">
+								<input type="number" name="valor_final" class="form-control" placeholder="Valor Final">
+							</div> 
+					<br />
 					</div>
 				</div>
 				<br />             
