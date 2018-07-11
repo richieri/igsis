@@ -11,8 +11,9 @@
 		{
 			gravarLog($sql_atualiza_evento);
 			atualizarAgenda($idEvento);
+			$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 
-			$titulo = "Reabertura do evento ".$evento['nomeEvento']." pela área de Contratos";
+			$titulo = "Evento ".$evento['nomeEvento']." enviado fora do prazo.";
 			$idUsuario = $_SESSION['idUsuario'];
 			$event = $idEvento;
 			$descricao = "Evento fora do prazo!";
@@ -31,7 +32,6 @@
 		*/
 		if($query_atualiza_evento)
 		{
-			gravarLog($sql_atualiza_pedido);
 			$i = 0;
 			$sql = "SELECT * FROM igsis_pedido_contratacao WHERE `idEvento` = '$idEvento'";
 			$query = mysqli_query($con,$sql);
@@ -45,10 +45,11 @@
 				$i++;
 			}
 			$mensagem = "<h3>Solicitação enviada!</h3>
-				<p>Entre em contato através do email <strong><a href='mailto:pedidosdecontratacao@gmail.com'>pedidosdecontratacao@gmail.com</a></strong> com as seguintes informações:</p>
+				<h5>Acompanhe o andamento de sua solicitação de envio através do módulo de Evento -> menu 'Carregar um evento gravado' -> coluna 'Status do evento'.</h5>
+				<h5>Após seu pedido ser aprovado pelo setor de Contratos Artísticos, acompanhe seu evento através do módulo de Evento -> menu 'Acompanhar andamento de pedidos enviados'.</h5>
 				<p>&nbsp;</p>
 				<hr/>
-				<p align='justify'>Favor analisar a liberação dos seguintes pedidos:</p>";
+				<p align='justify'>O seguinte evento foi para Gestão de Prazos:</p>";
 		}
 		else
 		{
