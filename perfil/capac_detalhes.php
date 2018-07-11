@@ -194,8 +194,15 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					<p align="justify"><strong>E-mail:</strong> <?php echo $produtor['email'] ?></p>
 					<p align="justify"><strong>Telefone:</strong> <?php echo $produtor['telefone1']." | ".$produtor['telefone2'] ?></p>
 					<br/>
+					<?php
+					if($evento['idTipoPessoa'] != NULL)
+					{
+					?>
 					<h5>Informações de Contratação</h5>
 					<p align="justify"><strong>Tipo:</strong> <?php echo $tipoPessoa['tipoPessoa'] ?></p>
+					<?php
+					}
+					?>
 					<br/>
 					<?php
 					if($evento['idTipoPessoa'] == 2)
@@ -240,6 +247,10 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					<?php
 					}
 					?>
+					<?php
+					if($evento['idTipoPessoa'] != NULL)
+					{
+					?>
 					<p align="justify"><strong>ARTISTA</strong></p>
 					<p align="justify"><strong>Nome:</strong> <?php echo $pessoaFisica['nome'] ?></p>
 					<p align="justify"><strong>Nome Artístico:</strong> <?php echo $pessoaFisica['nomeArtistico'] ?></p>
@@ -248,6 +259,9 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					<p align="justify"><strong>Telefone:</strong> <?php echo $pessoaFisica['telefone1']." | ".$pessoaFisica['telefone2']." | ".$pessoaFisica['telefone3'] ?></p>
 					<p align="justify"><strong>E-mail:</strong> <?php echo $pessoaFisica['email'] ?></p>
 					<p align="justify"><strong>DRT:</strong> <?php echo $pessoaFisica['drt'] ?></p>
+					<?php
+					}
+					?>
 					<?php
 					if($evento['idTipoPessoa'] == 1)
 					{
@@ -262,17 +276,30 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 						<p align="justify"><strong>Banco:</strong> <?php echo recuperaBanco($pessoaFisica['codigoBanco']) ?></p>
 						<p align="justify"><strong>Agência:</strong> <?php echo $pessoaFisica['agencia'] ?></p>
 						<p align="justify"><strong>Conta:</strong> <?php echo $pessoaFisica['conta'] ?></p>
-						<p align="justify"><strong>Data da última atualização do cadastro:</strong> <?php echo exibirDataHoraBr($pessoaFisica['dataAtualizacao']) ?></p>
+						<p align=
+						aFisica['dataAtualizacao']) ?></p>
 						<p align="justify"><strong>Usuário que inseriu no sistema:</strong> <?php echo recuperaUsuarioCapac($pessoaFisica['idUsuario']) ?></p>
 					<?php
 					}
 					?>
-					<br/>
-
+					<?php
+					if($evento['idTipoPessoa'] == NULL)
+					{
+					?>
+					<?php	
+					}	
+					?>
+					<br />
+					<?php
+					if($evento['idTipoPessoa'] == NULL)
+					{
+					?>
 					<div class="table-responsive list_info"><h6>Arquivo(s) de Eventos</h6>
 						<?php listaArquivoCamposMultiplos($idCapac,5); ?>
 					</div>
-
+					<?php
+					}
+					?>
 					<div class="table-responsive list_info"><h6>Arquivo(s) para Comunicação/Produção</h6>
 						<?php listaArquivosComProd($idCapac); ?>
 					</div>
@@ -289,16 +316,23 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 							<?php listaArquivoCamposMultiplos($pessoaJuridica['id'],3); ?>
 						</div>
 					<?php
+					}elseif($evento['idTipoPessoa'] == 1){
+					?>
+						<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
+							<?php listaArquivoCamposMultiplos($pessoaFisica['id'],1); ?>
+						</div>
+
+						<div class="table-responsive list_info"><h6>Arquivo(s) do Grupo</h6>
+							<?php listaArquivoCamposMultiplos($idCapac,4); ?>
+						</div>
+					<?php
+					}
+					else
+					{
+					?>
+					<?php
 					}
 					?>
-
-					<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Física</h6>
-						<?php listaArquivoCamposMultiplos($pessoaFisica['id'],1); ?>
-					</div>
-
-					<div class="table-responsive list_info"><h6>Arquivo(s) do Grupo</h6>
-						<?php listaArquivoCamposMultiplos($idCapac,4); ?>
-					</div>
 
 				</div>
 
@@ -321,12 +355,30 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 				}
 				?>
 
+				<?php
+				if($evento['idTipoPessoa'] != NULL)
+				{
+				?>
 				<div class="col-md-offset-2 col-md-8">
 					<form method='POST' action='?perfil=importar_evento_capac'>
 						<input type="hidden" name="idCapac" value="<?php echo $idCapac ?>" />
 						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Importar">
 					</form>
 				</div>
+				<?php
+				}
+				else
+				{	
+				?>
+				<div class="col-md-offset-2 col-md-8">
+					<form method='POST' action='?perfil=importar_evento_sempedido_capac'>
+						<input type="hidden" name="idCapac" value="<?php echo $idCapac ?>" />
+						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Importar">
+					</form>
+				</div>
+				<?php 
+				}
+				?>
 			</div>
 		</div>
 	</div>

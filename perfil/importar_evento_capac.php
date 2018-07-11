@@ -3,7 +3,7 @@
 $con1 = bancoMysqli();
 $con2 = bancoMysqliProponente();
 
-$idInsituicao = $_SESSION['idInstituicao'];
+$idInstituicao = $_SESSION['idInstituicao'];
 $idUsuario = $_SESSION['idUsuario'];
 
 $idCapac = $_POST['idCapac'];
