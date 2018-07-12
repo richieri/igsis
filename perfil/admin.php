@@ -1734,8 +1734,7 @@
 			if(isset($_POST['cadastrar']))
 			{
 				//$con = bancoMysqli();
-				$projetoEspecial = $_POST['projetoEspecial'];	
-				$instituicao = $_POST['instituicao'];
+				$projetoEspecial = $_POST['projetoEspecial'];
 				if($projetoEspecial == '')
 				{  
 					$mensagem = "<p>O campo projeto especial é obrigatório! Preencha e tente novamente.</a></p>"; 
@@ -1748,7 +1747,7 @@
 					if ($existe == 0) // caso não esteja vazio
 					{
 						//inserir no banco
-						$sqlinserir= "INSERT INTO `ig_projeto_especial` (`idProjetoEspecial`,`projetoEspecial`, `idInstituicao`,`publicado`) VALUES (NULL, '$projetoEspecial', '$instituicao', 1)";
+						$sqlinserir= "INSERT INTO `ig_projeto_especial` (`idProjetoEspecial`,`projetoEspecial`, `idInstituicao`,`publicado`) VALUES (NULL, '$projetoEspecial', '999', 1)";
 						$queryinserir= mysqli_query($con,$sqlinserir);
 						if($queryinserir)
 						{
@@ -1783,12 +1782,6 @@
 					<!-- // Espaço existente !-->
 					<div class="col-md-offset-1 col-md-10">  
 						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8">
-								<label>Instituição:</label>
-								<select name="instituicao" class="form-control"  >
-									<?php acessoInstituicao("ig_instituicao",""); ?>
-								</select>	
-							</div>
 							<div class="col-md-offset-2 col-md-8">
 								<label>Adicionar novo projeto especial:</label>
 								<input type="text" name="projetoEspecial" class="form-control"id="espaco" value="" />
