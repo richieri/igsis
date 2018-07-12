@@ -264,7 +264,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(25,$l,'Justificativa:',0,0,'L');
-   $pdf->SetFont('Arial','', 10);
+   $pdf->SetFont('Arial','', 9);
    $pdf->MultiCell(155,5,utf8_decode($Justificativa));
 
 

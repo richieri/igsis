@@ -265,7 +265,7 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 	$pdf->Cell(25,$l,'Justificativa:',0,1,'L');
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 10);
+	$pdf->SetFont('Arial','', 9);
 	$pdf->MultiCell(180,5,utf8_decode($Justificativa));
 
 
