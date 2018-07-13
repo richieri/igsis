@@ -194,60 +194,68 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					<p align="justify"><strong>E-mail:</strong> <?php echo $produtor['email'] ?></p>
 					<p align="justify"><strong>Telefone:</strong> <?php echo $produtor['telefone1']." | ".$produtor['telefone2'] ?></p>
 					<br/>
-					<h5>Informações de Contratação</h5>
-					<p align="justify"><strong>Tipo:</strong> <?php echo $tipoPessoa['tipoPessoa'] ?></p>
-					<br/>
 					<?php
-					if($evento['idTipoPessoa'] == 2)
+					if($evento['contratacao'] != 3)
 					{
 					?>
-						<p align="justify"><strong>Razão Social:</strong> <?php echo $pessoaJuridica['razaoSocial'] ?></p>
-						<p align="justify"><strong>CNPJ:</strong> <?php echo $pessoaJuridica['cnpj'] ?></p>
-						<p align="justify"><strong>CCM:</strong> <?php echo $pessoaJuridica['ccm'] ?></p>
-						<p align="justify"><strong>CEP:</strong> <?php echo $pessoaJuridica['cep'] ?></p>
-						<p align="justify"><strong>Número:</strong> <?php echo $pessoaJuridica['numero'] ?></p>
-						<p align="justify"><strong>Complemento:</strong> <?php echo $pessoaJuridica['complemento'] ?></p>
-						<p align="justify"><strong>Telefone:</strong> <?php echo $pessoaJuridica['telefone1']." | ".$pessoaJuridica['telefone2']." | ".$pessoaJuridica['telefone3'] ?></p>
-						<p align="justify"><strong>E-mail:</strong> <?php echo $pessoaJuridica['email'] ?></p>
-						<br/>
-						<p align="justify"><strong>REPRESENTANTE LEGAL #1</strong></p>
-						<p align="justify"><strong>Nome:</strong> <?php echo $representante1['nome'] ?></p>
-						<p align="justify"><strong>RG:</strong> <?php echo $representante1['rg'] ?></p>
-						<p align="justify"><strong>CPF:</strong> <?php echo $representante1['cpf'] ?></p>
-						<p align="justify"><strong>Estado Civil:</strong> <?php echo recuperaEstadoCivilCapac($representante1['idEstadoCivil']) ?></p>
-						<p align="justify"><strong>Nacionalidade:</strong> <?php echo $representante1['nacionalidade'] ?></p>
+						<h5>Informações de Contratação</h5>
+						<p align="justify"><strong>Tipo:</strong> <?php echo $tipoPessoa['tipoPessoa'] ?></p>
 						<br/>
 						<?php
-						if($representante2 != NULL)
+						if($evento['idTipoPessoa'] == 2)
 						{
 						?>
-							<p align="justify"><strong>REPRESENTANTE LEGAL #2</strong></p>
-							<p align="justify"><strong>Nome:</strong> <?php echo $representante2['nome'] ?></p>
-							<p align="justify"><strong>RG:</strong> <?php echo $representante2['rg'] ?></p>
-							<p align="justify"><strong>CPF:</strong> <?php echo $representante2['cpf'] ?></p>
-							<p align="justify"><strong>Estado Civil:</strong> <?php echo recuperaEstadoCivilCapac($representante2['idEstadoCivil']) ?></p>
-							<p align="justify"><strong>Nacionalidade:</strong> <?php echo $representante2['nacionalidade'] ?></p>
+							<p align="justify"><strong>Razão Social:</strong> <?php echo $pessoaJuridica['razaoSocial'] ?></p>
+							<p align="justify"><strong>CNPJ:</strong> <?php echo $pessoaJuridica['cnpj'] ?></p>
+							<p align="justify"><strong>CCM:</strong> <?php echo $pessoaJuridica['ccm'] ?></p>
+							<p align="justify"><strong>CEP:</strong> <?php echo $pessoaJuridica['cep'] ?></p>
+							<p align="justify"><strong>Número:</strong> <?php echo $pessoaJuridica['numero'] ?></p>
+							<p align="justify"><strong>Complemento:</strong> <?php echo $pessoaJuridica['complemento'] ?></p>
+							<p align="justify"><strong>Telefone:</strong> <?php echo $pessoaJuridica['telefone1']." | ".$pessoaJuridica['telefone2']." | ".$pessoaJuridica['telefone3'] ?></p>
+							<p align="justify"><strong>E-mail:</strong> <?php echo $pessoaJuridica['email'] ?></p>
+							<br/>
+							<p align="justify"><strong>REPRESENTANTE LEGAL #1</strong></p>
+							<p align="justify"><strong>Nome:</strong> <?php echo $representante1['nome'] ?></p>
+							<p align="justify"><strong>RG:</strong> <?php echo $representante1['rg'] ?></p>
+							<p align="justify"><strong>CPF:</strong> <?php echo $representante1['cpf'] ?></p>
+							<p align="justify"><strong>Estado Civil:</strong> <?php echo recuperaEstadoCivilCapac($representante1['idEstadoCivil']) ?></p>
+							<p align="justify"><strong>Nacionalidade:</strong> <?php echo $representante1['nacionalidade'] ?></p>
+							<br/>
+							<?php
+							if($representante2 != NULL)
+							{
+							?>
+								<p align="justify"><strong>REPRESENTANTE LEGAL #2</strong></p>
+								<p align="justify"><strong>Nome:</strong> <?php echo $representante2['nome'] ?></p>
+								<p align="justify"><strong>RG:</strong> <?php echo $representante2['rg'] ?></p>
+								<p align="justify"><strong>CPF:</strong> <?php echo $representante2['cpf'] ?></p>
+								<p align="justify"><strong>Estado Civil:</strong> <?php echo recuperaEstadoCivilCapac($representante2['idEstadoCivil']) ?></p>
+								<p align="justify"><strong>Nacionalidade:</strong> <?php echo $representante2['nacionalidade'] ?></p>
+								<br/>
+							<?php
+							}
+							?>
+							<p align="justify"><strong>Banco:</strong> <?php echo recuperaBanco($pessoaJuridica['codigoBanco']) ?></p>
+							<p align="justify"><strong>Agência:</strong> <?php echo $pessoaJuridica['agencia'] ?></p>
+							<p align="justify"><strong>Conta:</strong> <?php echo $pessoaJuridica['conta'] ?></p>
+							<p align="justify"><strong>Data da última atualização do cadastro:</strong> <?php echo exibirDataHoraBr($pessoaJuridica['dataAtualizacao']) ?></p>
+							<p align="justify"><strong>Usuário que inseriu no sistema:</strong> <?php echo recuperaUsuarioCapac($pessoaJuridica['idUsuario']) ?></p>
 							<br/>
 						<?php
 						}
 						?>
-						<p align="justify"><strong>Banco:</strong> <?php echo recuperaBanco($pessoaJuridica['codigoBanco']) ?></p>
-						<p align="justify"><strong>Agência:</strong> <?php echo $pessoaJuridica['agencia'] ?></p>
-						<p align="justify"><strong>Conta:</strong> <?php echo $pessoaJuridica['conta'] ?></p>
-						<p align="justify"><strong>Data da última atualização do cadastro:</strong> <?php echo exibirDataHoraBr($pessoaJuridica['dataAtualizacao']) ?></p>
-						<p align="justify"><strong>Usuário que inseriu no sistema:</strong> <?php echo recuperaUsuarioCapac($pessoaJuridica['idUsuario']) ?></p>
-						<br/>
+						<p align="justify"><strong>ARTISTA</strong></p>
+						<p align="justify"><strong>Nome:</strong> <?php echo $pessoaFisica['nome'] ?></p>
+						<p align="justify"><strong>Nome Artístico:</strong> <?php echo $pessoaFisica['nomeArtistico'] ?></p>
+						<p align="justify"><strong>RG:</strong> <?php echo $pessoaFisica['rg'] ?></p>
+						<p align="justify"><strong>CPF:</strong> <?php echo $pessoaFisica['cpf'] ?></p>
+						<p align="justify"><strong>Telefone:</strong> <?php echo $pessoaFisica['telefone1']." | ".$pessoaFisica['telefone2']." | ".$pessoaFisica['telefone3'] ?></p>
+						<p align="justify"><strong>E-mail:</strong> <?php echo $pessoaFisica['email'] ?></p>
+						<p align="justify"><strong>DRT:</strong> <?php echo $pessoaFisica['drt'] ?></p>
 					<?php
 					}
 					?>
-					<p align="justify"><strong>ARTISTA</strong></p>
-					<p align="justify"><strong>Nome:</strong> <?php echo $pessoaFisica['nome'] ?></p>
-					<p align="justify"><strong>Nome Artístico:</strong> <?php echo $pessoaFisica['nomeArtistico'] ?></p>
-					<p align="justify"><strong>RG:</strong> <?php echo $pessoaFisica['rg'] ?></p>
-					<p align="justify"><strong>CPF:</strong> <?php echo $pessoaFisica['cpf'] ?></p>
-					<p align="justify"><strong>Telefone:</strong> <?php echo $pessoaFisica['telefone1']." | ".$pessoaFisica['telefone2']." | ".$pessoaFisica['telefone3'] ?></p>
-					<p align="justify"><strong>E-mail:</strong> <?php echo $pessoaFisica['email'] ?></p>
-					<p align="justify"><strong>DRT:</strong> <?php echo $pessoaFisica['drt'] ?></p>
+
 					<?php
 					if($evento['idTipoPessoa'] == 1)
 					{
@@ -268,12 +276,25 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					}
 					?>
 					<br />
+					<?php
+					if ($evento['contratacao'] != 3)
+					{	
+					?>
 					<div class="table-responsive list_info"><h6>Arquivo(s) de Eventos</h6>
 						<?php listaArquivoCamposMultiplos($idCapac,5); ?>
 					</div>
+
+					<?php
+					}
+					?>
 					<div class="table-responsive list_info"><h6>Arquivo(s) para Comunicação/Produção</h6>
 						<?php listaArquivosComProd($idCapac); ?>
-					</div>
+					</div>	
+
+					<?php
+					if ($evento['contratacao'] != 3)
+					{	
+					?>
 
 					<?php
 					if($evento['idTipoPessoa'] == 2)
@@ -300,6 +321,10 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					}
 					?>
 				</div>
+
+				<?php
+				}
+				?>	
 
 				<?php
 				if($evento['idTipoPessoa'] == 2)
