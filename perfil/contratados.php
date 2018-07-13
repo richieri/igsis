@@ -3615,7 +3615,7 @@ if(isset($_POST['insereParecer']))
 		gravarLog($sql_insere_parecer);
 		$mensagem = "Atualizado com sucesso!";
 		$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
-		$topicos = $parecer['topico1']."\n".$parecer['topico2']."\n".$parecer['topico3']."\n".$parecer['topico4'];
+		$topicos = $parecer['topico1']."\n\n".$parecer['topico2']."\n\n".$parecer['topico3']."\n\n".$parecer['topico4'];
 
 		$sql_pedido = "UPDATE igsis_pedido_contratacao 
 		SET parecerArtistico = :topicos WHERE idPedidoContratacao = :id_ped";
@@ -3663,7 +3663,7 @@ if(isset($_POST['editaParecer']))
  		gravarLog($sql_edita_parecer);
 		$mensagem = "Atualizado com sucesso!";
 		$parecer = recuperaDados("igsis_parecer_artistico",$id_ped,"idPedidoContratacao");
-		$topicos = $parecer['topico1']."\n".$parecer['topico2']."\n".$parecer['topico3']."\n".$parecer['topico4'];
+		$topicos = $parecer['topico1']."\n\n".$parecer['topico2']."\n\n".$parecer['topico3']."\n\n".$parecer['topico4'];
 
 		$sql_pedido = "UPDATE igsis_pedido_contratacao SET parecerArtistico = :topicos WHERE idPedidoContratacao = :id_ped";
 
