@@ -119,8 +119,9 @@ include 'includes/menu.php';
 						<select class="form-control" name="pagamentos" id="">
 							<option value='655'></option>
 							<?php
+                            /*TODO: Confirmar usuarios no select abaixo*/
 							$ped = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
-							$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 295, 393, 424, 445, 655, 681, 848, 895, 778, 906, 926, 927, 928, 1007) ORDER BY nomeCompleto";
+							$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 295, 393, 424, 445, 655, 681, 848, 895, 778, 906, 926, 927, 928, 1007, 993, 996) ORDER BY nomeCompleto";
 							$query_operador = mysqli_query($con,$sql_operador);
 							while($user = mysqli_fetch_array($query_operador))
 							{
