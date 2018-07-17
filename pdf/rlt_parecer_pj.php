@@ -144,7 +144,7 @@ $sei =
 							(Instituído pela Portaria nº 088/2018-SMC-G)</strong></p>".
 "<p>&nbsp;</p>".
 
-"<p align='justify'>"."$Parecer"."</p>".
+"<p align='justify'>".nl2br($Parecer)."</p>".
 
 
 "<p>&nbsp;</p>"
