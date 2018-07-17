@@ -335,7 +335,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					</div>
 				<?php
 				}
-				else
+				elseif($evento['idTipoPessoa'] == 1)
 				{
 				?>
 					<div class="col-md-offset-2 col-md-8">
@@ -343,7 +343,15 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					</div>
 				<?php
 				}
+				else 
+				{	
 				?>
+					<div class="col-md-offset-2 col-md-8">
+						<a href="../include/arquivos_capac.php?idEvento=<?php echo $idCapac ?> class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
+					</div>
+				<?php
+				}
+				?>	
 
 				<div class="col-md-offset-2 col-md-8">
 					<form method='POST' action='?perfil=importar_evento_capac'>
