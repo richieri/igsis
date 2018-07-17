@@ -1254,7 +1254,16 @@
         <?php
 			if($pedido['parcelas'] > 1)
 			{ //libera a edição de parcelas
+                $mostraAlerta = isset($_POST['alertaParcela']) ? $_POST['alertaParcela'] : null;
+                if($mostraAlerta == null){
+                    ?>
+                    <script>
+                        alert("Lembre-se de editar as parcelas!");
+                    </script>
+                    <?php
+                }
 		?>
+
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<a href="?perfil=contratados&p=edicaoParcelas" class="btn btn-theme btn-block">Editar parcelas</a>
@@ -2523,7 +2532,12 @@
 				</form>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
-						<a href="?perfil=contratados&p=edicaoPedido" value="VOLTAR" class="btn btn-theme btn-lg btn-block">VOLTAR para área de pedidos de contratação</a>
+                        <form method="POST" action="?perfil=contratados&p=edicaoPedido">
+                            <input type="hidden" name="alertaParcela" value="7777">
+                            <input type='submit' class='btn btn-theme btn-lg btn-block' value='VOLTAR para área de pedidos de contratação'>
+                            <!--<a href="?perfil=contratados&p=edicaoPedido" value="VOLTAR" class="btn btn-theme btn-lg btn-block">VOLTAR para área de pedidos de contratação</a>-->
+
+                        </form>
 					</div>
 				</div>	
 	  		</div>
