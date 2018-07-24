@@ -1326,22 +1326,6 @@
 								<textarea name="justificativa" required class="form-control" rows="10" placeholder="Texto usado fins jurídicos e confecção de contratos."><?php echo $pedido["justificativa"] ?></textarea>
 							</div> 
 						</div>
-				<!--		
-				<?php
-					if ($_SESSION['idInstituicao'] == 5)
-					{
-				?>
-						<div class='form-group'>
-							<div class='col-md-offset-2 col-md-8'>
-								<label>Parecer artístico*</label>
-								<textarea name='parecerArtistico' class='form-control' rows='10' placeholder='Texto usado fins jurídicos e confecção de contratos.'>Parecer por conta da comissão artística.</textarea>
-							</div> 
-						</div>
-				<?php
-					}
-					else
-					{
-				?> -->
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Parecer artístico</label>
@@ -1354,11 +1338,7 @@
 							<div class='col-md-6'>
 								<a href='?perfil=contratados&p=edicaoParecer&artista=Consagrado' class='btn btn-theme btn-block'>Editar parecer artista consagrado</a>
 							</div>
-						</div>		
-				<?php
-					}	
-				?>				
-								
+						</div>			
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 								<textarea name="Observacao" class='form-control' cols="40" rows="5"><?php echo $pedido['observacao'] ?></textarea>
