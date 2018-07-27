@@ -2629,10 +2629,7 @@
 				?>
 							</p>
 							<br/>
-				<?php
-					if ($_SESSION['idInstituicao'] != 5)
-					{
-				?>		
+					
 							<h6>Parecer Artístico</h6>
 							<p>
 						<?php
@@ -2653,9 +2650,7 @@
 						?>
 						</p>
 						<br/>
-				<?php
-					}		
-				?>		
+		
 						<p>
 				<?php //print_r($evento);
 					if($ocorrencia > 0)
@@ -2680,8 +2675,8 @@
 					else
 					{
 						$pedido = listaPedidoContratacao($_SESSION['idEvento']);
-						if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
-						{
+						/*if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
+						{*/
 					?>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
@@ -2693,7 +2688,7 @@
 								</div>
 							</div>
 					<?php
-						}
+						/*}
 						else if($prazo['fora'] == 0) //Não tem pedido e está dentro do prazo
 						{
 					?>
@@ -2720,7 +2715,7 @@
 						*/
 					}
 				break;
-			} // fecha a switch action ?>	
+			} // fecha a switch action */?>	
 					</div>
 				</div>
 			</div>
