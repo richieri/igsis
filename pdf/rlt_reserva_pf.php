@@ -72,7 +72,7 @@ $sei =
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Sr(a) Supervisor(a)</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), conforme solicitação LINK, tendo sido anexados os documentos necessários e incluido o parecer técnico LINK, ratificando o caráter artístico e o valor proposto para o cachê referente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentação(ões), no período de "."$periodo".".</p>".
+  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), no período de "."$periodo".".</p>".
   "<p>Autorizo a reserva que deverá onerar recursos do FEPAC (Pessoa Física), mediante RESERVA COM TRANSFERÊNCIA PARA U.O. 25.10. </p>".
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/AJ para prosseguimento.</p>". 
