@@ -167,7 +167,7 @@ $n_parcela = mysqli_num_rows($query_parcela);
 <p>&nbsp;</p>
 <h3>CLÁUSULA TERCEIRA – DO PREÇO E CONDIÇÕES DE PAGAMENTO</h3>
 <p> </p>
-<p>3.1 Pelos serviços prestados, a CONTRATANTE pagará à CONTRATADA o total de R$ <?php echo ($ValorGlobal); ?>, a serem pagos em <?php echo ($n_parcela); ?> parcelas, após a confirmação da execução dos serviços pela unidade requisitante.</p>
+<p>3.1 Pelos serviços prestados, a CONTRATANTE pagará à CONTRATADA o total de R$ <?php echo ($ValorGlobal); ?> (<?php echo ($ValorPorExtenso) ?>), a serem pagos em <?php echo ($n_parcela); ?> parcelas, após a confirmação da execução dos serviços pela unidade requisitante.</p>
 <p>3.2  As despesas relativas ao presente Contrato estão garantidas pela dotação n° 25.10 13.392.3001.6.354 3.3.90.39.00.00. </p>
 <p>3.3 Não haverá reajuste do valor contratual.</p>
 <p>3.4 No caso de atraso no pagamento por culpa exclusiva da CONTRATANTE haverá, a pedido da CONTRATADA, compensação financeira, nos termos da Portaria SF nº. 05, publicada em 07 de janeiro de 2012. </p>

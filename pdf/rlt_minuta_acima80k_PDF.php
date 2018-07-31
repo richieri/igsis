@@ -222,7 +222,7 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    // ARRUMAR A QUANTIDADE DE PARCELAS
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("3.1. Pelos serviços prestados, a CONTRATANTE pagará à CONTRATADA o total de R$ ".$ValorGlobal.", a serem pagos em ".$n_parcela." parcelas, após a confirmação da execução dos serviços pela unidade requisitante."));
+   $pdf->MultiCell(180,$l,utf8_decode("3.1. Pelos serviços prestados, a CONTRATANTE pagará à CONTRATADA o total de R$ ".$ValorGlobal." (".$ValorPorExtenso."), a serem pagos em ".$n_parcela." parcelas, após a confirmação da execução dos serviços pela unidade requisitante."));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
