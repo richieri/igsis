@@ -1281,6 +1281,7 @@
 							<div class="col-md-offset-2 col-md-8">
 								<strong>Verba:</strong> <?php echo $campo_verba; ?>  <br/>
 								<select class="form-control" id="verba" name="verba" >
+									<option value="0"></option>
 									<?php geraVerbaUsuario($_SESSION['idUsuario'],$pedido['idVerba']); ?>  
 								</select>
 							</div>
