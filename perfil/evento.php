@@ -2124,7 +2124,7 @@
  						    <select class="form-control" name="idSubEvento" id="inputSubject" >
 								<option>Selecione o sub-evento</option>
 								<option value="0">Não é sub-evento</option>
-								<?php geraOpcaoSub($_SESSION['idEvento'],""); ?>
+								<?php geraOpcaoSub($_SESSION['idEvento'],$ocor['idSubEvento']); ?>
 							</select>
 						</div>
 					</div>
