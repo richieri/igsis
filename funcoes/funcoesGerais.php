@@ -587,6 +587,16 @@
 		$campo = mysqli_fetch_array($query);
 		return $campo;		
 	}
+	function recuperaArgumento($idEvento)
+	{
+		//retorna uma array com os dados da tabela igsis_argumento
+		$con = bancoMysqli();
+		$sql = "SELECT * FROM igsis_argumento WHERE idEvento = '$idEvento' LIMIT 0,1";
+		$query = mysqli_query($con,$sql);
+		$campo = mysqli_fetch_array($query);
+		echo "<b>Argumento da não aprovação anterior:</b> ".$campo['argumento']."<br />";
+		
+	}
 	function recuperaDados($tabela,$idEvento,$campo)
 	{
 		//retorna uma array com os dados de qualquer tabela. serve apenas para 1 registro.

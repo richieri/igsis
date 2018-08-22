@@ -11,6 +11,7 @@
 
 		$idEvento = $_GET['id_eve'];
 		$evento = recuperaEvento($_GET['id_eve']);
+		/*$argumento = recuperaArgumento($_GET['id_eve']);*/
 		$_SESSION['idEvento'] = $idEvento;
 ?>
 
@@ -28,7 +29,9 @@ case 'inicial':
 				<a href="?perfil=gestao_prazos&p=detalhe_evento&pag=pedidos&id_eve=<?php echo $idEvento;?>">Pedidos de contratação</a> |  
 				<a href="?perfil=gestao_prazos&p=detalhe_evento&pag=pendencias&id_eve=<?php echo $idEvento;?>">Pendências</a>
 			</h5>
-		<div class="table-responsive list_info" >
+ 			<p align="center">
+			<?php recuperaArgumento($idEvento); ?></b><br />
+			 </p>		<div class="table-responsive list_info" >
 			<h4><?php echo $evento['nomeEvento'] ?></h4>
 				<p align="left"><?php descricaoEvento($idEvento); ?></p>      
 				<h5>Ocorrências</h5>
