@@ -19,6 +19,7 @@ $link04 = $http."rlt_proposta_formacao.php"."?id=".$id_ped."&penal";
 $link05 = $http."rlt_proposta_exposicao_edital_word_pf.php"."?id=".$id_ped."&penal";
 $link06 = $http."rlt_proposta_emia.php"."?id=".$id_ped."&penal";
 $link07 = $http."rlt_proposta_pesquisador_formacao.php"."?id=".$id_ped;
+$link47 = $http."rlt_proposta_reversao.php"."?id=".$id_ped."&penal";
 
 $link18 = $http."rlt_declaracao_iss_pf.php";
 $link19 = $http."rlt_declaracao_naoservidor_pf.php";
@@ -32,7 +33,8 @@ $link25 = $http."rlt_pedido_reserva_vocacional_pf.php";
 $link29 = $http."rlt_pedido_reserva_centrosculturais_pf.php";
 $link30 = $http."rlt_pedido_reserva_gabinete_pf.php";
 $link31 = $http."rlt_pedido_reserva_dph_pf.php";
-$link32 = $http."rlt_pedido_reserva_csmb_pf.php";
+$link32 = $http."rlt_pedido_reserva_csmb
+_pf.php";
 $link33 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
 $link41 = $http."rlt_pedido_reserva_ccsp_pf.php";
 $link42 = $http."rlt_pedido_reserva_oficina.php";
@@ -40,6 +42,7 @@ $link43 = $http."rlt_pedido_reserva_bma_pf.php";
 $link44 = $http."rlt_reserva_pf.php";
 $link45 = $http."rlt_pedido_reserva_pia_pf.php";
 $link46 = $http."rlt_pedido_reserva_vocacional_sme_pf.php";
+$link47 = $http."rlt_proposta_reversao.php"."?id=".$id_ped."&penal";
 
 
 
@@ -90,7 +93,8 @@ echo "
 						</tr>
 
 						<tr>
-							<td><a href='$link03=13' target='_blank'><strong>Contratações gerais</strong></a></td>
+							<td><a href='$link03=13' target='_blank'><strong>Contratações gerais - Com cachê</strong></a></td>
+							<td><a href='$link47=13' target='_blank'><strong>Contratações gerais - Reversão de Bilheteria</strong></a></td>
 						</tr>
 
 						<tr><td class='list_description'><br/></td></tr>
