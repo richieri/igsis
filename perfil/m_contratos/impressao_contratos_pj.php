@@ -12,7 +12,7 @@ $link0 = $http."rlt_pedido_contratacao_pj.php";
 $link02 = $http."rlt_proposta_padrao.php"."?id=".$id_ped."&penal";
 $link03 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal";
 $link04 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal";
-$link47 = $http."rlt_proposta_reversao.php"."?id=".$id_ped."&penal";
+$link56 = $http."rlt_proposta_reversao.php"."?id=".$id_ped."&penal";
 
 
 $link5 = $http."rlt_fac_pj.php";
@@ -80,7 +80,7 @@ echo "
 						</tr>
 
 						<tr>
-							<td><a href='$link47=13' target='_blank'><strong>Contratações Gerais - Reversão de Bilheteria</strong></a></td>
+							<td><a href='$link56=13' target='_blank'><strong>Contratações Gerais - Reversão de Bilheteria</strong></a></td>
 							
 						</tr>
 
