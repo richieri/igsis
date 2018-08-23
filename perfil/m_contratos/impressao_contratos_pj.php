@@ -9,7 +9,7 @@ $server = "http://".$_SERVER['SERVER_NAME']."/igsis"; //mudar para pasta do igsi
 $http = $server."/pdf/";
 
 $link0 = $http."rlt_pedido_contratacao_pj.php";
-$link02 = $http."rlt_proposta_padrao_pj.php"."?id=".$id_ped."&penal";
+$link02 = $http."rlt_proposta_padrao.php"."?id=".$id_ped."&penal";
 $link03 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal";
 $link04 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal";
 
@@ -71,28 +71,10 @@ echo "
 
 						<tr class='list_menu'><td colspan='2'><strong>PROPOSTA</strong></td></tr>
 
-						<tr>
-							<td><a href='$link02=3' target='_blank'><strong>Cinema</strong></a></td>
-							<td><a href='$link02=6' target='_blank'><strong>Doação de Serviços</strong></a></td>
-						</tr>
 
 						<tr>
-							<td><a href='$link02=18' target='_blank'><strong>Longa Temporada</strong></a></td>
-							<td><a href='$link02=16' target='_blank'><strong>Curta Temporada</strong></a></td>
-						</tr>
-
-						<tr>
-							<td><a href='$link02=10' target='_blank'><strong>Exposição | Outros</strong></a></td>
-							<td><a href='$link03=22' target='_blank'><strong>Edital - Exposição</strong></a></td>
-						</tr>
-
-						<tr>
-							<td><a href='$link02=24' target='_blank'><strong>Edital - Mediação</strong></a></td>
-							<td><a href='$link02=26' target='_blank'><strong>Edital - Contação de Histórias </strong></a></td>
-						</tr>
-
-						<tr>
-							<td><a href='$link02=28' target='_blank'><strong>Edital - Gala de Balé</strong></a></td>
+							<td><a href='$link03=22' target='_blank'><strong>Editais</strong></a></td>
+							<td><a href='$link02=13' target='_blank'><strong>Contratações Gerais</strong></a></td>
 						</tr>
 
 						<tr><td class='list_description'><br/></td></tr>
@@ -100,46 +82,29 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>DECLARAÇÃO</strong></td></tr>
 
 						<tr>
-							<td><a href='$link17' target='_blank'><strong>ISS</strong></a></td>
 							<td><a href='$link19' target='_blank'><strong>Exclusividade (Grupo)</strong></a></td>
+							<td><a href='$link54?id=$id_ped' target='_blank'><strong>Exclusividade (1 pessoa)</strong></a></td>
 						</tr>
 
 						<tr>
 							<td><a href='$link40' target='_blank'><strong>Convênio 500</strong></a></td>
-							<td><a href='$link54?id=$id_ped' target='_blank'><strong>Exclusividade (1 pessoa)</strong></a></td>
+							
 						</tr>
-						<tr>	
-							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Abertura de Conta - Banco do Brasil</strong></a></td>
-						</tr>
-
+						
 						<tr><td class='list_description'><br/></td></tr>
 
 						<tr class='list_menu'><td colspan='2'><strong>OUTROS</strong></td></tr>
 
 						<tr>
 							<td><a href='$link5?id=$id_ped' target='_blank'><strong>FACC</strong></a></td>
-							<td><a href='$link7?id=$id_ped' target='_blank'><strong>Uso de Direitos Conexos</strong></a></td>
-						</tr>
-
-						<tr>
-							<td><a href='$link37?id=$id_ped' target='_blank'><strong>Ordem de Serviço - Assinatura</strong></a></td>
-							<td><a href='$link45?id=$id_ped' target='_blank'><strong>Ordem de serviço - Gabinete Assinatura</strong></a></td>
-
-						</tr>
-
-						<tr>
-							<td><a href='$link38?id=$id_ped' target='_blank'><strong>Termo de Doação - Assinatura</strong></a></td>
 							<td><a href='$link8?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
 						</tr>
 
 						<tr>
-							<td><a href='$link27?id=$id_ped' target='_blank'><strong>Termo de Parceria</strong></a></td>
 							<td><a href='$link52?id=$id_ped' target='_blank'><strong>Minuta Acima 80 mil</strong></a></td>
-						</tr>
-
-						<tr>
 							<td><a href='$link32' target='_blank'><strong>NORMAS INTERNAS - Teatros Municipais</strong></a></td>
 						</tr>
+
 
 						<tr><td class='list_description'><br/></td></tr>
 
