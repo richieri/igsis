@@ -19,7 +19,7 @@ $link04 = $http."rlt_proposta_formacao.php"."?id=".$id_ped."&penal";
 $link05 = $http."rlt_proposta_exposicao_edital_word_pf.php"."?id=".$id_ped."&penal";
 $link06 = $http."rlt_proposta_emia.php"."?id=".$id_ped."&penal";
 $link07 = $http."rlt_proposta_pesquisador_formacao.php"."?id=".$id_ped;
-$link47 = $http."rlt_proposta_reversao.php"."?id=".$id_ped."&penal";
+$link47 = $http."rlt_proposta_reversao_pf.php"."?id=".$id_ped."&penal";
 
 $link18 = $http."rlt_declaracao_iss_pf.php";
 $link19 = $http."rlt_declaracao_naoservidor_pf.php";
@@ -42,7 +42,6 @@ $link43 = $http."rlt_pedido_reserva_bma_pf.php";
 $link44 = $http."rlt_reserva_pf.php";
 $link45 = $http."rlt_pedido_reserva_pia_pf.php";
 $link46 = $http."rlt_pedido_reserva_vocacional_sme_pf.php";
-$link47 = $http."rlt_proposta_reversao.php"."?id=".$id_ped."&penal";
 
 
 
