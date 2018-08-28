@@ -265,7 +265,7 @@
 			</div>
 		</div>
 		<?php
-			$chamado = recuperaAlteracoesEvento($_GET['id_ped']);	
+			$chamado = recuperaAlteracoesEvento($_GET['id_ped']) ;	
 			switch($action)
 			{
 				case "evento":
