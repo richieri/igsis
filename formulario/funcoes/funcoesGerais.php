@@ -2022,8 +2022,9 @@ function listaOcorrenciasInstituicao($idInstituicao){
 
 	while($sala = mysqli_fetch_array($query_sala)){
 		$idLocal = $sala['idLocal'];
+		$idInstituicao = $_SESSION['idInstituicao'];
 		//$sql_ocorrencia = "SELECT * FROM ig_ocorrencia WHERE local = '$idLocal' AND publicado = '1'"; //recupera as ocorrências que tenham os locais da instituicao
-		$sql_ocorrencia = "SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE local = '$idLocal' AND publicado = '1' ORDER BY dataInicio DESC ";
+		$sql_ocorrencia = "SELECT DISTINCT idEvento FROM ig_ocorrencia WHERE local = '$idLocal' AND publicado = '1' AND idInstituicao = '$idInstituicao' ORDER BY dataInicio DESC ";
 		$query_ocorrencia = mysqli_query($con,$sql_ocorrencia);
 
 		while($ocorrencia = mysqli_fetch_array($query_ocorrencia)){
