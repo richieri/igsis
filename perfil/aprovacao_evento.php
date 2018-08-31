@@ -33,7 +33,7 @@
 		if($query_atualiza_evento)
 		{
 			$i = 0;
-			$sql = "SELECT * FROM igsis_pedido_contratacao WHERE `idEvento` = '$idEvento'";
+			$sql = "SELECT * FROM igsis_pedido_contratacao WHERE `idEvento` = '$idEvento' AND `publicado` = 1";
 			$query = mysqli_query($con,$sql);
 			while($ped = mysqli_fetch_array($query))
 			{
