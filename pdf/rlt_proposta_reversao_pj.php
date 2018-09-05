@@ -75,6 +75,8 @@ $FormaPagamento = $pedido["FormaPagamento"];
 $Justificativa = $pedido["Justificativa"];
 $Fiscal = $pedido["Fiscal"];
 $Suplente = $pedido["Suplente"];
+$NumeroProcesso = $pedido["NumeroProcesso"];
+
 
 //PessoaJuridica
 $pjRazaoSocial = $pj["Nome"];
@@ -215,14 +217,16 @@ $pdf->SetXY( $x , 25 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 	$pdf->Ln();
 
-// Proposta
+    // Proposta
 	$pdf->SetX($x);
 	$pdf->SetFont('Arial','', 10);
 	$pdf->Cell(10,10,'(B)',0,0,'L');
 	$pdf->SetFont('Arial','B', 12);
 	$pdf->Cell(160,10,'PROPOSTA',0,0,'C');
-	$pdf->SetFont('Arial','', 10);
-	$pdf->Cell(10,10,$ano."-".$id_ped,0,1,'R');
+    $pdf->SetFont('Arial','', 10);
+    $pdf->Cell(10,10,$NumeroProcesso,0,1,'R');
+    $pdf->Cell(186,10,$ano."-".$id_ped,0,1,'R');
+
 
 	$pdf->SetX($x);
 	$pdf->SetFont('Arial','B', 10);

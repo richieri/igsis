@@ -67,6 +67,8 @@ $FormaPagamento = $pedido["FormaPagamento"];
 $Justificativa = $pedido["Justificativa"];
 $Fiscal = $pedido["Fiscal"];
 $Suplente = $pedido["Suplente"];
+$NumeroProcesso = $pedido["NumeroProcesso"];
+
 
 $Nome = $pessoa["Nome"];
 $NomeArtistico = $pessoa["NomeArtistico"];
@@ -187,7 +189,8 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetFont('Arial','B', 12);
    $pdf->Cell(160,10,'PROPOSTA',0,0,'C');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(10,10,$ano."-".$id_ped,0,1,'R');
+   $pdf->Cell(10,10,$NumeroProcesso,0,1,'R');
+   $pdf->Cell(183,10,$ano."-".$id_ped,0,1,'R');
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
