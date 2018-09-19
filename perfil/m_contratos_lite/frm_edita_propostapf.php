@@ -190,6 +190,41 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 			</div>
             <h5><?php if(isset($mensagem)){echo $mensagem;}?> </h5>
 		</div>
+
+		<div class="form-group">                  
+			<div class="col-md-offset-2 col-md-8"><hr/></div>
+		</div> 
+
+		<div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+				<h5>Pedidos Relacionados</h5>
+				<?php 
+					$outros = listaPedidoContratacao($pedido['idEvento']); 
+					for($i = 0; $i < count($outros); $i++)
+					{
+						$dados = siscontrat($outros[$i]);
+						if($dados['TipoPessoa'] == 1)
+						{
+				?>
+							<p align="left">Número do Pedido de Contratação:<b> <a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $outros[$i]; ?>"></b><?php echo $outros[$i]; ?></a><br /></p>
+				<?php 
+						}
+						if($dados['TipoPessoa'] == 2)
+						{
+				?>
+							<p align="left">Número do Pedido de Contratação:<b> <a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $outros[$i]; ?>"></b><?php echo $outros[$i]; ?></a><br /></p>
+				<?php 
+						}
+					}		
+				?>
+            	<br />
+			</div>
+		</div>
+
+		<div class="form-group">                  
+			<div class="col-md-offset-2 col-md-8"><hr/></div>
+		</div> 
+
 		<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">
 				
@@ -484,32 +519,6 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 					
 				<div class="form-group">
                     <div class="col-md-offset-2 col-md-8"><br /></div>
-				</div>
-
-				
-				<div class="form-group">
-                    <div class="col-md-offset-2 col-md-8">
-						<h4>Pedidos Relacionados</h4>
-						<?php $outros = listaPedidoContratacao($pedido['idEvento']); 
-						for($i = 0; $i < count($outros); $i++)
-						{
-							$dados = siscontrat($outros[$i]);
-							if($dados['TipoPessoa'] == 1)
-							{
-						?>
-								<p align="left">Número do Pedido de Contratação:<b> <a href="?perfil=contratos_lite&p=frm_edita_propostapf&id_ped=<?php echo $outros[$i]; ?>"></b><?php echo $outros[$i]; ?></a><br /></p>
-						<?php 
-							}
-							if($dados['TipoPessoa'] == 2)
-							{
-						?>
-								<p align="left">Número do Pedido de Contratação:<b> <a href="?perfil=contratos_lite&p=frm_edita_propostapj&id_ped=<?php echo $outros[$i]; ?>"></b><?php echo $outros[$i]; ?></a><br /></p>
-						<?php
-							}
-						}
-						?>
-                    	<br />
-					</div>
 				</div>
 	  		</div>
 	  	</div>
