@@ -1336,44 +1336,13 @@
 	function lista_prazo($num_registro,$pagina,$ordem)
 	{
 		$con = bancoMysqli();
-		$sql_lista_total = "SELECT ped.idEvento, 
-			ped.idPedidoContratacao, 
-			ped.tipoPessoa, 
-			ped.idPessoa, 
-			ped.instituicao,
-			ped.idContratos
-			FROM igsis_pedido_contratacao 
-			AS ped
-			INNER JOIN ig_evento 
-			AS eve 
-			ON ped.idEvento = eve.idEvento
-			WHERE eve.dataEnvio IS NULL
-			AND eve.publicado = 1 
-			AND ped.publicado = 1
-			AND eve.statusEvento = 'Aguardando'
-			ORDER BY eve.idEvento DESC";
+		$sql_lista_total = "SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, ped.idContratos, MAX(ped.idPedidoContratacao) FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC";
 		$query_lista_total = mysqli_query($con,$sql_lista_total);
 		$total_registros = mysqli_num_rows($query_lista_total);
 		$pag = $pagina - 1;
 		$registro_inicial = $num_registro * $pag;
 		$total_paginas = $total_registros / $num_registro; // gera o número de páginas
-		$sql_lista_pagina = "SELECT ped.idEvento, 
-			ped.idPedidoContratacao, 
-			ped.tipoPessoa, 
-			ped.idPessoa, 
-			ped.instituicao,
-			ped.idContratos
-			FROM igsis_pedido_contratacao 
-			AS ped
-			INNER JOIN ig_evento 
-			AS eve 
-			ON ped.idEvento = eve.idEvento
-			WHERE eve.dataEnvio IS NULL 
-			AND eve.publicado = 1 
-			AND ped.publicado = 1
-			AND eve.statusEvento = 'Aguardando'
-			ORDER BY eve.idEvento 
-			DESC LIMIT $registro_inicial,$num_registro";
+		$sql_lista_pagina = "SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, ped.idContratos, MAX(ped.idPedidoContratacao) FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC LIMIT $registro_inicial,$num_registro";
 		$query_lista_pagina = mysqli_query($con,$sql_lista_pagina);
 		//$x = $sql_lista_pagina;
 		$i = 0;

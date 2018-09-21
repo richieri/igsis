@@ -98,13 +98,11 @@
 				<thead>
 					<tr class="list_menu">
 					<td>Id Evento</td>
-					<td>Código do Pedido</td>
 					<td>Proponente</td>
 					<td>Objeto</td>
 					<td>Local</td>
 					<td>Período</td>
                     <td>Fiscal</td>
-					<td>Operador</td>
 					<td></td>
 					<td></td>
 					</tr>
@@ -117,14 +115,6 @@
 						$pf = recuperaDados("sis_pessoa_fisica",$lista[$i]['IdProponente'],"Id_PessoaFisica");
 						$chamado = recuperaAlteracoesEvento($lista[$i]['idEvento']);
 						echo "<tr><td class='lista'> <a target='_blank' href='".$link.$lista[$i]['idEvento']."'>".$lista[$i]['idEvento']."</a></td>";
-						if($lista[$i]['TipoPessoa'] == 2)
-						{
-							echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$lista[$i]['idPedido']."'>".$lista[$i]['idPedido']."</a></td>";
-						}
-						else
-						{
-							echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$lista[$i]['idPedido']."'>".$lista[$i]['idPedido']."</a></td>";
-						}
 						echo '<td class="list_description">'.$lista[$i]['Proponente'].'</td> ';
 
 						echo '<td class="list_description">'.$lista[$i]['Objeto'].' [';
@@ -141,11 +131,10 @@
 						echo '<td class="list_description">'.$lista[$i]['Local'].'</td> ';
 						echo '<td class="list_description">'.$lista[$i]['Periodo'].'</td> ';
 						echo '<td class="list_description">'.$lista[$i]['Fiscal'].'</td>';
-						echo '<td class="list_description">'.$lista[$i]['Operador'].'</td>';
 						echo "<td class='list_description'>
 						<form method='POST' a target='_blank' action='?perfil=gestao_prazos&p=detalhe_evento&pag=finalizar&id_eve=".$lista[$i]['idEvento']."'>
 						<input type='hidden' name='finalizar' value='".$lista[$i]['idEvento']."' >
-						<input type ='submit' class='btn btn-theme  btn-block' value='enviar'></td></form>"	;
+						<input type ='submit' class='btn btn-theme  btn-block' target='_blank' value='enviar'></td></form>"	;
 						echo "<td class='list_description'>
 						<form method='POST' a target='_blank'  action='?perfil=gestao_prazos&p=detalhe_evento&pag=desaprovar&id_eve=".$lista[$i]['idEvento']."'>
 						<input type='hidden' name='carregar' value='".$lista[$i]['idEvento']."' >
