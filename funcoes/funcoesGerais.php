@@ -2933,7 +2933,7 @@
 		$con = bancoMysqli();
 		$sql = "SELECT * FROM sis_protocolo, igsis_pedido_contratacao 
 			WHERE sis_protocolo.idPedido = igsis_pedido_contratacao.idPedidoContratacao 
-			AND igsis_pedido_contratacao.idEvento = '$idEvento'";
+			AND igsis_pedido_contratacao.idEvento = '$idEvento' AND igsis_pedido_contratacao.publicado = '1' ";
 		$query = mysqli_query($con,$sql);
 		$protos = "";
 		while($protocolo = mysqli_fetch_array($query))
