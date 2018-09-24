@@ -73,7 +73,7 @@ case 'inicial':
 		else
 		{
 			if($id != "")
-			{ // Foi inserido o número do pedido
+			{ // Foi inserido o número do evento
 				$con = bancoMysqli();
 				$sql_existe = "SELECT * FROM igsis_pedido_contratacao AS ped
 				INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento
@@ -82,6 +82,7 @@ case 'inicial':
 				AND statusEvento = 'Aguardando' 
 				AND eve.publicado = 1 
 				AND eve.dataEnvio IS NULL
+				GROUP BY eve.idEvento
 				ORDER BY eve.idEvento DESC";
 				$query_existe = mysqli_query($con, $sql_existe);
 				$num_registro = mysqli_num_rows($query_existe);
@@ -104,32 +105,21 @@ case 'inicial':
 						$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 						$fiscal = recuperaUsuario($evento['idResponsavel']);
 						$operador = recuperaUsuario($pedido['idContratos']);
+						$pedidos = listaTodosPedidos($pedido['idEvento']);
 						$x[0]['id']= $evento['idEvento'];
-						$x[0]['id_ped']= $pedido['idPedidoContratacao'];
+						$x[0]['Pedidos']= $pedidos;
 						$x[0]['local'] = substr($local,1);
 						$x[0]['periodo'] = $periodo;
 						$x[0]['fiscal'] = $fiscal['nomeCompleto'];
 						$x[0]['operador'] = $operador['nomeCompleto'];
 						$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-						if($pedido['tipoPessoa'] == 1)
-						{
-							$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-							$x[0]['proponente'] = $pessoa['Nome'];
-							$x[0]['tipo'] = "Física";
-						}
-						else
-						{
-							$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-							$x[0]['proponente'] = $pessoa['RazaoSocial'];
-							$x[0]['tipo'] = "Jurídica";
-						}
 						$i++;
 					}
 					$x['num'] = $i;
 				}
 			}
 			else
-			{ //Não foi inserido o número do pedido
+			{ //Não foi inserido o número do evento
 				if($nomeEvento != '')
 				{
 					$filtro_evento = " AND nomeEvento LIKE '%$nomeEvento%' OR autor LIKE '%$nomeEvento%'";
@@ -176,30 +166,18 @@ case 'inicial':
 						$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
 						$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
 						$local = listaLocais($pedido['idEvento']);
+						$pedidos = listaTodosPedidos($pedido['idEvento']);
 						$periodo = retornaPeriodo($pedido['idEvento']);
 						$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 						$fiscal = recuperaUsuario($evento['idResponsavel']);
 						$operador = recuperaUsuario($pedido['idContratos']);
 						$x[$i]['id']= $evento['idEvento'];
-						$x[$i]['id_ped']= $pedido['idPedidoContratacao'];
+						$x[$i]['Pedidos'] = $pedidos;
 						$x[$i]['local'] = substr($local,1);
 						$x[$i]['periodo'] = $periodo;
 						$x[$i]['fiscal'] = $fiscal['nomeCompleto'];
 						$x[$i]['operador'] = $operador['nomeCompleto'];
 						$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-
-						if($pedido['tipoPessoa'] == 1)
-						{
-							$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-							$x[$i]['proponente'] = $pessoa['Nome'];
-							$x[$i]['tipo'] = "Física";
-						}
-						else
-						{
-							$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-							$x[$i]['proponente'] = $pessoa['RazaoSocial'];
-							$x[$i]['tipo'] = "Jurídica";
-						}
 						$i++;
 					}
 					$x['num'] = $i;
@@ -225,12 +203,13 @@ case 'inicial':
 						<thead>
 							<tr class="list_menu">
 							<td>Id Evento</td>
-							<td>Pedido</td>
+							<td>Pedido(s)</td>
 							<td>Objeto</td>
 							<td>Local</td>
 							<td>Periodo</td>
 							<td>Fiscal</td>
-							<td>Operador</td>
+							<td></td>
+							<td></td>
 							</tr>
 						</thead>
 						<tbody>
@@ -241,20 +220,20 @@ case 'inicial':
 							for($h = 0; $h < $x['num']; $h++)
 							{
 								echo "<tr><td class='list_description'> <a href='".$link.$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
-								if($pedido['tipoPessoa'] == 2)
-								{
-									echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id_ped']."'>".$x[$h]['id_ped']."</a></td>";
-								}
-								else
-								{
-									echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id_ped']."'>".$x[$h]['id_ped']."</a></td>";
-								}
+								echo '<td class="list_description">'.$x[$h]['Pedidos'].				'</td> ';
 								echo '<td class="list_description">'.$x[$h]['objeto'].				'</td> ';
 								echo '<td class="list_description">'.$x[$h]['local'].				'</td> ';
 								echo '<td class="list_description">'.$x[$h]['periodo'].				'</td> ';
 								echo '<td class="list_description">'.$x[$h]['fiscal'].				'</td> ';
-								echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
-							}
+								echo "<td class='list_description'>
+								<form method='POST' a target='_blank' action='?perfil=gestao_prazos&p=detalhe_evento&pag=finalizar&id_eve=".$link.$x[$h]['id']."'>
+								<input type='hidden' name='finalizar' value='".$link.$x[$h]['id']."' >
+								<input type ='submit' class='btn btn-theme  btn-block' target='_blank' value='enviar'></td></form>"	;
+								echo "<td class='list_description'>
+								<form method='POST' a target='_blank'  action='?perfil=gestao_prazos&p=detalhe_evento&pag=desaprovar&id_eve=".$link.$x[$h]['id']."'>
+								<input type='hidden' name='carregar' value='".$link.$x[$h]['id']."' >
+								<input type ='submit' class='btn btn-theme  btn-block' value='não aprovar'></td></form>"	;
+									}
 						?>
 						</tbody>
 					</table>
