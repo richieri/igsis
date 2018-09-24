@@ -98,6 +98,7 @@
 				<thead>
 					<tr class="list_menu">
 					<td>Id Evento</td>
+					<td>Pedido(s)</td>
 					<td>Proponente</td>
 					<td>Objeto</td>
 					<td>Local</td>
@@ -115,6 +116,8 @@
 						$pf = recuperaDados("sis_pessoa_fisica",$lista[$i]['IdProponente'],"Id_PessoaFisica");
 						$chamado = recuperaAlteracoesEvento($lista[$i]['idEvento']);
 						echo "<tr><td class='lista'> <a target='_blank' href='".$link.$lista[$i]['idEvento']."'>".$lista[$i]['idEvento']."</a></td>";
+						echo '<td class="list_description">'.$lista[$i]['Pedidos'].'</td> ';
+
 						echo '<td class="list_description">'.$lista[$i]['Proponente'].'</td> ';
 
 						echo '<td class="list_description">'.$lista[$i]['Objeto'].' [';

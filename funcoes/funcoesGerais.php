@@ -1669,6 +1669,19 @@
 		}
 		return $locais;
 	}
+	function listaTodosPedidos($idEvento)
+	{
+		$con = bancoMysqli();
+			$sql = "SELECT DISTINCT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND publicado = '1'";
+			$query = mysqli_query($con,$sql);
+			$pedidos = "";	
+			while($pedido = mysqli_fetch_array($query))
+			{
+				$pedidos .= $pedido['idPedidoContratacao']."  ";
+			}
+		
+		return $pedidos;
+	}
 	/*
 	function listaLocais($idEvento)
 	{
