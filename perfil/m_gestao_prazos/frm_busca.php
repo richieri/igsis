@@ -254,7 +254,7 @@ case 'inicial':
 			<div class="row">
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-						<h3>Busca por evento</h1>
+						<h3>Busca por evento</h3>
 					</div>
 				</div>
 			</div>
