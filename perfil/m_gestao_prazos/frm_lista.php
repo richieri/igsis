@@ -104,18 +104,21 @@
 					<td>Local</td>
 					<td>Período</td>
                     <td>Fiscal</td>
+                    <td>Operador</td>
 					<td></td>
 					<td></td>
 					</tr>
 				</thead>
-				<tbody>
+
 				<?php
+					echo "<tbody>";
 					$data=date('Y');
 					for($i = 0; $i < count($lista); $i++)
 					{
 						$pf = recuperaDados("sis_pessoa_fisica",$lista[$i]['IdProponente'],"Id_PessoaFisica");
 						$chamado = recuperaAlteracoesEvento($lista[$i]['idEvento']);
 						echo "<tr><td class='lista'> <a target='_blank' href='".$link.$lista[$i]['idEvento']."'>".$lista[$i]['idEvento']."</a></td>";
+
 						echo '<td class="list_description">'.$lista[$i]['Pedidos'].'</td> ';
 
 						echo '<td class="list_description">'.$lista[$i]['Proponente'].'</td> ';
@@ -134,6 +137,7 @@
 						echo '<td class="list_description">'.$lista[$i]['Local'].'</td> ';
 						echo '<td class="list_description">'.$lista[$i]['Periodo'].'</td> ';
 						echo '<td class="list_description">'.$lista[$i]['Fiscal'].'</td>';
+                        echo '<td class="list_description">'.strstr($lista[$i]['Operador'], ' ', true).'</td>';
 						echo "<td class='list_description'>
 						<form method='POST' a target='_blank' action='?perfil=gestao_prazos&p=detalhe_evento&pag=finalizar&id_eve=".$lista[$i]['idEvento']."'>
 						<input type='hidden' name='finalizar' value='".$lista[$i]['idEvento']."' >
@@ -145,8 +149,9 @@
 						echo ' </tr>';
 					}
 					echo "<br/><h5>Foram encontrados ".$i." registros</h5>";
+					echo "</tbody>";
 					?>
-				</tbody>
+
 			</table>
 		</div>
 	</div>

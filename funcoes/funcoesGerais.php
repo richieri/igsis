@@ -1672,12 +1672,20 @@
 	function listaTodosPedidos($idEvento)
 	{
 		$con = bancoMysqli();
-			$sql = "SELECT DISTINCT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND publicado = '1'";
+			$sql = "SELECT DISTINCT idPedidoContratacao,tipoPessoa FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND publicado = '1'";
 			$query = mysqli_query($con,$sql);
 			$pedidos = "";	
 			while($pedido = mysqli_fetch_array($query))
 			{
-				$pedidos .= $pedido['idPedidoContratacao']."  ";
+                if($pedido['tipoPessoa'] == 2)
+                {
+                    $link = "?perfil=contratos&p=frm_edita_propostapj&id_ped=";
+                }
+                else
+                {
+                    $link = "?perfil=contratos&p=frm_edita_propostapf&id_ped=";
+                }
+			    $pedidos .= "<a target='_blank'  href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a>  ";
 			}
 		
 		return $pedidos;
