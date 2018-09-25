@@ -421,7 +421,7 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-5">
 						<label>Nome do Grupo</label>
-						<input type="text" name="nomeGrupo" id="nomeGrupo" readonly class='form-control' value="<?php echo $evento['nomeGrupo'] ?>" >
+						<input type="text" name="nomeGrupo" id="nomeGrupo" class='form-control' value="<?php echo $evento['nomeGrupo'] ?>" >
 					</div>
 					<div class="col-md-3"><br/>
 						<input type="hidden" name="atualizaGrupo" value="<?php echo $pedido['idEvento']; ?>" />
