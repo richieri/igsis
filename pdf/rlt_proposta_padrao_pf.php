@@ -142,7 +142,11 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(36,$l,utf8_decode('Data de Nascimento:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(25,$l,utf8_decode($DataNascimento),0,0,'L');
+   if($DataNascimento == "31/12/1969"){
+      $pdf->Cell(25,$l, " " ,0,0,'L');
+   }else {
+      $pdf->Cell(25,$l,utf8_decode($DataNascimento),0,0,'L');
+   }
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(28,$l,utf8_decode('Nacionalidade:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);

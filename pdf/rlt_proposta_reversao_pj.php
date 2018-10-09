@@ -177,7 +177,11 @@ $pdf->SetXY( $x , 25 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 	$pdf->SetFont('Arial','B', 10);
     $pdf->Cell(36,$l,utf8_decode('Data de Nascimento:'),0,0,'L');
     $pdf->SetFont('Arial','', 10);
-    $pdf->Cell(25,$l,utf8_decode($exDataNascimento),0,0,'L');
+    if($exDataNascimento == "31/12/1969"){
+      $pdf->Cell(25,$l, " " ,0,0,'L');
+    }else {
+      $pdf->Cell(25,$l,utf8_decode($exDataNascimento),0,0,'L');
+    }
     $pdf->SetFont('Arial','B', 10);
     $pdf->Cell(28,$l,utf8_decode('Nacionalidade:'),0,0,'L');
     $pdf->SetFont('Arial','', 10);
@@ -500,14 +504,14 @@ $l=5; //DEFINE A ALTURA DA LINHA
 		$pdf->Cell(100,4,"CPF: ".$rep02CPF,0,0,'L');
 	}
 
-  $pdf->Ln();  
+  $pdf->Ln();
   $pdf->Ln();
 
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 9);
    $pdf->MultiCell(180,5,utf8_decode('Autorizo a execução do serviço.'));
-  
+
   $pdf->Ln();
   $pdf->Ln();
 
