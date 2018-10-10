@@ -267,8 +267,32 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 					</div> 
 				
 			<?php 
-				} 
+				}
+				elseif ($coord['contratos'] == 2)
+				{ 
+			?>	
+					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
+					<div class="form-group">
+						<div class="col-md-offset-2 col-md-5"><strong>Status:</strong><br/>
+							<select class="form-control" name="estado" id="">
+								<option value='0'></option>
+								<?php  geraOpcaoEstado($ped['estado'],1); ?>
+							</select>
+						</div>
+						<div class="col-md-3"><br/>
+							<input type="hidden" name="idEstado" value="<?php echo $id_ped; ?>" />
+							<input type="submit" class="btn btn-theme  btn-block" value="Atualizar status">
+						</div>
+					</div>
+					</form>
+				
+					<div class="form-group">                  
+						<div class="col-md-offset-2 col-md-8"><hr/></div>
+					</div> 
+			<?php
+			}
 			?>		
+
 			<!-- Fim Coordenador de Contratos -->
 				  
 				<div class="form-group">
