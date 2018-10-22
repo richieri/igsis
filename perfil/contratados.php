@@ -3695,12 +3695,12 @@ if ($pedido['TipoPessoa'] == 2)
 	$ex = siscontratDocs($pedido['IdExecutante'],1);
 	$rep01 = siscontratDocs($pj['Representante01'],3);
 	$rep02 = siscontratDocs($pj['Representante02'],3);
-	$t1 = "Esta comissão ratifica o pedido de contratação de ".$ex['Nome']." por intermédio da ".$pj["Nome"].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido["ValorGlobal"]." (".valorPorExtenso($pedido["ValorGlobal"]).").";
+	$t1 = "Esta comissão ratifica o pedido de contratação de ".$ex['Nome']." por intermédio da ".$pj['Nome'].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido['ValorGlobal']." (".valorPorExtenso($pedido['ValorGlobal']).").";
 }
 else
 {
 	$pf = siscontratDocs($pedido['IdProponente'],1);
-	$t1 = "Esta comissão ratifica o pedido de contratação de ".$pf["Nome"].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido["ValorGlobal"]." (".valorPorExtenso($pedido["ValorGlobal"]).").";			
+	$t1 = "Esta comissão ratifica o pedido de contratação de ".$pf['Nome'].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido['ValorGlobal']." (".valorPorExtenso($pedido['ValorGlobal']).").";
 }
 
 ?>
