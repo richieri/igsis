@@ -113,7 +113,7 @@ if(isset($_POST['pesquisar']))
 		if($id != "")
 		{ // Foi inserido o número do pedido
 			$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
-			if(($pedido['estado'] != NULL ) && ($pedido['estado'] != 15 ))
+			if(($pedido['estado'] != NULL ) && ($pedido['estado'] != 15 ) && $pedido['publicado'] == 1)
 			{
 				$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
 				$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
