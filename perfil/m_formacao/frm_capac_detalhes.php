@@ -134,6 +134,6 @@ $documento = recuperaDadosCapac('tipo_documento', 'id', $pf['idTipoDocumento']);
                 </div>
             </div>
             <div class="col-md-offset-2 col-md-8">
-                <a href="includes/frm_capac_arquivos.php?idPf=<?= $idCapac ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
+                <a href="../perfil/m_formacao/includes/frm_capac_arquivos.php?idPf=<?= $idCapac ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
             </div>
 </section>
