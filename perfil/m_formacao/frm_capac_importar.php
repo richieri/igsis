@@ -16,22 +16,22 @@ include 'includes/menu.php';
                 <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
                 <p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
 
-                <form method="POST" action="?perfil=capac_busca_resultado" class="form-horizontal" role="form">
+                <form method="POST" action="?perfil=formacao&p=frm_capac_importar_resultado" class="form-horizontal" role="form">
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8"><strong>Código do cadastro no CAPAC</strong><br/>
-                            <input type="text" name="idCapacPf" class="form-control" placeholder="Insira o Código do Cadastro" >
+                            <input type="text" name="idCapacPf" class="form-control" placeholder="Insira o Código do Cadastro" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8"><strong>Nome do Proponente</strong><br/>
-                            <input type="text" name="nomeEvento" class="form-control" placeholder="Insira nome do proponente" >
+                            <input type="text" name="proponente" class="form-control" placeholder="Insira nome do proponente" >
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8"><strong>Programa</strong><br/>
-                            <select class="form-control" name="tipoEvento" id="inputSubject" >
+                            <select class="form-control" name="programa" id="inputSubject" >
                                 <option value="">Selecione...</option>
                                 <?php
                                 $sql = "SELECT * FROM `tipo_formacao`";
