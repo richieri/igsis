@@ -45,32 +45,67 @@ $Cbo = $query1["cbo"];
 $sql2 = $con2->query("SELECT * FROM pessoa_fisica where cpf = '$cpf_busca'");
 $query2 = $sql2->fetch_array(MYSQLI_ASSOC);
 
-$idPessoaMac = $query2['id'];
-$nome = $query2["nome"];
-$nomeArtistico = $query2["nomeArtistico"];
-$rg = $query2["rg"];
-$cpf = $query2["cpf"];
-$ccm = $query2["ccm"];
-$dataNascimento = $query2["dataNascimento"];
-$localNascimento = $query2["localNascimento"];
-$nacionalidade = $query2["nacionalidade"];
-$cep = $query2["cep"];
-$numero = $query2["numero"];
-$complemento = $query2["complemento"];
-$telefone1 = $query2["telefone1"];
-$telefone2 = $query2["telefone2"];
-$telefone3 = $query2["telefone3"];
-$email = $query2["email"];
-$drt = $query2["drt"];
-$funcao = $query2["funcao"];
-$pis = $query2["pis"];
-$omb = $query2["omb"];
-$dataAtualizacao = $query2["dataAtualizacao"];
-$idTipoDocumento = $query2["idTipoDocumento"];
-$codigoBanco = $query2["codigoBanco"];
-$agencia = $query2["agencia"];
-$conta = $query2["conta"];
-$cbo = $query2["cbo"];
+$id = $query2['id'];
+$nome = $query2['nome'];
+$nomeArtistico = $query2['nomeArtistico'];
+$rg = $query2['rg'];
+$cpf = $query2['cpf'];
+$ccm = $query2['ccm'];
+$idEstadoCivil = $query2['idEstadoCivil'];
+$dataNascimento = $query2['dataNascimento'];
+$localNascimento = $query2['localNascimento'];
+$nacionalidade = $query2['nacionalidade'];
+$logradouro = $query2['logradouro'];
+$bairro = $query2['bairro'];
+$cidade = $query2['cidade'];
+$estado = $query2['estado'];
+$cep = $query2['cep'];
+$numero = $query2['numero'];
+$complemento = $query2['complemento'];
+$telefone1 = $query2['telefone1'];
+$telefone2 = $query2['telefone2'];
+$telefone3 = $query2['telefone3'];
+$email = $query2['email'];
+$drt = $query2['drt'];
+$cbo = $query2['cbo'];
+$funcao = $query2['funcao'];
+$pis = $query2['pis'];
+$omb = $query2['omb'];
+$idTipoDocumento = $query2['idTipoDocumento'];
+$codigoBanco = $query2['codigoBanco'];
+$agencia = $query2['agencia'];
+$conta = $query2['conta'];
+$dataAtualizacao = $query2['dataAtualizacao'];
+$oficineiro = $query2['oficineiro'];
+$tipoFormacaoId = $query2['tipo_formacao_id'];
+$grauInstrucaoId = $query2['grau_instrucao_id'];
+$formacaoFuncaoId = $query2['formacao_funcao_id'];
+$idUsuario = $query2['idUsuario'];
+
+switch ($query2['etnia_id'])
+{
+    case 1:
+        $etniaId = 7;
+        break;
+    case 2:
+        $etniaId = 8;
+        break;
+    case 3:
+        $etniaId = 9;
+        break;
+    case 4:
+        $etniaId = 10;
+        break;
+    case 5:
+        $etniaId = 11;
+        break;
+    case 6:
+        $etniaId = 12;
+        break;
+    default:
+        break;
+}
+
 
 $sql_funcao = "SELECT ff.funcao FROM formacao_funcoes AS ff
                 INNER JOIN pessoa_fisica AS pf ON ff.id = pf.formacao_funcao_id
@@ -136,19 +171,21 @@ if(isset($_POST['importarCapacIgsis']))
     {
         $mensagem = "Importado com sucesso!";
 
-        //gravarLog($sql_insert_pf);
+        gravarLog($sql_insere_pf);
         $sql_ultimo = "SELECT * FROM sis_pessoa_fisica ORDER BY Id_PessoaFisica DESC LIMIT 0,1"; //recupera ultimo id
-        $query_ultimo = mysqli_query($con1,$sql_ultimo);
-        $id = mysqli_fetch_array($query_ultimo);
+        $id = $con1->query($sql_ultimo)->fetch_array();
         $idFisica = $id['Id_PessoaFisica'];
-        $idEvento = $_SESSION['idEvento'];
-        $sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantes`, `publicado`) VALUES ('$idEvento', '1', '$idFisica', $integrantes, '1')";
-        $query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
-        if($query_insert_pedido)
+        $sql_formacao_complemento = "INSERT INTO `sis_pessoa_fisica_formacao` (`IdPessoaFisica`, `IdEtinia`, `IdGrauInstrucao`) VALUES ('$idFisica', '$etniaId', '$grauInstrucaoId')";
+        $query_formacao_complemento = $con1->query($sql_formacao_complemento);
+        if($query_formacao_complemento)
         {
-            gravarLog($sql_insert_pedido);
+            gravarLog($sql_formacao_complemento);
+            $ano = date('Y');
+
+            // TODO: INSERT da pessoa na tabela sis_formacao
+            $sql_formacao = "INSERT INTO `sis_formacao` (`ano`, ) VALUE (`$ano`, )"
             $mensagem = "Inserido com sucesso!";
-            echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=contratados'>";
+            echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=formacao&p=frm_cadastra_dadoscontratacao&id=$idFisica'>";
         }
         else
         {
@@ -167,14 +204,14 @@ if($query1 == '' && $query2 != '')
     ?>
     <section id="list_items" class="home-section bg-white">
         <div class="container">
-            <div class="form-group">
+            <div class="row">
                 <div class="col-md-offset-2 col-md-8">
                     <h6>Não foi encontrado registro com o CPF <strong><?php echo $cpf_busca ?></strong> no IGSIS. Deseja realmente importar do CAPAC?</h6>
                     <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="row">
                 <div class="col-md-offset-2 col-md-6">
                     <form method='POST' action='?perfil=formacao&p=frm_capac_compara' enctype='multipart/form-data'>
                         <input type='hidden' name='busca' value='<?php echo $cpf_busca ?>'>
@@ -188,12 +225,7 @@ if($query1 == '' && $query2 != '')
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8"><hr/></div>
-            </div>
-
-            <div class="container">
-                <div class="page-header"> <h5>Informações Pessoais</h5><br></div>
+            <div class="row">
                 <div class="well">
                     <p align="justify"><strong>Nome:</strong> <?= $query2['nome']; ?></p>
                     <p align="justify"><strong>Nome artístico:</strong> <?= $query2['nomeArtistico']; ?></p>
@@ -208,7 +240,7 @@ if($query1 == '' && $query2 != '')
                     <p align="justify"><strong>PIS/PASEP/NIT:</strong> <?= $query2['pis']; ?><p>
                     <p align="justify"><strong>Programa Selecionado:</strong> <?= $programa['descricao']; ?><p>
 
-                <div class = "page-header"><h5>Endereço: </h5><br></div>
+                    <div class = "page-header"><h5>Endereço: </h5><br></div>
                     <p align="justify"><strong>CEP:</strong> <?php echo $query2['cep']; ?></p>
                     <p align="justify"><strong>Logradouro:</strong> <?php echo $query2['logradouro']; ?></p>
                     <p align="justify"><strong>Número:</strong> <?php echo $query2['numero']; ?></p>
