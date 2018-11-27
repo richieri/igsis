@@ -28,7 +28,7 @@ function recuperaDadosCapac($tabela, $campo, $valor)
 
 function recuperaBanco($campoY)
 {
-    $banco = recuperaDadosCapac("banco",$campoY,"id");
+    $banco = recuperaDadosCapac("banco",'id', $campoY);
     $nomeBanco = $banco['banco'];
     return $nomeBanco;
 }
@@ -135,5 +135,12 @@ $documento = recuperaDadosCapac('tipo_documento', 'id', $pf['idTipoDocumento']);
             </div>
             <div class="col-md-offset-2 col-md-8">
                 <a href="../perfil/m_formacao/includes/frm_capac_arquivos.php?idPf=<?= $idCapac ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
+            </div>
+
+            <div class="col-md-offset-2 col-md-8">
+                <form method='POST' action='?perfil=formacao&p=frm_capac_compara'>
+                    <input type="hidden" name="cpf" value="<?= $pf['cpf'] ?>" />
+                    <input type="submit" class="btn btn-theme btn-lg btn-block" value="Importar">
+                </form>
             </div>
 </section>

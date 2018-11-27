@@ -11,7 +11,7 @@ $nome_arquivo = $data.".zip";
 
 $zip = new ZipArchive();
 
-if( $zip->open( $nome_arquivo , ZipArchive::CREATE )  === true)
+if( $zip->open( $nome_arquivo , ZipArchive::CREATE ) === true)
 {
     // arquivos do proponente
     $sql = "SELECT * FROM upload_arquivo WHERE publicado = '1' AND idPessoa = '$idPf' AND idTipoPessoa = '6'";
