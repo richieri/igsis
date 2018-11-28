@@ -12,40 +12,47 @@ $cpf_busca = $_POST['cpf'];
 
 // Localiza no IGSIS
 $sql1 = $con1->query("SELECT * FROM sis_pessoa_fisica where CPF = '$cpf_busca'");
-$query1 = $sql1->fetch_array(MYSQLI_ASSOC);
+$query1 = $sql1->fetch_array();
 
-$Nome = $query1["Nome"];
-$NomeArtistico = $query1["NomeArtistico"];
-$RG = $query1["RG"];
-$CPF = $query1["CPF"];
-$CCM = $query1["CCM"];
-$DataNascimento = $query1["DataNascimento"];
-$LocalNascimento = $query1["LocalNascimento"];
-$Nacionalidade = $query1["Nacionalidade"];
-$CEP = $query1["CEP"];
-$Numero = $query1["Numero"];
-$Complemento = $query1["Complemento"];
-$Telefone1 = $query1["Telefone1"];
-$Telefone2 = $query1["Telefone2"];
-$Telefone3 = $query1["Telefone3"];
-$Email = $query1["Email"];
-$DRT = $query1["DRT"];
-$Funcao = $query1["Funcao"];
-$Pis = $query1["Pis"];
-$OMB = $query1["OMB"];
-$DataAtualizacao = $query1["DataAtualizacao"];
-$tipoDocumento = $query1["tipoDocumento"];
-$codBanco = $query1["codBanco"];
-$Agencia = $query1["agencia"];
-$Conta = $query1["conta"];
-$Cbo = $query1["cbo"];
+$idIgsis = $query1['Id_PessoaFisica'];
+$Foto = $query1['Foto'];
+$Nome = $query1['Nome'];
+$NomeArtistico = $query1['NomeArtistico'];
+$RG = $query1['RG'];
+$CPF = $query1['CPF'];
+$CCM = $query1['CCM'];
+$IdEstadoCivil = $query1['IdEstadoCivil'];
+$DataNascimento = $query1['DataNascimento'];
+$LocalNascimento = $query1['LocalNascimento'];
+$Nacionalidade = $query1['Nacionalidade'];
+$CEP = $query1['CEP'];
+$Numero = $query1['Numero'];
+$Complemento = $query1['Complemento'];
+$Telefone1 = $query1['Telefone1'];
+$Telefone2 = $query1['Telefone2'];
+$Telefone3 = $query1['Telefone3'];
+$Email = $query1['Email'];
+$DRT = $query1['DRT'];
+$Funcao = $query1['Funcao'];
+$InscricaoINSS = $query1['InscricaoINSS'];
+$Pis = $query1['Pis'];
+$OMB = $query1['OMB'];
+$DataAtualizacao = $query1['DataAtualizacao'];
+$Observacao = $query1['Observacao'];
+$IdUsuario = $query1['IdUsuario'];
+$IdEvento = $query1['idEvento'];
+$TipoDocumento = $query1['tipoDocumento'];
+$CodBanco = $query1['codBanco'];
+$Agencia = $query1['agencia'];
+$Conta = $query1['conta'];
+$Cbo = $query1['cbo'];
 
 
 //Localiza no proponente
 $sql2 = $con2->query("SELECT * FROM pessoa_fisica where cpf = '$cpf_busca'");
-$query2 = $sql2->fetch_array(MYSQLI_ASSOC);
+$query2 = $sql2->fetch_array();
 
-$id = $query2['id'];
+$idCapac = $query2['id'];
 $nome = $query2['nome'];
 $nomeArtistico = $query2['nomeArtistico'];
 $rg = $query2['rg'];
@@ -319,7 +326,7 @@ if($query1 == '' && $query2 != '')
                     <p align="justify"><strong>Cidade:</strong> <?php echo $query2['cidade']; ?></p>
                     <p align="justify"><strong>Estado:</strong> <?php echo $query2['estado']; ?></p>
 
-                    <div class = "page-header"><h5>Informações Complementares: </h5><br></div>
+                    <div class="page-header"><h5>Informações Complementares: </h5><br></div>
                     <p align="justify"><strong>DRT:</strong> <?php echo $query2['drt']; ?></p>
                     <p align="justify"><strong>Etnia:</strong> <?= $etnia['etnia']; ?><p>
                     <p align="justify"><strong>Grau de Instrução:</strong> <?= $grauInstrucao['grau_instrucao']; ?><p>
@@ -360,10 +367,14 @@ If($query1 != '' && $query2 != '')
                     </thead>
                     <tbody>
                     <?php
+                    foreach ($query1 as $key => $valor)
+                    {
+//                        TODO: Pegar o indice numeral e utilizar na query2 para comparação
+                    }
                     if($Nome != $nome)
                     {
                         echo "<tr>";
-                        echo "<td class='list_description'>Nome</td>";
+                        echo "<td class='list_description'><strong>Nome</strong></td>";
                         echo "<td class='list_description'>".$nome."</td>";
                         echo "<td class='list_description'>".$Nome."</td>";
                         echo "<td>
@@ -765,7 +776,7 @@ If($query1 != '' && $query2 != '')
                         $sql = "SELECT *
 								FROM upload_lista_documento as list
 								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
-								WHERE arq.idPessoa = '$idPessoaMac'
+								WHERE arq.idPessoa = '$idCapac'
 								AND arq.idTipoPessoa = '6'
 								AND arq.publicado = '1'";
                         $query = mysqli_query($con2,$sql);
@@ -792,51 +803,26 @@ If($query1 != '' && $query2 != '')
                             echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
                         }
                         ?>
-                        <a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=1" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+                        <a href="../include/arquivos_pessoa_capac.php?idPessoa=<?= $idCapac ?>&tipo=1" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <?php
-        if(isset($_POST['edicaoPessoa']))
-        {
-            $_SESSION['edicaoPessoa'] = $_POST['edicaoPessoa'];
-        }
-        $edicaoPessoa = $_SESSION['edicaoPessoa'];
-
-        if($edicaoPessoa == 1)
-        {
-            ?>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <form method='POST' action='?perfil=contratados'>
-                        <input type='submit' class='btn btn-theme btn-lg btn-block' value='voltar para a lista de contratados'>
-                    </form>
-                </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6">
+                <form method='POST' action='?perfil=contratados&p=fisica'>
+                    <input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro Proponente'>
+                </form>
             </div>
-            <?php
-        }
-        else
-        {
-            ?>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-6">
-                    <form method='POST' action='?perfil=contratados&p=fisica'>
-                        <input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro cpf'>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <form method='POST' action='?perfil=contratados&p=lista'>
-                        <input type='hidden' name='insereFisica' value='1'>
-                        <input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
-                        <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
-                    </form>
-                </div>
+            <div class="col-md-6">
+                <form method='POST' action='?perfil=contratados&p=lista'>
+                    <input type='hidden' name='insereFisica' value='1'>
+                    <input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
+                    <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
+                </form>
             </div>
-            <?php
-        }
-        ?>
+        </div>
     </section>
     <?php
 }
