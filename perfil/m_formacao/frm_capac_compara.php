@@ -79,7 +79,6 @@ $dataAtualizacao = $query2['dataAtualizacao'];
 $oficineiro = $query2['oficineiro'];
 $tipoFormacaoId = $query2['tipo_formacao_id'];
 $grauInstrucaoId = $query2['grau_instrucao_id'];
-$formacaoFuncaoId = $query2['formacao_funcao_id'];
 $idUsuario = $query2['idUsuario'];
 
 switch ($query2['etnia_id'])
@@ -103,9 +102,74 @@ switch ($query2['etnia_id'])
         $etniaId = 12;
         break;
     default:
+        $etniaId = NULL;
         break;
 }
 
+switch ($query2['formacao_funcao_id'])
+{
+    case 1:
+        $formacaoFuncaoId = 54;
+        break;
+    case 2:
+        $formacaoFuncaoId = 58;
+        break;
+    case 3:
+        $formacaoFuncaoId = 59;
+        break;
+    case 4:
+        $formacaoFuncaoId = 54;
+        break;
+    case 5:
+        $formacaoFuncaoId = 57;
+        break;
+    case 6:
+        $formacaoFuncaoId = 55;
+        break;
+    default:
+        $formacaoFuncaoId = NULL;
+        break;
+}
+
+switch ($query2['formacao_linguagem_id'])
+{
+    case 1:
+        $formacaoLinguagemId = 2;
+        break;
+    case 2:
+        $formacaoLinguagemId = 3;
+        break;
+    case 3:
+        $formacaoLinguagemId = 5;
+        break;
+    case 4:
+        $formacaoLinguagemId = 6;
+        break;
+    case 5:
+        $formacaoLinguagemId = 7;
+        break;
+    case 6:
+        $formacaoLinguagemId = 1;
+        break;
+    case 7:
+        $formacaoLinguagemId = 2;
+        break;
+    case 8:
+        $formacaoLinguagemId = 3;
+        break;
+    case 9:
+        $formacaoLinguagemId = 5;
+        break;
+    case 10:
+        $formacaoLinguagemId = 6;
+        break;
+    case 11:
+        $formacaoLinguagemId = 7;
+        break;
+    default:
+        $formacaoLinguagemId = NULL;
+        break;
+}
 
 $sql_funcao = "SELECT ff.funcao FROM formacao_funcoes AS ff
                 INNER JOIN pessoa_fisica AS pf ON ff.id = pf.formacao_funcao_id
@@ -172,20 +236,26 @@ if(isset($_POST['importarCapacIgsis']))
         $mensagem = "Importado com sucesso!";
 
         gravarLog($sql_insere_pf);
-        $sql_ultimo = "SELECT * FROM sis_pessoa_fisica ORDER BY Id_PessoaFisica DESC LIMIT 0,1"; //recupera ultimo id
-        $id = $con1->query($sql_ultimo)->fetch_array();
-        $idFisica = $id['Id_PessoaFisica'];
+        $idFisica = $con1->insert_id;
         $sql_formacao_complemento = "INSERT INTO `sis_pessoa_fisica_formacao` (`IdPessoaFisica`, `IdEtinia`, `IdGrauInstrucao`) VALUES ('$idFisica', '$etniaId', '$grauInstrucaoId')";
         $query_formacao_complemento = $con1->query($sql_formacao_complemento);
         if($query_formacao_complemento)
         {
             gravarLog($sql_formacao_complemento);
             $ano = date('Y');
-
-            // TODO: INSERT da pessoa na tabela sis_formacao
-            $sql_formacao = "INSERT INTO `sis_formacao` (`ano`, ) VALUE (`$ano`, )"
-            $mensagem = "Inserido com sucesso!";
-            echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=formacao&p=frm_cadastra_dadoscontratacao&id=$idFisica'>";
+            $sql_formacao = "INSERT INTO `sis_formacao` (`ano`, `IdPessoaFisica`, `IdCargo`, `IdLinguagem`, `Status`, `publicado`) VALUES ('$ano', '$idFisica', '$formacaoFuncaoId', '$formacaoLinguagemId', '1', '1')";
+            $query_formacao = $con1->query($sql_formacao);
+            if ($query_formacao)
+            {
+                $idContratacao = $con1->insert_id;
+                gravarLog($sql_formacao);
+                $mensagem = "Inserido com sucesso!";
+                echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=formacao&p=frm_cadastra_dadoscontratacao&id=$idContratacao'>";
+            }
+            else
+            {
+                $mensagem = "Erro ao importar! Tente novamente. [COD-02]";
+            }
         }
         else
         {
@@ -214,7 +284,7 @@ if($query1 == '' && $query2 != '')
             <div class="row">
                 <div class="col-md-offset-2 col-md-6">
                     <form method='POST' action='?perfil=formacao&p=frm_capac_compara' enctype='multipart/form-data'>
-                        <input type='hidden' name='busca' value='<?php echo $cpf_busca ?>'>
+                        <input type='hidden' name='cpf' value='<?= $cpf_busca ?>'>
                         <input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
                     </form><br/>
                 </div>
