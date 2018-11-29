@@ -13,7 +13,7 @@ if(isset($_POST['exportar'])) {
     if ($datainicio != '') {
         if ($datafim != '') {
 
-            $datafim = $_POST['datafim'];
+            //$datafim = $_POST['dataFim'];
             $filtro_data = " AND O.dataInicio BETWEEN '$datainicio' AND '$datafim'";
         } else {
             $filtro_data = " AND O.dataInicio > '$datainicio'";
