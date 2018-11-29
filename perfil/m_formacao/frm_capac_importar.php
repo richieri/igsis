@@ -1,6 +1,8 @@
 <?php
 $con = bancoMysqliProponente();
 
+unset($_SESSION['id']);
+
 include 'includes/menu.php';
 ?>
 

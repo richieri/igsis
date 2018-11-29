@@ -54,7 +54,9 @@ $pasta = "?perfil=formacao&p=administrativo&pag=";
 					<li><a href="?perfil=formacao&p=frm_cadastra_vigencia&novo">Cadastrar</a></li>
 					<li><a href="?perfil=formacao&p=frm_lista_vigencia">Listar</a></li>
 				</ul>
-			</li>		
+			</li>
+            <li><a href="?perfil=formacao&p=frm_habilita_cadastro_capac">Habilitar / Desabilitar Cadastro no CAPAC</a></li>
+
 			<li><a href="?perfil=formacao">Voltar ao módulo Formação</a></li>
 		</ul>
 	</div>

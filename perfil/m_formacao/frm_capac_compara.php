@@ -6,16 +6,15 @@ $con1 = bancoMysqli();
 $con2 = bancoMysqliProponente();
 
 // Endereço da página
-$link = "?perfil=m_formacao&p=frm_capac_compara";
+$link = "?perfil=formacao&p=frm_capac_compara";
 
 $cpf_busca = $_POST['cpf'];
 
 // Localiza no IGSIS
 $sql1 = $con1->query("SELECT * FROM sis_pessoa_fisica where CPF = '$cpf_busca'");
-$query1 = $sql1->fetch_array();
+$query1 = $sql1->fetch_assoc();
 
 $idIgsis = $query1['Id_PessoaFisica'];
-$Foto = $query1['Foto'];
 $Nome = $query1['Nome'];
 $NomeArtistico = $query1['NomeArtistico'];
 $RG = $query1['RG'];
@@ -47,10 +46,11 @@ $Agencia = $query1['agencia'];
 $Conta = $query1['conta'];
 $Cbo = $query1['cbo'];
 
+$EstadoCivil = recuperaDadosIgsis('sis_estado_civil', 'Id_EstadoCivil', $IdEstadoCivil);
 
 //Localiza no proponente
 $sql2 = $con2->query("SELECT * FROM pessoa_fisica where cpf = '$cpf_busca'");
-$query2 = $sql2->fetch_array();
+$query2 = $sql2->fetch_assoc();
 
 $idCapac = $query2['id'];
 $nome = $query2['nome'];
@@ -184,6 +184,12 @@ $sql_funcao = "SELECT ff.funcao FROM formacao_funcoes AS ff
                 WHERE pf.id = '".$query2['id']."'";
 $cargo = $con2->query($sql_funcao)->fetch_array();
 
+$estadoCivil = recuperaDadosCapac('estado_civil', 'id', $query2['idEstadoCivil']);
+$etnia = recuperaDadosCapac('etnias', 'id', $query2['etnia_id']);
+$grauInstrucao = recuperaDadosCapac('grau_instrucoes', 'id', $query2['grau_instrucao_id']);
+$programa = recuperaDadosCapac('tipo_formacao', 'id', $query2['tipo_formacao_id']);
+$documento = recuperaDadosCapac('tipo_documento', 'id', $query2['idTipoDocumento']);
+
 //retorna uma array com os dados de qualquer tabela do IGSIS. Serve apenas para 1 registro.
 function recuperaDadosIgsis($tabela_dados_ig,$campo_dados_ig,$variavelCampo_dados_ig)
 {
@@ -211,22 +217,15 @@ function recuperaBanco($campoY)
     return $nomeBanco;
 }
 
-$estadoCivil = recuperaDadosCapac('estado_civil', 'id', $query2['idEstadoCivil']);
-$etnia = recuperaDadosCapac('etnias', 'id', $query2['etnia_id']);
-$grauInstrucao = recuperaDadosCapac('grau_instrucoes', 'id', $query2['grau_instrucao_id']);
-$programa = recuperaDadosCapac('tipo_formacao', 'id', $query2['tipo_formacao_id']);
-$documento = recuperaDadosCapac('tipo_documento', 'id', $query2['idTipoDocumento']);
-
 if(isset($_POST['atualizaIgsis']))
 {
     $campo = $_POST['campo'];
     $varCampo = $_POST['varCampo'];
     $nomeCampo = $_POST['nomeCampo'];
-    $sql_update_nome = "UPDATE sis_pessoa_fisica SET ".$campo." = '$varCampo' WHERE CPF = '$cpf'";
+    $sql_update_nome = "UPDATE sis_pessoa_fisica SET ".$campo." = '$varCampo' WHERE CPF = '$cpf_busca'";
     if(mysqli_query($con1,$sql_update_nome))
     {
-        $mensagem =	$nomeCampo." atualizado com sucesso!";
-        echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=".$link."&busca=".$cpf_busca."'>";
+        $mensagem =	"<span style='color: #00a201; '>" .$nomeCampo." atualizado com sucesso!</span>";
     }
     else
     {
@@ -236,15 +235,36 @@ if(isset($_POST['atualizaIgsis']))
 
 if(isset($_POST['importarCapacIgsis']))
 {
-    $sql_insere_pf = "INSERT INTO sis_pessoa_fisica (`Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `DataNascimento`, `LocalNascimento`,	`Nacionalidade`, `CEP`,	`Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`,	`Funcao`, `Pis`, `OMB`, `DataAtualizacao`,`tipoDocumento`, `codBanco`, `agencia`, `conta`, `cbo`) VALUES ('$nome', '$nomeArtistico', '$rg', '$cpf', '$ccm', '$dataNascimento', '$localNascimento', '$nacionalidade', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$drt', '$funcao', '$pis', '$omb', '$dataAtualizacao', '$idTipoDocumento', '$codigoBanco', '$agencia', '$conta', '$cbo')";
+    if(isset($_POST['novo']))
+    {
+        $sql_insere_pf = "INSERT INTO sis_pessoa_fisica (`Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `DataNascimento`, `LocalNascimento`,	`Nacionalidade`, `CEP`,	`Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`,	`Funcao`, `Pis`, `OMB`, `DataAtualizacao`,`tipoDocumento`, `codBanco`, `agencia`, `conta`, `cbo`) VALUES ('$nome', '$nomeArtistico', '$rg', '$cpf', '$ccm', '$dataNascimento', '$localNascimento', '$nacionalidade', '$cep', '$numero', '$complemento', '$telefone1', '$telefone2', '$telefone3', '$email', '$drt', '$funcao', '$pis', '$omb', '$dataAtualizacao', '$idTipoDocumento', '$codigoBanco', '$agencia', '$conta', '$cbo')";
+        $query_insere_pf = $con1->query($sql_insere_pf);
+        $idFisica = $con1->insert_id;
+    }
+    else
+    {
+        $sql_insere_pf = "SELECT * FROM sis_pessoa_fisica where CPF = '$cpf_busca'";
+        $query_insere_pf = $con1->query($sql_insere_pf);
+        $Id_PessoaFisica = $query_insere_pf->fetch_assoc();
+        $idFisica = $Id_PessoaFisica['Id_PessoaFisica'];
+    }
 
-    if(mysqli_query($con1,$sql_insere_pf))
+    if($query_insere_pf)
     {
         $mensagem = "Importado com sucesso!";
 
         gravarLog($sql_insere_pf);
-        $idFisica = $con1->insert_id;
-        $sql_formacao_complemento = "INSERT INTO `sis_pessoa_fisica_formacao` (`IdPessoaFisica`, `IdEtinia`, `IdGrauInstrucao`) VALUES ('$idFisica', '$etniaId', '$grauInstrucaoId')";
+        $consulta_formacao_complemento = "SELECT `IdPessoaFisica` FROM `sis_pessoa_fisica_formacao` WHERE `IdPessoaFisica` = '$idFisica'";
+        $res = $con1->query($consulta_formacao_complemento)->num_rows;
+
+        if ($res != 0)
+        {
+            $sql_formacao_complemento = "UPDATE `sis_pessoa_fisica_formacao` SET `IdEtinia` = '$etniaId', `IdGrauInstrucao` = '$grauInstrucaoId' WHERE `IdPessoaFisica` = '$idFisica' AND `IdEtinia` IS NULL";
+        }
+        else
+        {
+            $sql_formacao_complemento = "INSERT INTO `sis_pessoa_fisica_formacao` (`IdPessoaFisica`, `IdEtinia`, `IdGrauInstrucao`) VALUES ('$idFisica', '$etniaId', '$grauInstrucaoId')";
+        }
         $query_formacao_complemento = $con1->query($sql_formacao_complemento);
         if($query_formacao_complemento)
         {
@@ -254,10 +274,11 @@ if(isset($_POST['importarCapacIgsis']))
             $query_formacao = $con1->query($sql_formacao);
             if ($query_formacao)
             {
-                $idContratacao = $con1->insert_id;
                 gravarLog($sql_formacao);
-                $mensagem = "Inserido com sucesso!";
-                echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=formacao&p=frm_cadastra_dadoscontratacao&id=$idContratacao'>";
+                $idContratacao = $con1->insert_id;
+                $_SESSION['id'] = $idContratacao;
+                $mensagem = "<span style='color: #00a201; '>Importado com Sucesso! Aguarde...</span>";
+                echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=formacao&p=frm_arquivos&idPessoa=$idFisica&tipoPessoa=1&importar=1'>";
             }
             else
             {
@@ -289,16 +310,9 @@ if($query1 == '' && $query2 != '')
             </div>
 
             <div class="row">
-                <div class="col-md-offset-2 col-md-6">
-                    <form method='POST' action='?perfil=formacao&p=frm_capac_compara' enctype='multipart/form-data'>
-                        <input type='hidden' name='cpf' value='<?= $cpf_busca ?>'>
-                        <input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
-                    </form><br/>
-                </div>
-                <div class="col-md-6">
-                    <form method='POST' action='?perfil=m_formacao&p=frm_capac_importar' enctype='multipart/form-data'>
-                        <input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
-                    </form>
+                <div class="alert alert-danger">
+                    <p><strong>ATENÇÃO!</strong></p>
+                    <p>Todos os arquivos precisam ser baixados e enviados manualmente na página de anexos!</p>
                 </div>
             </div>
 
@@ -337,8 +351,58 @@ if($query1 == '' && $query2 != '')
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8"><hr/></div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">
+                        <h5>Lista de Arquivos Anexados pelo CAPAC</h5>
+                        <div class="table-responsive list_info">
+                            <?php
+                            $sql = "SELECT *
+								FROM upload_lista_documento as list
+								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+								WHERE arq.idPessoa = '$idCapac'
+								AND arq.idTipoPessoa = '6'
+								AND arq.publicado = '1'";
+                            $query = mysqli_query($con2, $sql);
+                            $linhas = mysqli_num_rows($query);
+
+                            if ($linhas > 0) {
+                                echo "
+								<table class='table table-condensed'>
+
+									<tbody>";
+                                while ($arquivo = mysqli_fetch_array($query)) {
+                                    echo "<tr>";
+                                    echo "<td align = 'left' class='list_description'><a href='../../../igsiscapac/uploadsdocs/" . $arquivo['arquivo'] . "' target='_blank'>" . $arquivo['arquivo'] . "</a> (" . $arquivo['documento'] . ")</td>";
+                                    echo "</tr>";
+                                }
+                                echo "
+									</tbody>
+								</table>";
+                            } else {
+                                echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+                            }
+                            ?>
+                            <a href="../perfil/m_formacao/includes/frm_capac_arquivos.php?idPf=<?= $idCapac ?>"
+                               class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-offset-2 col-md-6">
+                    <form method='POST' action='?perfil=formacao&p=frm_capac_compara' enctype='multipart/form-data'>
+                        <input type='hidden' name='cpf' value='<?= $cpf_busca ?>'>
+                        <input type='hidden' name='novo' value='1'>
+                        <input type='submit' name='importarCapacIgsis' class='btn btn-theme btn-lg btn-block' value='Importar'>
+                    </form><br/>
+                </div>
+                <div class="col-md-6">
+                    <form method='POST' action='?perfil=m_formacao&p=frm_capac_importar' enctype='multipart/form-data'>
+                        <input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
+                    </form>
+                </div>
             </div>
 
         </div>
@@ -353,6 +417,10 @@ If($query1 != '' && $query2 != '')
     <section id="list_items" class="home-section bg-white">
         <div class="container">
             <p>O CPF nº <strong><?php echo $cpf_busca ?></strong> possui cadastro no sistema CAPAC e no IGSIS. Abaixo está a lista com as divergências apontadas o cadastro.</p>
+            <div class="alert alert-danger">
+                <p><strong>ATENÇÃO!</strong></p>
+                <p>Todos os arquivos precisam ser baixados e enviados manualmente na página de anexos!</p>
+            </div>
             <div class="table-responsive list_info">
                 <h6>Divergências</h6>
                 <h5><?php if(isset($mensagem)){echo $mensagem;}; ?></h5>
@@ -367,10 +435,6 @@ If($query1 != '' && $query2 != '')
                     </thead>
                     <tbody>
                     <?php
-                    foreach ($query1 as $key => $valor)
-                    {
-//                        TODO: Pegar o indice numeral e utilizar na query2 para comparação
-                    }
                     if($Nome != $nome)
                     {
                         echo "<tr>";
@@ -378,9 +442,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$nome."</td>";
                         echo "<td class='list_description'>".$Nome."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Nome' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='Nome'  />
 										<input type='hidden' name='varCampo' value='".$nome."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -395,9 +459,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$nomeArtistico."</td>";
                         echo "<td class='list_description'>".$NomeArtistico."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Nome Artístico' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='NomeArtistico'  />
 										<input type='hidden' name='varCampo' value='".$nomeArtistico."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -412,9 +476,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$rg."</td>";
                         echo "<td class='list_description'>".$RG."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='RG' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='RG'  />
 										<input type='hidden' name='varCampo' value='".$rg."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -429,9 +493,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$ccm."</td>";
                         echo "<td class='list_description'>".$CCM."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='CCM' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='CCM'  />
 										<input type='hidden' name='varCampo' value='".$ccm."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -446,9 +510,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".exibirDataBr($dataNascimento)."</td>";
                         echo "<td class='list_description'>".exibirDataBr($DataNascimento)."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Data de Nascimento' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='DataNascimento'  />
 										<input type='hidden' name='varCampo' value='".$dataNascimento."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -463,9 +527,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$localNascimento."</td>";
                         echo "<td class='list_description'>".$LocalNascimento."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Local de Nascimento' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='LocalNascimento'  />
 										<input type='hidden' name='varCampo' value='".$localNascimento."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -480,9 +544,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$nacionalidade."</td>";
                         echo "<td class='list_description'>".$Nacionalidade."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Nacionalidade' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='Nacionalidade'  />
 										<input type='hidden' name='varCampo' value='".$nacionalidade."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -497,9 +561,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$cep."</td>";
                         echo "<td class='list_description'>".$CEP."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='CEP' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />
 										<input type='hidden' name='campo' value='CEP'  />
 										<input type='hidden' name='varCampo' value='".$cep."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -514,9 +578,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$numero."</td>";
                         echo "<td class='list_description'>".$Numero."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Número' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Numero'  />
 										<input type='hidden' name='varCampo' value='".$numero."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -531,9 +595,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$complemento."</td>";
                         echo "<td class='list_description'>".$Complemento."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Complemento' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Complemento'  />
 										<input type='hidden' name='varCampo' value='".$complemento."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -548,9 +612,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$telefone1."</td>";
                         echo "<td class='list_description'>".$Telefone1."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Telefone #1' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Telefone1'  />
 										<input type='hidden' name='varCampo' value='".$telefone1."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -565,9 +629,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$telefone2."</td>";
                         echo "<td class='list_description'>".$Telefone2."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Telefone #2' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Telefone2'  />
 										<input type='hidden' name='varCampo' value='".$telefone2."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -582,9 +646,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$telefone3."</td>";
                         echo "<td class='list_description'>".$Telefone3."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Telefone #3' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Telefone3'  />
 										<input type='hidden' name='varCampo' value='".$telefone3."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -599,9 +663,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$email."</td>";
                         echo "<td class='list_description'>".$Email."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='E-mail' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Email'  />
 										<input type='hidden' name='varCampo' value='".$email."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -616,9 +680,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$drt."</td>";
                         echo "<td class='list_description'>".$DRT."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='DRT' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='DRT'  />
 										<input type='hidden' name='varCampo' value='".$drt."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -633,9 +697,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$funcao."</td>";
                         echo "<td class='list_description'>".$Funcao."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Função' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Funcao'  />
 										<input type='hidden' name='varCampo' value='".$funcao."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -650,10 +714,10 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$cbo."</td>";
                         echo "<td class='list_description'>".$Cbo."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='CBO' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
-										<input type='hidden' name='campo' value='Cbo'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
+										<input type='hidden' name='campo' value='cbo'  />
 										<input type='hidden' name='varCampo' value='".$cbo."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 									</form>
@@ -667,9 +731,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$pis."</td>";
                         echo "<td class='list_description'>".$Pis."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='NIT' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='Pis'  />
 										<input type='hidden' name='varCampo' value='".$pis."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -684,9 +748,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$omb."</td>";
                         echo "<td class='list_description'>".$OMB."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='OMB' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='OMB'  />
 										<input type='hidden' name='varCampo' value='".$omb."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -694,18 +758,18 @@ If($query1 != '' && $query2 != '')
 								</td>";
                         echo "</tr>";
                     }
-                    if($codBanco != $codigoBanco)
+                    if($CodBanco != $codigoBanco)
                     {
-                        $igNomeBanco = recuperaDadosIgsis("igsis_bancos","ID","$codBanco");
+                        $igNomeBanco = recuperaDadosIgsis("igsis_bancos","ID","$CodBanco");
                         $propNomeBanco = recuperaDadosCapac("banco","id","$codigoBanco");
                         echo "<tr>";
                         echo "<td class='list_description'>Banco</td>";
                         echo "<td class='list_description'>".$propNomeBanco['banco']."</td>";
                         echo "<td class='list_description'>".$igNomeBanco['banco']."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Banco' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='codBanco'  />
 										<input type='hidden' name='varCampo' value='".$codigoBanco."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -720,10 +784,10 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$agencia."</td>";
                         echo "<td class='list_description'>".$Agencia."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Agência' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
-										<input type='hidden' name='campo' value='Agencia'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
+										<input type='hidden' name='campo' value='agencia'  />
 										<input type='hidden' name='varCampo' value='".$agencia."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 									</form>
@@ -737,10 +801,27 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".$conta."</td>";
                         echo "<td class='list_description'>".$Conta."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Conta' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
-										<input type='hidden' name='campo' value='Conta'  />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
+										<input type='hidden' name='campo' value='conta'  />
+										<input type='hidden' name='varCampo' value='".$conta."'  />
+										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
+									</form>
+								</td>";
+                        echo "</tr>";
+                    }
+                    if($IdEstadoCivil != $idEstadoCivil)
+                    {
+                        echo "<tr>";
+                        echo "<td class='list_description'>Estado Civil</td>";
+                        echo "<td class='list_description'>".$EstadoCivil[1]."</td>";
+                        echo "<td class='list_description'>".$estadoCivil[1]."</td>";
+                        echo "<td>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
+										<input type='hidden' name='nomeCampo' value='estadoCivil' />
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
+										<input type='hidden' name='campo' value='IdEstadoCivil'  />
 										<input type='hidden' name='varCampo' value='".$conta."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
 									</form>
@@ -754,9 +835,9 @@ If($query1 != '' && $query2 != '')
                         echo "<td class='list_description'>".exibirDataBr($dataAtualizacao)."</td>";
                         echo "<td class='list_description'>".exibirDataBr($DataAtualizacao)."</td>";
                         echo "<td>
-									<form method='POST' action='".$link."&busca=".$cpf_busca."' enctype='multipart/form-data'>
+									<form method='POST' action='".$link."' enctype='multipart/form-data'>
 										<input type='hidden' name='nomeCampo' value='Última Atualização' />
-										<input type='hidden' name='busca' value='".$cpf_busca."'  />	
+										<input type='hidden' name='cpf' value='".$cpf_busca."'  />	
 										<input type='hidden' name='campo' value='DataAtualizacao'  />
 										<input type='hidden' name='varCampo' value='".$dataAtualizacao."'  />
 										<input type='submit' name='atualizaIgsis' class='btn btn-theme btn-md btn-block' value='Atualizar IGSIS'>
@@ -791,7 +872,7 @@ If($query1 != '' && $query2 != '')
                             while($arquivo = mysqli_fetch_array($query))
                             {
                                 echo "<tr>";
-                                echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+                                echo "<td align = 'left' class='list_description'><a href='../../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
                                 echo "</tr>";
                             }
                             echo "
@@ -803,7 +884,7 @@ If($query1 != '' && $query2 != '')
                             echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
                         }
                         ?>
-                        <a href="../include/arquivos_pessoa_capac.php?idPessoa=<?= $idCapac ?>&tipo=1" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+                        <a href="../perfil/m_formacao/includes/frm_capac_arquivos.php?idPf=<?= $idCapac ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
                     </div>
                 </div>
             </div>
@@ -811,15 +892,15 @@ If($query1 != '' && $query2 != '')
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-6">
-                <form method='POST' action='?perfil=contratados&p=fisica'>
+                <form method='POST' action='?perfil=formacao&p=frm_capac_importar'>
                     <input type='submit' class='btn btn-theme btn-lg btn-block' value='Pesquisar outro Proponente'>
                 </form>
             </div>
             <div class="col-md-6">
-                <form method='POST' action='?perfil=contratados&p=lista'>
-                    <input type='hidden' name='insereFisica' value='1'>
-                    <input type='hidden' name='Id_PessoaFisica' value='<?php echo $query1['Id_PessoaFisica'] ?>'>
-                    <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Criar Pedido'>
+                <form method='POST' action='<?= $link ?>'>
+                    <input type='hidden' name='importarCapacIgsis' value='1'>
+                    <input type='hidden' name='cpf' value='<?= $cpf_busca ?>'  />
+                    <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Importar'>
                 </form>
             </div>
         </div>

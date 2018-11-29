@@ -2,7 +2,6 @@
 include 'includes/menu.php';
 
 $con = bancoMysqli();
-$id_pf = $_GET['id_pf'];
 
 if(isset($_POST['novo']))
 {
