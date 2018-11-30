@@ -81,6 +81,7 @@ $etnia = recuperaDadosCapac('etnias', 'id', $pf['etnia_id']);
 $grauInstrucao = recuperaDadosCapac('grau_instrucoes', 'id', $pf['grau_instrucao_id']);
 $programa = recuperaDadosCapac('tipo_formacao', 'id', $pf['tipo_formacao_id']);
 $documento = recuperaDadosCapac('tipo_documento', 'id', $pf['idTipoDocumento']);
+$linguagem = recuperaDadosCapac('formacao_linguagem', 'id', $pf['formacao_linguagem_id']);
 
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -123,6 +124,7 @@ $documento = recuperaDadosCapac('tipo_documento', 'id', $pf['idTipoDocumento']);
                     <p align="justify"><strong>DRT:</strong> <?php echo $pf['drt']; ?></p>
                     <p align="justify"><strong>Etnia:</strong> <?= $etnia['etnia']; ?><p>
                     <p align="justify"><strong>Grau de Instrução:</strong> <?= $grauInstrucao['grau_instrucao']; ?><p>
+                    <p align="justify"><strong>Linguagem:</strong> <?= $linguagem['linguagem']; ?><p>
                     <p align="justify"><strong>Função:</strong> <?= $funcao[0]; ?><p>
                     <p align="justify"><strong>Banco:</strong> <?php echo recuperaBanco($pf['codigoBanco']); ?></p>
                     <p align="justify"><strong>Agência:</strong> <?php echo $pf['agencia']; ?></p>

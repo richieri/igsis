@@ -1,30 +1,48 @@
 <?php
 $con = bancoMysqliProponente();
 
+if (empty($_POST['idCapacPf']) && empty($_POST['proponente']) && empty($_POST['programa']))
+{
+    echo "<script>window.location = '?perfil=formacao&p=frm_capac_importar&erro=1';</script>";
+}
+
 $idCapacPf = trim($_POST['idCapacPf']);
 $proponente = addslashes($_POST['proponente']);
 $programa = $_POST['programa'];
 
-if($proponente != '')
+function pesquisaProponente()
 {
-    $filtro_proponente = " AND nome LIKE '%$proponente%'";
-}
-else
-{
-    $filtro_proponente = "";
-}
+    $idCapacPf = trim($_POST['idCapacPf']);
+    $proponente = addslashes($_POST['proponente']);
+    $programa = $_POST['programa'];
 
-if($programa != 0)
-{
-    $filtro_programa = " AND tipo_formacao_id = '$programa'";
-}
-else
-{
-    $filtro_programa = "";
+    $query = "SELECT `id`, `nome`, `nomeArtistico`, `tipo_formacao_id`, `formacao_funcao_id` FROM `pessoa_fisica`";
+    $condicoes = [];
+
+    if(!(empty($idCapacPf)))
+    {
+        $condicoes[] = "`id` = '$idCapacPf'";
+    }
+    if(!(empty($proponente)))
+    {
+     $condicoes[] = "`nome` LIKE '%$proponente%'";
+    }
+    if(!(empty($programa)))
+    {
+        $condicoes[] = "`tipo_formacao_id` = '$programa'";
+    }
+
+    $sql = $query;
+    if (count($condicoes) > 0)
+    {
+        $sql .= " WHERE " . implode(' AND ', $condicoes);
+    }
+
+    return $sql;
 }
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = "SELECT `id`, `nome`, `nomeArtistico`, `tipo_formacao_id`, `formacao_funcao_id` FROM `pessoa_fisica` WHERE `id` = '$idCapacPf' $filtro_proponente $filtro_programa ORDER BY `nome`";
+$sql_lista = pesquisaProponente()." AND `tipo_formacao_id` IS NOT NULL ORDER BY `nome`";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -40,7 +58,7 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = "SELECT `id`, `nome`, `nomeArtistico`, `tipo_formacao_id`, `formacao_funcao_id` FROM `pessoa_fisica` WHERE `id` = '$idCapacPf' $filtro_proponente $filtro_programa ORDER BY `nome` limit $inicio,$registros ";
+$sql_lista = pesquisaProponente()." AND `tipo_formacao_id` IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens

@@ -3,6 +3,11 @@ $con = bancoMysqliProponente();
 
 unset($_SESSION['id']);
 
+if (isset($_GET['erro']))
+{
+    $mensagem = "<span style='color: #ef0000'>É necessario ao menos um item na pesquisa. Tente novamente.</span>";
+}
+
 include 'includes/menu.php';
 ?>
 
@@ -14,14 +19,12 @@ include 'includes/menu.php';
 
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
-                <br/>
-                <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
-                <p>É preciso ao menos um critério de busca ou você pesquisou por um pedido inexistente. Tente novamente.</p>
+                <h5><?= (isset($mensagem)) ? $mensagem : null ?></h5>
 
                 <form method="POST" action="?perfil=formacao&p=frm_capac_importar_resultado" class="form-horizontal" role="form">
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8"><strong>Código do cadastro no CAPAC</strong><br/>
-                            <input type="text" name="idCapacPf" class="form-control" placeholder="Insira o Código do Cadastro" required>
+                            <input type="text" name="idCapacPf" class="form-control" placeholder="Insira o Código do Cadastro">
                         </div>
                     </div>
 

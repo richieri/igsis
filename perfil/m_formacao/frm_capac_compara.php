@@ -189,6 +189,7 @@ $etnia = recuperaDadosCapac('etnias', 'id', $query2['etnia_id']);
 $grauInstrucao = recuperaDadosCapac('grau_instrucoes', 'id', $query2['grau_instrucao_id']);
 $programa = recuperaDadosCapac('tipo_formacao', 'id', $query2['tipo_formacao_id']);
 $documento = recuperaDadosCapac('tipo_documento', 'id', $query2['idTipoDocumento']);
+$linguagem = recuperaDadosCapac('formacao_linguagem', 'id', $query2['formacao_linguagem_id']);
 
 //retorna uma array com os dados de qualquer tabela do IGSIS. Serve apenas para 1 registro.
 function recuperaDadosIgsis($tabela_dados_ig,$campo_dados_ig,$variavelCampo_dados_ig)
@@ -344,6 +345,7 @@ if($query1 == '' && $query2 != '')
                     <p align="justify"><strong>DRT:</strong> <?php echo $query2['drt']; ?></p>
                     <p align="justify"><strong>Etnia:</strong> <?= $etnia['etnia']; ?><p>
                     <p align="justify"><strong>Grau de Instrução:</strong> <?= $grauInstrucao['grau_instrucao']; ?><p>
+                    <p align="justify"><strong>Linguagem:</strong> <?= $linguagem['linguagem']; ?><p>
                     <p align="justify"><strong>Função:</strong> <?= $cargo[0]; ?><p>
                     <p align="justify"><strong>Banco:</strong> <?php echo recuperaBanco($query2['codigoBanco']); ?></p>
                     <p align="justify"><strong>Agência:</strong> <?php echo $query2['agencia']; ?></p>
