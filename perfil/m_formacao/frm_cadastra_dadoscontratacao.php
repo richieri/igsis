@@ -5,6 +5,7 @@ $con = bancoMysqli();
 
 if(isset($_POST['novo']))
 {
+    $id_pf = $_POST['novo'];
 	$sql_novo = "INSERT INTO `sis_formacao` (`IdPessoaFisica`, `publicado` ) VALUES ('$id_pf','0')";
 	$query_novo = mysqli_query($con,$sql_novo);
 	if($query_novo)
