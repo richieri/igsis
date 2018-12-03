@@ -234,14 +234,14 @@ $(function()
 							<option value='2016'<?php if($formacao['Ano'] == 2016){echo " selected ";} ?>>2016</option>
 						</select><br/>
 					</div>			
-					<div class="col-md-6"><strong>Status:</strong><br/>
+					<div class="col-md-6"><strong>Status do Cadastro:</strong><br/>
 						<select class="form-control" name="status" id="Status">
 							<option value='1'<?php if($formacao['Status'] == 1){echo " selected ";} ?>>Ativo</option>
 							<option value='0'<?php if($formacao['Status'] == 0){echo " selected ";} ?>>Inativo</option>
 						</select><br/>
 					</div>
 				</div>
-                  
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Chamados:</strong>
 						<input type='text' name="chamados" class='form-control' value="<?php echo $formacao['Chamados'] ?>">
@@ -381,6 +381,16 @@ $(function()
 					</div>
 				</div>
 				<br />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><strong>Status:</strong>
+                        <select class="form-control" name="status" id="Verba">
+
+                            <option value="1" <?php if($formacao['Verba'] == 1){ echo "selected";} ?>>Secretaria Municipal de Cultura (SMC)</option>
+                            <option value="2" <?php if($formacao['Verba'] == 2){ echo "selected";} ?>>Secretaria Municipal de Educação (SME)</option>
+                        </select>
+                    </div>
+                </div>
 			   
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br/>
