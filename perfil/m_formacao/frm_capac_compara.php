@@ -401,7 +401,7 @@ if($query1 == '' && $query2 != '')
                     </form><br/>
                 </div>
                 <div class="col-md-6">
-                    <form method='POST' action='?perfil=m_formacao&p=frm_capac_importar' enctype='multipart/form-data'>
+                    <form method='POST' action='?perfil=formacao&p=frm_capac_importar' enctype='multipart/form-data'>
                         <input type='submit' name='' class='btn btn-theme btn-lg btn-block' value='Voltar'>
                     </form>
                 </div>
