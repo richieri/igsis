@@ -9,13 +9,16 @@
         if ($situacao == 1)
         {
             $status = ['0', 'BLOQUEADO'];
+            $anoReferencia = "";
         }
         else
         {
+            $ano = $_POST['ano'];
             $status = ['1', 'LIBERADO'];
+            $anoReferencia = ", `ano` = '$ano'";
         }
 
-        $sqlCadastro = "UPDATE `formacao_cadastro` SET `situacao` = '".$status[0]."', `descricao` = '".$status[1]."' WHERE `id` = '1'";
+        $sqlCadastro = "UPDATE `formacao_cadastro` SET `situacao` = '".$status[0]."', `descricao` = '".$status[1]."'$anoReferencia WHERE `id` = '1'";
         $queryCadastro = $con->query($sqlCadastro);
 
         if ($queryCadastro)
@@ -28,6 +31,7 @@ $formacaoCadastro = $con->query('SELECT * FROM `formacao_cadastro`')->fetch_asso
 
     $situacao = $formacaoCadastro['situacao'];
     $descricao = $formacaoCadastro['descricao'];
+    $anoCadastro = $formacaoCadastro['ano'];
 
     switch ($situacao)
     {
@@ -56,10 +60,25 @@ $formacaoCadastro = $con->query('SELECT * FROM `formacao_cadastro`')->fetch_asso
                     <h6>Deseja <?=$msgStatus?> o cadastro de artistas para formação no CAPAC?</h6>
                 </div>
 
-                <div class="col-md-offset-4 col-md-4">
+                <div class="col-md-offset-2 col-md-8">
                     <form method='POST' action='?perfil=formacao&p=frm_habilita_cadastro_capac' enctype='multipart/form-data'>
                         <input type="hidden" name="situacao" value="<?=$situacao?>">
-                        <input type='submit' name='cadastro' class='btn btn-theme btn-lg btn-block' value='SIM' onclick="return confirm('Tem certeza que deseja realizar essa ação?')">
+
+                        <?php if ($situacao == 0) { ?>
+                            <div class="row">
+                                <div class="form-group col-md-offset-4 col-md-4">
+                                    <strong>Ano Referência do cadastro:</strong><br/>
+                                    <input value="<?= $anoCadastro ?>" type="text" name="ano" class="form-control" maxlength="4" placeholder="AAAA">
+                                </div>
+                            </div>
+                        <?php } ?>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type='submit' name='cadastro' class='btn btn-theme btn-lg btn-block for' value='SIM'
+                                       onclick="return confirm('Tem certeza que deseja realizar essa ação?')">
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
