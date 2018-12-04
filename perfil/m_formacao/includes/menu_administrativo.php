@@ -56,7 +56,7 @@ $pasta = "?perfil=formacao&p=administrativo&pag=";
 				</ul>
 			</li>
             <li><a href="?perfil=formacao&p=frm_habilita_cadastro_capac">Habilitar / Desabilitar Cadastro no CAPAC</a></li>
-            <li><a href="?perfil=../pdf/formacao_inscritos_capac.php">Exportar Inscritos do CAPAC</a></li>
+            <li><a href="../pdf/formacao_inscritos_capac.php">Exportar Inscritos do CAPAC</a></li>
 
 			<li><a href="?perfil=formacao">Voltar ao módulo Formação</a></li>
 		</ul>
