@@ -78,6 +78,8 @@ if(isset($_POST['atualizar']))
 	$verba = $_POST['verba'];
 	$territorio = $_POST['territorios'];
 	$vigencia = $_POST['vigencia'];
+    $statusFormacao = $_POST['statusFormacao'];
+
 	$sql_atualiza_formacao = "UPDATE sis_formacao SET
 	`Ano` = '$ano',
 	$equipamento1  
@@ -96,6 +98,7 @@ if(isset($_POST['atualizar']))
 	`Verba` = '$verba',
 	`subprefeitura` = '$subprefeitura',
 	`IdVigencia` = '$vigencia',
+    `idStatusFormacao` = '$statusFormacao',
 
 	`Observacao` = '$obs'
 	WHERE Id_Formacao = '$id'";
@@ -384,10 +387,17 @@ $(function()
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-8"><strong>Status:</strong>
-                        <select class="form-control" name="status" id="Verba">
-
-                            <option value="1" <?php if($formacao['Verba'] == 1){ echo "selected";} ?>>Secretaria Municipal de Cultura (SMC)</option>
-                            <option value="2" <?php if($formacao['Verba'] == 2){ echo "selected";} ?>>Secretaria Municipal de Educação (SME)</option>
+                        <select class="form-control" name="statusFormacao" id="Verba">
+                            <option value="">Selecione...</option>
+                            <?php
+                                $sqlStatusFormacao = "SELECT * FROM sis_formacao_status ORDER BY 2";
+                                $optStatusFormacao = $con->query($sqlStatusFormacao);
+                                foreach ($optStatusFormacao as $option) {
+                            ?>
+                                    <option value='<?= $option['id'] ?>'<?= ($option['id'] == $formacao['idStatusFormacao']) ? "selected" : "" ?>><?= $option['statusFormacao'] ?></option>
+                            <?php
+                                }
+                            ?>
                         </select>
                     </div>
                 </div>
