@@ -15,9 +15,10 @@
 <section id="list_items">
 	<div class="container">
 		<div class="sub-title"><br/><br/>
-			<h4>Escolha o ano<br/> 
-				| <a href="<?php echo $pasta?><?php echo $ano;?>"><?php echo $ano; ?></a> 
-				| <a href="<?php echo $pasta?><?php echo $ano - 1; ?>"><?php echo $ano - 1; ?></a> |
+			<h4>Escolha o ano<br/>
+                | <a href="<?php echo $pasta?>2017">2017</a>
+                | <a href="<?php echo $pasta?>2018">2018</a>
+                | <a href="<?php echo $pasta?>2019">2019</a> |
 			</h4>
 		</div>
 	</div>
@@ -40,15 +41,7 @@
 				</thead>
 				<tbody>
 <?php
-	switch($p)
-	{
-		case $ano:
-			$sql_lista_emia = "SELECT * FROM sis_emia WHERE publicado = '1' AND Ano = $ano";
-		break;
-		case $ano - 1:
-			$sql_lista_emia = "SELECT * FROM sis_emia WHERE publicado = '1' AND Ano = $ano - 1";
-		break; 
-	} 
+    $sql_lista_emia = "SELECT * FROM sis_emia WHERE publicado = '1' AND Ano = $p";
 	$query_lista_emia = mysqli_query($con,$sql_lista_emia);
 	while($emia = mysqli_fetch_array($query_lista_emia))
 	{

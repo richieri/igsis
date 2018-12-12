@@ -44,18 +44,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php
-                    $sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '5' AND ped.publicado = '1' AND Ano = $p ORDER BY idPedidoContratacao DESC";
-
-                    /*switch($p)
-			{
-				case $ano:
-					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '5' AND ped.publicado = '1' AND Ano = $ano ORDER BY idPedidoContratacao DESC";
-				break;
-				case $ano - 1:
-					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '5' AND ped.publicado = '1' AND Ano = $ano - 1 ORDER BY idPedidoContratacao DESC";
-				break; 
-			} 	*/
+            <?php
+            $sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_emia ON sis_emia.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '5' AND ped.publicado = '1' AND Ano = $p ORDER BY idPedidoContratacao DESC";
 			$data=date('Y');
 			$query_enviados = mysqli_query($con,$sql_enviados);
 			while($pedido = mysqli_fetch_array($query_enviados))
