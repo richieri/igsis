@@ -13,6 +13,14 @@ if(isset($_POST['fisica']) OR ($_GET['tipoPessoa'] == 4))
 	$p = "fisica";
 }
 
+if(isset($_GET['importar']))
+{
+    $form = "<form method='POST' action='?perfil=formacao&p=frm_edita_pf&id_pf=$idPessoa' />
+				<input type='hidden' name='fisica' value='1'>";
+    $p = "fisica";
+}
+
+
 if(isset($_POST["enviar"]))
 {
 	$sql_arquivos = "SELECT * FROM sis_formacao_upload";

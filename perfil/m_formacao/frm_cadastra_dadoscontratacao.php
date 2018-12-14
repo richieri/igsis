@@ -2,10 +2,10 @@
 include 'includes/menu.php';
 
 $con = bancoMysqli();
-$id_pf = $_GET['id_pf'];
 
 if(isset($_POST['novo']))
 {
+    $id_pf = $_POST['novo'];
 	$sql_novo = "INSERT INTO `sis_formacao` (`IdPessoaFisica`, `publicado` ) VALUES ('$id_pf','0')";
 	$query_novo = mysqli_query($con,$sql_novo);
 	if($query_novo)
@@ -78,6 +78,8 @@ if(isset($_POST['atualizar']))
 	$verba = $_POST['verba'];
 	$territorio = $_POST['territorios'];
 	$vigencia = $_POST['vigencia'];
+    $statusFormacao = $_POST['statusFormacao'];
+
 	$sql_atualiza_formacao = "UPDATE sis_formacao SET
 	`Ano` = '$ano',
 	$equipamento1  
@@ -96,6 +98,7 @@ if(isset($_POST['atualizar']))
 	`Verba` = '$verba',
 	`subprefeitura` = '$subprefeitura',
 	`IdVigencia` = '$vigencia',
+    `idStatusFormacao` = '$statusFormacao',
 
 	`Observacao` = '$obs'
 	WHERE Id_Formacao = '$id'";
@@ -234,14 +237,14 @@ $(function()
 							<option value='2016'<?php if($formacao['Ano'] == 2016){echo " selected ";} ?>>2016</option>
 						</select><br/>
 					</div>			
-					<div class="col-md-6"><strong>Status:</strong><br/>
+					<div class="col-md-6"><strong>Status do Cadastro:</strong><br/>
 						<select class="form-control" name="status" id="Status">
 							<option value='1'<?php if($formacao['Status'] == 1){echo " selected ";} ?>>Ativo</option>
 							<option value='0'<?php if($formacao['Status'] == 0){echo " selected ";} ?>>Inativo</option>
 						</select><br/>
 					</div>
 				</div>
-                  
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Chamados:</strong>
 						<input type='text' name="chamados" class='form-control' value="<?php echo $formacao['Chamados'] ?>">
@@ -381,6 +384,23 @@ $(function()
 					</div>
 				</div>
 				<br />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><strong>Status:</strong>
+                        <select class="form-control" name="statusFormacao" id="Verba">
+                            <option value="">Selecione...</option>
+                            <?php
+                                $sqlStatusFormacao = "SELECT * FROM sis_formacao_status ORDER BY 2";
+                                $optStatusFormacao = $con->query($sqlStatusFormacao);
+                                foreach ($optStatusFormacao as $option) {
+                            ?>
+                                    <option value='<?= $option['id'] ?>'<?= ($option['id'] == $formacao['idStatusFormacao']) ? "selected" : "" ?>><?= $option['statusFormacao'] ?></option>
+                            <?php
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
 			   
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br/>

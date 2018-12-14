@@ -1197,6 +1197,34 @@ case 'list_edital':
 	</div>            
 </section>
 
-<?php /* =========== FIM EDITAL ===========*/ break; 
+<?php /* =========== FIM EDITAL ===========*/ break;
 
+/* =========== INÍCIO RELATÓRIO INSCRITOS ===========*/
+case 'relatorio_inscritos':
+?>
+    <section id="contact" class="home-section bg-white">
+        <div class="container">
+            <div class="form-group">
+                <div class="sub-title">
+                    <h2>RELATÓRIO DE INSCRITOS NO CAPAC</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10">
+                    <form class="form-horizontal" role="form" action="../pdf/formacao_inscritos_capac.php" method="post">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-6"><strong>Iscrições para o ano: *</strong>
+                                <input type="text" class="form-control" id="ano" name="ano" maxlength="4" placeholder="Exemplo: 2019">
+                            </div>
+                            <div class="col-md-6"><strong><br/></strong>
+                                <input type="submit" class="btn btn-theme btn-md btn-block" value="Gerar">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <?php /* =========== FIM RELATÓRIO INSCRITOS ===========*/ break;
  } //fim da switch ?>
