@@ -2675,8 +2675,8 @@
 					else
 					{
 						$pedido = listaPedidoContratacao($_SESSION['idEvento']);
-						/*if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
-						{*/
+						if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
+						{
 					?>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8">
@@ -2688,7 +2688,7 @@
 								</div>
 							</div>
 					<?php
-						/*}
+						}
 						else if($prazo['fora'] == 0) //Não tem pedido e está dentro do prazo
 						{
 					?>
@@ -2702,7 +2702,7 @@
 							</div>
 					<?php
 						}
-						/*else if($pedido =! null) //Tem pedido
+						else if($pedido =! null) //Tem pedido
 						{
 							?><div class="col-md-offset-1 col-md-10">
 								<h4><font color="red">Sistema fechado para envio de programação com pedido de contratação.</font></h4>
@@ -2712,7 +2712,6 @@
 								 
 							<?php
 						}
-						*/
 					}
 				break;
 			} // fecha a switch action */?>	
@@ -2902,7 +2901,7 @@
 			</div>
 		</div>  
 		<div class="table-responsive list_info">
-			<table class="table table-condensed"></script>
+			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>
