@@ -1044,9 +1044,18 @@
 			}
 			if(isset($_POST['atualizar']))
 			{
-				$integrantes = addslashes($_POST['integrantes']);
+			    if ($_POST['parcelas'] <= 12)
+                {
+                    $parcelas = $_POST['parcelas'];
+                    $tipoParcela = NULL;
+                }
+			    else
+                {
+                    $parcelas = substr($_POST['parcelas'], 0, 1);
+                    $tipoParcela = substr($_POST['parcelas'], 1, 1);
+                }
+			    $integrantes = addslashes($_POST['integrantes']);
 				$Observacao = addslashes($_POST['Observacao']);
-				$parcelas = $_POST['parcelas'];
 				$Verba = $_POST['verba'];
 				$parecer = addslashes($_POST['parecerArtistico']);
 				$justificativa = addslashes($_POST['justificativa']);
@@ -1060,6 +1069,7 @@
 						`integrantes` = '$integrantes',
 						`observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
+						`tipoParcela` =  '$tipoParcela',
 						`parecerArtistico` =  '$parecer',
 						`justificativa` =  '$justificativa',
 						`qtdApresentacoes` =  '$qtdApresentacoes',
@@ -1075,6 +1085,7 @@
 						`formaPagamento` =  '$formaPagamento',
 						`observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
+						`tipoParcela` =  '$tipoParcela',
 						`parecerArtistico` =  '$parecer',
 						`integrantes` = '$integrantes',
 						`justificativa` =  '$justificativa',
@@ -1211,12 +1222,13 @@
 		<?php
 			if($pedido['parcelas'] > 0)
 			{
-                if ($nomeEvento['ig_tipo_evento_idTipoEvento'] != 4)
+                if ($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4)
                 {
 		?>
-						<div class="form-group">
+                    <!--TODO: Adaptar texto das parcelas para Oficinas-->
+                    <div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-								<textarea  disabled name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
+								<textarea  disabled name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?>
 								</textarea>
 								<p></p>
 							</div>
@@ -1226,7 +1238,6 @@
                 else
                 {
         ?>
-                    <!--TODO: Adaptar texto das parcelas para Oficinas-->
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
                                 <textarea  disabled name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
@@ -1254,8 +1265,8 @@
                                 <?php if ($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4) { /*Caso seja evento tipo OFICINA*/?>
 									<option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
 									<option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única Oficinas de Curta Duração (1 mês)</option>
-									<option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração I (3 meses)</option>
-									<option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração II (4 meses) </option>
+									<option value="21" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 1)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração I (3 meses)</option>
+									<option value="22" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 2)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração II (4 meses) </option>
 									<option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas Oficina Estendida I (6 meses)</option>
 									<option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas Oficina Estendida II  (10 meses)</option>
                                 <?php } else { ?>
@@ -1277,10 +1288,11 @@
 							</div>	
 						</div>
         <?php
-			if($pedido['parcelas'] > 1)
+			if(($pedido['parcelas'] > 1) || (($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4) && $pedido['parcelas'] != 0))
 			{ //libera a edição de parcelas
                 $mostraAlerta = isset($_POST['alertaParcela']) ? $_POST['alertaParcela'] : null;
-                if($mostraAlerta == null){
+                if($mostraAlerta == null)
+                {
                     ?>
                     <script>
                         alert("Lembre-se de editar as parcelas!");

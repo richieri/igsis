@@ -814,6 +814,7 @@
 		}
 		return $x;
 	}
+
 	function txtParcelas($idPedido,$numero)
 	{
 		$con = bancoMysqli();
@@ -846,7 +847,88 @@
 			return "O pagamento se dará no 20º (vigésimo) dia após a data de entrega de toda documentação correta relativa ao pagamento.";
 		}
 	}
-	function txtParcelasFormacao($idPedido,$numero)
+
+    function txtParcelasOficinas($idPedido,$numero,$tipoParcela = 0)
+    {
+        $con = bancoMysqli();
+        switch ($numero)
+        {
+            case 1:
+                $sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND `numero` = 1";
+                $parcela = $con->query($sql)->fetch_assoc();
+                return "Entrega de Entrega de documentos a partir de ".exibirDataBr($parcela['vencimento']).". O pagamento se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto, conforme item 4.4 do Edital.";
+                break;
+
+            case 2:
+                $texto = "Conforme item 4.4 do Edital. \n";
+                if ($tipoParcela == 1)
+                {
+                    $textos = [
+                        1 => "O pagamento da 1ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução do primeiro mês de projeto.",
+                        2 => "O pagamento da 2ª parcela se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto."
+                    ];
+                }
+                elseif ($tipoParcela == 2)
+                {
+                    $textos = [
+                        1 => "O pagamento da 1ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos 2 primeiros meses de projeto.",
+                        2 => "O pagamento da 2ª parcela se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto."
+                    ];
+                }
+                for ($i = 1 ; $i <= $numero ; $i++)
+                {
+                    $sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND `numero` = '$i'";
+                    $parcela = $con->query($sql)->fetch_assoc();
+
+                    $texto .= "Entrega de Entrega de documentos a partir de ".exibirDataBr($parcela['vencimento']).". ".$textos[$i]." \n";
+                }
+                return $texto;
+                break;
+
+            case 3:
+                $texto = "Conforme item 4.4 do Edital. \n";
+                $textos = [
+                    1 => "O pagamento da 1ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos 2 primeiros meses de projeto.",
+                    2 => "O pagamento da 2ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos terceiro e quarto meses de projeto.",
+                    3 => "O pagamento da 3ª parcela se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto."
+                ];
+                for ($i = 1 ; $i <= $numero ; $i++)
+                {
+                    $sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND `numero` = '$i'";
+                    $parcela = $con->query($sql)->fetch_assoc();
+
+                    $texto .= "Entrega de Entrega de documentos a partir de ".exibirDataBr($parcela['vencimento']).". ".$textos[$i]." \n";
+                }
+                return $texto;
+                break;
+
+            case 5:
+                $texto = "Conforme item 4.4 do Edital. \n";
+                $textos = [
+                    1 => "O pagamento da 1ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos 2 primeiros meses de projeto.",
+                    2 => "O pagamento da 2ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos terceiro e quarto meses de projeto.",
+                    3 => "O pagamento da 3ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos quinto e sexto meses de projeto.",
+                    4 => "O pagamento da 4ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos sétimo e oitavo meses de projeto.",
+                    5 => "O pagamento da 5ª parcela se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto."
+                ];
+                for ($i = 1 ; $i <= $numero ; $i++)
+                {
+                    $sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND `numero` = '$i'";
+                    $parcela = $con->query($sql)->fetch_assoc();
+
+                    $texto .= "Entrega de Entrega de documentos a partir de ".exibirDataBr($parcela['vencimento']).". ".$textos[$i]." \n";
+                }
+                return $texto;
+                break;
+
+            default:
+                return null;
+                break;
+        }
+    }
+
+
+function txtParcelasFormacao($idPedido,$numero)
 	{
 		$con = bancoMysqli();
 		$sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido'";
