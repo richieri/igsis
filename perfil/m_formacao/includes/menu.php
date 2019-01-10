@@ -11,6 +11,7 @@ $pasta = "?perfil=formacao&p=";
 			<li><a href="#">Pessoa Física</a>
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>frm_cadastra_pf">Cadastrar</a></li>
+                    <li><a href="<?php echo $pasta ?>frm_capac_importar">Importar do CAPAC</a></li>
 					<li><a href="<?php echo $pasta ?>frm_lista_pf">Listar</a></li>
 				</ul>
 			</li>
