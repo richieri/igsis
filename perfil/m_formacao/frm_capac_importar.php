@@ -2,6 +2,9 @@
 $con = bancoMysqliProponente();
 
 unset($_SESSION['id']);
+unset($_SESSION['idCapacPf']);
+unset($_SESSION['proponente']);
+unset($_SESSION['programa']);
 
 if (isset($_GET['erro']))
 {

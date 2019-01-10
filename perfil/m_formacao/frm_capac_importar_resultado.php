@@ -1,21 +1,25 @@
 <?php
 $con = bancoMysqliProponente();
 
-if (empty($_POST['idCapacPf']) && empty($_POST['proponente']) && empty($_POST['programa']))
+if (!(isset($_GET['pagina'])))
 {
-    echo "<script>window.location = '?perfil=formacao&p=frm_capac_importar&erro=1';</script>";
+    $_SESSION['idCapacPf'] = $idCapacPf = trim($_POST['idCapacPf']);
+    $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
+    $_SESSION['programa'] = $programa = $_POST['programa'];
+    if (empty($_POST['idCapacPf']) && empty($_POST['proponente']) && empty($_POST['programa']))
+    {
+        echo "<script>window.location = '?perfil=formacao&p=frm_capac_importar&erro=1';</script>";
+    }
+}
+else
+{
+    $idCapacPf = $_SESSION['idCapacPf'];
+    $proponente = $_SESSION['proponente'];
+    $programa = $_SESSION['programa'];
 }
 
-$idCapacPf = trim($_POST['idCapacPf']);
-$proponente = addslashes($_POST['proponente']);
-$programa = $_POST['programa'];
-
-function pesquisaProponente()
+function pesquisaProponente($idCapacPf, $proponente, $programa)
 {
-    $idCapacPf = trim($_POST['idCapacPf']);
-    $proponente = addslashes($_POST['proponente']);
-    $programa = $_POST['programa'];
-
     $query = "SELECT `id`, `nome`, `nomeArtistico`, `tipo_formacao_id`, `formacao_funcao_id` FROM `pessoa_fisica`";
     $condicoes = [];
 
@@ -42,7 +46,7 @@ function pesquisaProponente()
 }
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = pesquisaProponente()." AND `tipo_formacao_id` IS NOT NULL ORDER BY `nome`";
+$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa)." AND `tipo_formacao_id` IS NOT NULL ORDER BY `nome`";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -58,7 +62,7 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = pesquisaProponente()." AND `tipo_formacao_id` IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
+$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa)." AND `tipo_formacao_id` IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
