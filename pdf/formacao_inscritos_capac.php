@@ -53,8 +53,8 @@ $con = bancoMysqliProponente();
 
 $ano = $_POST['ano'];
 
-$sql= "SELECT pf.id, pf.nome, pf.rg, pf.cpf, pf.localNascimento, pf.dataNascimento, tf.descricao, fl.linguagem, ff.funcao, pf.formacao_ano
-        FROM pessoa_fisica AS pf 
+$sql= "SELECT pf.id, pf.nome, pf.rg, pf.ccm, pf.cpf, pf.localNascimento, pf.dataNascimento, tf.descricao, fl.linguagem, ff.funcao, pf.formacao_ano
+        FROM pessoa_fisica AS pf
         INNER JOIN tipo_formacao AS tf ON pf.tipo_formacao_id =  tf.id
         INNER JOIN formacao_linguagem AS fl ON pf.formacao_linguagem_id = fl.id
         INNER JOIN formacao_funcoes AS ff ON pf.formacao_funcao_id = ff.id
