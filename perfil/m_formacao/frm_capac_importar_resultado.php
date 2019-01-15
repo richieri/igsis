@@ -39,7 +39,7 @@ function pesquisaProponente($idCapacPf, $proponente, $programa)
     $sql = $query;
     if (count($condicoes) > 0)
     {
-        $sql .= " WHERE " . implode(' AND ', $condicoes);
+        $sql .= " WHERE " . implode(' AND ', $condicoes) . " AND `formacao_funcao_id` IS NOT NULL AND `publicado` = '1'";
     }
 
     return $sql;

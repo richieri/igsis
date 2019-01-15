@@ -37,6 +37,7 @@
 			$query_apagar = mysqli_query($con,$sql_apagar);
 			if($query_apagar)
 			{
+			    gravarLog($sql_apagar);
 				$mensagem = "Registro apagado com sucesso.";	
 			}
 			else
