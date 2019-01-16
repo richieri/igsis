@@ -50,12 +50,24 @@ $con = bancoMysqliProponente();
 
 $ano = $_POST['ano'];
 
+$idTipoFormacao = $_POST['idTipoFormacao'];
+
+if($idTipoFormacao == 1){
+  $sqlFormacao = ' AND pf.tipo_formacao_id = 1';
+}else if($idTipoFormacao == 2){
+  $sqlFormacao = ' AND pf.tipo_formacao_id = 2';
+} else if($idTipoFormacao == 0){
+  $sqlFormacao = ' ';
+}
+
 $sql= "SELECT pf.id, pf.nome, pf.rg, pf.ccm, pf.cpf, pf.localNascimento, pf.dataNascimento, tf.descricao, fl.linguagem, ff.funcao, pf.formacao_ano
         FROM pessoa_fisica AS pf
         INNER JOIN tipo_formacao AS tf ON pf.tipo_formacao_id =  tf.id
         INNER JOIN formacao_linguagem AS fl ON pf.formacao_linguagem_id = fl.id
         INNER JOIN formacao_funcoes AS ff ON pf.formacao_funcao_id = ff.id
-        WHERE pf.tipo_formacao_id > 0 AND pf.formacao_ano = '$ano'";
+        WHERE pf.tipo_formacao_id > 0 AND pf.formacao_ano = '$ano' {$sqlFormacao}";
+
+        echo $sql;
 
 $query = (mysqli_query($con,$sql));
 
