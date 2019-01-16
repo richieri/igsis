@@ -92,6 +92,7 @@ if(isset($_POST['usuario']))
 
 					<br /><br />
 
+                    <!--
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<h4><p>Não possui cadastro?<strong><a href="https://goo.gl/lHLdnI" target="_blank"> CLIQUE AQUI!</strong></a></p></h4>
@@ -99,6 +100,7 @@ if(isset($_POST['usuario']))
 							<p>Dúvidas? Envie e-mail para: <strong>sistema.igsis@gmail.com</strong></p>
 						</div>
 					</div>
+					-->
 				</div>
 			</div>
 		</section>
