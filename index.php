@@ -110,7 +110,7 @@ if(isset($_POST['usuario']))
 					<table width="100%">
 						<tr>
 							<td width="20%"><img src="visual/images/logo_cultura_q.png" align="left"/></td>
-							<td align="center"><font color="#ccc">2017 @ IGSIS - Cadastro de Artistas e Profissionais de Arte e Cultura<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
+							<td align="center"><font color="#ccc">2017 @ IGSIS - Sistema de Contratação Artística<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
 							<td width="20%"><img src="visual/images/logo_igsis_azul.png" align="right"/></td>
 						</tr>
 					</table>
