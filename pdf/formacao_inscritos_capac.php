@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Incluimos a classe PHPExcel
 require_once("../include/phpexcel/Classes/PHPExcel.php");
@@ -21,21 +21,18 @@ $objPHPExcel->getProperties()->setCategory("Inscritos");
 
 // Criamos as colunas
 $objPHPExcel->setActiveSheetIndex(0)
-    ->setCellValue('A1', 'Nome' )
-    ->setCellValue('B1', "RG" )
+    ->setCellValue('A1', 'Número Inscrição' )
+    ->setCellValue('B1', "Nome" )
     ->setCellValue("C1", "CPF" )
-    ->setCellValue("D1", "CCM" )
-    ->setCellValue("E1", "Data de Nascimento")
-    ->setCellValue("F1", "Local de Nascimento")
-    ->setCellValue("G1", "Programa")
-    ->setCellValue("H1", "Linguagem")
-    ->setCellValue("I1", "Função");
+    ->setCellValue("D1", "Data de Nascimento" )
+    ->setCellValue("E1", "Função")
+    ->setCellValue("F1", "Linguagem");
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:I1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true);
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:I1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:F1')->applyFromArray
 (
     array
     (
@@ -71,19 +68,13 @@ while($pf = mysqli_fetch_array($query))
     $d = "D".$i;
     $e = "E".$i;
     $f = "F".$i;
-    $g = "G".$i;
-    $h = "H".$i;
-    $I = "I".$i;
     $objPHPExcel->setActiveSheetIndex(0)
-        ->setCellValue($a, $pf['nome'])
-        ->setCellValue($b, $pf['rg'])
+        ->setCellValue($a, $pf['id'])
+        ->setCellValue($b, $pf['nome'])
         ->setCellValue($c, $pf['cpf'])
-        ->setCellValue($d, $pf['ccm'])
-        ->setCellValue($e, exibirDataBr($pf['dataNascimento']))
-        ->setCellValue($f, $pf['localNascimento'])
-        ->setCellValue($g, $pf['descricao'])
-        ->setCellValue($h, $pf['linguagem'])
-        ->setCellValue($I, $pf['funcao']);
+        ->setCellValue($d, exibirDataBr($pf['dataNascimento']))
+        ->setCellValue($e, $pf['funcao'])
+        ->setCellValue($f, $pf['linguagem']);
     $i++;
 }
 
