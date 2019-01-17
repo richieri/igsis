@@ -41,18 +41,79 @@ function recuperaUsuarioCapac($campoZ)
 	return $nomeUsuario;
 }
 
+function comparaArquivosOficineiros ($query, $queryOficineiro)
+{
+    $registrosPf = [];
+    $registrosOficineiro = [];
+    while ($registroPf = mysqli_fetch_assoc($query))
+    {
+        array_push($registrosPf, $registroPf);
+    }
+    while ($registroOficineiro = mysqli_fetch_assoc($queryOficineiro))
+    {
+        array_push($registrosOficineiro, $registroOficineiro);
+    }
+    echo "
+								<table class='table table-condensed'>
+
+									<tbody>";
+    foreach ($registrosPf as $documentoPf => $arquivoPf)
+    {
+        foreach ($registrosOficineiro as $documentoPfOficineiro => $arquivoPfOficineiro)
+        {
+            if ($arquivoPf['documento'] == $arquivoPfOficineiro['documento'])
+            {
+                if ($arquivoPf['dataEnvio'] > $arquivoPfOficineiro['dataEnvio'])
+                {
+                    echo "<tr>";
+                    echo "<td class='list_description' width='15%'>".$arquivoPf['documento']."</td>";
+                    echo "<td class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivoPf['arquivo']."' target='_blank'>".$arquivoPf['arquivo']."</td>";
+                    echo "</tr>";
+                    unset($registrosOficineiro[$documentoPfOficineiro]);
+                    unset($registrosPf[$documentoPf]);
+                }
+                else
+                {
+                    echo "<tr>";
+                    echo "<td class='list_description' width='15%'>".$arquivoPfOficineiro['documento']."</td>";
+                    echo "<td class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivoPfOficineiro['arquivo']."' target='_blank'>".$arquivoPfOficineiro['arquivo']."</td>";
+                    echo "</tr>";
+                    unset($registrosOficineiro[$documentoPfOficineiro]);
+                    unset($registrosPf[$documentoPf]);
+                }
+            }
+        }
+    }
+    $documentos = array_merge($registrosPf, $registrosOficineiro);
+    foreach ($documentos as $arquivo)
+    {
+        echo "<tr>";
+        echo "<td class='list_description' width='15%'>".$arquivo['documento']."</td>";
+        echo "<td class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</td>";
+        echo "</tr>";
+    }
+}
+
 function listaArquivoCamposMultiplos($idPessoa,$pf)
 {
 	$con = bancoMysqliProponente();
 	switch ($pf) {
 		case 1: //todos os arquivos de pf
-			$sql = "SELECT *
+			$sql = "SELECT * 
 				FROM upload_lista_documento as list
 				INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
 				WHERE arq.idPessoa = '$idPessoa'
 				AND arq.idTipoPessoa = '1'
 				AND arq.publicado = '1'
 				ORDER BY documento";
+
+            $sqlOficineiro = "SELECT *
+								FROM upload_lista_documento as list
+								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+								WHERE arq.idPessoa = '$idPessoa'
+								AND arq.idTipoPessoa = '4'
+								AND arq.publicado = '1'
+                                ORDER BY documento";
 		break;
 		case 2: //todos os arquivos de pj
 			$sql = "SELECT *
@@ -63,6 +124,15 @@ function listaArquivoCamposMultiplos($idPessoa,$pf)
 				AND arq.publicado = '1'
 				AND list.id NOT IN (20,21,103,104)
 				ORDER BY documento";
+
+            $sqlOficineiro = "SELECT *
+								FROM upload_lista_documento as list
+								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+								WHERE arq.idPessoa = '$idPessoa'
+								AND arq.idTipoPessoa = '5'
+								AND arq.publicado = '1'
+                                AND list.id NOT IN (123,124,125,126)
+                                ORDER BY documento";
 		break;
 		case 3: //representante_legal1
 			$arq1 = "AND (list.id = '20' OR ";
@@ -99,33 +169,68 @@ function listaArquivoCamposMultiplos($idPessoa,$pf)
 				AND edital = 0
 				AND arq.publicado = '1'";
 		break;
-		default:
+        case 6: //representante_legal1 oficineiro
+            $arq1 = "AND (list.id = '123' OR ";
+            $arq2 = "list.id = '124'OR ";
+            $arq3 = "list.id = '125' OR ";
+            $arq4 = "list.id = '126')";
+            $sql = "SELECT *
+				FROM upload_lista_documento as list
+				INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+				WHERE arq.idPessoa = '$idPessoa'
+				AND arq.idTipoPessoa = '2'
+				$arq1 $arq2 $arq3 $arq4
+				AND arq.publicado = '1'";
+            break;
+
+        default:
 		break;
 	}
 	$query = mysqli_query($con,$sql);
 	$linhas = mysqli_num_rows($query);
+	$oficineiro = false;
+
+	if (isset($sqlOficineiro))
+    {
+        $queryOficineiro = $con->query($sqlOficineiro);
+        $linhasOficineiro = $queryOficineiro->num_rows;
+        $oficineiro = true;
+    }
 
 	if ($linhas > 0)
 	{
-	echo "
-		<table class='table table-condensed'>
-			<thead>
-				<tr class='list_menu'>
-					<td>Nome do arquivo</td>
-					<td width='10%'></td>
-				</tr>
-			</thead>
-			<tbody>";
-				while($arquivo = mysqli_fetch_array($query))
-				{
-					echo "<tr>";
-					echo "<td class='list_description' width='5%'>".$arquivo['documento']."</td>";
-					echo "<td class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</td>";
-					echo "</tr>";
-				}
-				echo "
-		</tbody>
-		</table>";
+        echo "
+                <table class='table table-condensed'>
+                    <thead>
+                        <tr class='list_menu'>
+                            <td>Nome do arquivo</td>
+                            <td width='10%'></td>
+                        </tr>
+                    </thead>
+                    <tbody>";
+	    if ($oficineiro)
+        {
+            if ($linhasOficineiro > 0)
+            {
+                comparaArquivosOficineiros($query, $queryOficineiro);
+                echo "
+									</tbody>
+								</table>";
+            }
+        }
+	    else
+        {
+            while($arquivo = mysqli_fetch_array($query))
+            {
+                echo "<tr>";
+                echo "<td class='list_description' width='5%'>".$arquivo['documento']."</td>";
+                echo "<td class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</td>";
+                echo "</tr>";
+            }
+            echo "
+                </tbody>
+                </table>";
+        }
 	}
 	else
 	{
@@ -202,7 +307,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 						<p align="justify"><strong>Tipo:</strong> <?php echo $tipoPessoa['tipoPessoa'] ?></p>
 						<br/>
 						<?php
-						if($evento['idTipoPessoa'] == 2)
+						if(($evento['idTipoPessoa'] == 2) || $evento['idTipoPessoa'] == 5)
 						{
 						?>
 							<p align="justify"><strong>Razão Social:</strong> <?php echo $pessoaJuridica['razaoSocial'] ?></p>
@@ -257,7 +362,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					?>
 
 					<?php
-					if($evento['idTipoPessoa'] == 1)
+					if(($evento['idTipoPessoa'] == 1) || ($evento['idTipoPessoa'] == 4))
 					{
 					?>
 						<p align="justify"><strong>Estado Civil:</strong> <?php echo recuperaEstadoCivilCapac($pessoaFisica['idEstadoCivil']) ?></p>
@@ -297,7 +402,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					?>
 
 					<?php
-					if($evento['idTipoPessoa'] == 2)
+					if(($evento['idTipoPessoa'] == 2) || ($evento['idTipoPessoa'] == 5))
 					{
 					?>
 						<div class="table-responsive list_info"><h6>Arquivo(s) de Pessoa Jurídica</h6>
@@ -327,7 +432,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 				?>	
 
 				<?php
-				if($evento['idTipoPessoa'] == 2)
+				if(($evento['idTipoPessoa'] == 2) || ($evento['idTipoPessoa'] == 5))
 				{
 				?>
 					<div class="col-md-offset-2 col-md-8">
@@ -335,7 +440,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 					</div>
 				<?php
 				}
-				elseif($evento['idTipoPessoa'] == 1)
+				elseif(($evento['idTipoPessoa'] == 1) || ($evento['idTipoPessoa'] == 4))
 				{
 				?>
 					<div class="col-md-offset-2 col-md-8">
@@ -347,7 +452,7 @@ $usuario = recuperaDadosCapac("usuario",$evento['idUsuario'],"id");
 				{	
 				?>
 					<div class="col-md-offset-2 col-md-8">
-						<a href="../include/arquivos_capac.php?idEvento=<?php echo $idCapac ?> class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
+						<a href="../include/arquivos_capac.php?idEvento=<?php echo $idCapac ?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a><br/>
 					</div>
 				<?php
 				}

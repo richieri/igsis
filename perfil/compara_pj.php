@@ -33,6 +33,8 @@ function comparaArquivosOficineiros ($query, $queryOficineiro)
                     echo "<tr>";
                     echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivoPf['arquivo']."' target='_blank'>".$arquivoPf['arquivo']."</a> (".$arquivoPf['documento'].")</td>";
                     echo "</tr>";
+                    unset($registrosOficineiro[$documentoPfOficineiro]);
+                    unset($registrosPf[$documentoPf]);
                 }
                 else
                 {
