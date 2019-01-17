@@ -189,6 +189,7 @@ function listaArquivoCamposMultiplos($idPessoa,$pf)
 	$query = mysqli_query($con,$sql);
 	$linhas = mysqli_num_rows($query);
 	$oficineiro = false;
+	$linhasOficineiro = 0;
 
 	if (isset($sqlOficineiro))
     {
@@ -217,6 +218,20 @@ function listaArquivoCamposMultiplos($idPessoa,$pf)
 									</tbody>
 								</table>";
             }
+            else
+            {
+                while($arquivo = mysqli_fetch_array($query))
+                {
+                    echo "<tr>";
+                    echo "<td class='list_description' width='5%'>".$arquivo['documento']."</td>";
+                    echo "<td class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</td>";
+                    echo "</tr>";
+                }
+                echo "
+                </tbody>
+                </table>";
+            }
+
         }
 	    else
         {
@@ -232,7 +247,30 @@ function listaArquivoCamposMultiplos($idPessoa,$pf)
                 </table>";
         }
 	}
-	else
+    elseif ($linhasOficineiro > 0)
+    {
+        echo "
+                <table class='table table-condensed'>
+                    <thead>
+                        <tr class='list_menu'>
+                            <td>Nome do arquivo</td>
+                            <td width='10%'></td>
+                        </tr>
+                    </thead>
+                    <tbody>";
+        while($arquivo = $queryOficineiro->fetch_assoc())
+        {
+            echo "<tr>";
+            echo "<td class='list_description' width='5%'>".$arquivo['documento']."</td>";
+            echo "<td class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</td>";
+            echo "</tr>";
+        }
+        echo "
+                </tbody>
+                </table>";
+    }
+
+    else
 	{
 		echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
 	}
