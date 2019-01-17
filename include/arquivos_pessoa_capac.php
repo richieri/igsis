@@ -6,19 +6,19 @@ error_reporting(E_ALL);
 require_once "../funcoes/funcoesConecta.php";
 $path = "../../igsiscapac/uploadsdocs/";
 
-function comparaArquivoOficineiro($idPessoa)
+function comparaArquivoOficineiro($idPessoa, $tipoPessoa)
 {
     $con = bancoMysqliProponente();
 
     $sql = "SELECT * FROM upload_lista_documento as list
                 INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
                 WHERE arq.idPessoa = '$idPessoa'
-                AND arq.idTipoPessoa = '1'
+                AND arq.idTipoPessoa = '".$tipoPessoa[0]."'
                 AND arq.publicado = '1'";
     $sqlOficineiro = "SELECT * FROM upload_lista_documento as list
                         INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
                         WHERE arq.idPessoa = '$idPessoa'
-                        AND arq.idTipoPessoa = '4'
+                        AND arq.idTipoPessoa = '".$tipoPessoa[1]."'
                         AND arq.publicado = '1'";
 
     $query = $con->query($sql);
@@ -70,7 +70,7 @@ $idPessoa = $_GET['idPessoa'];
 if (count($_GET['tipo']) == 2)
 {
     $a = 1;
-    $query = comparaArquivoOficineiro($idPessoa);
+    $query = comparaArquivoOficineiro($idPessoa, $_GET['tipo']);
 }
 else
 {
