@@ -57,7 +57,11 @@ function comparaArquivoOficineiro($idPessoa)
             }
         }
     }
-    array_push($documentos, array_merge($registrosPf, $registrosOficineiro));
+    $registros = array_merge($registrosPf, $registrosOficineiro);
+    foreach ($registros as $registro)
+    {
+        array_push($documentos, $registro);
+    }
     return $documentos;
 }
 $con = bancoMysqliProponente();
