@@ -100,7 +100,7 @@ if( $zip->open( $nome_arquivo , ZipArchive::CREATE )  === true)
         if($evento['idPf'] != 0)
         {
             //		$sql_pf = "SELECT * FROM upload_arquivo WHERE publicado = '1' AND idPessoa = '$idPf' AND idTipoPessoa = '1'";
-            $query_pf = comparaArquivoOficineiro($idPj,[1,4]);
+            $query_pf = comparaArquivoOficineiro($idPf,[1,4]);
         }
     }
 
