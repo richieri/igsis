@@ -6,12 +6,71 @@ error_reporting(E_ALL);
 require_once "../funcoes/funcoesConecta.php";
 $path = "../../igsiscapac/uploadsdocs/";
 
+function comparaArquivoOficineiro($idPessoa)
+{
+    $con = bancoMysqliProponente();
+
+    $sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '1' AND publicado = '1'";
+    $sqlOficineiro = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '4' AND publicado = '1'";
+
+    $query = $con->query($sql);
+    $queryOficineiro = $con->query($sqlOficineiro);
+
+    $registrosPf = [];
+    $registrosOficineiro = [];
+    $documentos = [];
+    while ($registroPf = mysqli_fetch_assoc($query))
+    {
+        array_push($registrosPf, $registroPf);
+    }
+    while ($registroOficineiro = mysqli_fetch_assoc($queryOficineiro))
+    {
+        array_push($registrosOficineiro, $registroOficineiro);
+    }
+
+    foreach ($registrosPf as $documentoPf => $arquivoPf)
+    {
+        foreach ($registrosOficineiro as $documentoPfOficineiro => $arquivoPfOficineiro)
+        {
+            if ($arquivoPf['documento'] == $arquivoPfOficineiro['documento'])
+            {
+                if ($arquivoPf['dataEnvio'] > $arquivoPfOficineiro['dataEnvio'])
+                {
+                    array_push($documentos, $registrosPf[$documentoPf]);
+                    unset($registrosOficineiro[$documentoPfOficineiro]);
+                    unset($registrosPf[$documentoPf]);
+                }
+                else
+                {
+                    echo "<tr>";
+                    echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivoPfOficineiro['arquivo']."' target='_blank'>".$arquivoPfOficineiro['arquivo']."</a> (".$arquivoPfOficineiro['documento'].")</td>";
+                    echo "</tr>";
+                    array_push($documentos, $registrosOficineiro[$documentoPfOficineiro]);
+                    unset($registrosOficineiro[$documentoPfOficineiro]);
+                    unset($registrosPf[$documentoPf]);
+                }
+            }
+        }
+    }
+    array_push($documentos, array_merge($registrosPf, $registrosOficineiro));
+    return $documentos;
+}
 $con = bancoMysqliProponente();
 $idPessoa = $_GET['idPessoa'];
-$tipo = $_GET['tipo'];
 
-$sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '$tipo' AND publicado = '1'";
-$query = mysqli_query($con,$sql);
+if (count($_GET['tipo']) == 2)
+{
+    $a = 1;
+    $query = comparaArquivoOficineiro($idPessoa);
+}
+else
+{
+    $a = 0;
+    $tipo = implode('',$_GET['tipo']);
+    $sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '$tipo' AND publicado = '1'";
+    $query = mysqli_query($con,$sql);
+}
+
 $data = date('YmdHis');
 $nome_arquivo = $data.".zip";
 
@@ -33,7 +92,7 @@ if ($criou === true)
     //$z->addFromString('teste/outro.txt', 'Outro arquivo');
 
     // Copiando um arquivo do HD para o diretorio "teste" do pacote
-	while($arquivo = mysqli_fetch_array($query))
+    foreach ($query as $arquivo)
 	{
 		$file = $path.$arquivo['arquivo'];
 		$file2 = $arquivo['arquivo'];
