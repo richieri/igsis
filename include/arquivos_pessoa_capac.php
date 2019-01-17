@@ -10,8 +10,16 @@ function comparaArquivoOficineiro($idPessoa)
 {
     $con = bancoMysqliProponente();
 
-    $sql = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '1' AND publicado = '1'";
-    $sqlOficineiro = "SELECT * FROM upload_arquivo WHERE idPessoa = '$idPessoa' AND idTipoPessoa = '4' AND publicado = '1'";
+    $sql = "SELECT * FROM upload_lista_documento as list
+                INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+                WHERE arq.idPessoa = '$idPessoa'
+                AND arq.idTipoPessoa = '1'
+                AND arq.publicado = '1'";
+    $sqlOficineiro = "SELECT * FROM upload_lista_documento as list
+                        INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+                        WHERE arq.idPessoa = '$idPessoa'
+                        AND arq.idTipoPessoa = '4'
+                        AND arq.publicado = '1'";
 
     $query = $con->query($sql);
     $queryOficineiro = $con->query($sqlOficineiro);
@@ -42,9 +50,6 @@ function comparaArquivoOficineiro($idPessoa)
                 }
                 else
                 {
-                    echo "<tr>";
-                    echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivoPfOficineiro['arquivo']."' target='_blank'>".$arquivoPfOficineiro['arquivo']."</a> (".$arquivoPfOficineiro['documento'].")</td>";
-                    echo "</tr>";
                     array_push($documentos, $registrosOficineiro[$documentoPfOficineiro]);
                     unset($registrosOficineiro[$documentoPfOficineiro]);
                     unset($registrosPf[$documentoPf]);
