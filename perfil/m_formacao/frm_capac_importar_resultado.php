@@ -28,7 +28,8 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
                   pf.nomeArtistico,
                   pf.dataNascimento,
                   pf.tipo_formacao_id,
-                  pf.formacao_funcao_id
+                  pf.formacao_funcao_id,
+                  pf.formacao_linguagem_id
                 FROM pessoa_fisica AS pf
                        INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
                        INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
@@ -137,7 +138,7 @@ include 'includes/menu.php';
                             {
                                 $formacao = recuperaDadosCapac('tipo_formacao', 'id', $linha['tipo_formacao_id']);
                                 $funcao = recuperaDadosCapac('formacao_funcoes', 'id', $linha['formacao_funcao_id']);
-                                $linguagem = recuperaDadosCapac('formacao_linguagem', 'tipo_formacao_id', $linha['tipo_formacao_id']);
+                                $linguagem = recuperaDadosCapac('formacao_linguagem', 'id', $linha['formacao_linguagem_id']);
                             ?>
                                 <tr>
                                     <td class="list_description"><?= $linha['id'] ?></td>
