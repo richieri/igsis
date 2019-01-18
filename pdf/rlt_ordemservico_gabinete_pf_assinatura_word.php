@@ -143,7 +143,7 @@ echo
 	"<p>&nbsp;</p>".
 	"<p>&nbsp;</p>".
 	"<p>&nbsp;</p>".
-	"<p><b>Juliana Velho<br/>".
+	"<p><b>Carla Mingolla<br/>".
 		"Chefe de Gabinete<br/>".
 		"Secretaria Municipal de Cultura</b></p>";
 	echo "</body>";

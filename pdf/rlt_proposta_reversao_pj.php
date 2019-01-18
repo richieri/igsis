@@ -520,7 +520,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 
    $pdf->SetX($x,262);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(100,4,utf8_decode('Juliana Velho'),'T',1,'L');
+   $pdf->Cell(100,4,utf8_decode('Carla Mingolla'),'T',1,'L');
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);

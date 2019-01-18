@@ -152,7 +152,7 @@ $n_parcela = mysqli_num_rows($query_parcela);
 <p><strong>Processo nº <?php echo strtoupper($NumeroProcesso); ?></strong></p>
 <p><strong>TERMO DE CONTRATO DE PRESTAÇÃO DE SERVIÇOS FORMALIZADO ENTRE A SECRETARIA MUNICIPAL CULTURA E <?php echo strtoupper($pjRazaoSocial); ?>, COM FUNDAMENTO NO ARTIGO 25, INCISO III, DA LEI FEDERAL Nº 8666/93 E ALTERAÇÕES POSTERIORES, ARTIGO 1º DA LEI MUNICIPAL Nº 13.278/02 E ARTIGOS 16 E 17 DO DECRETO MUNICIPAL Nº 44.279/03.</strong></p>
 <p> </p>
-<p> A PREFEITURA DO MUNICÍPIO DE SÃO PAULO doravante denominada simplesmente PREFEITURA, através da SECRETARIA MUNICIPAL DE CULTURA, neste ato representada pela Chefe de Gabinete, Juliana Velho, e <?php echo strtoupper($pjRazaoSocial); ?>, CNPJ <?php echo $pjCNPJ; ?>, com endereço <?php echo strtoupper($pjEndereco); ?> , neste ato representada por <?php echo strtoupper($rep01Nome); ?>, RG n° <?php echo strtoupper($rep01RG); ?> , CPF Nº <?php echo $rep01CPF; ?>, doravante denominada CONTRATADA, com fundamento no artigo 25, inciso III da Lei Federal nº 8.666/93 e conforme consta do processo administrativo em referência, tem justo e acordado o que segue:</p>
+<p> A PREFEITURA DO MUNICÍPIO DE SÃO PAULO doravante denominada simplesmente PREFEITURA, através da SECRETARIA MUNICIPAL DE CULTURA, neste ato representada pela Chefe de Gabinete, Carla Mingolla, e <?php echo strtoupper($pjRazaoSocial); ?>, CNPJ <?php echo $pjCNPJ; ?>, com endereço <?php echo strtoupper($pjEndereco); ?> , neste ato representada por <?php echo strtoupper($rep01Nome); ?>, RG n° <?php echo strtoupper($rep01RG); ?> , CPF Nº <?php echo $rep01CPF; ?>, doravante denominada CONTRATADA, com fundamento no artigo 25, inciso III da Lei Federal nº 8.666/93 e conforme consta do processo administrativo em referência, tem justo e acordado o que segue:</p>
 <p> </p>
 <h3>CLÁUSULA PRIMEIRA - DO OBJETO</h3>
 <p> </p>
@@ -199,7 +199,7 @@ $n_parcela = mysqli_num_rows($query_parcela);
 <p>&nbsp;</p>
 
 <p align='center'><strong>____________________________________<br/>
-JULIANA VELHO<br/>
+CARLA MINGOLLA<br/>
 Chefe de Gabinete<br/>
 Secretaria Municipal de Cultura
 </strong></p>
