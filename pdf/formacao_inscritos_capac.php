@@ -52,20 +52,45 @@ $ano = $_POST['ano'];
 
 $idTipoFormacao = $_POST['idTipoFormacao'];
 
-if($idTipoFormacao == 1){
-  $sqlFormacao = ' AND pf.tipo_formacao_id = 1';
-}else if($idTipoFormacao == 2){
-  $sqlFormacao = ' AND pf.tipo_formacao_id = 2';
-} else if($idTipoFormacao == 0){
-  $sqlFormacao = ' ';
+
+switch ($idTipoFormacao)
+{
+    case 0:
+        $sqlFormacao = "";
+        break;
+    case 1:
+        $sqlFormacao = "AND pf.tipo_formacao_id = 1";
+        break;
+    case 2:
+        $sqlFormacao = "AND pf.tipo_formacao_id = 2";
+        break;
+    default:
+        $sqlFormacao = "";
+        break;
 }
 
-$sql= "SELECT pf.id, pf.nome, pf.rg, pf.ccm, pf.cpf, pf.localNascimento, pf.dataNascimento, tf.descricao, fl.linguagem, ff.funcao, pf.formacao_ano
+$sql= "SELECT
+          pf.id,
+          pf.nome,
+          pf.rg,
+          pf.cpf,
+          pf.ccm,
+          pf.dataNascimento,
+          tf.descricao,
+          fl.linguagem,
+          ff.funcao,
+          pf.formacao_ano
         FROM pessoa_fisica AS pf
-        INNER JOIN tipo_formacao AS tf ON pf.tipo_formacao_id =  tf.id
-        INNER JOIN formacao_linguagem AS fl ON pf.formacao_linguagem_id = fl.id
-        INNER JOIN formacao_funcoes AS ff ON pf.formacao_funcao_id = ff.id
-        WHERE pf.tipo_formacao_id > 0 AND pf.formacao_ano = '$ano' {$sqlFormacao}";
+               INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
+               INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
+               INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
+               INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
+                           WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
+                           GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id
+        WHERE pf.tipo_formacao_id > 0
+          AND pf.formacao_ano = '$ano'
+          AND pf.formacao_funcao_id IS NOT NULL
+          AND pf.publicado = '1' {$sqlFormacao}";
 
         echo $sql;
 

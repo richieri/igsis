@@ -6,6 +6,7 @@ if (!(isset($_GET['pagina'])))
     $_SESSION['idCapacPf'] = $idCapacPf = trim($_POST['idCapacPf']);
     $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
     $_SESSION['programa'] = $programa = $_POST['programa'];
+    $_SESSION['ano'] = $ano = $_POST['ano'];
     if (empty($_POST['idCapacPf']) && empty($_POST['proponente']) && empty($_POST['programa']))
     {
         echo "<script>window.location = '?perfil=formacao&p=frm_capac_importar&erro=1';</script>";
@@ -16,37 +17,56 @@ else
     $idCapacPf = $_SESSION['idCapacPf'];
     $proponente = $_SESSION['proponente'];
     $programa = $_SESSION['programa'];
+    $ano = $_SESSION['ano'];
 }
 
-function pesquisaProponente($idCapacPf, $proponente, $programa)
+function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
 {
-    $query = "SELECT `id`, `nome`, `nomeArtistico`, `dataNascimento`,`tipo_formacao_id`, `formacao_funcao_id` FROM `pessoa_fisica`";
+    $query = "SELECT
+                  pf.id,
+                  pf.nome,
+                  pf.nomeArtistico,
+                  pf.dataNascimento,
+                  pf.tipo_formacao_id,
+                  pf.formacao_funcao_id
+                FROM pessoa_fisica AS pf
+                       INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
+                       INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
+                       INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
+                       INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
+                                   WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
+                                   GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id";
     $condicoes = [];
 
     if(!(empty($idCapacPf)))
     {
-        $condicoes[] = "`id` = '$idCapacPf'";
+        $condicoes[] = "pf.id = '$idCapacPf'";
     }
     if(!(empty($proponente)))
     {
-     $condicoes[] = "`nome` LIKE '%$proponente%'";
+     $condicoes[] = "pf.nome LIKE '%$proponente%'";
     }
     if(!(empty($programa)))
     {
-        $condicoes[] = "`tipo_formacao_id` = '$programa'";
+        $condicoes[] = "pf.tipo_formacao_id = '$programa'";
     }
+    if(!(empty($ano)))
+    {
+        $condicoes[] = "pf.formacao_ano = '$ano'";
+    }
+
 
     $sql = $query;
     if (count($condicoes) > 0)
     {
-        $sql .= " WHERE " . implode(' AND ', $condicoes) . " AND `formacao_funcao_id` IS NOT NULL AND `publicado` = '1'";
+        $sql .= " WHERE " . implode(' AND ', $condicoes) . " AND pf.formacao_funcao_id IS NOT NULL AND pf.publicado = '1'";
     }
 
     return $sql;
 }
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa)." AND `tipo_formacao_id` IS NOT NULL ORDER BY `nome`";
+$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -62,7 +82,7 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa)." AND `tipo_formacao_id` IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
+$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens

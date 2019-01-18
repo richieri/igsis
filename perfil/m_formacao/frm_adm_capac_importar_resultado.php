@@ -3,40 +3,41 @@ $con = bancoMysqliProponente();
 
 if (!(isset($_GET['pagina'])))
 {
-    $_SESSION['idCapacPf'] = $idCapacPf = trim($_POST['idCapacPf']);
-    $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
-    $_SESSION['programa'] = $programa = $_POST['programa'];
-    if (empty($_POST['idCapacPf']) && empty($_POST['proponente']) && empty($_POST['programa']))
+    $_SESSION['ano'] = $ano = $_POST['ano'];
+    if (empty($_POST['ano']))
     {
-        echo "<script>window.location = '?perfil=formacao&p=frm_capac_importar&erro=1';</script>";
+        echo "<script>window.location = '?perfil=formacao&p=frm_adm_capac_importar&erro=1';</script>";
     }
 }
 else
 {
-    $idCapacPf = $_SESSION['idCapacPf'];
-    $proponente = $_SESSION['proponente'];
-    $programa = $_SESSION['programa'];
+    $ano = $_SESSION['ano'];
 }
 
-function pesquisaProponente($idCapacPf, $proponente, $programa)
+function pesquisaProponente($ano)
 {
-    $query = "SELECT pf.id AS id, pf.nome, pf.dataNascimento, pf.cpf, pf.tipo_formacao_id, pf.formacao_funcao_id, pf.formacao_linguagem_id, fl.linguagem 
-    FROM pessoa_fisica AS pf 
-    INNER JOIN formacao_linguagem AS fl
-    ON pf.formacao_linguagem_id = fl.id ";
+    $query = "SELECT
+                  pf.id,
+                  pf.nome,
+                  pf.nomeArtistico,
+                  pf.dataNascimento,
+                  pf.cpf,
+                  pf.tipo_formacao_id,
+                  pf.formacao_funcao_id,
+                  pf.formacao_linguagem_id,
+                  fl.linguagem
+                FROM pessoa_fisica AS pf
+                       INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
+                       INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
+                       INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
+                       INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
+                                   WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
+                                   GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id";
     $condicoes = [];
 
-    if(!(empty($idCapacPf)))
+    if(!(empty($ano)))
     {
-        $condicoes[] = "id = '$idCapacPf'";
-    }
-    if(!(empty($proponente)))
-    {
-     $condicoes[] = "nome LIKE '%$proponente%'";
-    }
-    if(!(empty($programa)))
-    {
-        $condicoes[] = "pf.tipo_formacao_id = '$programa'";
+        $condicoes[] = "`formacao_ano` = '$ano'";
     }
 
     $sql = $query;
@@ -49,7 +50,7 @@ function pesquisaProponente($idCapacPf, $proponente, $programa)
 }
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
+$sql_lista = pesquisaProponente($ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -65,7 +66,7 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY pf.nome LIMIT $inicio,$registros ";
+$sql_lista = pesquisaProponente($ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY pf.nome LIMIT $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
@@ -137,7 +138,7 @@ include 'includes/menu_administrativo.php';
                                     echo "<strong>Páginas</strong>";
                                     for($i = 1; $i < $numPaginas + 1; $i++)
                                     {
-                                        echo "<a href='?perfil=formacao&p=frm_capac_importar_resultado&pagina=$i'> [".$i."]</a> ";
+                                        echo "<a href='?perfil=formacao&p=frm_adm_capac_importar_resultado&pagina=$i'> [".$i."]</a> ";
                                     }
                                     ?>
                                 </td>
