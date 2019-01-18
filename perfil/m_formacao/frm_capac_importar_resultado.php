@@ -20,7 +20,7 @@ else
 
 function pesquisaProponente($idCapacPf, $proponente, $programa)
 {
-    $query = "SELECT `id`, `nome`, `nomeArtistico`, `tipo_formacao_id`, `formacao_funcao_id` FROM `pessoa_fisica`";
+    $query = "SELECT `id`, `nome`, `nomeArtistico`, `dataNascimento`,`tipo_formacao_id`, `formacao_funcao_id` FROM `pessoa_fisica`";
     $condicoes = [];
 
     if(!(empty($idCapacPf)))
@@ -104,8 +104,10 @@ include 'includes/menu.php';
                                 <td>Codigo</td>
                                 <td>Nome</td>
                                 <td>Nome Artístico</td>
+                                <td>Data de Nascimento</td>
                                 <td>Programa</td>
                                 <td>Função</td>
+                                <td>Linguagem</td>
                                 <td width="20%"></td>
                             </tr>
                         </thead>
@@ -115,13 +117,16 @@ include 'includes/menu.php';
                             {
                                 $formacao = recuperaDadosCapac('tipo_formacao', 'id', $linha['tipo_formacao_id']);
                                 $funcao = recuperaDadosCapac('formacao_funcoes', 'id', $linha['formacao_funcao_id']);
+                                $linguagem = recuperaDadosCapac('formacao_linguagem', 'tipo_formacao_id', $linha['tipo_formacao_id']);
                             ?>
                                 <tr>
                                     <td class="list_description"><?= $linha['id'] ?></td>
                                     <td class="list_description"><?= $linha['nome'] ?></td>
                                     <td class="list_description"><?= $linha['nomeArtistico'] ?></td>
+                                    <td class="list_description"><?= exibirDataBr($linha['dataNascimento']) ?></td>
                                     <td class="list_description"><?= $formacao['descricao'] ?></td>
                                     <td class="list_description"><?= $funcao['funcao'] ?></td>
+                                    <td class="list_description"><?= $linguagem['linguagem'] ?></td>
                                     <td><a class='btn btn-theme btn-md btn-block' target='_blank' href='?perfil=formacao&p=frm_capac_detalhes&id_capac=<?=$linha['id']?>'>CARREGAR</a></td>
                                 </tr>
                             <?php
