@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Incluimos a classe PHPExcel
 require_once("../include/phpexcel/Classes/PHPExcel.php");
@@ -21,21 +21,18 @@ $objPHPExcel->getProperties()->setCategory("Inscritos");
 
 // Criamos as colunas
 $objPHPExcel->setActiveSheetIndex(0)
-    ->setCellValue('A1', 'Nome' )
-    ->setCellValue('B1', "RG" )
+    ->setCellValue('A1', 'Número Inscrição' )
+    ->setCellValue('B1', "Nome" )
     ->setCellValue("C1", "CPF" )
-    ->setCellValue("D1", "CCM" )
-    ->setCellValue("E1", "Data de Nascimento")
-    ->setCellValue("F1", "Local de Nascimento")
-    ->setCellValue("G1", "Programa")
-    ->setCellValue("H1", "Linguagem")
-    ->setCellValue("I1", "Função");
+    ->setCellValue("D1", "Data de Nascimento" )
+    ->setCellValue("E1", "Função")
+    ->setCellValue("F1", "Linguagem");
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:I1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true);
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:I1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:F1')->applyFromArray
 (
     array
     (
@@ -53,12 +50,49 @@ $con = bancoMysqliProponente();
 
 $ano = $_POST['ano'];
 
-$sql= "SELECT pf.id, pf.nome, pf.rg, pf.ccm, pf.cpf, pf.localNascimento, pf.dataNascimento, tf.descricao, fl.linguagem, ff.funcao, pf.formacao_ano
+$idTipoFormacao = $_POST['idTipoFormacao'];
+
+
+switch ($idTipoFormacao)
+{
+    case 0:
+        $sqlFormacao = "";
+        break;
+    case 1:
+        $sqlFormacao = "AND pf.tipo_formacao_id = 1";
+        break;
+    case 2:
+        $sqlFormacao = "AND pf.tipo_formacao_id = 2";
+        break;
+    default:
+        $sqlFormacao = "";
+        break;
+}
+
+$sql= "SELECT
+          pf.id,
+          pf.nome,
+          pf.rg,
+          pf.cpf,
+          pf.ccm,
+          pf.dataNascimento,
+          tf.descricao,
+          fl.linguagem,
+          ff.funcao,
+          pf.formacao_ano
         FROM pessoa_fisica AS pf
-        INNER JOIN tipo_formacao AS tf ON pf.tipo_formacao_id =  tf.id
-        INNER JOIN formacao_linguagem AS fl ON pf.formacao_linguagem_id = fl.id
-        INNER JOIN formacao_funcoes AS ff ON pf.formacao_funcao_id = ff.id
-        WHERE pf.tipo_formacao_id > 0 AND pf.formacao_ano = '$ano'";
+               INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
+               INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
+               INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
+               INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
+                           WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
+                           GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id
+        WHERE pf.tipo_formacao_id > 0
+          AND pf.formacao_ano = '$ano'
+          AND pf.formacao_funcao_id IS NOT NULL
+          AND pf.publicado = '1' {$sqlFormacao}";
+
+        echo $sql;
 
 $query = (mysqli_query($con,$sql));
 
@@ -71,19 +105,13 @@ while($pf = mysqli_fetch_array($query))
     $d = "D".$i;
     $e = "E".$i;
     $f = "F".$i;
-    $g = "G".$i;
-    $h = "H".$i;
-    $I = "I".$i;
     $objPHPExcel->setActiveSheetIndex(0)
-        ->setCellValue($a, $pf['nome'])
-        ->setCellValue($b, $pf['rg'])
+        ->setCellValue($a, $pf['id'])
+        ->setCellValue($b, $pf['nome'])
         ->setCellValue($c, $pf['cpf'])
-        ->setCellValue($d, $pf['ccm'])
-        ->setCellValue($e, exibirDataBr($pf['dataNascimento']))
-        ->setCellValue($f, $pf['localNascimento'])
-        ->setCellValue($g, $pf['descricao'])
-        ->setCellValue($h, $pf['linguagem'])
-        ->setCellValue($I, $pf['funcao']);
+        ->setCellValue($d, exibirDataBr($pf['dataNascimento']))
+        ->setCellValue($e, $pf['funcao'])
+        ->setCellValue($f, $pf['linguagem']);
     $i++;
 }
 

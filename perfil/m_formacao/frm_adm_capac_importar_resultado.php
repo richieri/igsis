@@ -3,32 +3,29 @@ $con = bancoMysqliProponente();
 
 if (!(isset($_GET['pagina'])))
 {
-    $_SESSION['idCapacPf'] = $idCapacPf = trim($_POST['idCapacPf']);
-    $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
-    $_SESSION['programa'] = $programa = $_POST['programa'];
     $_SESSION['ano'] = $ano = $_POST['ano'];
-    if (empty($_POST['idCapacPf']) && empty($_POST['proponente']) && empty($_POST['programa']))
+    if (empty($_POST['ano']))
     {
-        echo "<script>window.location = '?perfil=formacao&p=frm_capac_importar&erro=1';</script>";
+        echo "<script>window.location = '?perfil=formacao&p=frm_adm_capac_importar&erro=1';</script>";
     }
 }
 else
 {
-    $idCapacPf = $_SESSION['idCapacPf'];
-    $proponente = $_SESSION['proponente'];
-    $programa = $_SESSION['programa'];
     $ano = $_SESSION['ano'];
 }
 
-function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
+function pesquisaProponente($ano)
 {
     $query = "SELECT
                   pf.id,
                   pf.nome,
                   pf.nomeArtistico,
                   pf.dataNascimento,
+                  pf.cpf,
                   pf.tipo_formacao_id,
-                  pf.formacao_funcao_id
+                  pf.formacao_funcao_id,
+                  pf.formacao_linguagem_id,
+                  fl.linguagem
                 FROM pessoa_fisica AS pf
                        INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
                        INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
@@ -38,23 +35,10 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
                                    GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id";
     $condicoes = [];
 
-    if(!(empty($idCapacPf)))
-    {
-        $condicoes[] = "pf.id = '$idCapacPf'";
-    }
-    if(!(empty($proponente)))
-    {
-     $condicoes[] = "pf.nome LIKE '%$proponente%'";
-    }
-    if(!(empty($programa)))
-    {
-        $condicoes[] = "pf.tipo_formacao_id = '$programa'";
-    }
     if(!(empty($ano)))
     {
-        $condicoes[] = "pf.formacao_ano = '$ano'";
+        $condicoes[] = "`formacao_ano` = '$ano'";
     }
-
 
     $sql = $query;
     if (count($condicoes) > 0)
@@ -66,7 +50,7 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
 }
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
+$sql_lista = pesquisaProponente($ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -82,7 +66,7 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
+$sql_lista = pesquisaProponente($ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY pf.nome LIMIT $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
@@ -106,14 +90,14 @@ function recuperaDadosCapac($tabela, $campo, $valor)
     return $campo;
 }
 
-include 'includes/menu.php';
+include 'includes/menu_administrativo.php';
 ?>
 <section id="list_items" class="home-section bg-white">
     <div class="container">
         <div class="form-group">
             <h3>Resultado da busca</h3>
             <h5><?php if(isset($mensagem)){echo $mensagem;};?></h5>
-            <h5><a href="?perfil=formacao&p=frm_capac_importar">Fazer outra busca</a></h5>
+            <h5><a href="?perfil=formacao&p=frm_adm_capac_importar">Fazer outra busca</a></h5>
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
@@ -123,12 +107,10 @@ include 'includes/menu.php';
                             <tr class="list_menu">
                                 <td>Codigo</td>
                                 <td>Nome</td>
-                                <td>Nome Artístico</td>
+                                <td>CPF</td>
                                 <td>Data de Nascimento</td>
-                                <td>Programa</td>
                                 <td>Função</td>
                                 <td>Linguagem</td>
-                                <td width="20%"></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,17 +119,14 @@ include 'includes/menu.php';
                             {
                                 $formacao = recuperaDadosCapac('tipo_formacao', 'id', $linha['tipo_formacao_id']);
                                 $funcao = recuperaDadosCapac('formacao_funcoes', 'id', $linha['formacao_funcao_id']);
-                                $linguagem = recuperaDadosCapac('formacao_linguagem', 'tipo_formacao_id', $linha['tipo_formacao_id']);
                             ?>
                                 <tr>
                                     <td class="list_description"><?= $linha['id'] ?></td>
                                     <td class="list_description"><?= $linha['nome'] ?></td>
-                                    <td class="list_description"><?= $linha['nomeArtistico'] ?></td>
+                                    <td class="list_description"><?= $linha['cpf'] ?></td>
                                     <td class="list_description"><?= exibirDataBr($linha['dataNascimento']) ?></td>
-                                    <td class="list_description"><?= $formacao['descricao'] ?></td>
                                     <td class="list_description"><?= $funcao['funcao'] ?></td>
-                                    <td class="list_description"><?= $linguagem['linguagem'] ?></td>
-                                    <td><a class='btn btn-theme btn-md btn-block' target='_blank' href='?perfil=formacao&p=frm_capac_detalhes&id_capac=<?=$linha['id']?>'>CARREGAR</a></td>
+                                    <td class="list_description"><?= $linha['linguagem'] ?></td>
                                 </tr>
                             <?php
                             }
@@ -159,7 +138,7 @@ include 'includes/menu.php';
                                     echo "<strong>Páginas</strong>";
                                     for($i = 1; $i < $numPaginas + 1; $i++)
                                     {
-                                        echo "<a href='?perfil=formacao&p=frm_capac_importar_resultado&pagina=$i'> [".$i."]</a> ";
+                                        echo "<a href='?perfil=formacao&p=frm_adm_capac_importar_resultado&pagina=$i'> [".$i."]</a> ";
                                     }
                                     ?>
                                 </td>

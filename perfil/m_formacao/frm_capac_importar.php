@@ -5,10 +5,11 @@ unset($_SESSION['id']);
 unset($_SESSION['idCapacPf']);
 unset($_SESSION['proponente']);
 unset($_SESSION['programa']);
+unset($_SESSION['ano']);
 
 if (isset($_GET['erro']))
 {
-    $mensagem = "<span style='color: #ef0000'>É necessario ao menos um item na pesquisa. Tente novamente.</span>";
+    $mensagem = "<span style='color: #ef0000'>Digite o código, nome ou programa a ser pesquisado.</span>";
 }
 
 include 'includes/menu.php';
@@ -50,6 +51,12 @@ include 'includes/menu.php';
                                 }
                                 ?>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8"><strong>Ano de inscrição:</strong><br/>
+                            <input type="text" name="ano" class="form-control" placeholder="<?= date('Y') ?>" value="<?= date('Y') ?>">
                         </div>
                     </div>
                     <div class="form-group">

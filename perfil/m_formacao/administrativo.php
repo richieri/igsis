@@ -8,7 +8,7 @@ if(isset($_GET['pag']))
 }
 else
 {
-	$p = 'inicial';	
+	$p = 'inicial';
 }
 
 switch($p)
@@ -32,10 +32,10 @@ case 'add_cargo':
 
 if(isset($_POST['add_cargo']))
 {
-	$idCargo = $_POST['add_cargo'];		   
+	$idCargo = $_POST['add_cargo'];
 	$cargo = $_POST['Cargo'];
 	$justificativa = $_POST['justificativa'];
-	$sql_atualiza_cargo = "INSERT INTO sis_formacao_cargo 
+	$sql_atualiza_cargo = "INSERT INTO sis_formacao_cargo
 	(Cargo, justificativa) VALUES ('$cargo', '$justificativa')";
 	$con = bancoMysqli();
 	$query_atualiza_cargo = mysqli_query($con,$sql_atualiza_cargo);
@@ -46,11 +46,11 @@ if(isset($_POST['add_cargo']))
 	}
 	else
 	{
-		$mensagem = "Erro ao cadastrar.";	
-	}		   
+		$mensagem = "Erro ao cadastrar.";
+	}
 }
-?>   
- 
+?>
+
 <section id="contact" class="home-section bg-white">
 	<div class="container">
 		<div class="form-group">
@@ -64,16 +64,16 @@ if(isset($_POST['add_cargo']))
 				<form class="form-horizontal" role="form" action="#" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Cargo: *</strong>
-							<input type="text" class="form-control" id="Cargo" name="Cargo" placeholder="Cargo"> 
+							<input type="text" class="form-control" id="Cargo" name="Cargo" placeholder="Cargo">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Justificativa*:</strong><br/>
 							<textarea name="justificativa" class="form-control" rows="5"></textarea>
 						</div>
 					</div>
-						
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="add_cargo" value="1"/>
@@ -81,19 +81,19 @@ if(isset($_POST['add_cargo']))
 						</div>
 					</div>
 				</form>
-			</div>		
+			</div>
 		</div>
 	</div>
-</section> 
+</section>
 
-<?php 
+<?php
 break;
 case 'list_cargo':
 
 	if(isset($_POST['atualizar']))
 	{
-		$idCargo = $_POST['atualizar'];		   
-		$cargo = $_POST['cargo'];	
+		$idCargo = $_POST['atualizar'];
+		$cargo = $_POST['cargo'];
 		$coordenador = $_POST['coordenador'];
 		$justificativa = $_POST['justificativa'];
 		$sql_atualiza_cargo = "UPDATE sis_formacao_cargo SET
@@ -107,10 +107,10 @@ case 'list_cargo':
 			$mensagem = "Atualizado com sucesso!";
 			gravarLog($sql_atualiza_cargo);
 		}else{
-			$mensagem = "Erro ao atualizar.";	
-		}		   
+			$mensagem = "Erro ao atualizar.";
+		}
 	}
-?> 
+?>
 
 <section id="list_items">
 	<div class="container">
@@ -154,26 +154,26 @@ case 'list_cargo':
 							</td>
 						</form>
 						</tr>
-				<?php 
-					} 
-				?>	
+				<?php
+					}
+				?>
 				</tbody>
 			</table>
 		</div>
-	</div>           		
+	</div>
 </section>
 
 <?php /* =========== FIM CARGO ===========*/ break;
 
 
 /* =========== INÍCIO COORDENADORIA ===========*/
-case 'add_coordenadoria': 
+case 'add_coordenadoria':
 
 if(isset($_POST['add_coordenadoria']))
 {
-	$idCoordenadoria = $_POST['add_coordenadoria'];		   
-	$coordenadoria = $_POST['Coordenadoria'];		   
-	$sql_atualiza_coordenadoria = "INSERT INTO sis_formacao_coordenadoria 
+	$idCoordenadoria = $_POST['add_coordenadoria'];
+	$coordenadoria = $_POST['Coordenadoria'];
+	$sql_atualiza_coordenadoria = "INSERT INTO sis_formacao_coordenadoria
 	(Coordenadoria) VALUES ('$coordenadoria')";
 	$con = bancoMysqli();
 	$query_atualiza_coordenadoria = mysqli_query($con,$sql_atualiza_coordenadoria);
@@ -184,10 +184,10 @@ if(isset($_POST['add_coordenadoria']))
 	}
 	else
 	{
-		$mensagem = "Erro ao cadastrar.";	
-	}		   
+		$mensagem = "Erro ao cadastrar.";
+	}
 }
-?>  
+?>
 
 <section id="contact" class="home-section bg-white">
 	<div class="container">
@@ -202,10 +202,10 @@ if(isset($_POST['add_coordenadoria']))
 				<form class="form-horizontal" role="form" action="#" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Coordenadoria: *</strong>
-							<input type="text" class="form-control" id="Coordenadoria" name="Coordenadoria" placeholder="Coordenadoria"> 
+							<input type="text" class="form-control" id="Coordenadoria" name="Coordenadoria" placeholder="Coordenadoria">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="add_coordenadoria" />
@@ -213,19 +213,19 @@ if(isset($_POST['add_coordenadoria']))
 						</div>
 					</div>
 				</form>
-			</div>		
+			</div>
 		</div>
 	</div>
-</section> 
+</section>
 
-<?php 
+<?php
 break;
 case 'list_coordenadoria':
-   
+
 if(isset($_POST['atualizar']))
 {
-	$idCoordenadoria = $_POST['atualizar'];		   
-	$coordenadoria = $_POST['coordenadoria'];		   
+	$idCoordenadoria = $_POST['atualizar'];
+	$coordenadoria = $_POST['coordenadoria'];
 	$sql_atualiza_coordenadoria = "UPDATE sis_formacao_coordenadoria SET
 	Coordenadoria = '$coordenadoria'
 	WHERE idCoordenadoria = '$idCoordenadoria'";
@@ -238,10 +238,10 @@ if(isset($_POST['atualizar']))
 	}
 	else
 	{
-		$mensagem = "Erro ao atualizar.";	
-	}		   
+		$mensagem = "Erro ao atualizar.";
+	}
 }
-?> 
+?>
 <section id="list_items">
 	<div class="container">
 		<div class="col-md-offset-2 col-md-8">
@@ -249,7 +249,7 @@ if(isset($_POST['atualizar']))
 			<h2>COORDENADORIA</h2>
 			<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
 			<br/>
-		</div>		
+		</div>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
@@ -274,17 +274,17 @@ if(isset($_POST['atualizar']))
 							<input type="hidden" name="atualizar" value="<?php echo $coordenadoria['idCoordenadoria']; ?>" />
 							<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
 						</form>
-					</tr>	
-				<?php 
-					} 
-				?>				
+					</tr>
+				<?php
+					}
+				?>
 				</tbody>
 			</table>
 		</div>
-    </div>            
+    </div>
 </section>
-	
-<?php /* =========== FIM COORDENADORIA ===========*/ break; 
+
+<?php /* =========== FIM COORDENADORIA ===========*/ break;
 
 
 /* =========== INÍCIO EQUIPAMENTO ===========*/
@@ -345,22 +345,22 @@ $(function()
 {
 	$('#instituicao1').change(function()
 	{
-		if( $(this).val() ) 
+		if( $(this).val() )
 		{
 			$('#Equipamento').hide();
 			$('.carregando').show();
 			$.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
 			{
-				var options = '<option value=""></option>';	
-				for (var i = 0; i < j.length; i++) 
+				var options = '<option value=""></option>';
+				for (var i = 0; i < j.length; i++)
 				{
 					options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
-				}	
+				}
 				$('#Equipamento').html(options).show();
 				$('.carregando').hide();
 			});
-		} 
-		else 
+		}
+		else
 		{
 			$('#Equipamento').html('<option value="">-- Escolha uma instituição --</option>');
 		}
@@ -375,10 +375,10 @@ $(function()
             	<h2>CADASTRO DE DETALHES DO EQUIPAMENTO</h2>
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
-		</div>		
+		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form" action="#" method="post">			
+				<form class="form-horizontal" role="form" action="#" method="post">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Instituição</strong>
 						<select class="form-control" name="instituicao1" id="instituicao1" >
@@ -390,7 +390,7 @@ $(function()
 						<select class="form-control" name="Equipamento" id="Equipamento" ></select><br/>
 					</div>
 				</div>
-				  
+
 				<div class="form-group">
 					<div class="col-md-offset-4 col-md-4"><strong>Território: *</strong><br/>
 						<select class="form-control" id="IdTerritorio" name="IdTerritorio">
@@ -400,104 +400,104 @@ $(function()
 						<br/>
 					</div>
 				</div>
-					
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Região:</strong>
-						<select class="form-control" id="IdRegiao" name="IdRegiao"> 
+						<select class="form-control" id="IdRegiao" name="IdRegiao">
 							<option>Selecione</option>
 							<?php geraOpcao("sis_formacao_regiao","","") ?>
 						</select>
-					</div>						
+					</div>
 					<div class="col-md-6"><strong>Subprefeitura:</strong>
-						<select class="form-control" id="IdSubprefeitura" name="IdSubprefeitura"> 
+						<select class="form-control" id="IdSubprefeitura" name="IdSubprefeitura">
 							<option>Selecione</option>
 							<?php geraOpcao("sis_formacao_subprefeitura","","") ?>
 						</select>
 					</div>
 				</div>
-							
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 do Equipamento: *</strong>
 						<input type="text" class="form-control" id="Telefone1" name="Telefone1" />
-					</div>					
+					</div>
 					<div class="col-md-6"><strong>Telefone #2 do Equipamento:</strong>
 						<input type="text" class="form-control" id="Telefone2" name="Telefone2" />
 					</div>
 				</div>
-							
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>E-mail do Equipamento:</strong><br/>
 						<input type="text" class="form-control" id="Email" name="Email">
-					</div>					
+					</div>
 					<div class="col-md-offset col-md-6"><strong>Localização:</strong>
 						<input type="text" class="form-control" id="LinkAcessoMapa" name="LinkAcessoMapa" />
 					</div>
 				</div>
-							
+
 				<div class="form-group">
 					<div class="col-md-offset-5 col-md-2"><strong>CEP: *</strong>
 						<input type="text" class="form-control" id="CEP" name="IdEndereco" />
 					</div>
 				</div>
-							
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Endereço *:</strong><br/>
 						<input type="text" class="form-control" id="Endereco" name="Endereco">
-					</div>					
+					</div>
 					<div class="col-md-6"><strong>Bairro: *</strong><br/>
-						<input type="text" class="form-control" id="Bairro" name="Bairro" />  
+						<input type="text" class="form-control" id="Bairro" name="Bairro" />
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
 						<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero">
-					</div>						
+					</div>
 					<div class=" col-md-6"><strong>Complemento:</strong><br/>
 						<input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento">
 					</div>
-				</div>     
-							
+				</div>
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Cidade: *</strong><br/>
 						<input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade">
-					</div>					
+					</div>
 					<div class="col-md-6"><strong>Estado: *</strong><br/>
 						<input type="text" class="form-control" id="Estado" name="Estado" placeholder="Estado">
 					</div>
 				</div>
-												
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Nome do Responsável: *</strong>
 						<input type="text" class="form-control" id="Contato" name="Contato"/>
-					</div>					
+					</div>
 					<div class="col-md-6"><strong>Email do Responsável:</strong>
 						<input type="text" class="form-control" id="EmailResponsavel" name="EmailResponsavel" />
 					</div>
 				</div>
-							
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 do Responsável: *</strong>
 						<input type="text" class="form-control" id="Tel1Responsavel" name="Telefone1Responsavel" />
-					</div>					
+					</div>
 					<div class="col-md-6"><strong>Telefone #2 do Responsável:</strong>
 						<input type="text" class="form-control" id="Tel2Responsavel" name="Telefone2Responsavel" />
 					</div>
 				</div>
-							
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 						<textarea name="Observacao" class="form-control" rows="5"></textarea>
 					</div>
 				</div>
-					
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<input type="submit" class="btn btn-theme btn-lg btn-block" name="add_equipamento" value="Gravar">
 					</div>
 				</div>
 				</form>
-			</div>		
+			</div>
 		</div>
 	</div>
 </section>
@@ -507,7 +507,7 @@ break;
 case 'list_equipamento':
 
 if(isset($_POST['atualizar']))
-{	
+{
 	$id_equipamento = $_POST['atualizar'];
 	$equipamento = $_POST['equipamento'];
 	$territorios  = $_POST['territorios'];
@@ -515,21 +515,21 @@ if(isset($_POST['atualizar']))
 	$territorio = $_POST['territorios'];
 	$sql_atualiza_equipamento = "UPDATE sis_equipamento SET
 		Equipamento '$equipamento'
-		IdCargo = '$cargo', 
+		IdCargo = '$cargo',
 		Territorio = '$territorio',
 		Observacao = '$obs'
 		WHERE Id_Equipamento = '$id_equipamento'";
 	$query_atualiza_equipamento = mysqli_query($con,$sql_atualiza_equipamento);
 	if($query_atualiza_equipamento)
 	{
-		$mensagem = "Atualizado com sucesso!";	
+		$mensagem = "Atualizado com sucesso!";
 	}
 	else
 	{
-		$mensagem = "Erro ao atualizar. Tente novamente.";	
+		$mensagem = "Erro ao atualizar. Tente novamente.";
 	}
 }
-?> 
+?>
 
 <section id="list_items">
 	<div class="container">
@@ -545,11 +545,11 @@ if(isset($_POST['atualizar']))
 						<td>Telefone1 Equipamento</td>
 					</tr>
 				</thead>
-				<tbody>						
+				<tbody>
 				<?php
 					$consulta_tabela_equipamento = mysqli_query ($con,"SELECT `Id_Equipamento`, `Equipamento`, `IdTerritorio`, `IdRegiao`, `Telefone1` FROM `sis_equipamento` ORDER BY Id_Equipamento");
 					$linha_tabela_equipamento= mysqli_fetch_assoc($consulta_tabela_equipamento);
-					
+
 					$link1= "?perfil=formacao&p=administrativo&pag=altera_equipamento&Id_equipamento=";
 
 					do
@@ -557,7 +557,7 @@ if(isset($_POST['atualizar']))
 						$equipamento = recuperaDados("ig_local",$linha_tabela_equipamento["Equipamento"],"idLocal");
 						$territorio = recuperaDados("sis_formacao_territorio",$linha_tabela_equipamento["IdTerritorio"],"Id_Territorio");
 						$regiao = recuperaDados("sis_formacao_regiao",$linha_tabela_equipamento["IdRegiao"],"Id_Regiao");
-						
+
 						echo "<tr><td class='lista'> <a href='".$link1.$linha_tabela_equipamento['Id_Equipamento']."'>".$equipamento['sala']."</a></td>";
 						echo '<td class="lista">'.$territorio['Territorio'].	'</td> ';
 						echo '<td class="lista">'.$regiao['Regiao'].		'</td> ';
@@ -573,7 +573,7 @@ if(isset($_POST['atualizar']))
 
 <?php
 break;
-case 'altera_equipamento':    
+case 'altera_equipamento':
 
 $id_eq=$_GET['Id_equipamento'];
 $recuperar = recuperaDados("sis_equipamento",$_GET['Id_equipamento'],"Id_Equipamento");
@@ -595,7 +595,7 @@ $a = $recuperar['Equipamento'];
 				<div class="col-md-6"><strong>Equipamento*:</strong><br/>
 						 <?php echo $recuperar['Equipamento'] ?>
 				</div>
-				  
+
 				<div class="form-group">
 					<div class="col-md-offset-4 col-md-4"><strong>Território: *</strong><br/>
 						<select class="form-control" id="IdTerritorio" name="IdTerritorio">
@@ -604,22 +604,22 @@ $a = $recuperar['Equipamento'];
 						</select><br/>
 					</div>
 				</div>
-					
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Região:</strong>
-						<select class="form-control" id="IdRegiao" name="IdRegiao"> 
+						<select class="form-control" id="IdRegiao" name="IdRegiao">
 							<option>Selecione</option>
 							<?php geraOpcao("sis_formacao_regiao","","") ?>
 						</select>
 					</div>
 					<div class="col-md-6"><strong>Subprefeitura:</strong>
-						<select class="form-control" id="IdSubprefeitura" name="IdSubprefeitura"> 
+						<select class="form-control" id="IdSubprefeitura" name="IdSubprefeitura">
 							<option>Selecione</option>
 							<?php geraOpcao("sis_formacao_subprefeitura","","") ?>
 						</select>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 do Equipamento: *</strong>
 						<input type="text" class="form-control" id="Telefone1" name="Telefone1" value="<?php echo $recuperar['Telefone1'] ?>" />
@@ -628,7 +628,7 @@ $a = $recuperar['Equipamento'];
 						<input type="text" class="form-control" id="Telefone2" name="Telefone2" value="<?php echo $recuperar['Telefone2'] ?>" />
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>E-mail do Equipamento:</strong><br/>
 						<input type="text" class="form-control" id="Email" name="Email" value="<?php echo $recuperar['Email'] ?>" />
@@ -637,31 +637,31 @@ $a = $recuperar['Equipamento'];
 						<input type="text" class="form-control" id="LinkAcessoMapa" name="LinkAcessoMapa" value="<?php echo $recuperar['LinkAcessoMapa'] ?>" />
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-5 col-md-2"><strong>CEP: *</strong>
 						<input type="text" class="form-control" id="CEP" name="CEP" value="<?php echo $recuperar['IdEndereco']?>" />
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Endereço *:</strong><br/>
 						<input type="text" class="form-control" id="Endereco" name="Endereco" />
 					</div>
 					<div class="col-md-6"><strong>Bairro: *</strong><br/>
-						<input type="text" class="form-control" id="Bairro" name="Bairro"  />  
+						<input type="text" class="form-control" id="Bairro" name="Bairro"  />
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Número *:</strong><br/>
 						<input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" value="<?php echo $recuperar['Numero']?>" />
-					</div>				  
+					</div>
 					<div class=" col-md-6"><strong>Complemento:</strong><br/>
 						<input type="text" class="form-control" id="Complemento" name="Complemento" value="<?php echo $recuperar['Complemento']?>">
 					</div>
-				</div>				
-				
+				</div>
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Cidade: *</strong><br/>
 						<input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade">
@@ -670,7 +670,7 @@ $a = $recuperar['Equipamento'];
 						<input type="text" class="form-control" id="Estado" name="Estado" placeholder="Estado">
 					</div>
 				</div>
-												
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Nome do Responsável: *</strong>
 						<input type="text" class="form-control" id="Contato" name="Contato" value="<?php echo $recuperar['Contato']?>" />
@@ -679,7 +679,7 @@ $a = $recuperar['Equipamento'];
 						<input type="text" class="form-control" id="EmailResponsavel" name="EmailResponsavel" value="<?php echo $recuperar['EmailResponsavel']?>" />
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Telefone #1 do Responsável: *</strong>
 						<input type="text" class="form-control" id="Tel1Responsavel" name="Telefone1Responsavel" value="<?php echo $recuperar['Telefone1Responsavel']?>" />
@@ -688,7 +688,7 @@ $a = $recuperar['Equipamento'];
 						<input type="text" class="form-control" id="Tel2Responsavel" name="Telefone2Responsavel" value="<?php echo $recuperar['Telefone2Responsavel']?>" />
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 						<textarea name="Observacao" class="form-control" rows="5" > <?php echo $recuperar['Observacao']?>  </textarea>
@@ -696,22 +696,22 @@ $a = $recuperar['Equipamento'];
 				</div>
 
 				</form>
-			</div>		
+			</div>
 		</div>
 	</div>
 </section>
 
 <?php /* =========== FIM EQUIPAMENTO ===========*/ break;
 
- 
+
 /* =========== INÍCIO LINGUAGEM ===========*/
 case 'add_linguagem':
 
 if(isset($_POST['add_linguagem']))
 {
-	$idLinguagem = $_POST['add_linguagem'];		   
-	$linguagem = $_POST['Linguagem'];		   
-	$sql_atualiza_linguagem = "INSERT INTO sis_formacao_linguagem 
+	$idLinguagem = $_POST['add_linguagem'];
+	$linguagem = $_POST['Linguagem'];
+	$sql_atualiza_linguagem = "INSERT INTO sis_formacao_linguagem
 	(Linguagem) VALUES ('$linguagem')";
 	$con = bancoMysqli();
 	$query_atualiza_linguagem = mysqli_query($con,$sql_atualiza_linguagem);
@@ -722,8 +722,8 @@ if(isset($_POST['add_linguagem']))
 	}
 	else
 	{
-		$mensagem = "Erro ao cadastrar.";	
-	}		   
+		$mensagem = "Erro ao cadastrar.";
+	}
 }
 ?>
 
@@ -734,16 +734,16 @@ if(isset($_POST['add_linguagem']))
             	<h2>CADASTRO DE LINGUAGEM</h2>
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
-		</div>		
+		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form class="form-horizontal" role="form" action="#" method="post">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Linguagem: *</strong>
-						<input type="text" class="form-control" id="Linguagem" name="Linguagem" placeholder="Linguagem"> 
+						<input type="text" class="form-control" id="Linguagem" name="Linguagem" placeholder="Linguagem">
 					</div>
 				</div>
-					
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<input type="hidden" name="add_linguagem" />
@@ -751,19 +751,19 @@ if(isset($_POST['add_linguagem']))
 					</div>
 				</div>
 				</form>
-			</div>		
+			</div>
 		</div>
 	</div>
-</section> 
+</section>
 
-<?php 
+<?php
 break;
 case 'list_linguagem':
 
 if(isset($_POST['atualizar']))
 {
-	$idLinguagem = $_POST['atualizar'];		   
-	$linguagem = $_POST['linguagem'];		   
+	$idLinguagem = $_POST['atualizar'];
+	$linguagem = $_POST['linguagem'];
 	$sql_atualiza_linguagem = "UPDATE sis_formacao_linguagem SET
 	Linguagem = '$linguagem'
 	WHERE Id_Linguagem = '$idLinguagem'";
@@ -776,10 +776,10 @@ if(isset($_POST['atualizar']))
 	}
 	else
 	{
-		$mensagem = "Erro ao atualizar.";	
-	}		   
+		$mensagem = "Erro ao atualizar.";
+	}
 }
-?> 
+?>
 
 <section id="list_items">
 	<div class="container">
@@ -788,7 +788,7 @@ if(isset($_POST['atualizar']))
 			<h2>LINGUAGEM</h2>
 			<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
 			<br/>
-		</div>		
+		</div>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
@@ -813,15 +813,15 @@ if(isset($_POST['atualizar']))
 									<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
 							</form>
 						</tr>
-				<?php 
-					} 
+				<?php
+					}
 				?>
 				</tbody>
 			</table>
 		</div>
-    </div> 
+    </div>
 </section>
-<?php /* =========== FIM LINGUAGEM ===========*/ break; 
+<?php /* =========== FIM LINGUAGEM ===========*/ break;
 
 
 /* =========== INÍCIO PROJETO ===========*/
@@ -829,8 +829,8 @@ case 'add_projeto':
 
 if(isset($_POST['add_projeto']))
 {
-	$idProjeto = $_POST['add_projeto'];		   
-	$projeto = $_POST['Projeto'];		   
+	$idProjeto = $_POST['add_projeto'];
+	$projeto = $_POST['Projeto'];
 	$sql_atualiza_projeto = "INSERT INTO sis_formacao_projeto (Projeto) VALUES ('$projeto')";
 	$con = bancoMysqli();
 	$query_atualiza_projeto = mysqli_query($con,$sql_atualiza_projeto);
@@ -841,8 +841,8 @@ if(isset($_POST['add_projeto']))
 	}
 	else
 	{
-		$mensagem = "Erro ao cadastrar.";	
-	}		   
+		$mensagem = "Erro ao cadastrar.";
+	}
 }
 ?>
 
@@ -859,10 +859,10 @@ if(isset($_POST['add_projeto']))
 				<form class="form-horizontal" role="form" action="#" method="post">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Projeto: *</strong>
-						<input type="text" class="form-control" id="Projeto" name="Projeto" placeholder="Projeto"> 
+						<input type="text" class="form-control" id="Projeto" name="Projeto" placeholder="Projeto">
 					</div>
 				</div>
-					
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<input type="hidden" name="add_projeto" />
@@ -870,19 +870,19 @@ if(isset($_POST['add_projeto']))
 					</div>
 				</div>
 				</form>
-			</div>		
+			</div>
 		</div>
 	</div>
-</section> 
+</section>
 
-<?php 
+<?php
 break;
 case 'list_projeto':
 
 if(isset($_POST['atualizar']))
 {
-	$idProjeto = $_POST['atualizar'];		   
-	$projeto = $_POST['projeto'];		   
+	$idProjeto = $_POST['atualizar'];
+	$projeto = $_POST['projeto'];
 	$sql_atualiza_projeto = "UPDATE sis_formacao_projeto SET
 	Projeto = '$projeto'
 	WHERE Id_Projeto = '$idProjeto'";
@@ -895,10 +895,10 @@ if(isset($_POST['atualizar']))
 	}
 	else
 	{
-		$mensagem = "Erro ao atualizar.";	
-	}		   
+		$mensagem = "Erro ao atualizar.";
+	}
 }
-?> 
+?>
 
 <section id="list_items">
 	<div class="container">
@@ -907,7 +907,7 @@ if(isset($_POST['atualizar']))
 			<h2>PROJETO</h2>
 			<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
 			<br/>
-		</div>			
+		</div>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
@@ -916,7 +916,7 @@ if(isset($_POST['atualizar']))
 						<td colspan="2">Projeto</td>
 						<td></td>
 					</tr>
-				</thead>			
+				</thead>
 				<tbody>
 				<?php
 					$sql = "SELECT * FROM sis_formacao_projeto" ;
@@ -932,16 +932,16 @@ if(isset($_POST['atualizar']))
 								<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
 							</form>
 						</tr>
-				<?php 
-					} 
+				<?php
+					}
 				?>
 				</tbody>
 			</table>
 		</div>
-	</div>            
+	</div>
 </section>
 
-<?php /* =========== FIM PROJETO ===========*/ break; 
+<?php /* =========== FIM PROJETO ===========*/ break;
 
 
 /* =========== INÍCIO SUBPREFEITURA ===========*/
@@ -949,8 +949,8 @@ case 'add_subprefeitura':
 
 if(isset($_POST['add_subprefeitura']))
 {
-	$idSubprefeitura = $_POST['add_subprefeitura'];		   
-	$subprefeitura = $_POST['Subprefeitura'];		   
+	$idSubprefeitura = $_POST['add_subprefeitura'];
+	$subprefeitura = $_POST['Subprefeitura'];
 	$sql_atualiza_subprefeitura = "INSERT INTO sis_formacao_subprefeitura (Subprefeitura) VALUES ('$subprefeitura')";
 	$con = bancoMysqli();
 	$query_atualiza_subprefeitura = mysqli_query($con,$sql_atualiza_subprefeitura);
@@ -961,8 +961,8 @@ if(isset($_POST['add_subprefeitura']))
 	}
 	else
 	{
-		$mensagem = "Erro ao cadastrar.";	
-	}		   
+		$mensagem = "Erro ao cadastrar.";
+	}
 }
 ?>
 
@@ -979,10 +979,10 @@ if(isset($_POST['add_subprefeitura']))
 				<form class="form-horizontal" role="form" action="#" method="post">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Subprefeitura: *</strong>
-						<input type="text" class="form-control" id="Subprefeitura" name="Subprefeitura" placeholder="Subprefeitura"> 
+						<input type="text" class="form-control" id="Subprefeitura" name="Subprefeitura" placeholder="Subprefeitura">
 					</div>
 				</div>
-					
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<input type="hidden" name="add_subprefeitura" />
@@ -990,19 +990,19 @@ if(isset($_POST['add_subprefeitura']))
 					</div>
 				</div>
 				</form>
-			</div>		
+			</div>
 		</div>
 	</div>
-</section> 
+</section>
 
-<?php 
+<?php
 break;
 case 'list_subprefeitura':
 
 if(isset($_POST['atualizar']))
 {
-	$idSubprefeitura = $_POST['atualizar'];		   
-	$subprefeitura = $_POST['subprefeitura'];		   
+	$idSubprefeitura = $_POST['atualizar'];
+	$subprefeitura = $_POST['subprefeitura'];
 	$sql_atualiza_subprefeitura = "UPDATE sis_formacao_subprefeitura SET
 	Subprefeitura = '$subprefeitura'
 	WHERE Id_Subprefeitura = '$idSubprefeitura'";
@@ -1015,10 +1015,10 @@ if(isset($_POST['atualizar']))
 	}
 	else
 	{
-		$mensagem = "Erro ao atualizar.";	
-	}		   
+		$mensagem = "Erro ao atualizar.";
+	}
 }
-?> 
+?>
 
 <section id="list_items">
 	<div class="container">
@@ -1027,7 +1027,7 @@ if(isset($_POST['atualizar']))
 			<h2>SUBPREFEITURA</h2>
 			<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
 			<br/>
-		</div>		
+		</div>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
@@ -1036,7 +1036,7 @@ if(isset($_POST['atualizar']))
 						<td colspan="2">Subprefeitura</td>
 						<td></td>
 					</tr>
-				</thead>			
+				</thead>
 				<tbody>
 				<?php
 					$sql = "SELECT * FROM sis_formacao_subprefeitura" ;
@@ -1047,21 +1047,21 @@ if(isset($_POST['atualizar']))
 				<tr>
 					<form action="?perfil=formacao&p=administrativo&pag=list_subprefeitura" method="post">
 						<td><?php echo $subprefeitura['Id_Subprefeitura']; ?></td>
-						<td><input type="text" name="subprefeitura" class="form-control" value="<?php echo $subprefeitura['Subprefeitura']; ?>"/></td>					
+						<td><input type="text" name="subprefeitura" class="form-control" value="<?php echo $subprefeitura['Subprefeitura']; ?>"/></td>
 						<td><input type="hidden" name="atualizar" value="<?php echo $subprefeitura['Id_Subprefeitura']; ?>" />
 							<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
 					</form>
 				</tr>
-				<?php 
-					} 
+				<?php
+					}
 				?>
 				</tbody>
 			</table>
 		</div>
-	</div>            
+	</div>
 </section>
 
-<?php /* =========== FIM SUBPREFEITURA ===========*/ break; 
+<?php /* =========== FIM SUBPREFEITURA ===========*/ break;
 
 
 /* =========== INÍCIO EDITAL ===========*/
@@ -1069,7 +1069,7 @@ case 'add_edital':
 
 if(isset($_POST['add_edital']))
 {
-	$idEdital = $_POST['add_edital'];		   
+	$idEdital = $_POST['add_edital'];
 	$itensEdital = $_POST['itensEdital'];
 	$edital = $_POST['edital'];
 	$itensCredenciamento = $_POST['itensCredenciamento'];
@@ -1087,10 +1087,10 @@ if(isset($_POST['add_edital']))
 	}
 	else
 	{
-		$mensagem = "Erro ao cadastrar.";	
-	}		   
+		$mensagem = "Erro ao cadastrar.";
+	}
 }
-?> 
+?>
 
 <section id="contact" class="home-section bg-white">
 	<div class="container">
@@ -1099,60 +1099,60 @@ if(isset($_POST['add_edital']))
             	<h2>CADASTRO INFORMAÇÕES DO EDITAL</h2>
                 <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
 			</div>
-		</div>		
+		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
 			<form class="form-horizontal" role="form" action="#" method="post">
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Edital nº: *</strong>
-						<input type="text" class="form-control" id="edital" name="edital"> 
-					</div>					
+						<input type="text" class="form-control" id="edital" name="edital">
+					</div>
 					<div class="col-md-6"><strong>Itens do Edital: *</strong>
-						<input type="text" class="form-control" id="itensEdital" name="itensEdital"> 
+						<input type="text" class="form-control" id="itensEdital" name="itensEdital">
 					</div>
 				</div>
-                
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Itens do Credenciamento: *</strong>
-						<input type="text" class="form-control" id="itensCredenciamento" name="itensCredenciamento"> 
-					</div>					
+						<input type="text" class="form-control" id="itensCredenciamento" name="itensCredenciamento">
+					</div>
 					<div class="col-md-6"><strong>Data do resultado no D.O.: *</strong>
 						<input type="date" class="form-control" id="dataDO" name="dataDO">
 					</div>
 				</div>
-							
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Período (meses): *</strong>
-						<input type="text" class="form-control" id="meses" name="meses"> 
-					</div>					  
+						<input type="text" class="form-control" id="meses" name="meses">
+					</div>
 					<div class="col-md-6"><strong>Folha de Pesquisa: *</strong>
-						<input type="text" class="form-control" id="folhaPesquisa" name="folhaPesquisa"> 
+						<input type="text" class="form-control" id="folhaPesquisa" name="folhaPesquisa">
 					</div>
 				</div>
-                
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Proceso de pesquisa: *</strong>
-						<input type="text" class="form-control" id="processoPesquisa" name="processoPesquisa"> 
+						<input type="text" class="form-control" id="processoPesquisa" name="processoPesquisa">
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<input type="hidden" name="add_edital" value="1" />
 						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
 					</div>
 				</div>
-				
+
 			</form>
-			</div>		
+			</div>
 		</div>
 	</div>
-</section> 
+</section>
 
-<?php 
+<?php
 break;
 case 'list_edital':
-?> 
+?>
 
 <section id="list_items">
 	<div class="container">
@@ -1161,7 +1161,7 @@ case 'list_edital':
 			<h2>EDITAL</h2>
 			<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
 			<br/>
-		</div>		
+		</div>
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
@@ -1172,7 +1172,7 @@ case 'list_edital':
 						<td>Processo de Pesquisa</td>
 						<td></td>
 					</tr>
-				</thead>				
+				</thead>
 				<tbody>
 				<?php
 					$sql = "SELECT * FROM sis_formacao_edital" ;
@@ -1188,13 +1188,13 @@ case 'list_edital':
 									<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
 							</form>
 						</tr>
-				<?php 
-					} 
-				?>	
+				<?php
+					}
+				?>
 				</tbody>
 			</table>
 		</div>
-	</div>            
+	</div>
 </section>
 
 <?php /* =========== FIM EDITAL ===========*/ break;
@@ -1213,13 +1213,24 @@ case 'relatorio_inscritos':
                 <div class="col-md-offset-1 col-md-10">
                     <form class="form-horizontal" role="form" action="../pdf/formacao_inscritos_capac.php" method="post">
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-6"><strong>Iscrições para o ano: *</strong>
-                                <input type="text" class="form-control" id="ano" name="ano" maxlength="4" placeholder="Exemplo: 2019">
+                            <div class="col-md-offset-2 col-md-6"><strong>Inscrições para o ano: *</strong>
+                                <input type="text" class="form-control" id="ano" name="ano" maxlength="4" placeholder="Exemplo: 2019" required>
                             </div>
-                            <div class="col-md-6"><strong><br/></strong>
-                                <input type="submit" class="btn btn-theme btn-md btn-block" value="Gerar">
-                            </div>
+
+														<div class="col-md-6"> <strong>Tipo formação: </strong>
+															<select class="form-control" name="idTipoFormacao" id="idTipoFormacao">
+																<option value="0">Todos</option>
+																<option value="1">Vocacional</option>
+																<option value="2">PIA</option>
+															</select>
+														</div>
                         </div>
+
+												<div class="form-group">
+														<div class="col-md-offset-4 col-md-6"><strong><br/></strong>
+																<input type="submit" class="btn btn-theme btn-md btn-block" value="Gerar">
+														</div>
+												</div>
                     </form>
                 </div>
             </div>
