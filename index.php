@@ -73,7 +73,7 @@ if(isset($_POST['usuario']))
 			<div class="container">
 				<div class="col-md-offset-1 col-md-10">
 					<h5><?php if(isset($mensagem)){ echo $mensagem; } ?></h5>
-					<form method="POST" action="index.php"class="form-horizontal" role="form">
+					<form method="POST" action="index.php" class="form-horizontal" role="form">
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6">
 								<input type="text" name="usuario" class="form-control" id="inputName" placeholder="Usuário">
@@ -92,7 +92,7 @@ if(isset($_POST['usuario']))
 
 					<br /><br />
 
-                    <!--
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<h4><p>Não possui cadastro?<strong><a href="https://goo.gl/lHLdnI" target="_blank"> CLIQUE AQUI!</strong></a></p></h4>
@@ -100,7 +100,7 @@ if(isset($_POST['usuario']))
 							<p>Dúvidas? Envie e-mail para: <strong>sistema.igsis@gmail.com</strong></p>
 						</div>
 					</div>
-					-->
+
 				</div>
 			</div>
 		</section>
