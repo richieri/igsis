@@ -204,7 +204,7 @@ Nestes termos, encaminho para deferimento."));
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("São Paulo, _______ de ________________________ de 2018."));
+   $pdf->MultiCell(180,$l,utf8_decode("São Paulo, _______ de ________________________ de $ano."));
    
    
 //RODAPÉ PERSONALIZADO
