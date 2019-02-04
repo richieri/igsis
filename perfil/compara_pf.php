@@ -176,6 +176,7 @@ if(isset($_SESSION['idEvento']))
 	$idEventoCapac = $array_evento['idEventoCapac'];
 
 	$eventoCapac = recuperaDadosProp("evento","id",$idEventoCapac);
+	$tipoEventoCapac = $eventoCapac['idTipoPessoa'];
 	$integrantes = $eventoCapac['integrantes'];
 }
 
@@ -210,7 +211,14 @@ if(isset($_POST['importarCapacIgsis']))
 		$id = mysqli_fetch_array($query_ultimo);
 		$idFisica = $id['Id_PessoaFisica'];
 		$idEvento = $_SESSION['idEvento'];
-		$sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantes`, `publicado`) VALUES ('$idEvento', '1', '$idFisica', $integrantes, '1')";
+		if (($tipoEventoCapac == 4) || ($tipoEventoCapac == 5))
+        {
+            $sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `publicado`) VALUES ('$idEvento', '1', '$idFisica', '1')";
+        }
+		else
+        {
+            $sql_insert_pedido = "INSERT INTO `igsis_pedido_contratacao` (`idEvento`, `tipoPessoa`, `idPessoa`, `integrantes`, `publicado`) VALUES ('$idEvento', '1', '$idFisica', $integrantes, '1')";
+        }
 		$query_insert_pedido = mysqli_query($con1,$sql_insert_pedido);
 		if($query_insert_pedido)
 		{
@@ -830,10 +838,11 @@ If($query1 != '' && $query2 != '')
                         }
 						else
 						{
-							echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+                            echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
 						}
-					?>
-						<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo[]=<?=implode('&tipo[]=', $tipoPessoa)?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+					if (isset($tipoPessoa)) { ?>
+                        <a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo[]=<?=implode('&tipo[]=', $tipoPessoa)?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos</a>
+                    <?php } ?>
 					</div>
 				</div>
 			</div>

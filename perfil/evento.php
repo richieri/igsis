@@ -241,7 +241,7 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Nome do Evento *</label>
-							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo $campo['nomeEvento'] ?>"/>
+							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo $campo['nomeEvento'] ?>" required/>
 						</div> 
 					</div>
 					<div class="form-group">
@@ -265,8 +265,8 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Tipo de Evento *</label>
-							<select class="form-control" name="ig_tipo_evento_idTipoEvento" id="inputSubject" >
-								<option value="1"></option>
+							<select class="form-control" name="ig_tipo_evento_idTipoEvento" id="inputSubject" required>
+								<option value=""></option>
 								<?php echo geraOpcao("ig_tipo_evento",$campo['ig_tipo_evento_idTipoEvento'],"") ?>
 							</select>					
 						</div>

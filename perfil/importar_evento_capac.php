@@ -38,7 +38,7 @@ $telefone2Produtor = $produtorC['telefone2'];
 if($eventoC['contratacao'] != 3)
 {
 
-	if($idTipoPessoa == 2)
+	if(($idTipoPessoa == 2) || $idTipoPessoa == 5)
 	{
 		//Recupera pj
 		$sqlPj = $con2->query("SELECT * FROM pessoa_juridica where id = '$idPj'");
@@ -142,7 +142,7 @@ if(isset($_POST['idCapac']))
 			$sql_insere_igsis = "INSERT INTO `igsis_capac`(`idEventoCapac`, `idEventoIgsis`) VALUES ('$idCapac', '$idEventoIg')";
 			if(mysqli_query($con1,$sql_insere_igsis))
 			{
-				if($idTipoPessoa == 2)
+				if(($idTipoPessoa == 2) || ($idTipoPessoa == 5))
 				{
 					if($idPf > 0)
 					{
@@ -154,7 +154,7 @@ if(isset($_POST['idCapac']))
 						echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pj&busca=".$cnpj."'>";
 					}
 				}
-				elseif($idTipoPessoa == 1)
+				elseif(($idTipoPessoa == 1) || ($idTipoPessoa == 4))
 				{
 					echo "<meta HTTP-EQUIV='refresh' CONTENT='1.5;URL=?perfil=compara_pf&busca=".$cpfPf."'>";
 				}
