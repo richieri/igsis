@@ -910,8 +910,74 @@
 		} 
 		return true;
 	}
+
+	function valorRegiao()
+    {
+        var areaRegiao = document.getElementById("valoresRegiao");
+        if (areaRegiao === null)
+        {
+            console.log("area não encontrada");
+        }
+        else
+        {
+            console.log("Area encontrada");
+            var norte = document.getElementById("norte").value;
+            var sul = document.getElementById("sul").value;
+            var leste = document.getElementById("leste").value;
+            var oeste = document.getElementById("oeste").value;
+            var centro = document.getElementById("centro").value;
+
+            if ((norte == "") || (sul == "") || (leste == "") || (oeste == "") || (centro == ""))
+            {
+                document.getElementById("btnValores").disabled = true;
+                document.getElementById("divRegiao").hidden = false;
+                // alert("Preencha todos os valores por região para prosseguir")
+            }
+            else
+            {
+                document.getElementById("btnValores").disabled = false;
+                document.getElementById("divRegiao").hidden = true;
+            }
+        }
+    }
+
 </script>
 		<?php
+            if (isset($_POST['valoresRegiao']))
+            {
+                $norte = $_POST['norte'];
+                $sul = $_POST['sul'];
+                $leste = $_POST['leste'];
+                $oeste = $_POST['oeste'];
+                $centro = $_POST['centro'];
+                $idPedido = $_SESSION['idPedido'];
+
+                $sqlConsultaValores = "SELECT * FROM `igsis_valor_regiao` WHERE `idPedido` = '$idPedido'";
+                if ($con->query($sqlConsultaValores)->num_rows <= 0)
+                {
+                    $sqlValoresRegiao = "INSERT INTO `igsis_valor_regiao` (`idPedido`, `norte`, `sul`, `leste`, `oeste`, `centro`)
+                                         VALUES ('$idPedido', '$norte', '$sul', '$leste', '$oeste', '$centro')";
+                }
+                else
+                {
+                    $sqlValoresRegiao = "UPDATE `igsis_valor_regiao` SET 
+                                          `norte` = '$norte',
+                                          `sul` = '$sul',
+                                          `leste` = '$leste',
+                                          `oeste` = '$oeste',
+                                          `centro` = '$centro'
+                                          WHERE `idPedido` = '$idPedido'";
+                }
+                if ($con->query($sqlValoresRegiao))
+                {
+                    gravarLog($sqlValoresRegiao);
+                    $mensagem = "Valores por Região Atualizados com sucesso";
+                }
+                else
+                {
+                    $mensagem = "Erro ao atualizar os valores";
+                }
+            }
 			if(isset($_POST['novoJuridica']))
 			{
 				//cadastra e insere pessoa jurídica
@@ -1108,6 +1174,7 @@
 			include "../funcoes/funcoesSiscontrat.php";
 			$pedido = recuperaDados("igsis_pedido_contratacao",$_SESSION['idPedido'],"idPedidoContratacao");
 			$executante = siscontratDocs($pedido['IdExecutante'],1);
+			$valorRegiao = recuperaDados('igsis_valor_regiao', $pedido['idPedidoContratacao'],'idPedido')
 		?>
 <!-- Contact -->
 <section id="contact" class="home-section bg-white">
@@ -1195,6 +1262,54 @@
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
+                <!--Form para Gravar valores por região
+                input pego atraves do atributo form-->
+                <?php if ($pedido['valor'] != 0) { ?>
+                    <form action="?perfil=contratados&p=edicaoPedido" id="formRegiao" method="post">
+                        
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <div class="alert alert-danger" id="divRegiao">
+                                    <span class="alert-danger"><strong>Insira todos os valores por região para prosseguir</strong></span>
+                                </div>
+                                <strong>Valor por Região:</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-offset-3 col-md-2">
+                                <label for="norte">Norte:</label>
+                                <input type="text" name="norte" id="norte" class="form-control"
+                                       onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= ($valorRegiao['norte']) ?? NULL ?>">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="sul">Sul:</label>
+                                <input type="text" name="sul" id="sul" class="form-control" onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= ($valorRegiao['sul']) ?? NULL ?>">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="leste">Leste:</label>
+                                <input type="text" name="leste" id="leste" class="form-control" onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= ($valorRegiao['leste']) ?? NULL ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-offset-4 col-md-2">
+                                <label for="oeste">Oeste:</label>
+                                <input type="text" name="oeste" id="oeste" class="form-control" onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= ($valorRegiao['oeste']) ?? NULL ?>">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="centro">Centro:</label>
+                                <input type="text" name="centro" id="centro" class="form-control" onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= ($valorRegiao['centro']) ?? NULL ?>">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-offset-2 col-md-8">
+                                <input type="hidden" name="valoresRegiao" id="valoresRegiao">
+                                <input type="submit" class="form-control btn btn-theme btn-block" id="btnValores" value="Gravar Valores">
+                            </div>
+                        </div>
+                    </form>
+                <?php } ?>
+
 				<!-- /Grupo -->
 				<form class="form-horizontal" role="form" onsubmit="return valida()" action="?perfil=contratados&p=edicaoPedido" method="post">
 		<?php
@@ -1396,7 +1511,7 @@
 							<div class="col-md-offset-2 col-md-8">
 								<input type="hidden" name="atualizar" value="<?php echo $pedido['parcelas']; ?>" />
 								<input type="hidden" name="idPedidoContratacao" value="<?php echo $_SESSION['idPedido']; ?>" />
-								<input type="submit" name="GRAVAR" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
+								<input type="submit" name="GRAVAR" value="GRAVAR" class="btn btn-theme btn-lg btn-block" id="gravarPedido" onmouseover="valorRegiao()">
 							</div>
 						</div>
 					</div>
@@ -1415,8 +1530,9 @@
 			</div>
 		</div>
 	</div>	
-</section>  
-	<?php 
+</section>
+<script defer> window.onload = valorRegiao(); </script>
+	<?php
 		break;
 		case "edicaoProponente":
 			if(isset($_POST['pesquisar']))
