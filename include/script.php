@@ -10,7 +10,7 @@
   });
  
     $(function() {
-    $('#valor').maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
+    $('#valor, #norte, #sul, #leste, #oeste, #centro').maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
   });
       $(function() {
     $('.valor').maskMoney({thousands:'', decimal:',', allowZero:true, suffix: ''});
