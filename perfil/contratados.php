@@ -1227,12 +1227,12 @@
 		?>
                     <!--TODO: Adaptar texto das parcelas para Oficinas-->
                     <div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-								<textarea  disabled name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?>
-								</textarea>
-								<p></p>
-							</div>
-						</div>
+                        <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
+                            <textarea  disabled name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?>
+                            </textarea>
+                            <p></p>
+                        </div>
+                    </div>
 		<?php
                 }
                 else

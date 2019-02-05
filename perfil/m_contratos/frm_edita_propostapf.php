@@ -55,14 +55,27 @@ if(isset($_POST['atualizar']))
 	$parecer = addslashes($_POST['ParecerTecnico']);
 	$observacao = addslashes($_POST['Observacao']);
 	$pendenciaDocumento = addslashes($_POST['pendenciaDocumento']);
-	$parcelas = $_POST['parcelas'];
+
+	if ($_POST['parcelas'] <= 12)
+    {
+        $parcelas = $_POST['parcelas'];
+        $tipoParcela = NULL;
+    }
+    else
+    {
+        $parcelas = substr($_POST['parcelas'], 0, 1);
+        $tipoParcela = substr($_POST['parcelas'], 1, 1);
+    }
+
 	$processo = $_POST['NumeroProcesso'];
 	$dataAgora = date('Y-m-d H:i:s');
+
 	if($_POST['atualizar'] > '1')
 	{
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
 			`integrantes` = '$integrantes',
 			`parcelas` =  '$parcelas',
+            `tipoParcela` = '$tipoParcela',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
 			pendenciaDocumento = '$pendenciaDocumento',
@@ -108,12 +121,13 @@ if(isset($_POST['atualizar']))
 	else
 	{
 		$valor = dinheiroDeBr($_POST['Valor']); 
-		$forma_pagamento = $_POST['FormaPagamento'];	
+		$forma_pagamento = $_POST['FormaPagamento'];
 		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
 			`integrantes` = '$integrantes',
 			valor = '$valor',
 			formaPagamento = '$forma_pagamento',
 			`parcelas` =  '$parcelas',
+			`tipoParcela` =  '$tipoParcela',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
 			pendenciaDocumento = '$pendenciaDocumento',
@@ -427,16 +441,30 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				<?php 
 					}
 					if($pedido['parcelas'] > 0)
-					{ 
-				?>
+					{
+                        if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
+                        {
+                ?>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
+                                    <textarea readonly name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?></textarea>
+                                    <p>&nbsp;</p>
+                                </div>
+                            </div>
+                <?php
+                        }
+                        else
+                        {
+                ?>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
-								<textarea readonly name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?> 
+								<textarea readonly name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
 								</textarea>
 								<p>&nbsp;</p>
 							</div>
 						</div>
-				<?php 
+				<?php
+                        }
 					}
 					else
 					{ 
@@ -452,21 +480,30 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Parcelas (antes de editar as parcelas, é preciso salvar o pedido)</strong><br/>
-							<select class="form-control" id="parcelas" name="parcelas" >
-								<option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
-								<option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
-								<option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
-								<option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
-								<option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
-								<option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
-								<option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
-								<option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
-								<option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
-								<option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
-								<option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
-								<option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
-								<option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
-							</select>
+                            <select class="form-control" id="parcelas" name="parcelas">
+                                <?php if ($evento['ig_tipo_evento_idTipoEvento'] == 4) { /*Caso seja evento tipo OFICINA*/?>
+                                    <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
+                                    <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única Oficinas de Curta Duração (1 mês)</option>
+                                    <option value="21" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 1)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração I (3 meses)</option>
+                                    <option value="22" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 2)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração II (4 meses) </option>
+                                    <option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas Oficina Estendida I (6 meses)</option>
+                                    <option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas Oficina Estendida II  (10 meses)</option>
+                                <?php } else { ?>
+                                    <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
+                                    <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
+                                    <option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
+                                    <option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
+                                    <option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
+                                    <option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
+                                    <option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
+                                    <option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
+                                    <option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
+                                    <option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
+                                    <option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
+                                    <option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
+                                    <option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
+                                <?php } ?>
+                            </select>
 						</div>	
                     </div>
                                      

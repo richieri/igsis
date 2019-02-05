@@ -172,7 +172,14 @@
 					}
 					else
 					{
-						$pagamento = txtParcelas($idPedido,$pedido['parcelas']);
+					    if ($evento['ig_tipo_evento_idTipoEvento'])
+                        {
+                            $pagamento = txtParcelasOficinas($idPedido,$pedido['parcelas'], $pedido['tipoParcela']);
+                        }
+					    else
+                        {
+                            $pagamento = txtParcelas($idPedido,$pedido['parcelas']);
+                        }
 					}
 				}
 			}
