@@ -172,7 +172,7 @@
 					}
 					else
 					{
-					    if ($evento['ig_tipo_evento_idTipoEvento'])
+					    if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
                         {
                             $pagamento = txtParcelasOficinas($idPedido,$pedido['parcelas'], $pedido['tipoParcela']);
                         }
