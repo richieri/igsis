@@ -1130,20 +1130,39 @@
 				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
 				$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				$formaPagamento = $_POST['formaPagamento'];
-				if($_POST['atualizar'] >= '2')
+                $formaPagamento = $_POST['formaPagamento'];
+                $evento = recuperaDados('ig_evento', $_SESSION['idEvento'], 'idEvento');
+                if($_POST['atualizar'] >= '2')
 				{
-					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
-						`integrantes` = '$integrantes',
-						`observacao` =  '$Observacao',
-						`parcelas` =  '$parcelas',
-						`tipoParcela` =  '$tipoParcela',
-						`parecerArtistico` =  '$parecer',
-						`justificativa` =  '$justificativa',
-						`qtdApresentacoes` =  '$qtdApresentacoes',
-						`dataKitPagamento` = '$dataKitPagamento',
-						`idVerba` =  '$Verba'
-						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
+                    {
+                        $sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
+                           `formaPagamento` = '$formaPagamento',
+                            `integrantes` = '$integrantes',
+                            `observacao` =  '$Observacao',
+                            `parcelas` =  '$parcelas',
+                            `tipoParcela` =  '$tipoParcela',
+                            `parecerArtistico` =  '$parecer',
+                            `justificativa` =  '$justificativa',
+                            `qtdApresentacoes` =  '$qtdApresentacoes',
+                            `dataKitPagamento` = '$dataKitPagamento',
+                            `idVerba` =  '$Verba'
+                            WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    }
+                    else
+                    {
+                        $sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
+                            `integrantes` = '$integrantes',
+                            `observacao` =  '$Observacao',
+                            `parcelas` =  '$parcelas',
+                            `tipoParcela` =  '$tipoParcela',
+                            `parecerArtistico` =  '$parecer',
+                            `justificativa` =  '$justificativa',
+                            `qtdApresentacoes` =  '$qtdApresentacoes',
+                            `dataKitPagamento` = '$dataKitPagamento',
+                            `idVerba` =  '$Verba'
+                            WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    }
 				}
 				else
 				{
@@ -1349,7 +1368,7 @@
                     <!--TODO: Adaptar texto das parcelas para Oficinas-->
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-                            <textarea  disabled name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?>
+                            <textarea  readonly name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?>
                             </textarea>
                             <p></p>
                         </div>
@@ -1361,7 +1380,7 @@
         ?>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-                                <textarea  disabled name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
+                                <textarea  readonly name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
                                     </textarea>
                                 <p></p>
                             </div>

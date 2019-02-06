@@ -55,6 +55,10 @@ if(isset($_POST['atualizar']))
 	$parecer = addslashes($_POST['ParecerTecnico']);
 	$observacao = addslashes($_POST['Observacao']);
 	$pendenciaDocumento = addslashes($_POST['pendenciaDocumento']);
+    $recupera = recuperaDados("igsis_pedido_contratacao",$ped,"idPedidoContratacao");
+    $idEvento = $recupera['idEvento'];
+    $evento = recuperaDados('ig_evento', $idEvento, 'idEvento');
+    $forma_pagamento = $_POST['FormaPagamento'];
 
 	if ($_POST['parcelas'] <= 12)
     {
@@ -72,7 +76,10 @@ if(isset($_POST['atualizar']))
 
 	if($_POST['atualizar'] > '1')
 	{
-		$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+        if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
+        {
+            $sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+            `formaPagamento` = '$forma_pagamento',
 			`integrantes` = '$integrantes',
 			`parcelas` =  '$parcelas',
             `tipoParcela` = '$tipoParcela',
@@ -83,6 +90,21 @@ if(isset($_POST['atualizar']))
 			DataContrato = '$dataAgora',
 			NumeroProcesso = '$processo'
 			WHERE idPedidoContratacao = '$ped'";
+        }
+        else
+        {
+            $sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
+                `integrantes` = '$integrantes',
+                `parcelas` =  '$parcelas',
+                `tipoParcela` = '$tipoParcela',
+                justificativa = '$justificativa',
+                observacao = '$observacao',
+                pendenciaDocumento = '$pendenciaDocumento',
+                parecerArtistico = '$parecer',
+                DataContrato = '$dataAgora',
+                NumeroProcesso = '$processo'
+                WHERE idPedidoContratacao = '$ped'";
+        }
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_pedido)
 		{
@@ -460,7 +482,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
 								<textarea name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
 								</textarea>
-								<p>&nbsp;</p>
+							<p>&nbsp;</p>
 							</div>
 						</div>
 				<?php

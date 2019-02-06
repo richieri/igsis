@@ -172,7 +172,7 @@
 					}
 					else
 					{
-					    if ($evento['ig_tipo_evento_idTipoEvento'])
+					    if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
                         {
                             $pagamento = txtParcelasOficinas($idPedido,$pedido['parcelas'], $pedido['tipoParcela']);
                         }
@@ -286,6 +286,7 @@
 				"Assinatura" => $assinatura['Assinatura'],
 				"Cargo" => $assinatura['Cargo'],
 				"parcelas" => $pedido['parcelas'],
+				"tipoParcela" => $pedido['tipoParcela'],
 				"RfFiscal" => $rfFiscal,
 				"RfSuplente" => $rfSuplente,
 				"AmparoLegal" => $pedido['AmparoLegal'],
@@ -1466,4 +1467,16 @@ function txtParcelasFormacao($idPedido,$numero)
 		}
 		return $x;
 	}
+	function valorPorRegiao($idPedido){
+        $con = bancoMysqli();
+	    $sql = "SELECT * FROM igsis_valor_regiao WHERE idPedido = '$idPedido'";
+	    $query = mysqli_query($con, $sql);
+	    $array = mysqli_fetch_array($query);
+	    $zona['norte'] = $array['norte'];
+	    $zona['sul'] = $array['sul'];
+	    $zona['leste'] = $array['leste'];
+	    $zona['oeste'] = $array['oeste'];
+	    $zona['centro'] = $array['centro'];
+	    return $zona;
+    }
 ?>
