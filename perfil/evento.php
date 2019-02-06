@@ -2669,7 +2669,7 @@
 						<br />
 						<p><?php echo $prazo['mensagem'];?><p>
 				<?php
-                    $sqlConsultaPedido = "SELECT `idPedidoContratacao` FROM `igsis_pedido_contratacao` WHERE `idEvento` = '".$_SESSION['idEvento']."' AND `publicado` = '1'";
+                    $sqlConsultaPedido = "SELECT `idPedidoContratacao`, `valor` FROM `igsis_pedido_contratacao` WHERE `idEvento` = '".$_SESSION['idEvento']."' AND `publicado` = '1'";
                     $queryConsultaPedido = $con->query($sqlConsultaPedido);
 					if($evento['ig_produtor_idProdutor'] == 0)
 					{
@@ -2679,11 +2679,21 @@
 					{
                         if ($queryConsultaPedido->num_rows > 0)
                         {
-                            $idPedido = $queryConsultaPedido->fetch_assoc()['idPedidoContratacao'];
-                            $sqlValoresRegiao = "SELECT * FROM `igsis_valor_regiao` WHERE `idPedido` = '$idPedido'";
-                            $registrosRegiao = $con->query($sqlValoresRegiao)->num_rows;
+                            $erroRegiao = false;
+                            while ($pedidos = $queryConsultaPedido->fetch_assoc())
+                            {
+                                if ($pedidos['valor'] > 0)
+                                {
+                                    $sqlValoresRegiao = "SELECT * FROM `igsis_valor_regiao` WHERE `idPedido` = '".$pedidos['idPedidoContratacao']."'";
+                                    $registrosRegiao = $con->query($sqlValoresRegiao)->num_rows;
 
-                            if ($registrosRegiao == 0)
+                                    if ($registrosRegiao == 0)
+                                    {
+                                        $erroRegiao = true;
+                                    }
+                                }
+                            }
+                            if ($erroRegiao)
                             {
                                 echo "<h6>Preencha os valores por região no pedido de contratação para habilitar o botão de envio!</h6>";
                             }
