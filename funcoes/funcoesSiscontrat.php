@@ -286,6 +286,7 @@
 				"Assinatura" => $assinatura['Assinatura'],
 				"Cargo" => $assinatura['Cargo'],
 				"parcelas" => $pedido['parcelas'],
+				"tipoParcela" => $pedido['tipoParcela'],
 				"RfFiscal" => $rfFiscal,
 				"RfSuplente" => $rfSuplente,
 				"AmparoLegal" => $pedido['AmparoLegal'],

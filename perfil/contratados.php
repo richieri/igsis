@@ -1062,20 +1062,39 @@
 				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
 				$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				$formaPagamento = $_POST['formaPagamento'];
-				if($_POST['atualizar'] >= '2')
+                $formaPagamento = $_POST['formaPagamento'];
+                $evento = recuperaDados('ig_evento', $_SESSION['idEvento'], 'idEvento');
+                if($_POST['atualizar'] >= '2')
 				{
-					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
-						`integrantes` = '$integrantes',
-						`observacao` =  '$Observacao',
-						`parcelas` =  '$parcelas',
-						`tipoParcela` =  '$tipoParcela',
-						`parecerArtistico` =  '$parecer',
-						`justificativa` =  '$justificativa',
-						`qtdApresentacoes` =  '$qtdApresentacoes',
-						`dataKitPagamento` = '$dataKitPagamento',
-						`idVerba` =  '$Verba'
-						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
+                    {
+                        $sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
+                           `formaPagamento` = '$formaPagamento',
+                            `integrantes` = '$integrantes',
+                            `observacao` =  '$Observacao',
+                            `parcelas` =  '$parcelas',
+                            `tipoParcela` =  '$tipoParcela',
+                            `parecerArtistico` =  '$parecer',
+                            `justificativa` =  '$justificativa',
+                            `qtdApresentacoes` =  '$qtdApresentacoes',
+                            `dataKitPagamento` = '$dataKitPagamento',
+                            `idVerba` =  '$Verba'
+                            WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    }
+                    else
+                    {
+                        $sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
+                            `integrantes` = '$integrantes',
+                            `observacao` =  '$Observacao',
+                            `parcelas` =  '$parcelas',
+                            `tipoParcela` =  '$tipoParcela',
+                            `parecerArtistico` =  '$parecer',
+                            `justificativa` =  '$justificativa',
+                            `qtdApresentacoes` =  '$qtdApresentacoes',
+                            `dataKitPagamento` = '$dataKitPagamento',
+                            `idVerba` =  '$Verba'
+                            WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    }
 				}
 				else
 				{
