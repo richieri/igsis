@@ -2,10 +2,10 @@
 $con = bancoMysqliProponente();
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = "SELECT eve.id, idTipoEvento, nomeEvento, nome, cpf, dataCadastro, publicado
+$sql_lista = "SELECT eve.id, idTipoEvento, nomeEvento, nome, cpf, dataCadastro, eve.publicado
 				FROM evento AS eve
 				INNER JOIN pessoa_fisica AS pf ON pf.id = eve.idPf
-				WHERE idTipoPessoa = '1' AND publicado = '2' ORDER BY nomeEvento";
+				WHERE idTipoPessoa = '1' OR idTipoPessoa = '4' AND eve.publicado = '2' ORDER BY nomeEvento";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -21,10 +21,10 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = "SELECT eve.id, idTipoEvento, nomeEvento, nome, cpf, dataCadastro, publicado
+$sql_lista = "SELECT eve.id, idTipoEvento, nomeEvento, nome, cpf, dataCadastro, eve.publicado
 				FROM evento AS eve
 				INNER JOIN pessoa_fisica AS pf ON pf.id = eve.idPf
-				WHERE idTipoPessoa = '1' AND publicado = '2' ORDER BY nomeEvento limit $inicio,$registros ";
+				WHERE idTipoPessoa = '1' OR idTipoPessoa = '4' AND eve.publicado = '2' ORDER BY nomeEvento limit $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens

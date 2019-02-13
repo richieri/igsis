@@ -5,7 +5,7 @@ $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
 $sql_lista = "SELECT eve.id, idTipoEvento, nomeEvento, razaoSocial, cnpj, dataCadastro, publicado
 				FROM evento AS eve
 				INNER JOIN pessoa_juridica AS pj ON pj.id = eve.idPj
-				WHERE idTipoPessoa = '2' AND publicado = '2' ORDER BY nomeEvento";
+				WHERE idTipoPessoa = '2' OR idTipoPessoa = '5' AND publicado = '2' ORDER BY nomeEvento";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -24,7 +24,7 @@ $inicio = ($registros*$pagina)-$registros;
 $sql_lista = "SELECT eve.id, idTipoEvento, nomeEvento, razaoSocial, cnpj, dataCadastro, publicado
 				FROM evento AS eve
 				INNER JOIN pessoa_juridica AS pj ON pj.id = eve.idPj
-				WHERE idTipoPessoa = '2' AND publicado = '2' ORDER BY nomeEvento limit $inicio,$registros ";
+				WHERE idTipoPessoa = '2' OR idTipoPessoa = '5' AND publicado = '2' ORDER BY nomeEvento limit $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
