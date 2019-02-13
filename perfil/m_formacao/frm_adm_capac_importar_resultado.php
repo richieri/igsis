@@ -3,19 +3,48 @@ $con = bancoMysqliProponente();
 
 if (!(isset($_GET['pagina'])))
 {
-    $_SESSION['ano'] = $ano = $_POST['ano'];
-    if (empty($_POST['ano']))
+    if (isset($_POST['pesquisaGeral']))
     {
-        echo "<script>window.location = '?perfil=formacao&p=frm_adm_capac_importar&erro=1';</script>";
+        $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
+        $_SESSION['pesquisaGeral'] = true;
+    }
+    else
+    {
+        $_SESSION['ano'] = $ano = $_POST['ano'];
+        $_SESSION['tipoCadastro'] = $tipoCadastro = $_POST['tipoCadastro'];
+        $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
+        if (empty($_POST['ano']))
+        {
+            echo "<script>window.location = '?perfil=formacao&p=frm_adm_capac_importar&erro=1';</script>";
+        }
     }
 }
 else
 {
-    $ano = $_SESSION['ano'];
+    if (isset($_SESSION['pesquisaGeral']))
+    {
+        $proponente = $_SESSION['proponente'];
+    }
+    else
+    {
+        $ano = $_SESSION['ano'];
+        $tipoCadastro = $_SESSION['tipoCadastro'];
+        $proponente = $_SESSION['proponente'];
+    }
 }
 
-function pesquisaProponente($ano)
+function pesquisaProponente($ano, $tipoCadastro, $proponente)
 {
+    if ($tipoCadastro == 1)
+    {
+        $innerCadastro = "INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
+                                   WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
+                                   GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id";
+    }
+    else
+    {
+        $innerCadastro = "";
+    }
     $query = "SELECT
                   pf.id,
                   pf.nome,
@@ -30,14 +59,17 @@ function pesquisaProponente($ano)
                        INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
                        INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
                        INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
-                       INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
-                                   WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
-                                   GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id";
+                       $innerCadastro";
     $condicoes = [];
 
     if(!(empty($ano)))
     {
         $condicoes[] = "`formacao_ano` = '$ano'";
+    }
+
+    if(!(empty($proponente)))
+    {
+        $condicoes[] = "pf.nome LIKE '%$proponente%'";
     }
 
     $sql = $query;
@@ -50,7 +82,14 @@ function pesquisaProponente($ano)
 }
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = pesquisaProponente($ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
+if (isset($_SESSION['pesquisaGeral']))
+{
+    $sql_lista = "SELECT * FROM `pessoa_fisica` WHERE `nome` LIKE '%$proponente%' AND `publicado` = 1";
+}
+else
+{
+    $sql_lista = pesquisaProponente($ano, $tipoCadastro, $proponente)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
+}
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -66,7 +105,15 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = pesquisaProponente($ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY pf.nome LIMIT $inicio,$registros ";
+if (isset($_SESSION['pesquisaGeral']))
+{
+    $sql_lista = "SELECT * FROM `pessoa_fisica` WHERE `nome` LIKE '%$proponente%' AND `publicado` = 1 LIMIT $inicio,$registros";
+}
+else
+{
+    $sql_lista = pesquisaProponente($ano, $tipoCadastro, $proponente)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY pf.nome LIMIT $inicio,$registros ";
+
+}
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
@@ -105,12 +152,13 @@ include 'includes/menu_administrativo.php';
                     <table class="table table-condensed">
                         <thead>
                             <tr class="list_menu">
-                                <td>Codigo</td>
+                                <td>Código CAPAC</td>
                                 <td>Nome</td>
                                 <td>CPF</td>
                                 <td>Data de Nascimento</td>
                                 <td>Função</td>
                                 <td>Linguagem</td>
+                                <td width="20%"></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,6 +167,7 @@ include 'includes/menu_administrativo.php';
                             {
                                 $formacao = recuperaDadosCapac('tipo_formacao', 'id', $linha['tipo_formacao_id']);
                                 $funcao = recuperaDadosCapac('formacao_funcoes', 'id', $linha['formacao_funcao_id']);
+                                $linguagem = recuperaDadosCapac('formacao_linguagem', 'id', $linha['formacao_linguagem_id']);
                             ?>
                                 <tr>
                                     <td class="list_description"><?= $linha['id'] ?></td>
@@ -126,7 +175,8 @@ include 'includes/menu_administrativo.php';
                                     <td class="list_description"><?= $linha['cpf'] ?></td>
                                     <td class="list_description"><?= exibirDataBr($linha['dataNascimento']) ?></td>
                                     <td class="list_description"><?= $funcao['funcao'] ?></td>
-                                    <td class="list_description"><?= $linha['linguagem'] ?></td>
+                                    <td class="list_description"><?= $linguagem['linguagem'] ?></td>
+                                    <td><a class='btn btn-theme btn-md btn-block' target='_blank' href='?perfil=formacao&p=frm_capac_resumo&id_capac=<?=$linha['id']?>'>Exibir Resumo</a></td>
                                 </tr>
                             <?php
                             }

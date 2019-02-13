@@ -42,6 +42,7 @@ include 'includes/menu.php';
                         <div class="col-md-offset-2 col-md-8"><strong>Programa</strong><br/>
                             <select class="form-control" name="programa" id="inputSubject" >
                                 <option value="">Selecione...</option>
+                                <option value="">Todos</option>
                                 <?php
                                 $sql = "SELECT * FROM `tipo_formacao`";
                                 $query = mysqli_query($con,$sql);
@@ -56,7 +57,7 @@ include 'includes/menu.php';
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8"><strong>Ano de inscrição:</strong><br/>
-                            <input type="text" name="ano" class="form-control" placeholder="<?= date('Y') ?>" value="<?= date('Y') ?>">
+                            <input type="text" name="ano" class="form-control" placeholder="<?= date('Y') ?>" value="<?= date('Y') ?>" required>
                         </div>
                     </div>
                     <div class="form-group">

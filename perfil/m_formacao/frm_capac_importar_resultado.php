@@ -7,7 +7,7 @@ if (!(isset($_GET['pagina'])))
     $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
     $_SESSION['programa'] = $programa = $_POST['programa'];
     $_SESSION['ano'] = $ano = $_POST['ano'];
-    if (empty($_POST['idCapacPf']) && empty($_POST['proponente']) && empty($_POST['programa']))
+    if (empty($_POST['ano']))
     {
         echo "<script>window.location = '?perfil=formacao&p=frm_capac_importar&erro=1';</script>";
     }
