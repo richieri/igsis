@@ -1444,7 +1444,7 @@ function txtParcelasFormacao($idPedido,$numero)
 			$pedidos = listaTodosPedidos($pedido['idEvento']);
 			//$local_juridico = listaLocaisJuridico($pedido['idEvento']);
 			$periodo = retornaPeriodo($pedido['idEvento']);
-			$duracao = retornaDuracao($pedido['idEvento']);
+			//$duracao = retornaDuracao($pedido['idEvento']);
 			$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
 			$fiscal = recuperaUsuario($pedido['idResponsavel']);
 			$operador = recuperaUsuario($pedido['idContratos']);
@@ -1455,9 +1455,9 @@ function txtParcelasFormacao($idPedido,$numero)
 				"TipoPessoa" => $pedido['tipoPessoa'],
 				"Objeto" => retornaTipo($pedido['ig_tipo_evento_idTipoEvento'])." - ".$pedido['nomeGrupo']." - ".$pedido['nomeEvento'] ,
 				"Local" => substr($local,1) , //retira a virgula no começo da string
-				"LocalJuridico" => substr($local,1) , //retira a virgula no começo da string
+				//"LocalJuridico" => substr($local,1) , //retira a virgula no começo da string
 				"Periodo" => $periodo, 
-				"Duracao" => $duracao, 			
+				//"Duracao" => $duracao,
 				"DataCadastro" => $pedido['dataEnvio'],
 				"Fiscal" => $fiscal['nomeCompleto'] ,
 				"Operador" => $operador['nomeCompleto'],
