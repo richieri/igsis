@@ -1,5 +1,5 @@
 <?php
-	$lista = lista_prazo(1000,1,"DESC"); //esse gera uma array com os pedidos
+	$lista = lista_prazo(30,1,"DESC"); //esse gera uma array com os pedidos
 	$link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
 
 	if(isset($_POST['finalizar']))
