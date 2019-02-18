@@ -193,7 +193,7 @@ $link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
 							echo "<strong>Páginas</strong>";
 							for($i = 1; $i < $numPaginas + 1; $i++)
 							{
-								echo "<a href='?perfil=comunicacao&p=lista_virada&pagina=$i'> [".$i."]</a> ";
+								echo "<a href='?perfil=gestao_prazos&p=frm_lista&pagina=$i'> [".$i."]</a> ";
 							}
 						?>
                         </td>
