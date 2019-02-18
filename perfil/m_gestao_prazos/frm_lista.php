@@ -21,11 +21,14 @@ $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
 $sql_lista = "
-	SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, ped.idContratos, eve.idResponsavel, eve.ig_tipo_evento_idTipoEvento, eve.nomeGrupo, eve.nomeEvento, eve.dataEnvio 
+	SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, uope.nomeCompleto AS operador, uresp.nomeCompleto AS fiscal, tipo.tipoEvento, eve.nomeGrupo, eve.nomeEvento, eve.dataEnvio 
 	FROM igsis_pedido_contratacao AS ped 
-	INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento 
+	INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento
+    INNER JOIN ig_tipo_evento AS tipo ON tipo.idTipoEvento = eve.ig_tipo_evento_idTipoEvento
+    INNER JOIN ig_usuario AS uresp ON uresp.idUsuario = eve.idResponsavel
+	LEFT JOIN  ig_usuario AS uope ON uope.idUsuario = ped.idContratos
 	WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' 
-	GROUP BY eve.idEvento ORDER BY eve.idEvento DESC 
+	GROUP BY eve.idEvento ORDER BY eve.idEvento DESC
 	LIMIT $inicio,$registros";
 $query_lista = mysqli_query($con,$sql_lista);
 
@@ -157,14 +160,14 @@ $link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
                     $chamado = recuperaAlteracoesEvento($lista['idEvento']);
                     $local = listaLocais($lista['idEvento']);
                     $periodo = retornaPeriodo($lista['idEvento']);
-                    $fiscal = recuperaUsuario($lista['idResponsavel']);
-                    $operador = recuperaUsuario($lista['idContratos']);
+                    //$fiscal = recuperaUsuario($lista['idResponsavel']);
+                    //$operador = recuperaUsuario($lista['idContratos']);
                     $pessoa = recuperaPessoa($lista['idPessoa'],$lista['tipoPessoa']);
                     echo "<tr>";
                     echo "<td class='lista'> <a target='_blank' href='".$link.$lista['idEvento']."'>".$lista['idEvento']."</a></td>";
                     echo '<td class="list_description">'.$pedidos.'</td> ';
                     echo '<td class="list_description">'.$pessoa['nome'].'</td> ';
-                    echo '<td class="list_description">'.retornaTipo($lista['ig_tipo_evento_idTipoEvento'])." - ".$lista['nomeGrupo']." - ".$lista['nomeEvento'].' [';
+                    echo '<td class="list_description">'.$lista['tipoEvento']." - ".$lista['nomeGrupo']." - ".$lista['nomeEvento'].' [';
                         if($chamado['numero'] == '0') {
                             echo "0";
                         }
@@ -174,8 +177,8 @@ $link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
                     echo '] </td> ';
                     echo '<td class="list_description">'.substr($local,1).'</td> ';
                     echo '<td class="list_description">'.$periodo.'</td> ';
-                    echo '<td class="list_description">'.$fiscal['nomeCompleto'].'</td>';
-                    echo '<td class="list_description">'.strstr($operador['nomeCompleto'], ' ', true).'</td>';
+                    echo '<td class="list_description">'.strstr($lista['fiscal'], ' ', true).'</td>';
+                    echo '<td class="list_description">'.strstr($lista['operador'], ' ', true).'</td>';
                     echo "<td class='list_description'>
 						<form method='POST' target='_blank' action='?perfil=gestao_prazos&p=detalhe_evento&pag=finalizar&id_eve=".$lista['idEvento']."'>
 						<input type='hidden' name='finalizar' value='".$lista['idEvento']."' >
