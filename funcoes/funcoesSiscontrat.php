@@ -1426,39 +1426,39 @@ function txtParcelasFormacao($idPedido,$numero)
 	function lista_prazo($num_registro,$pagina,$ordem)
 	{
 		$con = bancoMysqli();
-		$sql_lista_total = "SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, ped.idContratos FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC";
+		$sql_lista_total = "SELECT ped.idEvento FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC";
 		$query_lista_total = mysqli_query($con,$sql_lista_total);
 		$total_registros = mysqli_num_rows($query_lista_total);
 		$pag = $pagina - 1;
 		$registro_inicial = $num_registro * $pag;
 		$total_paginas = $total_registros / $num_registro; // gera o número de páginas
-		$sql_lista_pagina = "SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, ped.idContratos FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC LIMIT $registro_inicial,$num_registro";
+		$sql_lista_pagina = "SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, ped.idContratos, eve.idResponsavel, eve.ig_tipo_evento_idTipoEvento, eve.nomeGrupo, eve.nomeEvento, eve.dataEnvio FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC LIMIT $registro_inicial,$num_registro";
 		$query_lista_pagina = mysqli_query($con,$sql_lista_pagina);
 		//$x = $sql_lista_pagina;
 		$i = 0;
 		while($pedido = mysqli_fetch_array($query_lista_pagina))
 		{
-			$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
-			$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+			//$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
+			//$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
 			$local = listaLocais($pedido['idEvento']);
 			$pedidos = listaTodosPedidos($pedido['idEvento']);
-			$local_juridico = listaLocaisJuridico($pedido['idEvento']);
+			//$local_juridico = listaLocaisJuridico($pedido['idEvento']);
 			$periodo = retornaPeriodo($pedido['idEvento']);
 			$duracao = retornaDuracao($pedido['idEvento']);
 			$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
-			$fiscal = recuperaUsuario($evento['idResponsavel']);
+			$fiscal = recuperaUsuario($pedido['idResponsavel']);
 			$operador = recuperaUsuario($pedido['idContratos']);
 			$x[$i] = array(
 				"idPedido" => $pedido['idPedidoContratacao'],
 				"idEvento" => $pedido['idEvento'], 
 				"Pedidos" => $pedidos, //retira a virgula no começo da string
 				"TipoPessoa" => $pedido['tipoPessoa'],
-				"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeGrupo']." - ".$evento['nomeEvento'] ,
+				"Objeto" => retornaTipo($pedido['ig_tipo_evento_idTipoEvento'])." - ".$pedido['nomeGrupo']." - ".$pedido['nomeEvento'] ,
 				"Local" => substr($local,1) , //retira a virgula no começo da string
 				"LocalJuridico" => substr($local,1) , //retira a virgula no começo da string
 				"Periodo" => $periodo, 
 				"Duracao" => $duracao, 			
-				"DataCadastro" => $evento['dataEnvio'],
+				"DataCadastro" => $pedido['dataEnvio'],
 				"Fiscal" => $fiscal['nomeCompleto'] ,
 				"Operador" => $operador['nomeCompleto'],
 				"IdProponente" => $pedido['idPessoa'],
