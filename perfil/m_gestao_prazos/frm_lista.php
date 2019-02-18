@@ -1,5 +1,5 @@
 <?php
-	$lista = lista_prazo(200,1,"DESC"); //esse gera uma array com os pedidos
+	//$lista = lista_prazo(200,1,"DESC"); //esse gera uma array com os pedidos
 $con = bancoMysqli();
 
 //verifica a página atual caso seja informada na URL, senão atribui como 1ª página
