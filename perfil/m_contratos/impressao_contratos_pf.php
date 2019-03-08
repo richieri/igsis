@@ -157,7 +157,7 @@ echo "
 
 						<tr>
 							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
-							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB BMA</strong></a></td>
+							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
 						</tr>
 
 

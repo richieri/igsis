@@ -33,8 +33,7 @@ $link25 = $http."rlt_pedido_reserva_vocacional_pf.php";
 $link29 = $http."rlt_pedido_reserva_centrosculturais_pf.php";
 $link30 = $http."rlt_pedido_reserva_gabinete_pf.php";
 $link31 = $http."rlt_pedido_reserva_dph_pf.php";
-$link32 = $http."rlt_pedido_reserva_csmb
-_pf.php";
+$link32 = $http."rlt_pedido_reserva_csmb_pf.php";
 $link33 = $http."rlt_pedido_reserva_casasdecultura_pf.php";
 $link41 = $http."rlt_pedido_reserva_ccsp_pf.php";
 $link42 = $http."rlt_pedido_reserva_oficina.php";
@@ -42,6 +41,7 @@ $link43 = $http."rlt_pedido_reserva_bma_pf.php";
 $link44 = $http."rlt_reserva_pf.php";
 $link45 = $http."rlt_pedido_reserva_pia_pf.php";
 $link46 = $http."rlt_pedido_reserva_vocacional_sme_pf.php";
+$link48 = $http."rlt_pedido_reserva_oficina_csmb_bma.php";
 
 
 
@@ -157,6 +157,7 @@ echo "
 
 						<tr>
 							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
+							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
 						</tr>
 
 

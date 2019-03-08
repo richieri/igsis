@@ -50,6 +50,7 @@ $link52 = $http."rlt_minuta_acima80k.php";
 $link53 = $http."rlt_pedido_reserva_bma_pj.php";
 $link55 = $http."rlt_pedido_reserva_pia_pj.php";
 $link57 = $http."rlt_pedido_reserva_oficina_pj.php";
+$link58 = $http."rlt_pedido_reserva_oficina_csmb_bma_pj.php";
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -144,7 +145,8 @@ echo "
 						</tr>
 						
 						<tr>
-						    <td><a href='$link57?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
+						    <td><a href='$link57?id=$id_ped' target='_blank'><strong>Reserva Oficina</strong></a></td>
+						    <td><a href='$link58?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
                         </tr>
 
 					</tbody>
