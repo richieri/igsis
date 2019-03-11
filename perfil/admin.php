@@ -1265,7 +1265,7 @@
 							<div class="col-md-offset-2 col-md-8">
 								<label>Perfil:</label>
 								<select name="papelusuario" class="form-control"  >
-									<?php acessoPerfilUser("ig_papelusuario","3",""); ?>
+									<?php geraOpcaoOrdem("ig_papelusuario","2"); ?>
 								</select>
 							</div>  <!--  // Email !-->
 							<div class="col-md-offset-2 col-md-8">  
@@ -1411,7 +1411,7 @@
 									<label>Acesso aos Perfil's :</label>
 								</div>
 								<select name="papelusuario" class="form-control"  >
-									<?php acessoPerfilUser("ig_papelusuario",$recuperaUsuario['ig_papelusuario_idPapelUsuario'],""); ?>
+									<?php geraOpcaoOrdem("ig_papelusuario",$recuperaUsuario['ig_papelusuario_idPapelUsuario']); ?>
 								</select>
 							</div>  <!--  // Regristro Funcional 'RF' !-->
 							<div class="col-md-offset-2 col-md-8">  
