@@ -196,9 +196,7 @@ $link01 = $http."relatorio_virada.php";
 						<td>Objeto</td>
 						<td>Local</td>
 						<td>Periodo</td>
-						<td>Pendências</td>
 						<td>Valor</td>
-						<td>Operador</td>
 						<td>Status</td>
 						<td width="7%"></td>
 					</tr>
@@ -209,8 +207,9 @@ $link01 = $http."relatorio_virada.php";
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND eve.projetoEspecial = 54
-					ORDER BY idPedidoContratacao DESC";
+INNER JOIN ig_ocorrencia AS oco ON eve.idEvento = oco.idEvento
+					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND oco.dataInicio LIKE '2017%'
+					ORDER BY idPedidoContratacao DESC limit 0,25";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
 				{
@@ -243,9 +242,7 @@ $link01 = $http."relatorio_virada.php";
 					<td class="list_description">'.$ped['Objeto'].'</td>
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
-					<td class="list_description">'.$ped['pendenciaDocumento'].'</td> 
 					<td class="list_description">'.dinheiroParaBr($ped['ValorGlobal']).'</td> 
-					<td class="list_description">'.$operador['nomeCompleto'].'</td> 
 					<td class="list_description">'.retornaEstado($ped['Status']).'</td>';
 					echo "<td class='list_description'>
 						<form method='POST' action='?perfil=evento&p=basica' target='_blank'>
