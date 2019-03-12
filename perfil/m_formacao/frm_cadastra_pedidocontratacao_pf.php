@@ -4,6 +4,7 @@
 		$idPedidoContratacao = $_GET['id_ped'];
 	}
 	$con = bancoMysqli();
+	$impressao = false;
 	if(isset($_POST['action']))
 	{
 		switch($_POST['action'])
@@ -111,6 +112,7 @@
 					if($query_atualiza_formacao)
 					{
 						$mensagem = "Pedido Atualizado";
+						$impressao = true;
 					}
 					else
 					{
@@ -179,7 +181,18 @@
 			<h2>PEDIDO DE CONTRATAÇÃO DE PESSOA FÍSICA</h2>
 			<h6><?php if(isset($mensagem)){ echo $mensagem; } ?></h6>
 		</div>
-		<div class="row">
+
+        <div class="row" style="padding-bottom: 1%">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">
+                        <a href="?perfil=formacao&p=frm_impressao_contratos&id_ped=<?=$idPedidoContratacao?>" class="btn btn-theme btn-lg btn-block" target="_blank">Ir para a área de impressão</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form class="form-horizontal" role="form" action="#" method="post">
 					<div class="form-group">
