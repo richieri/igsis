@@ -49,6 +49,7 @@ if(isset($_POST['atualizar']))
 	$con = bancoMysqli();
 	$ped = $_GET['id_ped'];
 	$integrantes= addslashes($_POST['integrantes']);
+	$verba = $_POST['Verba'];
 	$justificativa = addslashes($_POST['Justificativa']);
 	$fiscal = $_POST['Fiscal'];
 	$suplente  = $_POST['Suplente'];
@@ -82,7 +83,8 @@ if(isset($_POST['atualizar']))
             `formaPagamento` = '$forma_pagamento',
 			`integrantes` = '$integrantes',
 			`parcelas` =  '$parcelas',
-            `tipoParcela` = '$tipoParcela',
+            `tipoParcela` = '$tipoParcela', 
+            idVerba = '$verba',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
 			pendenciaDocumento = '$pendenciaDocumento',
@@ -97,6 +99,7 @@ if(isset($_POST['atualizar']))
                 `integrantes` = '$integrantes',
                 `parcelas` =  '$parcelas',
                 `tipoParcela` = '$tipoParcela',
+                idVerba = '$verba',
                 justificativa = '$justificativa',
                 observacao = '$observacao',
                 pendenciaDocumento = '$pendenciaDocumento',
@@ -150,6 +153,7 @@ if(isset($_POST['atualizar']))
 			formaPagamento = '$forma_pagamento',
 			`parcelas` =  '$parcelas',
 			`tipoParcela` =  '$tipoParcela',
+            idVerba = '$verba',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
 			pendenciaDocumento = '$pendenciaDocumento',
@@ -543,7 +547,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				?>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Verba:</strong><br/>
-						<select disabled class="form-control" name="Verba" id="Verba">
+						<select class="form-control" name="Verba" id="Verba">
 							<?php geraOpcao("sis_verba",$linha_tabelas['Verba'],"") ?>
 						</select>
 					</div>
