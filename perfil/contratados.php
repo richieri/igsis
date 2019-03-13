@@ -1879,6 +1879,7 @@
 						<td>Nome</td>
 						<td>CPF</td>
 						<td width="15%"></td>    
+						<td width="15%"></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -1890,10 +1891,20 @@
 							echo "<td class='list_description'>".$descricao['CPF']."</td>";
 							echo "
 								<td class='list_description'>
-								<form method='POST' action='?perfil=contratados&p=edicaoPedido' >
-								<input type='hidden' name='idPedido' value='".$_POST['idPedido']."'>
-								<input type='hidden' name='insereExecutante' value='".$descricao['Id_PessoaFisica']."'>
-								<input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'></td></form>"	;
+                                    <form method='POST' action='?perfil=contratados&p=edicaoPedido' >
+                                        <input type='hidden' name='idPedido' value='".$_POST['idPedido']."'>
+                                        <input type='hidden' name='insereExecutante' value='".$descricao['Id_PessoaFisica']."'>
+                                        <input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'>
+                                    </form>
+                                </td>";
+							echo "
+								<td class='list_description'>
+                                    <form method='POST' action='?perfil=contratados&p=edicaoPessoa' >
+                                        <input type='hidden' name='idPedidoContratacao' value='".$_POST['idPedido']."'>
+                                        <input type='hidden' name='editaLider' value='".$descricao['Id_PessoaFisica']."'>
+                                        <input type ='submit' class='btn btn-theme btn-md btn-block' value='Editar Pessoa'>
+                                    </form>
+                                </td>"	;
 							echo "</tr>";
 						}
 					?>
@@ -3050,9 +3061,17 @@
 			}
 			else
 			{
-				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				$pedido = recuperaDados("igsis_pedido_contratacao",$idPedidoContratacao,"idPedidoContratacao");
-			}
+                if (isset($_POST['editaLider'])) {
+                    $idPedidoContratacao = $_POST['idPedidoContratacao'];
+                    $pedido = [
+                            'tipoPessoa' => 1,
+                            'idPessoa' => $_POST['editaLider']
+                    ];
+                } else {
+                    $idPedidoContratacao = $_POST['idPedidoContratacao'];
+                    $pedido = recuperaDados("igsis_pedido_contratacao", $idPedidoContratacao, "idPedidoContratacao");
+                }
+            }
 			switch($pedido['tipoPessoa'])
 			{
 				case 1:
@@ -3214,21 +3233,37 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="cadastrarFisica" value="<?php echo $fisica['Id_PessoaFisica'] ?>" />
-							<input type="hidden" name="idPedidoContratacao" value="<?php echo $_POST['idPedidoContratacao'] ?>" />
+							<input type="hidden" name="idPedidoContratacao" value="<?= $_POST['idPedidoContratacao'] ?>" />
 							<input type="hidden" name="Sucesso" id="Sucesso" />
 							<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
+                            <?php if (isset($_POST['editaLider'])) { ?>
+                                <input type="hidden" name="editaLider" value="<?= $_POST['editaLider'] ?>" />
+                            <?php } ?>
 						</div>
 					</div>
 				</form>
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
- 						<form method='POST' action='?perfil=contratados&p=arquivos'>
+
+                <form class="form-horizontal" method='POST' action='?perfil=contratados&p=arquivos'>
+                    <div class="form-group">
+					    <div class="col-md-offset-2 col-md-8">
 							<input type='hidden' name='idPessoa' value='<?php echo $fisica['Id_PessoaFisica'] ?>'>
 							<input type='hidden' name='tipoPessoa' value='1'>
 							<input type="submit" value="Anexar arquivos" class="btn btn-theme btn-lg btn-block">
-						</form>
-					</div>
-				</div>
+    					</div>
+	    			</div>
+                </form>
+
+                <?php if (isset($_POST['editaLider'])) { ?>
+                    <form class="form-horizontal" method='POST' action='?perfil=contratados&p=edicaoPedido'>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <input type="hidden" name="idPedido" value="<?= $_POST['idPedidoContratacao'] ?>"/>
+                                <input type='hidden' name='insereExecutante' value='<?= $fisica['Id_PessoaFisica'] ?>'>
+                                <input type='submit' class='btn btn-theme btn-lg btn-block' value='Inserir Pessoa no Pedido'/>
+                            </div>
+                        </div>
+                    </form>
+                <?php } ?>
 	  		</div>
 	  	</div>	
 	</div>
