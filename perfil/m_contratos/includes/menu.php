@@ -34,6 +34,7 @@ $pasta = "?perfil=contratos&p=";
 			</li>
 			<li><a href="<?php echo $pasta ?>frm_chamados">Chamados</a></li>
 			<li><a href="<?php echo $pasta ?>lista_mesasei">Mesas SEI</a></li>
+			<li><a href="<?php echo $pasta ?>teste_tabela">Teste Tabela</a></li>
 			<li style="color:white;">-------------------------</li>
 			<li><a href="index.php?secao=perfil">Carregar módulos</a></li>
 			<li><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/index.php/modulo-contratos/">Ajuda</a></li>
