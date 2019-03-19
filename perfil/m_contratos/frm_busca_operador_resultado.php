@@ -60,7 +60,7 @@ $sql = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.NumeroProcesso, ped.ti
         INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento
         LEFT JOIN ig_instituicao AS inst ON eve.idInstituicao = inst.idInstituicao
         INNER JOIN sis_estado AS st ON ped.estado = st.idEstado
-        WHERE idContratos = '$operador' AND ped.publicado = 1 AND eve.publicado = 1 AND ped.estado NOT IN (1,7,8,10,11,12,14,15)";
+        WHERE idContratos = '$operador' AND ped.publicado = 1 AND eve.publicado = 1 AND ped.estado NOT IN (1,7,8,10,11,12,14,15,17)";
 $query = mysqli_query($con,$sql);
 $i = 0;
 
