@@ -67,7 +67,7 @@ $i = 0;
 while($evento = mysqli_fetch_array($query))
 {
     $idEvento = $evento['idEvento'];
-    $dataInicio = strtotime(retornaDataInicio($idEvento));
+    $dataInicio = retornaDataInicio($idEvento);
     $local = listaLocais($evento['idEvento']);
     $periodo = retornaPeriodo($evento['idEvento']);
 
@@ -88,6 +88,7 @@ while($evento = mysqli_fetch_array($query))
     }
     $x[$i]['local'] = substr($local,1);
     $x[$i]['instituicao'] = $evento['sigla'];
+    $x[$i]['dataInicio'] = $dataInicio;
     $x[$i]['periodo'] = $periodo;
     $x[$i]['valor']= $evento['valor'];
     $x[$i]['pendencia'] = $evento['pendenciaDocumento'];
@@ -120,6 +121,7 @@ include 'includes/menu.php';
                         <th>Objeto</th>
                         <th width="20%">Local</th>
                         <th>Instituição</th>
+                        <th>Início</th>
                         <th>Periodo</th>
                         <th>Valor</th>
                         <th>Pendências</th>
@@ -145,6 +147,7 @@ include 'includes/menu.php';
                         echo '<td>'.$x[$h]['objeto'].'</td> ';
                         echo '<td>'.$x[$h]['local'].'</td> ';
                         echo '<td>'.$x[$h]['instituicao'].'</td> ';
+                        echo '<td>'.$x[$h]['dataInicio'].'</td> ';
                         echo '<td>'.$x[$h]['periodo'].'</td> ';
                         echo '<td>'.$x[$h]['valor'].'</td> ';
                         echo '<td>'.$x[$h]['pendencia'].'</td> ';
@@ -162,6 +165,7 @@ include 'includes/menu.php';
                         <th>Objeto</th>
                         <th width="20%">Local</th>
                         <th>Instituição</th>
+                        <th>Início</th>
                         <th>Periodo</th>
                         <th>Valor</th>
                         <th>Pendências</th>
