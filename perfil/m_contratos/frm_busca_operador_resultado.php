@@ -51,20 +51,23 @@ function retornaDataInicio($idEvento)
 
 $operador = $_POST['operador'];
 
-$sql = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.NumeroProcesso, ped.tipoPessoa, ped.idPessoa, ped.valor, ped.pendenciaDocumento, ped.estado, ped.idContratos, eve.idInstituicao, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, inst.sigla, st.estado,usr.nomeCompleto
+$sql_operador = "SELECT nomeCompleto FROM ig_usuario WHERE idUsuario = '$operador'";
+$query_operador = mysqli_query($con,$sql_operador);
+$a_operador = mysqli_fetch_array($query_operador);
+
+$sql = "SELECT ped.idPedidoContratacao, ped.idEvento, ped.NumeroProcesso, ped.tipoPessoa, ped.idPessoa, ped.valor, ped.pendenciaDocumento, ped.estado, ped.idContratos, eve.idInstituicao, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, inst.sigla, st.estado
         FROM igsis_pedido_contratacao AS ped
         INNER JOIN ig_evento AS eve ON eve.idEvento = ped.idEvento
         LEFT JOIN ig_instituicao AS inst ON eve.idInstituicao = inst.idInstituicao
         INNER JOIN sis_estado AS st ON ped.estado = st.idEstado
-        LEFT JOIN ig_usuario AS usr ON ped.idContratos = usr.nomeCompleto
-        WHERE idContratos = '$operador' AND ped.publicado = 1 AND eve.publicado = 1 AND ped.estado NOT IN (1,7,8,10,11,12,14,15)";
+        WHERE idContratos = '$operador' AND ped.publicado = 1 AND eve.publicado = 1 AND ped.estado NOT IN (1,7,8,10,11,12,14,15,17)";
 $query = mysqli_query($con,$sql);
 $i = 0;
 
 while($evento = mysqli_fetch_array($query))
 {
     $idEvento = $evento['idEvento'];
-    $dataInicio = strtotime(retornaDataInicio($idEvento));
+    $dataInicio = retornaDataInicio($idEvento);
     $local = listaLocais($evento['idEvento']);
     $periodo = retornaPeriodo($evento['idEvento']);
 
@@ -85,11 +88,11 @@ while($evento = mysqli_fetch_array($query))
     }
     $x[$i]['local'] = substr($local,1);
     $x[$i]['instituicao'] = $evento['sigla'];
+    $x[$i]['dataInicio'] = $dataInicio;
     $x[$i]['periodo'] = $periodo;
     $x[$i]['valor']= $evento['valor'];
     $x[$i]['pendencia'] = $evento['pendenciaDocumento'];
     $x[$i]['status'] = $evento['estado'];
-    $x[$i]['operador'] = $evento['nomeCompleto'];
     $i++;
 }
 
@@ -102,6 +105,7 @@ include 'includes/menu.php';
             <div class="col-md-offset-2 col-md-8">
                 <div class="section-heading">
                     <h3>Resultado da Busca Por Operador</h3>
+                    <h5><?= $a_operador['nomeCompleto'] ?></h5>
                 </div>
             </div>
         </div>
@@ -117,11 +121,11 @@ include 'includes/menu.php';
                         <th>Objeto</th>
                         <th width="20%">Local</th>
                         <th>Instituição</th>
+                        <th>Início</th>
                         <th>Periodo</th>
                         <th>Valor</th>
                         <th>Pendências</th>
                         <th>Status</th>
-                        <th>Operador</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -143,11 +147,11 @@ include 'includes/menu.php';
                         echo '<td>'.$x[$h]['objeto'].'</td> ';
                         echo '<td>'.$x[$h]['local'].'</td> ';
                         echo '<td>'.$x[$h]['instituicao'].'</td> ';
+                        echo '<td>'.$x[$h]['dataInicio'].'</td> ';
                         echo '<td>'.$x[$h]['periodo'].'</td> ';
                         echo '<td>'.$x[$h]['valor'].'</td> ';
                         echo '<td>'.$x[$h]['pendencia'].'</td> ';
                         echo '<td>'.$x[$h]['status'].'</td> ';
-                        echo '<td>'.$x[$h]['operador'].'</td> ';
                         echo '</tr>';
                     }
                     ?>
@@ -161,11 +165,11 @@ include 'includes/menu.php';
                         <th>Objeto</th>
                         <th width="20%">Local</th>
                         <th>Instituição</th>
+                        <th>Início</th>
                         <th>Periodo</th>
                         <th>Valor</th>
                         <th>Pendências</th>
                         <th>Status</th>
-                        <th>Operador</th>
                     </tr>
                     </tfoot>
                 </table>
