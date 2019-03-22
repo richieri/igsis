@@ -611,7 +611,7 @@
 		//cria as options com usuários de uma instituicao
 		$sql = "SELECT DISTINCT * FROM ig_usuario,ig_papelusuario 
 			WHERE ig_usuario.ig_papelusuario_idPapelUsuario = ig_papelusuario.idPapelUsuario 
-			AND ig_papelusuario.evento = 1 
+			AND ig_papelusuario.evento = 1 AND ig_usuario.publicado = 1
 			ORDER BY nomeCompleto";
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
@@ -826,6 +826,13 @@
 				$local = "De acordo com a programação da Virada Cultural";
 				$espaco = "De acordo com a programação da Virada Cultural";	
 			}
+            $tipo = recuperaDados("ig_evento",$idEvento,"idEvento");
+            if($tipo['projetoEspecial'] == 74){
+                $hora = "De acordo com a programação do Mês do Hip Hop";
+                $local = "De acordo com a programação do Mês do Hip Hop";
+                $espaco = "De acordo com a programação do Mês do Hip Hop";
+            }
+
 			$ocorrencia = "<div class='left'>$tipo_de_evento $dia_especial ".
 				$sub['titulo']
 				."<br />
@@ -1658,14 +1665,29 @@
 		else
 		{
 			$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
-			$query = mysqli_query($con,$sql);	
-			$locais = "";
-			while($local = mysqli_fetch_array($query))
-			{
-				$sala = recuperaDados("ig_local",$local['local'],"idLocal");
-				$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
-				$locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].")";
-			}
+			$query = mysqli_query($con,$sql);
+
+            $locais = "";
+
+            $tipo = recuperaDados("ig_evento",$idEvento,"idEvento");
+            if($tipo['projetoEspecial'] == 74){
+                while($local = mysqli_fetch_array($query))
+                {
+
+                    $sala = recuperaDados("ig_local",$local['local'],"idLocal");
+                    $instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
+                    $locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].") DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
+            }
+            else{
+                while($local = mysqli_fetch_array($query))
+                {
+
+                    $sala = recuperaDados("ig_local",$local['local'],"idLocal");
+                    $instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
+                    $locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].")";
+                }
+            }
 		}
 		return $locais;
 	}
@@ -1932,7 +1954,18 @@
 			else
 			{
 				return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
-			}	
+			}
+            $tipo = recuperaDados("ig_evento",$id,"idEvento");
+            if($tipo['projetoEspecial'] == 74){
+                if($data_inicio == $dataFinal)
+                {
+                    return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
+                else
+                {
+                    return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
+            }
 		}
 		else
 		{
@@ -3531,6 +3564,12 @@
 					$x[$i]['hora'] = "";
 					$x[$i]['espaco'] = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 				}
+				$tipo = recuperaDados("ig_evento",$idEvento,"idEvento");
+				if($tipo['projetoEspecial'] == 74){
+                    $x[$i]['data'] = $data." ".trim($semana)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                    $x[$i]['hora'] = "";
+                    $x[$i]['espaco'] = $local['sala']." (".$instituicao.") DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
 				$i++;
 			}
 		}
