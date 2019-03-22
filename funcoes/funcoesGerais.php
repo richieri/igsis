@@ -1955,17 +1955,6 @@
 			{
 				return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 			}
-            $tipo = recuperaDados("ig_evento",$id,"idEvento");
-            if($tipo['projetoEspecial'] == 74){
-                if($data_inicio == $dataFinal)
-                {
-                    return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
-                }
-                else
-                {
-                    return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
-                }
-            }
 		}
 		else
 		{
@@ -2002,8 +1991,19 @@
 			{
 				$dataFinal = $dataFinal02;		
 			}
+            $tipo = recuperaDados("ig_evento",$id,"idEvento");
+            if($tipo['projetoEspecial'] == 74){
+                if($data_inicio == $dataFinal)
+                {
+                    return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
+                else
+                {
+                    return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
+            }
 			if($data_inicio == $dataFinal)
-			{ 
+			{
 				return exibirDataBr($data_inicio);
 			}
 			else
