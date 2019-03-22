@@ -3529,7 +3529,7 @@
 				{
 					$x[$i]['data'] = $data." ".trim($semana);
 					$x[$i]['hora'] = "";
-					$x[$i]['espaco'] = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL 2018.";
+					$x[$i]['espaco'] = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 				}
 				$i++;
 			}
