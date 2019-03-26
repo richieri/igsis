@@ -1409,9 +1409,6 @@ function txtParcelasFormacao($idPedido,$numero)
 	{
 		//gera os options de um select com ordenação
 		$sql = "SELECT * FROM $tabela ORDER BY $order";
-		?>
-		<script>console.log(<?php echo $sql ?>);</script>
-		<?php
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
 		while($option = mysqli_fetch_row($query))
