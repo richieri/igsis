@@ -77,8 +77,8 @@ $con = bancoMysqli();
 			<td class="list_description">'.$ped['Periodo'].'</td>
 			<td class="list_description">'.$ped['pendenciaDocumento'].'</td>
 			<td class="list_description">'.dinheiroParaBr($ped['ValorGlobal']).'</td>
-			<td class="list_description">'.$ped['nomeCompleto'].'</td>
-			<td class="list_description">'.$ped['estado'].'</td>';
+			<td class="list_description">'.$pedido['nomeCompleto'].'</td>
+			<td class="list_description">'.$pedido['estado'].'</td>';
 			echo "</tr>";
 		}
 	?>
