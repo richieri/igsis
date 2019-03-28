@@ -38,7 +38,7 @@ $con = bancoMysqli();
 			FROM ig_evento AS eve
 			INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 			INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-            RIGHT JOIN sis_estado As st ON ped.estado = st.idEstado
+            LEFT JOIN sis_estado As st ON ped.estado = st.idEstado
             INNER JOIN ig_usuario AS usr ON eve.idUsuario = usr.idUsuario
 			WHERE eve.publicado=1 AND ped.publicado=1 AND eve.projetoEspecial = 69
 			ORDER BY idPedidoContratacao DESC";
