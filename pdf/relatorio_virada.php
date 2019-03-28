@@ -28,16 +28,18 @@ $con = bancoMysqli();
 				<td>Periodo</td>
 				<td>Pendências</td>
 				<td>Valor</td>
-				<td>Operador</td>
+				<td>Usuário</td>
 				<td>Status</td>
 			</tr>
 		</thead>
 		<tbody>
 	<?php
-		$sql_enviados = "SELECT eve.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, eve.nomeEvento, ped.valor, proj.projetoEspecial, ped.idContratos
+		$sql_enviados = "SELECT eve.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, eve.nomeEvento, ped.valor, proj.projetoEspecial, st.estado,eve.dataEnvio, eve.idUsuario, usr.nomeCompleto
 			FROM ig_evento AS eve
 			INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 			INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
+            RIGHT JOIN sis_estado As st ON ped.estado = st.idEstado
+            INNER JOIN ig_usuario AS usr ON eve.idUsuario = usr.idUsuario
 			WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND eve.projetoEspecial = 69
 			ORDER BY idPedidoContratacao DESC";
 		$query_enviados = mysqli_query($con,$sql_enviados);
@@ -45,7 +47,6 @@ $con = bancoMysqli();
 		{
 			$pj = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
 			$ped = siscontrat($pedido['idPedidoContratacao']);
-			$operador = recuperaUsuario($pedido['idContratos']);
 			if($ped['tipoPessoa'] == 1)
 			{
 				$link="?perfil=contratos&p=frm_edita_propostapf&id_ped=";
@@ -76,8 +77,8 @@ $con = bancoMysqli();
 			<td class="list_description">'.$ped['Periodo'].'</td>
 			<td class="list_description">'.$ped['pendenciaDocumento'].'</td>
 			<td class="list_description">'.dinheiroParaBr($ped['ValorGlobal']).'</td>
-			<td class="list_description">'.$operador['nomeCompleto'].'</td>
-			<td class="list_description">'.retornaEstado($ped['Status']).'</td>';
+			<td class="list_description">'.$ped['nomeCompleto'].'</td>
+			<td class="list_description">'.$ped['estado'].'</td>';
 			echo "</tr>";
 		}
 	?>
