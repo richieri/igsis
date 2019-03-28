@@ -8,7 +8,7 @@ $dataAtual = date('Y:m:d H:i:s');
 
 header ("Pragma: no-cache");
 header ("Content-type: application/x-msexcel");
-header ("Content-Disposition: attachment; filename=$dataAtual virada_2019.xls" );
+header ("Content-Disposition: attachment; filename=$dataAtual_hiphop_2019.xls" );
 
 $con = bancoMysqli();
 ?>
