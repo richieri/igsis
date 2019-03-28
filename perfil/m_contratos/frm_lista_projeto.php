@@ -198,6 +198,7 @@ $link01 = $http."relatorio_virada.php";
 						<td>Periodo</td>
 						<td>Valor</td>
 						<td>Status</td>
+						<td>Operador</td>
 						<td width="7%"></td>
 					</tr>
 				</thead>
@@ -243,7 +244,8 @@ $link01 = $http."relatorio_virada.php";
 					<td class="list_description">'.$ped['Local'].'</td> 
 					<td class="list_description">'.$ped['Periodo'].'</td> 
 					<td class="list_description">'.dinheiroParaBr($ped['ValorGlobal']).'</td> 
-					<td class="list_description">'.retornaEstado($ped['Status']).'</td>';
+					<td class="list_description">'.retornaEstado($ped['Status']).'</td>
+					<td class="list_description">'.$operador['nomeCompleto'].'</td>';
 					echo "<td class='list_description'>
 						<form method='POST' action='?perfil=evento&p=basica' target='_blank'>
 						<input type='hidden' name='carregar' value='".$pedido['idEvento']."' >
