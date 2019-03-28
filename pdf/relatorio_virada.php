@@ -6,9 +6,9 @@ require_once("../funcoes/funcoesSiscontrat.php");
 
 $dataAtual = date('Y:m:d H:i:s');
 
-header ("Pragma: no-cache");
-header ("Content-type: application/x-msexcel");
-header ("Content-Disposition: attachment; filename=$dataAtual virada_2019.xls" );
+//header ("Pragma: no-cache");
+//header ("Content-type: application/x-msexcel");
+//header ("Content-Disposition: attachment; filename=$dataAtual virada_2019.xls" );
 
 $con = bancoMysqli();
 ?>
@@ -40,7 +40,7 @@ $con = bancoMysqli();
 			INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
             RIGHT JOIN sis_estado As st ON ped.estado = st.idEstado
             INNER JOIN ig_usuario AS usr ON eve.idUsuario = usr.idUsuario
-			WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND eve.projetoEspecial = 69
+			WHERE eve.publicado=1 AND ped.publicado=1 AND eve.projetoEspecial = 69
 			ORDER BY idPedidoContratacao DESC";
 		$query_enviados = mysqli_query($con,$sql_enviados);
 		while($pedido = mysqli_fetch_array($query_enviados))
