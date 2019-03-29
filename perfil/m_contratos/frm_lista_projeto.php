@@ -181,7 +181,7 @@ $link01 = $http."relatorio_virada.php";
 ?>
 <br /><br /><br />
 <section id="list_items">
-	<div class="container">
+	<div class="container" style="min-width: 1201px; width: 90%;">
 		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6> <a href="<?php echo $link01 ?>"><strong>Gerar Excel</strong></a>
 		</div>
 		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>	
@@ -196,15 +196,16 @@ $link01 = $http."relatorio_virada.php";
 						<td>Objeto</td>
 						<td>Local</td>
 						<td>Periodo</td>
-						<td>Valor</td>
-						<td>Status</td>
-						<td>Operador</td>
+                        <td>Pendências</td>
+                        <td>Valor</td>
+                        <td>Operador</td>
+                        <td>Status</td>
 						<td width="7%"></td>
 					</tr>
 				</thead>
 				<tbody>
 			<?php
-				$sql_enviados = "SELECT eve.idEvento, ped.idPedidoContratacao, ped.idPessoa, eve.nomeEvento, ped.valor, proj.projetoEspecial, ped.idContratos
+				$sql_enviados = "SELECT DISTINCT eve.idEvento, ped.idPedidoContratacao, ped.idPessoa, eve.nomeEvento, ped.valor, proj.projetoEspecial, ped.idContratos
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
@@ -242,10 +243,11 @@ $link01 = $http."relatorio_virada.php";
 					echo '
 					<td class="list_description">'.$ped['Objeto'].'</td>
 					<td class="list_description">'.$ped['Local'].'</td> 
-					<td class="list_description">'.$ped['Periodo'].'</td> 
-					<td class="list_description">'.dinheiroParaBr($ped['ValorGlobal']).'</td> 
-					<td class="list_description">'.retornaEstado($ped['Status']).'</td>
-					<td class="list_description">'.$operador['nomeCompleto'].'</td>';
+					<td class="list_description">'.$ped['Periodo'].'</td>
+                    <td class="list_description">'.$ped['pendenciaDocumento'].'</td>
+					<td class="list_description">'.dinheiroParaBr($ped['ValorGlobal']).'</td>
+					<td class="list_description">'.$operador['nomeCompleto'].'</td>
+					<td class="list_description">'.retornaEstado($ped['Status']).'</td>';
 					echo "<td class='list_description'>
 						<form method='POST' action='?perfil=evento&p=basica' target='_blank'>
 						<input type='hidden' name='carregar' value='".$pedido['idEvento']."' >
