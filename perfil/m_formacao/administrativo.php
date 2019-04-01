@@ -1065,139 +1065,14 @@ if(isset($_POST['atualizar']))
 
 
 /* =========== INÍCIO EDITAL ===========*/
-case 'add_edital':
+case 'add_programa':
+    include "telas/programa_add.php";
+    break;
 
-if(isset($_POST['add_edital']))
-{
-	$idEdital = $_POST['add_edital'];
-	$itensEdital = $_POST['itensEdital'];
-	$edital = $_POST['edital'];
-	$itensCredenciamento = $_POST['itensCredenciamento'];
-	$dataDO = $_POST['dataDO'];
-	$meses = $_POST['meses'];
-	$folhaPesquisa = $_POST['folhaPesquisa'];
-	$processoPesquisa = $_POST['processoPesquisa'];
-	$sql_atualiza_edital = "INSERT INTO `sis_formacao_edital`(`itensEdital`, `edital`, `itensCredenciamento`, `dataDO`, `meses`, `folhaPesquisa`, `processoPesquisa`) VALUES ($itensEdital, $edital, $itensCredenciamento, $dataDO, $meses, $folhaPesquisa, $processoPesquisa)";
-	$con = bancoMysqli();
-	$query_atualiza_edital = mysqli_query($con,$sql_atualiza_edital);
-	if($query_atualiza_edital)
-	{
-		$mensagem = "Edital ".$edital." cadastrado com sucesso!";
-		gravarLog($sql_atualiza_edital);
-	}
-	else
-	{
-		$mensagem = "Erro ao cadastrar.";
-	}
-}
-?>
-
-<section id="contact" class="home-section bg-white">
-	<div class="container">
-		<div class="form-group">
-			<div class="sub-title">
-            	<h2>CADASTRO INFORMAÇÕES DO EDITAL</h2>
-                <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			<form class="form-horizontal" role="form" action="#" method="post">
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Edital nº: *</strong>
-						<input type="text" class="form-control" id="edital" name="edital">
-					</div>
-					<div class="col-md-6"><strong>Itens do Edital: *</strong>
-						<input type="text" class="form-control" id="itensEdital" name="itensEdital">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Itens do Credenciamento: *</strong>
-						<input type="text" class="form-control" id="itensCredenciamento" name="itensCredenciamento">
-					</div>
-					<div class="col-md-6"><strong>Data do resultado no D.O.: *</strong>
-						<input type="date" class="form-control" id="dataDO" name="dataDO">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Período (meses): *</strong>
-						<input type="text" class="form-control" id="meses" name="meses">
-					</div>
-					<div class="col-md-6"><strong>Folha de Pesquisa: *</strong>
-						<input type="text" class="form-control" id="folhaPesquisa" name="folhaPesquisa">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-6"><strong>Proceso de pesquisa: *</strong>
-						<input type="text" class="form-control" id="processoPesquisa" name="processoPesquisa">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-						<input type="hidden" name="add_edital" value="1" />
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Gravar">
-					</div>
-				</div>
-
-			</form>
-			</div>
-		</div>
-	</div>
-</section>
-
-<?php
-break;
-case 'list_edital':
-?>
-
-<section id="list_items">
-	<div class="container">
-		<div class="col-md-offset-2 col-md-8">
-			<br />
-			<h2>EDITAL</h2>
-			<p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
-			<br/>
-		</div>
-		<div class="table-responsive list_info">
-			<table class="table table-condensed">
-				<thead>
-					<tr class="list_menu">
-						<td>Id</td>
-						<td>Edital</td>
-						<td>Data D.O.</td>
-						<td>Processo de Pesquisa</td>
-						<td></td>
-					</tr>
-				</thead>
-				<tbody>
-				<?php
-					$sql = "SELECT * FROM sis_formacao_edital" ;
-					$query = mysqli_query($con,$sql);
-					while($edital = mysqli_fetch_array($query))
-					{
-				?>
-						<tr>
-							<form action="?perfil=formacao&p=administrativo&pag=list_edital" method="post">
-								<td><?php echo $edital['idFormacaoEdital']; ?></td>
-								<td><input type="text" name="Edital" class="form-control" value="<?php echo $edital['edital']; ?>"/></td>
-								<td><input type="hidden" name="atualizar" value="<?php echo $edital['idFormacaoEdital']; ?>" />
-									<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'></td>
-							</form>
-						</tr>
-				<?php
-					}
-				?>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</section>
-
-<?php /* =========== FIM EDITAL ===========*/ break;
+case 'list_programa':
+    include "telas/programa_list.php";
+    break;
+/* =========== FIM EDITAL ===========*/
 
 /* =========== INÍCIO RELATÓRIO INSCRITOS ===========*/
 case 'relatorio_inscritos':
