@@ -960,7 +960,7 @@ function txtParcelasFormacao($idPedido,$numero)
 					$texto .= $k."ª parcela de R$ ".dinheiroParaBr($x[$k]['valor']).". Entrega de documentos a partir de ".exibirDataBr($x[$k]['vencimento']).".\n";		
 				}
 			}
-			$texto .= "O pagamento de cada parcela se dará em 8 (oito) dias úteis após a data de confirmação da correta execução do(s) serviço(s).​";
+			$texto .= "A liquidação de cada parcela se dará em 3 (três) dias úteis após a data de confirmação da correta execução do(s) serviço(s).​";
 			return $texto;
 		}
 		else
