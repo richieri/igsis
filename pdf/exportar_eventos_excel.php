@@ -83,10 +83,14 @@ header("Content-Disposition: attachment;Filename=eventos_teste.xls");
             <th>Artista</th>
             <th>Data</th>
             <th>Hora</th>
-            <th>Duração</th>
+            <th>Duração em min.</th>
             <th>Nº de Apresentações</th>
-            <th>Linguagem</th>
-            <th>Valor</th>
+            <th>Linguagem IGSIS</th>
+            <th>Linguagem / Expressão Artística</th>
+            <th>Público / Representatividade social</th>
+            <th>Atividade realizada em espaço público</th>
+            <th>Cobrança de ingresso</th>
+            <th>Valor do ingresso</th>
             <th>Classificação Indicativa</th>
             <th>Links de Divulgação</th>
             <th>Sinopse</th>
@@ -111,9 +115,13 @@ header("Content-Disposition: attachment;Filename=eventos_teste.xls");
                 <td><?=$linha['artista']?></td>
                 <td><?= $linha['data']?></td>
                 <td><?= $linha['horario_inicial']?></td>
-                <td><?= $linha['duracao']?> minutos</td>
+                <td><?= $linha['duracao']?></td>
                 <td><?= $apresentacoes?></td>
                 <td><?=$linha['categoria']?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><?=($linha['valor'] == 0 ? "Gratuito" : "R$ ".dinheiroParaBr($linha['valor']))?></td>
                 <td><?=($linha['valor'] == 0 ? "Gratuito" : "R$ ".dinheiroParaBr($linha['valor']))?></td>
                 <td><?=$linha['classificacao']?></td>
                 <td><?=$linha['divulgacao']?></td>
