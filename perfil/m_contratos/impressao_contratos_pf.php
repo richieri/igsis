@@ -42,7 +42,7 @@ $link44 = $http."rlt_reserva_pf.php";
 $link45 = $http."rlt_pedido_reserva_pia_pf.php";
 $link46 = $http."rlt_pedido_reserva_vocacional_sme_pf.php";
 $link48 = $http."rlt_pedido_reserva_oficina_csmb_bma.php";
-
+$link49 = $http."rlt_pedido_reserva_hiphop_sme_pf.php";
 
 
 $link17 = $http."rlt_normas_internas_teatros_pf.php"."?id=".$id_ped;
@@ -159,7 +159,9 @@ echo "
 							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
 							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
 						</tr>
-
+                        <tr>
+                            <td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td>
+                        </tr>
 
 					</tbody>
 				</table>
