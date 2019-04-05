@@ -16,6 +16,9 @@ $pfs = $con->query($sqlFormacaoPf);
                 <div class="section-heading">
                     <h2>Listagem de Pessoa Fisica</h2>
                 </div>
+                <div class="section-heading" id="loader">
+                    <img src="./images/carregando.gif" alt="" style="max-width: 20%">
+                </div>
             </div>
         </div>
         <div class="row">
@@ -76,5 +79,9 @@ $pfs = $con->query($sqlFormacaoPf);
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-5 text-left'i><'col-sm-7 text-right'p>>",
         });
-    })
+    });
+
+    $(window).load(function(){
+        $('div#loader').fadeOut(500);
+    });
 </script>
