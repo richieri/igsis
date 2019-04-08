@@ -19,7 +19,7 @@ $dadosPf = [
     'CPF' => $pf['CPF'],
     'CCM' => $pf['CCM'],
     'Data de Nascimento' => exibirDataBr($pf['DataNascimento']),
-    'Endereço' => "Rua, ".$pf['Numero']."",
+    'Endereço' => "Rua Exemplo, ".$pf['Numero']."",
     'Bairro' => '',
     'CEP' => $pf['CEP'],
     'Cidade / Estado' => '',
@@ -75,6 +75,11 @@ if ($foto == null) {
             </div>
             <div class="row">
                 <div class="col-md-offset-4 col-md-6">
+                    <div class="form-group">
+                        <a href="../pdf/rlt_formacao_pf_pdf.php?idPf=<?=$idPf?>" class="btn btn-theme btn-block">Imprimir Resumo</a>
+                    </div>
+                </div>
+                <div class="col-md-offset-4 col-md-6">
                     <a href="?perfil=formacao&p=frm_lista_pf" class="btn btn-theme btn-block">Voltar para busca</a>
                 </div>
             </div>
@@ -82,9 +87,3 @@ if ($foto == null) {
 
     </div>
 </section>
-
-<script>
-    function imprimirPagina() {
-        window.print();
-    }
-</script>
