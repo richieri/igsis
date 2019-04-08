@@ -33,39 +33,44 @@ $idPf=$_GET['idPf'];
 $ano=date('Y');
 $dataAtual = date("d/m/Y");
 
-$pf = recuperaDados('sis_pessoa_fisica', $idPf, 'Id_PessoaFisica');
-
-$estadoCivil = recuperaDados('sis_estado_civil', $pf['IdEstadoCivil'], 'Id_EstadoCivil')['EstadoCivil'];
-
-$sqlFoto = "SELECT arquivo FROM igsis_arquivos_pessoa WHERE idTipoPessoa = '1' AND idPessoa = '".$pf['Id_PessoaFisica']."' AND tipo = '29' AND publicado = '1'";
+$sqlFoto = "SELECT arquivo FROM igsis_arquivos_pessoa WHERE idTipoPessoa = '1' AND idPessoa = '".$idPf."' AND tipo = '29' AND publicado = '1'";
 $foto = $con->query($sqlFoto)->fetch_assoc()['arquivo'];
 
-$formacao = recuperaDados("sis_pessoa_fisica_formacao",$pf['Id_PessoaFisica'],"IdPessoaFisica");
-
-$dadosPf = [
-    'Nome' => $pf['Nome'],
-    'Nome Artístico' => $pf['NomeArtistico'],
-    'RG' => $pf['RG'],
-    'CPF' => $pf['CPF'],
-    'CCM' => $pf['CCM'],
-    'Data de Nascimento' => exibirDataBr($pf['DataNascimento']),
-    'Endereço' => "Rua, ".$pf['Numero']."",
-    'Bairro' => '',
-    'CEP' => $pf['CEP'],
-    'Cidade / Estado' => '',
-    'Email' => $pf['Email'],
-    'Telefone #1' => $pf['Telefone1'],
-    'Telefone #2' => $pf['Telefone2'],
-    'Estado Civil' => $estadoCivil,
-    'Nacionalidade' => $pf['Nacionalidade'],
-    'PIS/PASEP/NIT' => $pf['Pis']
-];
+$pessoa = siscontratDocs($idPf,1);
+$Nome = $pessoa["Nome"];
+$NomeArtistico = $pessoa["NomeArtistico"];
+$EstadoCivil = $pessoa["EstadoCivil"];
+$Nacionalidade = $pessoa["Nacionalidade"];
+$DataNascimento = exibirDataBr($pessoa["DataNascimento"]);
+$RG = $pessoa["RG"];
+$CPF = $pessoa["CPF"];
+$CCM = $pessoa["CCM"];
+$OMB = $pessoa["OMB"];
+$DRT = $pessoa["DRT"];
+$cbo = $pessoa["cbo"];
+$Funcao = $pessoa["Funcao"];
+$Endereco = $pessoa["Endereco"];
+$Telefones = $pessoa["Telefones"];
+$Email = $pessoa["Email"];
+$INSS = $pessoa["INSS"];
 
 if ($foto == null) {
     $fotoImg = "./images/avatar_default.png";
 } else {
     $fotoImg = "../uploadsdocs/$foto";
 }
+
+$formComp = recuperaDados("sis_formacao",$idPf,"IdPessoaFisica");
+$chamado = $formComp['Chamados'];
+$status  = $formComp['Status'];
+$pontuacao = $formComp['Pontuacao'];
+
+$teste = "Texto de teste";
+$valor = 5000;
+$ValorPorExtenso = valorPorExtenso($valor);
+
+$pfDet = recuperaDados("sis_pessoa_fisica_formacao",$idPf,"IdPessoaFisica");
+$curriculo = $pfDet['Curriculo'];
 
 // GERANDO O PDF:
 $pdf = new PDF('P','mm','A4'); //CRIA UM NOVO ARQUIVO PDF NO TAMANHO A4
@@ -74,23 +79,124 @@ $pdf->AddPage();
 
 
 $x=20;
-$l=6; //DEFINE A ALTURA DA LINHA
+$l=8; //DEFINE A ALTURA DA LINHA
 
-$pdf->SetXY( $x , 50);// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+$pdf->SetXY( $x , 35);// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 14);
 $pdf->Cell(180,15,utf8_decode("REGISTRO DE PESSOA FÍSICA"),0,1,'C');
 
-foreach ($dadosPf as $titulo => $dado) {
-    $pdf->SetX(40);
-    $pdf->SetFont('Arial','B', 10);
-    $pdf->Cell(180,$l,utf8_decode($titulo).": ",0,1,'L');
+$pdf->Ln(5);
 
-    $pdf->SetX(60);
-    $pdf->SetFont('Arial','', 10);
-    $pdf->Cell(180,$l,utf8_decode($dado),0,1,'L');
+$pdf->Image($fotoImg,160,56,-200);
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(12,$l,'Nome:',0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->MultiCell(168,$l,utf8_decode($Nome));
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(7,$l,utf8_decode('RG:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(30,$l,utf8_decode($RG),0,0,'L');
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(10,$l,utf8_decode('CPF:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(40,$l,utf8_decode($CPF),0,0,'L');
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(10,$l,utf8_decode('CCM:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(45,$l,utf8_decode($CCM),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(36,$l,utf8_decode('Data de Nascimento:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+if($DataNascimento == "31/12/1969"){
+    $pdf->Cell(25,$l, " " ,0,1,'L');
+}else {
+    $pdf->Cell(25,$l,utf8_decode($DataNascimento),0,1,'L');
 }
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->MultiCell(160,$l,utf8_decode($Endereco));
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(87,$l,utf8_decode($Telefones),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(13,$l,utf8_decode('E-mail:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(53,$l,utf8_decode($Email),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(64,$l,utf8_decode('Inscrição no INSS ou nº PIS / PASEP:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(50,$l,utf8_decode($INSS),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->Cell(180,5,'','B',1,'C');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(27,$l,utf8_decode('Equipamento 1:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(153,$l,utf8_decode($teste),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(27,$l,utf8_decode('Equipamento 2:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(153,$l,utf8_decode($teste),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(13,$l,utf8_decode('Cargo:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(165,$l,utf8_decode($teste),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(17,$l,utf8_decode('Vigência:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(165,$l,utf8_decode($teste),0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(12,$l,'Valor:',0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->MultiCell(168,$l,utf8_decode("R$ $valor"."  "."($ValorPorExtenso )"));
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(27,$l,utf8_decode('Mini currículo:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->MultiCell(153,$l,utf8_decode($curriculo));
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(21,$l,utf8_decode('Chamados:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(20,$l,utf8_decode($chamado),0,0,'L');
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(14,$l,utf8_decode('Status:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(40,$l,utf8_decode($teste),0,0,'L');
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(20,$l,utf8_decode('Pontuação:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(15,$l,utf8_decode('1'.$pontuacao),0,1,'L');
 
 $pdf->Output();
 ?>
