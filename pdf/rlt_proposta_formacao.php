@@ -353,7 +353,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,$l,utf8_decode("O prestador de serviços acima citado é contratado nos termos do Edital ".$edital.", no período de ".$Periodo. ", com carga horária total de: ".$CargaHoraria.", distribuída no período já citado, na forma abaixo descrita:"));
+   $pdf->MultiCell(180,$l,utf8_decode("O prestador de serviços acima citado é contratado nos termos do Edital ".$edital.", no período de ".$Periodo. ", com carga horária total de até: ".$CargaHoraria.", distribuída no período já citado, na forma abaixo descrita:"));
 
    $pdf->Ln();
 
@@ -371,7 +371,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 
    	   $pdf->SetX($x);
    	   $pdf->SetFont('Arial','', 10);
-   	   $pdf->MultiCell(180,$l,utf8_decode("De $inicio a $fim - $horas horas"));
+   	   $pdf->MultiCell(180,$l,utf8_decode("De $inicio a $fim - até $horas horas"));
    	}
 	}
 	//fim cronograma

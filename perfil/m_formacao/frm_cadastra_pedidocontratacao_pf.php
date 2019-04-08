@@ -231,7 +231,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
-								<textarea  disabled name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']); ?> 
+								<textarea  disabled name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasFormacao($pedido['idPedidoContratacao'],$pedido['parcelas']); ?>
 								</textarea>
 							</div>
 						</div>

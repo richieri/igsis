@@ -121,11 +121,11 @@ $sei =
 </div>
          
 <script>
-var client = new ZeroClipboard();
-client.clip(document.getElementById("botao-copiar"));
-client.on("aftercopy", function(){
-    alert("Copiado com sucesso!");
-});
+    var client = new ZeroClipboard();
+    client.clip(document.getElementById("botao-copiar"));
+    client.on("aftercopy", function(){
+        alert("Copiado com sucesso!");
+    });
 </script>
 
   </body>
