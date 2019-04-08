@@ -4,7 +4,11 @@ $con = bancoMysqli();
 $idPf = $_GET['idPf'];
 
 $pf = recuperaDados('sis_pessoa_fisica', $idPf, 'Id_PessoaFisica');
+
 $estadoCivil = recuperaDados('sis_estado_civil', $pf['IdEstadoCivil'], 'Id_EstadoCivil')['EstadoCivil'];
+
+$sqlFoto = "SELECT arquivo FROM igsis_arquivos_pessoa WHERE idTipoPessoa = '1' AND idPessoa = '".$pf['Id_PessoaFisica']."' AND tipo = '29' AND publicado = '1'";
+$foto = $con->query($sqlFoto)->fetch_assoc()['arquivo'];
 
 $formacao = recuperaDados("sis_pessoa_fisica_formacao",$pf['Id_PessoaFisica'],"IdPessoaFisica");
 
@@ -27,10 +31,10 @@ $dadosPf = [
     'PIS/PASEP/NIT' => $pf['Pis']
 ];
 
-if ($pf['Foto'] == null) {
-    $foto = "./images/avatar_default.png";
+if ($foto == null) {
+    $fotoImg = "./images/avatar_default.png";
 } else {
-    $foto = "https://img.buzzfeed.com/buzzfeed-static/static/2016-02/24/8/enhanced/webdr15/enhanced-32767-1456319339-1.jpg?downsize=700:*&output-format=auto&output-quality=auto";
+    $fotoImg = "../uploadsdocs/$foto";
 }
 
 ?>
@@ -45,8 +49,8 @@ if ($pf['Foto'] == null) {
         <div class="col-md-offset-1 col-md-10">
             <div class="row">
                 <div class="well">
-                    <a href="<?=$foto?>" target="_blank">
-                        <img src="<?=$foto?>" alt="" style="max-width: 20%" align="right">
+                    <a href="<?=$fotoImg?>" target="_blank">
+                        <img src="<?=$fotoImg?>" alt="" style="max-width: 20%" align="right">
                     </a>
                     <?php
                     foreach ($dadosPf as $campo => $dado) {

@@ -138,6 +138,14 @@
 		}
 	}
 	$fisica = recuperaDados("sis_pessoa_fisica",$ultimo,"Id_PessoaFisica");
+	$sqlFoto = "SELECT arquivo FROM igsis_arquivos_pessoa WHERE idTipoPessoa = '1' AND idPessoa = '".$fisica['Id_PessoaFisica']."' AND tipo = '29' AND publicado = '1'";
+	$foto = $con->query($sqlFoto)->fetch_assoc()['arquivo'];
+
+if ($foto == null) {
+    $fotoImg = "./images/avatar_default.png";
+} else {
+    $fotoImg = "../uploadsdocs/$foto";
+}
 	
 	$server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; 
 	$http = $server."/pdf/";
@@ -151,17 +159,30 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_edita_pf&id_pf=<?php echo $ultimo ?>" method="post">
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
-							<input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" value="<?php echo $fisica['Nome']; ?>" >
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-offset-2 col-md-8"><strong>Nome Artístico:</strong><br/>
-							<input type="text" class="form-control" id="NomeArtistico" name="NomeArtistico" placeholder="Nome Artístico" value="<?php echo $fisica['NomeArtistico']; ?>">
-						</div>
-					</div>
+                <div class="col-md-offset-2 col-md-3">
+                    <div class="form-group">
+                        <a href="<?= $fotoImg ?>" target="_blank">
+                            <img src="<?= $fotoImg ?>" alt="" style="max-width: 60%">
+                        </a>
+                    </div>
+                </div>
+                <form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_edita_pf&id_pf=<?php echo $ultimo ?>" method="post">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <strong>Nome *:</strong><br/>
+                                <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome"
+                                       value="<?php echo $fisica['Nome']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <div><strong>Nome Artístico:</strong><br/>
+                                    <input type="text" class="form-control" id="NomeArtistico" name="NomeArtistico"
+                                           placeholder="Nome Artístico"
+                                           value="<?php echo $fisica['NomeArtistico']; ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-6"><strong>Tipo de documento *:</strong><br/>
 							<select class="form-control" id="tipoDocumento" name="tipoDocumento" >
