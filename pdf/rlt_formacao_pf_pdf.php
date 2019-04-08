@@ -54,19 +54,25 @@ $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
 
+$sqlFormacao = "SELECT * FROM sis_formacao WHERE IdPessoaFisica = $idPf AND publicado = '1' ORDER BY Ano DESC LIMIT 0,1";
+$formacao = $con->query($sqlFormacao)->fetch_assoc();
+
+$equipamento1 = recuperaDados('ig_local', $formacao['IdEquipamento01'], 'idLocal')['sala'];
+$equipamento2 = recuperaDados('ig_local', $formacao['IdEquipamento02'], 'idLocal')['sala'];
+$cargo = recuperaDados('sis_formacao_cargo', $formacao['IdCargo'], 'Id_Cargo')['Cargo'];
+$vigencia = recuperaDados('sis_formacao_vigencia', $formacao['IdVigencia'], 'Id_Vigencia')['descricao'];
+$valor = recuperaDados('igsis_pedido_contratacao', $formacao['idPedidoContratacao'], 'idPedidoContratacao')['valor'];
+$miniCurriculo = recuperaDados('sis_pessoa_fisica_formacao', $formacao['IdPessoaFisica'], 'IdPessoaFisica')['Curriculo'];
+$numProcesso = recuperaDados('igsis_pedido_contratacao', $formacao['idPedidoContratacao'], 'idPedidoContratacao')['NumeroProcesso'];
+$status = ($formacao['Status'] == 1) ? "Ativo" : "Inativo";
+
 if ($foto == null) {
-    $fotoImg = "./images/avatar_default.png";
+    $fotoImg = "../visual/images/avatar_default.png";
 } else {
     $fotoImg = "../uploadsdocs/$foto";
 }
 
-$formComp = recuperaDados("sis_formacao",$idPf,"IdPessoaFisica");
-$chamado = $formComp['Chamados'];
-$status  = $formComp['Status'];
-$pontuacao = $formComp['Pontuacao'];
-
 $teste = "Texto de teste";
-$valor = 5000;
 $ValorPorExtenso = valorPorExtenso($valor);
 
 $pfDet = recuperaDados("sis_pessoa_fisica_formacao",$idPf,"IdPessoaFisica");
@@ -152,51 +158,51 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(27,$l,utf8_decode('Equipamento 1:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(153,$l,utf8_decode($teste),0,1,'L');
+$pdf->Cell(153,$l,utf8_decode($equipamento1),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(27,$l,utf8_decode('Equipamento 2:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(153,$l,utf8_decode($teste),0,1,'L');
+$pdf->Cell(153,$l,utf8_decode($equipamento2),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(13,$l,utf8_decode('Cargo:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(165,$l,utf8_decode($teste),0,1,'L');
+$pdf->Cell(165,$l,utf8_decode($cargo),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(17,$l,utf8_decode('Vigência:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(165,$l,utf8_decode($teste),0,1,'L');
+$pdf->Cell(165,$l,utf8_decode($vigencia),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(12,$l,'Valor:',0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->MultiCell(168,$l,utf8_decode("R$ $valor"."  "."($ValorPorExtenso )"));
+$pdf->MultiCell(168,$l,utf8_decode("R$ ".dinheiroParaBr($valor)." "."($ValorPorExtenso )"));
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(27,$l,utf8_decode('Mini currículo:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->MultiCell(153,$l,utf8_decode($curriculo));
+$pdf->MultiCell(153,$l,utf8_decode($miniCurriculo));
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(21,$l,utf8_decode('Chamados:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(20,$l,utf8_decode($chamado),0,0,'L');
+$pdf->Cell(20,$l,utf8_decode($formacao['Chamados']),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(14,$l,utf8_decode('Status:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(40,$l,utf8_decode($teste),0,0,'L');
+$pdf->Cell(40,$l,utf8_decode($status),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(20,$l,utf8_decode('Pontuação:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(15,$l,utf8_decode('1'.$pontuacao),0,1,'L');
+$pdf->Cell(15,$l,utf8_decode($formacao['Pontuacao']),0,1,'L');
 
 $pdf->Output();
 ?>
