@@ -283,7 +283,7 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->Ln();
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 8);
+   $pdf->SetFont('Arial','', 9);
    $pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
 
    $pdf->Ln();
