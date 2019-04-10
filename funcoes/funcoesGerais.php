@@ -395,8 +395,25 @@
 		}
 	}
 
-	function geraRadio($tabela) {
-//	    teste
+	function geraCheckbox($tabela, $name, $tabelaRelacionamento = null, $idEvento = null) {
+        $con = bancoMysqli();
+        $sqlConsulta = "SELECT * FROM $tabela WHERE publicado = '1'";
+        $dados = $con->query($sqlConsulta);
+
+        if (isset($tabelaRelacionamento)) {
+            $relacionamento = []
+            $sqlConsultaRelacionamento = "SELECT * FROM $tabelaRelacionamento WHERE idEvento = $idEvento";
+            $relacionamentos = $con->query($sqlConsultaRelacionamento)->fetch_all(MYSQLI_ASSOC);
+        }
+
+        while ($checkbox = $dados->fetch_row()) {
+            ?>
+            <div class="checkbox-grid-2 text-left">
+                <input type="checkbox" name="<?=$name?>[]" id="<?=$checkbox[1]?>" value="<?=$checkbox[0]?>">
+                <label for="<?=$checkbox[1]?>"><?=$checkbox[1]?></label>
+            </div>
+            <?php
+        }
     }
 
 	function geraOpcaoRelJuridica($select,$idUsuario)

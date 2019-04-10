@@ -3,6 +3,7 @@ USE `igsis`;
 CREATE TABLE `igsis_linguagem` (
    `id` INT NOT NULL AUTO_INCREMENT,
    `linguagem` VARCHAR(30) NOT NULL,
+   `publicado` TINYINT(1) NOT NULL DEFAULT '1',
    PRIMARY KEY (`id`)
 )
 COMMENT='Contém as linguagens que devem ser usadas no agendão'
@@ -23,6 +24,7 @@ INSERT INTO `igsis_linguagem` (`id`, `linguagem`) VALUES (11, 'Visual');
 CREATE TABLE `igsis_representatividade` (
    `id` INT NOT NULL AUTO_INCREMENT,
    `representatividade_social` VARCHAR(27) NOT NULL,
+   `publicado` TINYINT(1) NOT NULL DEFAULT '1',
    PRIMARY KEY (`id`)
 )
 COMMENT='Contém o publico destinado que devem ser usadas no agendão'

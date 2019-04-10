@@ -156,6 +156,7 @@
 			if(isset($_POST['atualizar']))
 			{	
 				// Atualiza o banco
+                $idEvento = $_SESSION['idEvento'];
 				$sinopse = addslashes($_POST['sinopse']);
 				$releaseCom = addslashes($_POST['releaseCom']); 
 				$linksCom = addslashes($_POST['linksCom']);
@@ -192,17 +193,30 @@
 				`linksCom` = '$linksCom',
 				`publicado` = 1,
 				`statusEvento` = 'Em elaboração'
-				WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
-				$con = bancoMysqli();
-				if(mysqli_query($con,$sql_atualizar))
-				{
-					$mensagem = "Atualizado com sucesso!";
-					gravarLog($sql_atualizar);	
-				}
-				else
-				{
-					$mensagem = "Erro ao atualizar... tente novamente";
-				}	
+                WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
+                $con = bancoMysqli();
+                if(mysqli_query($con,$sql_atualizar))
+                {
+                    if (isset($_POST['linguagem'])) {
+                        $sqlConsultaRelacionamento = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '$idEvento'";
+                        $relacionamento = $con->query($sqlConsultaRelacionamento);
+
+                        if ($relacionamento->num_rows == 0) {
+                            foreach ($_POST['linguagem'] as $checkbox) {
+                                $sqlInsertRelacionamento = "INSERT INTO igsis_evento_linguagem (idEvento, idLinguagem) VALUE ('$idEvento', '$checkbox')";
+                                $con->query($sqlInsertRelacionamento);
+                            }
+                        } else {
+//                            teste
+                        }
+                    }
+                    $mensagem .= "Atualizado com sucesso!";
+                    gravarLog($sql_atualizar);
+                }
+                else
+                {
+                    $mensagem = "Erro ao atualizar... tente novamente";
+                }
 			}
 			// Cria um array com dados do evento
 			$campo = recuperaEvento($_SESSION['idEvento']);
@@ -272,16 +286,36 @@
 						</div>
 					</div>
 
-                    PATRIMÔNIO CULTURAL E MEMÓRIA
+                    <div class="row">
+<!--                        <div class="form-group">-->
+                            <div class="col-md-offset-2 col-md-8">
+                                <label>Linguagem / Expressão Artística * (multipla escolha)</label>
+                            </div>
+<!--                        </div>-->
+                    </div>
                     <div class="form-group">
-						<div class="col-md-offset-2 col-md-8">
-							<label>Tipo de Evento *</label>
-							<select class="form-control" name="ig_tipo_evento_idTipoEvento" id="inputSubject" required>
-								<option value=""></option>
-								<?php echo geraOpcao("ig_tipo_evento",$campo['ig_tipo_evento_idTipoEvento'],"") ?>
-							</select>
-						</div>
-					</div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <?php
+                                geraCheckbox('igsis_linguagem', 'linguagem', 'igsis_evento_linguagem', $_SESSION['idEvento']);
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!--                        <div class="form-group">-->
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Público / Representatividade Social * (multipla escolha)</label>
+                        </div>
+                        <!--                        </div>-->
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <?php
+                            geraCheckbox('igsis_representatividade', 'representatividade');
+                            ?>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<br />
 						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
