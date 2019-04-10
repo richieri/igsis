@@ -72,7 +72,7 @@ echo "
 						</tr>
 
 						<tr>
-							<td width='50%'><a href='$link01?id=$id_ped' target='_blank'><strong>Pedido de Contratação</strong></a></td>
+							<td width='50%'><a href='$link01' target='_blank'><strong>Pedido de Contratação</strong></a></td>
 							<td><a href='$link02?id=$id_ped' target='_blank'><strong>Pedido de Contratação - Formação</strong></a></td>
 						</tr>
 

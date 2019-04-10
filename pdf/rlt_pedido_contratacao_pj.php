@@ -16,6 +16,10 @@ $ano=date('Y');
 $pedido = siscontrat($id_ped);
 $pj = siscontratDocs($pedido['IdProponente'],2);
 
+if ($pedido['TipoPessoa'] == 1) {
+    echo "<script>window.location = 'rlt_pedido_contratacao_pf.php?id=".$id_ped."';</script>";
+}
+
 $Objeto = $pedido["Objeto"];
 $Periodo = $pedido["Periodo"];
 $Duracao = $pedido["Duracao"];
