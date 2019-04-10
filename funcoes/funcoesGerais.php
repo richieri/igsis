@@ -394,6 +394,11 @@
 			}
 		}
 	}
+
+	function geraRadio($tabela) {
+//	    teste
+    }
+
 	function geraOpcaoRelJuridica($select,$idUsuario)
 	{
 		//gera os options de um select
