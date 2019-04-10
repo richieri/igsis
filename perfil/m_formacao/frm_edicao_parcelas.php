@@ -49,7 +49,19 @@ if(isset($_POST['cadastrar']))
 		$query_atualiza_parcela = mysqli_query($con,$sql_atualiza_parcela);
 		if($query_atualiza_parcela)
 		{
-			$mensagem = $mensagem." Parcela $i atualizada.<br />"; 
+		    $mensagem = $mensagem." Parcela $i atualizada.<br />";
+		    
+		    $sql_parcelas = "SELECT SUM(valor) AS valorTotal FROM igsis_parcelas WHERE idPedido = '$idPedido'";
+			$query_parcelas = mysqli_query($con,$sql_parcelas);
+			$parcelas = mysqli_fetch_array($query_parcelas);
+		    $valorGlobal = $parcelas['valorTotal'];
+		    $sql_pedido = "UPDATE igsis_pedido_contratacao SET valor = '$valorGlobal' WHERE idPedidoContratacao = '$idPedido'";
+		    if(mysqli_query($con,$sql_pedido)){
+		        $mensagem .= "Valor total do pedido atuallizado.";
+            }
+		    else{
+		        $mensagem .= "Erro ao atualizar pedido";
+            }
 		}
 		else
 		{
