@@ -1,5 +1,7 @@
 <?php
 $campo = recuperaDados("ig_evento","1234","idEvento");
+
+include "include/menu.php";
 ?>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
