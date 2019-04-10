@@ -389,9 +389,8 @@ $(function()
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-8"><strong>Status:</strong>
                         <select class="form-control" name="statusFormacao" id="Verba">
-                            <option value="">Selecione...</option>
                             <?php
-                                $sqlStatusFormacao = "SELECT * FROM sis_formacao_status ORDER BY 2";
+                                $sqlStatusFormacao = "SELECT * FROM sis_formacao_status ORDER BY 1 DESC";
                                 $optStatusFormacao = $con->query($sqlStatusFormacao);
                                 foreach ($optStatusFormacao as $option) {
                             ?>
