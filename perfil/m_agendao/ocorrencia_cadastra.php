@@ -1,10 +1,12 @@
+<?php
+include "include/menu.php";
+?>
 <section id="inserir" class="home-section bg-white">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
                     <h3>Evento - Inserir ocorrências</h3>
-                    <h1><?php echo $campo["nomeEvento"] ?> </h1>
                     <p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
                 </div>
             </div>
@@ -39,6 +41,10 @@
                         <div class="col-md-offset-2 col-md-2">
                             <label>Horário de início *</label>
                             <input type="text" name="hora" class="form-control"id="hora" placeholder="hh:mm"/>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Valor ingresso *</label>
+                            <input type="text" name="valorIngresso" class="form-control" id="valor" placeholder="em reais">
                         </div>
                         <div class=" col-md-3">
                             <label>Duração *</label>
@@ -78,5 +84,6 @@
                 </form>
             </div>
         </div>
+        <!-- TODO: Incluir um botão de avançar após o usuário gravar -->
     </div>
 </section>
