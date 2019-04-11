@@ -88,13 +88,14 @@ ORDER BY idPedidoContratacao DESC";
                 while($pedido = mysqli_fetch_array($query_enviados))
                 {
                     //$ped = siscontrat($pedido['idPedidoContratacao']);
+                    $periodo = retornaPeriodoVigencia($pedido['idPedidoContratacao']);
 
                     echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
                     echo '<td class="list_description">'.$pedido['NumeroProcesso'].'</td> ';
                     echo '<td class="list_description">'.$pedido['Nome'].'</td> ';
                     echo '<td class="list_description">CONTRATAÇÃO COMO '.$pedido['Cargo'].' DO '.$pedido['Programa'].' NOS TERMOS DO EDITAL '.$pedido['edital'].' - PROGRAMAS DA DIVISÃO DE FORMAÇÃO.</td>';
                     echo '<td class="list_description">em construção</td> ';
-                    echo '<td class="list_description">em construção</td> ';
+                    echo '<td class="list_description">'.$periodo.'</td> ';
                     echo '<td class="list_description">'.$pedido['Verba'].'</td> ';
                     echo '<td class="list_description">'.$pedido['estado'].'</td> </tr>';
                 }
