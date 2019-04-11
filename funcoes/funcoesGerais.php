@@ -413,7 +413,7 @@
  * @param int $idEvento
  * <p>ID do evento para consultar na tabela de relacionamento</p>
  */
-function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento) {
+function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0) {
     $con = bancoMysqli();
     $sqlConsulta = "SELECT * FROM $tabela WHERE publicado = '1' ORDER BY 2";
     $dados = $con->query($sqlConsulta);
