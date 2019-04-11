@@ -1,4 +1,65 @@
 <?php
+if (isset($_POST['cadastra'])) {
+
+
+    $ig_comunicao_idCom = 0;
+    $local_id = $_POST['local'];
+
+    $id_evento = 0;
+
+    $segunda    = $_POST['segunda'] ?? 0;
+    $terca      = $_POST['terca']   ?? 0;
+    $quarta     = $_POST['quarta']  ?? 0;
+    $quinta     = $_POST['quinta']  ?? 0;
+    $sexta      = $_POST['sexta']   ?? 0;
+    $sabado     = $_POST['sabado']  ?? 0;
+    $domingo    = $_POST['domingo'] ?? 0;
+
+    $data_inicio = $_POST['dataInicio'];
+    $data_fim   = $_POST['dataFinal'] ?? NULL;
+
+    $espaco_id = $_POST['espaco'] ?? NULL;
+
+
+    $horario_inicio = $_POST['hora'];
+    $retirada_ingresso_id = $_POST['retiradaIngresso'];
+
+    $duracao = $_POST['duracao'];
+    $valor_ingresso = dinheiroDeBr($_POST['valorIngresso']);
+
+
+
+    if(($data_fim == NULL))
+    {
+        $tipoOcorrencia = 3; // Tipo de Ocorrência data única
+    }
+    else
+    {
+        $tipoOcorrencia = 4; // Tipo de Ocorrência por temporada
+    }
+    $con = bancoMysqli();
+    $sql = "INSERT INTO ig_ocorrencia 
+(idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, publicado )  
+            VALUES 
+('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', $segunda, $terca, $quarta, $quinta, $sexta, $sabado, $domingo, '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, 1  )";
+
+    if (mysqli_query($con, $sql))
+    {
+        //$idOcorrencia = recuperaUltimo('ig_produtor');
+        $mensagem =  "Cadastrado com sucesso!";
+        gravarLog($sql);
+    } else {
+        $mensagem = "Erro ao gravar! Tente novamente.";
+        gravarLog($sql);
+    }
+
+    $ocorrencia = recuperaDados("ig_produtor","$idOcorrencia","idProdutor");
+
+  
+}
+
+
+
 include "include/menu.php";
 ?>
 <section id="inserir" class="home-section bg-white">
@@ -7,14 +68,14 @@ include "include/menu.php";
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
                     <h3>Evento - Inserir ocorrências</h3>
-                    <p><?php if(isset($mensagem)){echo $mensagem;} ?></p>
+                    <h4><?php if(isset($mensagem)){echo $mensagem;} ?></h4>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
-                <form method="POST" action="?perfil=agendao&p=ocorrencia_lista" class="form-horizontal" role="form">
+                <form method="POST" action="?perfil=agendao&p=ocorrencia_cadastra" class="form-horizontal" role="form">
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-6">
@@ -78,7 +139,7 @@ include "include/menu.php";
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
                             <input type="hidden" name="inserir" value="1"  />
-                            <input type="submit" class="btn btn-theme btn-lg btn-block" value="Inserir ocorrência"  />
+                            <input type="submit" class="btn btn-theme btn-lg btn-block"  name="cadastra" value="Inserir"  />
                         </div>
                     </div>
                 </form>
@@ -87,3 +148,31 @@ include "include/menu.php";
         <!-- TODO: Incluir um botão de avançar após o usuário gravar -->
     </div>
 </section>
+
+<script type="application/javascript">
+    $(function()
+    {
+        $('#instituicao').change(function()
+        {
+            if( $(this).val() )
+            {
+                $('#local').hide();
+                $('.carregando').show();
+                $.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
+                {
+                    var options = '<option value=""></option>';
+                    for (var i = 0; i < j.length; i++)
+                    {
+                        options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+                    }
+                    $('#local').html(options).show();
+                    $('.carregando').hide();
+                });
+            }
+            else
+            {
+                $('#local').html('<option value="">-- Escolha uma instituição --</option>');
+            }
+        });
+    });
+</script>
