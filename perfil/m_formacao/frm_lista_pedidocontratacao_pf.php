@@ -121,7 +121,7 @@
 	<div class="container">
 		<div class="sub-title"><h6>PEDIDOS NÃO ENVIADOS DE CONTRATAÇÃO DE PESSOA FÍSICA</h6></div>
         <div class="row">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>Código do Pedido</th>
@@ -184,6 +184,20 @@
 <script type="text/javascript" defer>
     $(function () {
         $('#example1').DataTable({
+            "language": {
+                "url": 'bower_components/datatables.net/Portuguese-Brasil.json'
+            },
+            "responsive": true,
+            "dom": "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5 text-left'i><'col-sm-7 text-right'p>>",
+        });
+    })
+</script>
+
+<script type="text/javascript" defer>
+    $(function () {
+        $('#example2').DataTable({
             "language": {
                 "url": 'bower_components/datatables.net/Portuguese-Brasil.json'
             },
