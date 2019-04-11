@@ -401,7 +401,7 @@
         $dados = $con->query($sqlConsulta);
 
         if (isset($tabelaRelacionamento)) {
-            $relacionamento = []
+            $relacionamento = [];
             $sqlConsultaRelacionamento = "SELECT * FROM $tabelaRelacionamento WHERE idEvento = $idEvento";
             $relacionamentos = $con->query($sqlConsultaRelacionamento)->fetch_all(MYSQLI_ASSOC);
         }
