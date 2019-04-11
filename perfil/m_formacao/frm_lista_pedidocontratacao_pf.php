@@ -86,13 +86,13 @@ ORDER BY idPedidoContratacao DESC";
                 $query_enviados = mysqli_query($con,$sql_enviados);
                 while($pedido = mysqli_fetch_array($query_enviados))
                 {
-                    $ped = siscontrat($pedido['idPedidoContratacao']);
+                    //$ped = siscontrat($pedido['idPedidoContratacao']);
                     echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
                     echo '<td class="list_description">'.$pedido['NumeroProcesso'].'</td> ';
                     echo '<td class="list_description">'.$pedido['Nome'].'</td> ';
-                    echo '<td class="list_description">'.$ped['Objeto'].'</td> ';
-                    echo '<td class="list_description">'.$ped['Local'].'</td> ';
-                    echo '<td class="list_description">'.$ped['Periodo'].'</td> ';
+                    echo '<td class="list_description">teste</td> ';
+                    echo '<td class="list_description">teste</td> ';
+                    echo '<td class="list_description">teste</td> ';
                     echo '<td class="list_description">'.$pedido['Verba'].'</td> ';
                     echo '<td class="list_description">'.$pedido['estado'].'</td> </tr>';
                 }
