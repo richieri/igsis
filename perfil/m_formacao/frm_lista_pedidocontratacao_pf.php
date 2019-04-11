@@ -125,7 +125,6 @@
                 <thead>
                 <tr>
                     <th>Código do Pedido</th>
-                    <th>Processo</th>
                     <th>Proponente</th>
                     <th>Objeto</th>
                     <th>Local</th>
@@ -161,7 +160,6 @@
                 <tfoot>
                 <tr>
                     <th>Código do Pedido</th>
-                    <th>Processo</th>
                     <th>Proponente</th>
                     <th>Objeto</th>
                     <th>Local</th>
