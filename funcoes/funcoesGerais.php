@@ -395,26 +395,43 @@
 		}
 	}
 
-	function geraCheckbox($tabela, $name, $tabelaRelacionamento = null, $idEvento = null) {
-        $con = bancoMysqli();
-        $sqlConsulta = "SELECT * FROM $tabela WHERE publicado = '1'";
-        $dados = $con->query($sqlConsulta);
+/**
+ * Esta função gera checkboxes que tem relacionamento com "eventos". <strong>A ordem das colunas nas tabelas interfere no
+ * resultado desta função.</strong> <br>
+ * A ordem deve ser:
+ * <li>Para Tabela de Atributos:</li>
+ * Id, Atributo
+ * <br>
+ * <li>Para Tabela de Relacionamento:</li>
+ * idEvento, idAtributo
+ * @param string $tabela
+ * <p>Tabela que deve ser utilizada para gerar os Checkboxes. Será gerado um checkbox para cada registro</p>
+ * @param string $name
+ * <p>Name que o input deve receber. Este name poderá ser utilizado no $_POST</p>
+ * @param string $tabelaRelacionamento
+ * <p>Tabela de relacionamento que deve ser consultada. Será utilizada para retornar os checkboxes já selecionados</p>
+ * @param int $idEvento
+ * <p>ID do evento para consultar na tabela de relacionamento</p>
+ */
+function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento) {
+    $con = bancoMysqli();
+    $sqlConsulta = "SELECT * FROM $tabela WHERE publicado = '1'";
+    $dados = $con->query($sqlConsulta);
 
-        if (isset($tabelaRelacionamento)) {
-            $relacionamento = [];
-            $sqlConsultaRelacionamento = "SELECT * FROM $tabelaRelacionamento WHERE idEvento = $idEvento";
-            $relacionamentos = $con->query($sqlConsultaRelacionamento)->fetch_all(MYSQLI_ASSOC);
-        }
-
-        while ($checkbox = $dados->fetch_row()) {
-            ?>
-            <div class="checkbox-grid-2 text-left">
-                <input type="checkbox" name="<?=$name?>[]" id="<?=$checkbox[1]?>" value="<?=$checkbox[0]?>">
-                <label for="<?=$checkbox[1]?>"><?=$checkbox[1]?></label>
-            </div>
-            <?php
-        }
+    if (isset($tabelaRelacionamento)) {
+        $sqlConsultaRelacionamento = "SELECT * FROM $tabelaRelacionamento WHERE idEvento = $idEvento";
+        $relacionamentos = $con->query($sqlConsultaRelacionamento)->fetch_all(MYSQLI_ASSOC);
     }
+
+    while ($checkbox = $dados->fetch_row()) {
+        ?>
+        <div class="checkbox-grid-2 text-left">
+            <input type="checkbox" name="<?=$name?>[]" id="<?=$checkbox[1]?>" value="<?=$checkbox[0]?>" <?=in_array_r($checkbox[0], $relacionamentos) ? "checked" : ""?>>
+            <label for="<?=$checkbox[1]?>"><?=$checkbox[1]?></label>
+        </div>
+        <?php
+    }
+}
 
 	function geraOpcaoRelJuridica($select,$idUsuario)
 	{
@@ -4736,5 +4753,69 @@ function validaCNPJ($cnpj)
 	}
 	$resto = $soma % 11;
 	return $cnpj{13} == ($resto < 2 ? 0 : 11 - $resto);
+}
+
+/**
+ * @param int|string $needle
+ * @param array $haystack
+ * @param bool $strict
+ * @return bool
+ */
+function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Esta função é responsável pela inserção e remoção de dados nas tabelas de relacionamento com "eventos".
+ * <strong>A ordem das colunas nas tabelas interfere no resultado desta função.</strong> <br>
+ * A ordem deve ser:
+ * <li>Para Tabela de Relacionamento:</li>
+ * idEvento, idAtributo
+ * @param string $tabela
+ * <p>Nome da tabela de relacionamento</p>
+ * @param int $idEvento
+ * <p>Id do Evento que será registrado</p>
+ * @param array $post
+ * <p>O post com o name da checkbox</p>
+ */
+function atualizaRelacionamentoEvento($tabela, $idEvento, $post) {
+    $con = bancoMysqli();
+
+    $sqlConsultaRelacionamento = "SELECT * FROM $tabela WHERE idEvento = '$idEvento'";
+    $relacionamento = $con->query($sqlConsultaRelacionamento);
+
+    $consultaColunas = $con->query("SHOW COLUMNS FROM $tabela");
+    while ($linha = $consultaColunas->fetch_assoc()) {
+        $colunas[] = $linha['Field'];
+    }
+
+    $coluna = $colunas[1];
+
+    if ($relacionamento->num_rows == 0) {
+        foreach ($post as $checkbox) {
+            $sqlInsertRelacionamento = "INSERT INTO $tabela (idEvento, $coluna) VALUE ('$idEvento', '$checkbox')";
+            $con->query($sqlInsertRelacionamento);
+        }
+    } else {
+        $relacionamentos = $relacionamento->fetch_all(MYSQLI_NUM);
+
+        foreach ($relacionamentos as $relacionamento) {
+            if (!(in_array_r($relacionamento[1], $post))) {
+                $sqlDeleteRelacionamento = "DELETE FROM $tabela WHERE idEvento = '$idEvento' AND $coluna = '".$relacionamento[1]."'";
+                $con->query($sqlDeleteRelacionamento);
+            }
+        }
+        foreach ($post as $checkbox) {
+            if (!(in_array_r($checkbox, $relacionamentos))) {
+                $sqlInsertRelacionamento = "INSERT INTO $tabela (idEvento, $coluna) VALUE ('$idEvento', '$checkbox')";
+                $con->query($sqlInsertRelacionamento);
+            }
+        }
+    }
 }
 ?>

@@ -48,15 +48,15 @@ INSERT INTO `igsis_representatividade` (`id`, `representatividade_social`, `desc
 INSERT INTO `igsis_representatividade` (`id`, `representatividade_social`, `descricao`, `publicado`) VALUES (13, 'Vulnerabilidade social', 'Atividades artístico-culturais que são desenvolvidas por grupos sociais de vulnerabilidade social ou em territórios da cidade com baixos índices de desenvolvimento socioeconômico e cultural', 1);
 
 CREATE TABLE `igsis_evento_linguagem` (
-   `idLinguagem` INT NOT NULL,
-   `idEvento` INT NOT NULL
+   `idEvento` INT NOT NULL,
+   `idLinguagem` INT NOT NULL
 )
 COMMENT='Trata dos relacionamentos entre as tabelas igsis_linguagem e ig_evento'
 COLLATE='utf8_general_ci';
 
 CREATE TABLE `igsis_evento_representatividade` (
-   `idRepresentatividade` INT NOT NULL,
-   `idEvento` INT NOT NULL
+   `idEvento` INT NOT NULL,
+   `idRepresentatividade` INT NOT NULL
 )
 COMMENT='Trata dos relacionamentos entre as tabelas igsis_representatividade e ig_evento'
 COLLATE='utf8_general_ci';

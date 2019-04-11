@@ -198,19 +198,14 @@
                 if(mysqli_query($con,$sql_atualizar))
                 {
                     if (isset($_POST['linguagem'])) {
-                        $sqlConsultaRelacionamento = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '$idEvento'";
-                        $relacionamento = $con->query($sqlConsultaRelacionamento);
-
-                        if ($relacionamento->num_rows == 0) {
-                            foreach ($_POST['linguagem'] as $checkbox) {
-                                $sqlInsertRelacionamento = "INSERT INTO igsis_evento_linguagem (idEvento, idLinguagem) VALUE ('$idEvento', '$checkbox')";
-                                $con->query($sqlInsertRelacionamento);
-                            }
-                        } else {
-//                            teste
-                        }
+                        atualizaRelacionamentoEvento('igsis_evento_linguagem', $idEvento, $_POST['linguagem']);
                     }
-                    $mensagem .= "Atualizado com sucesso!";
+
+                    if (isset($_POST['representatividade'])) {
+                        atualizaRelacionamentoEvento('igsis_evento_representatividade', $idEvento, $_POST['representatividade']);
+                    }
+
+                    $mensagem = "Atualizado com sucesso!";
                     gravarLog($sql_atualizar);
                 }
                 else
@@ -287,31 +282,27 @@
 					</div>
 
                     <div class="row">
-<!--                        <div class="form-group">-->
                             <div class="col-md-offset-2 col-md-8">
-                                <label>Linguagem / Expressão Artística * (multipla escolha)</label>
+                                <label>Ações (Expressões Artístico-culturais) * <i>(multipla escolha)</i></label>
                             </div>
-<!--                        </div>-->
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
                             <?php
-                                geraCheckbox('igsis_linguagem', 'linguagem', 'igsis_evento_linguagem', $_SESSION['idEvento']);
+                                geraCheckboxEvento('igsis_linguagem', 'linguagem', 'igsis_evento_linguagem', $_SESSION['idEvento']);
                             ?>
                         </div>
                     </div>
 
                     <div class="row">
-                        <!--                        <div class="form-group">-->
                         <div class="col-md-offset-2 col-md-8">
-                            <label>Público / Representatividade Social * (multipla escolha)</label>
+                            <label>Público (Representatividade e Visibilidade Sócio-cultural)* <i>(multipla escolha)</i></label>
                         </div>
-                        <!--                        </div>-->
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
                             <?php
-                            geraCheckbox('igsis_representatividade', 'representatividade');
+                                geraCheckboxEvento('igsis_representatividade', 'representatividade', 'igsis_evento_representatividade', $_SESSION['idEvento']);
                             ?>
                         </div>
                     </div>
