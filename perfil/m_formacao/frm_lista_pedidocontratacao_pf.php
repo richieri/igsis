@@ -68,16 +68,16 @@
                 {
                     case $ano:
                         $sql_enviados = "
-SELECT ped.idPedidoContratacao, ped.NumeroProcesso, pf.Nome, idPessoa, Ano, vb.Verba, st.estado, pro.Programa, pro.edital, cg.Cargo
-FROM igsis_pedido_contratacao AS ped 
-    INNER JOIN sis_formacao AS form ON form.idPedidoContratacao = ped.idPedidoContratacao
-    INNER JOIN sis_formacao_programa AS pro ON pro.Id_Programa = form.IdPrograma
-    INNER JOIN sis_verba AS vb ON pro.verba = vb.Id_Verba
-    INNER JOIN sis_estado AS st ON st.idEstado = ped.estado
-    INNER JOIN sis_formacao_cargo AS cg ON form.IdCargo = cg.Id_Cargo
-    INNER JOIN sis_pessoa_fisica AS pf ON ped.idPessoa = pf.Id_PessoaFisica
-WHERE ped.estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano 
-ORDER BY idPedidoContratacao DESC";
+                            SELECT ped.idPedidoContratacao, ped.NumeroProcesso, pf.Nome, idPessoa, Ano, vb.Verba, st.estado, pro.Programa, pro.edital, cg.Cargo, form.IdEquipamento01, form.IdEquipamento02, form.IdEquipamento03
+                            FROM igsis_pedido_contratacao AS ped 
+                                INNER JOIN sis_formacao AS form ON form.idPedidoContratacao = ped.idPedidoContratacao
+                                INNER JOIN sis_formacao_programa AS pro ON pro.Id_Programa = form.IdPrograma
+                                INNER JOIN sis_verba AS vb ON pro.verba = vb.Id_Verba
+                                INNER JOIN sis_estado AS st ON st.idEstado = ped.estado
+                                INNER JOIN sis_formacao_cargo AS cg ON form.IdCargo = cg.Id_Cargo
+                                INNER JOIN sis_pessoa_fisica AS pf ON ped.idPessoa = pf.Id_PessoaFisica
+                            WHERE ped.estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano 
+                            ORDER BY idPedidoContratacao DESC";
                     break;
                     case $ano - 1:
                         $sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano, IdPrograma FROM igsis_pedido_contratacao AS ped INNER JOIN sis_formacao ON sis_formacao.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano - 1 ORDER BY idPedidoContratacao DESC";
@@ -87,14 +87,15 @@ ORDER BY idPedidoContratacao DESC";
                 $query_enviados = mysqli_query($con,$sql_enviados);
                 while($pedido = mysqli_fetch_array($query_enviados))
                 {
-                    //$ped = siscontrat($pedido['idPedidoContratacao']);
+                    $objeto = "CONTRATAÇÃO COMO ".$pedido['Cargo']." DO ".$pedido['Programa']." NOS TERMOS DO EDITAL ".$pedido['edital']." - PROGRAMAS DA DIVISÃO DE FORMAÇÃO.";
+                    $local = retornaLocal($pedido['IdEquipamento01'])."\n".retornaLocal($pedido['IdEquipamento02'])."\n".retornaLocal($pedido['IdEquipamento03']);
                     $periodo = retornaPeriodoVigencia($pedido['idPedidoContratacao']);
 
                     echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
                     echo '<td class="list_description">'.$pedido['NumeroProcesso'].'</td> ';
                     echo '<td class="list_description">'.$pedido['Nome'].'</td> ';
-                    echo '<td class="list_description">CONTRATAÇÃO COMO '.$pedido['Cargo'].' DO '.$pedido['Programa'].' NOS TERMOS DO EDITAL '.$pedido['edital'].' - PROGRAMAS DA DIVISÃO DE FORMAÇÃO.</td>';
-                    echo '<td class="list_description">em construção</td> ';
+                    echo '<td class="list_description">'.$objeto.'</td>';
+                    echo '<td class="list_description">'.$local.'</td> ';
                     echo '<td class="list_description">'.$periodo.'</td> ';
                     echo '<td class="list_description">'.$pedido['Verba'].'</td> ';
                     echo '<td class="list_description">'.$pedido['estado'].'</td> </tr>';
