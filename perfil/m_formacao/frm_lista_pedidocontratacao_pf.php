@@ -93,8 +93,8 @@ ORDER BY idPedidoContratacao DESC";
                     echo '<td class="list_description">'.$pedido['NumeroProcesso'].'</td> ';
                     echo '<td class="list_description">'.$pedido['Nome'].'</td> ';
                     echo '<td class="list_description">CONTRATAÇÃO COMO '.$pedido['Cargo'].' DO '.$pedido['Programa'].' NOS TERMOS DO EDITAL '.$pedido['edital'].' - PROGRAMAS DA DIVISÃO DE FORMAÇÃO.</td>';
-                    echo '<td class="list_description">teste</td> ';
-                    echo '<td class="list_description">teste</td> ';
+                    echo '<td class="list_description">em construção</td> ';
+                    echo '<td class="list_description">em construção</td> ';
                     echo '<td class="list_description">'.$pedido['Verba'].'</td> ';
                     echo '<td class="list_description">'.$pedido['estado'].'</td> </tr>';
                 }
