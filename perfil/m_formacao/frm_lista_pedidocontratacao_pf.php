@@ -67,31 +67,34 @@
                 switch($p)
                 {
                     case $ano:
-                        $sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano, IdPrograma FROM igsis_pedido_contratacao AS ped INNER JOIN sis_formacao ON sis_formacao.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano ORDER BY idPedidoContratacao DESC";
+                        $sql_enviados = "
+SELECT ped.idPedidoContratacao, ped.NumeroProcesso, pf.Nome, idPessoa, Ano, vb.Verba, st.estado
+FROM igsis_pedido_contratacao AS ped 
+    INNER JOIN sis_formacao AS form ON form.idPedidoContratacao = ped.idPedidoContratacao
+    INNER JOIN sis_formacao_programa AS pro ON pro.Id_Programa = form.IdPrograma
+    INNER JOIN sis_verba AS vb ON pro.verba = vb.Id_Verba
+    INNER JOIN sis_estado AS st ON st.idEstado = ped.estado
+    INNER JOIN sis_pessoa_fisica AS pf ON ped.idPessoa = pf.Id_PessoaFisica
+WHERE ped.estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano 
+ORDER BY idPedidoContratacao DESC";
                     break;
                     case $ano - 1:
                         $sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano, IdPrograma FROM igsis_pedido_contratacao AS ped INNER JOIN sis_formacao ON sis_formacao.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano - 1 ORDER BY idPedidoContratacao DESC";
                     break;
-
-
                 }
                 $data=date('Y');
                 $query_enviados = mysqli_query($con,$sql_enviados);
                 while($pedido = mysqli_fetch_array($query_enviados))
                 {
-                    $programa = recuperaDados("sis_formacao_programa",$pedido['IdPrograma'],"Id_Programa");
-                    $verba = recuperaDados("sis_verba",$programa['verba'],"Id_Verba");
-
-                    $linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
                     $ped = siscontrat($pedido['idPedidoContratacao']);
                     echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-                    echo '<td class="list_description">'.$ped['NumeroProcesso'].						'</td> ';
-                    echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].					'</td> ';
-                    echo '<td class="list_description">'.$ped['Objeto'].						'</td> ';
-                    echo '<td class="list_description">'.$ped['Local'].				'</td> ';
-                    echo '<td class="list_description">'.$ped['Periodo'].						'</td> ';
-                    echo '<td class="list_description">'.$verba['Verba'].						'</td> ';
-                    echo '<td class="list_description">'.retornaEstado($ped['Status']).						'</td> </tr>';
+                    echo '<td class="list_description">'.$pedido['NumeroProcesso'].'</td> ';
+                    echo '<td class="list_description">'.$pedido['Nome'].'</td> ';
+                    echo '<td class="list_description">'.$ped['Objeto'].'</td> ';
+                    echo '<td class="list_description">'.$ped['Local'].'</td> ';
+                    echo '<td class="list_description">'.$ped['Periodo'].'</td> ';
+                    echo '<td class="list_description">'.$pedido['Verba'].'</td> ';
+                    echo '<td class="list_description">'.$pedido['estado'].'</td> </tr>';
                 }
                 echo "</tbody>";
                 ?>
