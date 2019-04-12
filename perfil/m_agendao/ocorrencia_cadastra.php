@@ -3,7 +3,7 @@ if (isset($_POST['cadastra'])) {
 
 
     $ig_comunicao_idCom = 0;
-    $local_id = $_POST['local'];
+    $local_id = $_POST['instituicao'] ;
 
     $id_evento = 0;
 
@@ -18,7 +18,7 @@ if (isset($_POST['cadastra'])) {
     $data_inicio = $_POST['dataInicio'];
     $data_fim   = $_POST['dataFinal'] ?? NULL;
 
-    $espaco_id = $_POST['espaco'] ?? NULL;
+    $espaco_id = $_POST['local'];
 
 
     $horario_inicio = $_POST['hora'];
@@ -45,7 +45,7 @@ if (isset($_POST['cadastra'])) {
 
     if (mysqli_query($con, $sql))
     {
-        //$idOcorrencia = recuperaUltimo('ig_produtor');
+        $idOcorrencia = recuperaUltimo('ig_ocorrencia');
         $mensagem =  "Cadastrado com sucesso!";
         gravarLog($sql);
     } else {
@@ -53,7 +53,9 @@ if (isset($_POST['cadastra'])) {
         gravarLog($sql);
     }
 
-    $ocorrencia = recuperaDados("ig_produtor","$idOcorrencia","idProdutor");
+    $ocorrencia = recuperaDados("ig_ocorrencia","$idOcorrencia","idOcorrencia");
+
+   // var_dump($ocorrencia);
 
   
 }
@@ -80,11 +82,11 @@ include "include/menu.php";
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-6">
                             <label>Data início *</label>
-                            <input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="">
+                            <input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="" value="<?php echo isset($ocorrencia['dataInicio']) ? $ocorrencia['dataInicio'] : '' ?>">
                         </div>
                         <div class=" col-md-6">
                             <label>Data encerramento</label>
-                            <input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" placeholder="só preencha em caso de temporada">
+                            <input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" placeholder="só preencha em caso de temporada" value="<?php echo isset($ocorrencia['dataFinal']) ? $ocorrencia['dataFinal'] : '' ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -101,15 +103,15 @@ include "include/menu.php";
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-2">
                             <label>Horário de início *</label>
-                            <input type="text" name="hora" class="form-control"id="hora" placeholder="hh:mm"/>
+                            <input type="text" name="hora" class="form-control"id="hora" placeholder="hh:mm" value="<?php echo isset($ocorrencia['horaInicio']) ? $ocorrencia['horaInicio'] : '' ?>"/>
                         </div>
                         <div class="col-md-3">
                             <label>Valor ingresso *</label>
-                            <input type="text" name="valorIngresso" class="form-control" id="valor" placeholder="em reais">
+                            <input type="text" name="valorIngresso" class="form-control" id="valor" placeholder="em reais" value="<?php echo isset($ocorrencia['valorIngresso']) ? $ocorrencia['valorIngresso'] : '' ?>">
                         </div>
                         <div class=" col-md-3">
                             <label>Duração *</label>
-                            <input type="text" id="duracao" name="duracao" class="form-control" id="" placeholder="em minutos">
+                            <input type="text" id="duracao" name="duracao" class="form-control" id="" placeholder="em minutos" value="<?php echo isset($ocorrencia['duracao']) ? $ocorrencia['duracao'] : '' ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -117,7 +119,9 @@ include "include/menu.php";
                             <label>Sistema de retirada de ingressos</label>
                             <select class="form-control" name="retiradaIngresso" id="inputSubject" >
                                 <option>Selecione</option>
-                                <?php geraOpcao("ig_retirada","","") ?>
+                                <?php
+                                $retIng = $ocorrencia['retiradaIngresso'];
+                                geraOpcao("ig_retirada","$retIng","") ?>
                             </select>
                         </div>
                     </div>
@@ -126,7 +130,9 @@ include "include/menu.php";
                             <label>Local / instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
                             <select class="form-control" name="instituicao" id="instituicao" >
                                 <option>Selecione</option>
-                                <?php geraOpcao("ig_instituicao","","") ?>
+                                <?php
+                                $inst = isset($_POST['instituicao']) ? $_POST['instituicao'] : "";
+                                geraOpcao("ig_instituicao","$inst","") ?>
                             </select>
                         </div>
                     </div>
@@ -138,7 +144,6 @@ include "include/menu.php";
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <input type="hidden" name="inserir" value="1"  />
                             <input type="submit" class="btn btn-theme btn-lg btn-block"  name="cadastra" value="Inserir"  />
                         </div>
                     </div>
@@ -161,9 +166,12 @@ include "include/menu.php";
                 $.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
                 {
                     var options = '<option value=""></option>';
-                    for (var i = 0; i < j.length; i++)
-                    {
-                        options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+
+
+                    for (var i = 0; i < j.length; i++)                    {
+
+                            options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+
                     }
                     $('#local').html(options).show();
                     $('.carregando').hide();
@@ -175,4 +183,33 @@ include "include/menu.php";
             }
         });
     });
+</script>
+
+<script type="application/javascript">
+
+       window.onload = function()
+        {
+
+            let espaco = '<?=$espaco_id?>';
+            let local = '<?=$local_id?>'
+
+
+                    $.getJSON('local.ajax.php?instituicao=', {instituicao: local, ajax: 'true'}, function (j) {
+                        var options = '<option value=""></option>';
+
+
+                        for (var i = 0; i < j.length; i++) {
+                            if (j[i].idEspaco == espaco) {
+                                options += '<option value="' + j[i].idEspaco + '" selected>' + j[i].espaco + '</option>';
+                            } else {
+                                options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+                            }
+                        }
+                        $('#local').html(options).show();
+
+                    });
+
+
+        };
+
 </script>
