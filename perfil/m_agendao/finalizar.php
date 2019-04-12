@@ -49,24 +49,25 @@ $ocorrencia = $con->query("
             while($campo = mysqli_fetch_array($ocorrencia)){
                 if($campo['dataFinal'] == '0000-00-00')
                 {
-                    $data = exibirDataBr($campo['dataInicio'])." - ".diasemana($campo['dataInicio']);
+                    $data = exibirDataBr($campo['dataInicio'])." (".diasemana($campo['dataInicio']).")";
                     $semana = "";
                 }
                 else
                 {
                     $data = "De ".exibirDataBr($campo['dataInicio'])." a ".exibirDataBr($campo['dataFinal']);
-                    $semana = "";
-                    $semana .= $campo['segunda'] == 1 ? $seg = "segunda " : NULL;
-                    $semana .= $campo['terca'] == 1 ? $ter = "terca " : NULL;
-                    $semana .= $campo['quarta'] == 1 ? $qua = "quarta " : NULL;
-                    $semana .= $campo['quinta'] == 1 ? $qui = "quinta " : NULL;
-                    $semana .= $campo['sexta'] == 1 ? $sex = "sexta " : NULL;
-                    $semana .= $campo['sabado'] == 1 ? $sab = "sabado " : NULL;
-                    $semana .= $campo['domingo'] == 1 ? $dom = "domingo" : NULL;
+                    $semana = "(";
+                    $semana .= $campo['segunda'] == 1 ? "segunda " : NULL;
+                    $semana .= $campo['terca'] == 1 ? "terca " : NULL;
+                    $semana .= $campo['quarta'] == 1 ? "quarta " : NULL;
+                    $semana .= $campo['quinta'] == 1 ? "quinta " : NULL;
+                    $semana .= $campo['sexta'] == 1 ? "sexta " : NULL;
+                    $semana .= $campo['sabado'] == 1 ? "sabado " : NULL;
+                    $semana .= $campo['domingo'] == 1 ? "domingo" : NULL;
+                    $semana .= ")";
                 }
             ?>
                 <p align="justify">
-                    <strong>Data:</strong> <?= $data." (".$semana ?>) <br/>
+                    <strong>Data:</strong> <?= $data." ".$semana ?> <br/>
                     <strong>Horário:</strong> <?= exibirHora($campo['horaInicio']) ?><br>
                     <strong>Duração:</strong> <?= $campo['duracao'] ?> minutos<br>
                     <strong>Local:</strong>  <?= $campo['sala'] ." - ". $campo['sigla'] ?><br>
