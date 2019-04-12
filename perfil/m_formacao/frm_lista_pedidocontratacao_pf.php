@@ -47,46 +47,73 @@
 <section id="list_items">
 	<div class="container">
 		<div class="sub-title"><h6>PEDIDOS ENVIADOS DE CONTRATAÇÃO DE PESSOA FÍSICA</h6></div>
-		<div class="table-responsive list_info">
-			<table class="table table-condensed">
-				<thead>
-					<tr class="list_menu">
-						<td>Código do Pedido</td>
-						<td>Processo</td>
-						<td>Proponente</td>
-						<td>Objeto</td>
-						<td>Local</td>
-						<td>Período</td>
-						<td>Status</td>
+		<div class="row">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Código do Pedido</th>
+						<th>Processo</th>
+						<th>Proponente</th>
+						<th>Objeto</th>
+						<th>Local</th>
+						<th>Período</th>
+						<th>Verba</th>
+						<th>Status</th>
 					</tr>
 				</thead>
-				<tbody>
-					<?php
-			switch($p)
-			{
-				case $ano:
-					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_formacao ON sis_formacao.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano ORDER BY idPedidoContratacao DESC";
-				break;
-				case $ano - 1:
-					$sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano FROM igsis_pedido_contratacao AS ped INNER JOIN sis_formacao ON sis_formacao.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano - 1 ORDER BY idPedidoContratacao DESC";
-				break; 
-			} 	
-			$data=date('Y');
-			$query_enviados = mysqli_query($con,$sql_enviados);
-			while($pedido = mysqli_fetch_array($query_enviados))
-			{
-				$linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-				$ped = siscontrat($pedido['idPedidoContratacao']);
-				echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-				echo '<td class="list_description">'.$ped['NumeroProcesso'].						'</td> ';
-				echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].					'</td> ';
-				echo '<td class="list_description">'.$ped['Objeto'].						'</td> ';
-				echo '<td class="list_description">'.$ped['Local'].				'</td> ';
-				echo '<td class="list_description">'.$ped['Periodo'].						'</td> ';
-				echo '<td class="list_description">'.retornaEstado($ped['Status']).						'</td> </tr>';
-			}
-					?>
-				</tbody>	
+
+                <?php
+                echo "<tbody>";
+                switch($p)
+                {
+                    case $ano:
+                        $sql_enviados = "
+                            SELECT ped.idPedidoContratacao, ped.NumeroProcesso, pf.Nome, idPessoa, Ano, vb.Verba, st.estado, pro.Programa, pro.edital, cg.Cargo, form.IdEquipamento01, form.IdEquipamento02, form.IdEquipamento03
+                            FROM igsis_pedido_contratacao AS ped 
+                                INNER JOIN sis_formacao AS form ON form.idPedidoContratacao = ped.idPedidoContratacao
+                                INNER JOIN sis_formacao_programa AS pro ON pro.Id_Programa = form.IdPrograma
+                                INNER JOIN sis_verba AS vb ON pro.verba = vb.Id_Verba
+                                INNER JOIN sis_estado AS st ON st.idEstado = ped.estado
+                                INNER JOIN sis_formacao_cargo AS cg ON form.IdCargo = cg.Id_Cargo
+                                INNER JOIN sis_pessoa_fisica AS pf ON ped.idPessoa = pf.Id_PessoaFisica
+                            WHERE ped.estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano 
+                            ORDER BY idPedidoContratacao DESC";
+                    break;
+                    case $ano - 1:
+                        $sql_enviados = "SELECT ped.idPedidoContratacao,idPessoa, Ano, IdPrograma FROM igsis_pedido_contratacao AS ped INNER JOIN sis_formacao ON sis_formacao.idPedidoContratacao = ped.idPedidoContratacao WHERE estado IS NOT NULL AND tipoPessoa = '4' AND ped.publicado = '1' AND Ano = $ano - 1 ORDER BY idPedidoContratacao DESC";
+                    break;
+                }
+                $data=date('Y');
+                $query_enviados = mysqli_query($con,$sql_enviados);
+                while($pedido = mysqli_fetch_array($query_enviados))
+                {
+                    $objeto = "CONTRATAÇÃO COMO ".$pedido['Cargo']." DO ".$pedido['Programa']." NOS TERMOS DO EDITAL ".$pedido['edital']." - PROGRAMAS DA DIVISÃO DE FORMAÇÃO.";
+                    $local = retornaLocal($pedido['IdEquipamento01'])."\n".retornaLocal($pedido['IdEquipamento02'])."\n".retornaLocal($pedido['IdEquipamento03']);
+                    $periodo = retornaPeriodoVigencia($pedido['idPedidoContratacao']);
+
+                    echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
+                    echo '<td class="list_description">'.$pedido['NumeroProcesso'].'</td> ';
+                    echo '<td class="list_description">'.$pedido['Nome'].'</td> ';
+                    echo '<td class="list_description">'.$objeto.'</td>';
+                    echo '<td class="list_description">'.$local.'</td> ';
+                    echo '<td class="list_description">'.$periodo.'</td> ';
+                    echo '<td class="list_description">'.$pedido['Verba'].'</td> ';
+                    echo '<td class="list_description">'.$pedido['estado'].'</td> </tr>';
+                }
+                echo "</tbody>";
+                ?>
+                <tfoot>
+                    <tr>
+                        <th>Código do Pedido</th>
+                        <th>Processo</th>
+                        <th>Proponente</th>
+                        <th>Objeto</th>
+                        <th>Local</th>
+                        <th>Período</th>
+                        <th>Verba</th>
+                        <th>Status</th>
+                    </tr>
+                </tfoot>
 			</table>
 		</div>
 	</div>
@@ -100,43 +127,53 @@
 <section id="list_items">
 	<div class="container">
 		<div class="sub-title"><h6>PEDIDOS NÃO ENVIADOS DE CONTRATAÇÃO DE PESSOA FÍSICA</h6></div>
-		<div class="table-responsive list_info">
-			<table class="table table-condensed">
-				<thead>
-					<tr class="list_menu">
-					<td>Código do Pedido</td>
-					<td>Proponente</td>
-					<td>Objeto</td>
-					<td>Local</td>
-					<td>Período</td>
-					<td></td>
-					</tr>
-				</thead>
-				<tbody>
-		<?php
-			$data=date('Y');
-			$sql_n_enviados = "SELECT idPedidoContratacao,idPessoa FROM igsis_pedido_contratacao WHERE estado IS NULL AND tipoPessoa = '4' AND publicado = '1' ORDER BY idPedidoContratacao DESC";
-			$query_n_enviados = mysqli_query($con,$sql_n_enviados);
-			while($pedido = mysqli_fetch_array($query_n_enviados))
-			{
-				$linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-				$ped = siscontrat($pedido['idPedidoContratacao']);	 
-				echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
-				echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].					'</td> ';
-				echo '<td class="list_description">'.$ped['Objeto'].						'</td> ';
-				echo '<td class="list_description">'.$ped['Local'].				'</td> ';
-				echo '<td class="list_description">'.$ped['Periodo'].						'</td> ';
-				echo "
-						<td class='list_description'>
-						<form method='POST' action='?perfil=formacao&p=frm_lista_pedidocontratacao_pf&enviados=0'>
-						<input type='hidden' name=apagarPedido value='1'>
-						<input type='hidden' name='idPedidoContratacao' value='".$pedido['idPedidoContratacao']."'>
-						<input type ='submit' class='btn btn-theme btn-sm btn-block'";
-					echo " value='apagar'></td></form>"	; //botão de apagar
-					echo "</tr>";
-			}
-?>
-				</tbody>
+        <div class="row">
+            <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Código do Pedido</th>
+                    <th>Proponente</th>
+                    <th>Objeto</th>
+                    <th>Local</th>
+                    <th>Período</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <?php
+                echo "<tbody>";
+                $data=date('Y');
+                $sql_n_enviados = "SELECT idPedidoContratacao,idPessoa FROM igsis_pedido_contratacao WHERE estado IS NULL AND tipoPessoa = '4' AND publicado = '1' ORDER BY idPedidoContratacao DESC";
+                $query_n_enviados = mysqli_query($con,$sql_n_enviados);
+                while($pedido = mysqli_fetch_array($query_n_enviados))
+                {
+                    $linha_tabela_pedido_contratacaopf = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+                    $ped = siscontrat($pedido['idPedidoContratacao']);
+                    echo "<tr><td class='lista'> <a href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a></td>";
+                    echo '<td class="list_description">'.$linha_tabela_pedido_contratacaopf['Nome'].					'</td> ';
+                    echo '<td class="list_description">'.$ped['Objeto'].						'</td> ';
+                    echo '<td class="list_description">'.$ped['Local'].				'</td> ';
+                    echo '<td class="list_description">'.$ped['Periodo'].						'</td> ';
+                    echo "
+                            <td class='list_description'>
+                            <form method='POST' action='?perfil=formacao&p=frm_lista_pedidocontratacao_pf&enviados=0'>
+                            <input type='hidden' name=apagarPedido value='1'>
+                            <input type='hidden' name='idPedidoContratacao' value='".$pedido['idPedidoContratacao']."'>
+                            <input type ='submit' class='btn btn-theme btn-sm btn-block'";
+                        echo " value='apagar'></td></form>"	; //botão de apagar
+                        echo "</tr>";
+                }
+                echo "</tbody>";
+                ?>
+                <tfoot>
+                <tr>
+                    <th>Código do Pedido</th>
+                    <th>Proponente</th>
+                    <th>Objeto</th>
+                    <th>Local</th>
+                    <th>Período</th>
+                    <th>Status</th>
+                </tr>
+                </tfoot>
 			</table>
 		</div>
 	</div>
@@ -146,3 +183,33 @@
 	}
 	?>    
 <!--fim_list-->
+<script type="text/javascript" defer src="../visual/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" defer src="../visual/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript" defer>
+    $(function () {
+        $('#example1').DataTable({
+            "language": {
+                "url": 'bower_components/datatables.net/Portuguese-Brasil.json'
+            },
+            "responsive": true,
+            "dom": "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5 text-left'i><'col-sm-7 text-right'p>>",
+        });
+    })
+</script>
+
+<script type="text/javascript" defer>
+    $(function () {
+        $('#example2').DataTable({
+            "language": {
+                "url": 'bower_components/datatables.net/Portuguese-Brasil.json'
+            },
+            "responsive": true,
+            "dom": "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5 text-left'i><'col-sm-7 text-right'p>>",
+        });
+    })
+</script>
