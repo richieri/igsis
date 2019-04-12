@@ -4,8 +4,11 @@ unset($_SESSION['idEvento']);
 unset($_SESSION['cinema']);
 unset($_SESSION['subEvento']);
 
+$idUsuario = $_SESSION['idUsuario'];
+$idInstituicao = $_SESSION['idInstituicao'];
+
 $con = bancoMysqli();
-$idEvento = (isset($_POST['carregar'])) ? $_POST['carregar'] : 0;
+$idEvento = (isset($_POST['carregar'])) ? $_POST['carregar'] : null;
 
 if (isset($_POST['cadastra'])) {
     $nomeEvento = $_POST['nomeEvento'];
@@ -16,8 +19,8 @@ if (isset($_POST['cadastra'])) {
     $sinopse = $_POST['sinopse'];
     $links = $_POST['linksCom'];
 
-    $sqlInsereEvento = "INSERT INTO ig_evento (nomeEvento, projetoEspecial, fichaTecnica, ig_tipo_evento_idTipoEvento, faixaEtaria, sinopse, linksCom)
-                        VALUES ('$nomeEvento', '$idProjetoEspecial', '$artistas', '$idTipoEvento', '$idFaixaEtaria', '$sinopse', '$links')";
+    $sqlInsereEvento = "INSERT INTO ig_evento (nomeEvento, projetoEspecial, fichaTecnica, ig_tipo_evento_idTipoEvento, faixaEtaria, sinopse, linksCom, idUsuario, idInstituicao, statusEvento, ocupacao, publicado)
+                        VALUES ('$nomeEvento', '$idProjetoEspecial', '$artistas', '$idTipoEvento', '$idFaixaEtaria', '$sinopse', '$links', '$idUsuario', '$idInstituicao', 'Em Elaboração', '1', '1')";
     if ($con->query($sqlInsereEvento)) {
         $idEvento = $con->insert_id;
 
@@ -35,6 +38,7 @@ if (isset($_POST['cadastra'])) {
 }
 
 if (isset($_POST['atualiza'])) {
+    $idEvento = $_POST['idEvento'];
     $nomeEvento = $_POST['nomeEvento'];
     $idProjetoEspecial = $_POST['projetoEspecial'];
     $artistas = $_POST['artistas'];
@@ -51,7 +55,7 @@ if (isset($_POST['atualiza'])) {
                         faixaEtaria = '$idFaixaEtaria',
                         sinopse = '$sinopse',
                         linksCom = '$links'
-                        WHERE idEvento = $idEvento";
+                        WHERE idEvento = '$idEvento'";
     if ($con->query($sqlAtualizaEvento)) {
         if (isset($_POST['linguagem'])) {
             atualizaRelacionamentoEvento('igsis_evento_linguagem', $idEvento, $_POST['linguagem']);
@@ -61,12 +65,12 @@ if (isset($_POST['atualiza'])) {
             atualizaRelacionamentoEvento('igsis_evento_representatividade', $idEvento, $_POST['representatividade']);
         }
 
-        $mensagem = "Evento Atualizad com Sucesso!";
-        gravarLog($sqlInsereEvento);
+        $mensagem = "Evento Atualizado com Sucesso!";
+        gravarLog($sqlAtualizaEvento);
     }
 }
 
-$campo = recuperaDados("ig_evento","1234","idEvento");
+$campo = recuperaDados("ig_evento",$idEvento,"idEvento");
 
 include "include/menu.php";
 ?>
@@ -181,7 +185,8 @@ include "include/menu.php";
 
                     <div class="row form-group">
                         <div class="col-md-offset-1 col-md-10">
-                            <input type="submit" class="btn btn-theme btn-lg btn-block" name="<?=($idEvento == 0) ? "cadastra" : "atualiza"?>>" value="Gravar">
+                            <input type="hidden" name="idEvento" value="<?=$idEvento?>">
+                            <input type="submit" class="btn btn-theme btn-lg btn-block" name="<?=($idEvento == null) ? "cadastra" : "atualiza"?>" value="Gravar">
                         </div>
                     </div>
                 </form>
