@@ -156,6 +156,7 @@
 			if(isset($_POST['atualizar']))
 			{	
 				// Atualiza o banco
+                $idEvento = $_SESSION['idEvento'];
 				$sinopse = addslashes($_POST['sinopse']);
 				$releaseCom = addslashes($_POST['releaseCom']); 
 				$linksCom = addslashes($_POST['linksCom']);
@@ -192,17 +193,25 @@
 				`linksCom` = '$linksCom',
 				`publicado` = 1,
 				`statusEvento` = 'Em elaboração'
-				WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
-				$con = bancoMysqli();
-				if(mysqli_query($con,$sql_atualizar))
-				{
-					$mensagem = "Atualizado com sucesso!";
-					gravarLog($sql_atualizar);	
-				}
-				else
-				{
-					$mensagem = "Erro ao atualizar... tente novamente";
-				}	
+                WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
+                $con = bancoMysqli();
+                if(mysqli_query($con,$sql_atualizar))
+                {
+                    if (isset($_POST['linguagem'])) {
+                        atualizaRelacionamentoEvento('igsis_evento_linguagem', $idEvento, $_POST['linguagem']);
+                    }
+
+                    if (isset($_POST['representatividade'])) {
+                        atualizaRelacionamentoEvento('igsis_evento_representatividade', $idEvento, $_POST['representatividade']);
+                    }
+
+                    $mensagem = "Atualizado com sucesso!";
+                    gravarLog($sql_atualizar);
+                }
+                else
+                {
+                    $mensagem = "Erro ao atualizar... tente novamente";
+                }
 			}
 			// Cria um array com dados do evento
 			$campo = recuperaEvento($_SESSION['idEvento']);
@@ -271,6 +280,39 @@
 							</select>					
 						</div>
 					</div>
+
+                    <div class="row">
+                            <div class="col-md-offset-2 col-md-8">
+                                <label>Ações (Expressões Artístico-culturais) * <i>(multipla escolha) </i></label>
+                                <button class='btn btn-default' type='button' data-toggle='modal'
+                                        data-target='#modalAcoes' style="border-radius: 30px;">
+                                    <i class="fa fa-question-circle"></i></button>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <?php
+                                geraCheckboxEvento('igsis_linguagem', 'linguagem', 'igsis_evento_linguagem', $_SESSION['idEvento']);
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Público (Representatividade e Visibilidade Sócio-cultural)* <i>(multipla escolha) </i></label>
+                            <button class='btn btn-default' type='button' data-toggle='modal'
+                                    data-target='#modalPublico' style="border-radius: 30px;">
+                                <i class="fa fa-question-circle"></i></button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <?php
+                                geraCheckboxEvento('igsis_representatividade', 'representatividade', 'igsis_evento_representatividade', $_SESSION['idEvento']);
+                            ?>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<br />
 						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
@@ -354,6 +396,80 @@
 			</div>
 		</div>
 	</div>
+
+    <div class="modal fade" id="modalAcoes" role="dialog" aria-labelledby="lblmodalAcoes" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Ações (Expressões Artístico-culturais)</h4>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Ação</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sqlConsultaLinguagens = "SELECT linguagem, descricao FROM igsis_linguagem WHERE publicado = '1' ORDER BY 1";
+                            foreach ($con->query($sqlConsultaLinguagens)->fetch_all(MYSQLI_ASSOC) as $linguagem) {
+                            ?>
+                                <tr>
+                                    <td><?=$linguagem['linguagem']?></td>
+                                    <td><?=$linguagem['descricao']?></td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-theme" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPublico" role="dialog" aria-labelledby="lblmodalPublico" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Ações (Expressões Artístico-culturais)</h4>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Ação</th>
+                            <th>Descrição</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $sqlConsultaLinguagens = "SELECT representatividade_social, descricao FROM igsis_representatividade WHERE publicado = '1' ORDER BY 1";
+                        foreach ($con->query($sqlConsultaLinguagens)->fetch_all(MYSQLI_ASSOC) as $linguagem) {
+                            ?>
+                            <tr>
+                                <td><?=$linguagem['representatividade_social']?></td>
+                                <td><?=$linguagem['descricao']?></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-theme" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 	<?php
 		break;
