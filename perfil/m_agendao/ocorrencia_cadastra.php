@@ -1,11 +1,13 @@
 <?php
+
+$id_evento = $_POST['idEvento'] ?? null;
+$idOcorrencia = $_POST['idOcorrencia'] ?? null;
+
 if (isset($_POST['cadastra'])) {
 
 
     $ig_comunicao_idCom = 0;
-    $local_id = $_POST['instituicao'] ;
-
-    $id_evento = 0;
+    $local_id = $_POST['local'] ;
 
     $segunda    = $_POST['segunda'] ?? 0;
     $terca      = $_POST['terca']   ?? 0;
@@ -15,11 +17,8 @@ if (isset($_POST['cadastra'])) {
     $sabado     = $_POST['sabado']  ?? 0;
     $domingo    = $_POST['domingo'] ?? 0;
 
-    $data_inicio = $_POST['dataInicio'];
-    $data_fim   = $_POST['dataFinal'] ?? NULL;
-
-    $espaco_id = $_POST['local'];
-
+    $data_inicio = exibirDataMysql($_POST['dataInicio']);
+    $data_fim   = isset($_POST['dataFinal']) ? exibirDataMysql($_POST['dataFinal']) : NULL;
 
     $horario_inicio = $_POST['hora'];
     $retirada_ingresso_id = $_POST['retiradaIngresso'];
@@ -53,14 +52,8 @@ if (isset($_POST['cadastra'])) {
         gravarLog($sql);
     }
 
-    $ocorrencia = recuperaDados("ig_ocorrencia","$idOcorrencia","idOcorrencia");
-
-   // var_dump($ocorrencia);
-
-  
 }
-
-
+$ocorrencia = recuperaDados("ig_ocorrencia","$idOcorrencia","idOcorrencia");
 
 include "include/menu.php";
 ?>
@@ -69,7 +62,7 @@ include "include/menu.php";
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="text-hide">
-                    <h3>Evento - Inserir ocorrências</h3>
+                    <h3>Evento - <?=($idOcorrencia == null) ? "Inserir" : "Atualizar"?> ocorrência</h3>
                     <h4><?php if(isset($mensagem)){echo $mensagem;} ?></h4>
                 </div>
             </div>
@@ -82,11 +75,11 @@ include "include/menu.php";
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-6">
                             <label>Data início *</label>
-                            <input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="" value="<?php echo isset($ocorrencia['dataInicio']) ? $ocorrencia['dataInicio'] : '' ?>">
+                            <input type="text" name="dataInicio" class="form-control" id="datepicker01" placeholder="" value="<?php echo isset($ocorrencia['dataInicio']) ? exibirDataBr($ocorrencia['dataInicio']) : '' ?>">
                         </div>
                         <div class=" col-md-6">
                             <label>Data encerramento</label>
-                            <input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" placeholder="só preencha em caso de temporada" value="<?php echo isset($ocorrencia['dataFinal']) ? $ocorrencia['dataFinal'] : '' ?>">
+                            <input type="text" name="dataFinal" class="form-control" id="datepicker02" onblur="validate()" placeholder="só preencha em caso de temporada" value="<?php echo (isset($ocorrencia['dataFinal']) && $ocorrencia['dataFinal'] != '0000-00-00') ? exibirDataBr($ocorrencia['dataFinal']) : '' ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -107,7 +100,7 @@ include "include/menu.php";
                         </div>
                         <div class="col-md-3">
                             <label>Valor ingresso *</label>
-                            <input type="text" name="valorIngresso" class="form-control" id="valor" placeholder="em reais" value="<?php echo isset($ocorrencia['valorIngresso']) ? $ocorrencia['valorIngresso'] : '' ?>">
+                            <input type="text" name="valorIngresso" class="form-control" id="valor" placeholder="em reais" value="<?php echo isset($ocorrencia['valorIngresso']) ? dinheiroParaBr($ocorrencia['valorIngresso']) : '' ?>">
                         </div>
                         <div class=" col-md-3">
                             <label>Duração *</label>
@@ -120,8 +113,7 @@ include "include/menu.php";
                             <select class="form-control" name="retiradaIngresso" id="inputSubject" >
                                 <option>Selecione</option>
                                 <?php
-                                $retIng = $ocorrencia['retiradaIngresso'];
-                                geraOpcao("ig_retirada","$retIng","") ?>
+                                geraOpcao("ig_retirada",$ocorrencia['retiradaIngresso'],"") ?>
                             </select>
                         </div>
                     </div>
@@ -131,7 +123,6 @@ include "include/menu.php";
                             <select class="form-control" name="instituicao" id="instituicao" >
                                 <option>Selecione</option>
                                 <?php
-                                $inst = isset($_POST['instituicao']) ? $_POST['instituicao'] : "";
                                 geraOpcao("ig_instituicao","$inst","") ?>
                             </select>
                         </div>
@@ -144,13 +135,23 @@ include "include/menu.php";
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <input type="submit" class="btn btn-theme btn-lg btn-block"  name="cadastra" value="Inserir"  />
+                            <input type="hidden" name="idOcorrencia" value="<?=$idOcorrencia?>">
+                            <input type="hidden" name="idEvento" value="<?=$id_evento?>">
+                            <input type="submit" class="btn btn-theme btn-lg btn-block"  name="<?=($idOcorrencia == null) ? "cadastra" : "atualiza"?>" value="Inserir"  />
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <!-- TODO: Incluir um botão de avançar após o usuário gravar -->
+        <hr>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <form method="POST" action="?perfil=agendao&p=lista_ocorrencias" class="form-horizontal" role="form">
+                    <input type="hidden" name="idEvento" value="<?=$id_evento?>">
+                    <input type="submit" class="btn btn-theme btn-sm" value="Voltar a lista de Ocorrências">
+                </form>
+            </div>
+        </div>
     </div>
 </section>
 
