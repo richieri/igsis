@@ -37,19 +37,22 @@ function resumoDadosFormacao($formacao) {
     echo "<div class=\"tab-content\">";
     $i = 0;
     foreach ($linhaFormacao as $linha) {
+        $pedido = recuperaDados('igsis_pedido_contratacao', $linha['idPedidoContratacao'], 'idPedidoContratacao');
         $equipamento1 = recuperaDados('ig_local', $linha['IdEquipamento01'], 'idLocal')['sala'];
         $equipamento2 = recuperaDados('ig_local', $linha['IdEquipamento02'], 'idLocal')['sala'];
         $cargo = recuperaDados('sis_formacao_cargo', $linha['IdCargo'], 'Id_Cargo')['Cargo'];
-        $vigencia = recuperaDados('sis_formacao_vigencia', $linha['IdVigencia'], 'Id_Vigencia')['descricao'];
+        $vigencia = retornaPeriodoVigencia($linha['idPedidoContratacao']);
         $valor = recuperaDados('igsis_pedido_contratacao', $linha['idPedidoContratacao'], 'idPedidoContratacao')['valor'];
         $miniCurriculo = recuperaDados('sis_pessoa_fisica_formacao', $linha['IdPessoaFisica'], 'IdPessoaFisica')['Curriculo'];
         $numProcesso = recuperaDados('igsis_pedido_contratacao', $linha['idPedidoContratacao'], 'idPedidoContratacao')['NumeroProcesso'];
+        $cargaHoraria = retornaCargaHoraria($linha['idPedidoContratacao'], $pedido['parcelas']);
         ?>
         <div class="tab-pane fade in <?=$i == 0 ? "active" : ""?>" id="<?=$linha['Ano']?>">
             <p class='text-justify'><b>Equipamento:</b> <?=$equipamento1?> </p>
             <p class='text-justify'><b>Equipamento 2:</b> <?=$equipamento2?> </p>
             <p class='text-justify'><b>Cargo:</b> <?=$cargo?> </p>
             <p class='text-justify'><b>Vigência:</b> <?=$vigencia?> </p>
+            <p class='text-justify'><b>Carga Horária Total:</b> <?=$cargaHoraria?> </p>
             <p class='text-justify'><b>Valor:</b> R$ <?=dinheiroParaBr($valor)?> </p>
             <p class='text-justify'><b>Mini curriculo:</b> <?=$miniCurriculo?> </p>
             <p class='text-justify'><b>Chamados:</b> <?=$linha['Chamados']?> </p>
