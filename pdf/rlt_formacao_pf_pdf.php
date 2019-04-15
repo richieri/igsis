@@ -99,7 +99,8 @@ $pdf->Cell(180,15,utf8_decode("REGISTRO DE PESSOA FÍSICA"),0,1,'C');
 $pdf->Ln(5);
 
 //$pdf->Image($fotoImg,160,56, );
-$pdf->Cell( 40, 40, $pdf->Image($fotoImg, 160, $pdf->GetY(), 33.78), 0, 0, 'L', false );
+$pdf->SetX(160);
+$pdf->Cell( 40, 40, $pdf->Image($fotoImg, 160, $pdf->GetY(), 33.78), 0, 0, 'R', false );
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
@@ -135,7 +136,7 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->MultiCell(160,$l,utf8_decode($Endereco));
+$pdf->MultiCell(70,$l,utf8_decode($Endereco));
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
