@@ -70,7 +70,7 @@ include "include/menu.php";
                                     <td class="list-description"><?=$evento['statusEvento']?></td>
                                     <td class='list_description'>
                                         <form method='POST' action='?perfil=agendao&p=evento_cadastra'>
-                                            <input type='hidden' name='carregar' value='<?=$evento['idEvento']?>'>
+                                            <input type='hidden' name='idEvento' value='<?=$evento['idEvento']?>'>
                                             <input type ='submit' class='btn btn-theme btn-block' value='carregar'>
                                         </form>
                                     </td>

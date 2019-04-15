@@ -8,7 +8,7 @@ $idUsuario = $_SESSION['idUsuario'];
 $idInstituicao = $_SESSION['idInstituicao'];
 
 $con = bancoMysqli();
-$idEvento = (isset($_POST['carregar'])) ? $_POST['carregar'] : null;
+$idEvento = (isset($_POST['idEvento'])) ? $_POST['idEvento'] : null;
 
 if (isset($_POST['cadastra'])) {
     $nomeEvento = $_POST['nomeEvento'];
@@ -112,7 +112,7 @@ include "include/menu.php";
                     </div>
 
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8">
+                        <div class="col-md-offset-1 col-md-10">
                             <label>Tipo de Evento *</label>
                             <select class="form-control" name="tipoEvento" id="inputSubject" required>
                                 <option value=""></option>
@@ -122,7 +122,7 @@ include "include/menu.php";
                     </div>
 
                     <div class="row">
-                        <div class="col-md-offset-2 col-md-8">
+                        <div class="col-md-offset-1 col-md-10">
                             <label>Ações (Expressões Artístico-culturais) * <i>(multipla escolha) </i></label>
                             <button class='btn btn-default' type='button' data-toggle='modal'
                                     data-target='#modalAcoes' style="border-radius: 30px;">
@@ -130,7 +130,7 @@ include "include/menu.php";
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8">
+                        <div class="col-md-offset-1 col-md-10">
                             <?php
                             geraCheckboxEvento('igsis_linguagem', 'linguagem', 'igsis_evento_linguagem', $idEvento);
                             ?>
@@ -138,7 +138,7 @@ include "include/menu.php";
                     </div>
 
                     <div class="row">
-                        <div class="col-md-offset-2 col-md-8">
+                        <div class="col-md-offset-1 col-md-10">
                             <label>Público (Representatividade e Visibilidade Sócio-cultural)* <i>(multipla escolha) </i></label>
                             <button class='btn btn-default' type='button' data-toggle='modal'
                                     data-target='#modalPublico' style="border-radius: 30px;">
@@ -146,7 +146,7 @@ include "include/menu.php";
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8">
+                        <div class="col-md-offset-1 col-md-10">
                             <?php
                             geraCheckboxEvento('igsis_representatividade', 'representatividade', 'igsis_evento_representatividade', $idEvento);
                             ?>
@@ -192,7 +192,20 @@ include "include/menu.php";
                 </form>
             </div>
         </div>
-        <!-- TODO: Incluir um botão de avançar após o usuário gravar -->
+        <hr>
+        <div class="row col-md-offset-1 col-md-10">
+            <div class="col-md-2 pull-left">
+                <form method="POST" action="?perfil=agendao&p=lista_eventos" class="form-horizontal" role="form">
+                    <input type="submit" class="btn btn-theme btn-lg btn-block" value="Voltar">
+                </form>
+            </div>
+            <div class="col-md-2 pull-right">
+                <form method="POST" action="?perfil=agendao&p=produtor_cadastra" class="form-horizontal" role="form">
+                    <input type="hidden" name="idEvento" value="<?=$idEvento?>">
+                    <input type="submit" class="btn btn-theme btn-lg btn-block" value="Avançar">
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade" id="modalAcoes" role="dialog" aria-labelledby="lblmodalAcoes" aria-hidden="true">
