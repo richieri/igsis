@@ -10,7 +10,7 @@ $ocorrencias = $con->query($sqlConsultaOcorrencias)->fetch_all(MYSQLI_ASSOC);
 if(isset($_POST['apagar']))
 {
     $idApagar = $_POST['apagar'];
-    $sqlApagarOcorrencia = "UPDATE ig_ocorrencia SET publicado = 0 WHERE idEvento = $idApagar";
+    $sqlApagarOcorrencia = "UPDATE ig_ocorrencia SET publicado = 0 WHERE idOcorrencia = $idApagar";
 
     if($con->query($sqlApagarOcorrencia)) {
         $mensagem = "Ocorrência apagada com sucesso!";
@@ -41,47 +41,7 @@ include "include/menu.php";
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <div class="table-responsive list_info">
-                    <table class='table table-condensed'>
-                        <thead>
-                            <tr class='list_menu'>
-                                <td>Ocorrência</td>
-                                <td width='10%'></td>
-                                <td width='10%'></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        if ($numOcorrencias) {
-                            foreach ($ocorrencias as $ocorrencia) { ?>
-                                <tr>
-                                    <td>Aeoo</td>
-                                    <td class='list_description'>
-                                        <form action="?perfil=agendao&p=ocorrencia_cadastra" method="post">
-                                            <input type="hidden" name="idOcorrencia" value="<?=$ocorrencia['idOcorrencia']?>">
-                                            <input type="hidden" name="idEvento" value="<?=$idEvento?>">
-                                            <input class='btn btn-theme' type="submit" value="Editar">
-                                        </form>
-                                    </td><td class='list_description'>
-                                        <button id="btnApagar" class='btn btn-theme' type='button' data-toggle='modal'
-                                                data-target='#confirmApagar'
-                                        <!--onclick="confirmApagar('<? /*=$evento['idEvento']*/ ?>', '<? /*=$evento['nomeEvento']*/ ?>')-->
-                                        ;">
-                                        Apagar
-                                        </button>
-                                    </td>
-                                </tr>
-                        <?php
-                            }
-                        } else {
-                        ?>
-                            <tr>
-                                <th colspan="2" class="text-center">Não existe ocorrências cadastradas</th>
-                            </tr>
-                        <?php
-                        }
-                        ?>
-                        </tbody>
-                    </table>
+                    <?php listaOcorrencias($idEvento, "?perfil=agendao&p=ocorrencia_cadastra", "?perfil=agendao&p=lista_ocorrencias"); ?>
                 </div>
             </div>
         </div>
@@ -89,7 +49,7 @@ include "include/menu.php";
             <div class="col-md-offset-4 col-md-10">
                 <div class="col-md-5 text-center">
                     <form method="POST" action="?perfil=agendao&p=ocorrencia_cadastra" class="form-horizontal" role="form">
-                        <input type="hidden" name="idEvento" value="<?=$idEvento?>">
+                        <input type="hidden" name="idEvento" value="<?= $idEvento ?>">
                         <input type="submit" class="btn btn-theme btn-lg btn-block" value="Cadastrar Nova Ocorrência">
                     </form>
                 </div>
@@ -100,7 +60,7 @@ include "include/menu.php";
             <div class="col-md-offset-1 col-md-10">
                 <div class="col-md-2 pull-left">
                     <form method="POST" action="?perfil=agendao&p=produtor_cadastra" class="form-horizontal" role="form">
-                        <input type="hidden" name="idEvento" value="<?=$idEvento?>">
+                        <input type="hidden" name="idEvento" value="<?= $idEvento ?>">
                         <input type="submit" class="btn btn-theme btn-lg btn-block" value="Voltar">
                     </form>
                 </div>
@@ -121,15 +81,16 @@ include "include/menu.php";
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Aeoo?</h4>
+                    <h4 class="modal-title">Remover?</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Confirma?</p>
+                    <p>Deseja Realmente remover esta ocorrência?</p>
                 </div>
                 <div class="modal-footer">
-                    <form action="?perfil=agendao&p=lista_eventos" method="post">
+                    <form action="?perfil=agendao&p=lista_ocorrencias" method="post">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <input type="hidden" name="apagar" id="idEvento">
+                        <input type="hidden" name="apagar" id="idOcorrencia">
+                        <input type="hidden" name="idEvento" id="idEvento">
                         <button type="submit" class="btn btn-danger" id="confirm">Remover</button>
                     </form>
                 </div>
@@ -139,14 +100,23 @@ include "include/menu.php";
     <!-- Fim Confirmação de Exclusão -->
 </section>
 
-<!--<script>
-    function confirmApagar(id, nomeEvento) {
-        document.querySelector('#idEvento').value = id;
+<script>
+    var btnsApagar = document.querySelectorAll('#btnApagar');
+    btnsApagar.forEach(function (btnApagar) {
+        btnApagar.addEventListener('click', function (event) {
+            event.preventDefault();
+            var idOcorrencia = btnApagar.getAttribute("data-idOcorrencia");
+            var idEvento = btnApagar.getAttribute("data-idEvento");
+            confirmApagar(idOcorrencia, idEvento);
+            $("#confirmApagar").modal();
+        });
+    });
+
+    function confirmApagar(idOcorrencia, idEvento) {
+        document.querySelector('#idOcorrencia').value = idOcorrencia;
+        document.querySelector('#idEvento').value = idEvento;
 
         var titulo = document.querySelector('.modal-title');
-        titulo.innerHTML = "Remover o Evento";
-
-        var mensagem = document.querySelector('.modal-body p');
-        mensagem.innerHTML = "Deseja realmente remover o evento " + nomeEvento + "?";
+        titulo.innerHTML = "Remover Ocorrência";
     }
-</script>-->
+</script>

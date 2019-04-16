@@ -3,6 +3,12 @@
 $id_evento = $_POST['idEvento'] ?? null;
 $idOcorrencia = $_POST['idOcorrencia'] ?? null;
 
+if (isset($_POST['id'])) {
+    $idOcorrencia = $_POST['id'];
+    $ocorrencia = recuperaDados("ig_ocorrencia","$idOcorrencia","idOcorrencia");
+    $id_evento = $ocorrencia['idEvento'];
+}
+
 if (isset($_POST['cadastra'])) {
 
 
@@ -18,7 +24,7 @@ if (isset($_POST['cadastra'])) {
     $domingo    = $_POST['domingo'] ?? 0;
 
     $data_inicio = exibirDataMysql($_POST['dataInicio']);
-    $data_fim   = isset($_POST['dataFinal']) ? exibirDataMysql($_POST['dataFinal']) : NULL;
+    $data_fim   = (isset($_POST['dataFinal']) && $_POST['dataFinal'] != '') ? exibirDataMysql($_POST['dataFinal']) : NULL;
 
     $horario_inicio = $_POST['hora'];
     $retirada_ingresso_id = $_POST['retiradaIngresso'];
@@ -57,6 +63,37 @@ $ocorrencia = recuperaDados("ig_ocorrencia","$idOcorrencia","idOcorrencia");
 
 include "include/menu.php";
 ?>
+<script type="application/javascript">
+    $(function()
+    {
+        $('#instituicao').change(function()
+        {
+            if( $(this).val() )
+            {
+                $('#local').hide();
+                $('.carregando').show();
+                $.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
+                {
+                    var options = '<option value=""></option>';
+
+
+                    for (var i = 0; i < j.length; i++)                    {
+
+                        options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+
+                    }
+                    $('#local').html(options).show();
+                    $('.carregando').hide();
+                });
+            }
+            else
+            {
+                $('#local').html('<option value="">-- Escolha uma instituição --</option>');
+            }
+        });
+    });
+</script>
+
 <section id="inserir" class="home-section bg-white">
     <div class="container">
         <div class="row">
@@ -120,17 +157,22 @@ include "include/menu.php";
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
                             <label>Local / instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
-                            <select class="form-control" name="instituicao" id="instituicao" >
-                                <option>Selecione</option>
+                            <select class="form-control" name="instituicao" id="instituicao" required>
+                                <option value="">Selecione...</option>
                                 <?php
-                                geraOpcao("ig_instituicao","$inst","") ?>
+                                $inst = retornaInstituicao($ocorrencia['local']);
+                                geraOpcao("ig_instituicao",$inst,"")
+                                ?>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
                             <label>Sala / espaço (antes selecione a instituição)</label>
-                            <select class="form-control" name="local" id="local" ></select>
+                            <select class="form-control" name="local" id="local" required>
+                                <option value="">Selecione...</option>
+                                <?php geraOpcao("ig_local",$ocorrencia['local'],$inst); ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -171,7 +213,7 @@ include "include/menu.php";
 
                     for (var i = 0; i < j.length; i++)                    {
 
-                            options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+                        options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
 
                     }
                     $('#local').html(options).show();

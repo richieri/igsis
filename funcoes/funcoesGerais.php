@@ -786,7 +786,14 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 		$campo = mysqli_fetch_array($query);
 		return $campo['idInstituicao'];
 	}
-	function listaOcorrencias($idEvento)
+
+/**
+ * @param int $idEvento
+ * <p>ID do Evento que será consultado para gerar a lista de ocorrências</p>
+ * @param string $actionEdita (opcional)
+ * @param string $actionDuplicaApaga (opcional)
+ */
+function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencias&action=editar", $actionDuplicaApaga = "?perfil=evento&p=ocorrencias&action=listar")
 	{
 		//lista ocorrencias de determinado evento
 		$sql = "SELECT * FROM ig_ocorrencia 
@@ -885,19 +892,19 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 			echo "<td class='list_description'>".$ocorrencia."</td>";
 			echo "
 				<td class='list_description'>
-					<form method='POST' action='?perfil=evento&p=ocorrencias&action=editar'>
+					<form method='POST' action='$actionEdita'>
 						<input type='hidden' name='id' value='$id' />
 						<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td></form>";
 			echo "
 				<td class='list_description'>
-					<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
+					<form method='POST' action='$actionDuplicaApaga'>
 						<input type='hidden' name='duplicar' value='".$campo['idOcorrencia']."' />
 						<input type ='submit' class='btn btn-theme btn-block' value='Duplicar'></td></form>";
 			echo "
 				<td class='list_description'>
-					<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
+					<form method='POST' action='$actionDuplicaApaga'>
 						<input type='hidden' name='apagar' value='".$campo['idOcorrencia']."' />
-						<input type ='submit' class='btn btn-theme  btn-block' value='Apagar'></td></form>";
+						<input id='btnApagar' type ='submit' class='btn btn-theme  btn-block' value='Apagar' data-idOcorrencia='".$campo['idOcorrencia']."' data-idEvento='$idEvento'></td></form>";
 			echo "</tr>";	
 		}
 		echo "
