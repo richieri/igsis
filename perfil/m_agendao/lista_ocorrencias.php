@@ -75,7 +75,7 @@ include "include/menu.php";
                     </form>
                 </div>
                 <div class="col-md-2 pull-right">
-                    <form method="POST" action="#" class="form-horizontal" role="form">
+                    <form method="POST" action="?perfil=agendao&p=finalizar" class="form-horizontal" role="form">
                         <input type="hidden" name="idEvento" value="<?=$idEvento?>">
                         <input type="submit" class="btn btn-theme btn-lg btn-block" value="Avançar">
                     </form>

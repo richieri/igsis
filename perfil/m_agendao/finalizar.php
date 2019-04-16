@@ -112,7 +112,7 @@ else{
 
         <div class="row col-md-offset-1 col-md-10">
             <div class="col-md-2 pull-left">
-                <form method="POST" action="?perfil=agendao&p=ocorrencia_lista" class="form-horizontal" role="form">
+                <form method="POST" action="?perfil=agendao&p=lista_ocorrencias" class="form-horizontal" role="form">
                     <input type="hidden" name="idEvento" value="<?=$idEvento?>">
                     <input type="submit" class="btn btn-theme btn-lg btn-block" value="Voltar">
                 </form>
