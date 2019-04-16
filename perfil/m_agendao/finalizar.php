@@ -3,7 +3,7 @@ include "include/menu.php";
 $con = bancoMysqli();
 
 //$idEvento = "20968";
-$idEvento = "20968";
+$idEvento = $_POST['idEvento'] ?? null;
 
 $evento = $con->query("
     SELECT eve.nomeEvento, prj.projetoEspecial,eve.fichaTecnica, fx.faixa, eve.sinopse, eve.linksCom, eve.ig_produtor_idProdutor
