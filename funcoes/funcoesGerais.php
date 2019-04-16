@@ -899,7 +899,7 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 				<td class='list_description'>
 					<form method='POST' action='$actionDuplicaApaga'>
 						<input type='hidden' name='duplicar' value='".$campo['idOcorrencia']."' />
-						<input type ='submit' class='btn btn-theme btn-block' value='Duplicar'></td></form>";
+						<input id='btnDuplicar' type='submit' class='btn btn-theme btn-block' value='Duplicar' data-idOcorrencia='".$campo['idOcorrencia']."' data-idEvento='$idEvento'></td></form>";
 			echo "
 				<td class='list_description'>
 					<form method='POST' action='$actionDuplicaApaga'>

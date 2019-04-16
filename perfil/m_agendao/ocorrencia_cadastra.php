@@ -1,4 +1,5 @@
 <?php
+$con = bancoMysqli();
 
 $id_evento = $_POST['idEvento'] ?? null;
 $idOcorrencia = $_POST['idOcorrencia'] ?? null;
@@ -10,7 +11,6 @@ if (isset($_POST['id'])) {
 }
 
 if (isset($_POST['cadastra'])) {
-
 
     $ig_comunicao_idCom = 0;
     $local_id = $_POST['local'] ;
@@ -32,8 +32,6 @@ if (isset($_POST['cadastra'])) {
     $duracao = $_POST['duracao'];
     $valor_ingresso = dinheiroDeBr($_POST['valorIngresso']);
 
-
-
     if(($data_fim == NULL))
     {
         $tipoOcorrencia = 3; // Tipo de Ocorrência data única
@@ -42,7 +40,7 @@ if (isset($_POST['cadastra'])) {
     {
         $tipoOcorrencia = 4; // Tipo de Ocorrência por temporada
     }
-    $con = bancoMysqli();
+
     $sql = "INSERT INTO ig_ocorrencia 
 (idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, publicado )  
             VALUES 
@@ -59,6 +57,67 @@ if (isset($_POST['cadastra'])) {
     }
 
 }
+
+if (isset($_POST['atualiza'])) {
+    $ig_comunicao_idCom = 0;
+    $local_id = $_POST['local'] ;
+
+    $segunda    = $_POST['segunda'] ?? 0;
+    $terca      = $_POST['terca']   ?? 0;
+    $quarta     = $_POST['quarta']  ?? 0;
+    $quinta     = $_POST['quinta']  ?? 0;
+    $sexta      = $_POST['sexta']   ?? 0;
+    $sabado     = $_POST['sabado']  ?? 0;
+    $domingo    = $_POST['domingo'] ?? 0;
+
+    $data_inicio = exibirDataMysql($_POST['dataInicio']);
+    $data_fim   = (isset($_POST['dataFinal']) && $_POST['dataFinal'] != '') ? exibirDataMysql($_POST['dataFinal']) : NULL;
+
+    $horario_inicio = $_POST['hora'];
+    $retirada_ingresso_id = $_POST['retiradaIngresso'];
+
+    $duracao = $_POST['duracao'];
+    $valor_ingresso = dinheiroDeBr($_POST['valorIngresso']);
+
+    if(($data_fim == NULL))
+    {
+        $tipoOcorrencia = 3; // Tipo de Ocorrência data única
+    }
+    else
+    {
+        $tipoOcorrencia = 4; // Tipo de Ocorrência por temporada
+    }
+
+    $sql = "UPDATE ig_ocorrencia SET 
+                idTipoOcorrencia = '$tipoOcorrencia',
+                ig_comunicao_idCom = '$ig_comunicao_idCom',
+                local = '$local_id',
+                idEvento = '$id_evento',
+                segunda = $segunda,
+                terca = $terca,
+                quarta = $quarta,
+                quinta = $quinta,
+                sexta = $sexta,
+                sabado = $sabado,
+                domingo = $domingo,
+                dataInicio = '$data_inicio',
+                dataFinal = '$data_fim',
+                horaInicio = '$horario_inicio',
+                valorIngresso = $valor_ingresso,
+                retiradaIngresso = $retirada_ingresso_id,
+                duracao = $duracao  
+             WHERE idOcorrencia = '$idOcorrencia'";
+
+    if (mysqli_query($con, $sql))
+    {
+        $mensagem =  "Atualizado com sucesso!";
+        gravarLog($sql);
+    } else {
+        $mensagem = "Erro ao atualizar! Tente novamente.";
+        gravarLog($sql);
+    }
+}
+
 $ocorrencia = recuperaDados("ig_ocorrencia","$idOcorrencia","idOcorrencia");
 
 include "include/menu.php";
@@ -179,7 +238,7 @@ include "include/menu.php";
                         <div class="col-md-offset-2 col-md-8">
                             <input type="hidden" name="idOcorrencia" value="<?=$idOcorrencia?>">
                             <input type="hidden" name="idEvento" value="<?=$id_evento?>">
-                            <input type="submit" class="btn btn-theme btn-lg btn-block"  name="<?=($idOcorrencia == null) ? "cadastra" : "atualiza"?>" value="Inserir"  />
+                            <input type="submit" class="btn btn-theme btn-lg btn-block"  name="<?=($idOcorrencia == null) ? "cadastra" : "atualiza"?>" value="<?=($idOcorrencia == null) ? "Inserir" : "Atualizar"?>"  />
                         </div>
                     </div>
                 </form>

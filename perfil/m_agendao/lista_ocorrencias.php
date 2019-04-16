@@ -20,6 +20,16 @@ if(isset($_POST['apagar']))
     }
 }
 
+if (isset($_POST['duplicar'])) {
+    $idOcorrencia = $_POST['duplicar'];
+    $sqlDuplicarOcorrencia = "INSERT INTO ig_ocorrencia (`idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada`, `observacao` ) SELECT `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada`, `observacao` FROM ig_ocorrencia WHERE `idOcorrencia` = '$idOcorrencia'";
+    if ($con->query($sqlDuplicarOcorrencia)) {
+        $mensagem = "Ocorrência duplicada com sucesso!";
+    } else {
+        $mensagem = "Erro ao duplicar a ocorrência...";
+    }
+}
+
 $queryOcorrencias = $con->query($sqlConsultaOcorrencias);
 $numOcorrencias = $queryOcorrencias->num_rows;
 $ocorrencia = $queryOcorrencias->fetch_all(MYSQLI_ASSOC);
@@ -37,14 +47,6 @@ include "include/menu.php";
                 </div>
             </div>
         </div>
-        <div class="col-md-offset-1 col-md-10"><hr/></div>
-        <div class="row">
-            <div class="col-md-offset-1 col-md-10">
-                <div class="table-responsive list_info">
-                    <?php listaOcorrencias($idEvento, "?perfil=agendao&p=ocorrencia_cadastra", "?perfil=agendao&p=lista_ocorrencias"); ?>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-offset-4 col-md-10">
                 <div class="col-md-5 text-center">
@@ -52,6 +54,14 @@ include "include/menu.php";
                         <input type="hidden" name="idEvento" value="<?= $idEvento ?>">
                         <input type="submit" class="btn btn-theme btn-lg btn-block" value="Cadastrar Nova Ocorrência">
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-10"><hr/></div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="table-responsive list_info">
+                    <?php listaOcorrencias($idEvento, "?perfil=agendao&p=ocorrencia_cadastra", "?perfil=agendao&p=lista_ocorrencias"); ?>
                 </div>
             </div>
         </div>
@@ -107,16 +117,44 @@ include "include/menu.php";
             event.preventDefault();
             var idOcorrencia = btnApagar.getAttribute("data-idOcorrencia");
             var idEvento = btnApagar.getAttribute("data-idEvento");
-            confirmApagar(idOcorrencia, idEvento);
+            confirmApagar(idOcorrencia, idEvento, "apagar");
             $("#confirmApagar").modal();
         });
     });
 
-    function confirmApagar(idOcorrencia, idEvento) {
+    var btnsDuplicar = document.querySelectorAll('#btnDuplicar');
+    btnsDuplicar.forEach(function (btnDuplicar) {
+        btnDuplicar.addEventListener('click', function (event) {
+            event.preventDefault();
+            var idOcorrencia = btnDuplicar.getAttribute("data-idOcorrencia");
+            var idEvento = btnDuplicar.getAttribute("data-idEvento");
+            confirmApagar(idOcorrencia, idEvento, "duplicar");
+            $("#confirmApagar").modal();
+        });
+    });
+
+    function confirmApagar(idOcorrencia, idEvento, acao) {
+        document.querySelector('#idOcorrencia').setAttribute('name', acao);
         document.querySelector('#idOcorrencia').value = idOcorrencia;
         document.querySelector('#idEvento').value = idEvento;
 
         var titulo = document.querySelector('.modal-title');
-        titulo.innerHTML = "Remover Ocorrência";
+        var mensagem = document.querySelector('.modal-body p');
+        var btnConfirm = document.querySelector('#confirm');
+
+        if (acao == "apagar") {
+            titulo.innerHTML = "Remover Ocorrência?";
+            mensagem.innerHTML = "Deseja realmente apagar esta ocorrência?"
+            btnConfirm.classList.remove('btn-theme');
+            btnConfirm.classList.add('btn-danger');
+            btnConfirm.innerHTML = "Remover";
+
+        } else {
+            titulo.innerHTML = "Duplicar Ocorrência?";
+            mensagem.innerHTML = "Deseja realmente duplicar esta ocorrência?"
+            btnConfirm.classList.remove('btn-danger');
+            btnConfirm.classList.add('btn-theme');
+            btnConfirm.innerHTML = "Duplicar";
+        }
     }
 </script>
