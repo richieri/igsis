@@ -66,5 +66,3 @@ INSERT INTO `ig_modulo` (`idModulo`, `nome`, `pag`, `descricao`) VALUES ('30', '
 ALTER TABLE `ig_papelusuario` ADD `agendao` TINYINT(1) NULL DEFAULT NULL AFTER `emia`;
 
 UPDATE `ig_papelusuario` SET `agendao` = '1' WHERE `ig_papelusuario`.`idPapelUsuario` = 1;
-
-ALTER TABLE `ig_evento` ADD `numero_apresentacao` INT NOT NULL DEFAULT '0' AFTER `statusEvento`, ADD `espaco_publico` TINYINT(1) NOT NULL DEFAULT '0' AFTER `numero_apresentacao`;
