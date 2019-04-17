@@ -380,6 +380,7 @@
 			return "Erro";
 		}
 	}
+
 	function siscontratDocs($idPessoa,$tipo)
 	{
 		if($idPessoa == NULL)

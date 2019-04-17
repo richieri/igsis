@@ -13,7 +13,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 header('Content-Type: application/json');
 
-$sql = "SELECT 
+$sql = "SELECT
           idLocal AS `igsis_id`,
           sala AS `nome`
           FROM ig_local WHERE idInstituicao = 14
