@@ -25,6 +25,7 @@ $pasta = "?perfil=formacao&p=";
 				<ul class="dl-submenu">
 					<li><a href="<?php echo $pasta ?>frm_lista_pedidocontratacao_pf&enviados=0">Não enviados</a></li>
 					<li><a href="<?php echo $pasta ?>frm_lista_pedidocontratacao_pf&enviados=1">Enviados</a></li>
+					<li><a href="<?php echo $pasta ?>frm_pedidocontratacao_excel">Exportar Pedidos para Excel</a></li>
 				</ul>
 			</li>							
 			<li><a href="<?php echo $pasta ?>frm_busca_pagamento">Pagamento</a></li>				
