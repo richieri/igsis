@@ -37,6 +37,7 @@ $ano=date('Y');
 
 $pedido = siscontrat($id_ped);
 $pj = siscontratDocs($pedido['IdProponente'],2);
+$ex = siscontratDocs($pedido['IdExecutante'],1);
 $rep01 = siscontratDocs($pj['Representante01'],3);
 $rep02 = siscontratDocs($pj['Representante02'],3);
 $enderecoCEP = enderecoCEP($pj['CEP']);
@@ -82,7 +83,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetXY( $x , 40 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
-   $pdf->SetXY(112, 43);
+   $pdf->SetXY(112, 44);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,$l,utf8_decode('X'),0,0,'L');
 
@@ -90,7 +91,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(53,$l,utf8_decode($pjCNPJ),0,0,'L');
    
-   $pdf->SetXY(150, 43);
+   $pdf->SetXY(150, 45);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(53,$l,utf8_decode($pjCCM),0,0,'L');
    
