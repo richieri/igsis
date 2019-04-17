@@ -23,6 +23,7 @@ if(!isset ($_SESSION['usuario']) == true) //verifica se há uma sessão, se não
     <link href="css/style.css" rel="stylesheet" media="screen">
     <link href="color/default.css" rel="stylesheet" media="screen">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
