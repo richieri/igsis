@@ -31,6 +31,7 @@ $cache_expire = session_cache_expire();
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
 	<link href="color/default.css" rel="stylesheet" media="screen">
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
