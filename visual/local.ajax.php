@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 //header( 'Cache-Control: no-cache' );
 //header( 'Content-type: application/xml; charset="utf-8"', true );
 
-$con = mysqli_connect('200.237.5.34','root','lic54eca','igsis');
+$con = mysqli_connect('localhost','root','','igsis');
 //mysqli_set_charset($con,"utf8");
 
 $cod = mysqli_real_escape_string( $con,$_GET['instituicao'] );

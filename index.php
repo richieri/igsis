@@ -73,7 +73,7 @@ if(isset($_POST['usuario']))
 			<div class="container">
 				<div class="col-md-offset-1 col-md-10">
 					<h5><?php if(isset($mensagem)){ echo $mensagem; } ?></h5>
-					<form method="POST" action="index.php"class="form-horizontal" role="form">
+					<form method="POST" action="index.php" class="form-horizontal" role="form">
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-6">
 								<input type="text" name="usuario" class="form-control" id="inputName" placeholder="Usuário">
@@ -92,6 +92,7 @@ if(isset($_POST['usuario']))
 
 					<br /><br />
 
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<h4><p>Não possui cadastro?<strong><a href="https://goo.gl/lHLdnI" target="_blank"> CLIQUE AQUI!</strong></a></p></h4>
@@ -99,6 +100,7 @@ if(isset($_POST['usuario']))
 							<p>Dúvidas? Envie e-mail para: <strong>sistema.igsis@gmail.com</strong></p>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</section>
@@ -108,7 +110,7 @@ if(isset($_POST['usuario']))
 					<table width="100%">
 						<tr>
 							<td width="20%"><img src="visual/images/logo_cultura_q.png" align="left"/></td>
-							<td align="center"><font color="#ccc">2017 @ IGSIS - Cadastro de Artistas e Profissionais de Arte e Cultura<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
+							<td align="center"><font color="#ccc">2017 @ IGSIS - Sistema de Contratação Artística<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
 							<td width="20%"><img src="visual/images/logo_igsis_azul.png" align="right"/></td>
 						</tr>
 					</table>

@@ -394,6 +394,45 @@
 			}
 		}
 	}
+
+/**
+ * Esta função gera checkboxes que tem relacionamento com "eventos". <strong>A ordem das colunas nas tabelas interfere no
+ * resultado desta função.</strong> <br>
+ * A ordem deve ser:
+ * <li>Para Tabela de Atributos:</li>
+ * Id, Atributo
+ * <br>
+ * <li>Para Tabela de Relacionamento:</li>
+ * idEvento, idAtributo
+ * @param string $tabela
+ * <p>Tabela que deve ser utilizada para gerar os Checkboxes. Será gerado um checkbox para cada registro</p>
+ * @param string $name
+ * <p>Name que o input deve receber. Este name poderá ser utilizado no $_POST</p>
+ * @param string $tabelaRelacionamento
+ * <p>Tabela de relacionamento que deve ser consultada. Será utilizada para retornar os checkboxes já selecionados</p>
+ * @param int $idEvento
+ * <p>ID do evento para consultar na tabela de relacionamento</p>
+ */
+function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0) {
+    $con = bancoMysqli();
+    $sqlConsulta = "SELECT * FROM $tabela WHERE publicado = '1' ORDER BY 2";
+    $dados = $con->query($sqlConsulta);
+
+    if (isset($tabelaRelacionamento)) {
+        $sqlConsultaRelacionamento = "SELECT * FROM $tabelaRelacionamento WHERE idEvento = $idEvento";
+        $relacionamentos = $con->query($sqlConsultaRelacionamento)->fetch_all(MYSQLI_ASSOC);
+    }
+
+    while ($checkbox = $dados->fetch_row()) {
+        ?>
+        <div class="checkbox-grid-2 text-left">
+            <input type="checkbox" name="<?=$name?>[]" id="<?=$checkbox[1]?>" value="<?=$checkbox[0]?>" <?=in_array_r($checkbox[0], $relacionamentos) ? "checked" : ""?>>
+            <label for="<?=$checkbox[1]?>"><?=$checkbox[1]?></label>
+        </div>
+        <?php
+    }
+}
+
 	function geraOpcaoRelJuridica($select,$idUsuario)
 	{
 		//gera os options de um select
@@ -611,7 +650,7 @@
 		//cria as options com usuários de uma instituicao
 		$sql = "SELECT DISTINCT * FROM ig_usuario,ig_papelusuario 
 			WHERE ig_usuario.ig_papelusuario_idPapelUsuario = ig_papelusuario.idPapelUsuario 
-			AND ig_papelusuario.evento = 1 
+			AND ig_papelusuario.evento = 1 AND ig_usuario.publicado = 1
 			ORDER BY nomeCompleto";
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
@@ -826,6 +865,13 @@
 				$local = "De acordo com a programação da Virada Cultural";
 				$espaco = "De acordo com a programação da Virada Cultural";	
 			}
+            $tipo = recuperaDados("ig_evento",$idEvento,"idEvento");
+            if($tipo['projetoEspecial'] == 74){
+                $hora = "De acordo com a programação do Mês do Hip Hop";
+                $local = "De acordo com a programação do Mês do Hip Hop";
+                $espaco = "De acordo com a programação do Mês do Hip Hop";
+            }
+
 			$ocorrencia = "<div class='left'>$tipo_de_evento $dia_especial ".
 				$sub['titulo']
 				."<br />
@@ -1658,16 +1704,52 @@
 		else
 		{
 			$sql = "SELECT DISTINCT local FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1'";
-			$query = mysqli_query($con,$sql);	
-			$locais = "";
-			while($local = mysqli_fetch_array($query))
-			{
-				$sala = recuperaDados("ig_local",$local['local'],"idLocal");
-				$instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
-				$locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].")";
-			}
+			$query = mysqli_query($con,$sql);
+
+            $locais = "";
+
+            $tipo = recuperaDados("ig_evento",$idEvento,"idEvento");
+            if($tipo['projetoEspecial'] == 74){
+                while($local = mysqli_fetch_array($query))
+                {
+
+                    $sala = recuperaDados("ig_local",$local['local'],"idLocal");
+                    $instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
+                    $locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].") DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
+            }
+            else{
+                while($local = mysqli_fetch_array($query))
+                {
+
+                    $sala = recuperaDados("ig_local",$local['local'],"idLocal");
+                    $instituicao = recuperaDados("ig_instituicao",$sala['idInstituicao'],"idInstituicao");
+                    $locais = $locais.", ".$sala['sala']." (".$instituicao['sigla'].")";
+                }
+            }
 		}
 		return $locais;
+	}
+	function listaTodosPedidos($idEvento)
+	{
+		$con = bancoMysqli();
+			$sql = "SELECT DISTINCT idPedidoContratacao,tipoPessoa FROM igsis_pedido_contratacao WHERE idEvento = '$idEvento' AND publicado = '1'";
+			$query = mysqli_query($con,$sql);
+			$pedidos = "";	
+			while($pedido = mysqli_fetch_array($query))
+			{
+                if($pedido['tipoPessoa'] == 2)
+                {
+                    $link = "?perfil=contratos&p=frm_edita_propostapj&id_ped=";
+                }
+                else
+                {
+                    $link = "?perfil=contratos&p=frm_edita_propostapf&id_ped=";
+                }
+			    $pedidos .= "<a target='_blank'  href='".$link.$pedido['idPedidoContratacao']."'>".$pedido['idPedidoContratacao']."</a>  ";
+			}
+		
+		return $pedidos;
 	}
 	/*
 	function listaLocais($idEvento)
@@ -1911,7 +1993,7 @@
 			else
 			{
 				return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
-			}	
+			}
 		}
 		else
 		{
@@ -1948,8 +2030,19 @@
 			{
 				$dataFinal = $dataFinal02;		
 			}
+            $tipo = recuperaDados("ig_evento",$id,"idEvento");
+            if($tipo['projetoEspecial'] == 74){
+                if($data_inicio == $dataFinal)
+                {
+                    return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
+                else
+                {
+                    return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
+            }
 			if($data_inicio == $dataFinal)
-			{ 
+			{
 				return exibirDataBr($data_inicio);
 			}
 			else
@@ -2933,7 +3026,7 @@
 		$con = bancoMysqli();
 		$sql = "SELECT * FROM sis_protocolo, igsis_pedido_contratacao 
 			WHERE sis_protocolo.idPedido = igsis_pedido_contratacao.idPedidoContratacao 
-			AND igsis_pedido_contratacao.idEvento = '$idEvento'";
+			AND igsis_pedido_contratacao.idEvento = '$idEvento' AND igsis_pedido_contratacao.publicado = '1' ";
 		$query = mysqli_query($con,$sql);
 		$protos = "";
 		while($protocolo = mysqli_fetch_array($query))
@@ -3508,8 +3601,14 @@
 				{
 					$x[$i]['data'] = $data." ".trim($semana);
 					$x[$i]['hora'] = "";
-					$x[$i]['espaco'] = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL 2018.";
+					$x[$i]['espaco'] = "DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
 				}
+				$tipo = recuperaDados("ig_evento",$idEvento,"idEvento");
+				if($tipo['projetoEspecial'] == 74){
+                    $x[$i]['data'] = $data." ".trim($semana)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                    $x[$i]['hora'] = "";
+                    $x[$i]['espaco'] = $local['sala']." (".$instituicao.") DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                }
 				$i++;
 			}
 		}
@@ -4654,5 +4753,69 @@ function validaCNPJ($cnpj)
 	}
 	$resto = $soma % 11;
 	return $cnpj{13} == ($resto < 2 ? 0 : 11 - $resto);
+}
+
+/**
+ * @param int|string $needle
+ * @param array $haystack
+ * @param bool $strict
+ * @return bool
+ */
+function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Esta função é responsável pela inserção e remoção de dados nas tabelas de relacionamento com "eventos".
+ * <strong>A ordem das colunas nas tabelas interfere no resultado desta função.</strong> <br>
+ * A ordem deve ser:
+ * <li>Para Tabela de Relacionamento:</li>
+ * idEvento, idAtributo
+ * @param string $tabela
+ * <p>Nome da tabela de relacionamento</p>
+ * @param int $idEvento
+ * <p>Id do Evento que será registrado</p>
+ * @param array $post
+ * <p>O post com o name da checkbox</p>
+ */
+function atualizaRelacionamentoEvento($tabela, $idEvento, $post) {
+    $con = bancoMysqli();
+
+    $sqlConsultaRelacionamento = "SELECT * FROM $tabela WHERE idEvento = '$idEvento'";
+    $relacionamento = $con->query($sqlConsultaRelacionamento);
+
+    $consultaColunas = $con->query("SHOW COLUMNS FROM $tabela");
+    while ($linha = $consultaColunas->fetch_assoc()) {
+        $colunas[] = $linha['Field'];
+    }
+
+    $coluna = $colunas[1];
+
+    if ($relacionamento->num_rows == 0) {
+        foreach ($post as $checkbox) {
+            $sqlInsertRelacionamento = "INSERT INTO $tabela (idEvento, $coluna) VALUE ('$idEvento', '$checkbox')";
+            $con->query($sqlInsertRelacionamento);
+        }
+    } else {
+        $relacionamentos = $relacionamento->fetch_all(MYSQLI_NUM);
+
+        foreach ($relacionamentos as $relacionamento) {
+            if (!(in_array_r($relacionamento[1], $post))) {
+                $sqlDeleteRelacionamento = "DELETE FROM $tabela WHERE idEvento = '$idEvento' AND $coluna = '".$relacionamento[1]."'";
+                $con->query($sqlDeleteRelacionamento);
+            }
+        }
+        foreach ($post as $checkbox) {
+            if (!(in_array_r($checkbox, $relacionamentos))) {
+                $sqlInsertRelacionamento = "INSERT INTO $tabela (idEvento, $coluna) VALUE ('$idEvento', '$checkbox')";
+                $con->query($sqlInsertRelacionamento);
+            }
+        }
+    }
 }
 ?>

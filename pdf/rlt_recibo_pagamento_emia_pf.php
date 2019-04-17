@@ -158,7 +158,7 @@ $f=12; //DEFINE O TAMANHO DA FONTE
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', $f);
-   $pdf->MultiCell(180,$l,utf8_decode("São Paulo, _______ de ________________________ de 2018."));
+   $pdf->MultiCell(180,$l,utf8_decode("São Paulo, _______ de ________________________ de $ano."));
    
    $pdf->Ln();
    $pdf->Ln();

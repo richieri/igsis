@@ -156,6 +156,7 @@
 			if(isset($_POST['atualizar']))
 			{	
 				// Atualiza o banco
+                $idEvento = $_SESSION['idEvento'];
 				$sinopse = addslashes($_POST['sinopse']);
 				$releaseCom = addslashes($_POST['releaseCom']); 
 				$linksCom = addslashes($_POST['linksCom']);
@@ -192,17 +193,25 @@
 				`linksCom` = '$linksCom',
 				`publicado` = 1,
 				`statusEvento` = 'Em elaboração'
-				WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
-				$con = bancoMysqli();
-				if(mysqli_query($con,$sql_atualizar))
-				{
-					$mensagem = "Atualizado com sucesso!";
-					gravarLog($sql_atualizar);	
-				}
-				else
-				{
-					$mensagem = "Erro ao atualizar... tente novamente";
-				}	
+                WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
+                $con = bancoMysqli();
+                if(mysqli_query($con,$sql_atualizar))
+                {
+                    if (isset($_POST['linguagem'])) {
+                        atualizaRelacionamentoEvento('igsis_evento_linguagem', $idEvento, $_POST['linguagem']);
+                    }
+
+                    if (isset($_POST['representatividade'])) {
+                        atualizaRelacionamentoEvento('igsis_evento_representatividade', $idEvento, $_POST['representatividade']);
+                    }
+
+                    $mensagem = "Atualizado com sucesso!";
+                    gravarLog($sql_atualizar);
+                }
+                else
+                {
+                    $mensagem = "Erro ao atualizar... tente novamente";
+                }
 			}
 			// Cria um array com dados do evento
 			$campo = recuperaEvento($_SESSION['idEvento']);
@@ -241,7 +250,7 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Nome do Evento *</label>
-							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo $campo['nomeEvento'] ?>"/>
+							<input type="text" name="nomeEvento" class="form-control" id="inputSubject" value="<?php echo $campo['nomeEvento'] ?>" required/>
 						</div> 
 					</div>
 					<div class="form-group">
@@ -265,12 +274,45 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Tipo de Evento *</label>
-							<select class="form-control" name="ig_tipo_evento_idTipoEvento" id="inputSubject" >
-								<option value="1"></option>
+							<select class="form-control" name="ig_tipo_evento_idTipoEvento" id="inputSubject" required>
+								<option value=""></option>
 								<?php echo geraOpcao("ig_tipo_evento",$campo['ig_tipo_evento_idTipoEvento'],"") ?>
 							</select>					
 						</div>
 					</div>
+
+                    <div class="row">
+                            <div class="col-md-offset-2 col-md-8">
+                                <label>Ações (Expressões Artístico-culturais) * <i>(multipla escolha) </i></label>
+                                <button class='btn btn-default' type='button' data-toggle='modal'
+                                        data-target='#modalAcoes' style="border-radius: 30px;">
+                                    <i class="fa fa-question-circle"></i></button>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <?php
+                                geraCheckboxEvento('igsis_linguagem', 'linguagem', 'igsis_evento_linguagem', $_SESSION['idEvento']);
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Público (Representatividade e Visibilidade Sócio-cultural)* <i>(multipla escolha) </i></label>
+                            <button class='btn btn-default' type='button' data-toggle='modal'
+                                    data-target='#modalPublico' style="border-radius: 30px;">
+                                <i class="fa fa-question-circle"></i></button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <?php
+                                geraCheckboxEvento('igsis_representatividade', 'representatividade', 'igsis_evento_representatividade', $_SESSION['idEvento']);
+                            ?>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<br />
 						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
@@ -312,7 +354,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Classificação/indicação etária</label>
+                            <label>Classificação indicativa *</label> <a href="?perfil=classificacaoIndicativa" target="_blank"><i>(Confira aqui como classificar)</i></a>
 							<select class="form-control" name="faixaEtaria" id="inputSubject" >
 								<option value="0"></option>
 								<?php echo geraOpcao("ig_etaria",$campo['faixaEtaria'],"") ?>
@@ -354,6 +396,80 @@
 			</div>
 		</div>
 	</div>
+
+    <div class="modal fade" id="modalAcoes" role="dialog" aria-labelledby="lblmodalAcoes" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Ações (Expressões Artístico-culturais)</h4>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Ação</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sqlConsultaLinguagens = "SELECT linguagem, descricao FROM igsis_linguagem WHERE publicado = '1' ORDER BY 1";
+                            foreach ($con->query($sqlConsultaLinguagens)->fetch_all(MYSQLI_ASSOC) as $linguagem) {
+                            ?>
+                                <tr>
+                                    <td><?=$linguagem['linguagem']?></td>
+                                    <td><?=$linguagem['descricao']?></td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-theme" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPublico" role="dialog" aria-labelledby="lblmodalPublico" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Ações (Expressões Artístico-culturais)</h4>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Ação</th>
+                            <th>Descrição</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $sqlConsultaLinguagens = "SELECT representatividade_social, descricao FROM igsis_representatividade WHERE publicado = '1' ORDER BY 1";
+                        foreach ($con->query($sqlConsultaLinguagens)->fetch_all(MYSQLI_ASSOC) as $linguagem) {
+                            ?>
+                            <tr>
+                                <td><?=$linguagem['representatividade_social']?></td>
+                                <td><?=$linguagem['descricao']?></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-theme" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 	<?php
 		break;
@@ -405,7 +521,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<label>Classificação/indicação etária</label>
+                            <label>Classificação indicativa *</label> <a href="?perfil=classificacaoIndicativa" target="_blank"><i>(Confira aqui como classificar)</i></a>
 							<select class="form-control" name="faixaEtaria" id="inputSubject" >
 								<option value="0"></option>
 								<?php echo geraOpcao("ig_etaria",$campo['faixaEtaria'],"") ?>
@@ -1937,7 +2053,7 @@
 					</div>
 					<div class="form-group">       			
 						<div class="col-md-offset-2 col-md-8">
-							<input type="checkbox" name="virada" id="virada" onclick="habilitar()"/><label  style="padding:0 20px 0 5px;">Virada 2018</label>
+							<input type="checkbox" name="virada" id="virada" onclick="habilitar()"/><label  style="padding:0 20px 0 5px;">Virada 2019</label>
 						</div>                     
 					</div>
 					<div class="form-group">
@@ -2159,7 +2275,7 @@
 					</div>
 					<div class="form-group">         			
 						<div class="col-md-offset-2 col-md-8">
-							<input type="checkbox" name="virada" id="virada" onclick="habilitar()" <?php checar($ocor['virada']) ?>/><label  style="padding:0 20px 0 5px;">Virada 2018</label>
+							<input type="checkbox" name="virada" id="virada" onclick="habilitar()" <?php checar($ocor['virada']) ?>/><label  style="padding:0 20px 0 5px;">Virada 2019</label>
 						</div>                     
 					</div>
 					<div class="form-group">
@@ -2611,6 +2727,7 @@
 					$campos = verificaCampos($_SESSION['idEvento']);
 					$ocorrencia = verificaOcorrencias($_SESSION['idEvento']);
 					$prazo = prazoContratos($_SESSION['idEvento']);
+
 			?>   
 					<h5> <a href="?perfil=evento&p=enviar&action=evento">Dados do evento </a>| <a href="?perfil=evento&p=enviar&action=servicos">Solicitação de serviços</a> | <a href="?perfil=evento&p=enviar&action=pedidos">Pedidos de contratação</a>  |  Pendências</h5>
 					<div class="table-responsive list_info" >
@@ -2668,51 +2785,117 @@
 						<br />
 						<p><?php echo $prazo['mensagem'];?><p>
 				<?php
+                    $sqlConsultaPedido = "SELECT `idPedidoContratacao`, `valor` FROM `igsis_pedido_contratacao` WHERE `idEvento` = '".$_SESSION['idEvento']."' AND `publicado` = '1'";
+                    $queryConsultaPedido = $con->query($sqlConsultaPedido);
 					if($evento['ig_produtor_idProdutor'] == 0)
 					{
 						echo "<h6>Preencha os dados do produtor para habilitar o botão de envio!</h6>";
 					}
 					else
 					{
-						$pedido = listaPedidoContratacao($_SESSION['idEvento']);
-						/*if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
-						{*/
-					?>
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8">
-									<form method='POST' action='?perfil=aprovacao_evento'>
-										<input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
-										<br />
-										<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
-									</form>
-								</div>
-							</div>
-					<?php
-						/*}
-						else if($prazo['fora'] == 0) //Não tem pedido e está dentro do prazo
-						{
-					?>
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-8">
-									<form method='POST' action='?perfil=evento&p=finalizar'>
-										<input type='hidden' name='carregar' value='".$campo['idEvento']."' />
-										<input type ='submit' class='btn btn-theme btn-lg btn-block' value='Enviar'>
-									</form>
-								</div>
-							</div>
-					<?php
-						}
-						/*else if($pedido =! null) //Tem pedido
-						{
-							?><div class="col-md-offset-1 col-md-10">
-								<h4><font color="red">Sistema fechado para envio de programação com pedido de contratação.</font></h4>
-								<p><strong>Dúvidas entrar em contato com a Débora através do e-mail dsbueno@prefeitura.sp.gov.br</strong></p>
-							</div>
-							
-								 
-							<?php
-						}
-						*/
+                        if ($queryConsultaPedido->num_rows > 0)
+                        {
+                            $erroRegiao = false;
+                            while ($pedidos = $queryConsultaPedido->fetch_assoc())
+                            {
+                                if ($pedidos['valor'] > 0)
+                                {
+                                    $sqlValoresRegiao = "SELECT * FROM `igsis_valor_regiao` WHERE `idPedido` = '".$pedidos['idPedidoContratacao']."'";
+                                    $registrosRegiao = $con->query($sqlValoresRegiao)->num_rows;
+
+                                    if ($registrosRegiao == 0)
+                                    {
+                                        $erroRegiao = true;
+                                    }
+                                }
+                            }
+                            if ($erroRegiao)
+                            {
+                                echo "<h6>Preencha os valores por região no pedido de contratação para habilitar o botão de envio!</h6>";
+                            }
+                            else
+                            {
+                                $pedido = listaPedidoContratacao($_SESSION['idEvento']);
+                                if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
+                                {
+                                ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <form method='POST' action='?perfil=aprovacao_evento'>
+                                                <input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
+                                                <br />
+                                                <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+                                            </form>
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                                else if($prazo['fora'] == 0) //Não tem pedido e está dentro do prazo
+                                {
+                                    ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <form method='POST' action='?perfil=evento&p=finalizar'>
+                                                <input type='hidden' name='carregar' value='".$campo['idEvento']."' />
+                                                <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Enviar'>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                else if($pedido =! null) //Tem pedido
+                                {
+                                    ?><div class="col-md-offset-1 col-md-10">
+                                    <h4><font color="red">Sistema fechado para envio de programação com pedido de contratação.</font></h4>
+                                    <p><strong>Dúvidas entrar em contato com a Débora através do e-mail dsbueno@prefeitura.sp.gov.br</strong></p>
+                                </div>
+
+
+                                    <?php
+                                }
+                            }
+                        }
+                        else
+                        {
+                            $pedido = listaPedidoContratacao($_SESSION['idEvento']);
+                            if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
+                            {
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <form method='POST' action='?perfil=aprovacao_evento'>
+                                            <input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
+                                            <br />
+                                            <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+                                        </form>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            else if($prazo['fora'] == 0) //Não tem pedido e está dentro do prazo
+                            {
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <form method='POST' action='?perfil=evento&p=finalizar'>
+                                            <input type='hidden' name='carregar' value='".$campo['idEvento']."' />
+                                            <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Enviar'>
+                                        </form>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            else if($pedido =! null) //Tem pedido
+                            {
+                                ?><div class="col-md-offset-1 col-md-10">
+                                <h4><font color="red">Sistema fechado para envio de programação com pedido de contratação.</font></h4>
+                                <p><strong>Dúvidas entrar em contato com a Débora através do e-mail dsbueno@prefeitura.sp.gov.br</strong></p>
+                            </div>
+
+
+                                <?php
+                            }
+                        }
 					}
 				break;
 			} // fecha a switch action */?>	
@@ -2902,7 +3085,7 @@
 			</div>
 		</div>  
 		<div class="table-responsive list_info">
-			<table class="table table-condensed"></script>
+			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
 						<td>Codigo do Pedido</td>

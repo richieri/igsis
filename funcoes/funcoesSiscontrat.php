@@ -172,7 +172,14 @@
 					}
 					else
 					{
-						$pagamento = txtParcelas($idPedido,$pedido['parcelas']);
+					    if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
+                        {
+                            $pagamento = txtParcelasOficinas($idPedido,$pedido['parcelas'], $pedido['tipoParcela']);
+                        }
+					    else
+                        {
+                            $pagamento = txtParcelas($idPedido,$pedido['parcelas']);
+                        }
 					}
 				}
 			}
@@ -279,6 +286,7 @@
 				"Assinatura" => $assinatura['Assinatura'],
 				"Cargo" => $assinatura['Cargo'],
 				"parcelas" => $pedido['parcelas'],
+				"tipoParcela" => $pedido['tipoParcela'],
 				"RfFiscal" => $rfFiscal,
 				"RfSuplente" => $rfSuplente,
 				"AmparoLegal" => $pedido['AmparoLegal'],
@@ -814,6 +822,7 @@
 		}
 		return $x;
 	}
+
 	function txtParcelas($idPedido,$numero)
 	{
 		$con = bancoMysqli();
@@ -846,7 +855,88 @@
 			return "O pagamento se dará no 20º (vigésimo) dia após a data de entrega de toda documentação correta relativa ao pagamento.";
 		}
 	}
-	function txtParcelasFormacao($idPedido,$numero)
+
+    function txtParcelasOficinas($idPedido,$numero,$tipoParcela = 0)
+    {
+        $con = bancoMysqli();
+        switch ($numero)
+        {
+            case 1:
+                $sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND `numero` = 1";
+                $parcela = $con->query($sql)->fetch_assoc();
+                return "Entrega de Entrega de documentos a partir de ".exibirDataBr($parcela['vencimento']).". O pagamento se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto, conforme item 4.4 do Edital.";
+                break;
+
+            case 2:
+                $texto = "Conforme item 4.4 do Edital. \n";
+                if ($tipoParcela == 1)
+                {
+                    $textos = [
+                        1 => "O pagamento da 1ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução do primeiro mês de projeto.",
+                        2 => "O pagamento da 2ª parcela se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto."
+                    ];
+                }
+                elseif ($tipoParcela == 2)
+                {
+                    $textos = [
+                        1 => "O pagamento da 1ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos 2 primeiros meses de projeto.",
+                        2 => "O pagamento da 2ª parcela se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto."
+                    ];
+                }
+                for ($i = 1 ; $i <= $numero ; $i++)
+                {
+                    $sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND `numero` = '$i'";
+                    $parcela = $con->query($sql)->fetch_assoc();
+
+                    $texto .= "Entrega de Entrega de documentos a partir de ".exibirDataBr($parcela['vencimento']).". ".$textos[$i]." \n";
+                }
+                return $texto;
+                break;
+
+            case 3:
+                $texto = "Conforme item 4.4 do Edital. \n";
+                $textos = [
+                    1 => "O pagamento da 1ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos 2 primeiros meses de projeto.",
+                    2 => "O pagamento da 2ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos terceiro e quarto meses de projeto.",
+                    3 => "O pagamento da 3ª parcela se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto."
+                ];
+                for ($i = 1 ; $i <= $numero ; $i++)
+                {
+                    $sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND `numero` = '$i'";
+                    $parcela = $con->query($sql)->fetch_assoc();
+
+                    $texto .= "Entrega de Entrega de documentos a partir de ".exibirDataBr($parcela['vencimento']).". ".$textos[$i]." \n";
+                }
+                return $texto;
+                break;
+
+            case 5:
+                $texto = "Conforme item 4.4 do Edital. \n";
+                $textos = [
+                    1 => "O pagamento da 1ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos 2 primeiros meses de projeto.",
+                    2 => "O pagamento da 2ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos terceiro e quarto meses de projeto.",
+                    3 => "O pagamento da 3ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos quinto e sexto meses de projeto.",
+                    4 => "O pagamento da 4ª parcela se dará a partir do primeiro dia útil subsequente à comprovação da execução dos sétimo e oitavo meses de projeto.",
+                    5 => "O pagamento da 5ª parcela se dará a partir do primeiro dia útil subsequente à comprovação do encerramento do projeto."
+                ];
+                for ($i = 1 ; $i <= $numero ; $i++)
+                {
+                    $sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido' AND `numero` = '$i'";
+                    $parcela = $con->query($sql)->fetch_assoc();
+
+                    $texto .= "Entrega de Entrega de documentos a partir de ".exibirDataBr($parcela['vencimento']).". ".$textos[$i]." \n";
+                }
+                return $texto;
+                break;
+
+            default:
+                return null;
+                break;
+        }
+    }
+
+
+function txtParcelasFormacao($idPedido,$numero)
 	{
 		$con = bancoMysqli();
 		$sql = "SELECT * FROM igsis_parcelas WHERE idPedido = '$idPedido'";
@@ -870,7 +960,7 @@
 					$texto .= $k."ª parcela de R$ ".dinheiroParaBr($x[$k]['valor']).". Entrega de documentos a partir de ".exibirDataBr($x[$k]['vencimento']).".\n";		
 				}
 			}
-			$texto .= "O pagamento de cada parcela se dará em 8 (oito) dias úteis após a data de confirmação da correta execução do(s) serviço(s).​";
+			$texto .= "A liquidação de cada parcela se dará em 3 (três) dias úteis após a data de confirmação da correta execução do(s) serviço(s).​";
 			return $texto;
 		}
 		else
@@ -1318,7 +1408,7 @@
 	function geraOpcaoOrdem($tabela,$order)
 	{
 		//gera os options de um select com ordenação
-		$sql = "SELECT * FROM $tabela ORDER BY $order";	
+		$sql = "SELECT * FROM $tabela ORDER BY $order";
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
 		while($option = mysqli_fetch_row($query))
@@ -1336,68 +1426,39 @@
 	function lista_prazo($num_registro,$pagina,$ordem)
 	{
 		$con = bancoMysqli();
-		$sql_lista_total = "SELECT ped.idEvento, 
-			ped.idPedidoContratacao, 
-			ped.tipoPessoa, 
-			ped.idPessoa, 
-			ped.instituicao,
-			ped.idContratos
-			FROM igsis_pedido_contratacao 
-			AS ped
-			INNER JOIN ig_evento 
-			AS eve 
-			ON ped.idEvento = eve.idEvento
-			WHERE eve.dataEnvio IS NULL
-			AND eve.publicado = 1 
-			AND ped.publicado = 1
-			AND eve.statusEvento = 'Aguardando'
-			ORDER BY eve.idEvento DESC";
+		$sql_lista_total = "SELECT ped.idEvento FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC";
 		$query_lista_total = mysqli_query($con,$sql_lista_total);
 		$total_registros = mysqli_num_rows($query_lista_total);
 		$pag = $pagina - 1;
 		$registro_inicial = $num_registro * $pag;
 		$total_paginas = $total_registros / $num_registro; // gera o número de páginas
-		$sql_lista_pagina = "SELECT ped.idEvento, 
-			ped.idPedidoContratacao, 
-			ped.tipoPessoa, 
-			ped.idPessoa, 
-			ped.instituicao,
-			ped.idContratos
-			FROM igsis_pedido_contratacao 
-			AS ped
-			INNER JOIN ig_evento 
-			AS eve 
-			ON ped.idEvento = eve.idEvento
-			WHERE eve.dataEnvio IS NULL 
-			AND eve.publicado = 1 
-			AND ped.publicado = 1
-			AND eve.statusEvento = 'Aguardando'
-			ORDER BY eve.idEvento 
-			DESC LIMIT $registro_inicial,$num_registro";
+		$sql_lista_pagina = "SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, ped.idContratos, eve.idResponsavel, eve.ig_tipo_evento_idTipoEvento, eve.nomeGrupo, eve.nomeEvento, eve.dataEnvio FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC LIMIT $registro_inicial,$num_registro";
 		$query_lista_pagina = mysqli_query($con,$sql_lista_pagina);
 		//$x = $sql_lista_pagina;
 		$i = 0;
 		while($pedido = mysqli_fetch_array($query_lista_pagina))
 		{
-			$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
-			$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+			//$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
+			//$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
 			$local = listaLocais($pedido['idEvento']);
-			$local_juridico = listaLocaisJuridico($pedido['idEvento']);
+			$pedidos = listaTodosPedidos($pedido['idEvento']);
+			//$local_juridico = listaLocaisJuridico($pedido['idEvento']);
 			$periodo = retornaPeriodo($pedido['idEvento']);
-			$duracao = retornaDuracao($pedido['idEvento']);
+			//$duracao = retornaDuracao($pedido['idEvento']);
 			$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
-			$fiscal = recuperaUsuario($evento['idResponsavel']);
+			$fiscal = recuperaUsuario($pedido['idResponsavel']);
 			$operador = recuperaUsuario($pedido['idContratos']);
 			$x[$i] = array(
 				"idPedido" => $pedido['idPedidoContratacao'],
 				"idEvento" => $pedido['idEvento'], 
+				"Pedidos" => $pedidos, //retira a virgula no começo da string
 				"TipoPessoa" => $pedido['tipoPessoa'],
-				"Objeto" => retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeGrupo']." - ".$evento['nomeEvento'] ,
+				"Objeto" => retornaTipo($pedido['ig_tipo_evento_idTipoEvento'])." - ".$pedido['nomeGrupo']." - ".$pedido['nomeEvento'] ,
 				"Local" => substr($local,1) , //retira a virgula no começo da string
-				"LocalJuridico" => substr($local,1) , //retira a virgula no começo da string
+				//"LocalJuridico" => substr($local,1) , //retira a virgula no começo da string
 				"Periodo" => $periodo, 
-				"Duracao" => $duracao, 			
-				"DataCadastro" => $evento['dataEnvio'],
+				//"Duracao" => $duracao,
+				"DataCadastro" => $pedido['dataEnvio'],
 				"Fiscal" => $fiscal['nomeCompleto'] ,
 				"Operador" => $operador['nomeCompleto'],
 				"IdProponente" => $pedido['idPessoa'],
@@ -1406,4 +1467,16 @@
 		}
 		return $x;
 	}
+	function valorPorRegiao($idPedido){
+        $con = bancoMysqli();
+	    $sql = "SELECT * FROM igsis_valor_regiao WHERE idPedido = '$idPedido'";
+	    $query = mysqli_query($con, $sql);
+	    $array = mysqli_fetch_array($query);
+	    $zona['norte'] = $array['norte'];
+	    $zona['sul'] = $array['sul'];
+	    $zona['leste'] = $array['leste'];
+	    $zona['oeste'] = $array['oeste'];
+	    $zona['centro'] = $array['centro'];
+	    return $zona;
+    }
 ?>

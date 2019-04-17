@@ -30,7 +30,39 @@ $INSS = $pedido_pessoa["INSS"];
 $dataAtual = date("d/m/Y");
 $ano=date('Y');
 
-  
+$regiao = valorPorRegiao($id_ped);
+$norte = dinheiroParaBr($regiao['norte']);
+$sul =  dinheiroParaBr($regiao['sul']);
+$leste =  dinheiroParaBr($regiao['leste']);
+$oeste =  dinheiroParaBr($regiao['oeste']);
+$centro =  dinheiroParaBr($regiao['centro']);
+
+$valores= "";
+$texto = "";
+
+if($norte != "0,00"){
+    $valores = "a região norte no valor de R$ ".$norte." (".valorPorExtenso($regiao['norte'])." )";
+}
+
+if($sul != "0,00"){
+    $valores .= ", a região sul no valor de R$ ".$sul." (".valorPorExtenso($regiao['sul'])." )";
+}
+
+if($leste != "0,00"){
+    $valores .= ", a região leste no valor de R$ ".$leste." (".valorPorExtenso($regiao['leste'])." )";
+}
+
+if($oeste != "0,00"){
+    $valores .= ", a região oeste no valor de R$ ".$oeste." (".valorPorExtenso($regiao['oeste'])." )";
+}
+
+if($centro != "0,00"){
+    $valores .= ", a região centro no valor de R$ ".$centro." (".valorPorExtenso($regiao['centro'])." )";
+}
+
+if($norte != "0,00" || $sul != "0,00" || $leste != "0,00" || $oeste != "0,00" || $centro != "0,00"){
+    $texto = "<p>&nbsp;</p><p>Em atendimento ao item referente a regionalização e georreferenciamento das despesas municipais com a implantação do detalhamento da ação, informo que a despesa aqui tratada se refere(m) ".$valores.".</p>";
+}
  ?>
  
  
@@ -68,6 +100,7 @@ $sei =
   "<p><strong>Sr.(a) Contador(a)</strong></p>".
   "<p>&nbsp;</p>". 
   "<p>Encaminho o presente para providências quanto ao pagamento, uma vez que os serviços foram realizados e confirmados a contento conforme documento <strong>LINK DA SOLICITAÇÃO</strong>.</p>".
+  $texto.
   "<p>&nbsp;</p>". 
   "<p>&nbsp;</p>".
   "<p>INFORMAÇÕES COMPLEMENTARES</p>".

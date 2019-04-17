@@ -25,10 +25,10 @@ $pasta = "?perfil=formacao&p=administrativo&pag=";
 					<li><a href="<?php echo $pasta ?>list_equipamento">Listar</a></li>
 				</ul>
 			</li>		
-			<li><a href="#">Edital</a>
+			<li><a href="#">Programa</a>
 				<ul class="dl-submenu">
-					<li><a href="<?php echo $pasta ?>add_edital">Cadastrar</a></li>
-					<li><a href="<?php echo $pasta ?>list_edital">Listar</a></li>
+					<li><a href="<?php echo $pasta ?>add_programa">Cadastrar</a></li>
+					<li><a href="<?php echo $pasta ?>list_programa">Listar</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Linguagem</a>
@@ -54,7 +54,11 @@ $pasta = "?perfil=formacao&p=administrativo&pag=";
 					<li><a href="?perfil=formacao&p=frm_cadastra_vigencia&novo">Cadastrar</a></li>
 					<li><a href="?perfil=formacao&p=frm_lista_vigencia">Listar</a></li>
 				</ul>
-			</li>		
+			</li>
+            <li><a href="?perfil=formacao&p=frm_habilita_cadastro_capac">Habilitar / Desabilitar Cadastro no CAPAC</a></li>
+            <li><a href="?perfil=formacao&p=frm_adm_capac_importar">Listar Inscritos do CAPAC</a></li>
+            <li><a href="<?php echo $pasta ?>relatorio_inscritos">Exportar Inscritos do CAPAC</a></li>
+
 			<li><a href="?perfil=formacao">Voltar ao módulo Formação</a></li>
 		</ul>
 	</div>

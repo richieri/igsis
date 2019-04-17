@@ -117,7 +117,7 @@ $l=4.3; //DEFINE A ALTURA DA LINHA
 
 2.	Dar início às apresentações no horário estabelecido com tolerância máxima de 15 minutos, salvo motivo de força maior.
 
-3.	ECAD - A produção do espetáculo deve adotar as medidas necessárias para liberação da autorização do ECAD, assim como providenciar eventuais pagamentos. Em caso de autoria própria e/ou domínio público as produções dos espetáculos devem dirigir-se ao ECAD e apresentar repertório (nome da música, autor e se é domínio público) que será executado, para posteriormente, entregar a liberação ao setor de contratação artística (junto com toda a documentação necessária para contratação).
+3.	ECAD - A produção do espetáculo deve adotar as medidas necessárias para liberação da autorização do ECAD. Em caso de autoria própria e/ou domínio público as produções dos espetáculos devem dirigir-se ao ECAD e apresentar repertório (nome da música, autor e se é domínio público) que será executado, para posteriormente, entregar a liberação ao setor de contratação artística (junto com toda a documentação necessária para contratação).
 
 4.	SBAT - A produção do espetáculo deve encaminhar a liberação do autor ou do seu representante junto com as demais documentações necessárias à coordenação do teatro.
 

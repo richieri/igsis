@@ -1,6 +1,47 @@
 <?php
-	$lista = lista_prazo(1000,1,"DESC"); //esse gera uma array com os pedidos
-	$link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
+	//$lista = lista_prazo(200,1,"DESC"); //esse gera uma array com os pedidos
+$con = bancoMysqli();
+
+//verifica a página atual caso seja informada na URL, senão atribui como 1ª página
+$pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
+$sql_lista = "SELECT ped.idEvento FROM igsis_pedido_contratacao AS ped INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' GROUP BY eve.idEvento ORDER BY eve.idEvento DESC";
+$query_lista = mysqli_query($con,$sql_lista);
+
+//conta o total de itens
+$total_geral = mysqli_num_rows($query_lista);
+
+//seta a quantidade de itens por página
+$registros = 25;
+
+//calcula o número de páginas arredondando o resultado para cima
+$numPaginas = ceil($total_geral/$registros);
+
+//variavel para calcular o início da visualização com base na página atual
+$inicio = ($registros*$pagina)-$registros;
+
+//seleciona os itens por página
+$sql_lista = "
+	SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, uope.nomeCompleto AS operador, uresp.nomeCompleto AS fiscal, tipo.tipoEvento, eve.nomeGrupo, eve.nomeEvento, eve.dataEnvio 
+	FROM igsis_pedido_contratacao AS ped 
+	INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento
+    INNER JOIN ig_tipo_evento AS tipo ON tipo.idTipoEvento = eve.ig_tipo_evento_idTipoEvento
+    INNER JOIN ig_usuario AS uresp ON uresp.idUsuario = eve.idResponsavel
+	LEFT JOIN  ig_usuario AS uope ON uope.idUsuario = ped.idContratos
+	WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' 
+	GROUP BY eve.idEvento ORDER BY eve.idEvento DESC
+	LIMIT $inicio,$registros";
+$query_lista = mysqli_query($con,$sql_lista);
+
+//conta o total de itens
+$total = mysqli_num_rows($query_lista);
+
+
+$link="index.php?perfil=gestao_prazos&p=detalhe_evento&id_eve=";
+
+
+/****************************************
+ * ENVIO DE DADOS
+ ****************************************/
 
 	if(isset($_POST['finalizar']))
 	{
@@ -93,68 +134,74 @@
 <section id="list_items">
 	<div class="container">
 		<div class="sub-title"><br/><br/><h4>PEDIDOS DE CONTRATAÇÃO</h4></div>
+        <p><strong>Total de registros:</strong> <?php echo $total_geral;?> | <strong>Registros nesta página:</strong> <?php echo $total;?></p>
 		<div class="table-responsive list_info">
-			<table class="table table-condensed"><script type=text/javascript language=JavaScript src=../js/find2.js> </script>
+			<table class="table table-condensed">
 				<thead>
 					<tr class="list_menu">
 					<td>Id Evento</td>
-					<td>Código do Pedido</td>
+					<td>Pedido(s)</td>
 					<td>Proponente</td>
 					<td>Objeto</td>
 					<td>Local</td>
 					<td>Período</td>
                     <td>Fiscal</td>
-					<td>Operador</td>
+                    <td>Operador</td>
 					<td></td>
 					<td></td>
 					</tr>
 				</thead>
-				<tbody>
+
 				<?php
-					$data=date('Y');
-					for($i = 0; $i < count($lista); $i++)
-					{
-						$pf = recuperaDados("sis_pessoa_fisica",$lista[$i]['IdProponente'],"Id_PessoaFisica");
-						$chamado = recuperaAlteracoesEvento($lista[$i]['idEvento']);
-						echo "<tr><td class='lista'> <a target='_blank' href='".$link.$lista[$i]['idEvento']."'>".$lista[$i]['idEvento']."</a></td>";
-						if($lista[$i]['TipoPessoa'] == 2)
-						{
-							echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$lista[$i]['idPedido']."'>".$lista[$i]['idPedido']."</a></td>";
-						}
-						else
-						{
-							echo "<td class='lista'><a target='_blank'  href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$lista[$i]['idPedido']."'>".$lista[$i]['idPedido']."</a></td>";
-						}
-						echo '<td class="list_description">'.$lista[$i]['Proponente'].'</td> ';
-
-						echo '<td class="list_description">'.$lista[$i]['Objeto'].' [';
-
-						if($chamado['numero'] == '0')
-						{
-							echo "0";
-						}
-						else
-						{
-							echo "<a href='?perfil=chamado&p=evento&id=".$lista[$i]['idEvento']."' target='_blank'>".$chamado['numero']."</a>";
-						}
-						echo '] </td> ';
-						echo '<td class="list_description">'.$lista[$i]['Local'].'</td> ';
-						echo '<td class="list_description">'.$lista[$i]['Periodo'].'</td> ';
-						echo '<td class="list_description">'.$lista[$i]['Fiscal'].'</td>';
-						echo '<td class="list_description">'.$lista[$i]['Operador'].'</td>';
-						echo "<td class='list_description'>
-						<form method='POST' a target='_blank' action='?perfil=gestao_prazos&p=detalhe_evento&pag=finalizar&id_eve=".$lista[$i]['idEvento']."'>
-						<input type='hidden' name='finalizar' value='".$lista[$i]['idEvento']."' >
+					echo "<tbody>";
+                while($lista = mysqli_fetch_array($query_lista))
+                {
+                    $pedidos = listaTodosPedidos($lista['idEvento']);
+                    $chamado = recuperaAlteracoesEvento($lista['idEvento']);
+                    $local = listaLocais($lista['idEvento']);
+                    $periodo = retornaPeriodo($lista['idEvento']);
+                    //$fiscal = recuperaUsuario($lista['idResponsavel']);
+                    //$operador = recuperaUsuario($lista['idContratos']);
+                    $pessoa = recuperaPessoa($lista['idPessoa'],$lista['tipoPessoa']);
+                    echo "<tr>";
+                    echo "<td class='lista'> <a target='_blank' href='".$link.$lista['idEvento']."'>".$lista['idEvento']."</a></td>";
+                    echo '<td class="list_description">'.$pedidos.'</td> ';
+                    echo '<td class="list_description">'.$pessoa['nome'].'</td> ';
+                    echo '<td class="list_description">'.$lista['tipoEvento']." - ".$lista['nomeGrupo']." - ".$lista['nomeEvento'].' [';
+                        if($chamado['numero'] == '0') {
+                            echo "0";
+                        }
+                        else{
+                            echo "<a href='?perfil=chamado&p=evento&id=".$lista['idEvento']."' target='_blank'>".$chamado['numero']."</a>";
+                        }
+                    echo '] </td> ';
+                    echo '<td class="list_description">'.substr($local,1).'</td> ';
+                    echo '<td class="list_description">'.$periodo.'</td> ';
+                    echo '<td class="list_description">'.strstr($lista['fiscal'], ' ', true).'</td>';
+                    echo '<td class="list_description">'.strstr($lista['operador'], ' ', true).'</td>';
+                    echo "<td class='list_description'>
+						<form method='POST' target='_blank' action='?perfil=gestao_prazos&p=detalhe_evento&pag=finalizar&id_eve=".$lista['idEvento']."'>
+						<input type='hidden' name='finalizar' value='".$lista['idEvento']."' >
 						<input type ='submit' class='btn btn-theme  btn-block' value='enviar'></td></form>"	;
-						echo "<td class='list_description'>
-						<form method='POST' a target='_blank'  action='?perfil=gestao_prazos&p=detalhe_evento&pag=desaprovar&id_eve=".$lista[$i]['idEvento']."'>
-						<input type='hidden' name='carregar' value='".$lista[$i]['idEvento']."' >
-						<input type ='submit' class='btn btn-theme  btn-block' value='não aprovar'></td></form>"	;
-						echo ' </tr>';
-					}
-					echo "<br/><h5>Foram encontrados ".$i." registros</h5>";
-					?>
-				</tbody>
+                    echo "<td class='list_description'>
+						<form method='POST' target='_blank'  action='?perfil=gestao_prazos&p=detalhe_evento&pag=desaprovar&id_eve=".$lista['idEvento']."'>
+						<input type='hidden' name='carregar' value='".$lista['idEvento']."' >
+						<input type ='submit' class='btn btn-theme  btn-block' value='não aprovar'></td></form>";
+                    echo "</tr>";
+                }?>
+					<tr>
+						<td colspan="10" bgcolor="#DEDEDE">
+						<?php
+							//exibe a paginação
+							echo "<strong>Páginas</strong>";
+							for($i = 1; $i < $numPaginas + 1; $i++)
+							{
+								echo "<a href='?perfil=gestao_prazos&p=frm_lista&pagina=$i'> [".$i."]</a> ";
+							}
+						?>
+                        </td>
+                    </tr>
+                </tbody>
 			</table>
 		</div>
 	</div>

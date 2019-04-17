@@ -88,7 +88,7 @@ $sei =
 "<p>&nbsp;</p>".
 "<p><strong>Pedido de Contratação nº:</strong> "."$ano-$id_ped"."</p>".
 "<p><strong>Processo SEI nº:</strong> "."$NumeroProcesso"."</p>".
-"<p><strong>Setor  solicitante:</strong> Divisão de Formação</p>".
+"<p><strong>Setor  solicitante:</strong> Supervisão de Formação Cultural</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Nome:</strong> "."$Nome"." <br />".
   "<strong>CPF:</strong> "."$CPF"."<br />".
@@ -121,11 +121,11 @@ $sei =
 </div>
          
 <script>
-var client = new ZeroClipboard();
-client.clip(document.getElementById("botao-copiar"));
-client.on("aftercopy", function(){
-    alert("Copiado com sucesso!");
-});
+    var client = new ZeroClipboard();
+    client.clip(document.getElementById("botao-copiar"));
+    client.on("aftercopy", function(){
+        alert("Copiado com sucesso!");
+    });
 </script>
 
   </body>

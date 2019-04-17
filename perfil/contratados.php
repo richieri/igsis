@@ -897,7 +897,7 @@
 			} //fecha a action
 		break;
 		case "edicaoPedido":
-		
+		$mensagemRegiao = "Insira todos os valores por região para prosseguir"
 		?>
 <script>
 	function valida()
@@ -910,8 +910,76 @@
 		} 
 		return true;
 	}
+
+	function valorRegiao()
+    {
+        var areaRegiao = document.getElementById("valoresRegiao");
+        if (areaRegiao === null)
+        {
+            console.log("area não encontrada");
+        }
+        else
+        {
+            console.log("Area encontrada");
+            var norte = document.getElementById("norte").value;
+            var sul = document.getElementById("sul").value;
+            var leste = document.getElementById("leste").value;
+            var oeste = document.getElementById("oeste").value;
+            var centro = document.getElementById("centro").value;
+
+            if ((norte == "0,00") && (sul == "0,00") && (leste == "0,00") && (oeste == "0,00") && (centro == "0,00"))
+            {
+                document.getElementById("btnValores").disabled = true;
+                document.getElementById("divRegiao").hidden = false;
+            }
+            else
+            {
+                document.getElementById("btnValores").disabled = false;
+                document.getElementById("divRegiao").hidden = true;
+            }
+        }
+    }
+
 </script>
 		<?php
+            if (isset($_POST['valoresRegiao']))
+            {
+                $pedidoValor = recuperaDados("igsis_pedido_contratacao",$_SESSION['idPedido'],"idPedidoContratacao")['valor'];
+                $norte = dinheiroDeBr($_POST['norte']);
+                $sul = dinheiroDeBr($_POST['sul']);
+                $leste = dinheiroDeBr($_POST['leste']);
+                $oeste = dinheiroDeBr($_POST['oeste']);
+                $centro = dinheiroDeBr($_POST['centro']);
+                $idPedido = $_SESSION['idPedido'];
+                $somaRegiao = $norte + $sul + $leste + $oeste + $centro;
+
+
+                if ($somaRegiao == $pedidoValor) {
+                    $sqlConsultaValores = "SELECT * FROM `igsis_valor_regiao` WHERE `idPedido` = '$idPedido'";
+                    if ($con->query($sqlConsultaValores)->num_rows <= 0) {
+                        $sqlValoresRegiao = "INSERT INTO `igsis_valor_regiao` (`idPedido`, `norte`, `sul`, `leste`, `oeste`, `centro`)
+                                             VALUES ('$idPedido', '$norte', '$sul', '$leste', '$oeste', '$centro')";
+                    } else {
+                        $sqlValoresRegiao = "UPDATE `igsis_valor_regiao` SET 
+                                              `norte` = '$norte',
+                                              `sul` = '$sul',
+                                              `leste` = '$leste',
+                                              `oeste` = '$oeste',
+                                              `centro` = '$centro'
+                                              WHERE `idPedido` = '$idPedido'";
+                    }
+                    if ($con->query($sqlValoresRegiao)) {
+                        gravarLog($sqlValoresRegiao);
+                        $mensagem = "Valores por Região Atualizados com sucesso";
+                    } else {
+                        $mensagem = "Erro ao atualizar os valores";
+                    }
+                }
+                else
+                {
+                    $mensagemRegiao = "Soma dos valores não confere com o valor total cadastrado";
+                }
+            }
 			if(isset($_POST['novoJuridica']))
 			{
 				//cadastra e insere pessoa jurídica
@@ -1044,28 +1112,57 @@
 			}
 			if(isset($_POST['atualizar']))
 			{
-				$integrantes = addslashes($_POST['integrantes']);
+			    if ($_POST['parcelas'] <= 12)
+                {
+                    $parcelas = $_POST['parcelas'];
+                    $tipoParcela = NULL;
+                }
+			    else
+                {
+                    $parcelas = substr($_POST['parcelas'], 0, 1);
+                    $tipoParcela = substr($_POST['parcelas'], 1, 1);
+                }
+			    $integrantes = addslashes($_POST['integrantes']);
 				$Observacao = addslashes($_POST['Observacao']);
-				$parcelas = $_POST['parcelas'];
 				$Verba = $_POST['verba'];
 				$parecer = addslashes($_POST['parecerArtistico']);
 				$justificativa = addslashes($_POST['justificativa']);
 				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
 				$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				$formaPagamento = $_POST['formaPagamento'];
-				if($_POST['atualizar'] >= '2')
+                $formaPagamento = $_POST['formaPagamento'];
+                $evento = recuperaDados('ig_evento', $_SESSION['idEvento'], 'idEvento');
+                if($_POST['atualizar'] >= '2')
 				{
-					$sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
-						`integrantes` = '$integrantes',
-						`observacao` =  '$Observacao',
-						`parcelas` =  '$parcelas',
-						`parecerArtistico` =  '$parecer',
-						`justificativa` =  '$justificativa',
-						`qtdApresentacoes` =  '$qtdApresentacoes',
-						`dataKitPagamento` = '$dataKitPagamento',
-						`idVerba` =  '$Verba'
-						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
+                    {
+                        $sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
+                           `formaPagamento` = '$formaPagamento',
+                            `integrantes` = '$integrantes',
+                            `observacao` =  '$Observacao',
+                            `parcelas` =  '$parcelas',
+                            `tipoParcela` =  '$tipoParcela',
+                            `parecerArtistico` =  '$parecer',
+                            `justificativa` =  '$justificativa',
+                            `qtdApresentacoes` =  '$qtdApresentacoes',
+                            `dataKitPagamento` = '$dataKitPagamento',
+                            `idVerba` =  '$Verba'
+                            WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    }
+                    else
+                    {
+                        $sql_atualizar_pedido = "UPDATE  `igsis_pedido_contratacao` SET
+                            `integrantes` = '$integrantes',
+                            `observacao` =  '$Observacao',
+                            `parcelas` =  '$parcelas',
+                            `tipoParcela` =  '$tipoParcela',
+                            `parecerArtistico` =  '$parecer',
+                            `justificativa` =  '$justificativa',
+                            `qtdApresentacoes` =  '$qtdApresentacoes',
+                            `dataKitPagamento` = '$dataKitPagamento',
+                            `idVerba` =  '$Verba'
+                            WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
+                    }
 				}
 				else
 				{
@@ -1075,6 +1172,7 @@
 						`formaPagamento` =  '$formaPagamento',
 						`observacao` =  '$Observacao',
 						`parcelas` =  '$parcelas',
+						`tipoParcela` =  '$tipoParcela',
 						`parecerArtistico` =  '$parecer',
 						`integrantes` = '$integrantes',
 						`justificativa` =  '$justificativa',
@@ -1097,6 +1195,7 @@
 			include "../funcoes/funcoesSiscontrat.php";
 			$pedido = recuperaDados("igsis_pedido_contratacao",$_SESSION['idPedido'],"idPedidoContratacao");
 			$executante = siscontratDocs($pedido['IdExecutante'],1);
+			$valorRegiao = recuperaDados('igsis_valor_regiao', $pedido['idPedidoContratacao'],'idPedido')
 		?>
 <!-- Contact -->
 <section id="contact" class="home-section bg-white">
@@ -1184,6 +1283,58 @@
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><br /></div>
 				</div>
+                <!--Form para Gravar valores por região
+                input pego atraves do atributo form-->
+                <?php if ($pedido['valor'] != 0) { ?>
+                    <form action="?perfil=contratados&p=edicaoPedido" id="formRegiao" method="post">
+                        
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <div class="alert alert-danger" id="divRegiao">
+                                    <span class="alert-danger" id="spanRegiao"><strong><?=$mensagemRegiao?></strong></span>
+                                </div>
+                                <strong>Valor por Região:</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-offset-3 col-md-2">
+                                <label for="norte">Norte:</label>
+                                <input type="text" name="norte" id="norte" class="form-control"
+                                       onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= dinheiroParaBr($valorRegiao['norte']) ?? NULL ?>">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="sul">Sul:</label>
+                                <input type="text" name="sul" id="sul" class="form-control"
+                                       onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= dinheiroParaBr($valorRegiao['sul']) ?? NULL ?>">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="leste">Leste:</label>
+                                <input type="text" name="leste" id="leste" class="form-control"
+                                       onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= dinheiroParaBr($valorRegiao['leste']) ?? NULL ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-offset-4 col-md-2">
+                                <label for="oeste">Oeste:</label>
+                                <input type="text" name="oeste" id="oeste" class="form-control"
+                                       onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= dinheiroParaBr($valorRegiao['oeste']) ?? NULL ?>">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="centro">Centro:</label>
+                                <input type="text" name="centro" id="centro" class="form-control"
+                                       onkeypress="valorRegiao()" onblur="valorRegiao()" value="<?= dinheiroParaBr($valorRegiao['centro']) ?? NULL ?>">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-offset-2 col-md-8">
+                                <input type="hidden" name="valoresRegiao" id="valoresRegiao">
+                                <input type="submit" class="form-control btn btn-theme btn-block" id="btnValores" value="Gravar Valores">
+                            </div>
+                        </div>
+                    </form>
+                <?php } ?>
+
 				<!-- /Grupo -->
 				<form class="form-horizontal" role="form" onsubmit="return valida()" action="?perfil=contratados&p=edicaoPedido" method="post">
 		<?php
@@ -1211,15 +1362,31 @@
 		<?php
 			if($pedido['parcelas'] > 0)
 			{
+                if ($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4)
+                {
 		?>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-								<textarea  disabled name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
-								</textarea>
-								<p></p>
-							</div>
-						</div>
+                    <!--TODO: Adaptar texto das parcelas para Oficinas-->
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
+                            <textarea  readonly name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?>
+                            </textarea>
+                            <p></p>
+                        </div>
+                    </div>
 		<?php
+                }
+                else
+                {
+        ?>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
+                                <textarea  readonly name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
+                                    </textarea>
+                                <p></p>
+                            </div>
+                        </div>
+        <?php
+                }
 			}
 			else
 			{
@@ -1234,28 +1401,38 @@
 		?>   				  
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Parcelas (antes de editar as parcelas, é preciso salvar o pedido)</strong><br/>
-								<select class="form-control" id="parcelas" name="parcelas" >
+                                <select class="form-control" id="parcelas" name="parcelas">
+                                <?php if ($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4) { /*Caso seja evento tipo OFICINA*/?>
 									<option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
-									<option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
-									<option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
-									<option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
-									<option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
-									<option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
-									<option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
-									<option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
-									<option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
-									<option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
-									<option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
-									<option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
-									<option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
+									<option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única Oficinas de Curta Duração (1 mês)</option>
+									<option value="21" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 1)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração I (3 meses)</option>
+									<option value="22" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 2)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração II (4 meses) </option>
+									<option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas Oficina Estendida I (6 meses)</option>
+									<option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas Oficina Estendida II  (10 meses)</option>
+                                <?php } else { ?>
+                                    <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
+                                    <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
+                                    <option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
+                                    <option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
+                                    <option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
+                                    <option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
+                                    <option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
+                                    <option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
+                                    <option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
+                                    <option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
+                                    <option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
+                                    <option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
+                                    <option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
+                                <?php } ?>
 								</select>
 							</div>	
 						</div>
         <?php
-			if($pedido['parcelas'] > 1)
+			if(($pedido['parcelas'] > 1) || (($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4) && $pedido['parcelas'] != 0))
 			{ //libera a edição de parcelas
                 $mostraAlerta = isset($_POST['alertaParcela']) ? $_POST['alertaParcela'] : null;
-                if($mostraAlerta == null){
+                if($mostraAlerta == null)
+                {
                     ?>
                     <script>
                         alert("Lembre-se de editar as parcelas!");
@@ -1359,7 +1536,7 @@
 							<div class="col-md-offset-2 col-md-8">
 								<input type="hidden" name="atualizar" value="<?php echo $pedido['parcelas']; ?>" />
 								<input type="hidden" name="idPedidoContratacao" value="<?php echo $_SESSION['idPedido']; ?>" />
-								<input type="submit" name="GRAVAR" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
+								<input type="submit" name="GRAVAR" value="GRAVAR" class="btn btn-theme btn-lg btn-block" id="gravarPedido" onmouseover="valorRegiao()">
 							</div>
 						</div>
 					</div>
@@ -1378,8 +1555,9 @@
 			</div>
 		</div>
 	</div>	
-</section>  
-	<?php 
+</section>
+<script defer> window.onload = valorRegiao(); </script>
+	<?php
 		break;
 		case "edicaoProponente":
 			if(isset($_POST['pesquisar']))
@@ -1701,6 +1879,7 @@
 						<td>Nome</td>
 						<td>CPF</td>
 						<td width="15%"></td>    
+						<td width="15%"></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -1712,10 +1891,20 @@
 							echo "<td class='list_description'>".$descricao['CPF']."</td>";
 							echo "
 								<td class='list_description'>
-								<form method='POST' action='?perfil=contratados&p=edicaoPedido' >
-								<input type='hidden' name='idPedido' value='".$_POST['idPedido']."'>
-								<input type='hidden' name='insereExecutante' value='".$descricao['Id_PessoaFisica']."'>
-								<input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'></td></form>"	;
+                                    <form method='POST' action='?perfil=contratados&p=edicaoPedido' >
+                                        <input type='hidden' name='idPedido' value='".$_POST['idPedido']."'>
+                                        <input type='hidden' name='insereExecutante' value='".$descricao['Id_PessoaFisica']."'>
+                                        <input type ='submit' class='btn btn-theme btn-md btn-block' value='inserir'>
+                                    </form>
+                                </td>";
+							echo "
+								<td class='list_description'>
+                                    <form method='POST' action='?perfil=contratados&p=edicaoPessoa' >
+                                        <input type='hidden' name='idPedidoContratacao' value='".$_POST['idPedido']."'>
+                                        <input type='hidden' name='editaLider' value='".$descricao['Id_PessoaFisica']."'>
+                                        <input type ='submit' class='btn btn-theme btn-md btn-block' value='Editar Pessoa'>
+                                    </form>
+                                </td>"	;
 							echo "</tr>";
 						}
 					?>
@@ -2872,9 +3061,17 @@
 			}
 			else
 			{
-				$idPedidoContratacao = $_POST['idPedidoContratacao'];
-				$pedido = recuperaDados("igsis_pedido_contratacao",$idPedidoContratacao,"idPedidoContratacao");
-			}
+                if (isset($_POST['editaLider'])) {
+                    $idPedidoContratacao = $_POST['idPedidoContratacao'];
+                    $pedido = [
+                            'tipoPessoa' => 1,
+                            'idPessoa' => $_POST['editaLider']
+                    ];
+                } else {
+                    $idPedidoContratacao = $_POST['idPedidoContratacao'];
+                    $pedido = recuperaDados("igsis_pedido_contratacao", $idPedidoContratacao, "idPedidoContratacao");
+                }
+            }
 			switch($pedido['tipoPessoa'])
 			{
 				case 1:
@@ -3036,21 +3233,37 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="cadastrarFisica" value="<?php echo $fisica['Id_PessoaFisica'] ?>" />
-							<input type="hidden" name="idPedidoContratacao" value="<?php echo $_POST['idPedidoContratacao'] ?>" />
+							<input type="hidden" name="idPedidoContratacao" value="<?= $_POST['idPedidoContratacao'] ?>" />
 							<input type="hidden" name="Sucesso" id="Sucesso" />
 							<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
+                            <?php if (isset($_POST['editaLider'])) { ?>
+                                <input type="hidden" name="editaLider" value="<?= $_POST['editaLider'] ?>" />
+                            <?php } ?>
 						</div>
 					</div>
 				</form>
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
- 						<form method='POST' action='?perfil=contratados&p=arquivos'>
+
+                <form class="form-horizontal" method='POST' action='?perfil=contratados&p=arquivos'>
+                    <div class="form-group">
+					    <div class="col-md-offset-2 col-md-8">
 							<input type='hidden' name='idPessoa' value='<?php echo $fisica['Id_PessoaFisica'] ?>'>
 							<input type='hidden' name='tipoPessoa' value='1'>
 							<input type="submit" value="Anexar arquivos" class="btn btn-theme btn-lg btn-block">
-						</form>
-					</div>
-				</div>
+    					</div>
+	    			</div>
+                </form>
+
+                <?php if (isset($_POST['editaLider'])) { ?>
+                    <form class="form-horizontal" method='POST' action='?perfil=contratados&p=edicaoPedido'>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <input type="hidden" name="idPedido" value="<?= $_POST['idPedidoContratacao'] ?>"/>
+                                <input type='hidden' name='insereExecutante' value='<?= $fisica['Id_PessoaFisica'] ?>'>
+                                <input type='submit' class='btn btn-theme btn-lg btn-block' value='Inserir Pessoa no Pedido'/>
+                            </div>
+                        </div>
+                    </form>
+                <?php } ?>
 	  		</div>
 	  	</div>	
 	</div>
@@ -3695,12 +3908,12 @@ if ($pedido['TipoPessoa'] == 2)
 	$ex = siscontratDocs($pedido['IdExecutante'],1);
 	$rep01 = siscontratDocs($pj['Representante01'],3);
 	$rep02 = siscontratDocs($pj['Representante02'],3);
-	$t1 = "Esta comissão ratifica o pedido de contratação de ".$ex["Nome"]." por intermédio da ".$pj["Nome"].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido["ValorGlobal"]." (".valorPorExtenso($pedido["ValorGlobal"]).").";
+	$t1 = "Esta comissão ratifica o pedido de contratação de ".$ex['Nome']." por intermédio da ".$pj['Nome'].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido['ValorGlobal']." (".valorPorExtenso($pedido['ValorGlobal']).").";
 }
 else
 {
 	$pf = siscontratDocs($pedido['IdProponente'],1);
-	$t1 = "Esta comissão ratifica o pedido de contratação de ".$pf["Nome"].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido["ValorGlobal"]." (".valorPorExtenso($pedido["ValorGlobal"]).").";			
+	$t1 = "Esta comissão ratifica o pedido de contratação de ".$pf['Nome'].", para apresentação artística no evento “".$Objeto."”, que ocorrerá ".$Periodo." no valor de R$ ".$pedido['ValorGlobal']." (".valorPorExtenso($pedido['ValorGlobal']).").";
 }
 
 ?>

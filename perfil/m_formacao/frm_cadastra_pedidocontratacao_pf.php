@@ -4,6 +4,7 @@
 		$idPedidoContratacao = $_GET['id_ped'];
 	}
 	$con = bancoMysqli();
+	$impressao = false;
 	if(isset($_POST['action']))
 	{
 		switch($_POST['action'])
@@ -87,17 +88,20 @@
 					$mensagem = "Erro ao criar pedido";	
 				}
 			break;
-			case "atualizar":
+
+            case "atualizar":
 				$idPedidoContratacao = $_POST['idPedido'];
 				$Observacao = addslashes($_POST['Observacao']);
 				$Suplente  = $_POST['Suplente']; 
 				$Fiscal  = $_POST['Fiscal'];
 				$Parecer  = addslashes($_POST['Parecer']);
 				$Justificativa  = addslashes($_POST['Justificativa']);
+				$numeroProcesso = $_POST['numeroProcesso'] ?? null;
 				$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
 					observacao = '$Observacao',
 					parecerArtistico = '$Parecer',
-					justificativa = '$Justificativa'
+					justificativa = '$Justificativa',
+                    NumeroProcesso = '$numeroProcesso'
 					WHERE idPedidoContratacao = '$idPedidoContratacao'";
 				$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 				//verificaMysql($sql_atualiza_pedido);
@@ -111,6 +115,7 @@
 					if($query_atualiza_formacao)
 					{
 						$mensagem = "Pedido Atualizado";
+						$impressao = true;
 					}
 					else
 					{
@@ -179,7 +184,18 @@
 			<h2>PEDIDO DE CONTRATAÇÃO DE PESSOA FÍSICA</h2>
 			<h6><?php if(isset($mensagem)){ echo $mensagem; } ?></h6>
 		</div>
-		<div class="row">
+
+        <div class="row" style="padding-bottom: 1%">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">
+                        <a href="?perfil=formacao&p=frm_impressao_contratos&id_ped=<?=$idPedidoContratacao?>" class="btn btn-theme btn-lg btn-block" target="_blank">Ir para a área de impressão</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
 			<div class="col-md-offset-1 col-md-10">
 				<form class="form-horizontal" role="form" action="#" method="post">
 					<div class="form-group">
@@ -218,7 +234,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
-								<textarea  disabled name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']); ?> 
+								<textarea  disabled name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasFormacao($pedido['idPedidoContratacao'],$pedido['parcelas']); ?>
 								</textarea>
 							</div>
 						</div>
@@ -245,6 +261,18 @@
 								   </select>
 								</div>
 							</div>
+                            <?php
+                            if($pedido['estado'] != NULL OR $pedido['estado'] != "" )
+                            {
+                            ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><strong>Número do Processo:</strong>
+                                        <input type="text" class="form-control" id="NumeroProcesso" name="numeroProcesso" placeholder="Número do Processo"  value="<?php echo $pedido['NumeroProcesso']; ?>" />
+                                    </div>
+                                </div>
+                            <?php
+	                        }
+                            ?>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 									<textarea name="Observacao" cols="40" rows="5"><?php echo $pedido['observacao'] ?></textarea>

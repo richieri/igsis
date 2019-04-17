@@ -6,6 +6,56 @@ $con2 = bancoMysqliProponente();
 // Endereço da página
 $link = "?perfil=compara_pj";
 
+function comparaArquivosOficineiros ($query, $queryOficineiro)
+{
+    $registrosPf = [];
+    $registrosOficineiro = [];
+    while ($registroPf = mysqli_fetch_assoc($query))
+    {
+        array_push($registrosPf, $registroPf);
+    }
+    while ($registroOficineiro = mysqli_fetch_assoc($queryOficineiro))
+    {
+        array_push($registrosOficineiro, $registroOficineiro);
+    }
+    echo "
+								<table class='table table-condensed'>
+
+									<tbody>";
+    foreach ($registrosPf as $documentoPf => $arquivoPf)
+    {
+        foreach ($registrosOficineiro as $documentoPfOficineiro => $arquivoPfOficineiro)
+        {
+            if ($arquivoPf['documento'] == $arquivoPfOficineiro['documento'])
+            {
+                if ($arquivoPf['dataEnvio'] > $arquivoPfOficineiro['dataEnvio'])
+                {
+                    echo "<tr>";
+                    echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivoPf['arquivo']."' target='_blank'>".$arquivoPf['arquivo']."</a> (".$arquivoPf['documento'].")</td>";
+                    echo "</tr>";
+                    unset($registrosOficineiro[$documentoPfOficineiro]);
+                    unset($registrosPf[$documentoPf]);
+                }
+                else
+                {
+                    echo "<tr>";
+                    echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivoPfOficineiro['arquivo']."' target='_blank'>".$arquivoPfOficineiro['arquivo']."</a> (".$arquivoPfOficineiro['documento'].")</td>";
+                    echo "</tr>";
+                    unset($registrosOficineiro[$documentoPfOficineiro]);
+                    unset($registrosPf[$documentoPf]);
+                }
+            }
+        }
+    }
+    $documentos = array_merge($registrosPf, $registrosOficineiro);
+    foreach ($documentos as $arquivo)
+    {
+        echo "<tr>";
+        echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+        echo "</tr>";
+    }
+}
+
 // inicia a busca por CNPJ
 If($_GET['busca'] == '')
 {
@@ -419,37 +469,76 @@ If($query1 == '' && $query2 != '')
 					<p><i>Obs.: Os arquivos não são importados automaticamente. Faça o download e verifique os mesmos antes de efetuar o upload.</i></p>
 					<div align="left">
 						<div class="table-responsive list_info">
-						<?php
-							$sql = "SELECT *
-									FROM upload_lista_documento as list
-									INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
-									WHERE arq.idPessoa = '$idPessoaMac'
-									AND arq.idTipoPessoa = '2'
-									AND arq.publicado = '1'";
-							$query = mysqli_query($con2,$sql);
-							$linhas = mysqli_num_rows($query);
+                            <?php
+                            $sql = "SELECT *
+								FROM upload_lista_documento as list
+								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+								WHERE arq.idPessoa = '$idPessoaMac'
+								AND arq.idTipoPessoa = '2'
+								AND arq.publicado = '1'";
+                            $query = mysqli_query($con2,$sql);
+                            $linhas = mysqli_num_rows($query);
 
-							if ($linhas > 0)
-							{
-								echo "
-									<table class='table table-condensed'>
-										<tbody>";
-											while($arquivo = mysqli_fetch_array($query))
-											{
-												echo "<tr>";
-												echo "<td align = 'left' class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
-												echo "</tr>";
-											}
-								echo "
-										</tbody>
-									</table>";
-							}
-							else
-							{
-								echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
-							}
-						?>
-							<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
+                            $sqlOficineiro = "SELECT *
+								FROM upload_lista_documento as list
+								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+								WHERE arq.idPessoa = '$idPessoaMac'
+								AND arq.idTipoPessoa = '5'
+								AND arq.publicado = '1'";
+                            $queryOficineiro = $con2->query($sqlOficineiro);
+                            $linhasOficineiro = $queryOficineiro->num_rows;
+
+                            if ($linhas > 0)
+                            {
+                                if ($linhasOficineiro > 0)
+                                {
+                                    $tipoPessoa = [2,5];
+                                    comparaArquivosOficineiros($query, $queryOficineiro);
+                                    echo "
+									</tbody>
+								</table>";
+                                }
+                                else
+                                {
+                                    $tipoPessoa = [2];
+                                    echo "
+								<table class='table table-condensed'>
+
+									<tbody>";
+                                    while($arquivo = mysqli_fetch_array($query))
+                                    {
+                                        echo "<tr>";
+                                        echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "
+									</tbody>
+								</table>";
+                                }
+                            }
+                            elseif ($linhasOficineiro > 0)
+                            {
+                                $tipoPessoa = [5];
+                                echo "
+								<table class='table table-condensed'>
+
+									<tbody>";
+                                while($arquivo = $queryOficineiro->fetch_assoc())
+                                {
+                                    echo "<tr>";
+                                    echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+                                    echo "</tr>";
+                                }
+                                echo "
+									</tbody>
+								</table>";
+                            }
+                            else
+                            {
+                                echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+                            }
+                            ?>
+							<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo[]=<?=implode('&tipo[]=', $tipoPessoa)?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
 						</div>
 					</div>
 				</div>
@@ -756,37 +845,76 @@ If($query1 != '' && $query2 != '')
 					<p><i>Obs.: Os arquivos não são importados automaticamente. Faça o download e verifique os mesmos antes de efetuar o upload.</i></p>
 					<div align="left">
 						<div class="table-responsive list_info">
-						<?php
-							$sql = "SELECT *
-									FROM upload_lista_documento as list
-									INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
-									WHERE arq.idPessoa = '$idPessoaMac'
-									AND arq.idTipoPessoa = '2'
-									AND arq.publicado = '1'";
-							$query = mysqli_query($con2,$sql);
-							$linhas = mysqli_num_rows($query);
+                            <?php
+                            $sql = "SELECT *
+								FROM upload_lista_documento as list
+								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+								WHERE arq.idPessoa = '$idPessoaMac'
+								AND arq.idTipoPessoa = '2'
+								AND arq.publicado = '1'";
+                            $query = mysqli_query($con2,$sql);
+                            $linhas = mysqli_num_rows($query);
 
-							if ($linhas > 0)
-							{
-								echo "
-									<table class='table table-condensed'>
-										<tbody>";
-											while($arquivo = mysqli_fetch_array($query))
-											{
-												echo "<tr>";
-												echo "<td align = 'left' class='list_description'><a href='../../igsiscapac/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
-												echo "</tr>";
-											}
-								echo "
-										</tbody>
-									</table>";
-							}
-							else
-							{
-								echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
-							}
-						?>
-							<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo=2" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
+                            $sqlOficineiro = "SELECT *
+								FROM upload_lista_documento as list
+								INNER JOIN upload_arquivo as arq ON arq.idUploadListaDocumento = list.id
+								WHERE arq.idPessoa = '$idPessoaMac'
+								AND arq.idTipoPessoa = '5'
+								AND arq.publicado = '1'";
+                            $queryOficineiro = $con2->query($sqlOficineiro);
+                            $linhasOficineiro = $queryOficineiro->num_rows;
+
+                            if ($linhas > 0)
+                            {
+                                if ($linhasOficineiro > 0)
+                                {
+                                    $tipoPessoa = [2,5];
+                                    comparaArquivosOficineiros($query, $queryOficineiro);
+                                    echo "
+									</tbody>
+								</table>";
+                                }
+                                else
+                                {
+                                    $tipoPessoa = [2];
+                                    echo "
+								<table class='table table-condensed'>
+
+									<tbody>";
+                                    while($arquivo = mysqli_fetch_array($query))
+                                    {
+                                        echo "<tr>";
+                                        echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "
+									</tbody>
+								</table>";
+                                }
+                            }
+                            elseif ($linhasOficineiro > 0)
+                            {
+                                $tipoPessoa = [5];
+                                echo "
+								<table class='table table-condensed'>
+
+									<tbody>";
+                                while($arquivo = $queryOficineiro->fetch_assoc())
+                                {
+                                    echo "<tr>";
+                                    echo "<td align = 'left' class='list_description'><a href='../../proponente/uploadsdocs/".$arquivo['arquivo']."' target='_blank'>".$arquivo['arquivo']."</a> (".$arquivo['documento'].")</td>";
+                                    echo "</tr>";
+                                }
+                                echo "
+									</tbody>
+								</table>";
+                            }
+                            else
+                            {
+                                echo "<p>Não há arquivo(s) inserido(s).<p/><br/>";
+                            }
+                            ?>
+							<a href="../include/arquivos_pessoa_capac.php?idPessoa=<?php echo $idPessoaMac ?>&tipo[]=<?=implode('&tipo[]=', $tipoPessoa)?>" class="btn btn-theme btn-md btn-block" target="_blank">Baixar todos os arquivos da empresa</a>
 						</div>
 					</div>
 				</div>

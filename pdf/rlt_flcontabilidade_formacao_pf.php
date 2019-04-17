@@ -19,6 +19,9 @@ $objeto = $pedido["Objeto"];
 $local = $pedido["Local"];
 $justificativa = $pedido["Justificativa"];
 
+$form = recuperaDados("sis_formacao",$id_ped,"idPedidoContratacao");
+$coord = recuperaDados("sis_formacao_coordenadoria",$form['Coordenarias'],"idCoordenadoria");
+
 $pedido_pessoa = siscontratDocs($pedido['IdProponente'],1);
 $nome = $pedido_pessoa["Nome"];
 $cpf = $pedido_pessoa["CPF"];
@@ -96,6 +99,7 @@ $sei =
   "<p><strong>SMC - CONTABILIDADE</strong></p>".
   "<p><strong>Sr.(a) Contador(a)</strong></p>".
   "<p align='justify'>Encaminho o presente para providências quanto ao pagamento, uma vez que os serviços foram realizados e confirmados a contento conforme documento link SEI.</p>".
+  "<p align='justify'>Em virtude da Regionalização e Georreferenciamento das Despesas Municipais com a nova implantação do Detalhamento da Ação em 2019 no Sistema SOF,  informamos que os valores do presente pagamento foram gastos na região ".$coord['Coordenadoria'].".</p>".
   "<p>&nbsp;</p>".
   
   "<p>INFORMAÇÕES COMPLEMENTARES</p>".

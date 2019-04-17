@@ -1,6 +1,9 @@
 <?php
 	include 'includes/menu.php';
-	$con = bancoMysqli(); 
+	$con = bancoMysqli();
+
+	unset($_SESSION['id']);
+
 	if(isset($_POST['pesquisar']))
 	{
 		// inicia a busca por Razao Social ou CNPJ

@@ -92,12 +92,41 @@ case "pedidos":
 			$pessoa = siscontratDocs($dados['IdProponente'],$dados['TipoPessoa']);
 ?>
             <p align="left">
+           	Código do Pedido: <b><?php echo $pedido[$i] ?></b><br />
 			Nome ou Razão Social: <b><?php echo $pessoa['Nome'] ?></b><br />
 			Tipo de pessoa: <b><?php echo retornaTipoPessoa($dados['TipoPessoa']);?></b><br />
 			Dotação: <b><?php echo retornaVerba($dados['Verba']);?></b><br />
 			Valor: <b>R$ <?php echo dinheiroParaBr($dados['ValorGlobal']);?></b><br />		
-			 </p>      
-<?php } // fechamento do for 
+			 </p>
+      
+<?php } // fechamento do for
+?>
+<div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+				<h5>Pedidos Relacionados</h5>
+				<?php 
+					$outros = listaPedidoContratacao($idEvento); 
+					for($i = 0; $i < count($outros); $i++)
+					{
+						$dados = siscontrat($outros[$i]);
+						if($dados['TipoPessoa'] == 1)
+						{
+				?>
+							<p align="left">Número do Pedido de Contratação:<b> <a href="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $outros[$i]; ?>"></b><?php echo $outros[$i]; ?></a><br /></p>
+				<?php 
+						}
+						if($dados['TipoPessoa'] == 2)
+						{
+				?>
+							<p align="left">Número do Pedido de Contratação:<b> <a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $outros[$i]; ?>"></b><?php echo $outros[$i]; ?></a><br /></p>
+				<?php 
+						}
+					}		
+				?>
+            	<br />
+			</div>
+		</div> 
+<?php		
 }
 	else
 { 

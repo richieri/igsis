@@ -1,4 +1,9 @@
-﻿	<div class="menu-area">
+﻿<?php
+$con = bancoMysqli();
+$evento = recuperaDados('ig_evento', $_SESSION['idEvento'], 'idEvento');
+
+?>
+        <div class="menu-area">
 			<div id="dl-menu" class="dl-menuwrapper">
 						<button class="dl-trigger">Open Menu</button>
 						<ul class="dl-menu">
@@ -33,7 +38,9 @@
                                         <li><a href="?perfil=evento&p=ocorrencias&action=inserir">Inserir nova ocorrência</a></li>
                                     </ul>
                             </li>
-                            <li><a href="?perfil=contratados">Contratados</a></li>
+                            <?php if ($evento['ig_tipo_evento_idTipoEvento']) { ?>
+                                <li><a href="?perfil=contratados">Contratados</a></li>
+                            <?php } ?>
 
                             <li><a href="?perfil=evento&p=enviar">Finalizar</a> </li>
  							<li><a href="#">Outras Opções</a> 
