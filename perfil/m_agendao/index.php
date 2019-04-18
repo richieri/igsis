@@ -22,7 +22,7 @@ include "include/menu.php";
                 <a class="btn btn-theme btn-block" href="?perfil=agendao&p=evento_cadastra">Lista / Edita evento</a>
             </div>
             <div class="col-md-4">
-                <a class="btn btn-theme btn-block" href="?perfil=agendao&p=evento_cadastra">Exporta evento para o excel</a>
+                <a class="btn btn-theme btn-block" href="?perfil=agendao&p=agendao_filtro_excel">Exporta evento para o excel</a>
             </div>
         </div>
     </div>
