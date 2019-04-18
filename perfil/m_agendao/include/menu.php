@@ -9,8 +9,8 @@ $perfil = $_SESSION['perfil'];
 		<button class="dl-trigger">Busca</button>
 			<ul class="dl-menu">
 
-				<li><a href="<?= $pasta ?>filtro">Cadastra evento</a></li>
-				<li><a href="<?= $pasta ?>programacao_local">Lista evento</a></li>
+				<li><a href="<?= $pasta ?>evento_cadastra">Cadastra evento</a></li>
+				<li><a href="<?= $pasta ?>lista_eventos">Lista evento</a></li>
                 <li><a href="<?= $pasta ?>agendao_filtro_excel">Exporta Excel</a></li>
 
 				<li style="color:white;">-------------------------</li>
