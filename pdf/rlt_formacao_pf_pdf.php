@@ -57,14 +57,17 @@ $INSS = $pessoa["INSS"];
 $sqlFormacao = "SELECT * FROM sis_formacao WHERE IdPessoaFisica = $idPf AND publicado = '1' ORDER BY Ano DESC LIMIT 0,1";
 $formacao = $con->query($sqlFormacao)->fetch_assoc();
 
+$pedido = recuperaDados('igsis_pedido_contratacao', $formacao['idPedidoContratacao'], 'idPedidoContratacao');
+
 $equipamento1 = recuperaDados('ig_local', $formacao['IdEquipamento01'], 'idLocal')['sala'];
 $equipamento2 = recuperaDados('ig_local', $formacao['IdEquipamento02'], 'idLocal')['sala'];
 $cargo = recuperaDados('sis_formacao_cargo', $formacao['IdCargo'], 'Id_Cargo')['Cargo'];
-$vigencia = recuperaDados('sis_formacao_vigencia', $formacao['IdVigencia'], 'Id_Vigencia')['descricao'];
+$vigencia = retornaPeriodoVigencia($formacao['idPedidoContratacao']);
 $valor = recuperaDados('igsis_pedido_contratacao', $formacao['idPedidoContratacao'], 'idPedidoContratacao')['valor'];
 $miniCurriculo = recuperaDados('sis_pessoa_fisica_formacao', $formacao['IdPessoaFisica'], 'IdPessoaFisica')['Curriculo'];
 $numProcesso = recuperaDados('igsis_pedido_contratacao', $formacao['idPedidoContratacao'], 'idPedidoContratacao')['NumeroProcesso'];
 $status = ($formacao['Status'] == 1) ? "Ativo" : "Inativo";
+$cargaHoraria = retornaCargaHoraria($formacao['idPedidoContratacao'], $pedido['parcelas']);
 
 if ($foto == null) {
     $fotoImg = "../visual/images/avatar_default.png";
@@ -95,7 +98,9 @@ $pdf->Cell(180,15,utf8_decode("REGISTRO DE PESSOA FÍSICA"),0,1,'C');
 
 $pdf->Ln(5);
 
-$pdf->Image($fotoImg,160,56,-200);
+//$pdf->Image($fotoImg,160,56, );
+$pdf->SetX(160);
+$pdf->Cell( 40, 40, $pdf->Image($fotoImg, 160, $pdf->GetY(), 33.78), 0, 0, 'R', false );
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
@@ -131,7 +136,7 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(20,$l,utf8_decode('Endereço:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->MultiCell(160,$l,utf8_decode($Endereco));
+$pdf->MultiCell(70,$l,utf8_decode($Endereco));
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
@@ -186,6 +191,12 @@ $pdf->MultiCell(168,$l,utf8_decode("R$ ".dinheiroParaBr($valor)." "."($ValorPorE
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
+$pdf->Cell(35, $l, utf8_decode('Carga Horária Total:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(10,$l, utf8_decode($cargaHoraria)." horas",0,1,'L');
+
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', 10);
 $pdf->Cell(27,$l,utf8_decode('Mini currículo:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
 $pdf->MultiCell(153,$l,utf8_decode($miniCurriculo));
@@ -199,10 +210,6 @@ $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(14,$l,utf8_decode('Status:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
 $pdf->Cell(40,$l,utf8_decode($status),0,0,'L');
-$pdf->SetFont('Arial','B', 10);
-$pdf->Cell(20,$l,utf8_decode('Pontuação:'),0,0,'L');
-$pdf->SetFont('Arial','', 10);
-$pdf->Cell(15,$l,utf8_decode($formacao['Pontuacao']),0,1,'L');
 
 $pdf->Output();
 ?>

@@ -20,7 +20,7 @@
 	{
 		case 'lista': 
 			unset($_SESSION['edicaoPessoa']);
-			if($_SESSION['idPedido'])
+			if(isset($_SESSION['idPedido']))
 			{
 				// fecha a session idPedido
 				unset($_SESSION['idPedido']);
@@ -3518,17 +3518,27 @@
 				{ 
 					$y = $arq['idTipoDoc'];
 					$x = $arq['sigla'];
-					$nome_arquivo = $_FILES['arquivo']['name'][$x];
-					if($nome_arquivo != "")
-					{
-						$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
-						//$ext = strtolower(substr($nome_arquivo[$i],-4)); //Pegando extensão do arquivo
-						$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
-						$hoje = date("Y-m-d H:i:s");
-						$dir = '../uploadsdocs/'; //Diretório para uploads
-						if(move_uploaded_file($nome_temporario, $dir.$new_name))
-						{
-							$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pessoa` 
+					$nome_arquivo = $_FILES['arquivo']['name'][$x] ?? null;
+					$f_size = $_FILES['arquivo']['size'][$x] ?? null;
+
+					if ($f_size > 600000) {
+                        echo "<script>
+                                swal('Tamanho de arquivo excedido', 'Tamanho máximo permitido: 0,6 MB.', 'error');                             
+                            </script>";
+                    } else {
+                        if ($nome_arquivo != "") {
+                            $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                            //$ext = strtolower(substr($nome_arquivo[$i],-4)); //Pegando extensão do arquivo
+                            $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                            $hoje = date("Y-m-d H:i:s");
+                            $dir = '../uploadsdocs/'; //Diretório para uploads
+                            $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
+                            $ext = strtolower(substr($nome_arquivo,-4));
+
+                            if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
+                            {
+                                if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
+                                    $sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pessoa` 
 								(`idArquivosPessoa`, 
 								`idTipoPessoa`, 
 								`idPessoa`, 
@@ -3543,22 +3553,23 @@
 								'$hoje', 
 								'1', 
 								'$y'); ";
-							$query = mysqli_query($con,$sql_insere_arquivo);
-							if($query)
-							{
-						 		gravarLog($sql_insere_arquivo);
-								$mensagem = "Arquivo recebido com sucesso";
-							}
-							else
-							{
-								$mensagem = "Erro ao gravar no banco";
-							}
-						}
-						else
-						{
-							$mensagem = "Erro no upload";   
-						}
-					}	
+                                    $query = mysqli_query($con, $sql_insere_arquivo);
+                                    if ($query) {
+                                        gravarLog($sql_insere_arquivo);
+                                        $mensagem = "Arquivo recebido com sucesso";
+                                    } else {
+                                        $mensagem = "Erro ao gravar no banco";
+                                    }
+                                } else {
+                                    $mensagem = "Erro no upload";
+                                }
+                            } else {
+                                echo "<script>
+                                          swal('Erro no upload!', 'Anexar documentos somente no formato PDF.', 'error');                             
+                                      </script>";
+                            }
+                        }
+                    }
 				}
 			}
 			if(isset($_POST['apagar']))
@@ -3679,16 +3690,26 @@
 					$y = $arq['idTipoDoc'];
 					$x = $arq['sigla'];
 					$nome_arquivo = $_FILES['arquivo']['name'][$x];
-					if($nome_arquivo != "")
-					{
-						$nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
-						//$ext = strtolower(substr($nome_arquivo[$i],-4)); //Pegando extensão do arquivo
-						$new_name = date("YmdHis")."_".semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
-						$hoje = date("Y-m-d H:i:s");
-						$dir = '../uploadsdocs/'; //Diretório para uploads  
-						if(move_uploaded_file($nome_temporario, $dir.$new_name))
-						{	  
-							$sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pedidos` 
+                    $f_size = $_FILES['arquivo']['size'][$x] ?? null;
+
+                    if ($f_size > 600000) {
+                        echo "<script>
+                                swal('Tamanho de arquivo excedido', 'Tamanho máximo permitido: 0,6 MB.', 'error');                             
+                            </script>";
+                    } else {
+                        if ($nome_arquivo != "") {
+                            $nome_temporario = $_FILES['arquivo']['tmp_name'][$x];
+                            //$ext = strtolower(substr($nome_arquivo[$i],-4)); //Pegando extensão do arquivo
+                            $new_name = date("YmdHis") . "_" . semAcento($nome_arquivo); //Definindo um novo nome para o arquivo
+                            $hoje = date("Y-m-d H:i:s");
+                            $dir = '../uploadsdocs/'; //Diretório para uploads
+                            $allowedExts = array(".pdf", ".PDF"); //Extensões permitidas
+                            $ext = strtolower(substr($nome_arquivo,-4));
+
+                            if(in_array($ext, $allowedExts)) //Pergunta se a extensão do arquivo, está presente no array das extensões permitidas
+                            {
+                                if (move_uploaded_file($nome_temporario, $dir . $new_name)) {
+                                    $sql_insere_arquivo = "INSERT INTO `igsis_arquivos_pedidos` 
 								(`idArquivosPedidos`, 
 								`idPedido`, 
 								`arquivo`, 
@@ -3701,22 +3722,23 @@
 								'$hoje', 
 								'1', 
 								'$y')";
-							$query = mysqli_query($con,$sql_insere_arquivo);
-							if($query)
-							{
- 								gravarLog($sql_insere_arquivo);
-								$mensagem = "Arquivo recebido com sucesso";
-							}
-							else
-							{
-								$mensagem = "Erro ao gravar no banco";
-							}
-						}
-						else
-						{
-							$mensagem = "Erro no upload";
-						}
-					}
+                                    $query = mysqli_query($con, $sql_insere_arquivo);
+                                    if ($query) {
+                                        gravarLog($sql_insere_arquivo);
+                                        $mensagem = "Arquivo recebido com sucesso";
+                                    } else {
+                                        $mensagem = "Erro ao gravar no banco";
+                                    }
+                                } else {
+                                    $mensagem = "Erro no upload";
+                                }
+                            } else {
+                                echo "<script>
+                                          swal('Erro no upload!', 'Anexar documentos somente no formato PDF.', 'error');                             
+                                      </script>";
+                            }
+                        }
+                    }
 				}
 			}
 			if(isset($_POST['apagar']))

@@ -88,17 +88,20 @@
 					$mensagem = "Erro ao criar pedido";	
 				}
 			break;
-			case "atualizar":
+
+            case "atualizar":
 				$idPedidoContratacao = $_POST['idPedido'];
 				$Observacao = addslashes($_POST['Observacao']);
 				$Suplente  = $_POST['Suplente']; 
 				$Fiscal  = $_POST['Fiscal'];
 				$Parecer  = addslashes($_POST['Parecer']);
 				$Justificativa  = addslashes($_POST['Justificativa']);
+				$numeroProcesso = $_POST['numeroProcesso'] ?? null;
 				$sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
 					observacao = '$Observacao',
 					parecerArtistico = '$Parecer',
-					justificativa = '$Justificativa'
+					justificativa = '$Justificativa',
+                    NumeroProcesso = '$numeroProcesso'
 					WHERE idPedidoContratacao = '$idPedidoContratacao'";
 				$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 				//verificaMysql($sql_atualiza_pedido);
@@ -258,6 +261,18 @@
 								   </select>
 								</div>
 							</div>
+                            <?php
+                            if($pedido['estado'] != NULL OR $pedido['estado'] != "" )
+                            {
+                            ?>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-8"><strong>Número do Processo:</strong>
+                                        <input type="text" class="form-control" id="NumeroProcesso" name="numeroProcesso" placeholder="Número do Processo"  value="<?php echo $pedido['NumeroProcesso']; ?>" />
+                                    </div>
+                                </div>
+                            <?php
+	                        }
+                            ?>
 							<div class="form-group">
 								<div class="col-md-offset-2 col-md-8"><strong>Observação:</strong><br/>
 									<textarea name="Observacao" cols="40" rows="5"><?php echo $pedido['observacao'] ?></textarea>

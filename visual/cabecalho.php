@@ -26,6 +26,7 @@ if(!isset ($_SESSION['usuario']) == true) //verifica se há uma sessão, se não
 
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <?php include "../include/script.php"; ?>
   </head>
   <body>

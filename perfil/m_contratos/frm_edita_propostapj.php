@@ -796,16 +796,22 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 				</div>
 				
 				<!-- reabrir -->
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_reabre"  method="post">
-						<input type="hidden" name="final" value="?perfil=contratos&p=frm_busca" >
-						<input type="hidden" name="voltar" value="?<?php echo $_SERVER["QUERY_STRING"] ?>" >
-						<input type="hidden" name="idEvento" value="<?php echo $pedido['idEvento'] ?>" >
-						<input type="submit" class="btn btn-theme btn-lg btn-block" value="Reabertura">
-					</form>
-					</div>
-				</div>
+                <?php
+                if($coord['contratos'] ==  3) {
+                ?>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                        <form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_reabre"  method="post">
+                            <input type="hidden" name="final" value="?perfil=contratos&p=frm_busca" >
+                            <input type="hidden" name="voltar" value="?<?php echo $_SERVER["QUERY_STRING"] ?>" >
+                            <input type="hidden" name="idEvento" value="<?php echo $pedido['idEvento'] ?>" >
+                            <input type="submit" class="btn btn-theme btn-lg btn-block" value="Reabertura">
+                        </form>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
 				<!-- // reabrir -->
 				
 				<div class="form-group">
