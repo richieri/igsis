@@ -73,6 +73,7 @@ $sei =
   "<p><strong>Período:</strong> ".$periodoParcela."</p>". 
   "<p>&nbsp;</p>".
   "<p align='justify'>Com base na Confirmação de Serviços (Documento SEI link ), atesto que foi efetivamente cumprido ".$horas." horas de trabalho durante o período supra citado.</p>".
+  "<p align='justify'>Em virtude do detalhamento da Ação em 2019, informamos que o pagamento  no valor de R$ 4.194,72 (quatro mil, cento e noventa e quatro reais e setenta e dois centavos) foi gasto na zona sul de São Paulo, rua Volkswagen, s/nº, Jabaquara, SP.</p>".
   "<p align='justify'>Encaminhamos o presente para as providências necessárias relativas ao pagamento da parcela do referido processo.</p>".
   "<p>&nbsp;</p>".
   "<p>&nbsp;</p>"
