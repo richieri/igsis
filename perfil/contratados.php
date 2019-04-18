@@ -20,7 +20,7 @@
 	{
 		case 'lista': 
 			unset($_SESSION['edicaoPessoa']);
-			if($_SESSION['idPedido'])
+			if(isset($_SESSION['idPedido']))
 			{
 				// fecha a session idPedido
 				unset($_SESSION['idPedido']);
