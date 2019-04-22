@@ -115,9 +115,9 @@ include "include/menu.php";
                         <input type="submit" class="btn btn-theme btn-lg btn-block" value="Avançar">
                     </form>
                 </div>
-            </div>
             <?php
-        }
-        ?>
+            }
+            ?>
+        </div>
     </div>
 </section>
