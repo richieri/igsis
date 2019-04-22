@@ -20,9 +20,11 @@ if (isset($_POST['cadastra'])) {
     $links = $_POST['linksCom'];
     $nApresentacao = $_POST['nApresentacao'];
     $espacoPublico = $_POST['espacoPublico'];
+    $fomento = $_POST['fomento'];
+    $tipoFomento = $_POST['tipoFomento'] ?? 0;
 
-    $sqlInsereEvento = "INSERT INTO ig_evento (nomeEvento, projetoEspecial, fichaTecnica, ig_tipo_evento_idTipoEvento, faixaEtaria, sinopse, linksCom, idUsuario, idInstituicao, statusEvento, ocupacao, numero_apresentacao, espaco_publico, publicado)
-                        VALUES ('$nomeEvento', '$idProjetoEspecial', '$artistas', '$idTipoEvento', '$idFaixaEtaria', '$sinopse', '$links', '$idUsuario', '$idInstituicao', 'Em Elaboração', '1', '$nApresentacao', '$espacoPublico','1')";
+    $sqlInsereEvento = "INSERT INTO ig_evento (nomeEvento, projetoEspecial, fichaTecnica, ig_tipo_evento_idTipoEvento, faixaEtaria, sinopse, linksCom, idUsuario, idInstituicao, statusEvento, ocupacao, numero_apresentacao, espaco_publico, fomento, tipo_fomento, publicado)
+                        VALUES ('$nomeEvento', '$idProjetoEspecial', '$artistas', '$idTipoEvento', '$idFaixaEtaria', '$sinopse', '$links', '$idUsuario', '$idInstituicao', 'Em Elaboração', '1', '$nApresentacao', '$espacoPublico', '$fomento', '$tipoFomento','1')";
     if ($con->query($sqlInsereEvento)) {
         $idEvento = $con->insert_id;
 
@@ -50,6 +52,8 @@ if (isset($_POST['atualiza'])) {
     $links = $_POST['linksCom'];
     $nApresentacao = $_POST['nApresentacao'];
     $espacoPublico = $_POST['espacoPublico'];
+    $fomento = $_POST['fomento'];
+    $tipoFomento = $_POST['tipoFomento'] ?? 0;
 
     $sqlAtualizaEvento = "UPDATE ig_evento SET 
                         nomeEvento = '$nomeEvento',
@@ -60,7 +64,9 @@ if (isset($_POST['atualiza'])) {
                         sinopse = '$sinopse',
                         linksCom = '$links',
                         numero_apresentacao = '$nApresentacao',
-                        espaco_publico = '$espacoPublico'
+                        espaco_publico = '$espacoPublico',
+                        fomento = '$fomento',
+                        tipo_fomento = '$tipoFomento'
                         WHERE idEvento = '$idEvento'";
 
     if ($con->query($sqlAtualizaEvento)) {
@@ -125,13 +131,36 @@ include "include/menu.php";
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-5">
                             <label for="nApresentacao">Nº apresentação</label>
-                            <input type="number" name="nApresentacao" id="nApresentacao" class="form-control" value="<?= $campo['numero_apresentacao'] ?>" min='1'>
+                            <input type="number" name="nApresentacao" id="nApresentacao" class="form-control"
+                                   value="<?= $campo['numero_apresentacao'] ?>" min='1'>
                         </div>
 
                         <div class="col-md-5">
-                            <label for="espacoPublico">Espaço Público?</label><br>
-                            <input type="radio" name="espacoPublico" id="espacoPublico" value="1" <?= $campo['espaco_publico'] == 1 ? 'checked' : NULL ?>> Sim
-                            <input type="radio" name="espacoPublico" id="espacoPublico" value="0" <?= $campo['espaco_publico'] == 0 ? 'checked' : NULL ?>> Não
+                            <label for="espacoPublico">Espaço Publico?</label><br>
+                            <input type="radio" name="espacoPublico" id="espacoPublico"
+                                   value="1" <?= $campo['espaco_publico'] == 1 ? 'checked' : NULL ?>> Sim
+                            <input type="radio" name="espacoPublico" id="espacoPublico"
+                                   value="0" <?= $campo['espaco_publico'] == 0 ? 'checked' : NULL ?>> Não
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-5">
+                                <label for="fomento">É fomento/programa?</label><br>
+                                <input type="radio" name="fomento" class="fomento" id="sim" value="1" <?= $campo['fomento'] == 1 ? 'checked' : NULL ?>> Sim
+                                <input type="radio" name="fomento" class="fomento" id="nao" value="0" <?= $campo['fomento'] == 0 ? 'checked' : NULL ?>> Não
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="espacoPublico">Selecione o fomento/programa</label><br>
+                                <select name="tipoFomento" id="tipoFomento" class="form-control">
+                                    <option value="">Selecione o fomento/programa da SMC</option>
+                                    <?php
+                                        geraOpcaoPadrao('fomento', $campo['tipoFomento']);
+                                    ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -319,3 +348,19 @@ include "include/menu.php";
         </div>
     </div>
 </section>
+
+<script type="text/javascript">
+    var fomento = $('.fomento');
+    fomento.on("change", verificaFomento);
+    $(document).ready(verificaFomento());
+
+    function verificaFomento() {
+        if ($('#sim').is(':checked')) {
+            $('#tipoFomento')
+                .attr('disabled', false)
+        } else {
+            $('#tipoFomento')
+                .attr('disabled', true);
+        }
+    }
+</script>
