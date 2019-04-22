@@ -885,8 +885,9 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 				Horário: $hora<br />
 				Duração: $duracao<br />
 				Local: $espaco - $instituicao<br />
-				Retirada de ingresso: $retirada  - Valor: $valor <br />
-				Observações: $observacao<br />";
+				Retirada de ingresso: $retirada  - Valor: $valor <br />";
+
+            $ocorrencia .= ($observacao == "") ? "" : "Observações: $observacao<br />";
 				
 			echo "<tr>";
 			echo "<td class='list_description'>".$ocorrencia."</td>";
