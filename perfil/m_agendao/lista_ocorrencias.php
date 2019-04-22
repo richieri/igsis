@@ -42,7 +42,7 @@ include "include/menu.php";
         <div class="row">
             <div class="col-md-12">
                 <div class="text-hide">
-                    <h2>Ocorrencias</h2>
+                    <h2>Ocorrências</h2>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
                 </div>
             </div>
@@ -52,7 +52,7 @@ include "include/menu.php";
                 <div class="col-md-5 text-center">
                     <form method="POST" action="?perfil=agendao&p=ocorrencia_cadastra" class="form-horizontal" role="form">
                         <input type="hidden" name="idEvento" value="<?= $idEvento ?>">
-                        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Cadastrar Nova Ocorrência">
+                        <input type="submit" class="btn btn-theme btn-md btn-block" value="Cadastrar Nova Ocorrência">
                     </form>
                 </div>
             </div>
