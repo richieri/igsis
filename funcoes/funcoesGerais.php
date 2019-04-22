@@ -395,6 +395,25 @@
 		}
 	}
 
+function geraOpcaoPadrao($tabela, $select = '')
+{
+    //gera os options de um select
+    $sql = "SELECT * FROM $tabela ORDER BY 2";
+    $con = bancoMysqli();
+    $query = mysqli_query($con,$sql);
+    while($option = mysqli_fetch_row($query))
+    {
+        if($option[0] == $select)
+        {
+            echo "<option value='".$option[0]."' selected >".$option[1]."</option>";
+        }
+        else
+        {
+            echo "<option value='".$option[0]."'>".$option[1]."</option>";
+        }
+    }
+}
+    
 /**
  * Esta função gera checkboxes que tem relacionamento com "eventos". <strong>A ordem das colunas nas tabelas interfere no
  * resultado desta função.</strong> <br>

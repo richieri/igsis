@@ -120,3 +120,17 @@ INSERT INTO `ig_periodo_dia` (`id`, `periodo`) VALUES (NULL, 'Manhã (06h às 12
 
 ALTER TABLE `ig_ocorrencia` ADD `idPeriodoDia` TINYINT(1) NULL AFTER `idSubprefeitura`;
 
+/*
+--------------------------------------------------------------------------------------------------------------------
+ ULTIMAS ALTERAÇÕES
+-------------------------------------------------------------------------------------------------------------------- 
+*/
+
+CREATE TABLE `igsis`.`fomento` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `fomento` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+  
+  ALTER TABLE `igsis`.`ig_evento` 
+ADD COLUMN `fomento` TINYINT(1) NOT NULL DEFAULT 0 AFTER `espaco_publico`,
+ADD COLUMN `tipo_fomento` INT NOT NULL DEFAULT 0 AFTER `fomento`;
