@@ -11,7 +11,7 @@ $perfil = $_SESSION['perfil'];
 
 				<li><a href="<?= $pasta ?>evento_cadastra">Cadastra evento</a></li>
 				<li><a href="<?= $pasta ?>lista_eventos">Lista evento</a></li>
-                <li><a href="<?= $pasta ?>agendao_filtro_excel">Exporta Excel</a></li>
+                <li><a href="<?= $pasta ?>exportar_filtra">Exporta Excel</a></li>
 
 				<li style="color:white;">-------------------------</li>
 				<li><a href="?secao=perfil">Carregar módulo</a></li>
