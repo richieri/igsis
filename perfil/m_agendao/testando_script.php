@@ -19,7 +19,7 @@ while ($locais = mysqli_fetch_array($queryLocais)) {
         $nums[$i] = $arrayNums[0];
         $num = $nums[$i];
 
-        $bairros[$i] = $arrayNums[1] ?? null;
+        $bairros[$i] = isset($arrayNums[1]) ? trim($arrayNums[1]) : null;
         $bairro = $bairros[$i];
 
         //print_r($arrayRua);
