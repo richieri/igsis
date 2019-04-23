@@ -98,3 +98,5 @@ ALTER TABLE `igsis`.`ig_local`
     ADD COLUMN `numero` INT(5) NULL AFTER `logradouro`,
     ADD COLUMN `complemento` VARCHAR(20) NULL AFTER `numero`,
     ADD COLUMN `bairro` VARCHAR(80) NULL AFTER `complemento`;
+
+/*Executar arquivo locais-22-04-19.sql após comando acima*/
