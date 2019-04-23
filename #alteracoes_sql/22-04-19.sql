@@ -69,7 +69,11 @@ UPDATE `ig_papelusuario` SET `agendao` = '1' WHERE `ig_papelusuario`.`idPapelUsu
 
 ALTER TABLE `ig_evento` ADD `numero_apresentacao` INT NOT NULL DEFAULT '0' AFTER `statusEvento`, ADD `espaco_publico` TINYINT(1) NOT NULL DEFAULT '0' AFTER `numero_apresentacao`;
 
--- 22/04/2019 -> Lorelei
+/*
+--------------------------------------------------------------------------------------------------------------------
+22/04/2019 -> Lorelei
+--------------------------------------------------------------------------------------------------------------------
+*/
 CREATE TABLE `igsis_subprefeitura` (`id` tinyint(2) NOT NULL, `subprefeitura` varchar(30) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `igsis_subprefeitura` (`id`, `subprefeitura`) VALUES
@@ -134,3 +138,13 @@ CREATE TABLE `igsis`.`fomento` (
   ALTER TABLE `igsis`.`ig_evento` 
 ADD COLUMN `fomento` TINYINT(1) NOT NULL DEFAULT 0 AFTER `espaco_publico`,
 ADD COLUMN `tipo_fomento` INT NOT NULL DEFAULT 0 AFTER `fomento`;
+
+/*
+--------------------------------------------------------------------------------------------------------------------
+23/04/2019 -> Tanair
+--------------------------------------------------------------------------------------------------------------------
+*/
+ALTER TABLE `igsis`.`ig_local`
+    ADD COLUMN `logradouro` VARCHAR(255) NULL AFTER `rua`,
+    ADD COLUMN `numero` INT(5) NULL AFTER `logradouro`,
+    ADD COLUMN `bairro` VARCHAR(80) NULL AFTER `numero`;
