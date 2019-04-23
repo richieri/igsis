@@ -130,24 +130,24 @@ include "include/menu.php";
 
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-5">
-                            <label for="nApresentacao">Nº apresentação</label>
-                            <input type="number" name="nApresentacao" id="nApresentacao" class="form-control"
-                                   value="<?= $campo['numero_apresentacao'] ?>" min='1'>
-                        </div>
-
-                        <div class="col-md-5">
-                            <label for="espacoPublico">Espaço Publico?</label><br>
+                            <label for="espacoPublico">Espaço público? *</label><br>
                             <input type="radio" name="espacoPublico" id="espacoPublico"
                                    value="1" <?= $campo['espaco_publico'] == 1 ? 'checked' : NULL ?>> Sim
                             <input type="radio" name="espacoPublico" id="espacoPublico"
                                    value="0" <?= $campo['espaco_publico'] == 0 ? 'checked' : NULL ?>> Não
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="nApresentacao">Quantidade de apresentação *</label>
+                            <input type="number" name="nApresentacao" id="nApresentacao" class="form-control"
+                                   value="<?= $campo['numero_apresentacao'] ?>" min='1'>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-offset-1 col-md-5">
-                                <label for="fomento">É fomento/programa?</label><br>
+                                <label for="fomento">É fomento/programa? *</label><br>
                                 <input type="radio" name="fomento" class="fomento" id="sim" value="1" <?= $campo['fomento'] == 1 ? 'checked' : NULL ?>> Sim
                                 <input type="radio" name="fomento" class="fomento" id="nao" value="0" <?= $campo['fomento'] == 0 ? 'checked' : NULL ?>> Não
                             </div>
@@ -209,13 +209,7 @@ include "include/menu.php";
 
                     <div class="row form-group">
                         <div class="col-md-offset-1 col-md-10">
-                            <label>Atividade realizada em espaço público</label>
-                        </div>
-                    </div>
-
-                    <div class="row form-group">
-                        <div class="col-md-offset-1 col-md-10">
-                            <label>Classificação/indicação etária</label>
+                            <label>Classificação/indicação etária *</label>
                             <select class="form-control" name="faixaEtaria" id="faixaEtaria" required>
                                 <option value="">Selecione...</option>
                                 <?php echo geraOpcao("ig_etaria", $campo['faixaEtaria'], "") ?>
