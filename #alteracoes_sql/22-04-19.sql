@@ -147,4 +147,5 @@ ADD COLUMN `tipo_fomento` INT NOT NULL DEFAULT 0 AFTER `fomento`;
 ALTER TABLE `igsis`.`ig_local`
     ADD COLUMN `logradouro` VARCHAR(255) NULL AFTER `rua`,
     ADD COLUMN `numero` INT(5) NULL AFTER `logradouro`,
-    ADD COLUMN `bairro` VARCHAR(80) NULL AFTER `numero`;
+    ADD COLUMN `complemento` VARCHAR(20) NULL AFTER `numero`,
+    ADD COLUMN `bairro` VARCHAR(80) NULL AFTER `complemento`;
