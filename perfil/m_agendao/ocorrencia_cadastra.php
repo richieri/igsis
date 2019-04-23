@@ -32,6 +32,9 @@ if (isset($_POST['cadastra'])) {
     $duracao = $_POST['duracao'];
     $valor_ingresso = dinheiroDeBr($_POST['valorIngresso']);
 
+    $subprefeitura = $_POST['subprefeitura'];
+    $periodo = $_POST['periodo'];
+
     if(($data_fim == NULL))
     {
         $tipoOcorrencia = 3; // Tipo de Ocorrência data única
@@ -42,10 +45,11 @@ if (isset($_POST['cadastra'])) {
     }
 
     $sql = "INSERT INTO ig_ocorrencia 
-(idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, publicado )  
+(idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, subprefeitura_id, idPeriodoDia,publicado )  
             VALUES 
-('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', $segunda, $terca, $quarta, $quinta, $sexta, $sabado, $domingo, '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, 1  )";
+('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', $segunda, $terca, $quarta, $quinta, $sexta, $sabado, $domingo, '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, '$subprefeitura', '$periodo', 1  )";
 
+    echo $sql;
     if (mysqli_query($con, $sql))
     {
         $idOcorrencia = recuperaUltimo('ig_ocorrencia');
@@ -79,6 +83,9 @@ if (isset($_POST['atualiza'])) {
     $duracao = $_POST['duracao'];
     $valor_ingresso = dinheiroDeBr($_POST['valorIngresso']);
 
+    $subprefeitura = $_POST['subprefeitura'];
+    $periodo = $_POST['periodo'];
+
     if(($data_fim == NULL))
     {
         $tipoOcorrencia = 3; // Tipo de Ocorrência data única
@@ -105,7 +112,9 @@ if (isset($_POST['atualiza'])) {
                 horaInicio = '$horario_inicio',
                 valorIngresso = $valor_ingresso,
                 retiradaIngresso = $retirada_ingresso_id,
-                duracao = $duracao  
+                duracao = $duracao,
+                subprefeitura_id = '$subprefeitura',
+                idPeriodoDia = '$periodo'  
              WHERE idOcorrencia = '$idOcorrencia'";
 
     if (mysqli_query($con, $sql))
@@ -201,6 +210,26 @@ include "include/menu.php";
                         <div class=" col-md-3">
                             <label>Duração *</label>
                             <input type="text" id="duracao" name="duracao" class="form-control" id="" placeholder="em minutos" value="<?php echo isset($ocorrencia['duracao']) ? $ocorrencia['duracao'] : '' ?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Período</label>
+                            <select class="form-control" name="periodo" id="periodo" >
+                                <option>Selecione</option>
+                                <?php
+                                geraOpcao("ig_periodo_dia",$ocorrencia['idPeriodoDia'],"") ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <label>Subprefeitura</label>
+                            <select class="form-control" name="subprefeitura" id="subprefeitura" >
+                                <option>Selecione</option>
+                                <?php
+                                geraOpcao("igsis_subprefeitura",$ocorrencia['subprefeitura_id'],"") ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">

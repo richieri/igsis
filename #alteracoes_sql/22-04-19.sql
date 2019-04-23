@@ -49,13 +49,13 @@ ALTER TABLE `igsis_subprefeitura`
 ALTER TABLE `igsis_subprefeitura`
    MODIFY `id` tinyint(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
-ALTER TABLE `ig_ocorrencia` ADD `idSubprefeitura` TINYINT(2) NULL AFTER `observacao`;
+ALTER TABLE `ig_ocorrencia` ADD `subprefeitura_id` TINYINT(2) NULL AFTER `observacao`;
 
 
 CREATE TABLE `igsis`.`ig_periodo_dia` (`id` INT NOT NULL AUTO_INCREMENT COMMENT '', `periodo` VARCHAR(25) NOT NULL COMMENT '', PRIMARY KEY (`id`)  COMMENT '');
 INSERT INTO `ig_periodo_dia` (`id`, `periodo`) VALUES (NULL, 'Manhã (06h às 12h)'), (NULL, 'Tarde (12h às 18h)'), (NULL, 'Noite (18h às 00h)'), (NULL, 'Madrugada (00h às 06h)');
 
-ALTER TABLE `ig_ocorrencia` ADD `idPeriodoDia` TINYINT(1) NULL AFTER `idSubprefeitura`;
+ALTER TABLE `ig_ocorrencia` ADD `idPeriodoDia` TINYINT(1) NULL AFTER `subprefeitura_id`;
 
 /*
 --------------------------------------------------------------------------------------------------------------------
