@@ -124,7 +124,7 @@ include "include/menu.php";
                         <div class="col-md-offset-1 col-md-10">
                             <label for="artistas">Artistas *</label>
                             <textarea id="artistas" name="artistas" class="form-control"
-                                      rows="5"><?php echo $campo["sinopse"] ?></textarea>
+                                      rows="5"><?php echo $campo["fichaTecnica"] ?></textarea>
                         </div>
                     </div>
 
