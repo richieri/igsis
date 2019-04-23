@@ -12,9 +12,9 @@ $evento = $con->query("
          INNER JOIN ig_etaria AS fx ON eve.faixaEtaria = fx.idIdade
     WHERE idEvento = '$idEvento'")->fetch_assoc();
 
-$linguagem = $con->query("SELECT linguagem FROM igsis_linguagem AS l INNER JOIN igsis_evento_linguagem AS e ON l.id = e.idLinguagem WHERE publicado = '1' ORDER BY linguagem");
+$linguagem = $con->query("SELECT linguagem FROM igsis_linguagem AS l INNER JOIN igsis_evento_linguagem AS e ON l.id = e.idLinguagem WHERE e.idEvento = '$idEvento' AND publicado = '1' ORDER BY linguagem");
 
-$representatividade = $con->query("SELECT representatividade_social FROM igsis_representatividade AS r INNER JOIN igsis_evento_representatividade AS e ON r.id = e.idRepresentatividade WHERE publicado = 1 ORDER BY representatividade_social");
+$representatividade = $con->query("SELECT representatividade_social FROM igsis_representatividade AS r INNER JOIN igsis_evento_representatividade AS e ON r.id = e.idRepresentatividade WHERE e.idEvento = '$idEvento' AND publicado = '1' ORDER BY representatividade_social");
 
 $idProdutor = $evento['ig_produtor_idProdutor'];
 $produtor= $con->query("SELECT * FROM ig_produtor WHERE idProdutor = '$idProdutor'")->fetch_assoc();
@@ -67,13 +67,13 @@ else{
         <div class = "page-header"><h4>Produtor</h4></div>
         <div class="well">
             <p align="justify">
-                <strong>Nome :</strong> <?= $produtor['nome'] ?> |
+                <strong>Nome:</strong> <?= $produtor['nome'] ?> |
                 <strong>Telefone:</strong> <?= $produtor['telefone'] ?> <?= $produtor['telefone2'] ? "/ ". $produtor['telefone2'] : NULL ?> |
                 <strong>E-mail:</strong> <?= $produtor['email'] ?>
             </p>
         </div>
 
-        <div class = "page-header"><h4>Ocorrência</h4></div>
+        <div class="page-header"><h4>Ocorrência</h4></div>
         <div class="well">
             <?php
             while($campo = mysqli_fetch_array($ocorrencia)){
