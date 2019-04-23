@@ -139,6 +139,22 @@ CREATE TABLE `igsis`.`fomento` (
 ADD COLUMN `fomento` TINYINT(1) NOT NULL DEFAULT 0 AFTER `espaco_publico`,
 ADD COLUMN `tipo_fomento` INT NOT NULL DEFAULT 0 AFTER `fomento`;
 
+INSERT INTO fomento (fomento) VALUES 
+('Fomento à Dança'),
+('Fomento ao Teatro'),
+('Fomento às Rádio Comunitárias'),
+('Apoio ao Raggae'),
+('Apoio à Fotografia'),
+('Apoio à Música'),
+('Digitalização de Acervo'),
+('Apoio ao Circo'),
+('Museu de Arte de Rua - Apoio à Arte de Rua'),
+('Fomento aos Livros: Autores não estreantes'),
+('Fomento aos Livros: Autores estreantes'),
+('Fomento à Cultura da Periferia'),
+('Programa VAI'),
+('Programa Cultura Viva Municipal');
+
 /*
 --------------------------------------------------------------------------------------------------------------------
 23/04/2019 -> Tanair
