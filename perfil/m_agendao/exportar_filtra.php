@@ -71,18 +71,39 @@ if (isset($_POST['filtrar'])) {
     $sql = "SELECT
                 E.idEvento,
                 E.nomeEvento AS 'nome',
+                E.espaco_publico AS 'espaco_publico',
                 TE.tipoEvento AS 'categoria',
                 DATE_FORMAT(O.dataInicio, '%d/%m/%Y') AS 'data',
                 DATE_FORMAT(O.horaInicio, '%H:%i') AS 'horario_inicial',
                 O.valorIngresso AS 'valor',
+                O.retiradaIngresso AS 'ingresso'
                 E.sinopse AS 'descricao',
                 L.sala AS 'nome_local',
                 I.sigla AS 'instituicao',
                 I.instituicao AS 'equipamento',
                 L.rua AS 'endereco',
+                L.logradouro AS 'logradouro',
+                L.numero AS 'numero',
+                L.complemento AS 'complemento',
+                L.bairro AS 'bairro',
+                L.cidade AS 'cidade',
+                L.estado AS 'estado',
+                L.cep AS 'cep',
                 I.telefone AS 'telefone',
                 E.nomeGrupo AS 'artista',
                 O.duracao AS 'duracao',
+                O.subprefeitura_id AS 'id_subprefeitura',
+                O.dataInicio AS 'data_inicio',
+                O.dataFinal AS 'data_fim',
+                O.segunda AS 'segunda',
+                O.terca AS 'terca',
+                O.quarta AS 'quarta',
+                O.quinta AS 'quinta',
+                O.sexta AS 'sexta', 
+                O.sabado AS 'sabado',
+                O.domingo AS 'domingo',
+                O.horaInicio AS 'hora_inicio',
+                O.idPeriodoDia AS 'idPeriodo',
                 CI.faixa AS 'classificacao',
                 E.linksCom AS 'divulgacao',
                 E.sinopse AS 'sinopse',
@@ -236,7 +257,6 @@ if (isset($_POST['filtrar'])) {
                     <tr class='list_menu'>
                         <td>Instituição</td>
                         <td>Equipamento / Local</td>
-                        <td>Endereço</td>
                         <td>Telefone</td>
                         <td>Nome do Evento</td>
                         <td>Projeto Especial</td>
@@ -265,7 +285,6 @@ if (isset($_POST['filtrar'])) {
                         <tr>
                             <td class="list_description"><?= $linha['instituicao'] ?></td>
                             <td class="list_description"><?= $linha['equipamento'] ?> - <?= $linha['nome_local'] ?></td>
-                            <td class="list_description"><?= $linha['endereco'] ?></td>
                             <td class="list_description"><?= $linha['telefone'] ?></td>
                             <td class="list_description"><?= $linha['nome'] ?></td>
                             <td class="list_description"><?= $linha['projetoEspecial'] ?></td>
@@ -278,7 +297,7 @@ if (isset($_POST['filtrar'])) {
                             <td class="list_description"><?= ($linha['valor'] == 0 ? "Gratuito" : "R$ " . dinheiroParaBr($linha['valor'])) ?></td>
                             <td class="list_description"><?= $linha['classificacao'] ?></td>
                             <td class="list_description"><?= $linha['divulgacao'] ?></td>
-                            <td class="list_description"><?= mb_strimwidth($linha['sinopse'], 0, 80, '...') ?></td>
+                            <td class="list_description"><?= mb_strimwidth($linha['sinopse'], 0, 50, '...') ?></td>
                             <td class="list_description"><?= $linha['produtor_nome'] ?></td>
                             <td class="list_description"><?= $linha['produtor_email'] ?></td>
                             <td class="list_description"><?= $linha['produtor_fone'] ?></td>

@@ -24,33 +24,48 @@ $objPHPExcel->getProperties()->setCategory("Inscritos");
 
 // Criamos as colunas
 $objPHPExcel->setActiveSheetIndex(0)
-    ->setCellValue('A1', 'Instituição' )
-    ->setCellValue('B1', "Equipamento / Local" )
-    ->setCellValue("C1", "Endereço" )
-    ->setCellValue("D1", "Telefone" )
-    ->setCellValue("E1", "Nome do Evento")
-    ->setCellValue("F1", "Projeto Especial")
-    ->setCellValue("G1", "Artista")
-    ->setCellValue("H1", "Data")
-    ->setCellValue("I1", "Hora")
-    ->setCellValue("J1", "Duração")
-    ->setCellValue("K1", "Nº de Apresentações")
-    ->setCellValue("L1", "Linguagem")
-    ->setCellValue("M1", "Valor")
-    ->setCellValue("N1", "Classificação Indicativa")
-    ->setCellValue("O1", "Links de Divulgação")
-    ->setCellValue("P1", "Sinopse")
-    ->setCellValue("Q1", "Produtor do Evento")
-    ->setCellValue("R1", "Email")
-    ->setCellValue("S1", "Telefone")
-    ->setCellValue("T1", "Inserido por (usuário)");
+    ->setCellValue('A1', 'Instituição/Coordenadoria' )
+    ->setCellValue('B1', "Equipamento" )
+    ->setCellValue("C1", "Espaço Público?" )
+    ->setCellValue("D1", "Local do Evento")
+    ->setCellValue("E1", "Logradouro")
+    ->setCellValue("F1", "Número")
+    ->setCellValue("G1", "Complemento")
+    ->setCellValue("H1", "Bairro")
+    ->setCellValue("I1", "Cidade")
+    ->setCellValue("J1", "Estado")
+    ->setCellValue("K1", "CEP")
+    ->setCellValue("L1", "SubPrefeitura")
+    ->setCellValue("M1", "Telefone")
+    ->setCellValue("N1", "Data Início")
+    ->setCellValue("O1", "Data Fim")
+    ->setCellValue("P1", "Dias da semana")
+    ->setCellValue("Q1", "Horário de início")
+    ->setCellValue("R1", "Período")
+    ->setCellValue("S1", "Duração (em minutos)")
+    ->setCellValue("T1", "Nº de atividades")
+    ->setCellValue("U1", "Cobrança de ingresso")
+    ->setCellValue("V1", "Valor do ingresso")
+    ->setCellValue("W1", "Nome do Evento")
+    ->setCellValue("X1", "Projeto Especial?")
+    ->setCellValue("Y1", "Artistas")
+    ->setCellValue("Z1", "Ação")
+    ->setCellValue("AA", "Público")
+    ->setCellValue("AB", "É Fomento/Programa?")
+    ->setCellValue("AC", "Classificação indicativa")
+    ->setCellValue("AD", "Link de Divulgação")
+    ->setCellValue("AE", "Sinopse")
+    ->setCellValue("AF", "Produtor do Evento")
+    ->setCellValue("AG", "E-mail de contato")
+    ->setCellValue("AH", "Telefone de contato")
+    ->setCellValue("AI", "Imagem para divulgação");
 
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:I1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:Y1')->getFont()->setBold(true);
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:I1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:Y1')->applyFromArray
 (
     array
     (
@@ -65,6 +80,24 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:I1')->applyFromArray
 $cont = 2;
 while($linha = mysqli_fetch_array($query))
 {
+    $dias = "Não especificado.";
+    $linha['segunda'] == 1 ?? $dias = "Segunda, ";
+    $linha['terca'] == 1 ?? $dias .= "Terça, ";
+    $linha['quarta'] == 1 ?? $dias .= "Quarta, ";
+    $linha['quinta'] == 1 ?? $dias .= "Quinta, ";
+    $linha['sexta'] == 1 ?? $dias .= "Sexta, ";
+    $linha['sabado'] == 1 ?? $dias .= "Sabádo, ";
+    $linha['domingo'] == 1 ?? $dias .= "Domingo. ";
+
+    $sqlPrefeitura = "SELECT * FROM igsis_subprefeitura WHERE id = '" . $linha['id_subprefeitura'] . "'";
+    $prefeitura = $con->query($sqlPrefeitura)->fetch_assoc();
+
+    $sqlPeriodo = "SELECT * FROM ig_periodo_dia WHERE id = '" . $linha['idPeriodo'] . "'";
+    $periodo = $con->query($sqlPeriodo)->fetch_assoc();
+
+    $sqlIngresso = "SELECT * FROM ig_retirada WHERE idRetirada = '" . $linha['ingresso'] . "'";
+    $retirada = $con->query($sqlIngresso)->fetch_assoc();
+
     $sqlConsultaOcorrencias = "SELECT idEvento FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
     $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
 
@@ -89,29 +122,47 @@ while($linha = mysqli_fetch_array($query))
     $r = "R".$cont;
     $s = "S".$cont;
     $t = "T".$cont;
+    $u = "U".$cont;
+    $v = "V".$cont;
+    $w = "W".$cont;
+    $x = "X".$cont;
+    $y = "Y".$cont;
+    $z = "Z".$cont;
+    $aa = "AA".$cont;
+    $ab = "AB".$cont;
+    $ac = "AC".$cont;
+    $ad = "AD".$cont;
+    $ae = "AE".$cont;
+    $af = "AF".$cont;
+    $ag = "AG".$cont;
 
 
     $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue($a, $linha['instituicao'])
-        ->setCellValue($b, $linha['equipamento'] . " - " . $linha['nome_local'])
-        ->setCellValue($c, $linha['endereco'])
-        ->setCellValue($d, $linha['telefone'])
-        ->setCellValue($e, $linha['nome'])
-        ->setCellValue($f, $linha['projetoEspecial'])
-        ->setCellValue($g, $linha['artista'])
-        ->setCellValue($h, $linha['data'])
-        ->setCellValue($i, $linha['horario_inicial'])
-        ->setCellValue($j, $linha['duracao'] . " minutos")
-        ->setCellValue($k, $apresentacoes)
-        ->setCellValue($l, $linha['categoria'])
-        ->setCellValue($m, $linha['valor'])
-        ->setCellValue($n, $linha['classificacao'])
-        ->setCellValue($o, $linha['divulgacao'])
-        ->setCellValue($p, $linha['sinopse'])
-        ->setCellValue($q, $linha['produtor_nome'])
-        ->setCellValue($r, $linha['produtor_email'])
-        ->setCellValue($s, $linha['produtor_fone'])
-        ->setCellValue($t, $linha['nomeCompleto']);
+        ->setCellValue($b, $linha['equipamento'])
+        ->setCellValue($c, $linha['espaco_publico'] == 1 ? "SIM" : "NÃO")
+        ->setCellValue($d, $linha['nome_local'])
+        ->setCellValue($e, $linha['logradouro'])
+        ->setCellValue($f, $linha['numero'])
+        ->setCellValue($g, $linha['complemento'])
+        ->setCellValue($h, $linha['bairro'])
+        ->setCellValue($i, $linha['cidade'])
+        ->setCellValue($j, $linha['estado'])
+        ->setCellValue($k, $linha['cep'])
+        ->setCellValue($l, $prefeitura['subprefeitura'])
+        ->setCellValue($m, $linha['telefone'])
+        ->setCellValue($n, $linha['data_inicio'])
+        ->setCellValue($o, $linha['data_fim'])
+        ->setCellValue($p, $dias)
+        ->setCellValue($q, $linha['hora_inicio'])
+        ->setCellValue($r, $periodo['periodo'])
+        ->setCellValue($s, $linha['duracao'] . " minutos.")
+        ->setCellValue($t, $apresentacoes)
+        ->setCellValue($u, $retirada['retirada'])
+        ->setCellValue($v, $linha['nome'])
+        ->setCellValue($w, $linha['bairro'])
+        ->setCellValue($x, $linha['cidade'])
+        ->setCellValue($y, $linha['estado']);
 
     $cont++;
 }
