@@ -78,7 +78,7 @@ if (isset($_POST['cadastra'])) {
     }
 
     $sql = "INSERT INTO ig_ocorrencia 
-(idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, subprefeitura_id, idPeriodoDia,publicado )  
+(idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, subprefeitura_id, idPeriodoDia, publicado )  
             VALUES 
 ('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', $segunda, $terca, $quarta, $quinta, $sexta, $sabado, $domingo, '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, '$subprefeitura', '$periodo', 1  )";
 

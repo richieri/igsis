@@ -873,6 +873,8 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 			{
 				$dia_especial = "";
 			}
+			$subprefeitura = ($campo['subprefeitura_id'] == null) ? "" : recuperaDados('igsis_subprefeitura', $campo['subprefeitura_id'], 'id')['subprefeitura'];
+			$periodo = ($campo['idPeriodoDia'] == null) ? "" : recuperaDados('ig_periodo_dia', $campo['idPeriodoDia'], 'id')['periodo'];
 			//recuperaDados($tabela,$idEvento,$campo)
 			$hora = exibirHora($campo['horaInicio']);
 			$duracao = recuperaDuracao($campo ['duracao']);
@@ -906,8 +908,10 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 				Local: $espaco - $instituicao<br />
 				Retirada de ingresso: $retirada  - Valor: $valor <br />";
 
+            $ocorrencia .= ($periodo == "") ? "" : "Período: $periodo<br />";
+            $ocorrencia .= ($subprefeitura == "") ? "" : "Subprefeitura: $subprefeitura<br />";
             $ocorrencia .= ($observacao == "") ? "" : "Observações: $observacao<br />";
-				
+
 			echo "<tr>";
 			echo "<td class='list_description'>".$ocorrencia."</td>";
 			echo "

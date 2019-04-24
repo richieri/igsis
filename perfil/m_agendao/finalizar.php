@@ -6,7 +6,7 @@ $con = bancoMysqli();
 $idEvento = $_POST['idEvento'] ?? null;
 
 $evento = $con->query("
-    SELECT eve.nomeEvento, prj.projetoEspecial,eve.fichaTecnica, fx.faixa, eve.sinopse, eve.linksCom, eve.ig_produtor_idProdutor
+    SELECT eve.nomeEvento, prj.projetoEspecial,eve.fichaTecnica, fx.faixa, eve.sinopse, eve.linksCom, eve.ig_produtor_idProdutor, eve.numero_apresentacao, eve.espaco_publico, eve.fomento, eve.tipo_fomento
     FROM ig_evento AS eve
          INNER JOIN ig_projeto_especial AS prj ON eve.projetoEspecial = prj.idProjetoEspecial
          INNER JOIN ig_etaria AS fx ON eve.faixaEtaria = fx.idIdade
@@ -20,11 +20,13 @@ $idProdutor = $evento['ig_produtor_idProdutor'];
 $produtor= $con->query("SELECT * FROM ig_produtor WHERE idProdutor = '$idProdutor'")->fetch_assoc();
 
 $ocorrencia = $con->query("
-    SELECT oco.idOcorrencia, oco.dataInicio, oco.dataFinal, oco.horaInicio, oco.duracao, loc.sala, inst.sigla, ret.retirada, oco.valorIngresso, oco.segunda, oco.terca, oco.quarta, oco.quinta, oco.sexta, oco.sabado, oco.domingo, loc.rua, loc.cidade, loc.estado, loc.cep
+    SELECT oco.idOcorrencia, oco.dataInicio, oco.dataFinal, oco.horaInicio, oco.duracao, loc.sala, inst.sigla, ret.retirada, oco.valorIngresso, oco.segunda, oco.terca, oco.quarta, oco.quinta, oco.sexta, oco.sabado, oco.domingo, loc.logradouro, loc.numero, loc.complemento, loc.bairro, loc.cidade, loc.estado, loc.cep, sub.subprefeitura, pd.periodo
     FROM ig_ocorrencia AS oco
     INNER JOIN ig_retirada AS ret ON oco.retiradaIngresso = ret.idRetirada
     INNER JOIN ig_local AS loc ON oco.local = loc.idLocal
     INNER JOIN ig_instituicao AS inst ON loc.idInstituicao = inst.idInstituicao
+    LEFT JOIN igsis_subprefeitura AS sub ON oco.subprefeitura_id = sub.id
+    LEFT JOIN ig_periodo_dia AS pd ON oco.idPeriodoDia = pd.id
     WHERE oco.idEvento = '$idEvento' AND oco.publicado = 1 
     ORDER BY dataInicio");
 
@@ -38,7 +40,7 @@ else{
 ?>
 <section class="home-section bg-white">
     <div class="container">
-        <div class = "page-header"><h4>Evento</h4></div>
+        <div class="page-header"><h4>Evento</h4></div>
         <div class="well">
             <p align="justify"><strong>Nome do evento:</strong> <?= $evento['nomeEvento'] ?></p>
             <p align="justify"><strong>Projeto especial:</strong> <?= $evento['projetoEspecial'] ?></p>
@@ -57,11 +59,17 @@ else{
                 }
                 ?>
             </p>
-            <p align="justify"><strong>Atividade realizada em espaço público:</strong> <?//= $evento[''] ?><p>
+            <p align="justify"><strong>Atividade realizada em espaço público:</strong> <?= ($evento['espaco_publico'] == 0) ? "Não" : "Sim" ?><p>
+            <p align="justify"><strong>Pertence a algum fomento ou programa:</strong> <?= ($evento['fomento'] == 0) ? "Não" : "Sim" ?><p>
+            <?php
+            if ($evento['fomento'] != 0) {
+                echo "<p align='justify'><strong>Fomento / Programa:</strong> ". recuperaDados('fomento', $evento['tipo_fomento'], 'id')['fomento']."<p>";
+            }
+            ?>
             <p align="justify"><strong>Classificação/indicação etária:</strong> <?= $evento['faixa'] ?><p>
             <p align="justify"><strong>Sinopse:</strong> <?= $evento['sinopse'] ?><p>
             <p align="justify"><strong>Links de divulgação:</strong> <?= $evento['linksCom'] ?><p>
-            <p align="justify"><strong>Número de apresentações:</strong> <?//= $evento['linksCom'] ?><p>
+            <p align="justify"><strong>Número de apresentações:</strong> <?= $evento['numero_apresentacao'] ?><p>
         </div>
 
         <div class = "page-header"><h4>Produtor</h4></div>
@@ -99,9 +107,17 @@ else{
                 <p align="justify">
                     <strong>Data:</strong> <?= $data." ".$semana ?> <br/>
                     <strong>Horário:</strong> <?= exibirHora($campo['horaInicio']) ?><br>
+                    <strong>Período:</strong> <?= ($campo['periodo'] == null) ? "Não Cadastrado" : $campo['periodo']  ?><br>
                     <strong>Duração:</strong> <?= $campo['duracao'] ?> minutos<br>
                     <strong>Local:</strong>  <?= $campo['sala'] ." - ". $campo['sigla'] ?><br>
-                    <strong>Endereço:</strong>  <?= $campo['rua'] ." - ". $campo['cidade']  ." - ". $campo['estado'] ." - ". $campo['cep']?><br>
+                    <strong>Subprefeitura:</strong>  <?= ($campo['subprefeitura'] == null) ? "Não Cadastrado" : $campo['subprefeitura'] ?><br>
+                    <strong>CEP:</strong>  <?= $campo['cep']?><br>
+                    <strong>Logradouro:</strong>  <?= $campo['logradouro'] ?><br>
+                    <strong>Número:</strong>  <?= $campo['numero'] ?><br>
+                    <strong>Complemento:</strong>  <?= $campo['complemento'] ?><br>
+                    <strong>Bairro:</strong>  <?= $campo['bairro'] ?><br>
+                    <strong>Cidade:</strong>  <?= $campo['cidade'] ?><br>
+                    <strong>Estado:</strong>  <?= $campo['estado'] ?><br>
                     <strong>Retirada de ingresso:</strong>  <?=  $campo['retirada']."  - Valor: ".dinheiroParaBr($campo['valorIngresso']) ?><br>
                 </p>
                 <br>
