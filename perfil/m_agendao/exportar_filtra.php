@@ -324,3 +324,42 @@ if (isset($_POST['filtrar'])) {
     }
 
 </script>
+
+<script>
+    $( function() {
+        var usuarios = [];
+        $.getJSON("ajax_usuario.php", function(result){
+            $.each(result, function(i, field){
+                usuarios.push(field.nomeCompleto);
+            });
+        });
+
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
+        $("#inserido").autocomplete({
+            source: usuarios
+        });
+    } );
+</script>
