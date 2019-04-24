@@ -125,7 +125,7 @@ while($linha = mysqli_fetch_array($query))
     }
 
     if ($linha['fomento'] == 1) {
-        $sqlFomento = "SELECT * FROM "
+        $sqlFomento = "SELECT * FROM fomento WHERE id = '". $linha['tipoFomento']."'";
     }
 
 
