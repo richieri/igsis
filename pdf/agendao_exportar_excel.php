@@ -80,7 +80,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:Y1')->applyFromArray
 $cont = 2;
 while($linha = mysqli_fetch_array($query))
 {
-    $dias = "Não especificado.";
+    $dias = "";
     $linha['segunda'] == 1 ?? $dias = "Segunda, ";
     $linha['terca'] == 1 ?? $dias .= "Terça, ";
     $linha['quarta'] == 1 ?? $dias .= "Quarta, ";
@@ -88,6 +88,48 @@ while($linha = mysqli_fetch_array($query))
     $linha['sexta'] == 1 ?? $dias .= "Sexta, ";
     $linha['sabado'] == 1 ?? $dias .= "Sabádo, ";
     $linha['domingo'] == 1 ?? $dias .= "Domingo. ";
+
+    //Ações
+    $sqlAcao = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '". $linha['idEvento'] . "'";
+    $queryAcao = mysqli_query($con, $sqlAcao);
+    $acoes = [];
+    $i = 0;
+
+    while ($arrayAcoes = mysqli_fetch_array($queryAcao)) {
+        $idAcao = $arrayAcoes['idLinguagem'];
+        $sqlLinguagens = "SELECT * FROM igsis_linguagem WHERE id = '$idAcao'";
+        $linguagens = $con->query($sqlLinguagens)->fetch_assoc();
+        $acoes[$i] = $linguagens['linguaguem'];
+    }
+
+    if (count($acoes) != 0) {
+        $stringAcoes = implode(", ", $acoes);
+    }
+
+
+    //Público
+    $sqlPublico = "SELECT * FROM igsis_evento_representatividade WHERE idEvento = '". $linha['idEvento'] . "'";
+    $queryPublico = mysqli_query($con, $sqlPublico);
+    $representatividade = [];
+    $i = 0;
+
+    while ($arrayPublico = mysqli_fetch_array($queryPublico)) {
+        $idRepresentatividade = $arrayPublico['idRepresentatividade'];
+        $sqlRepresen = "SELECT * FROM igsis_representatividade WHERE id = '$idRepresentatividade'";
+        $publicos = $con->query($sqlRepresen)->fetch_assoc();
+        $representatividade[$i] = $publicos['representatividade_social'];
+    }
+
+    if (count($acoes) != 0) {
+        $stringPublico = implode(", ", $representatividade);
+    }
+
+    if ($linha['fomento'] == 1) {
+        $sqlFomento = "SELECT * FROM "
+    }
+
+
+
 
     $sqlPrefeitura = "SELECT * FROM igsis_subprefeitura WHERE id = '" . $linha['id_subprefeitura'] . "'";
     $prefeitura = $con->query($sqlPrefeitura)->fetch_assoc();
@@ -97,6 +139,9 @@ while($linha = mysqli_fetch_array($query))
 
     $sqlIngresso = "SELECT * FROM ig_retirada WHERE idRetirada = '" . $linha['ingresso'] . "'";
     $retirada = $con->query($sqlIngresso)->fetch_assoc();
+
+    $sqlProjeto = "SELECT * FROM ig_projeto_especial WHERE idProjetoEspecial = '" . $linha['idProjetoEspecial'] . "'";
+    $projeto = $con->query($sqlProjeto)->fetch_assoc();
 
     $sqlConsultaOcorrencias = "SELECT idEvento FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
     $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
@@ -160,9 +205,17 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue($t, $apresentacoes)
         ->setCellValue($u, $retirada['retirada'])
         ->setCellValue($v, $linha['nome'])
-        ->setCellValue($w, $linha['bairro'])
-        ->setCellValue($x, $linha['cidade'])
-        ->setCellValue($y, $linha['estado']);
+        ->setCellValue($w, $projeto['projetoEspecial'])
+        ->setCellValue($x, $linha['artista'])
+        ->setCellValue($y, $stringAcoes)
+        ->setCellValue($z, $stringPublico)
+        ->setCellValue($aa, $stringAcoes)
+        ->setCellValue($ab, $stringAcoes)
+        ->setCellValue($ac, $stringAcoes)
+        ->setCellValue($ad, $stringAcoes)
+        ->setCellValue($ae, $stringAcoes)
+        ->setCellValue($af, $stringAcoes)
+        ->setCellValue($ag, $stringAcoes);
 
     $cont++;
 }
