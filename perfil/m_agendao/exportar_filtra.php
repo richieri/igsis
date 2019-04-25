@@ -306,7 +306,16 @@ if (isset($_POST['filtrar'])) {
                         $sqlConsultaOcorrencias = "SELECT idEvento FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
                         $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
 
-                        for($i = 1; $i <= $apresentacoes; $i++) {
+                        $sqlAgenda = "SELECT * FROM igsis_agenda WHERE idEvento = '" . $linha['idEvento'] . "'";
+
+                        if (mysqli_query($con, $sqlAgenda)) {
+                            $numAgenda = $con->query($sqlAgenda)->num_rows;
+                            echo $numAgenda;
+                        }
+
+
+
+                  /*      for($i = 1; $i <= $apresentacoes; $i++) {
                             $dias = "";
                             $linha['segunda'] == 1 ? $dias .= "Segunda, " : '';
                             $linha['terca'] == 1 ? $dias .= "Terça, " : '';
@@ -320,7 +329,7 @@ if (isset($_POST['filtrar'])) {
                             } else {
                                 $respectiva = '';
                             }
-                        }
+                        }*/
 
                         //Ações
                         $sqlAcao = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '". $linha['idEvento'] . "'";
