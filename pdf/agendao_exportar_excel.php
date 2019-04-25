@@ -24,7 +24,7 @@ $objPHPExcel->getProperties()->setCategory("Inscritos");
 
 // Criamos as colunas
 $objPHPExcel->setActiveSheetIndex(0)
-    ->setCellValue('A1', 'Instituição/Coordenadoria' )
+    ->setCellValue('A1', 'Instituição/Coordenadoria')
     ->setCellValue('B1', "Equipamento" )
     ->setCellValue("C1", "Espaço Público?" )
     ->setCellValue("D1", "Local do Evento")
@@ -50,22 +50,21 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue("X1", "Projeto Especial?")
     ->setCellValue("Y1", "Artistas")
     ->setCellValue("Z1", "Ação")
-    ->setCellValue("AA", "Público")
-    ->setCellValue("AB", "É Fomento/Programa?")
-    ->setCellValue("AC", "Classificação indicativa")
-    ->setCellValue("AD", "Link de Divulgação")
-    ->setCellValue("AE", "Sinopse")
-    ->setCellValue("AF", "Produtor do Evento")
-    ->setCellValue("AG", "E-mail de contato")
-    ->setCellValue("AH", "Telefone de contato")
-    ->setCellValue("AI", "Imagem para divulgação");
-
+    ->setCellValue("AA1", "Público")
+    ->setCellValue("AB1", "É Fomento/Programa?")
+    ->setCellValue("AC1", "Classificação indicativa")
+    ->setCellValue("AD1", "Link de Divulgação")
+    ->setCellValue("AE1", "Sinopse")
+    ->setCellValue("AF1", "Produtor do Evento")
+    ->setCellValue("AG1", "E-mail de contato")
+    ->setCellValue("AH1", "Telefone de contato");
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:Y1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getFont()->setBold(true);
+
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:Y1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->applyFromArray
 (
     array
     (
@@ -99,13 +98,12 @@ while($linha = mysqli_fetch_array($query))
         $idAcao = $arrayAcoes['idLinguagem'];
         $sqlLinguagens = "SELECT * FROM igsis_linguagem WHERE id = '$idAcao'";
         $linguagens = $con->query($sqlLinguagens)->fetch_assoc();
-        $acoes[$i] = $linguagens['linguaguem'];
+        $acoes[$i] = $linguagens['linguaguem'] ?? null;
     }
 
     if (count($acoes) != 0) {
         $stringAcoes = implode(", ", $acoes);
     }
-
 
     //Público
     $sqlPublico = "SELECT * FROM igsis_evento_representatividade WHERE idEvento = '". $linha['idEvento'] . "'";
@@ -126,26 +124,11 @@ while($linha = mysqli_fetch_array($query))
 
     if ($linha['fomento'] == 1) {
         $sqlFomento = "SELECT * FROM fomento WHERE id = '". $linha['tipoFomento']."'";
+        $fomento = $con->query($sqlFomento)->fetch_assoc();
     }
-
-
-
-
-    $sqlPrefeitura = "SELECT * FROM igsis_subprefeitura WHERE id = '" . $linha['id_subprefeitura'] . "'";
-    $prefeitura = $con->query($sqlPrefeitura)->fetch_assoc();
-
-    $sqlPeriodo = "SELECT * FROM ig_periodo_dia WHERE id = '" . $linha['idPeriodo'] . "'";
-    $periodo = $con->query($sqlPeriodo)->fetch_assoc();
-
-    $sqlIngresso = "SELECT * FROM ig_retirada WHERE idRetirada = '" . $linha['ingresso'] . "'";
-    $retirada = $con->query($sqlIngresso)->fetch_assoc();
-
-    $sqlProjeto = "SELECT * FROM ig_projeto_especial WHERE idProjetoEspecial = '" . $linha['idProjetoEspecial'] . "'";
-    $projeto = $con->query($sqlProjeto)->fetch_assoc();
 
     $sqlConsultaOcorrencias = "SELECT idEvento FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
     $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
-
 
     $a = "A".$cont;
     $b = "B".$cont;
@@ -180,10 +163,10 @@ while($linha = mysqli_fetch_array($query))
     $ae = "AE".$cont;
     $af = "AF".$cont;
     $ag = "AG".$cont;
-
+    $ah = "AH".$cont;
 
     $objPHPExcel->setActiveSheetIndex(0)
-        ->setCellValue($a, $linha['instituicao'])
+        ->setCellValue($a, $linha['sigla'])
         ->setCellValue($b, $linha['equipamento'])
         ->setCellValue($c, $linha['espaco_publico'] == 1 ? "SIM" : "NÃO")
         ->setCellValue($d, $linha['nome_local'])
@@ -194,28 +177,29 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue($i, $linha['cidade'])
         ->setCellValue($j, $linha['estado'])
         ->setCellValue($k, $linha['cep'])
-        ->setCellValue($l, $prefeitura['subprefeitura'])
+        ->setCellValue($l, $linha['subprefeitura'])
         ->setCellValue($m, $linha['telefone'])
         ->setCellValue($n, $linha['data_inicio'])
         ->setCellValue($o, $linha['data_fim'])
         ->setCellValue($p, $dias)
         ->setCellValue($q, $linha['hora_inicio'])
-        ->setCellValue($r, $periodo['periodo'])
+        ->setCellValue($r, $linha['periodo'])
         ->setCellValue($s, $linha['duracao'] . " minutos.")
         ->setCellValue($t, $apresentacoes)
-        ->setCellValue($u, $retirada['retirada'])
-        ->setCellValue($v, $linha['nome'])
-        ->setCellValue($w, $projeto['projetoEspecial'])
-        ->setCellValue($x, $linha['artista'])
-        ->setCellValue($y, $stringAcoes)
-        ->setCellValue($z, $stringPublico)
-        ->setCellValue($aa, $stringAcoes)
-        ->setCellValue($ab, $stringAcoes)
-        ->setCellValue($ac, $stringAcoes)
-        ->setCellValue($ad, $stringAcoes)
-        ->setCellValue($ae, $stringAcoes)
-        ->setCellValue($af, $stringAcoes)
-        ->setCellValue($ag, $stringAcoes);
+        ->setCellValue($u, $linha['retirada'])
+        ->setCellValue($v, $linha['valor'])
+        ->setCellValue($w, $linha['nome'])
+        ->setCellValue($x, $linha['projetoEspecial'])
+        ->setCellValue($y, $linha['artista'])
+        ->setCellValue($z, $stringAcoes ?? "Não há ações.")
+        ->setCellValue($aa, $stringPublico ?? "Não foi selecionado público." )
+        ->setCellValue($ab, isset($fomento['fomento']) ? $fomento['fomento'] : "Não")
+        ->setCellValue($ac, $linha['classificacao'])
+        ->setCellValue($ad, isset($linha['divulgacao']) ? $linha['divulgacao'] : "Sem link de divulgação.")
+        ->setCellValue($ae, $linha['sinopse'])
+        ->setCellValue($af, $linha['produtor_nome'])
+        ->setCellValue($ag, $linha['produtor_email'])
+        ->setCellValue($ah, $linha['produtor_fone']);
 
     $cont++;
 }
@@ -227,7 +211,7 @@ foreach (range('A', $objPHPExcel->getActiveSheet()->getHighestDataColumn()) as $
 {
     $objPHPExcel->getActiveSheet()
         ->getColumnDimension($col)
-        ->setAutoSize(true);
+        ->setWidth(10.50);
 }
 
 

@@ -51,13 +51,13 @@ if (isset($_POST['cadastra'])) {
     $ig_comunicao_idCom = 0;
     $local_id = $_POST['local'];
 
-    $segunda = $_POST['segunda'] ?? 0;
-    $terca = $_POST['terca'] ?? 0;
-    $quarta = $_POST['quarta'] ?? 0;
-    $quinta = $_POST['quinta'] ?? 0;
-    $sexta = $_POST['sexta'] ?? 0;
-    $sabado = $_POST['sabado'] ?? 0;
-    $domingo = $_POST['domingo'] ?? 0;
+    $segunda = isset($_POST['segunda']) ? 1 : 0;
+    $terca = isset($_POST['terca']) ? 1 : 0;
+    $quarta = isset($_POST['quarta']) ? 1 : 0;
+    $quinta = isset($_POST['quinta']) ? 1 : 0;
+    $sexta = isset($_POST['sexta']) ? 1 : 0;
+    $sabado = isset($_POST['sabado']) ? 1 : 0;
+    $domingo = isset($_POST['domingo']) ? 1 : 0;
 
     $data_inicio = exibirDataMysql($_POST['dataInicio']);
     $data_fim = (isset($_POST['dataFinal']) && $_POST['dataFinal'] != '') ? exibirDataMysql($_POST['dataFinal']) : NULL;
@@ -80,16 +80,18 @@ if (isset($_POST['cadastra'])) {
     $sql = "INSERT INTO ig_ocorrencia 
 (idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, subprefeitura_id, idPeriodoDia, publicado )  
             VALUES 
-('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', $segunda, $terca, $quarta, $quinta, $sexta, $sabado, $domingo, '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, '$subprefeitura', '$periodo', 1  )";
+('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, '$subprefeitura', '$periodo', 1  )";
 
     echo $sql;
     if (mysqli_query($con, $sql)) {
         $idOcorrencia = recuperaUltimo('ig_ocorrencia');
         $mensagem = "Cadastrado com sucesso!";
         gravarLog($sql);
+        echo $sql;
     } else {
         $mensagem = "Erro ao gravar! Tente novamente.";
         gravarLog($sql);
+        echo $sql;
     }
 
 }
@@ -98,13 +100,13 @@ if (isset($_POST['atualiza'])) {
     $ig_comunicao_idCom = 0;
     $local_id = $_POST['local'];
 
-    $segunda = $_POST['segunda'] ?? 0;
-    $terca = $_POST['terca'] ?? 0;
-    $quarta = $_POST['quarta'] ?? 0;
-    $quinta = $_POST['quinta'] ?? 0;
-    $sexta = $_POST['sexta'] ?? 0;
-    $sabado = $_POST['sabado'] ?? 0;
-    $domingo = $_POST['domingo'] ?? 0;
+    $segunda = isset($_POST['segunda']) ? 1 : 0;
+    $terca = isset($_POST['terca']) ? 1 : 0;
+    $quarta = isset($_POST['quarta']) ? 1 : 0;
+    $quinta = isset($_POST['quinta']) ? 1 : 0;
+    $sexta = isset($_POST['sexta']) ? 1 : 0;
+    $sabado = isset($_POST['sabado']) ? 1 : 0;
+    $domingo = isset($_POST['domingo']) ? 1 : 0;
 
     $data_inicio = exibirDataMysql($_POST['dataInicio']);
     $data_fim = (isset($_POST['dataFinal']) && $_POST['dataFinal'] != '') ? exibirDataMysql($_POST['dataFinal']) : NULL;
@@ -129,13 +131,13 @@ if (isset($_POST['atualiza'])) {
                 ig_comunicao_idCom = '$ig_comunicao_idCom',
                 local = '$local_id',
                 idEvento = '$id_evento',
-                segunda = $segunda,
-                terca = $terca,
-                quarta = $quarta,
-                quinta = $quinta,
-                sexta = $sexta,
-                sabado = $sabado,
-                domingo = $domingo,
+                segunda = '$segunda',
+                terca = '$terca',
+                quarta = '$quarta',
+                quinta = '$quinta',
+                sexta = '$sexta',
+                sabado = '$sabado',
+                domingo = '$domingo',
                 dataInicio = '$data_inicio',
                 dataFinal = '$data_fim',
                 horaInicio = '$horario_inicio',
@@ -152,6 +154,7 @@ if (isset($_POST['atualiza'])) {
     } else {
         $mensagem = "Erro ao atualizar! Tente novamente.";
         gravarLog($sql);
+        echo $sql;
     }
 }
 
@@ -210,7 +213,7 @@ include "include/menu.php";
                         <div class=" col-md-6">
                             <label>Data encerramento</label>
                             <input type="text" name="dataFinal" class="form-control" id="datepicker02"
-                                   onblur="validate()" placeholder="só preencha em caso de temporada"
+                                   onchange="validate()" placeholder="só preencha em caso de temporada"
                                    value="<?php echo (isset($ocorrencia['dataFinal']) && $ocorrencia['dataFinal'] != '0000-00-00') ? exibirDataBr($ocorrencia['dataFinal']) : '' ?>">
                         </div>
                     </div>
@@ -508,6 +511,44 @@ include "include/menu.php";
 </script>
 
 <script>
+    let data = $("#datepicker02").val();
+    if (data.length > 0)
+    {
+        $("#diasemana01").prop("disabled", false);
+        $("#diasemana02").prop("disabled", false);
+        $("#diasemana03").prop("disabled", false);
+        $("#diasemana04").prop("disabled", false);
+        $("#diasemana05").prop("disabled", false);
+        $("#diasemana06").prop("disabled", false);
+        $("#diasemana07").prop("disabled", false);
+    }
+
+
+    function validate()
+    {
+        let data = $("#datepicker02").val();
+        if (data.length > 0)
+        {
+            $("#diasemana01").prop("disabled", false);
+            $("#diasemana02").prop("disabled", false);
+            $("#diasemana03").prop("disabled", false);
+            $("#diasemana04").prop("disabled", false);
+            $("#diasemana05").prop("disabled", false);
+            $("#diasemana06").prop("disabled", false);
+            $("#diasemana07").prop("disabled", false);
+        }
+        else
+        {
+            $("#diasemana01").prop("disabled", true);
+            $("#diasemana02").prop("disabled", true);
+            $("#diasemana03").prop("disabled", true);
+            $("#diasemana04").prop("disabled", true);
+            $("#diasemana05").prop("disabled", true);
+            $("#diasemana06").prop("disabled", true);
+            $("#diasemana07").prop("disabled", true);
+        }
+    }
+
     //Script CEP
     $(document).ready(function () {
         function limpa_formulário_cep() {

@@ -77,12 +77,10 @@ if (isset($_POST['filtrar'])) {
                 DATE_FORMAT(O.dataInicio, '%d/%m/%Y') AS 'data',
                 DATE_FORMAT(O.horaInicio, '%H:%i') AS 'horario_inicial',
                 O.valorIngresso AS 'valor',
-                O.retiradaIngresso AS 'ingresso'
-                E.sinopse AS 'descricao',
+                O.retiradaIngresso AS 'ingresso',
                 L.sala AS 'nome_local',
-                I.sigla AS 'instituicao',
+                I.sigla AS 'sigla',
                 I.instituicao AS 'equipamento',
-                L.rua AS 'endereco',
                 L.logradouro AS 'logradouro',
                 L.numero AS 'numero',
                 L.complemento AS 'complemento',
@@ -114,6 +112,9 @@ if (isset($_POST['filtrar'])) {
                 P.email AS 'produtor_email',
                 P.telefone AS 'produtor_fone',
                 U.nomeCompleto AS 'nomeCompleto',
+                SUB_PRE.subprefeitura AS 'subprefeitura',
+                DIA_PERI.periodo AS 'periodo',
+                retirada.retirada AS 'retirada',
                 PE.projetoEspecial
             FROM
                 ig_evento AS E
@@ -124,7 +125,11 @@ if (isset($_POST['filtrar'])) {
                 INNER JOIN ig_etaria AS CI ON E.faixaEtaria = CI.idIdade
                 INNER JOIN ig_produtor AS P ON E.ig_produtor_idProdutor = P.idProdutor
                 INNER JOIN ig_usuario AS U ON E.idUsuario = U.idUsuario
-                INNER JOIN ig_projeto_especial AS PE ON E.projetoEspecial = PE.idProjetoEspecial
+                LEFT JOIN ig_projeto_especial AS PE ON E.projetoEspecial = PE.idProjetoEspecial
+                LEFT JOIN igsis_subprefeitura AS SUB_PRE ON O.subprefeitura_id = SUB_PRE.id
+                LEFT JOIN ig_periodo_dia AS DIA_PERI ON O.idPeriodoDia = DIA_PERI.id
+                INNER JOIN ig_retirada AS retirada ON O.retiradaIngresso = retirada.idRetirada
+                
             WHERE              
                 $filtro_data
                 $filtro_instituicao                 
@@ -145,6 +150,7 @@ if (isset($_POST['filtrar'])) {
         $consulta = 1;
         $displayForm = 'none';
         $displayBotoes = 'block';
+
     } else {
         $consulta = 0;
         $mensagem = "Não foram encontrados resultados para esta pesquisa!";
@@ -258,25 +264,40 @@ if (isset($_POST['filtrar'])) {
                 <table class='table table-condensed'>
                     <thead>
                     <tr class='list_menu'>
-                        <td>Instituição</td>
-                        <td>Equipamento / Local</td>
+                        <td>Instituição/Coordenadoria</td>
+                        <td>Equipamento</td>
+                        <td>Espaço Público?</td>
+                        <td>Local do Evento</td>
+                        <td>Logradouro</td>
+                        <td>Número</td>
+                        <td>Complemento</td>
+                        <td>Bairro</td>
+                        <td>Cidade</td>
+                        <td>Estado</td>
+                        <td>CEP</td>
+                        <td>SubPrefeitura</td>
                         <td>Telefone</td>
+                        <td>Data Início</td>
+                        <td>Data Fim</td>
+                        <td>Dias da semana</td>
+                        <td>Horário de início</td>
+                        <td>Período</td>
+                        <td>Duração (em minutos)</td>
+                        <td>Nº de atividades</td>
+                        <td>Cobrança de ingresso</td>
+                        <td>Valor do ingresso</td>
                         <td>Nome do Evento</td>
-                        <td>Projeto Especial</td>
-                        <td>Artista</td>
-                        <td>Data</td>
-                        <td>Hora</td>
-                        <td>Duração</td>
-                        <td>Nº de Apresentações</td>
-                        <td>Linguagem</td>
-                        <td>Valor</td>
-                        <td>Classificação Indicativa</td>
-                        <td>Links de Divulgação</td>
+                        <td>Projeto Especial?</td>
+                        <td>Artistas</td>
+                        <td>Ação</td>
+                        <td>Público</td>
+                        <td>É Fomento/Programa?</td>
+                        <td>Classificação indicativa</td>
+                        <td>Link de Divulgação</td>
                         <td>Sinopse</td>
                         <td>Produtor do Evento</td>
-                        <td>Email</td>
-                        <td>Telefone</td>
-                        <td>Inserido por (usuário)</td>
+                        <td>E-mail de contato</td>
+                        <td>Telefone de contato</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -284,27 +305,98 @@ if (isset($_POST['filtrar'])) {
                     while ($linha = mysqli_fetch_array($query)) {
                         $sqlConsultaOcorrencias = "SELECT idEvento FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
                         $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
+
+                        for($i = 1; $i <= $apresentacoes; $i++) {
+                            $dias = "";
+                            $linha['segunda'] == 1 ? $dias .= "Segunda, " : '';
+                            $linha['terca'] == 1 ? $dias .= "Terça, " : '';
+                            $linha['quarta'] == 1 ? $dias .= "Quarta, " : '';
+                            $linha['quinta'] == 1 ? $dias .= "Quinta, " : '';
+                            $linha['sexta'] == 1 ? $dias .= "Sexta, " : '';
+                            $linha['sabado'] == 1 ? $dias .= "Sabádo, " : '';
+                            $linha['domingo'] == 1 ? $dias .= "Domingo. " : '';
+                            if ($dias != "") {
+                                $respectiva = $apresentacoes . "º ocorrência: ";
+                            } else {
+                                $respectiva = '';
+                            }
+                        }
+
+                        //Ações
+                        $sqlAcao = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '". $linha['idEvento'] . "'";
+                        $queryAcao = mysqli_query($con, $sqlAcao);
+                        $acoes = [];
+                        $i = 0;
+
+                        while ($arrayAcoes = mysqli_fetch_array($queryAcao)) {
+                            $idAcao = $arrayAcoes['idLinguagem'];
+                            $sqlLinguagens = "SELECT * FROM igsis_linguagem WHERE id = '$idAcao'";
+                            $linguagens = $con->query($sqlLinguagens)->fetch_assoc();
+                            $acoes[$i] = $linguagens['linguaguem'] ?? null;
+                        }
+
+                        if (count($acoes) != 0) {
+                            $stringAcoes = implode(", ", $acoes);
+                        }
+
+                        //Público
+                        $sqlPublico = "SELECT * FROM igsis_evento_representatividade WHERE idEvento = '". $linha['idEvento'] . "'";
+                        $queryPublico = mysqli_query($con, $sqlPublico);
+                        $representatividade = [];
+                        $i = 0;
+
+                        while ($arrayPublico = mysqli_fetch_array($queryPublico)) {
+                            $idRepresentatividade = $arrayPublico['idRepresentatividade'];
+                            $sqlRepresen = "SELECT * FROM igsis_representatividade WHERE id = '$idRepresentatividade'";
+                            $publicos = $con->query($sqlRepresen)->fetch_assoc();
+                            $representatividade[$i] = $publicos['representatividade_social'];
+                        }
+
+                        if (count($acoes) != 0) {
+                            $stringPublico = implode(", ", $representatividade);
+                        }
+
+                        if ($linha['fomento'] == 1) {
+                            $sqlFomento = "SELECT * FROM fomento WHERE id = '". $linha['tipoFomento']."'";
+                            $fomento = $con->query($sqlFomento)->fetch_assoc();
+                        }
+
                         ?>
                         <tr>
-                            <td class="list_description"><?= $linha['instituicao'] ?></td>
+                            <td class="list_description"><?= $linha['sigla'] ?></td>
                             <td class="list_description"><?= $linha['equipamento'] ?> - <?= $linha['nome_local'] ?></td>
+                            <td class="list_description"><?= $linha['espaco_publico'] == 1 ? "SIM" : "NÃO" ?></td>
+                            <td class="list_description"><?= $linha['nome_local'] ?></td>
+                            <td class="list_description"><?= $linha['logradouro'] ?></td>
+                            <td class="list_description"><?= $linha['numero'] ?></td>
+                            <td class="list_description"><?= $linha['complemento'] ?></td>
+                            <td class="list_description"><?= $linha['bairro'] ?></td>
+                            <td class="list_description"><?= $linha['cidade'] ?> minutos</td>
+                            <td class="list_description"><?= $linha['estado']?></td>
+                            <td class="list_description"><?= $linha['cep'] ?></td>
+                            <td class="list_description"><?= $linha['subprefeitura'] ?></td>
                             <td class="list_description"><?= $linha['telefone'] ?></td>
+                            <td class="list_description"><?= $linha['data_inicio'] ?></td>
+                            <td class="list_description"><?= $linha['data_fim'] ?></td>
+                            <td class="list_description"><?= $respectiva . $dias ?></td>
+                            <td class="list_description"><?= $linha['hora_inicio'] ?></td>
+                            <td class="list_description"><?= $linha['periodo'] ?></td>
+                            <td class="list_description"><?= $linha['duracao'] . " minutos." ?></td>
+                            <td class="list_description"><?= $apresentacoes ?></td>
+                            <td class="list_description"><?= $linha['retirada'] ?></td>
+                            <td class="list_description"><?= dinheiroParaBr($linha['valor']) ?></td>
                             <td class="list_description"><?= $linha['nome'] ?></td>
                             <td class="list_description"><?= $linha['projetoEspecial'] ?></td>
                             <td class="list_description"><?= $linha['artista'] ?></td>
-                            <td class="list_description"><?= $linha['data'] ?></td>
-                            <td class="list_description"><?= $linha['horario_inicial'] ?></td>
-                            <td class="list_description"><?= $linha['duracao'] ?> minutos</td>
-                            <td class="list_description"><?= $apresentacoes ?></td>
-                            <td class="list_description"><?= $linha['categoria'] ?></td>
-                            <td class="list_description"><?= ($linha['valor'] == 0 ? "Gratuito" : "R$ " . dinheiroParaBr($linha['valor'])) ?></td>
+                            <td class="list_description"><?= $stringAcoes ?? "Não há ações."?></td>
+                            <td class="list_description"><?= $stringPublico ?? "Não foi selecionado público." ?></td>
+                            <td class="list_description"><?= isset($fomento['fomento']) ? $fomento['fomento'] : "Não" ?></td>
                             <td class="list_description"><?= $linha['classificacao'] ?></td>
-                            <td class="list_description"><?= $linha['divulgacao'] ?></td>
+                            <td class="list_description"><?= isset($linha['divulgacao']) ? $linha['divulgacao'] : "Sem link de divulgação." ?></td>
                             <td class="list_description"><?= mb_strimwidth($linha['sinopse'], 0, 50, '...') ?></td>
                             <td class="list_description"><?= $linha['produtor_nome'] ?></td>
                             <td class="list_description"><?= $linha['produtor_email'] ?></td>
                             <td class="list_description"><?= $linha['produtor_fone'] ?></td>
-                            <td class="list_description"><?= $linha['nomeCompleto'] ?></td>
                         </tr>
                         <?php
                     }
