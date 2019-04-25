@@ -169,6 +169,12 @@
 				$ig_tipo_evento_idTipoEvento = $_POST['ig_tipo_evento_idTipoEvento'];
 				$idResponsavel = $_POST['nomeResponsavel'];
 				$idSuplente = $_POST['suplente'];
+
+                $nApresentacao = $_POST['nApresentacao'];
+                $espacoPublico = $_POST['espacoPublico'];
+                $fomento = $_POST['fomento'];
+                $tipoFomento = $_POST['tipoFomento'] ?? 0;
+
 				if(isset($_POST['subEvento']))
 				{
 					$subEvento = 1;	
@@ -192,6 +198,10 @@
 				`releaseCom` = '$releaseCom', 
 				`linksCom` = '$linksCom',
 				`publicado` = 1,
+                numero_apresentacao = '$nApresentacao',
+                espaco_publico = '$espacoPublico',
+                fomento = '$fomento',
+                tipo_fomento = '$tipoFomento',
 				`statusEvento` = 'Em elaboração'
                 WHERE `ig_evento`.`idEvento` = ".$_SESSION['idEvento'].";";
                 $con = bancoMysqli();
@@ -271,6 +281,43 @@
 							</select>
 						</div>
 					</div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-4">
+                            <label for="espacoPublico">Espaço público? *</label><br>
+                            <input type="radio" name="espacoPublico" id="espacoPublico"
+                                   value="1" <?= $campo['espaco_publico'] == 1 ? 'checked' : NULL ?>> Sim
+                            <input type="radio" name="espacoPublico" id="espacoPublico"
+                                   value="0" <?= $campo['espaco_publico'] == 0 ? 'checked' : NULL ?>> Não
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="nApresentacao">Quantidade de apresentação *</label>
+                            <input type="number" name="nApresentacao" id="nApresentacao" class="form-control"
+                                   value="<?= $campo['numero_apresentacao'] ?>" min='1' required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-4">
+                                <label for="fomento">É fomento/programa? *</label><br>
+                                <input type="radio" name="fomento" class="fomento" id="sim" value="1" <?= $campo['fomento'] == 1 ? 'checked' : NULL ?>> Sim
+                                <input type="radio" name="fomento" class="fomento" id="nao" value="0" <?= $campo['fomento'] == 0 ? 'checked' : NULL ?>> Não
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="espacoPublico">Selecione o fomento/programa</label><br>
+                                <select name="tipoFomento" id="tipoFomento" class="form-control">
+                                    <option value="">Selecione o fomento/programa da SMC</option>
+                                    <?php
+                                    geraOpcaoPadrao('fomento', $campo['tipoFomento']);
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Tipo de Evento *</label>
@@ -3128,3 +3175,19 @@
 		break;
 	} // fim eventos
 	?>
+
+<script type="text/javascript">
+    var fomento = $('.fomento');
+    fomento.on("change", verificaFomento);
+    $(document).ready(verificaFomento());
+
+    function verificaFomento() {
+        if ($('#sim').is(':checked')) {
+            $('#tipoFomento')
+                .attr('disabled', false)
+        } else {
+            $('#tipoFomento')
+                .attr('disabled', true);
+        }
+    }
+</script>

@@ -140,7 +140,7 @@ include "include/menu.php";
                         <div class="col-md-5">
                             <label for="nApresentacao">Quantidade de apresentação *</label>
                             <input type="number" name="nApresentacao" id="nApresentacao" class="form-control"
-                                   value="<?= $campo['numero_apresentacao'] ?>" min='1'>
+                                   value="<?= $campo['numero_apresentacao'] ?>" min='1' required>
                         </div>
                     </div>
 
