@@ -347,13 +347,13 @@ include "include/menu.php";
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="instituicao">Instituicao </label>
-                            <input type="text" class="form-control" name="nomeInstituicao" id="nomeInstituicao">
+                            <label for="instituicao">Instituição</label>
+                            <input type="text" class="form-control" name="nomeInstituicao" id="nomeInstituicao" maxlength="80">
                         </div>
 
                         <div class="form-group">
-                            <label for="instituicao">Sigla </label>
-                            <input type="text" class="form-control" name="siglaInstituicao" id="siglaInstituicao">
+                            <label for="instituicao">Sigla</label>
+                            <input type="text" class="form-control" name="siglaInstituicao" id="siglaInstituicao" maxlength="12">
                         </div>
                     </div>
                     <div class="modal-footer">
