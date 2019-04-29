@@ -157,7 +157,7 @@ include "include/menu.php";
                                 <select name="tipoFomento" id="tipoFomento" class="form-control">
                                     <option value="">Selecione o fomento/programa da SMC</option>
                                     <?php
-                                        geraOpcaoPadrao('fomento', $campo['tipoFomento']);
+                                        geraOpcaoPadrao('fomento', $campo['tipo_fomento']);
                                     ?>
                                 </select>
                             </div>

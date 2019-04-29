@@ -311,7 +311,7 @@
                                 <select name="tipoFomento" id="tipoFomento" class="form-control">
                                     <option value="">Selecione o fomento/programa da SMC</option>
                                     <?php
-                                    geraOpcaoPadrao('fomento', $campo['tipoFomento']);
+                                    geraOpcaoPadrao('fomento', $campo['tipo_fomento']);
                                     ?>
                                 </select>
                             </div>
@@ -2711,6 +2711,26 @@
             <h4><?php echo $evento['nomeEvento'] ?></h4>
             <div align="left">
 				<?php descricaoEvento($_SESSION['idEvento']); ?>
+
+                <?php $idEvento = ($_SESSION['idEvento']);
+                $evento = recuperaDados('ig_evento', $idEvento, 'idEvento');
+                $fomento = recuperaDados('fomento', $evento['tipo_fomento'], 'id'); ?>
+                <?php
+                if($evento['fomento'] == 1){?>
+                    <span>
+                                <?= "<b>Fomento:</b><br />".nl2br($fomento['fomento'])."<br /><br />" ?>
+                            </span>
+                    <?php
+                }
+                ?>
+
+                <span>
+                        <?= "<b>Espaço Publico: </b><br />".nl2br($evento['espaco_publico'] == 1 ? 'Sim' : 'Não')."<br /><br />" ?>
+                    </span>
+
+                <span>
+                        <?= "<b>Número de apresentações:</b><br />".nl2br($evento['numero_apresentacao'])."<br /><br />" ?>
+                    </span>
             </div>      
             <h5>Ocorrências</h5>
             <?php echo resumoOcorrencias($_SESSION['idEvento']); ?><br /><br />

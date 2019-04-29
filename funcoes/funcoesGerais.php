@@ -395,7 +395,7 @@
 		}
 	}
 
-function geraOpcaoPadrao($tabela, $select = '')
+function geraOpcaoPadrao($tabela, $select)
 {
     //gera os options de um select
     $sql = "SELECT * FROM $tabela ORDER BY 2";
