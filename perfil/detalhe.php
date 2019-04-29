@@ -17,28 +17,7 @@
 				<h4><?php echo $evento['nomeEvento'] ?></h4>
 				<p align="left">
 					<?php descricaoEvento($_GET['evento']); ?>
-
-                    <?php $idEvento = ($_GET['evento']);
-                    $evento = recuperaDados('ig_evento', $idEvento, 'idEvento');
-                    $fomento = recuperaDados('fomento', $evento['tipo_fomento'], 'id'); ?>
-                    <?php
-                    if($evento['fomento'] == 1){?>
-                        <span>
-                                <?= "<b>Fomento:</b><br />".nl2br($fomento['fomento'])."<br /><br />" ?>
-                            </span>
-                        <?php
-                    }
-                    ?>
-
-                    <span>
-                        <?= "<b>Espaço Publico: </b><br />".nl2br($evento['espaco_publico'] == 1 ? 'Sim' : 'Não')."<br /><br />" ?>
-                    </span>
-
-                    <span>
-                        <?= "<b>Número de apresentações:</b><br />".nl2br($evento['numero_apresentacao'])."<br /><br />" ?>
-                    </span>
-				</p>
-
+				</p>      
 				<h5>Ocorrências</h5>
 				<?php echo resumoOcorrencias($_GET['evento']); ?><br /><br />
 				<?php listaOcorrenciasTexto($_GET['evento']); ?>

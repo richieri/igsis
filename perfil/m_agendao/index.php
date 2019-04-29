@@ -19,10 +19,10 @@ include "include/menu.php";
                 <a class="btn btn-theme btn-block" href="?perfil=agendao&p=evento_cadastra">Cadastra evento</a>
             </div>
             <div class="col-md-4">
-                <a class="btn btn-theme btn-block" href="?perfil=agendao&p=lista_eventos">Lista / Edita evento</a>
+                <a class="btn btn-theme btn-block" href="?perfil=agendao&p=evento_cadastra">Lista / Edita evento</a>
             </div>
             <div class="col-md-4">
-                <a class="btn btn-theme btn-block" href="?perfil=agendao&p=exportar_filtra">Exporta evento para o excel</a>
+                <a class="btn btn-theme btn-block" href="?perfil=agendao&p=evento_cadastra">Exporta evento para o excel</a>
             </div>
         </div>
     </div>

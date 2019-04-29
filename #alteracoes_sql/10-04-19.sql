@@ -2,7 +2,7 @@ USE `igsis`;
 
 CREATE TABLE `igsis_linguagem` (
    `id` INT(11) NOT NULL AUTO_INCREMENT,
-   `linguagem` VARCHAR(42) NOT NULL,
+   `linguagem` VARCHAR(36) NOT NULL,
    `descricao` VARCHAR(200) NOT NULL,
    `publicado` TINYINT(1) NOT NULL DEFAULT '1',
    PRIMARY KEY (`id`)
@@ -19,7 +19,7 @@ INSERT INTO `igsis_linguagem` (`id`, `linguagem`, `descricao`, `publicado`) VALU
 INSERT INTO `igsis_linguagem` (`id`, `linguagem`, `descricao`, `publicado`) VALUES (7, 'Música', 'Engloba todos os gêneros musicais, da musica clássica e erudita  aos gêneros vinculados aos grandes movimentos socioterritoriais, como o hip  hop, o dancehall, o funk, o tecnobrega e outros', 1);
 INSERT INTO `igsis_linguagem` (`id`, `linguagem`, `descricao`, `publicado`) VALUES (8, 'Oficinas e Formação Cultural', 'Engloba as atividades de formação e educação, como oficinas,  formações culturais; workshops; ateliês; palestras; aulas públicas', 1);
 INSERT INTO `igsis_linguagem` (`id`, `linguagem`, `descricao`, `publicado`) VALUES (9, 'Patrimônio Cultural, Museu e Memória', 'Patrimônio material e imaterial, gastronomia, memória, identidade coletiva', 1);
-INSERT INTO `igsis_linguagem` (`id`, `linguagem`, `descricao`, `publicado`) VALUES (10, 'Intervenção e Vivência Artístico Cultural', 'Experimentação e intervenção artística, performance, fundindo  teatro, o cinema, a dança, a poesia, a música e as artes plásticas', 1);
+INSERT INTO `igsis_linguagem` (`id`, `linguagem`, `descricao`, `publicado`) VALUES (10, 'Intervenção e Vivência Artístico Cul', 'Experimentação e intervenção artística, performance, fundindo  teatro, o cinema, a dança, a poesia, a música e as artes plásticas', 1);
 INSERT INTO `igsis_linguagem` (`id`, `linguagem`, `descricao`, `publicado`) VALUES (11, 'Teatro', 'Um ator ou conjunto de atores que interpretam uma história ou atividades para o público, stand-up', 1);
 INSERT INTO `igsis_linguagem` (`id`, `linguagem`, `descricao`, `publicado`) VALUES (12, 'Visual', 'Desenho, pintura, colagem, fotografia, gravura, grafite, história em quadrinhos, arte digital', 1);
 

@@ -1,53 +1,29 @@
 <?php
-$idEvento = (isset($_POST['idEvento'])) ? $_POST['idEvento'] : null;
 
-$con = bancoMysqli();
+if (isset($_POST['cadastra'])) {
 
-if(isset($_POST['cadastra']) || isset($_POST['atualiza'])){
     $nome = $_POST['produtorNome'];
     $telefone1 = $_POST['ig_produtor_telefone'];
     $email = $_POST['email'];
     $telefone2 = $_POST['telefone2'] ?? null;
-}
 
-if (isset($_POST['cadastra'])) {
 
+    $con = bancoMysqli();
     $sql = "INSERT INTO ig_produtor (nome, email, telefone, telefone2)  VALUES ('$nome', '$email', '$telefone1', '$telefone2' )";
 
     if (mysqli_query($con, $sql))
     {
         $idProdutor = recuperaUltimo('ig_produtor');
-        $sql_evento = "UPDATE ig_evento SET ig_produtor_idProdutor = '$idProdutor' WHERE idEvento = '$idEvento'";
-        if($con->query($sql_evento)){
-            $mensagem =  "Cadastrado com sucesso!";
-            gravarLog($sql);
-        }
-        else{
-            $mensagem = "Erro ao gravar! Tente novamente.";
-        }
-    }
-    else {
+        $mensagem =  "Cadastrado com sucesso!";
+        gravarLog($sql);
+    } else {
         $mensagem = "Erro ao gravar! Tente novamente.";
         gravarLog($sql);
     }
+
+    $produtor = recuperaDados("ig_produtor","$idProdutor","idProdutor");
+
 }
-
-if(isset($_POST['atualiza'])){
-    $idProdutor = $_POST['idProdutor'];
-    $sql = "UPDATE ig_produtor SET nome = '$nome', email = '$email', telefone = '$telefone1', telefone2 = '$telefone2' WHERE idProdutor = '$idProdutor'";
-    if ($con->query($sql)){
-        $mensagem =  "Atualizado com sucesso!";
-        gravarLog($sql);
-    }
-    else{
-        $mensagem = "Erro ao atualizar! Tente novamente.";
-    }
-}
-
-$evento = $con->query("SELECT ig_produtor_idProdutor FROM ig_evento WHERE idEvento = '$idEvento'")-> fetch_assoc();
-
-$idProdutor = $evento['ig_produtor_idProdutor'];
-$produtor = recuperaDados("ig_produtor",$idProdutor,"idProdutor");
 
 include "include/menu.php";
 ?>
@@ -89,35 +65,12 @@ include "include/menu.php";
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <input type="hidden" name="idEvento" value="<?=$idEvento?>">
-                            <input type="hidden" name="idProdutor" value="<?=$idProdutor?>">
-                            <input type="submit" class="btn btn-theme btn-lg btn-block" name="<?=($idProdutor == 0) ? "cadastra" : "atualiza"?>" value="Gravar">
+                            <input type="submit" class="btn btn-theme btn-lg btn-block" name="cadastra" value="Gravar">
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <hr>
-        <div class="row col-md-offset-1 col-md-10">
-            <div class="col-md-2 pull-left">
-                <form method="POST" action="?perfil=agendao&p=evento_cadastra" class="form-horizontal" role="form">
-                    <input type="hidden" name="idEvento" value="<?= $idEvento ?>">
-                    <input type="submit" class="btn btn-theme btn-lg btn-block" value="Voltar">
-                </form>
-            </div>
-            <?php
-            if ($idProdutor != 0) {
-            ?>
-                <div class="col-md-2 pull-right">
-                    <form method="POST" action="?perfil=agendao&p=lista_ocorrencias" class="form-horizontal"
-                          role="form">
-                        <input type="hidden" name="idEvento" value="<?= $idEvento ?>">
-                        <input type="submit" class="btn btn-theme btn-lg btn-block" value="Avançar">
-                    </form>
-                </div>
-            <?php
-            }
-            ?>
-        </div>
+        <!-- TODO: Incluir um botão de avançar após o usuário gravar -->
     </div>
 </section>
