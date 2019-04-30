@@ -1,4 +1,6 @@
 <?php
+setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+
 include '../funcoes/funcoesConecta.php';
 $con = bancoMysqli();
 // Incluimos a classe PHPExcel
@@ -180,8 +182,8 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue($l, $linha['subprefeitura'])
         ->setCellValue($m, $linha['telefone'])
         ->setCellValue($n, $linha['data_inicio'])
-        ->setCellValue($o, $linha['data_fim'])
-        ->setCellValue($p, $dias)
+        ->setCellValue($o, ($linha['data_fim'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['data_fim']))
+        ->setCellValue($p, ($dias == "") ? strftime("%A", strtotime($linha['data_inicio'])) : $dias)
         ->setCellValue($q, $linha['hora_inicio'])
         ->setCellValue($r, $linha['periodo'])
         ->setCellValue($s, $linha['duracao'] . " minutos.")
