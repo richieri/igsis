@@ -1,4 +1,6 @@
 <?php
+setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+
 include 'include/menu.php';
 $con = bancoMysqli();
 
@@ -137,7 +139,8 @@ if (isset($_POST['filtrar'])) {
                 $filtro_usuario 
                 $filtro_PE AND
                 E.publicado = 1 AND
-                E.statusEvento = 'Enviado'
+                E.statusEvento = 'Enviado' AND
+                O.publicado = 1
             ORDER BY dataInicio";
 
     $query = mysqli_query($con, $sql);
@@ -310,12 +313,12 @@ if (isset($_POST['filtrar'])) {
 
                         if (mysqli_query($con, $sqlAgenda)) {
                             $numAgenda = $con->query($sqlAgenda)->num_rows;
-                            echo $numAgenda;
+//                            echo $numAgenda;
                         }
 
 
 
-                  /*      for($i = 1; $i <= $apresentacoes; $i++) {
+                        for($i = 1; $i <= $apresentacoes; $i++) {
                             $dias = "";
                             $linha['segunda'] == 1 ? $dias .= "Segunda, " : '';
                             $linha['terca'] == 1 ? $dias .= "Terça, " : '';
@@ -329,7 +332,7 @@ if (isset($_POST['filtrar'])) {
                             } else {
                                 $respectiva = '';
                             }
-                        }*/
+                        }
 
                         //Ações
                         $sqlAcao = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '". $linha['idEvento'] . "'";
@@ -385,9 +388,17 @@ if (isset($_POST['filtrar'])) {
                             <td class="list_description"><?= $linha['cep'] ?></td>
                             <td class="list_description"><?= $linha['subprefeitura'] ?></td>
                             <td class="list_description"><?= $linha['telefone'] ?></td>
-                            <td class="list_description"><?= $linha['data_inicio'] ?></td>
-                            <td class="list_description"><?= $linha['data_fim'] ?></td>
-                            <td class="list_description"><?= $respectiva . $dias ?></td>
+                            <td class="list_description"><?= exibirDataBr($linha['data_inicio']) ?></td>
+                            <td class="list_description"><?= ($linha['data_fim'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['data_fim']) ?></td>
+                            <td class="list_description">
+                                <?php
+                                if ($respectiva == "" && $dias == "") {
+                                    echo strftime("%A", strtotime($linha['data_inicio']));
+                                } else {
+                                    echo $respectiva . $dias;
+                                }
+                                ?>
+                            </td>
                             <td class="list_description"><?= $linha['hora_inicio'] ?></td>
                             <td class="list_description"><?= $linha['periodo'] ?></td>
                             <td class="list_description"><?= $linha['duracao'] . " minutos." ?></td>
@@ -457,30 +468,6 @@ if (isset($_POST['filtrar'])) {
             });
         });
 
-        var availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
         $("#inserido").autocomplete({
             source: usuarios
         });

@@ -82,16 +82,13 @@ if (isset($_POST['cadastra'])) {
             VALUES 
 ('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, '$subprefeitura', '$periodo', 1  )";
 
-    echo $sql;
     if (mysqli_query($con, $sql)) {
         $idOcorrencia = recuperaUltimo('ig_ocorrencia');
         $mensagem = "Cadastrado com sucesso!";
         gravarLog($sql);
-        echo $sql;
     } else {
         $mensagem = "Erro ao gravar! Tente novamente.";
         gravarLog($sql);
-        echo $sql;
     }
 
 }
@@ -154,7 +151,6 @@ if (isset($_POST['atualiza'])) {
     } else {
         $mensagem = "Erro ao atualizar! Tente novamente.";
         gravarLog($sql);
-        echo $sql;
     }
 }
 
