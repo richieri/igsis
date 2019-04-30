@@ -113,6 +113,7 @@ $sei =
   "<p><strong>NIT/PIS/PASEP:</strong></p>".
   "<p><strong>Certidões fiscais:</strong></p>".
   "<p><strong>CCM:</strong></p>".
+  "<p><strong>FACC:</strong></p>".
   "<p>&nbsp;</p>".
 
   "<p>São Paulo, ".$dia." de ".$mes." de ".$ano.".</p>";

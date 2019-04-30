@@ -395,7 +395,8 @@
 			return NULL;	
 		}
 		else
-		{	
+		{
+		    $tipo = ($tipo == 4) ? 1 : $tipo;
 			$con = bancoMysqli();
 			switch($tipo)
 			{
