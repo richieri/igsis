@@ -24,7 +24,7 @@ if (isset($_POST['cadastra'])) {
     $tipoFomento = $_POST['tipoFomento'] ?? 0;
 
     $sqlInsereEvento = "INSERT INTO ig_evento (nomeEvento, projetoEspecial, fichaTecnica, ig_tipo_evento_idTipoEvento, faixaEtaria, sinopse, linksCom, idUsuario, idInstituicao, statusEvento, ocupacao, numero_apresentacao, espaco_publico, fomento, tipo_fomento, publicado)
-                        VALUES ('$nomeEvento', '$idProjetoEspecial', '$artistas', '$idTipoEvento', '$idFaixaEtaria', '$sinopse', '$links', '$idUsuario', '$idInstituicao', 'Em Elaboração', '1', '$nApresentacao', '$espacoPublico', '$fomento', '$tipoFomento','1')";
+                        VALUES ('$nomeEvento', '$idProjetoEspecial', '$artistas', '$idTipoEvento', '$idFaixaEtaria', '$sinopse', '$links', '$idUsuario', '$idInstituicao', 'Em elaboração', '1', '$nApresentacao', '$espacoPublico', '$fomento', '$tipoFomento','1')";
     if ($con->query($sqlInsereEvento)) {
         $idEvento = $con->insert_id;
 

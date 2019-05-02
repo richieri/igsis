@@ -71,11 +71,11 @@ include "include/menu.php";
                                     <td class='list_description'>
                                         <form method='POST' action='?perfil=agendao&p=evento_cadastra'>
                                             <input type='hidden' name='idEvento' value='<?=$evento['idEvento']?>'>
-                                            <input type ='submit' class='btn btn-theme btn-block' value='carregar' <?= $evento['statusEvento'] == "Em elaboração" ? "" : "disabled"?>>
+                                            <input type ='submit' class='btn btn-theme btn-block' value='carregar' <?= strtolower($evento['statusEvento']) == "em elaboração" ? "" : "disabled"?>>
                                         </form>
                                     </td>
                                     <?php
-                                    if ($evento['ocupacao'] == 1 && $evento['dataEnvio'] == null) {
+                                    if ($evento['ocupacao'] == 1 && $evento['dataEnvio'] == null && strtolower($evento['statusEvento']) == "em elaboração") {
                                     ?>
                                         <td class='list_description'>
                                             <button id="btnApagar" class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' onclick="confirmApagar('<?=$evento['idEvento']?>', '<?=$evento['nomeEvento']?>');">
