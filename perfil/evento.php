@@ -486,13 +486,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Ações (Expressões Artístico-culturais)</h4>
+                    <h4 class="modal-title">Público (Representatividade e Visibilidade Sócio-cultural)</h4>
                 </div>
                 <div class="modal-body" style="text-align: left;">
                     <table class="table table-bordered table-responsive">
                         <thead>
                         <tr>
-                            <th>Ação</th>
+                            <th>Representatividade</th>
                             <th>Descrição</th>
                         </tr>
                         </thead>
