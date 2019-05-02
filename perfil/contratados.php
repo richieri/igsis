@@ -3521,9 +3521,9 @@
 					$nome_arquivo = $_FILES['arquivo']['name'][$x] ?? null;
 					$f_size = $_FILES['arquivo']['size'][$x] ?? null;
 
-					if ($f_size > 20971520) {
+					if ($f_size > 6291456) {
                         echo "<script>
-                                swal('Tamanho de arquivo excedido', 'Tamanho máximo permitido: 20 MB.', 'error');                             
+                                swal('Tamanho de arquivo excedido', 'Tamanho máximo permitido: 6 MB.', 'error');                             
                             </script>";
                     } else {
                         if ($nome_arquivo != "") {
@@ -3692,9 +3692,9 @@
 					$nome_arquivo = $_FILES['arquivo']['name'][$x];
                     $f_size = $_FILES['arquivo']['size'][$x] ?? null;
 
-                    if ($f_size > 20971520) {
+                    if ($f_size > 6291456) {
                         echo "<script>
-                                swal('Tamanho de arquivo excedido', 'Tamanho máximo permitido: 20 MB.', 'error');                            
+                                swal('Tamanho de arquivo excedido', 'Tamanho máximo permitido: 6 MB.', 'error');                            
                             </script>";
                     } else {
                         if ($nome_arquivo != "") {
