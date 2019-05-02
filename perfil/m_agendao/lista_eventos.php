@@ -66,7 +66,7 @@ include "include/menu.php";
                                     <td class="list-description"><?=$evento['idEvento']?></td>
                                     <td class="list-description"><?=$evento['nomeEvento']?></td>
                                     <td class="list-description"><?=$tipoEvento?></td>
-                                    <td class="list-description"><?="a"?></td>
+                                    <td class="list-description"><?= retornaPeriodo($evento['idEvento']) ?></td>
                                     <td class="list-description"><?=$evento['statusEvento']?></td>
                                     <td class='list_description'>
                                         <form method='POST' action='?perfil=agendao&p=evento_cadastra'>
