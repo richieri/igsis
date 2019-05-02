@@ -100,7 +100,8 @@ while($linha = mysqli_fetch_array($query))
         $idAcao = $arrayAcoes['idLinguagem'];
         $sqlLinguagens = "SELECT * FROM igsis_linguagem WHERE id = '$idAcao'";
         $linguagens = $con->query($sqlLinguagens)->fetch_assoc();
-        $acoes[$i] = $linguagens['linguaguem'] ?? null;
+        $acoes[$i] = $linguagens['linguagem'];
+        $i++;
     }
 
     if (count($acoes) != 0) {
@@ -118,6 +119,7 @@ while($linha = mysqli_fetch_array($query))
         $sqlRepresen = "SELECT * FROM igsis_representatividade WHERE id = '$idRepresentatividade'";
         $publicos = $con->query($sqlRepresen)->fetch_assoc();
         $representatividade[$i] = $publicos['representatividade_social'];
+        $i++;
     }
 
     if (count($acoes) != 0) {

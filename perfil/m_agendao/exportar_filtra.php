@@ -91,7 +91,7 @@ if (isset($_POST['filtrar'])) {
                 L.estado AS 'estado',
                 L.cep AS 'cep',
                 I.telefone AS 'telefone',
-                E.nomeGrupo AS 'artista',
+                E.fichaTecnica AS 'artista',
                 O.duracao AS 'duracao',
                 O.subprefeitura_id AS 'id_subprefeitura',
                 O.dataInicio AS 'data_inicio',
@@ -344,7 +344,9 @@ if (isset($_POST['filtrar'])) {
                             $idAcao = $arrayAcoes['idLinguagem'];
                             $sqlLinguagens = "SELECT * FROM igsis_linguagem WHERE id = '$idAcao'";
                             $linguagens = $con->query($sqlLinguagens)->fetch_assoc();
-                            $acoes[$i] = $linguagens['linguaguem'] ?? null;
+                            $acoes[$i] = $linguagens['linguagem'];
+                            $i++;
+
                         }
 
                         if (count($acoes) != 0) {
@@ -362,6 +364,7 @@ if (isset($_POST['filtrar'])) {
                             $sqlRepresen = "SELECT * FROM igsis_representatividade WHERE id = '$idRepresentatividade'";
                             $publicos = $con->query($sqlRepresen)->fetch_assoc();
                             $representatividade[$i] = $publicos['representatividade_social'];
+                            $i++;
                         }
 
                         if (count($acoes) != 0) {
