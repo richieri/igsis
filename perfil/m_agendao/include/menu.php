@@ -15,7 +15,7 @@ $perfil = $_SESSION['perfil'];
 
 				<li style="color:white;">-------------------------</li>
 				<li><a href="?secao=perfil">Carregar módulo</a></li>
-				<li selected><a href="http://smcsistemas.prefeitura.sp.gov.br/manual/igsis">Ajuda</a></li>
+				<li selected><a href="http://smcsistemas.prefeitura.sp.gov.br/manual/igsis/modulo-agendao/">Ajuda</a></li>
 				<li><a href="../include/logoff.php">Sair</a></li>
 			</ul>
 	</div>
