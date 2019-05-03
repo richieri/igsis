@@ -1123,6 +1123,8 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 	}
 	function descricaoEvento($idEvento)
 	{
+	    $con = bancoMysqli();
+
 		//imprime dados de um evento
 		$evento = recuperaDados("ig_evento",$idEvento,"idEvento"); 
 		$tipoEvento = recuperaDados('ig_tipo_evento',$evento['ig_tipo_evento_idTipoEvento'],'idTipoEvento');
@@ -1133,7 +1135,22 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 		$responsavel = recuperaDados("ig_usuario",$evento['idResponsavel'],"idUsuario");
 		$suplente = recuperaDados("ig_usuario",$evento['suplente'],"idUsuario");
 		$faixa = recuperaDados('ig_etaria',$evento['faixaEtaria'],'idIdade');
-		//exibe as informações principais
+
+		$linguagens = [];
+		$representatividades = [];
+
+        $queryLinguagem = $con->query("SELECT linguagem FROM igsis_linguagem AS l INNER JOIN igsis_evento_linguagem AS e ON l.id = e.idLinguagem WHERE e.idEvento = '$idEvento' AND publicado = '1' ORDER BY linguagem");
+        $queryRepresentatividade = $con->query("SELECT representatividade_social FROM igsis_representatividade AS r INNER JOIN igsis_evento_representatividade AS e ON r.id = e.idRepresentatividade WHERE e.idEvento = '$idEvento' AND publicado = '1' ORDER BY representatividade_social");
+
+        while($ling = mysqli_fetch_array($queryLinguagem)){
+            $linguagens[] = $ling['linguagem'];
+        }
+
+        while($repr = mysqli_fetch_array($queryRepresentatividade)){
+            $representatividades[] = $repr['representatividade_social'];
+        }
+
+        //exibe as informações principais
 		echo "ID do Evento: <b>".$idEvento."</b><br />";
 		if($evento['dataEnvio'] != NULL)
 		{
@@ -1163,6 +1180,8 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 		echo "<br />";
 		echo "<b>Ficha técnica:</b><br />".nl2br($evento['fichaTecnica'])."<br /><br />";
 		echo "<b>Faixa ou indicação etária:</b> ".$faixa['faixa']."<br /><br />";
+		echo "<b>Linguagem / Expressão artística:</b> ".implode("; ", $linguagens)."<br /><br />";
+		echo "<b>Público / Representatividade social:</b> ".implode("; ", $representatividades)."<br /><br />";
 		//echo "<br /><br />";
 		echo "<b>Sinopse:</b><br />".nl2br($evento['sinopse'])."<br /><br />";
 		echo "<b>Release:</b><br />".nl2br($evento['releaseCom'])."<br /><br />";

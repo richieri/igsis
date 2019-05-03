@@ -518,6 +518,21 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    var fomento = $('.fomento');
+    fomento.on("change", verificaFomento);
+    $(document).ready(verificaFomento());
+
+    function verificaFomento() {
+        if ($('#sim').is(':checked')) {
+            $('#tipoFomento')
+                .attr('disabled', false)
+        } else {
+            $('#tipoFomento')
+                .attr('disabled', true);
+        }
+    }
+</script>
 	<?php
 		break;
 		case "detalhe" :
@@ -1946,7 +1961,7 @@
 			if(isset($_POST['duplicar']))
 			{
 				$idOc = $_POST['duplicar'];
-				$sql_duplicar_ocorrencia = "INSERT INTO ig_ocorrencia (`idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada`, `observacao` ) SELECT `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada`, `observacao` FROM ig_ocorrencia WHERE `idOcorrencia` = '$idOc'";
+				$sql_duplicar_ocorrencia = "INSERT INTO ig_ocorrencia (`idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada`, `observacao`, `subprefeitura_id`, `idPeriodoDia`) SELECT `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`, `idSubEvento`, `virada`, `observacao`, `subprefeitura_id`, `idPeriodoDia` FROM ig_ocorrencia WHERE `idOcorrencia` = '$idOc'";
 				if(mysqli_query($con,$sql_duplicar_ocorrencia))
 				{
 					$mensagem = "Ocorrência duplicada com sucesso!";	
@@ -3643,19 +3658,3 @@
 		break;
 	} // fim eventos
 	?>
-
-<script type="text/javascript">
-    var fomento = $('.fomento');
-    fomento.on("change", verificaFomento);
-    $(document).ready(verificaFomento());
-
-    function verificaFomento() {
-        if ($('#sim').is(':checked')) {
-            $('#tipoFomento')
-                .attr('disabled', false)
-        } else {
-            $('#tipoFomento')
-                .attr('disabled', true);
-        }
-    }
-</script>
