@@ -28,6 +28,9 @@ $sqlConsultaEventos = "SELECT * FROM ig_evento
                         ORDER BY idEvento DESC";
 $eventos = $con->query($sqlConsultaEventos)->fetch_all(MYSQLI_ASSOC);
 
+$eventoCadastrados = [];
+$eventoEnviados = [];
+
 foreach ($eventos as $evento) {
     if (strtolower($evento['statusEvento']) == "em elaboração") {
         $eventoCadastrados[] = $evento;
@@ -76,39 +79,52 @@ include "include/menu.php";
                                 </thead>
                                 <tbody>
                                 <?php
-                                foreach ($eventoCadastrados as $eventoCadastrado) {
-                                    $tipoEvento = recuperaDados('ig_tipo_evento', $eventoCadastrado['ig_tipo_evento_idTipoEvento'], 'idTipoEvento')['tipoEvento']
-                                    ?>
-                                    <tr>
-                                        <td class="list-description"><?=$eventoCadastrado['nomeEvento']?></td>
-                                        <td class="list-description"><?=$tipoEvento?></td>
-                                        <td class="list-description"><?= retornaPeriodo($eventoCadastrado['idEvento']) ?></td>
-                                        <td class="list-description"><?=$eventoCadastrado['statusEvento']?></td>
-                                        <?php
-                                        if ($eventoCadastrado['ocupacao'] == 1) {
+                                if (count($eventoCadastrados) > 0) {
+                                    foreach ($eventoCadastrados as $eventoCadastrado) {
+                                        $tipoEvento = recuperaDados('ig_tipo_evento', $eventoCadastrado['ig_tipo_evento_idTipoEvento'], 'idTipoEvento')['tipoEvento']
                                         ?>
-                                            <td class='list_description'>
-                                                <form method='POST' action='?perfil=agendao&p=evento_cadastra'>
-                                                    <input type='hidden' name='idEvento' value='<?=$eventoCadastrado['idEvento']?>'>
-                                                    <input type ='submit' class='btn btn-theme btn-block' value='carregar' <?= strtolower($eventoCadastrado['statusEvento']) == "em elaboração" ? "" : "disabled"?>>
-                                                </form>
-                                            </td>
-                                            <td class='list_description'>
-                                                <button id="btnApagar" class='btn btn-theme' type='button' data-toggle='modal' data-target='#confirmApagar' onclick="confirmApagar('<?=$eventoCadastrado['idEvento']?>', '<?=$eventoCadastrado['nomeEvento']?>');">
-                                                    Apagar
-                                                </button>
-                                            </td>
+                                        <tr>
+                                            <td class="list-description"><?= $eventoCadastrado['nomeEvento'] ?></td>
+                                            <td class="list-description"><?= $tipoEvento ?></td>
+                                            <td class="list-description"><?= retornaPeriodo($eventoCadastrado['idEvento']) ?></td>
+                                            <td class="list-description"><?= $eventoCadastrado['statusEvento'] ?></td>
+                                            <?php
+                                            if ($eventoCadastrado['ocupacao'] == 1) {
+                                                ?>
+                                                <td class='list_description'>
+                                                    <form method='POST' action='?perfil=agendao&p=evento_cadastra'>
+                                                        <input type='hidden' name='idEvento'
+                                                               value='<?= $eventoCadastrado['idEvento'] ?>'>
+                                                        <input type='submit' class='btn btn-theme btn-block'
+                                                               value='carregar' <?= strtolower($eventoCadastrado['statusEvento']) == "em elaboração" ? "" : "disabled" ?>>
+                                                    </form>
+                                                </td>
+                                                <td class='list_description'>
+                                                    <button id="btnApagar" class='btn btn-theme' type='button'
+                                                            data-toggle='modal' data-target='#confirmApagar'
+                                                            onclick="confirmApagar('<?= $eventoCadastrado['idEvento'] ?>', '<?= $eventoCadastrado['nomeEvento'] ?>');">
+                                                        Apagar
+                                                    </button>
+                                                </td>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <td class='list_description'>
+                                                    <a href='?perfil=agendao&p=evento_resumo&idEvento=<?= $eventoCadastrado['idEvento'] ?>'
+                                                       class='btn btn-theme'>Resumo</a>
+                                                </td>
+                                                <?php
+                                            }
+                                            ?>
+                                        </tr>
                                         <?php
-                                        } else {
-                                        ?>
-                                            <td class='list_description'>
-                                                <a href='?perfil=agendao&p=evento_resumo&idEvento=<?=$eventoCadastrado['idEvento']?>' class='btn btn-theme'>Resumo</a>
-                                            </td>
-                                        <?php
-                                        }
-                                        ?>
+                                    }
+                                } else {
+                                ?>
+                                    <tr class="text-center">
+                                        <td colspan="6"><strong>Nenhum Evento Cadastrado</strong></td>
                                     </tr>
-                                    <?php
+                                <?php
                                 }
                                 ?>
                                 </tbody>
@@ -132,23 +148,32 @@ include "include/menu.php";
                                 </thead>
                                 <tbody>
                                 <?php
-                                foreach ($eventoEnviados as $eventoEnviado) {
-                                    $tipoEvento = recuperaDados('ig_tipo_evento', $eventoEnviado['ig_tipo_evento_idTipoEvento'], 'idTipoEvento')['tipoEvento']
-                                    ?>
-                                    <tr>
-                                        <td class="list-description"><?=$eventoEnviado['idEvento']?></td>
-                                        <td class="list-description"><?=$eventoEnviado['nomeEvento']?></td>
-                                        <td class="list-description"><?=$tipoEvento?></td>
-                                        <td class="list-description"><?= retornaPeriodo($eventoEnviado['idEvento']) ?></td>
-                                        <td class="list-description"><?=$eventoEnviado['statusEvento']?></td>
-                                        <td class="list-description"><?=exibirDataBr($eventoEnviado['dataEnvio'])?></td>
-                                        <td class='list_description'>
-                                            <form method='POST' action='?perfil=agendao&p=evento_resumo&idEvento=<?=$eventoEnviado['idEvento']?>'>
-                                                <input type ='submit' class='btn btn-theme btn-block' value='resumo'>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <?php
+                                if (count($eventoEnviados) > 0) {
+                                    foreach ($eventoEnviados as $eventoEnviado) {
+                                        $tipoEvento = recuperaDados('ig_tipo_evento', $eventoEnviado['ig_tipo_evento_idTipoEvento'], 'idTipoEvento')['tipoEvento']
+                                        ?>
+                                        <tr>
+                                            <td class="list-description"><?= $eventoEnviado['idEvento'] ?></td>
+                                            <td class="list-description"><?= $eventoEnviado['nomeEvento'] ?></td>
+                                            <td class="list-description"><?= $tipoEvento ?></td>
+                                            <td class="list-description"><?= retornaPeriodo($eventoEnviado['idEvento']) ?></td>
+                                            <td class="list-description"><?= $eventoEnviado['statusEvento'] ?></td>
+                                            <td class="list-description"><?= exibirDataBr($eventoEnviado['dataEnvio']) ?></td>
+                                            <td class='list_description'>
+                                                <form method='POST'
+                                                      action='?perfil=agendao&p=evento_resumo&idEvento=<?= $eventoEnviado['idEvento'] ?>'>
+                                                    <input type='submit' class='btn btn-theme btn-block' value='resumo'>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                } else {
+                                ?>
+                                <tr class="text-center">
+                                    <td colspan="7"><strong>Nenhum Evento Enviado</strong></td>
+                                </tr>
+                                <?php
                                 }
                                 ?>
                                 </tbody>
