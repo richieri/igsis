@@ -194,7 +194,7 @@ if(isset($_POST['filtrar']))
                             <td class="list_description"><?=($linha['valor'] == 0 ? "Gratuito" : "R$ ".dinheiroParaBr($linha['valor']))?></td>
                             <td class="list_description"><?=$linha['classificacao']?></td>
                             <td class="list_description"><?=$linha['divulgacao']?></td>
-                            <td class="list_description"><?=$linha['sinopse']?></td>
+                            <td class="list_description"><?= mb_strimwidth($linha['sinopse'], 0, 50, '...')?></td>
                             <td class="list_description"><?=$linha['produtor_nome']?></td>
                             <td class="list_description"><?=$linha['produtor_email']?></td>
                             <td class="list_description"><?=$linha['produtor_fone']?></td>

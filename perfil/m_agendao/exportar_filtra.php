@@ -21,9 +21,9 @@ if (isset($_POST['filtrar'])) {
     if ($datainicio != '') {
         if ($datafim != '') {
             $datafim = exibirDataMysql($_POST['final']);
-            $filtro_data = "O.dataInicio BETWEEN '$datainicio' AND '$datafim'";
+            $filtro_data = "agenda.data BETWEEN '$datainicio' AND '$datafim'";
         } else {
-            $filtro_data = "O.dataInicio > '$datainicio'";
+            $filtro_data = "agenda.data > '$datainicio'";
         }
     } else {
         $mensagem = "Informe uma data para inicio da consulta";
@@ -76,10 +76,9 @@ if (isset($_POST['filtrar'])) {
                 E.espaco_publico AS 'espaco_publico',
                 E.projetoEspecial AS 'idProjetoEspecial',
                 TE.tipoEvento AS 'categoria',
-                DATE_FORMAT(O.dataInicio, '%d/%m/%Y') AS 'data',
-                DATE_FORMAT(O.horaInicio, '%H:%i') AS 'horario_inicial',
-                O.valorIngresso AS 'valor',
-                O.retiradaIngresso AS 'ingresso',
+                agenda.data AS 'data_inicio',
+                MAX(agenda.data) AS 'data_fim',
+                agenda.hora AS 'hora_inicio',
                 L.sala AS 'nome_local',
                 I.sigla AS 'sigla',
                 I.instituicao AS 'equipamento',
@@ -92,19 +91,6 @@ if (isset($_POST['filtrar'])) {
                 L.cep AS 'cep',
                 I.telefone AS 'telefone',
                 E.fichaTecnica AS 'artista',
-                O.duracao AS 'duracao',
-                O.subprefeitura_id AS 'id_subprefeitura',
-                O.dataInicio AS 'data_inicio',
-                O.dataFinal AS 'data_fim',
-                O.segunda AS 'segunda',
-                O.terca AS 'terca',
-                O.quarta AS 'quarta',
-                O.quinta AS 'quinta',
-                O.sexta AS 'sexta', 
-                O.sabado AS 'sabado',
-                O.domingo AS 'domingo',
-                O.horaInicio AS 'hora_inicio',
-                O.idPeriodoDia AS 'idPeriodo',
                 CI.faixa AS 'classificacao',
                 E.linksCom AS 'divulgacao',
                 E.sinopse AS 'sinopse',
@@ -114,20 +100,21 @@ if (isset($_POST['filtrar'])) {
                 P.email AS 'produtor_email',
                 P.telefone AS 'produtor_fone',
                 U.nomeCompleto AS 'nomeCompleto',
+                PE.projetoEspecial,    
                 SUB_PRE.subprefeitura AS 'subprefeitura',
                 DIA_PERI.periodo AS 'periodo',
-                retirada.retirada AS 'retirada',
-                PE.projetoEspecial
+                retirada.retirada AS 'retirada'
             FROM
                 ig_evento AS E
                 INNER JOIN ig_tipo_evento AS TE ON E.ig_tipo_evento_idTipoEvento = TE.idTipoEvento
-                INNER JOIN ig_ocorrencia AS O ON E.idEvento = O.idEvento
-                INNER JOIN ig_local AS L ON O.`local` = L.idLocal
                 INNER JOIN ig_instituicao AS I ON E.idInstituicao = I.idInstituicao
                 INNER JOIN ig_etaria AS CI ON E.faixaEtaria = CI.idIdade
                 INNER JOIN ig_produtor AS P ON E.ig_produtor_idProdutor = P.idProdutor
                 INNER JOIN ig_usuario AS U ON E.idUsuario = U.idUsuario
                 LEFT JOIN ig_projeto_especial AS PE ON E.projetoEspecial = PE.idProjetoEspecial
+                INNER JOIN igsis_agenda AS agenda ON E.idEvento = agenda.idEvento
+                INNER JOIN ig_local AS L ON agenda.idLocal = L.idLocal                
+                INNER JOIN ig_ocorrencia AS O ON E.idEvento = O.idEvento
                 LEFT JOIN igsis_subprefeitura AS SUB_PRE ON O.subprefeitura_id = SUB_PRE.id
                 LEFT JOIN ig_periodo_dia AS DIA_PERI ON O.idPeriodoDia = DIA_PERI.id
                 INNER JOIN ig_retirada AS retirada ON O.retiradaIngresso = retirada.idRetirada
@@ -140,13 +127,14 @@ if (isset($_POST['filtrar'])) {
                 $filtro_PE AND
                 E.publicado = 1 AND
                 E.statusEvento = 'Enviado' AND
-                O.publicado = 1
-            ORDER BY dataInicio";
+                E.publicado = 1
+                GROUP BY idEvento
+            ORDER BY data_inicio";
 
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
 
-    //echo $sql;
+    echo $sql;
 
     if ($num > 0) {
         $mensagem = "Foram encontrados $num resultados";
@@ -172,7 +160,7 @@ if (isset($_POST['filtrar'])) {
                 </div>
             </div>
         </div>
-        <div id="testeTana" style="display: <?=$displayForm?>">
+        <div id="testeTana" style="display: <?= $displayForm ?>">
             <form method="POST" action="?perfil=agendao&p=exportar_filtra" class="form-horizontal" role="form">
                 <div class="form-group">
                     <div class="row">
@@ -239,10 +227,11 @@ if (isset($_POST['filtrar'])) {
                 </div>
             </form>
         </div>
-        <div id="botoes" style="display: <?=$displayBotoes?>;">
+        <div id="botoes" style="display: <?= $displayBotoes ?>;">
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-6">
-                    <input type="button" class="btn btn-theme btn-block" name="novaPesquisa" id="novaPesquisa" value="Nova Pesquisa" onclick="mostraDiv()">
+                    <input type="button" class="btn btn-theme btn-block" name="novaPesquisa" id="novaPesquisa"
+                           value="Nova Pesquisa" onclick="mostraDiv()">
                     <hr>
                 </div>
             </div>
@@ -306,36 +295,40 @@ if (isset($_POST['filtrar'])) {
                     <tbody>
                     <?php
                     while ($linha = mysqli_fetch_array($query)) {
-                        $sqlConsultaOcorrencias = "SELECT idEvento FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
+                        $sqlConsultaOcorrencias = "SELECT * FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
+                        $queryOcorrencias = mysqli_query($con, $sqlConsultaOcorrencias);
                         $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
+                        if ($apresentacoes != 0) {
+                            $totalDuracao = '';
+                            $totalDias = '';
+                            $valores = '';
+                            $numOcorrencia = 1;
 
-                        $sqlAgenda = "SELECT * FROM igsis_agenda WHERE idEvento = '" . $linha['idEvento'] . "'";
-
-                        if (mysqli_query($con, $sqlAgenda)) {
-                            $numAgenda = $con->query($sqlAgenda)->num_rows;
-//                            echo $numAgenda;
-                        }
-
-
-
-                        for($i = 1; $i <= $apresentacoes; $i++) {
-                            $dias = "";
-                            $linha['segunda'] == 1 ? $dias .= "Segunda, " : '';
-                            $linha['terca'] == 1 ? $dias .= "Terça, " : '';
-                            $linha['quarta'] == 1 ? $dias .= "Quarta, " : '';
-                            $linha['quinta'] == 1 ? $dias .= "Quinta, " : '';
-                            $linha['sexta'] == 1 ? $dias .= "Sexta, " : '';
-                            $linha['sabado'] == 1 ? $dias .= "Sabádo, " : '';
-                            $linha['domingo'] == 1 ? $dias .= "Domingo. " : '';
-                            if ($dias != "") {
-                                $respectiva = $apresentacoes . "º ocorrência: ";
-                            } else {
-                                $respectiva = '';
+                            while ($ocorrencias = mysqli_fetch_array($queryOcorrencias)) {
+                                $respectiva = $numOcorrencia . "º ocorrência: ";
+                                $duração = $respectiva . $ocorrencias['duracao'] . " minutos.";
+                                $totalDuracao .= $duração . "<br>";
+                                $valores .= $respectiva . dinheiroParaBr($ocorrencias['valorIngresso']) . " reais.<br>";
+                                $dias = "";
+                                $ocorrencias['segunda'] == 1 ? $dias .= "Segunda, " : '';
+                                $ocorrencias['terca'] == 1 ? $dias .= "Terça, " : '';
+                                $ocorrencias['quarta'] == 1 ? $dias .= "Quarta, " : '';
+                                $ocorrencias['quinta'] == 1 ? $dias .= "Quinta, " : '';
+                                $ocorrencias['sexta'] == 1 ? $dias .= "Sexta, " : '';
+                                $ocorrencias['sabado'] == 1 ? $dias .= "Sabádo, " : '';
+                                $ocorrencias['domingo'] == 1 ? $dias .= "Domingo. " : '';
+                                if ($dias != "") {
+                                    //echo "dias diferente de vazio " . $respectiva . $dias;
+                                    $totalDias .= $respectiva . " " . substr($dias, 0, -2) . ".<br>";
+                                } else {
+                                    $totalDias .= $respectiva . " Dias não especificados. <br>";
+                                }
+                                $numOcorrencia++;
                             }
                         }
 
                         //Ações
-                        $sqlAcao = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '". $linha['idEvento'] . "'";
+                        $sqlAcao = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '" . $linha['idEvento'] . "'";
                         $queryAcao = mysqli_query($con, $sqlAcao);
                         $acoes = [];
                         $i = 0;
@@ -346,7 +339,6 @@ if (isset($_POST['filtrar'])) {
                             $linguagens = $con->query($sqlLinguagens)->fetch_assoc();
                             $acoes[$i] = $linguagens['linguagem'];
                             $i++;
-
                         }
 
                         if (count($acoes) != 0) {
@@ -354,7 +346,7 @@ if (isset($_POST['filtrar'])) {
                         }
 
                         //Público
-                        $sqlPublico = "SELECT * FROM igsis_evento_representatividade WHERE idEvento = '". $linha['idEvento'] . "'";
+                        $sqlPublico = "SELECT * FROM igsis_evento_representatividade WHERE idEvento = '" . $linha['idEvento'] . "'";
                         $queryPublico = mysqli_query($con, $sqlPublico);
                         $representatividade = [];
                         $i = 0;
@@ -372,7 +364,7 @@ if (isset($_POST['filtrar'])) {
                         }
 
                         if ($linha['fomento'] == 1) {
-                            $sqlFomento = "SELECT * FROM fomento WHERE id = '". $linha['tipoFomento']."'";
+                            $sqlFomento = "SELECT * FROM fomento WHERE id = '" . $linha['tipoFomento'] . "'";
                             $fomento = $con->query($sqlFomento)->fetch_assoc();
                         }
 
@@ -387,31 +379,26 @@ if (isset($_POST['filtrar'])) {
                             <td class="list_description"><?= $linha['complemento'] ?></td>
                             <td class="list_description"><?= $linha['bairro'] ?></td>
                             <td class="list_description"><?= $linha['cidade'] ?> minutos</td>
-                            <td class="list_description"><?= $linha['estado']?></td>
+                            <td class="list_description"><?= $linha['estado'] ?></td>
                             <td class="list_description"><?= $linha['cep'] ?></td>
                             <td class="list_description"><?= $linha['subprefeitura'] ?></td>
                             <td class="list_description"><?= $linha['telefone'] ?></td>
                             <td class="list_description"><?= exibirDataBr($linha['data_inicio']) ?></td>
                             <td class="list_description"><?= ($linha['data_fim'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['data_fim']) ?></td>
                             <td class="list_description">
-                                <?php
-                                if ($respectiva == "" && $dias == "") {
-                                    echo strftime("%A", strtotime($linha['data_inicio']));
-                                } else {
-                                    echo $respectiva . $dias;
-                                }
+                                <?= $totalDias;
                                 ?>
                             </td>
-                            <td class="list_description"><?= $linha['hora_inicio'] ?></td>
+                            <td class="list_description"><?= exibirHora($linha['hora_inicio']) ?></td>
                             <td class="list_description"><?= $linha['periodo'] ?></td>
-                            <td class="list_description"><?= $linha['duracao'] . " minutos." ?></td>
+                            <td class="list_description"><?= $totalDuracao ?></td>
                             <td class="list_description"><?= $apresentacoes ?></td>
                             <td class="list_description"><?= $linha['retirada'] ?></td>
-                            <td class="list_description"><?= dinheiroParaBr($linha['valor']) ?></td>
+                            <td class="list_description"><?= $valores ?></td>
                             <td class="list_description"><?= $linha['nome'] ?></td>
                             <td class="list_description"><?= $linha['projetoEspecial'] ?></td>
-                            <td class="list_description"><?= $linha['artista'] ?></td>
-                            <td class="list_description"><?= $stringAcoes ?? "Não há ações."?></td>
+                            <td class="list_description"><?= mb_strimwidth($linha['artista'], 0, 50, '...') ?></td>
+                            <td class="list_description"><?= $stringAcoes ?? "Não há ações." ?></td>
                             <td class="list_description"><?= $stringPublico ?? "Não foi selecionado público." ?></td>
                             <td class="list_description"><?= isset($fomento['fomento']) ? $fomento['fomento'] : "Não" ?></td>
                             <td class="list_description"><?= $linha['classificacao'] ?></td>
@@ -436,7 +423,7 @@ if (isset($_POST['filtrar'])) {
 
 <script type="text/javascript">
 
-    function mostraDiv () {
+    function mostraDiv() {
         let form = document.querySelector('#testeTana');
         form.style.display = 'block';
 
@@ -463,10 +450,10 @@ if (isset($_POST['filtrar'])) {
 </script>
 
 <script>
-    $( function() {
+    $(function () {
         var usuarios = [];
-        $.getJSON("ajax_usuario.php", function(result){
-            $.each(result, function(i, field){
+        $.getJSON("ajax_usuario.php", function (result) {
+            $.each(result, function (i, field) {
                 usuarios.push(field.nomeCompleto);
             });
         });
@@ -474,5 +461,5 @@ if (isset($_POST['filtrar'])) {
         $("#inserido").autocomplete({
             source: usuarios
         });
-    } );
+    });
 </script>
