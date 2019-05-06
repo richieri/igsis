@@ -741,7 +741,8 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 		$sql = "SELECT * FROM ig_evento 
 		WHERE publicado = 1 
 		AND (idUsuario = '$idUsuario' OR suplente = '$idUsuario' OR idResponsavel = '$idUsuario') 
-		AND dataEnvio IS NULL ORDER BY idEvento DESC";
+		AND dataEnvio IS NULL
+        AND ocupacao IS NULL ORDER BY idEvento DESC";
 		$query = mysqli_query($con,$sql);
 		echo "
 			<table class='table table-condensed'>
@@ -3028,7 +3029,8 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 			OR idResponsavel = $idUsuario 
 			OR suplente = $idUsuario) 
 			AND publicado = 1 
-			AND dataEnvio IS NOT NULL 
+			AND dataEnvio IS NOT NULL
+			AND ocupacao IS NULL
 			ORDER BY idEvento DESC";
 		$query = mysqli_query($con,$sql);
 		echo "

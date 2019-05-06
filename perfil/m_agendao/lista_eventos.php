@@ -5,8 +5,8 @@ $nomeUsuario = recuperaUsuario($idUsuario)['nomeCompleto'];
 
 $sqlConsultaEventos = "SELECT * FROM ig_evento
                         WHERE publicado = 1
-                        AND (idUsuario = '$idUsuario') 
-                        AND dataEnvio IS NULL ORDER BY idEvento DESC";
+                        AND (idUsuario = '$idUsuario')
+                        AND ocupacao = 1 ORDER BY idEvento DESC";
 $eventos = $con->query($sqlConsultaEventos)->fetch_all(MYSQLI_ASSOC);
 
 if(isset($_POST['apagar']))
@@ -22,17 +22,13 @@ if(isset($_POST['apagar']))
     }
 }
 
-$sqlConsultaEventos = "SELECT * FROM ig_evento
-                        WHERE publicado = 1
-                        AND (idUsuario = '$idUsuario') 
-                        ORDER BY idEvento DESC";
 $eventos = $con->query($sqlConsultaEventos)->fetch_all(MYSQLI_ASSOC);
 
 $eventoCadastrados = [];
 $eventoEnviados = [];
 
 foreach ($eventos as $evento) {
-    if (strtolower($evento['statusEvento']) == "em elaboração") {
+    if (mb_strtolower($evento['statusEvento']) == "em elaboração") {
         $eventoCadastrados[] = $evento;
     } else {
         $eventoEnviados[] = $evento;
@@ -59,7 +55,7 @@ include "include/menu.php";
             <div class="col-md-offset-1 col-md-10">
 
                 <ul class="nav nav-tabs">
-                    <li class="nav active"><a href="#gravados" data-toggle="tab">Eventos Gravados</a></li>
+                    <li class="nav active"><a href="#gravados" data-toggle="tab">Eventos Em Elaboração</a></li>
                     <li class="nav"><a href="#enviados" data-toggle="tab">Eventos Enviados</a></li>
                 </ul>
 
@@ -96,7 +92,7 @@ include "include/menu.php";
                                                         <input type='hidden' name='idEvento'
                                                                value='<?= $eventoCadastrado['idEvento'] ?>'>
                                                         <input type='submit' class='btn btn-theme btn-block'
-                                                               value='carregar' <?= strtolower($eventoCadastrado['statusEvento']) == "em elaboração" ? "" : "disabled" ?>>
+                                                               value='carregar' <?= mb_strtolower($eventoCadastrado['statusEvento'], 'UTF-8') == "em elaboração" ? "" : "disabled" ?>>
                                                     </form>
                                                 </td>
                                                 <td class='list_description'>
