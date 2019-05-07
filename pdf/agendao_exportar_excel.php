@@ -92,7 +92,7 @@ while($linha = mysqli_fetch_array($query))
 
         while ($ocorrencias = mysqli_fetch_array($queryOcorrencias)) {
             $respectiva = $numOcorrencia . "º ocorrência: ";
-            $duração = $respectiva . $ocorrencias['duracao'] . " minutos.   ";
+            $duração = $respectiva . $ocorrencias['duracao'] . " minutos.  \n";
             $totalDuracao .= $duração;
             $valores .= $respectiva . dinheiroParaBr($ocorrencias['valorIngresso']) . " reais.<br>";
             $dias = "";
@@ -105,7 +105,7 @@ while($linha = mysqli_fetch_array($query))
             $ocorrencias['domingo'] == 1 ? $dias .= "Domingo. " : '';
             if ($dias != "") {
                 //echo "dias diferente de vazio " . $respectiva . $dias;
-                $totalDias .= $respectiva . " " . substr($dias, 0, -2) . ".  ";
+                $totalDias .= $respectiva . " " . substr($dias, 0, -2) . ".   \n";
             } else {
                 $totalDias .= $respectiva . " Dias não especificados.";
             }
@@ -191,6 +191,7 @@ while($linha = mysqli_fetch_array($query))
     $af = "AF".$cont;
     $ag = "AG".$cont;
     $ah = "AH".$cont;
+    $ai = "AI".$cont;
 
     $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue($a, $linha['sigla'])
@@ -229,18 +230,20 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue($ah, $linha['produtor_fone']);
 
     $cont++;
-}
 
+     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setWrapText(true);
+     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+}
 // Renomeia a guia
 $objPHPExcel->getActiveSheet()->setTitle('Inscritos');
 
-foreach (range('A', $objPHPExcel->getActiveSheet()->getHighestDataColumn()) as $col)
-{
+for ($col = 'A'; $col !== 'AI'; $col++){
     $objPHPExcel->getActiveSheet()
         ->getColumnDimension($col)
-        ->setWidth(10.50);
+        ->setAutoSize(true);
 }
-
 
 $objPHPExcel->setActiveSheetIndex(0);
 ob_end_clean();
