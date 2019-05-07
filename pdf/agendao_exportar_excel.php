@@ -64,7 +64,6 @@ $objPHPExcel->setActiveSheetIndex(0)
 // Definimos o estilo da fonte
 $objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getFont()->setBold(true);
 
-
 //Colorir a primeira linha
 $objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->applyFromArray
 (
@@ -81,14 +80,38 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->applyFromArray
 $cont = 2;
 while($linha = mysqli_fetch_array($query))
 {
-    $dias = "";
-    $linha['segunda'] == 1 ?? $dias = "Segunda, ";
-    $linha['terca'] == 1 ?? $dias .= "Terça, ";
-    $linha['quarta'] == 1 ?? $dias .= "Quarta, ";
-    $linha['quinta'] == 1 ?? $dias .= "Quinta, ";
-    $linha['sexta'] == 1 ?? $dias .= "Sexta, ";
-    $linha['sabado'] == 1 ?? $dias .= "Sabádo, ";
-    $linha['domingo'] == 1 ?? $dias .= "Domingo. ";
+    $sqlConsultaOcorrencias = "SELECT * FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
+    $queryOcorrencias = mysqli_query($con, $sqlConsultaOcorrencias);
+    $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
+
+    if ($apresentacoes != 0) {
+        $totalDuracao = '';
+        $totalDias = '';
+        $valores = '';
+        $numOcorrencia = 1;
+
+        while ($ocorrencias = mysqli_fetch_array($queryOcorrencias)) {
+            $respectiva = $numOcorrencia . "º ocorrência: ";
+            $duração = $respectiva . $ocorrencias['duracao'] . " minutos.   ";
+            $totalDuracao .= $duração;
+            $valores .= $respectiva . dinheiroParaBr($ocorrencias['valorIngresso']) . " reais.<br>";
+            $dias = "";
+            $ocorrencias['segunda'] == 1 ? $dias .= "Segunda, " : '';
+            $ocorrencias['terca'] == 1 ? $dias .= "Terça, " : '';
+            $ocorrencias['quarta'] == 1 ? $dias .= "Quarta, " : '';
+            $ocorrencias['quinta'] == 1 ? $dias .= "Quinta, " : '';
+            $ocorrencias['sexta'] == 1 ? $dias .= "Sexta, " : '';
+            $ocorrencias['sabado'] == 1 ? $dias .= "Sabádo, " : '';
+            $ocorrencias['domingo'] == 1 ? $dias .= "Domingo. " : '';
+            if ($dias != "") {
+                //echo "dias diferente de vazio " . $respectiva . $dias;
+                $totalDias .= $respectiva . " " . substr($dias, 0, -2) . ".  ";
+            } else {
+                $totalDias .= $respectiva . " Dias não especificados.";
+            }
+            $numOcorrencia++;
+        }
+    }
 
     //Ações
     $sqlAcao = "SELECT * FROM igsis_evento_linguagem WHERE idEvento = '". $linha['idEvento'] . "'";
@@ -183,12 +206,12 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue($k, $linha['cep'])
         ->setCellValue($l, $linha['subprefeitura'])
         ->setCellValue($m, $linha['telefone'])
-        ->setCellValue($n, $linha['data_inicio'])
+        ->setCellValue($n, exibirDataBr($linha['data_inicio']))
         ->setCellValue($o, ($linha['data_fim'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['data_fim']))
-        ->setCellValue($p, ($dias == "") ? strftime("%A", strtotime($linha['data_inicio'])) : $dias)
-        ->setCellValue($q, $linha['hora_inicio'])
+        ->setCellValue($p, $totalDias)
+        ->setCellValue($q, exibirHora($linha['hora_inicio']))
         ->setCellValue($r, $linha['periodo'])
-        ->setCellValue($s, $linha['duracao'] . " minutos.")
+        ->setCellValue($s, $totalDuracao)
         ->setCellValue($t, $apresentacoes)
         ->setCellValue($u, $linha['retirada'])
         ->setCellValue($v, $linha['valor'])

@@ -128,13 +128,13 @@ if (isset($_POST['filtrar'])) {
                 E.publicado = 1 AND
                 E.statusEvento = 'Enviado' AND
                 E.publicado = 1
-                GROUP BY idEvento
+            GROUP BY idEvento
             ORDER BY data_inicio";
 
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
 
-    echo $sql;
+    //echo $sql;
 
     if ($num > 0) {
         $mensagem = "Foram encontrados $num resultados";
@@ -385,10 +385,7 @@ if (isset($_POST['filtrar'])) {
                             <td class="list_description"><?= $linha['telefone'] ?></td>
                             <td class="list_description"><?= exibirDataBr($linha['data_inicio']) ?></td>
                             <td class="list_description"><?= ($linha['data_fim'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['data_fim']) ?></td>
-                            <td class="list_description">
-                                <?= $totalDias;
-                                ?>
-                            </td>
+                            <td class="list_description"><?= $totalDias ?></td>
                             <td class="list_description"><?= exibirHora($linha['hora_inicio']) ?></td>
                             <td class="list_description"><?= $linha['periodo'] ?></td>
                             <td class="list_description"><?= $totalDuracao ?></td>
@@ -419,7 +416,6 @@ if (isset($_POST['filtrar'])) {
         ?>
     </div>
 </section>
-
 
 <script type="text/javascript">
 
