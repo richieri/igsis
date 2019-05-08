@@ -9,7 +9,8 @@
 	$idEvento = $pedido['idEvento'];
 	$pessoa = siscontratDocs($pedido['IdProponente'],$pedido['TipoPessoa']);
 	$evento = recuperaDados('ig_evento',$idEvento,'idEvento');
-	$chamado = recuperaAlteracoesEvento($idEvento);	
+	$chamado = recuperaAlteracoesEvento($idEvento);
+	$capac = recuperaDados("igsis_capac",$idEvento,"idEventoIgsis");
 	
 ?>
 <!-- Contact -->
@@ -30,6 +31,9 @@
 	}
 	else
 	{
+	    if($capac != NULL){
+	        echo "<p>Importado do CAPAC: <a href='?perfil=capac_detalhes&id_capac=".$capac['idEventoCapac']."' target='_blank'>".$capac['idEventoCapac']."</a></p>";
+        }
 ?>
 					<p align="justify"><?php descricaoEvento($idEvento); ?></p>
 					<br/>
