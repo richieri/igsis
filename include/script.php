@@ -1,10 +1,10 @@
-﻿<script type="text/javascript" src="js/autocomplete.js"></script>
-<script src="js/modernizr.custom.js"></script>
-<script src="js/jquery-1.9.1.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/jquery.maskedinput.js" type="text/javascript"></script>
-<script src="js/jquery.maskMoney.js" type="text/javascript"></script>
-  <script>
+﻿<script type="text/javascript" src="js/autocomplete.js" defer></script>
+<script src="js/modernizr.custom.js" defer></script>
+<script src="js/jquery-1.9.1.js" defer></script>
+<script src="js/jquery-ui.js" defer></script>
+<script src="js/jquery.maskedinput.js" type="text/javascript" defer></script>
+<script src="js/jquery.maskMoney.js" type="text/javascript" defer></script>
+  <script defer>
   $(function(){
 	$( "#hora" ).mask("99:99");
   });
@@ -34,7 +34,7 @@
     
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript" defer>
   /* Máscaras ER */
 function mascara(o,f){
     v_obj=o
@@ -62,12 +62,12 @@ function mtel(v){
 
  </script>
 
-<script type="text/javascript">
+<script type="text/javascript" defer>
 	$(document).ready(function(){	$("#CNPJ").mask("99.999.999/9999-99");});
 </script>
-<script type="text/javascript">$(document).ready(function(){	$("#cpf").mask("999.999.999-99");});</script>
+<script type="text/javascript" defer>$(document).ready(function(){	$("#cpf").mask("999.999.999-99");});</script>
 
-<script type="text/javascript">
+<script type="text/javascript" defer>
 	$(document).ready( function() {
    /* Executa a requisição quando o campo CEP perder o foco */
    $('#CEP').blur(function(){
@@ -96,7 +96,7 @@ function mtel(v){
 });
 	</script>
 
- <script type="text/javascript"> 	
+ <script type="text/javascript" defer>
  	$(document).ready(function(){
     $('#diaespecial').change(function(){
         var checked = $(this).attr('checked');
@@ -109,7 +109,7 @@ function mtel(v){
 })
  </script>
  
-	<script>
+	<script defer>
 	//funções para calendário	
 	  $(function() {
     $( "#datepicker01" ).datepicker({ 

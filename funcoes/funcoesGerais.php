@@ -395,6 +395,25 @@
 		}
 	}
 
+function geraOpcaoPadrao($tabela, $select)
+{
+    //gera os options de um select
+    $sql = "SELECT * FROM $tabela ORDER BY 2";
+    $con = bancoMysqli();
+    $query = mysqli_query($con,$sql);
+    while($option = mysqli_fetch_row($query))
+    {
+        if($option[0] == $select)
+        {
+            echo "<option value='".$option[0]."' selected >".$option[1]."</option>";
+        }
+        else
+        {
+            echo "<option value='".$option[0]."'>".$option[1]."</option>";
+        }
+    }
+}
+    
 /**
  * Esta função gera checkboxes que tem relacionamento com "eventos". <strong>A ordem das colunas nas tabelas interfere no
  * resultado desta função.</strong> <br>
@@ -413,15 +432,14 @@
  * @param int $idEvento
  * <p>ID do evento para consultar na tabela de relacionamento</p>
  */
-function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0) {
+function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = null) {
     $con = bancoMysqli();
     $sqlConsulta = "SELECT * FROM $tabela WHERE publicado = '1' ORDER BY 2";
     $dados = $con->query($sqlConsulta);
 
-    if (isset($tabelaRelacionamento)) {
-        $sqlConsultaRelacionamento = "SELECT * FROM $tabelaRelacionamento WHERE idEvento = $idEvento";
-        $relacionamentos = $con->query($sqlConsultaRelacionamento)->fetch_all(MYSQLI_ASSOC);
-    }
+    $sqlConsultaRelacionamento = "SELECT * FROM $tabelaRelacionamento WHERE idEvento = $idEvento";
+    $resRelacionamentos = $con->query($sqlConsultaRelacionamento);
+    $relacionamentos = ($resRelacionamentos) ? $resRelacionamentos->fetch_all(MYSQLI_ASSOC) : [];
 
     while ($checkbox = $dados->fetch_row()) {
         ?>
@@ -723,7 +741,8 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0
 		$sql = "SELECT * FROM ig_evento 
 		WHERE publicado = 1 
 		AND (idUsuario = '$idUsuario' OR suplente = '$idUsuario' OR idResponsavel = '$idUsuario') 
-		AND dataEnvio IS NULL ORDER BY idEvento DESC";
+		AND dataEnvio IS NULL
+        AND ocupacao IS NULL ORDER BY idEvento DESC";
 		$query = mysqli_query($con,$sql);
 		echo "
 			<table class='table table-condensed'>
@@ -787,7 +806,14 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0
 		$campo = mysqli_fetch_array($query);
 		return $campo['idInstituicao'];
 	}
-	function listaOcorrencias($idEvento)
+
+/**
+ * @param int $idEvento
+ * <p>ID do Evento que será consultado para gerar a lista de ocorrências</p>
+ * @param string $actionEdita (opcional)
+ * @param string $actionDuplicaApaga (opcional)
+ */
+function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencias&action=editar", $actionDuplicaApaga = "?perfil=evento&p=ocorrencias&action=listar")
 	{
 		//lista ocorrencias de determinado evento
 		$sql = "SELECT * FROM ig_ocorrencia 
@@ -848,6 +874,8 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0
 			{
 				$dia_especial = "";
 			}
+			$subprefeitura = ($campo['subprefeitura_id'] == null) ? "" : recuperaDados('igsis_subprefeitura', $campo['subprefeitura_id'], 'id')['subprefeitura'];
+			$periodo = ($campo['idPeriodoDia'] == null) ? "" : recuperaDados('ig_periodo_dia', $campo['idPeriodoDia'], 'id')['periodo'];
 			//recuperaDados($tabela,$idEvento,$campo)
 			$hora = exibirHora($campo['horaInicio']);
 			$duracao = recuperaDuracao($campo ['duracao']);
@@ -879,26 +907,29 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0
 				Horário: $hora<br />
 				Duração: $duracao<br />
 				Local: $espaco - $instituicao<br />
-				Retirada de ingresso: $retirada  - Valor: $valor <br />
-				Observações: $observacao<br />";
-				
+				Retirada de ingresso: $retirada  - Valor: $valor <br />";
+
+            $ocorrencia .= ($periodo == "") ? "" : "Período: $periodo<br />";
+            $ocorrencia .= ($subprefeitura == "") ? "" : "Subprefeitura: $subprefeitura<br />";
+            $ocorrencia .= ($observacao == "") ? "" : "Observações: $observacao<br />";
+
 			echo "<tr>";
 			echo "<td class='list_description'>".$ocorrencia."</td>";
 			echo "
 				<td class='list_description'>
-					<form method='POST' action='?perfil=evento&p=ocorrencias&action=editar'>
+					<form method='POST' action='$actionEdita'>
 						<input type='hidden' name='id' value='$id' />
 						<input type ='submit' class='btn btn-theme btn-block' value='Editar'></td></form>";
 			echo "
 				<td class='list_description'>
-					<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
+					<form method='POST' action='$actionDuplicaApaga'>
 						<input type='hidden' name='duplicar' value='".$campo['idOcorrencia']."' />
-						<input type ='submit' class='btn btn-theme btn-block' value='Duplicar'></td></form>";
+						<input id='btnDuplicar' type='submit' class='btn btn-theme btn-block' value='Duplicar' data-idOcorrencia='".$campo['idOcorrencia']."' data-idEvento='$idEvento'></td></form>";
 			echo "
 				<td class='list_description'>
-					<form method='POST' action='?perfil=evento&p=ocorrencias&action=listar'>
+					<form method='POST' action='$actionDuplicaApaga'>
 						<input type='hidden' name='apagar' value='".$campo['idOcorrencia']."' />
-						<input type ='submit' class='btn btn-theme  btn-block' value='Apagar'></td></form>";
+						<input id='btnApagar' type ='submit' class='btn btn-theme  btn-block' value='Apagar' data-idOcorrencia='".$campo['idOcorrencia']."' data-idEvento='$idEvento'></td></form>";
 			echo "</tr>";	
 		}
 		echo "
@@ -1093,6 +1124,8 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0
 	}
 	function descricaoEvento($idEvento)
 	{
+	    $con = bancoMysqli();
+
 		//imprime dados de um evento
 		$evento = recuperaDados("ig_evento",$idEvento,"idEvento"); 
 		$tipoEvento = recuperaDados('ig_tipo_evento',$evento['ig_tipo_evento_idTipoEvento'],'idTipoEvento');
@@ -1103,7 +1136,22 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0
 		$responsavel = recuperaDados("ig_usuario",$evento['idResponsavel'],"idUsuario");
 		$suplente = recuperaDados("ig_usuario",$evento['suplente'],"idUsuario");
 		$faixa = recuperaDados('ig_etaria',$evento['faixaEtaria'],'idIdade');
-		//exibe as informações principais
+
+		$linguagens = [];
+		$representatividades = [];
+
+        $queryLinguagem = $con->query("SELECT linguagem FROM igsis_linguagem AS l INNER JOIN igsis_evento_linguagem AS e ON l.id = e.idLinguagem WHERE e.idEvento = '$idEvento' AND publicado = '1' ORDER BY linguagem");
+        $queryRepresentatividade = $con->query("SELECT representatividade_social FROM igsis_representatividade AS r INNER JOIN igsis_evento_representatividade AS e ON r.id = e.idRepresentatividade WHERE e.idEvento = '$idEvento' AND publicado = '1' ORDER BY representatividade_social");
+
+        while($ling = mysqli_fetch_array($queryLinguagem)){
+            $linguagens[] = $ling['linguagem'];
+        }
+
+        while($repr = mysqli_fetch_array($queryRepresentatividade)){
+            $representatividades[] = $repr['representatividade_social'];
+        }
+
+        //exibe as informações principais
 		echo "ID do Evento: <b>".$idEvento."</b><br />";
 		if($evento['dataEnvio'] != NULL)
 		{
@@ -1133,6 +1181,8 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0
 		echo "<br />";
 		echo "<b>Ficha técnica:</b><br />".nl2br($evento['fichaTecnica'])."<br /><br />";
 		echo "<b>Faixa ou indicação etária:</b> ".$faixa['faixa']."<br /><br />";
+		echo "<b>Linguagem / Expressão artística:</b> ".implode("; ", $linguagens)."<br /><br />";
+		echo "<b>Público / Representatividade social:</b> ".implode("; ", $representatividades)."<br /><br />";
 		//echo "<br /><br />";
 		echo "<b>Sinopse:</b><br />".nl2br($evento['sinopse'])."<br /><br />";
 		echo "<b>Release:</b><br />".nl2br($evento['releaseCom'])."<br /><br />";
@@ -2979,7 +3029,8 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = 0
 			OR idResponsavel = $idUsuario 
 			OR suplente = $idUsuario) 
 			AND publicado = 1 
-			AND dataEnvio IS NOT NULL 
+			AND dataEnvio IS NOT NULL
+			AND ocupacao IS NULL
 			ORDER BY idEvento DESC";
 		$query = mysqli_query($con,$sql);
 		echo "
