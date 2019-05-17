@@ -161,7 +161,7 @@
 			<td><a href='$link9?id=$id_ped' target='_blank'><strong>Cooperativa</strong></a></td>
 		</tr>
 		<tr>
-			<td><a href='$link8?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
+			<!-- <td><a href='$link8?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td> -->
 			<td><a href='$link10?id=$id_ped' target='_blank'><strong>Formação</strong></a></td>
 		</tr>
 		<tr>

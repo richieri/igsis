@@ -141,7 +141,7 @@ echo "
 						</tr>
 
 						<tr>
-							<td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
+							<!-- <td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td> -->
 							<td><a href='$link41?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
 						</tr>
 
@@ -151,7 +151,7 @@ echo "
 						</tr>
 
 						<tr>
-							<td><a href='$link44?id=$id_ped' target='_blank'><strong>Reserva Pessoa Física</strong></a></td>
+							<!-- <td><a href='$link44?id=$id_ped' target='_blank'><strong>Reserva Pessoa Física</strong></a></td> -->
 							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
 						</tr>
 
@@ -160,7 +160,7 @@ echo "
 							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
 						</tr>
                         <tr>
-                            <td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td>
+                            <!-- <td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td> -->
                         </tr>
 
 					</tbody>
