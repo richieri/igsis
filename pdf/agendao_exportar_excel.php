@@ -63,6 +63,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 // Definimos o estilo da fonte
 $objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 //Colorir a primeira linha
 $objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->applyFromArray
@@ -92,7 +93,7 @@ while($linha = mysqli_fetch_array($query))
 
     if ($dias != "") {
         //echo "dias diferente de vazio " . $respectiva . $dias;
-        $totalDias .= substr($dias, 0, -2) . ". \n";
+        $totalDias .= substr($dias, 0, -2);
     } else {
         $totalDias .= "Dias não especificados.";
     }
@@ -191,7 +192,7 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue($n, exibirDataBr($linha['dataInicio']))
         ->setCellValue($o, ($linha['dataFinal'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['dataFinal']))
         ->setCellValue($p, $totalDias)
-        ->setCellValue($q, exibirHora($linha['hora_inicio']))
+        ->setCellValue($q, exibirHora($linha['horaInicio']))
         ->setCellValue($r, $linha['periodo'])
         ->setCellValue($s, $linha['duracao'] . " minutos.")
         ->setCellValue($t, $linha['apresentacoes'])
@@ -210,11 +211,11 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue($ag, $linha['produtor_email'])
         ->setCellValue($ah, $linha['produtor_fone']);
 
-    $cont++;
-
      $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setWrapText(true);
      $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
      $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    $cont++;
 
 }
 // Renomeia a guia
