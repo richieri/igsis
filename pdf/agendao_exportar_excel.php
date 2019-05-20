@@ -84,33 +84,21 @@ while($linha = mysqli_fetch_array($query))
     $queryOcorrencias = mysqli_query($con, $sqlConsultaOcorrencias);
     $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
 
-    if ($apresentacoes != 0) {
-        $totalDuracao = '';
-        $totalDias = '';
-        $valores = '';
-        $numOcorrencia = 1;
+    $totalDias = '';
+    $dias = "";
+    $linha['segunda'] == 1 ? $dias .= "Segunda, " : '';
+    $linha['terca'] == 1 ? $dias .= "Terça, " : '';
+    $linha['quarta'] == 1 ? $dias .= "Quarta, " : '';
+    $linha['quinta'] == 1 ? $dias .= "Quinta, " : '';
+    $linha['sexta'] == 1 ? $dias .= "Sexta, " : '';
+    $linha['sabado'] == 1 ? $dias .= "Sabádo, " : '';
+    $linha['domingo'] == 1 ? $dias .= "Domingo. " : '';
 
-        while ($ocorrencias = mysqli_fetch_array($queryOcorrencias)) {
-            $respectiva = $numOcorrencia . "º ocorrência: ";
-            $duração = $respectiva . $ocorrencias['duracao'] . " minutos.  \n";
-            $totalDuracao .= $duração;
-            $valores .= $respectiva . dinheiroParaBr($ocorrencias['valorIngresso']) . " reais.<br>";
-            $dias = "";
-            $ocorrencias['segunda'] == 1 ? $dias .= "Segunda, " : '';
-            $ocorrencias['terca'] == 1 ? $dias .= "Terça, " : '';
-            $ocorrencias['quarta'] == 1 ? $dias .= "Quarta, " : '';
-            $ocorrencias['quinta'] == 1 ? $dias .= "Quinta, " : '';
-            $ocorrencias['sexta'] == 1 ? $dias .= "Sexta, " : '';
-            $ocorrencias['sabado'] == 1 ? $dias .= "Sabádo, " : '';
-            $ocorrencias['domingo'] == 1 ? $dias .= "Domingo. " : '';
-            if ($dias != "") {
-                //echo "dias diferente de vazio " . $respectiva . $dias;
-                $totalDias .= $respectiva . " " . substr($dias, 0, -2) . ".   \n";
-            } else {
-                $totalDias .= $respectiva . " Dias não especificados.";
-            }
-            $numOcorrencia++;
-        }
+    if ($dias != "") {
+        //echo "dias diferente de vazio " . $respectiva . $dias;
+        $totalDias .= substr($dias, 0, -2) . ".<br>";
+    } else {
+        $totalDias .= "Dias não especificados. <br>";
     }
 
     //Ações
@@ -207,15 +195,15 @@ while($linha = mysqli_fetch_array($query))
         ->setCellValue($k, $linha['cep'])
         ->setCellValue($l, $linha['subprefeitura'])
         ->setCellValue($m, $linha['telefone'])
-        ->setCellValue($n, exibirDataBr($linha['data_inicio']))
-        ->setCellValue($o, ($linha['data_fim'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['data_fim']))
+        ->setCellValue($n, exibirDataBr($linha['dataInicio']))
+        ->setCellValue($o, ($linha['dataFinal'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['dataFinal']))
         ->setCellValue($p, $totalDias)
         ->setCellValue($q, exibirHora($linha['hora_inicio']))
         ->setCellValue($r, $linha['periodo'])
-        ->setCellValue($s, $totalDuracao)
-        ->setCellValue($t, $apresentacoes)
+        ->setCellValue($s, $linha['duracao'] . " minutos.")
+        ->setCellValue($t, $linha['apresentacoes'])
         ->setCellValue($u, $linha['retirada'])
-        ->setCellValue($v, $linha['valor'])
+        ->setCellValue($v, $linha['valorIngresso'] != '0.00' ? dinheiroParaBr($linha['valorIngresso']) . " reais." : "Gratuito")
         ->setCellValue($w, $linha['nome'])
         ->setCellValue($x, $linha['projetoEspecial'])
         ->setCellValue($y, $linha['artista'])
