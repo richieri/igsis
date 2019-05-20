@@ -80,10 +80,6 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->applyFromArray
 $cont = 2;
 while($linha = mysqli_fetch_array($query))
 {
-    $sqlConsultaOcorrencias = "SELECT * FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
-    $queryOcorrencias = mysqli_query($con, $sqlConsultaOcorrencias);
-    $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
-
     $totalDias = '';
     $dias = "";
     $linha['segunda'] == 1 ? $dias .= "Segunda, " : '';
@@ -141,9 +137,6 @@ while($linha = mysqli_fetch_array($query))
         $sqlFomento = "SELECT * FROM fomento WHERE id = '". $linha['tipoFomento']."'";
         $fomento = $con->query($sqlFomento)->fetch_assoc();
     }
-
-    $sqlConsultaOcorrencias = "SELECT idEvento FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
-    $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
 
     $a = "A".$cont;
     $b = "B".$cont;

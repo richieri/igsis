@@ -142,7 +142,7 @@ if (isset($_POST['filtrar'])) {
 
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
-    
+
     if ($num > 0) {
         $mensagem = "Foram encontrados $num resultados";
         $consulta = 1;
@@ -302,9 +302,6 @@ if (isset($_POST['filtrar'])) {
                     <tbody>
                     <?php
                     while ($linha = mysqli_fetch_array($query)) {
-                        $sqlConsultaOcorrencias = "SELECT * FROM ig_ocorrencia WHERE idEvento = '" . $linha['idEvento'] . "'";
-                        $queryOcorrencias = mysqli_query($con, $sqlConsultaOcorrencias);
-                        $apresentacoes = $con->query($sqlConsultaOcorrencias)->num_rows;
 
                         $totalDias = '';
                         $dias = "";
