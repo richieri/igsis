@@ -77,12 +77,16 @@ include "include/menu.php";
                                 <?php
                                 if (count($eventoCadastrados) > 0) {
                                     foreach ($eventoCadastrados as $eventoCadastrado) {
-                                        $tipoEvento = recuperaDados('ig_tipo_evento', $eventoCadastrado['ig_tipo_evento_idTipoEvento'], 'idTipoEvento')['tipoEvento']
+                                        $tipoEvento = recuperaDados('ig_tipo_evento', $eventoCadastrado['ig_tipo_evento_idTipoEvento'], 'idTipoEvento')['tipoEvento'];
+                                        $periodo = retornaPeriodo($eventoCadastrado['idEvento']);
+                                        if($periodo == "31/12/1969"){
+                                            $periodo = "Não há ocorrência cadastrada.";
+                                        }
                                         ?>
                                         <tr>
                                             <td class="list-description"><?= $eventoCadastrado['nomeEvento'] ?></td>
                                             <td class="list-description"><?= $tipoEvento ?></td>
-                                            <td class="list-description"><?= retornaPeriodo($eventoCadastrado['idEvento']) ?></td>
+                                            <td class="list-description"><?= $periodo ?></td>
                                             <td class="list-description"><?= $eventoCadastrado['statusEvento'] ?></td>
                                             <?php
                                             if ($eventoCadastrado['ocupacao'] == 1) {
