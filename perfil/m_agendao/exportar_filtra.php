@@ -75,10 +75,8 @@ if (isset($_POST['filtrar'])) {
                 E.nomeEvento AS 'nome',
                 E.espaco_publico AS 'espaco_publico',
                 E.projetoEspecial AS 'idProjetoEspecial',
+                E.numero_apresentacao AS 'apresentacoes',
                 TE.tipoEvento AS 'categoria',
-                /*agenda.data AS 'data_inicio',
-                MAX(agenda.data) AS 'data_fim',
-                agenda.hora AS 'hora_inicio',*/
                 O.idOcorrencia AS 'idOcorrencia',
                 O.horaInicio AS 'horaInicio',
                 O.dataInicio AS 'dataInicio',
@@ -122,10 +120,9 @@ if (isset($_POST['filtrar'])) {
                 INNER JOIN ig_tipo_evento AS TE ON E.ig_tipo_evento_idTipoEvento = TE.idTipoEvento
                 INNER JOIN ig_instituicao AS I ON E.idInstituicao = I.idInstituicao
                 INNER JOIN ig_etaria AS CI ON E.faixaEtaria = CI.idIdade
-                INNER JOIN ig_produtor AS P ON E.ig_produtor_idProdutor = P.idProdutor
+                LEFT JOIN ig_produtor AS P ON E.ig_produtor_idProdutor = P.idProdutor
                 INNER JOIN ig_usuario AS U ON E.idUsuario = U.idUsuario
-                LEFT JOIN ig_projeto_especial AS PE ON E.projetoEspecial = PE.idProjetoEspecial
-                /*INNER JOIN igsis_agenda AS agenda ON E.idEvento = agenda.idEvento*/                     
+                LEFT JOIN ig_projeto_especial AS PE ON E.projetoEspecial = PE.idProjetoEspecial                
                 INNER JOIN ig_ocorrencia AS O ON E.idEvento = O.idEvento
                 INNER JOIN ig_local AS L ON O.local = L.idLocal           
                 LEFT JOIN igsis_subprefeitura AS SUB_PRE ON O.subprefeitura_id = SUB_PRE.id
@@ -141,11 +138,11 @@ if (isset($_POST['filtrar'])) {
                 E.statusEvento = 'Enviado' AND
                 E.ocupacao = 1 AND
                 E.publicado = 1
-            ORDER BY dataInicio";
+            ORDER BY O.dataInicio";
 
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
-
+    
     if ($num > 0) {
         $mensagem = "Foram encontrados $num resultados";
         $consulta = 1;
@@ -388,7 +385,7 @@ if (isset($_POST['filtrar'])) {
                             <td class="list_description"><?= exibirHora($linha['horaInicio']) ?></td>
                             <td class="list_description"><?= $linha['periodo'] ?></td>
                             <td class="list_description"><?= $linha['duracao'] . " minutos." ?></td>
-                            <td class="list_description"><?= $apresentacoes ?></td>
+                            <td class="list_description"><?= $linha['apresentacoes'] ?></td>
                             <td class="list_description"><?= $linha['retirada'] ?></td>
                             <td class="list_description"><?= ($linha['valorIngresso'] != '0.00') ? dinheiroParaBr($linha['valorIngresso']) . " reais." : "Gratuito" ?></td>
                             <td class="list_description"><?= $linha['nome'] ?></td>
