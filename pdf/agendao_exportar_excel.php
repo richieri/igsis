@@ -92,9 +92,9 @@ while($linha = mysqli_fetch_array($query))
 
     if ($dias != "") {
         //echo "dias diferente de vazio " . $respectiva . $dias;
-        $totalDias .= substr($dias, 0, -2) . ".<br>";
+        $totalDias .= substr($dias, 0, -2) . ". \n";
     } else {
-        $totalDias .= "Dias não especificados. <br>";
+        $totalDias .= "Dias não especificados.";
     }
 
     //Ações
