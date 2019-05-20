@@ -158,7 +158,7 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 14.1. Em havendo contratação pela Secretaria de Cultura de empresa prestadora de serviços de gerenciamento da bilheteria, caberá a esta efetuar a venda dos ingressos. 
 
-14.2. A Coordenadoria dos Centros Culturais e Teatros reserva-se o direito de disponibilizar 6 (seis) ingressos por apresentação, que não poderão ser comercializados pela Cia. Sendo que haverá comunicado com antecedência quando da utilização desses ingressos. Caso não haja manifestação por parte da SMC, a comercialização desses ingressos será livre.
+14.2. A Coordenadoria dos Centros Culturais e Teatros reserva-se o direito de disponibilizar 33% da totalidade dos ingressos na estreia dos espetáculos e 6 (seis) ingressos por apresentação no restante da temporada, que não poderão ser comercializados pela Cia. Sendo que haverá comunicado com antecedência quando da utilização desses ingressos. Caso não haja manifestação por parte da SMC, a comercialização desses ingressos será livre.
 
 15.	Os preços máximos dos ingressos, conforme Portaria SMC 22/2017 de 07/03/2017, será de R$40,00 para os espetáculos artísticos culturais das diversas linguagens.
  
