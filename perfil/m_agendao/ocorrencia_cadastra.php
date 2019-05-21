@@ -59,6 +59,9 @@ if (isset($_POST['cadastra'])) {
     $sabado = isset($_POST['sabado']) ? 1 : 0;
     $domingo = isset($_POST['domingo']) ? 1 : 0;
 
+    $libras = isset($_POST['libras']) ? 1 : 0;
+    $audio_descricao = isset($_POST['audiodescricao']) ? 1 : 0;
+
     $data_inicio = exibirDataMysql($_POST['dataInicio']);
     $data_fim = (isset($_POST['dataFinal']) && $_POST['dataFinal'] != '') ? exibirDataMysql($_POST['dataFinal']) : NULL;
 
@@ -78,9 +81,9 @@ if (isset($_POST['cadastra'])) {
     }
 
     $sql = "INSERT INTO ig_ocorrencia 
-(idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, subprefeitura_id, idPeriodoDia, publicado )  
+(idTipoOcorrencia, ig_comunicao_idCom, local, idEvento, segunda, terca, quarta, quinta, sexta, sabado, domingo, dataInicio, dataFinal, horaInicio, valorIngresso, retiradaIngresso, duracao, subprefeitura_id, idPeriodoDia, libras, audiodescricao, publicado)  
             VALUES 
-('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, '$subprefeitura', '$periodo', 1  )";
+('$tipoOcorrencia', '$ig_comunicao_idCom', '$local_id', '$id_evento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$data_inicio', '$data_fim', '$horario_inicio', $valor_ingresso, $retirada_ingresso_id, $duracao, '$subprefeitura', '$periodo', $libras, $audio_descricao, 1  )";
 
     if (mysqli_query($con, $sql)) {
         $idOcorrencia = recuperaUltimo('ig_ocorrencia');
@@ -88,6 +91,7 @@ if (isset($_POST['cadastra'])) {
         gravarLog($sql);
     } else {
         $mensagem = "Erro ao gravar! Tente novamente.";
+        echo $sql;
         gravarLog($sql);
     }
 
@@ -104,6 +108,9 @@ if (isset($_POST['atualiza'])) {
     $sexta = isset($_POST['sexta']) ? 1 : 0;
     $sabado = isset($_POST['sabado']) ? 1 : 0;
     $domingo = isset($_POST['domingo']) ? 1 : 0;
+
+    $libras = isset($_POST['libras']) ? 1 : 0;
+    $audio_descricao = isset($_POST['audiodescricao']) ? 1 : 0;
 
     $data_inicio = exibirDataMysql($_POST['dataInicio']);
     $data_fim = (isset($_POST['dataFinal']) && $_POST['dataFinal'] != '') ? exibirDataMysql($_POST['dataFinal']) : NULL;
@@ -142,7 +149,9 @@ if (isset($_POST['atualiza'])) {
                 retiradaIngresso = $retirada_ingresso_id,
                 duracao = $duracao,
                 subprefeitura_id = '$subprefeitura',
-                idPeriodoDia = '$periodo'  
+                idPeriodoDia = '$periodo',  
+                libras = $libras, 
+                audiodescricao = $audio_descricao
              WHERE idOcorrencia = '$idOcorrencia'";
 
     if (mysqli_query($con, $sql)) {
@@ -199,7 +208,6 @@ include "include/menu.php";
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <form method="POST" action="?perfil=agendao&p=ocorrencia_cadastra" class="form-horizontal" role="form">
-
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-6">
                             <label>Data início *</label>
@@ -237,17 +245,26 @@ include "include/menu.php";
                             <input type="text" name="hora" class="form-control" id="hora" placeholder="hh:mm"
                                    value="<?php echo isset($ocorrencia['horaInicio']) ? $ocorrencia['horaInicio'] : '' ?>"/>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>Valor ingresso *</label>
                             <input type="text" name="valorIngresso" class="form-control" id="valor"
                                    placeholder="em reais"
                                    value="<?php echo isset($ocorrencia['valorIngresso']) ? dinheiroParaBr($ocorrencia['valorIngresso']) : '' ?>">
                         </div>
-                        <div class=" col-md-3">
+                        <div class=" col-md-2">
                             <label>Duração *</label>
                             <input type="text" id="duracao" name="duracao" class="form-control" id=""
                                    placeholder="em minutos"
                                    value="<?php echo isset($ocorrencia['duracao']) ? $ocorrencia['duracao'] : '' ?>">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <input type="checkbox" name="libras" id="libras" <?= $ocorrencia['libras'] == 1 ? 'checked' : '' ?>><label
+                                        style="padding:15px 5px 0 5px;">Libras</label><br>
+                                <input type="checkbox" name="audiodescricao" id="audiodescricao"  <?= $ocorrencia['audiodescricao'] == 1 ? 'checked' : '' ?>><label
+                                        style="padding:0 5px 0 5px;">Áudio Descrição</label>
+
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
