@@ -63,12 +63,6 @@ if (isset($_POST['filtrar'])) {
         $filtro_usuario = "";
     }
 
-    if (isset($_POST['excluiOficina'])){
-        $filtro_excluiOficina = "AND evLing.idLinguagem not in (8)";
-    } else {
-        $filtro_excluiOficina = "";
-    }
-
     if ($projeto != '') {
         $filtro_PE = "AND E.projetoEspecial = $projeto";
     } else {
@@ -134,13 +128,12 @@ if (isset($_POST['filtrar'])) {
                 LEFT JOIN igsis_subprefeitura AS SUB_PRE ON O.subprefeitura_id = SUB_PRE.id
                 LEFT JOIN ig_periodo_dia AS DIA_PERI ON O.idPeriodoDia = DIA_PERI.id
                 INNER JOIN ig_retirada AS retirada ON O.retiradaIngresso = retirada.idRetirada
-                INNER JOIN igsis_evento_linguagem as evLing ON evLing.idEvento = E.idEvento
+                
             WHERE              
                 $filtro_data
                 $filtro_instituicao                 
                 $filtro_local
                 $filtro_usuario 
-                $filtro_excluiOficina
                 $filtro_PE AND
                 E.statusEvento = 'Enviado' AND
                 E.ocupacao = 1 AND
@@ -228,14 +221,6 @@ if (isset($_POST['filtrar'])) {
                         <div class="col-md-3">
                             <label>Data encerramento</label>
                             <input type="text" name="final" class="form-control" id="datepicker02" placeholder="">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-offset-4 col-md-4">
-                            <input type="checkbox" name="excluiOficina" id="excluiOficina">
-                            <label for="excluiOficina">Remover os resultados de Oficina e Formação?</label>
                         </div>
                     </div>
                 </div>
