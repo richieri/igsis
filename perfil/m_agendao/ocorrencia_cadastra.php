@@ -262,7 +262,7 @@ include "include/menu.php";
                                 <input type="checkbox" name="libras" id="libras" <?= $ocorrencia['libras'] == 1 ? 'checked' : '' ?>><label
                                         style="padding:15px 5px 0 5px;">Libras</label><br>
                                 <input type="checkbox" name="audiodescricao" id="audiodescricao"  <?= $ocorrencia['audiodescricao'] == 1 ? 'checked' : '' ?>><label
-                                        style="padding:0 5px 0 5px;">Áudio Descrição</label>
+                                        style="padding:0 5px 0 5px;">Audiodescrição</label>
 
                             </div>
                         </div>
