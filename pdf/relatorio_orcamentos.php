@@ -26,18 +26,57 @@ $objPHPExcel->getProperties()->setKeywords("office 2007 openxml php");
 $objPHPExcel->getProperties()->setCategory("Inscritos");
 
 // Criamos as colunas
+
 $objPHPExcel->setActiveSheetIndex(0)
-    ->setCellValue('A1', 'Evento')
-    ->setCellValue('B1', "Espaço" )
-    ->setCellValue("C1", "Data" )
-    ->setCellValue("D1", "Valor do evento");
+    ->setCellValue('A1', '')
+    ->setCellValue('B1', "Valor total do Espaço")
+    ->setCellValue("C1", "")
+    ->setCellValue("D1", "");
+
+$objPHPExcel->setActiveSheetIndex(0)
+    ->setCellValue('A2', '')
+    ->setCellValue('B2', "R$ " . dinheiroParaBr($soma))
+    ->setCellValue("C2", "")
+    ->setCellValue("D2", "");
+
+
+$objPHPExcel->setActiveSheetIndex(0)
+    ->setCellValue('A3', "Evento")
+    ->setCellValue('B3', "Espaço")
+    ->setCellValue("C3", "Data")
+    ->setCellValue("D3", "Valor do evento");
 
 // Definimos o estilo da fonte
 $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
+$objPHPExcel->getActiveSheet()->getStyle('A2:D2')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A2:D2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle('A3:D3')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A3:D3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 //Colorir a primeira linha
 $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->applyFromArray
+(
+    array
+    (
+        'fill' => array
+        (
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'C1CDCD')
+        ),
+    )
+);
+$objPHPExcel->getActiveSheet()->getStyle('A2:D2')->applyFromArray
+(
+    array
+    (
+        'fill' => array
+        (
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'C1CDCD')
+        ),
+    )
+);
+$objPHPExcel->getActiveSheet()->getStyle('A3:D3')->applyFromArray
 (
     array
     (
@@ -49,7 +88,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->applyFromArray
     )
 );
 
-$cont = 2;
+$cont = 4;
 while($linha = mysqli_fetch_array($query))
 {
     $espaco = $linha['espaco'];
@@ -62,7 +101,7 @@ while($linha = mysqli_fetch_array($query))
     $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue($a, $linha['nome'])
         ->setCellValue($b, $linha['espaco'])
-        ->setCellValue($c, exibirDataBr($linha['data_pagamento']))
+        ->setCellValue($c, exibirDataBr($linha['data_inicio']))
         ->setCellValue($d, dinheiroParaBr($linha['valor_evento']));
 
     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $e)->getAlignment()->setWrapText(true);

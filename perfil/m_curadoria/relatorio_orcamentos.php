@@ -33,20 +33,20 @@ if (isset($_POST['filtrar'])) {
                 E.publicado,            
                 pedido.dataKitPagamento AS 'data_pagamento',
                 pedido.valor AS 'valor_evento',
-                L.sala AS 'espaco'
+                L.sala AS 'espaco',
+                O.dataInicio AS 'data_inicio'
             FROM
                 igsis_pedido_contratacao AS pedido
                 INNER JOIN ig_evento AS E ON pedido.idEvento = E.idEvento               
-                INNER JOIN ig_ocorrencia AS O ON pedido.idEvento = O.idEvento
-                INNER JOIN ig_local AS L ON O.local = L.idLocal                
-            WHERE            
-                pedido.dataKitPagamento BETWEEN '$data_inicio' AND '$data_fim'                
-                AND O.local = '$local'
-                AND
-                E.statusEvento = 'Enviado' AND
-                E.publicado = 1
-                GROUP BY pedido.idEvento
-            ORDER BY pedido.dataKitPagamento";
+                INNER JOIN (SELECT `idEvento`, `local`, MIN(`dataInicio`) AS 'dataInicio' FROM ig_ocorrencia GROUP BY idEvento) AS O ON pedido.idEvento = O.idEvento
+                INNER JOIN ig_local AS L ON O.local = L.idLocal 
+                               
+            WHERE 
+            O.local = '$local'    
+                AND O.dataInicio BETWEEN '$data_inicio' AND '$data_fim'
+                AND E.statusEvento = 'Enviado' 
+                AND E.publicado = 1
+            ORDER BY O.dataInicio";
 
     $query = mysqli_query($con, $sql);
     $queryTeste = mysqli_query($con, $sql);
@@ -76,7 +76,7 @@ if (isset($_POST['filtrar'])) {
             <div class="col-md-offset-2 col-md-8">
                 <div class="section-heading">
                     <h3>Relatório de orçamentos</h3>
-                    <h6><?php if (isset($mensagem)) {
+                    <h6 id="mensagem"><?php if (isset($mensagem)) {
                             echo $mensagem;
                         } ?></h6>
                 </div>
@@ -184,13 +184,11 @@ if (isset($_POST['filtrar'])) {
                     <tbody>
                     <?php
                     while ($linha = mysqli_fetch_array($query)) {
-                        //echo $linha['valor_total'];
-                        //echo $soma;
                         ?>
                         <tr>
                             <td class="list_description"><?= $linha['nome'] ?></td>
                             <td class="list_description"><?= $linha['espaco'] ?></td>
-                            <td class="list_description"><?= exibirDataBr($linha['data_pagamento']) ?></td>
+                            <td class="list_description"><?= exibirDataBr($linha['data_inicio']) ?></td>
                             <td class="list_description"><?= dinheiroParaBr($linha['valor_evento']) ?></td>
                         </tr>
                         <?php
@@ -198,7 +196,6 @@ if (isset($_POST['filtrar'])) {
                     ?>
                     </tbody>
                 </table>
-                <!-- < ?php echo "<h2>Valor total do espaço </h2><h4>R$ " . dinheiroParaBr($soma); ?> -->
             </div>
             <?php
         }
@@ -217,6 +214,9 @@ if (isset($_POST['filtrar'])) {
 
         let resultado = document.querySelector('#resultado');
         resultado.style.display = 'none';
+
+        let mensagem = document.querySelector('#mensagem');
+        mensagem.style.display = 'none';
     }
 
 
