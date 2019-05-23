@@ -136,7 +136,6 @@ if (isset($_POST['filtrar'])) {
                 $filtro_usuario 
                 $filtro_PE AND
                 E.statusEvento = 'Enviado' AND
-                E.ocupacao = 1 AND
                 E.publicado = 1
             ORDER BY O.dataInicio";
 
