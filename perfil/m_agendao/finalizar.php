@@ -20,7 +20,7 @@ $idProdutor = $evento['ig_produtor_idProdutor'];
 $produtor= $con->query("SELECT * FROM ig_produtor WHERE idProdutor = '$idProdutor'")->fetch_assoc();
 
 $ocorrencia = $con->query("
-    SELECT oco.idOcorrencia, oco.dataInicio, oco.dataFinal, oco.horaInicio, oco.duracao, loc.sala, inst.sigla, ret.retirada, oco.valorIngresso, oco.segunda, oco.terca, oco.quarta, oco.quinta, oco.sexta, oco.sabado, oco.domingo, loc.logradouro, loc.numero, loc.complemento, loc.bairro, loc.cidade, loc.estado, loc.cep, sub.subprefeitura, pd.periodo
+    SELECT oco.idOcorrencia, oco.dataInicio, oco.dataFinal, oco.horaInicio, oco.duracao, loc.sala, inst.sigla, ret.retirada, oco.valorIngresso, oco.segunda, oco.terca, oco.quarta, oco.quinta, oco.sexta, oco.sabado, oco.domingo, loc.logradouro, loc.numero, loc.complemento, loc.bairro, loc.cidade, loc.estado, loc.cep, sub.subprefeitura, pd.periodo, oco.libras, oco.audiodescricao
     FROM ig_ocorrencia AS oco
     INNER JOIN ig_retirada AS ret ON oco.retiradaIngresso = ret.idRetirada
     INNER JOIN ig_local AS loc ON oco.local = loc.idLocal
@@ -109,6 +109,8 @@ else{
                     <strong>Horário:</strong> <?= exibirHora($campo['horaInicio']) ?><br>
                     <strong>Período:</strong> <?= ($campo['periodo'] == null) ? "Não Cadastrado" : $campo['periodo']  ?><br>
                     <strong>Duração:</strong> <?= $campo['duracao'] ?> minutos<br>
+                    <strong>Libras:</strong> <?= $campo['libras'] == 1 ? "Sim" : "Não" ?><br>
+                    <strong>Audiodescrição:</strong> <?= $campo['audiodescricao'] == 1 ? "Sim" : "Não" ?><br>
                     <strong>Local:</strong>  <?= $campo['sala'] ." - ". $campo['sigla'] ?><br>
                     <strong>Subprefeitura:</strong>  <?= ($campo['subprefeitura'] == null) ? "Não Cadastrado" : $campo['subprefeitura'] ?><br>
                     <strong>CEP:</strong>  <?= $campo['cep']?><br>
