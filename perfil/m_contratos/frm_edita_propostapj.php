@@ -307,7 +307,12 @@ if(isset($_POST['idEstado']))
 	$con = bancoMysqli();
 	$ped = $_GET['id_ped'];
 	$estado = $_POST['estado'];
-	$sql_atualiza_estado = "UPDATE igsis_pedido_contratacao SET estado = '$estado' WHERE idPedidoContratacao = '$ped'";
+	$pedRelacionados = $_POST['relacionados'];
+	if (count($pedRelacionados) > 1) {
+        $sql_atualiza_estado = "UPDATE igsis_pedido_contratacao SET estado = '$estado' WHERE idPedidoContratacao IN (".implode(", ", $pedRelacionados).")";
+    } else {
+        $sql_atualiza_estado = "UPDATE igsis_pedido_contratacao SET estado = '$estado' WHERE idPedidoContratacao = '$ped'";
+    }
 	$query_atualiza_estado = mysqli_query($con,$sql_atualiza_estado);
 	if($query_atualiza_estado)
 	{
@@ -347,9 +352,11 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
             <div class="col-md-offset-2 col-md-8">
 				<h5>Pedidos Relacionados</h5>
 				<?php 
-					$outros = listaPedidoContratacao($pedido['idEvento']); 
+					$outros = listaPedidoContratacao($pedido['idEvento']);
+					$relacionados = [];
 					for($i = 0; $i < count($outros); $i++)
 					{
+					    array_push($relacionados, $outros[$i]);
 						$dados = siscontrat($outros[$i]);
 						if($dados['TipoPessoa'] == 1)
 						{
@@ -363,7 +370,7 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 							<p align="left">Número do Pedido de Contratação:<b> <a href="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $outros[$i]; ?>"></b><?php echo $outros[$i]; ?></a><br /></p>
 				<?php 
 						}
-					}		
+					}
 				?>
             	<br />
 			</div>
@@ -406,6 +413,9 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 						</div>
 						<div class="col-md-3"><br/>
 							<input type="hidden" name="idEstado" value="<?php echo $id_ped; ?>" />
+                            <?php foreach ($relacionados as $relacionado) { ?>
+                                <input type="hidden" name="relacionados[]" value="<?= $relacionado ?>" />
+                            <?php } ?>
 							<input type="submit" class="btn btn-theme  btn-block" value="Atualizar status">
 						</div>
 					</div>
@@ -420,7 +430,7 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 				elseif ($coord['contratos'] == 2)
 				{ 
 			?>	
-					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
+					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $id_ped; ?>" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-5"><strong>Status:</strong><br/>
 							<select class="form-control" name="estado" id="">
@@ -430,7 +440,10 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 						</div>
 						<div class="col-md-3"><br/>
 							<input type="hidden" name="idEstado" value="<?php echo $id_ped; ?>" />
-							<input type="submit" class="btn btn-theme  btn-block" value="Atualizar status">
+                            <?php foreach ($relacionados as $relacionado) { ?>
+                                <input type="hidden" name="relacionados[]" value="<?= $relacionado ?>" />
+                            <?php } ?>
+                            <input type="submit" class="btn btn-theme  btn-block" value="Atualizar status">
 						</div>
 					</div>
 					</form>
