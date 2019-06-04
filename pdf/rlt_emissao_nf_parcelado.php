@@ -88,8 +88,8 @@ switch($verba)
 		<p>&nbsp;</p>
 		<p><strong>Sacado:</strong> Secretaria Municipal de Cultura</p>
 		<p><strong>Unidade:</strong></p>
-		<p><strong>CNPJ:</strong> <?php echo $cnpj?></p>
-		<p><strong>Endereço:</strong> <?php echo $endereco?></p>
+		<p><strong>CNPJ:</strong> 49.269.244/0001-63</p>
+		<p><strong>Endereço:</strong> Av. São João, 473 - 11º andar - Centro - CEP: 01035-000</p>
 		<p><strong>Município:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Estado:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>I. Est. Nº</strong>: Isento </p>
 		<p>&nbsp;</p>
 		<p><strong>Nota Fiscal:</strong> <?php echo $notaFiscal?></p>
