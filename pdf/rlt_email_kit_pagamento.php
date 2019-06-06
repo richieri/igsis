@@ -10,12 +10,13 @@ $conexao = bancoMysqli();
 
 //CONSULTA 
 $id_ped=$_GET['id'];
+$idUsuario = $_GET['idUsuario'];
 
 $pedido = siscontrat($id_ped);
 $pj = siscontratDocs($pedido['IdProponente'],2);
 $rep01 = siscontratDocs($pj['Representante01'],3);
 $pj = siscontratDocs($pedido['IdProponente'],2);
-
+$nomeUsuario = recuperaDados('ig_usuario',$idUsuario,'idUsuario')['nomeCompleto'];
 
 dataPagamento($id_ped);
 
@@ -54,6 +55,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p align="justify">Informo que a documentação acima citada deverá ser devolvida digitalizada, <strong>somente através do e-mail smc.pagamentosartisticos@gmail.com, em até 48 horas, impreterivelmente.</strong></p>
 <p>&nbsp;</p>
 <p align="justify">Atenciosamente,</p>
+<p><?=$nomeUsuario?></p>
 <p>SMC / Pagamentos Artísticos</p>
 <p>Tel: (11) 3397-0191</p>
 <p>&nbsp;</p>

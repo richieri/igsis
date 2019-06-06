@@ -99,7 +99,7 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 			</tr>
 			<tr>
 				<td class='list_description'><strong>Email</strong></td>
-				<td class='list_description'><a href='$link14?id=$id_ped' target='_blank'>Kit de Pagamento</a></td>
+				<td class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."' target='_blank'>Kit de Pagamento</a></td>
 				<td class='list_description'><a href='$link15?id=$id_ped' target='_blank'>Anexo e Nota de Empenho</a></td>
 			</tr>	
 		</table>
