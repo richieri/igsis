@@ -45,7 +45,8 @@ if(isset($_POST['exportar'])) {
                 E.sinopse AS 'sinopse',
                 P.nome AS 'produtor_nome',
                 P.email AS 'produtor_email',
-                P.telefone AS 'produtor_fone'
+                P.telefone AS 'produtor_fone',
+                SUB_PRE.subprefeitura AS 'subprefeitura'
             FROM
                 ig_evento AS E
                 INNER JOIN ig_tipo_evento AS TE ON E.ig_tipo_evento_idTipoEvento = TE.idTipoEvento
@@ -54,6 +55,7 @@ if(isset($_POST['exportar'])) {
                 INNER JOIN ig_instituicao AS I ON E.idInstituicao = I.idInstituicao
                 INNER JOIN ig_etaria AS CI ON E.faixaEtaria = CI.idIdade
                 INNER JOIN ig_produtor AS P ON E.ig_produtor_idProdutor = P.idProdutor
+                LEFT JOIN igsis_subprefeitura AS SUB_PRE ON O.subprefeitura_id = SUB_PRE.id
             WHERE
                 $filtro_local AND
                 E.publicado = 1 AND
@@ -78,6 +80,7 @@ header("Content-Disposition: attachment;Filename=eventos_teste.xls");
             <th>Instituição</th>
             <th>Equipamento / Local</th>
             <th>Endereço</th>
+            <th>Subprefeitura</th>
             <th>Telefone</th>
             <th>Nome do Evento</th>
             <th>Artista</th>
@@ -110,6 +113,7 @@ header("Content-Disposition: attachment;Filename=eventos_teste.xls");
                 <td><?=$linha['instituicao']?></td>
                 <td><?=$linha['equipamento']?> - <?=$linha['nome_local']?></td>
                 <td><?=$linha['endereco']?></td>
+                <td><?=$linha['subprefeitura']?></td>
                 <td><?=$linha['telefone']?></td>
                 <td><?=$linha['nome']?></td>
                 <td><?=$linha['artista']?></td>
