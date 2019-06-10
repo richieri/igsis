@@ -27,39 +27,31 @@ $objPHPExcel->getProperties()->setCategory("Inscritos");
 // Criamos as colunas
 $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue('A1', 'Instituição/Coordenadoria')
-    ->setCellValue('B1', "Equipamento" )
-    ->setCellValue("C1", "Espaço Público?" )
-    ->setCellValue("D1", "Local do Evento")
-    ->setCellValue("E1", "Logradouro")
-    ->setCellValue("F1", "Número")
-    ->setCellValue("G1", "Complemento")
-    ->setCellValue("H1", "Bairro")
-    ->setCellValue("I1", "Cidade")
-    ->setCellValue("J1", "Estado")
-    ->setCellValue("K1", "CEP")
-    ->setCellValue("L1", "SubPrefeitura")
-    ->setCellValue("M1", "Telefone")
-    ->setCellValue("N1", "Data Início")
-    ->setCellValue("O1", "Data Fim")
-    ->setCellValue("P1", "Dias da semana")
-    ->setCellValue("Q1", "Horário de início")
-    ->setCellValue("R1", "Período")
-    ->setCellValue("S1", "Duração (em minutos)")
-    ->setCellValue("T1", "Nº de atividades")
-    ->setCellValue("U1", "Cobrança de ingresso")
-    ->setCellValue("V1", "Valor do ingresso")
-    ->setCellValue("W1", "Nome do Evento")
-    ->setCellValue("X1", "Projeto Especial?")
-    ->setCellValue("Y1", "Artistas")
-    ->setCellValue("Z1", "Ação")
-    ->setCellValue("AA1", "Público")
-    ->setCellValue("AB1", "É Fomento/Programa?")
-    ->setCellValue("AC1", "Classificação indicativa")
-    ->setCellValue("AD1", "Link de Divulgação")
-    ->setCellValue("AE1", "Sinopse")
-    ->setCellValue("AF1", "Produtor do Evento")
-    ->setCellValue("AG1", "E-mail de contato")
-    ->setCellValue("AH1", "Telefone de contato");
+    ->setCellValue("B1", "Local do Evento")
+    ->setCellValue("C1", "Endereço Completo")
+    ->setCellValue("D1", "SubPrefeitura")
+    ->setCellValue("E1", "Telefone")
+    ->setCellValue("F1", "Nome do Evento")
+    ->setCellValue("G1", "Artistas")
+    ->setCellValue("H1", "Data Início")
+    ->setCellValue("I1", "Data Fim")
+    ->setCellValue("J1", "Horário de início")
+    ->setCellValue("K1", "Duração (em minutos)")
+    ->setCellValue("L1", "Nº de Apresentações")
+    ->setCellValue("M1", "Período")
+    ->setCellValue("N1", "Linguagem / Expressão Artística Principal")
+    ->setCellValue("O1", "Público / Representatividade Social Principal")
+    ->setCellValue("P1", "Espaço Público?" )
+    ->setCellValue("Q1", "Entrada")
+    ->setCellValue("R1", "Valor do Ingresso (no caso de cobrança)")
+    ->setCellValue("S1", "Classificação indicativa")
+    ->setCellValue("T1", "Link de Divulgação")
+    ->setCellValue("U1", "Sinopse")
+    ->setCellValue("V1", "Calendário Macro")
+    ->setCellValue("W1", "Caso Seja Fomento / Programa da smc Qual o Fomento ou Programa?")
+    ->setCellValue("X1", "Produtor do Evento")
+    ->setCellValue("Y1", "E-mail de contato")
+    ->setCellValue("Z1", "Telefone de contato");
 
 // Definimos o estilo da fonte
 $objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getFont()->setBold(true);
@@ -165,55 +157,44 @@ while($linha = mysqli_fetch_array($query))
     $x = "X".$cont;
     $y = "Y".$cont;
     $z = "Z".$cont;
-    $aa = "AA".$cont;
-    $ab = "AB".$cont;
-    $ac = "AC".$cont;
-    $ad = "AD".$cont;
-    $ae = "AE".$cont;
-    $af = "AF".$cont;
-    $ag = "AG".$cont;
-    $ah = "AH".$cont;
-    $ai = "AI".$cont;
+
+    $enderecoCompleto = [
+        $linha['logradouro'],
+        $linha['numero'],
+        $linha['bairro']
+    ];
 
     $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue($a, $linha['sigla'])
-        ->setCellValue($b, $linha['equipamento'])
-        ->setCellValue($c, $linha['espaco_publico'] == 1 ? "SIM" : "NÃO")
-        ->setCellValue($d, $linha['nome_local'])
-        ->setCellValue($e, $linha['logradouro'])
-        ->setCellValue($f, $linha['numero'])
-        ->setCellValue($g, $linha['complemento'])
-        ->setCellValue($h, $linha['bairro'])
-        ->setCellValue($i, $linha['cidade'])
-        ->setCellValue($j, $linha['estado'])
-        ->setCellValue($k, $linha['cep'])
-        ->setCellValue($l, $linha['subprefeitura'])
-        ->setCellValue($m, $linha['telefone'])
-        ->setCellValue($n, exibirDataBr($linha['dataInicio']))
-        ->setCellValue($o, ($linha['dataFinal'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['dataFinal']))
-        ->setCellValue($p, $totalDias)
-        ->setCellValue($q, exibirHora($linha['horaInicio']))
-        ->setCellValue($r, $linha['periodo'])
-        ->setCellValue($s, $linha['duracao'] . " minutos.")
-        ->setCellValue($t, $linha['apresentacoes'])
-        ->setCellValue($u, $linha['retirada'])
-        ->setCellValue($v, $linha['valorIngresso'] != '0.00' ? dinheiroParaBr($linha['valorIngresso']) . " reais." : "Gratuito")
-        ->setCellValue($w, $linha['nome'])
-        ->setCellValue($x, $linha['projetoEspecial'])
-        ->setCellValue($y, $linha['artista'])
-        ->setCellValue($z, $stringAcoes ?? "Não há ações.")
-        ->setCellValue($aa, $stringPublico ?? "Não foi selecionado público." )
-        ->setCellValue($ab, isset($fomento['fomento']) ? $fomento['fomento'] : "Não")
-        ->setCellValue($ac, $linha['classificacao'])
-        ->setCellValue($ad, isset($linha['divulgacao']) ? $linha['divulgacao'] : "Sem link de divulgação.")
-        ->setCellValue($ae, $linha['sinopse'])
-        ->setCellValue($af, $linha['produtor_nome'])
-        ->setCellValue($ag, $linha['produtor_email'])
-        ->setCellValue($ah, $linha['produtor_fone']);
+        ->setCellValue($b, $linha['nome_local'])
+        ->setCellValue($c, implode(", ", $enderecoCompleto)." - CEP: ".$linha['cep'])
+        ->setCellValue($d, $linha['subprefeitura'])
+        ->setCellValue($e, $linha['telefone'])
+        ->setCellValue($f, $linha['nome'])
+        ->setCellValue($g, $linha['artista'])
+        ->setCellValue($h, exibirDataBr($linha['dataInicio']))
+        ->setCellValue($i, ($linha['dataFinal'] == "0000-00-00") ? "Não é Temporada" : exibirDataBr($linha['dataFinal']))
+        ->setCellValue($j, exibirHora($linha['horaInicio']))
+        ->setCellValue($k, $linha['duracao'] . " minutos.")
+        ->setCellValue($l, $linha['apresentacoes'])
+        ->setCellValue($m, $linha['periodo'])
+        ->setCellValue($n, $stringAcoes ?? "Não foi selecionada linguagem.")
+        ->setCellValue($o, $stringPublico ?? "Não foi selecionado público.")
+        ->setCellValue($p, $linha['espaco_publico'] == 1 ? "SIM" : "NÃO")
+        ->setCellValue($q, $linha['retirada'])
+        ->setCellValue($r, $linha['valorIngresso'] != '0.00' ? dinheiroParaBr($linha['valorIngresso']) . " reais." : "Gratuito")
+        ->setCellValue($s, $linha['classificacao'])
+        ->setCellValue($t, isset($linha['divulgacao']) ? $linha['divulgacao'] : "Sem link de divulgação.")
+        ->setCellValue($u, $linha['sinopse'])
+        ->setCellValue($v, $linha['projetoEspecial'])
+        ->setCellValue($w, isset($fomento['fomento']) ? $fomento['fomento'] : "Não")
+        ->setCellValue($x, $linha['produtor_nome'])
+        ->setCellValue($y, $linha['produtor_email'])
+        ->setCellValue($z, $linha['produtor_fone']);
 
-     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setWrapText(true);
-     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $ai)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $z)->getAlignment()->setWrapText(true);
+     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $z)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $z)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
     $cont++;
 
@@ -221,7 +202,7 @@ while($linha = mysqli_fetch_array($query))
 // Renomeia a guia
 $objPHPExcel->getActiveSheet()->setTitle('Inscritos');
 
-for ($col = 'A'; $col !== 'AI'; $col++){
+for ($col = 'A'; $col !== 'Z'; $col++){
     $objPHPExcel->getActiveSheet()
         ->getColumnDimension($col)
         ->setAutoSize(true);
