@@ -54,6 +54,7 @@ if (isset($_POST['atualiza'])) {
     $espacoPublico = $_POST['espacoPublico'];
     $fomento = $_POST['fomento'];
     $tipoFomento = $_POST['tipoFomento'] ?? 0;
+    $oficina = $_POST['oficina'];
 
     $sqlAtualizaEvento = "UPDATE ig_evento SET 
                         nomeEvento = '$nomeEvento',
@@ -66,7 +67,8 @@ if (isset($_POST['atualiza'])) {
                         numero_apresentacao = '$nApresentacao',
                         espaco_publico = '$espacoPublico',
                         fomento = '$fomento',
-                        tipo_fomento = '$tipoFomento'
+                        tipo_fomento = '$tipoFomento',
+                        oficina = '$oficina'
                         WHERE idEvento = '$idEvento'";
 
     if ($con->query($sqlAtualizaEvento)) {
@@ -171,6 +173,14 @@ include "include/menu.php";
                                 <option value=""></option>
                                 <?php echo geraOpcao("ig_tipo_evento", $campo['ig_tipo_evento_idTipoEvento'], "") ?>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-offset-3">
+                            <label for="tipo">Este evento é oficina?</label> <br>
+                            <label><input type="radio" name="oficina" value="1" id="simOficina" <?= $campo['oficina'] == 1 ? 'checked' : NULL ?>> Sim </label>&nbsp;&nbsp;
+                            <label><input type="radio" name="oficina" value="0" <?= $campo['oficina'] == 0 ? 'checked' : NULL ?>> Não </label>
                         </div>
                     </div>
 
@@ -343,18 +353,71 @@ include "include/menu.php";
     </div>
 </section>
 
-<script type="text/javascript">
-    var fomento = $('.fomento');
+<script>
+    let fomento = $('.fomento');
+    let linguagem = $("input[name='linguagem[]']");
+    const oficinaId = "Oficinas e Formação Cultural";
+    let oficinaRadio = $("input[name='oficina']");
+    var oficinaOficial = linguagem[8];
+
+    function verificaOficina() {
+        if ($('#simOficina').is(':checked')) {
+            checaCampos(oficinaOficial);
+        } else {
+            checaCampos("");
+        }
+    }
+
+    function checaCampos(obj){
+        if(obj.id == oficinaId && obj.value == '8'){
+
+            for(i = 0; i < linguagem.size(); i++){
+                if (!(linguagem[i] == obj)){
+                    let linguagens = linguagem[i].id;
+
+                    document.getElementById(linguagens).disabled = true;
+                    document.getElementById(linguagens).checked = false;
+                    document.getElementById(oficinaId).checked = true;
+                    document.getElementById(oficinaId).disabled = false;
+
+                    document.getElementById(oficinaId).readonly = true;
+
+                }
+            }
+        }else{
+            for(i = 0; i < linguagem.size(); i++){
+
+                if (!(linguagem[i] == linguagem[8])){
+                    let linguagens = linguagem[i].id;
+
+                    document.getElementById(linguagens).disabled = false;
+                    document.getElementById(oficinaId).checked = false;
+                    document.getElementById(oficinaId).disabled = true;
+
+                    document.getElementById(oficinaId).readonly = false;
+                }
+            }
+
+        }
+    }
+
     fomento.on("change", verificaFomento);
-    $(document).ready(verificaFomento());
+    oficinaRadio.on("change", verificaOficina);
+
+    $(document).ready(
+        verificaFomento(),
+        verificaOficina()
+    );
 
     function verificaFomento() {
         if ($('#sim').is(':checked')) {
             $('#tipoFomento')
                 .attr('disabled', false)
+                .attr('required', true)
         } else {
             $('#tipoFomento')
-                .attr('disabled', true);
+                .attr('disabled', true)
+                .attr('required', false)
         }
     }
 </script>
