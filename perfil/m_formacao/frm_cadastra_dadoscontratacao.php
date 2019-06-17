@@ -99,8 +99,8 @@ if(isset($_POST['atualizar']))
 	`subprefeitura` = '$subprefeitura',
 	`IdVigencia` = '$vigencia',
     `idStatusFormacao` = '$statusFormacao',
-
-	`Observacao` = '$obs'
+	`Observacao` = '$obs',
+    publicado = 1
 	WHERE Id_Formacao = '$id'";
 	$query_atualiza_formacao = mysqli_query($con,$sql_atualiza_formacao);
 	
@@ -113,6 +113,19 @@ if(isset($_POST['atualizar']))
 		$mensagem = "Erro ao atualizar. Tente novamente.";		
 	}
 }
+
+if(isset($_POST['excluir'])){
+    $idFormacao = $_POST['idFormacao'];
+    $sql_excluir = "UPDATE sis_formacao SET publicado = 0 WHERE Id_Formacao = '$idFormacao'";
+    if(mysqli_query($con,$sql_excluir)){
+        $mensagem = "Excluído com sucesso! Aguarde...";
+        echo "<META HTTP-EQUIV=\"REFRESH\" CONTENT=\"3; URL=?perfil=formacao&p=frm_lista_dadoscontratacao\">";
+    }
+    else{
+        $mensagem = "Erro ao excluir!";
+    }
+}
+
 $formacao = recuperaDados("sis_formacao",$id,"Id_Formacao");
 $pessoa = recuperaDados("sis_pessoa_fisica",$formacao['IdPessoaFisica'],"Id_PessoaFisica");
 $id_pf = $formacao['IdPessoaFisica'];
@@ -439,11 +452,20 @@ $(function()
 								<input type="hidden" name="action" value="novo"  />
 								<input type="hidden" name="idFormacao" value="<?php echo $formacao['Id_Formacao']; ?>"  />
 								<input type="submit" class="btn btn-theme btn-med btn-block" value="Criar pedido de contratação">
-							</form>
+							</form><br/>
 						</div>
 					</div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <form class="form-horizontal" role="form" action="?perfil=formacao&p=frm_cadastra_dadoscontratacao" method="post">
+                                <input type="hidden" name="idFormacao" value="<?php echo $formacao['Id_Formacao']; ?>"  />
+                                <input type="submit" class="btn btn-danger btn-med btn-block" name="excluir" value="Excluir">
+                            </form>
+                        </div>
+                    </div>
 			<?php 
-				} 
+				}
 			?>
 			</div>
 		</div>
