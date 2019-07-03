@@ -215,7 +215,7 @@ include 'includes/menu.php';
 								echo '<td class="list_description"><a target="_blank" href='.$link2.'&parcela='.$i.'>Pagamento</a></td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Recibo</a></td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link5.'?id='.$id_ped.' >Documentação</a></td>';
-								echo '<td class="list_description"><a target="_blank" href='.$link6.'?id='.$id_ped.' >Ateste de Confirmação</a></td>';
+								echo '<td class="list_description"><a target="_blank" href='.$link6.'?id='.$id_ped.' >Confirmação de Serviço</a></td>';
 							}
 						?>
 						</tbody>
