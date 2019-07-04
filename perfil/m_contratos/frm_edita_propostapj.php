@@ -175,12 +175,13 @@ if(isset($_POST['atualizar']))
     if ($_POST['parcelas'] <= 12)
     {
         $parcelas = $_POST['parcelas'];
-        $tipoParcela = NULL;
+        $tipoParcela = "tipoParcela = NULL";
+       // $tipoParcela = "NULL";
     }
     else
     {
         $parcelas = substr($_POST['parcelas'], 0, 1);
-        $tipoParcela = substr($_POST['parcelas'], 1, 1);
+        $tipoParcela = "tipoParcela = " . substr($_POST['parcelas'], 1, 1);
     }
 
 	$processo = $_POST['NumeroProcesso'];
@@ -193,7 +194,7 @@ if(isset($_POST['atualizar']))
             `formaPagamento` = '$forma_pagamento',
 			`integrantes` = '$integrantes',
 			`parcelas` =  '$parcelas',
-            `tipoParcela` = '$tipoParcela',
+            $tipoParcela,
             idVerba = '$verba',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
@@ -208,7 +209,7 @@ if(isset($_POST['atualizar']))
             $sql_atualiza_pedido = "UPDATE igsis_pedido_contratacao SET
 			`integrantes` = '$integrantes',
 			`parcelas` =  '$parcelas',
-            `tipoParcela` = '$tipoParcela',
+            $tipoParcela,
             idVerba = '$verba',
 			justificativa = '$justificativa',
 			observacao = '$observacao',
@@ -246,6 +247,7 @@ if(isset($_POST['atualizar']))
 		}
 		else
 		{
+		    echo $sql_atualiza_pedido;
 			$mensagem = "Erro(2) ao atualizar pedido.";
 		}
 	}
@@ -258,7 +260,7 @@ if(isset($_POST['atualizar']))
 			valor = '$valor',
 			formaPagamento = '$forma_pagamento',
 			`parcelas` =  '$parcelas',
-            `tipoParcela` = '$tipoParcela',
+            $tipoParcela,
             idVerba = '$verba',
 			justificativa = '$justificativa',
 			observacao = '$observacao',

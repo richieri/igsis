@@ -16,8 +16,8 @@ $link10=$http."rlt_recibo_documentacao_pj.php";
 $link11=$http."rlt_ateste_confirmacao_pj.php";
 $link12=$http."rlt_emissao_nf_integral.php";
 $link13=$http."rlt_emissao_nf_parcelado.php";
-$link14=$http."rlt_email_kit_pagamento.php";
-$link15=$http."rlt_email_anexo_ne.php";
+$link14=$http."rlt_email_empresas.php";
+$link15=$http."rlt_minuta_acima80k.php";
 
 
 $data = date('Y-m-d H:i:s');
@@ -74,38 +74,45 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 		</div><br/>
 		<h5>Qual documento deseja gerar?</h5>
 		<div class='col-md-offset-1 col-md-10'>
-		<table class='table table-condensed table-striped'>
-		<tr>	
+		<div class='col-md-4'>
+		<a href='$link11?id=$id_ped' target='_blank'>Confirmação de Serviço</a>
+		
+        </div>
+        <div class='col-md-4'>
+		<a href='$link10?id=$id_ped' target='_blank'>Ateste (documentação)</a>
+        </div>
+        <div class='col-md-4'>
+		<a href='$link15?id=$id_ped' target='_blank'>Minuta acima de R$ 176 mil</a>
+        </div>
+        <br><br>
+		<table class='table table-condensed table-striped text-center'>
+	<!--	<tr class='text-center'>	
             <td colspan='2' class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Confirmação de Serviço</a></td>
             <td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Ateste (documentação)</a></td>		
-            <td colspan='2'  class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Minuta acima de R$ 176 mil</a></td>
-            <td></td>
+            <td colspan='2'  class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Minuta acima de R$ 176 mil</a></td>            
             
-		</tr>
-		<tr class='list_menu'><td class='list_description text-center' colspan='7' height='50px;'><strong>01 Representante</strong></td></tr>
-			<tr>
+		</tr>-->
+		<tr class='list_menu'><td style='vertical-align: middle' class='list_description text-center' colspan='7' height='60px;'><strong>1 Representante</strong></td></tr>
+			<tr class='text-center'>
 				<!--<td class='list_description'><strong>01 Representante</strong></td>-->
-				<td class='list_description'><a href='$link1?id=$id_ped' target='_blank'>Pedido Integral</a></td>
-				<td class='list_description'><a href='$link3?id=$id_ped'  target='_blank'>Pedido  Parcelado</a></td>
-				<td class='list_description'><a href='$link5?id=$id_ped' target='_blank'>Recibo</a></td>
-				<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração Simples</a></td>
+				<td class='list_description'><a href='$link1?id=$id_ped' target='_blank'>Pedido <br> Integral</a></td>
+				<td class='list_description'><a href='$link3?id=$id_ped'  target='_blank'>Pedido <br>  Parcelado</a></td>
+				<td class='list_description' style='vertical-align: middle' ><a href='$link5?id=$id_ped' target='_blank'>Recibo</a></td>
+				<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração <br> Simples</a></td>
 				<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração de Associação sem fins lucrativos</a></td>
-				
-				<td></td>
-				
+								
 			</tr>
-			<tr class='list_menu'><td class='list_description text-center' colspan='7'  height='50px;'><strong>02 Representantes</strong></td></tr>
+			<tr class='list_menu'><td style='vertical-align: middle' class='list_description text-center bg-gray' colspan='7'  height='60px;'><strong>2 Representantes</strong></td></tr>
 			<tr>
 				<!--<td class='list_description text-center'><strong>02 Representantes</strong></td>-->
-				<td class='list_description'><a href='$link2?id=$id_ped' target='_blank'>Pedido Integral</a></td>
-				<td class='list_description'><a href='$link4?id=$id_ped'  target='_blank'>Pedido Parcelado</a></td>
-				<td class='list_description'><a href='$link6?id=$id_ped' target='_blank'>Recibo</a></td>
-				<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração Simples</a></td>
+				<td class='list_description' width='15%'><a href='$link2?id=$id_ped' target='_blank'>Pedido <br> Integral</a></td>
+				<td class='list_description' width='15%'><a href='$link4?id=$id_ped'  target='_blank'>Pedido <br> Parcelado</a></td>
+				<td class='list_description' width='15%' style='vertical-align: middle'  ><a href='$link6?id=$id_ped' target='_blank'>Recibo</a></td>
+				<td class='list_description' width='15%'><a href='$link7?id=$id_ped'  target='_blank'>Declaração <br> Simples</a></td>
 				<td class='list_description' width='20%'><a href='$link7?id=$id_ped'  target='_blank'>Declaração de Associação sem fins lucrativos</a></td>
 				<!--<td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Ateste (documentação)</a></td>
 				<td class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Confirmação de Serviço</a></td>-->
 			
-				<td></td>
 			</tr>
 			<!--<tr><td class='list_description text-center' colspan='7'><strong>02 Representantes</strong></td></tr>
 			<tr>
@@ -113,10 +120,18 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 				<td class='list_description'><a href='$ link12?id=$id_ped' target='_blank'>Integral</a></td>
 				<td class='list_description'><a href='$ link13?id=$id_ped'  target='_blank'>Parcelado</a></td>
 			</tr>--> 
-			<tr><td class='list_description text-center' colspan='7' height='50px;' ><strong>Email</strong></td></tr>
+			<tr><td style='vertical-align: middle' class='list_description text-center' colspan='7' height='50px;' ><strong>Email</strong></td></tr>
 			<tr>
 				<!--<td class='list_description'><strong>Email</strong></td>-->
-				<td class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."' target='_blank'>Kit de Pagamento</a></td>
+			
+				<td style='vertical-align: middle' class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=empresas' target='_blank'>Empresas</a></td>
+				<td style='vertical-align: middle' class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=cooperativas' target='_blank'>Cooperativas</a></td>
+				<td style='vertical-align: middle' class='list_description' colspan='2'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=associacoes' target='_blank'>Associações e institutos</a></td>
+				<td class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."' target='_blank'>Empresas acima de R$ 176 mil</a></td>
+				
+				
+				
+				
 				<!--<td class='list_description'><a href='$ link15?id=$ id_ped' target='_blank'>Anexo e Nota de Empenho</a></td>
 				    excluir o modelo \"Anexo e Nota de Empenho\". Não usamos mais.
 				    -->

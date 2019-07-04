@@ -105,19 +105,21 @@ $sei =
   "<p>&nbsp;</p>".
   "<p>INFORMAÇÕES COMPLEMENTARES</p>".
   "<hr>".  
-  "<p><strong>Nota de Empenho:</strong> ".$notaempenho."</p>".
-  "<p><strong>Anexo de Nota de Empenho:</strong> </p>".
-  "<p><strong>Publicação em DOC:</strong> </p>".
-  "<p><strong>Recibo de Nota de Empenho:</strong> </p>".
-  "<p><strong>Pedido de Pagamento:</strong> </p>".
-  "<p><strong>Recibo de pagamento:</strong> </p>".
-  "<p><strong>NIT/PIS/PASEP:</strong> ".$INSS."</p>".
-  "<p><strong>CND:</strong> </p>".
-  "<p><strong>FDC-CCM:</strong> </p>".
-  "<p><strong>CTM:</strong> </p>".
-  "<p><strong>Declaração ISS:</strong> </p>". 
-  "<p><strong>CADIN:</strong> </p>".
-  "<p><strong>FACC:</strong> </p>". 
+  "<p><strong>Nota e Anexo de Empenho:</strong>$notaempenho</p>".
+  "<p><strong>Kit de Pagamento Assinado:</strong></p>".
+  "<p><strong>Certidões Fiscais:</strong></p>".
+  "<p><strong>FACC:</strong> </p>".
+  /*  "<p><strong>Anexo de Nota de Empenho:</strong> </p>".
+    "<p><strong>Publicação em DOC:</strong> </p>".
+    "<p><strong>Recibo de Nota de Empenho:</strong> </p>".
+    "<p><strong>Pedido de Pagamento:</strong> </p>".
+    "<p><strong>Recibo de pagamento:</strong> </p>".
+    "<p><strong>NIT/PIS/PASEP:</strong> ".$INSS."</p>".
+    "<p><strong>CND:</strong> </p>".
+    "<p><strong>FDC-CCM:</strong> </p>".
+    "<p><strong>CTM:</strong> </p>".
+    "<p><strong>Declaração ISS:</strong> </p>".
+    "<p><strong>CADIN:</strong> </p>".*/
   "<p>&nbsp;</p>"
 
 ?>

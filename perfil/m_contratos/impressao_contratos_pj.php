@@ -111,8 +111,9 @@ echo "
 						</tr>
 
 						<tr>
-							<td><a href='$link52?id=$id_ped' target='_blank'><strong>Minuta Acima 80 mil</strong></a></td>
-							<td><a href='$link32' target='_blank'><strong>NORMAS INTERNAS - Teatros Municipais</strong></a></td>
+							<!--<td><a href='$link52?id=$id_ped' target='_blank'><strong>Minuta Acima 80 mil</strong></a></td> 
+							Tirar do módulo de contratos e colocar apenas no de pagamentos. Alterar o nome para \" Minuta acima de R$ 176 mil -->
+							<td colspan='2'><a href='$link32' target='_blank'><strong>NORMAS INTERNAS - Teatros Municipais</strong></a></td>
 						</tr>
 
 

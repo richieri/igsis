@@ -1,17 +1,17 @@
-<?php 
-	session_start();
-	   @ini_set('display_errors', '1');
-	error_reporting(E_ALL); 	
-   
-   // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
-	require_once("../include/lib/fpdf/fpdf.php");
-   require_once("../funcoes/funcoesConecta.php");
-   require_once("../funcoes/funcoesGerais.php");
-   require_once("../funcoes/funcoesSiscontrat.php");
+<?php
+session_start();
+@ini_set('display_errors', '1');
+error_reporting(E_ALL);
 
-   //CONEXÃO COM BANCO DE DADOS 
-   $conexao = bancoMysqli(); 
-   
+// INSTALAÇÃO DA CLASSE NA PASTA FPDF.
+require_once("../include/lib/fpdf/fpdf.php");
+require_once("../funcoes/funcoesConecta.php");
+require_once("../funcoes/funcoesGerais.php");
+require_once("../funcoes/funcoesSiscontrat.php");
+
+//CONEXÃO COM BANCO DE DADOS
+$conexao = bancoMysqli();
+
 
 
 
@@ -140,19 +140,60 @@ $n_parcela = mysqli_num_rows($query_parcela);
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
 <body>
 <style type='text/css'>
-.style_01 {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-}
+    .style_01 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+    }
 </style>
 
-<p><strong>PREFEITURA DO MUNICÍPIO DE SÃO PAULO</strong></p>
-<p><strong>SECRETARIA MUNICIPAL DE CULTURA</strong></p>
-<p><strong>TERMO DE CONTRATO Nº _______________________</strong></p>
+
+
+
+(Nome da entidade), com sede (endereço completo), inscrita no CNPJ sob o nº..... DECLARA à (nome da entidade pagadora), para fins de não incidência na fonte do IR, da CSLL, da Cofins, e da Contribuição para o PIS/Pasep, a que se refere o art. 64 da Lei nº 9.430, de 27 de dezembro de 1996, que é entidade sem fins lucrativos de caráter ............................................., a que se refere o art 15 da Lei nº 9.532, de 10 de dezembro de 1997.
+
+
+
+Para esse efeito, a declarante informa que:
+
+
+
+
+
+
+II - o signatário é representante legal desta entidade, assumindo o compromisso de informar à RFB e à unidade pagadora, imediatamente, eventual desenquadramento da presente situação e está ciente de que a falsidade na prestação dessas informações, sem prejuízo do disposto no art. 32 da Lei nº 9.430, de 1996, o sujeitará, com as demais pessoas que para ela concorrem, às penalidades previstas na legislação criminal e tributária, relativas à falsidade ideológica (art. 299 do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 - Código Penal) e ao crime contra a ordem tributária (art. 1º da Lei nº 8.137, de 27 de dezembro de 1990).
+
+
+
+Local e data.....................................................
+
+Assinatura do Responsável
+
+
+
+<p class="text-center"><strong>Anexo III - Instrução Normativa 1.234/2012</strong></p>
+<p><strong>DECLARAÇÃO INSTITUIÇÕES DE CARÁTER FILANTRÓPICO, RECREATIVO, CULTURAL, CIENTÍFICO E ÀS ASSOCIAÇÕES CIVIS</strong></p>
+<p><strong>Ilmo. Sr.</strong></p>
+
+        <p><strong>(autoridade a quem se dirige)</strong></p>
 <p><strong>Processo nº <?php echo strtoupper($NumeroProcesso); ?></strong></p>
 <p><strong>TERMO DE CONTRATO DE PRESTAÇÃO DE SERVIÇOS FORMALIZADO ENTRE A SECRETARIA MUNICIPAL CULTURA E <?php echo strtoupper($pjRazaoSocial); ?>, COM FUNDAMENTO NO ARTIGO 25, INCISO III, DA LEI FEDERAL Nº 8666/93 E ALTERAÇÕES POSTERIORES, ARTIGO 1º DA LEI MUNICIPAL Nº 13.278/02 E ARTIGOS 16 E 17 DO DECRETO MUNICIPAL Nº 44.279/03.</strong></p>
 <p> </p>
-<p> A PREFEITURA DO MUNICÍPIO DE SÃO PAULO doravante denominada simplesmente PREFEITURA, através da SECRETARIA MUNICIPAL DE CULTURA, neste ato representada pela Chefe de Gabinete, Carla Mingolla, e <?php echo strtoupper($pjRazaoSocial); ?>, CNPJ <?php echo $pjCNPJ; ?>, com endereço <?php echo strtoupper($pjEndereco); ?> , neste ato representada por <?php echo strtoupper($rep01Nome); ?>, RG n° <?php echo strtoupper($rep01RG); ?> , CPF Nº <?php echo $rep01CPF; ?>, doravante denominada CONTRATADA, com fundamento no artigo 25, inciso III da Lei Federal nº 8.666/93 e conforme consta do processo administrativo em referência, tem justo e acordado o que segue:</p>
+<p>I - preenche os seguintes requisitos, cumulativamente: </p>
+
+<p>a) é entidade sem fins lucrativos;</p>
+
+<p>b) presta serviços para os quais foi instituída e os coloca à disposição do grupo de pessoas a que se destinam;</p>
+
+<p>c) não remunera, por qualquer forma, seus dirigentes por serviços prestados;</p>
+
+<p>d) aplica integralmente seus recursos na manutenção e desenvolvimento de seus objetivos sociais;</p>
+
+<p>e) mantém escrituração completa de suas receitas e despesas em livros revestidos das formalidades que assegurem a respectiva exatidão;</p>
+
+<p>f) conserva em boa ordem, pelo prazo de 5 (cinco) anos, contado da data da emissão, os documentos que comprovam a origem de suas receitas e a efetivação de suas despesas, bem como a realização de quaisquer outros atos ou operações que venham a modificar sua situação patrimonial; e</p>
+
+<p>g) apresenta anualmente Declaração de Informações Econômico-Fiscais da Pessoa Jurídica (DIPJ), em conformidade com o disposto em ato da Secretaria da Receita Federal do Brasil (RFB);</p>
+
 <p> </p>
 <h3>CLÁUSULA PRIMEIRA - DO OBJETO</h3>
 <p> </p>
@@ -199,16 +240,16 @@ $n_parcela = mysqli_num_rows($query_parcela);
 <p>&nbsp;</p>
 
 <p align='center'><strong>____________________________________<br/>
-CARLA MINGOLLA<br/>
-Chefe de Gabinete<br/>
-Secretaria Municipal de Cultura
-</strong></p>
+        CARLA MINGOLLA<br/>
+        Chefe de Gabinete<br/>
+        Secretaria Municipal de Cultura
+    </strong></p>
 
 <p>&nbsp;</p>
 
 <p align='center'><strong>________________________________<br/>
-<?php echo $pjRazaoSocial; ?><br/>
-CPF: 
+        <?php echo $pjRazaoSocial; ?><br/>
+        CPF:
 </p></strong>
 
 <p>&nbsp;</p>
