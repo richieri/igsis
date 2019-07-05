@@ -18,6 +18,7 @@ $link12=$http."rlt_emissao_nf_integral.php";
 $link13=$http."rlt_emissao_nf_parcelado.php";
 $link14=$http."rlt_email_empresas.php";
 $link15=$http."rlt_minuta_acima80k.php";
+$link16=$http."rlt_declaracao_semFinsLucrativos.php";
 
 
 $data = date('Y-m-d H:i:s');
@@ -74,7 +75,7 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 		</div><br/>
 		<h5>Qual documento deseja gerar?</h5>
 		<div class='col-md-offset-1 col-md-10'>
-		<div class='col-md-4'>
+	<!--	<div class='col-md-4'>
 		<a href='$link11?id=$id_ped' target='_blank'>Confirmação de Serviço</a>
 		
         </div>
@@ -84,14 +85,14 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
         <div class='col-md-4'>
 		<a href='$link15?id=$id_ped' target='_blank'>Minuta acima de R$ 176 mil</a>
         </div>
-        <br><br>
+        <br><br> -->
 		<table class='table table-condensed table-striped text-center'>
-	<!--	<tr class='text-center'>	
+		<tr class='text-center'>	
             <td colspan='2' class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Confirmação de Serviço</a></td>
-            <td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Ateste (documentação)</a></td>		
-            <td colspan='2'  class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Minuta acima de R$ 176 mil</a></td>            
+            <td class='list_description' align='right'><a href='$link10?id=$id_ped' target='_blank'>Ateste (documentação)</a></td>		
+            <td colspan='2' class='list_description' ><a href='$link15?id=$id_ped' target='_blank'>Minuta acima de R$ 176 mil</a></td>            
             
-		</tr>-->
+		</tr>
 		<tr class='list_menu'><td style='vertical-align: middle' class='list_description text-center' colspan='7' height='60px;'><strong>1 Representante</strong></td></tr>
 			<tr class='text-center'>
 				<!--<td class='list_description'><strong>01 Representante</strong></td>-->
@@ -99,17 +100,17 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 				<td class='list_description'><a href='$link3?id=$id_ped'  target='_blank'>Pedido <br>  Parcelado</a></td>
 				<td class='list_description' style='vertical-align: middle' ><a href='$link5?id=$id_ped' target='_blank'>Recibo</a></td>
 				<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração <br> Simples</a></td>
-				<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração de Associação sem fins lucrativos</a></td>
+				<td class='list_description'><a href='$link16?id=$id_ped'  target='_blank'>Declaração de Associação sem fins lucrativos</a></td>
 								
 			</tr>
-			<tr class='list_menu'><td style='vertical-align: middle' class='list_description text-center bg-gray' colspan='7'  height='60px;'><strong>2 Representantes</strong></td></tr>
+			<tr class='list_menu'><td style='vertical-align: middle' class='list_description text-center' colspan='7'  height='60px;'><strong>2 Representantes</strong></td></tr>
 			<tr>
 				<!--<td class='list_description text-center'><strong>02 Representantes</strong></td>-->
 				<td class='list_description' width='15%'><a href='$link2?id=$id_ped' target='_blank'>Pedido <br> Integral</a></td>
 				<td class='list_description' width='15%'><a href='$link4?id=$id_ped'  target='_blank'>Pedido <br> Parcelado</a></td>
 				<td class='list_description' width='15%' style='vertical-align: middle'  ><a href='$link6?id=$id_ped' target='_blank'>Recibo</a></td>
 				<td class='list_description' width='15%'><a href='$link7?id=$id_ped'  target='_blank'>Declaração <br> Simples</a></td>
-				<td class='list_description' width='20%'><a href='$link7?id=$id_ped'  target='_blank'>Declaração de Associação sem fins lucrativos</a></td>
+				<td class='list_description' width='20%'><a href='$link16?id=$id_ped'  target='_blank'>Declaração de Associação sem fins lucrativos</a></td>
 				<!--<td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Ateste (documentação)</a></td>
 				<td class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Confirmação de Serviço</a></td>-->
 			

@@ -52,7 +52,7 @@ $rep01Nome = $rep01["Nome"];
 
 // GERANDO O WORD:
 header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - EmailEmpresas.doc");
+header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Email". ucfirst($modeloEmail) .".doc");
 
 ?>
 
