@@ -53,6 +53,7 @@ $link37 = $http."rlt_parecer_pf.php";
 $link38 = $http."rlt_termo_doacaoobradearte_pf.php";
 $link39 = $http."rlt_termo_parceria_pf.php";
 $link40 = $http."rlt_termo_doacao_pf_assinatura_word.php";
+$link60 = $http."rlt_condicionamento.php?id=".$id_ped ."&tipoPessoa=1";
 
 
 
@@ -106,6 +107,7 @@ echo "
 						</tr>
 						<tr>
 							<td><a href='$link21?id=$id_ped' target='_blank'><strong>Convênio 500</strong></a></td>
+							<td><a href='$link60' target='_blank'><strong>Condicionamento</strong></a></td>
 						</tr>
 
 						<tr><td class='list_description'><br/></td></tr>

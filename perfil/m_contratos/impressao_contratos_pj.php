@@ -52,6 +52,7 @@ $link55 = $http."rlt_pedido_reserva_pia_pj.php";
 $link57 = $http."rlt_pedido_reserva_oficina_pj.php";
 $link58 = $http."rlt_pedido_reserva_oficina_csmb_bma_pj.php";
 $link59 = $http."rlt_pedido_reserva_hiphop_sme_pj.php";
+$link60 = $http."rlt_condicionamento.php?id=".$id_ped."&tipoPessoa=2";
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -98,6 +99,7 @@ echo "
 
 						<tr>
 							<td><a href='$link40' target='_blank'><strong>Convênio 500</strong></a></td>
+							<td><a href='$link60' target='_blank'><strong>Condicionamento</strong></a></td>
 							
 						</tr>
 						
