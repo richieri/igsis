@@ -15,6 +15,10 @@ $pedido = siscontrat($id_ped);
 $pj = siscontratDocs($pedido['IdProponente'],2);
 $rep01 = siscontratDocs($pj['Representante01'],3);
 
+dataPagamento($id_ped);
+
+$NumeroProcesso = $pedido["NumeroProcesso"];
+
 $ano=date('Y');
 
 $codPed = "";
