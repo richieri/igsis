@@ -16,6 +16,7 @@ case 'inicial':
 	if(isset($_POST['pesquisar']))
 	{
 		$id = trim($_POST['id']);
+		$idEvento = trim($_POST['idEvento']);
 		$evento = trim($_POST['evento']);
 		$fiscal = $_POST['fiscal'];
 		$tipo = $_POST['tipo'];
@@ -24,7 +25,7 @@ case 'inicial':
 		$juridico = $_POST['juridico'];
 		$processo = $_POST['NumeroProcesso'];
 
-		if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $processo == 0 AND $juridico == 0)
+		if($id == "" AND $idEvento == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $processo == 0 AND $juridico == 0)
 		{ 
 ?>
 			<section id="services" class="home-section bg-white">
@@ -44,6 +45,8 @@ case 'inicial':
 								<form method="POST" action="?perfil=contabilidade&p=frm_busca_contabilidade" class="form-horizontal" role="form">
 								<label>Código do Pedido</label>
 								<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+                                <label>ID do Evento</label>
+                                <input type="text" name="idEvento" class="form-control" placeholder="ID do evento" ><br />
 								<label>Número do Processo</label>
 								<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />			<label>Objeto/Evento</label>
 								<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
@@ -153,12 +156,72 @@ case 'inicial':
 									$x['num'] = 1;
 									
 				}
+
 					else
 					{
 						$x['num'] = 0;
 		
 					}
-			}	
+			}
+			elseif($idEvento != "" AND $num_registro > 0)
+            { // Foi inserido o número do pedido
+                $pedido = recuperaDados("igsis_pedido_contratacao",$idEvento,"idEvento");
+                if($pedido['estado'] != NULL)
+                {
+                    $evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
+                    $usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
+                    $instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
+                    $local = listaLocais($pedido['idEvento']);
+                    $periodo = retornaPeriodo($pedido['idEvento']);
+                    $duracao = retornaDuracao($pedido['idEvento']);
+                    $pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
+                    $fiscal = recuperaUsuario($evento['idResponsavel']);
+                    $suplente = recuperaUsuario($evento['suplente']);
+                    $protocolo = "";
+
+                    if($pedido['parcelas'] > 1)
+                    {
+                        $valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
+                        $formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);
+                    }
+                    else
+                    {
+                        $valorTotal = $pedido['valor'];
+                        $formaPagamento = $pedido['formaPagamento'];
+                    }
+
+                    $x[0]['id']= $pedido['idPedidoContratacao'];
+                    $x[0]['NumeroProcesso'] = $pedido['NumeroProcesso'];
+                    $x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
+
+                    if($pedido['tipoPessoa'] == 1)
+                    {
+                        $pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+                        $x[0]['proponente'] = $pessoa['Nome'];
+                        $x[0]['tipo'] = "Física";
+
+                    }
+                    else
+                    {
+                        $pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+                        $x[0]['proponente'] = $pessoa['RazaoSocial'];
+                        $x[0]['tipo'] = "Jurídica";
+
+                    }
+                    $x[0]['local'] = substr($local,1);
+                    $x[0]['instituicao'] = $instituicao['sigla'];
+                    $x[0]['periodo'] = $periodo;
+                    $x[0]['status'] = $pedido['estado'];
+                    $x['num'] = 1;
+
+                }
+
+                else
+                {
+                    $x['num'] = 0;
+
+                }
+            }
 	
 	else
 	{ //Não foi inserido o número do pedido
@@ -371,6 +434,8 @@ case 'inicial':
 							<form method="POST" action="?perfil=contabilidade&p=frm_busca_contabilidade" class="form-horizontal" role="form">
 							<label>Código do Pedido</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
+                            <label>ID do Evento</label>
+                            <input type="text" name="idEvento" class="form-control" placeholder="ID do evento" ><br />
 							<label>Número do Processo</label>
 							<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira número do processo" ><br />
 							<label>Objeto/Evento</label>
