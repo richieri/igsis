@@ -1,7 +1,7 @@
 <?php
 
 // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
-require_once("../include/lib/fpdf/fpdf.php");
+require_once("../include/lib/fpdf/pdf_html.php");
 require_once("../funcoes/funcoesConecta.php");
 require_once("../funcoes/funcoesGerais.php");
 require_once("../funcoes/funcoesSiscontrat.php");
@@ -11,7 +11,7 @@ $conexao = bancoMysqli();
 
 session_start();
 
-class PDF extends FPDF
+class PDF extends PDF_HTML
 {
    // Page header
    function Header()
@@ -196,9 +196,9 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
    $pdf->Cell(15,$l,'Objeto:',0,0,'L');
-   $convenio = $pdf->WriteHTML(" <strong>CONVÊNIO FEDERAL N° 849979/2017</strong>");
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(165,$l,utf8_decode($Objeto.$convenio));
+   $convenio = utf8_decode("CONVÊNIO FEDERAL N° 849979/2017 cujo o objeto é a Contratação artística de oficinas de dança, teatro, circo, literatura e música para realização em Bibliotecas, Casas de Cultura e Centros Culturais da Secretaria Municipal de Cultura.");
+   $pdf->MultiCell(165,$l,utf8_decode($Objeto)." - ".$convenio);
 
 $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
@@ -208,7 +208,7 @@ $pdf->SetX($x);
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(82,$l,utf8_decode('Tempo Aproximado de Duração do Espetáculo:'),0,0,'L');
+   $pdf->Cell(82,$l,utf8_decode('Tempo global da oficina:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(40,$l,utf8_decode("$Duracao"."utos"),0,0,'L');
    if($CargaHoraria != '')
@@ -269,18 +269,28 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(10,$l,'(D)',0,0,'L');
+   $pdf->Cell(10,$l,'(C)',0,0,'L');
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(160,$l,utf8_decode('OBSERVAÇÕES'),0,1,'C');
+   $pdf->Cell(160,$l,'',0,1,'C');
 
    $pdf->SetX($x);
-   $pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
+   $pdf->Cell(10,$l,'',0,0,'L');
+
+//   $pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,$l,'',0,0,'L');
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(160,$l,utf8_decode('DECLARAÇÕES'),0,1,'C');
+   $pdf->Cell(160,$l,utf8_decode('EDITAL DE CREDENCIAMENTO Nº 02/2018 – SMC/GAB'),0,1,'C');
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(180,5,utf8_decode("CONVÊNIO FEDERAL N° 849979/2017, cujo o objeto é a Contratação artística de oficinas de dança, teatro, circo, literatura e música para realização em Bibliotecas, Casas de Cultura e Centros Culturais da Secretaria Municipal de Cultura."));
+
+   $pdf->Ln();
+   $pdf->Ln();
+   $pdf->Ln();
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 9);
