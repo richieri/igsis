@@ -10,12 +10,10 @@ $conexao = bancoMysqli();
 
 //CONSULTA
 $id_ped=$_GET['id'];
-$idUsuario = $_GET['idUsuario'];
 $tipoPessoa = $_GET['tipoPessoa'];
 
 $pedido = siscontrat($id_ped);
 $infosPessoa = siscontratDocs($pedido['IdProponente'],$tipoPessoa);
-$nomeUsuario = recuperaDados('ig_usuario',$idUsuario,'idUsuario')['nomeCompleto'];
 
 dataPagamento($id_ped);
 
@@ -23,7 +21,7 @@ $id = $pedido['idEvento'];
 $Objeto = $pedido["Objeto"];
 $Periodo = $pedido["Periodo"];
 $NumeroProcesso = $pedido["NumeroProcesso"];
-$local = $pedido['local'];
+$local = $pedido['Local'];
 
 
 $ano=date('Y');
@@ -31,11 +29,6 @@ $ano=date('Y');
 $codPed = "";
 
 $dataAtual = date('d/m/Y');
-
-// Representante01
-
-
-
 
 
 if ($tipoPessoa == 2) {
