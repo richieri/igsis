@@ -45,8 +45,8 @@ case 'inicial':
 								<form method="POST" action="?perfil=contabilidade&p=frm_busca_contabilidade" class="form-horizontal" role="form">
 								<label>Código do Pedido</label>
 								<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-<!--                                <label>ID do Evento</label>-->
-<!--                                <input type="text" name="idEvento" class="form-control" placeholder="ID do evento" ><br />-->
+                                <label>ID do Evento</label>
+                                <input type="text" name="idEvento" class="form-control" placeholder="ID do evento" ><br />
 								<label>Número do Processo</label>
 								<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />			<label>Objeto/Evento</label>
 								<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
@@ -434,8 +434,8 @@ case 'inicial':
 							<form method="POST" action="?perfil=contabilidade&p=frm_busca_contabilidade" class="form-horizontal" role="form">
 							<label>Código do Pedido</label>
 							<input type="text" name="id" class="form-control" id="palavras" placeholder="Insira o Código do Pedido" ><br />
-<!--                            <label>ID do Evento</label>-->
-<!--                            <input type="text" name="idEvento" class="form-control" placeholder="ID do evento" ><br />-->
+                            <label>ID do Evento</label>
+                            <input type="text" name="idEvento" class="form-control" placeholder="ID do evento" ><br />
 							<label>Número do Processo</label>
 							<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira número do processo" ><br />
 							<label>Objeto/Evento</label>
