@@ -163,7 +163,7 @@ case 'inicial':
 		
 					}
 			}
-			elseif($idEvento != "" AND $num_registro > 0)
+			elseif($idEvento != "")
             { // Foi inserido o número do pedido
                 $pedido = recuperaDados("igsis_pedido_contratacao",$idEvento,"idEvento");
                 if($pedido['estado'] != NULL)
