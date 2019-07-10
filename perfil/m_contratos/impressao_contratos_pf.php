@@ -55,6 +55,8 @@ $link39 = $http."rlt_termo_parceria_pf.php";
 $link40 = $http."rlt_termo_doacao_pf_assinatura_word.php";
 $link60 = $http."rlt_condicionamento.php?id=".$id_ped ."&tipoPessoa=1";
 
+$link50 = $http."rlt_proposta_oficina_convenio.php"."?id=".$id_ped."&penal";
+
 
 
 
@@ -95,6 +97,11 @@ echo "
 						<tr>
 							<td><a href='$link03=13' target='_blank'><strong>Contratações gerais - Com cachê</strong></a></td>
 							<td><a href='$link47=13' target='_blank'><strong>Contratações gerais - Reversão de Bilheteria</strong></a></td>
+						</tr>
+						
+						<tr>
+							<td><a href='$link50=13' target='_blank'><strong>Contratações de Oficina - Convênio</strong></a></td>
+							<td></td>
 						</tr>
 
 						<tr><td class='list_description'><br/></td></tr>
