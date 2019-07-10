@@ -2038,11 +2038,11 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 			}
 			if($data_inicio == $dataFinal)
 			{ 
-				return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
+				return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL";
 			}
 			else
 			{
-				return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL.";
+				return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL";
 			}
 		}
 		else
@@ -2084,11 +2084,11 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
             if($tipo['projetoEspecial'] == 74){
                 if($data_inicio == $dataFinal)
                 {
-                    return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                    return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP";
                 }
                 else
                 {
-                    return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
+                    return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP";
                 }
             }
 			if($data_inicio == $dataFinal)

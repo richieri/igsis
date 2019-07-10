@@ -98,7 +98,8 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 				<!--<td class='list_description'><strong>01 Representante</strong></td>-->
 				<td class='list_description'><a href='$link1?id=$id_ped' target='_blank'>Pedido <br> Integral</a></td>
 				<td class='list_description'><a href='$link3?id=$id_ped'  target='_blank'>Pedido <br>  Parcelado</a></td>
-				<td class='list_description' style='vertical-align: middle' ><a href='$link5?id=$id_ped' target='_blank'>Recibo</a></td>
+				<!--<td class='list_description' style='vertical-align: middle' ><a href='$link5?id=$id_ped' target='_blank'>Recibo</a></td>-->
+                <td class='list_description'><a href='$link12?id=$id_ped' target='_blank'>Instruções para <br> emissão de Nota Fiscal</a></td>
 				<td class='list_description'><a href='$link7?id=$id_ped'  target='_blank'>Declaração <br> Simples</a></td>
 				<td class='list_description'><a href='$link16?id=$id_ped'  target='_blank'>Declaração de Associação sem fins lucrativos</a></td>
 								
@@ -108,7 +109,8 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 				<!--<td class='list_description text-center'><strong>02 Representantes</strong></td>-->
 				<td class='list_description' width='15%'><a href='$link2?id=$id_ped' target='_blank'>Pedido <br> Integral</a></td>
 				<td class='list_description' width='15%'><a href='$link4?id=$id_ped'  target='_blank'>Pedido <br> Parcelado</a></td>
-				<td class='list_description' width='15%' style='vertical-align: middle'  ><a href='$link6?id=$id_ped' target='_blank'>Recibo</a></td>
+				<!--<td class='list_description' width='15%' style='vertical-align: middle'  ><a href='$link6?id=$id_ped' target='_blank'>Recibo</a></td>-->
+                <td class='list_description'><a href='$link12?id=$id_ped' target='_blank'>Instruções para <br> emissão de Nota Fiscal</a></td>
 				<td class='list_description' width='15%'><a href='$link7?id=$id_ped'  target='_blank'>Declaração <br> Simples</a></td>
 				<td class='list_description' width='20%'><a href='$link16?id=$id_ped'  target='_blank'>Declaração de Associação sem fins lucrativos</a></td>
 				<!--<td class='list_description'><a href='$link10?id=$id_ped' target='_blank'>Ateste (documentação)</a></td>
@@ -118,9 +120,9 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 			<!--<tr><td class='list_description text-center' colspan='7'><strong>02 Representantes</strong></td></tr>
 			<tr>
 				<td class='list_description'><strong>Emissão de Nota Fiscal</strong></td>
-				<td class='list_description'><a href='$ link12?id=$id_ped' target='_blank'>Integral</a></td>
-				<td class='list_description'><a href='$ link13?id=$id_ped'  target='_blank'>Parcelado</a></td>
-			</tr>--> 
+				<td class='list_description'><a href='$link12?id=$id_ped' target='_blank'>Integral</a></td>
+				<td class='list_description'><a href='$link13?id=$id_ped'  target='_blank'>Parcelado</a></td>
+			</tr>-->
 			<tr><td style='vertical-align: middle' class='list_description text-center' colspan='7' height='50px;' ><strong>Email</strong></td></tr>
 			<tr>
 				<!--<td class='list_description'><strong>Email</strong></td>-->
@@ -128,7 +130,7 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 				<td style='vertical-align: middle' class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=empresas' target='_blank'>Empresas</a></td>
 				<td style='vertical-align: middle' class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=cooperativas' target='_blank'>Cooperativas</a></td>
 				<td style='vertical-align: middle' class='list_description' colspan='2'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=associacoes' target='_blank'>Associações e institutos</a></td>
-				<td class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."' target='_blank'>Empresas acima de R$ 176 mil</a></td>
+				<td class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."' target='_blank'>Empresas com Minuta de Contrato</a></td>
 				
 				
 				
@@ -273,7 +275,7 @@ include 'includes/menu.php';
 										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
 										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a><br/>
 										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a><br />
-										<a target="_blank" href='.$link14.'?id='.$id_ped.'&parcela='.$i.'>Email Kit</a><br />
+										<a target="_blank" href='.$link14.'?id='.$id_ped.'&idUsuario='.$_SESSION['idUsuario'].'&parcela='.$i.'&modelo=empresas>Email Kit</a><br />
 										<a target="_blank" href='.$link15.'?id='.$id_ped.'&parcela='.$i.'>Email NE</a></td>';
 
 								echo '<td class="list_description">

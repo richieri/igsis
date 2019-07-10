@@ -15,7 +15,7 @@ $modeloEmail = $_GET['modelo'];
 
 switch ($modeloEmail) {
     case 'empresas':
-        $item4 = "Declaração do Simples Nacional (assinada pelo(a) representante legal, somente em caso de Empresa optante pelo Simples Nacional).";
+        $item4 = "Declaração do Simples Nacional (para ser assinada pelo(a) representante legal, somente em caso de Empresa optante pelo Simples Nacional).";
         break;
     case 'cooperativas':
         $item4 = "Documento comprobatório quanto a isenção ou imunidade de impostos.";
@@ -61,12 +61,12 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <body>
 
 <p align="justify">Prezado(a) Senhor(a) <?= $rep01Nome?>,</p>
-<p align="justify">Tendo em vista a apresentação <?= $Objeto?>, no período de <?= $Periodo?>, DE ACORDO COM PROGRAMAÇÃO DO EVENTO NO PERÍODO DA VIRADA CULTURAL., encaminho em anexo, para fins de pagamento, os itens abaixo relacionados:</p>
-<p align="justify">1) Recibo da nota de empenho (assinado pelo(a) representante legal da Empresa);</p>
-<p align="justify">2) Pedido de pagamento (assinado pelo(a) representante legal);</p>
-<p align="justify">3) Nota Fiscal eletrônica;</p>
-<p align="justify">4) <?=$item4?></p>
-<p align="justify">Para fins de arquivamento da empresa, segue o Anexo e a Nota de Empenho da referida contratação.  </p>
+<p align="justify">Tendo em vista a apresentação <?= $Objeto?>, na data/período de <?= $Periodo?>, encaminho em anexo, para fins de pagamento, os itens abaixo relacionados:</p>
+<p align="justify">a) Recibo da nota de empenho (para ser assinado pelo(a) representante legal da Empresa);</p>
+<p align="justify">b) Pedido de pagamento (para ser assinado pelo(a) representante legal);</p>
+<p align="justify">c)Instruções para Emissão da Nota Fiscal Eletrônica;</p>
+<p align="justify">d) <?=$item4?></p>
+<p align="justify">Para fins de arquivamento da empresa, segue também o Anexo e a Nota de Empenho da referida contratação.  </p>
 <p align="justify">Informo que a documentação acima citada deverá ser devolvida digitalizada, <strong>somente através do e-mail smc.pagamentosartisticos@gmail.com, em até 48 horas, impreterivelmente.</strong></p>
 <p>&nbsp;</p>
 <p align="justify">Atenciosamente,</p>
