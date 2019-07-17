@@ -100,7 +100,7 @@ echo "
 						</tr>
 						
 						<tr>
-							<td><a href='$link50=13' target='_blank'><strong>Contratações de Oficina - Convênio</strong></a></td>
+							<td><a href='$link50=13' target='_blank'><strong>Proposta Oficinas / Convênio MINC</strong></a></td>
 							<td></td>
 						</tr>
 

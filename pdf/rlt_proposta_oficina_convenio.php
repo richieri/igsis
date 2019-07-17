@@ -85,6 +85,14 @@ $Telefones = $pessoa["Telefones"];
 $Email = $pessoa["Email"];
 $INSS = $pessoa["INSS"];
 
+$sqlParcelas = "SELECT * FROM `igsis_parcelas` WHERE idPedido = '$id_ped'";
+$queryParcelas = $conexao->query($sqlParcelas);
+$tempoGlobal = 0;
+
+while ($linha = $queryParcelas->fetch_array()) {
+   $tempoGlobal += $linha['horas'];
+}
+
 
 // GERANDO O PDF:
 $pdf = new PDF('P','mm','A4'); //CRIA UM NOVO ARQUIVO PDF NO TAMANHO A4
@@ -208,9 +216,9 @@ $pdf->SetX($x);
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(82,$l,utf8_decode('Tempo global da oficina:'),0,0,'L');
+   $pdf->Cell(45,$l,utf8_decode('Tempo global da oficina:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
-   $pdf->Cell(40,$l,utf8_decode("$Duracao"."utos"),0,0,'L');
+   $pdf->Cell(20,$l,$tempoGlobal." horas",0,0,'L');
    if($CargaHoraria != '')
    {
       $pdf->SetFont('Arial','B', 10);
@@ -282,78 +290,48 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(10,$l,'',0,0,'L');
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(160,$l,utf8_decode('EDITAL DE CREDENCIAMENTO Nº 02/2018 – SMC/GAB'),0,1,'C');
+   $pdf->Cell(160,$l,utf8_decode('EDITAL DE CREDENCIAMENTO Nº 02/2018 - SMC/GAB'),0,1,'C');
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
-   $pdf->MultiCell(180,5,utf8_decode("CONVÊNIO FEDERAL N° 849979/2017, cujo o objeto é a Contratação artística de oficinas de dança, teatro, circo, literatura e música para realização em Bibliotecas, Casas de Cultura e Centros Culturais da Secretaria Municipal de Cultura."));
+   $pdf->MultiCell(180,5,utf8_decode("CONVÊNIO FEDERAL N° 849979/2017, cujo o objeto é a Contratação artística de oficinas de dança, teatro, circo, literatura e música para realização em Bibliotecas, Casas de Cultura e Centros Culturais da Secretaria Municipal de Cultura."), 0, 'C');
 
    $pdf->Ln();
    $pdf->Ln();
    $pdf->Ln();
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
-   $pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
+   $pdf->SetFont('Arial','', 10);
+   $pdf->Cell(10,5,'Declaro que:',0,0,'L');
 
-   $pdf->Ln();
+//   $pdf->SetX($x);
+//   $pdf->SetFont('Arial','', 9);
+//   $pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
 
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
-   $pdf->Cell(10,$l,'',0,0,'L');
-   $pdf->SetFont('Arial','B', 9);
-   $pdf->Cell(160,5,utf8_decode('NOS CASOS DE REVERSÃO DE BILHETERIA'),0,1,'C');
+   $pdf->Ln(20);
 
-   $pdf->Ln();
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
-   $pdf->MultiCell(180,5,utf8_decode('1) No caso de pagamento do cachê por reversão de bilheteria, fica o valor dos ingressos sujeito ao atendimento no disposto nas Leis Municipais nº 10.973/91, regulamentada pelo Decreto Municipal nº 30.730/91; Leis Municipais 11.113/91; 11.357/93 e 12.975/2000 e Portaria nº 66/SMC/2007; Lei Estadual nº 7844/92, regulamentada pelo Decreto Estadual nº 35.606/92; Lei Estadual nº 10.858/2001, com as alterações da Lei Estadual 14.729/2012 e Lei Federal nº 12.933/2013.'));
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
-   $pdf->MultiCell(180,5,utf8_decode('2) O pagamento do cachê corresponderá à reversão integral da renda obtida na bilheteria a/o ontratada/o, deduzidos os impostos e taxas pertinentes.'));
-
-   $pdf->Ln();
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
-   $pdf->Cell(10,$l,'',0,0,'L');
-   $pdf->SetFont('Arial','B', 9);
-   $pdf->Cell(160,5,utf8_decode('RESCISÃO'),0,1,'C');
-
-   $pdf->Ln();
+   /*Texto Declaração*/
+   $declaracao = [
+     'bullet' => chr(149),
+     'margin' => ' ',
+     'indent' => 0,
+     'spacer' => 0,
+     'text' => [
+         utf8_decode('Conheço e aceito incondicionalmente as regras do Edital n. 02/2018 - SMC/GAB de Credenciamento;'),
+         utf8_decode('Em caso de seleção, responsabilizo-me pelo cumprimento da agenda acordada entre o equipamento municipal e o Oficineiro, no tocante ao local, data e horário, para a realização da Oficina. Em acordo com o previsto no convênio federal n° 849979/2017'),
+         utf8_decode('Não sou servidor público municipal.'),
+         utf8_decode('Estou ciente de que a contratação não gera vínculo trabalhista entre a Municipalidade e o Contratado.'),
+         utf8_decode('Estou ciente da aplicação de penalidades conforme item 11 do Edital de Credenciamento nº 02/2018 SMC/GAB')
+     ]
+   ];
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
-   $pdf->MultiCell(180,5,utf8_decode('Este instrumento poderá ser rescindido, no interesse da administração, devidamente justificado ou em virtude da inexecução total ou parcial do serviço sem prejuízo de multa, nos termos da legislação vigente.'));
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCellBltArray(160, 5, $declaracao);
 
-   $pdf->Ln();
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
-   $pdf->Cell(10,$l,'',0,0,'L');
-   $pdf->SetFont('Arial','B', 9);
-   $pdf->Cell(160,5,utf8_decode('FORO'),0,1,'C');
-
-   $pdf->Ln();
-
-   $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
-   $pdf->MultiCell(180,5,utf8_decode('Fica eleito o foro da Fazenda Pública para todo e qualquer procedimento judicial oriundo deste instrumento.'));
-
-   $pdf->Ln();
-   $pdf->Ln();
-
-
-   $pdf->SetX($x);
+   $pdf->SetXY($x, 240);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(180,$l,"Data: _________ / _________ / "."$ano".".",0,0,'L');
-
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
 
 
 //RODAPÉ PERSONALIZADO
@@ -384,8 +362,8 @@ $l=5; //DEFINE A ALTURA DA LINHA
    $pdf->Cell(170,5,utf8_decode('CRONOGRAMA'),0,1,'L');
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 12);
-   $pdf->MultiCell(170,$l,utf8_decode($Objeto));
+   $pdf->SetFont('Arial','', 10);
+   $pdf->MultiCell(170,7,utf8_decode($Objeto)." - ".$convenio);
 
    $pdf->Ln();
 
