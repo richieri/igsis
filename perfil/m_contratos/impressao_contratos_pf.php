@@ -55,7 +55,7 @@ $link39 = $http."rlt_termo_parceria_pf.php";
 $link40 = $http."rlt_termo_doacao_pf_assinatura_word.php";
 $link60 = $http."rlt_condicionamento.php?id=".$id_ped ."&tipoPessoa=1";
 
-$link50 = $http."rlt_proposta_oficina_convenio.php"."?id=".$id_ped."&penal";
+$link50 = $http."rlt_proposta_oficina_convenio_word.php"."?id=".$id_ped."&penal";
 
 
 
