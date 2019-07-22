@@ -21,6 +21,9 @@ $link = $http."rlt_comunicacao_fotos.php";
 				<!--<li><a href="<?php echo $pasta ?>programacao_local">Agenda</a></li>-->
 				<li><a href="<?php echo $pasta ?>chamados">Lista de chamados</a></li>
 				<li><a href="<?php echo $pasta ?>gerar_csv">Gerar Arquivo .csv</a></li>
+                <?php if ($_SESSION['perfil'] == 1): ?>
+                    <li><a href="<?php echo $pasta ?>gerar_csv_locais">Gerar Arquivo .csv Locais</a></li>
+                <?php endif ?>
 				<li style="color:white;">-------------------------</li>
 				<li><a href="?secao=perfil">Carregar módulo</a></li>
 				<li selected><a href="http://smcsistemas.prefeitura.sp.gov.br/igsis/manual/index.php/modulo-comunicacao/">Ajuda</a></li>

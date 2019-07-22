@@ -23,21 +23,18 @@ if(isset($_POST['exportar'])) {
     }
 
     if ($local != '') {
-        $filtro_local = "E.idInstituicao = '$local' AND";
-    } else {
-        $filtro_local = "";
+        $filtro_local = "E.idInstituicao = '$local'";
     }
 
     $sql = "SELECT
                 INST.idInstituicao,
                 INST.instituicao,
-                E.nomeEvento AS 'nome',
-                TE.tipoEvento AS 'categoria',
-                O.dataInicio AS 'data',
-                DATE_FORMAT(O.horaInicio, '%H:%i') AS 'horario_inicial',
-                O.valorIngresso AS 'valor',
-                E.sinopse AS 'descricao',
-                L.sala AS 'nome_local'
+                L.sala AS 'Nome do Local',
+                L.rua AS 'Logradouro',
+                L.cidade AS 'Cidade',
+                L.estado AS 'Estado',
+                L.cep AS 'CEP',
+                L.pais AS 'Pais'
             FROM
                 ig_evento AS E
                 INNER JOIN ig_tipo_evento AS TE ON E.ig_tipo_evento_idTipoEvento = TE.idTipoEvento
@@ -46,7 +43,6 @@ if(isset($_POST['exportar'])) {
                 INNER JOIN ig_instituicao AS INST ON L.idInstituicao = INST.idInstituicao
             WHERE
                 E.publicado = 1 AND
-                $filtro_local
                 E.statusEvento = 'Enviado'
                 $filtro_data
             ORDER BY dataInicio";
@@ -54,26 +50,25 @@ if(isset($_POST['exportar'])) {
     $query = mysqli_query($con, $sql);
 
     header('Content-type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=eventos.csv');
+    header('Content-Disposition: attachment; filename=locais.csv');
 
     $arquivo = fopen("php://output", "w");
-    fputcsv($arquivo, array('Nome do Evento', 'Categoria', 'Data de Inicio', 'Horario de Inicio', 'Valor', 'Descrição', 'Local'));
+    fputcsv($arquivo, array('Nome do Local', 'Logradouro', 'Cidade', 'Estado', 'CEP', 'Pais'));
 
     $instituicoes = ['13', '5', '6', '9', '29', '35', '34', '8', '24', '25', '10'];
 
     while ($linha = mysqli_fetch_assoc($query)) {
-        $registro['Nome do Evento'] = $linha['nome'];
-        $registro['Categoria'] = $linha['categoria'];
-        $registro['Data de Inicio'] = $linha['data'];
-        $registro['Horario de Inicio'] = $linha['horario_inicial'];
-        $registro['Valor'] = $linha['valor'];
-        $registro['Descrição'] = $linha['descricao'];
-
         if (in_array($linha['idInstituicao'], $instituicoes)) {
-            $registro['Local'] = $linha['instituicao'];
+            $registro['Nome do Local'] = $linha['instituicao'];
         } else {
-            $registro['Local'] = $linha['nome_local'];
+            $registro['Nome do Local'] = $linha['Nome do Local'];
         }
+
+        $registro['Logradouro'] = (($linha['Logradouro'] == NULL) || ($linha['Logradouro'] == "")) ? " " : $linha['Logradouro'];
+        $registro['Cidade'] = (($linha['Cidade'] == NULL) || ($linha['Cidade'] == "")) ? " " : $linha['Cidade'];
+        $registro['Estado'] = (($linha['Estado'] == NULL) || ($linha['Estado'] == "")) ? " " : $linha['Estado'];
+        $registro['CEP'] = (($linha['CEP'] == NULL) || ($linha['CEP'] == "")) ? " " : $linha['CEP'];
+        $registro['Pais'] = (($linha['Pais'] == NULL) || ($linha['Pais'] == "")) ? " " : $linha['Pais'];
 
         fputcsv($arquivo, $registro);
     }
