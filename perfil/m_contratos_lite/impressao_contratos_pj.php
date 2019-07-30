@@ -12,6 +12,9 @@ $link0 = $http."rlt_pedido_contratacao_pj.php";
 $link02 = $http."rlt_proposta_padrao_pj.php"."?id=".$id_ped."&penal";
 $link03 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal";
 $link04 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal";
+$link56 = $http."rlt_proposta_reversao_pj.php"."?id=".$id_ped."&penal";
+
+
 $link5 = $http."rlt_fac_pj.php";
 $link6 = $http."rlt_evento_pj.php";
 $link7 = $http."rlt_direitos_conexos.php";
@@ -46,11 +49,13 @@ $link50 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal=30";
 $link52 = $http."rlt_minuta_acima80k.php";
 $link53 = $http."rlt_pedido_reserva_bma_pj.php";
 $link55 = $http."rlt_pedido_reserva_pia_pj.php";
-$link56 = $http."rlt_proposta_reversao_pj.php"."?id=".$id_ped."&penal";
 $link57 = $http."rlt_pedido_reserva_oficina_pj.php";
 $link58 = $http."rlt_pedido_reserva_oficina_csmb_bma_pj.php";
 $link59 = $http."rlt_pedido_reserva_hiphop_sme_pj.php";
-$link10 = $http."rlt_pedido_reserva_crdsp.php";
+$link60 = $http."rlt_pedido_reserva_crd.php";
+$link61 = $http."rlt_condicionamento.php?id=$id_ped&tipoPessoa=2";
+$link62 = $http."rlt_pedido_reserva_memoriacirco_pj.php";
+
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -96,6 +101,7 @@ echo "
 
 						<tr>
 							<td><a href='$link40' target='_blank'><strong>Convênio 500</strong></a></td>
+							<td><a href='$link61' target='_blank'><strong>Condicionamento</strong></a></td>
 							
 						</tr>
 						
@@ -109,8 +115,9 @@ echo "
 						</tr>
 
 						<tr>
-							<td><a href='$link52?id=$id_ped' target='_blank'><strong>Minuta Acima 80 mil</strong></a></td>
-							<td><a href='$link32' target='_blank'><strong>NORMAS INTERNAS - Teatros Municipais</strong></a></td>
+							<!--<td><a href='$link52?id=$id_ped' target='_blank'><strong>Minuta Acima 80 mil</strong></a></td> 
+							Tirar do módulo de contratos e colocar apenas no de pagamentos. Alterar o nome para \" Minuta acima de R$ 176 mil -->
+							<td colspan='2'><a href='$link32' target='_blank'><strong>NORMAS INTERNAS - Teatros Municipais</strong></a></td>
 						</tr>
 
 
@@ -149,7 +156,10 @@ echo "
                         </tr>
                         <tr>
                             <td><a href='$link59?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td>
-                            <td><a href='$link10?id=$id_ped' target='_blank'><strong>Reserva CRDSP</strong></a></td>
+                            <td><a href='$link60?id=$id_ped' target='_blank'><strong>Reserva CRD</strong></a></td>
+                        </tr>
+                         <tr>
+                            <td><a href='$link62?id=$id_ped' target='_blank'><strong>Centro de Memória do Circo</strong></a></td>
                         </tr>
 
 					</tbody>
