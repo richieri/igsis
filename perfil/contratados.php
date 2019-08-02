@@ -1127,6 +1127,7 @@
 				$Verba = $_POST['verba'];
 				$parecer = addslashes($_POST['parecerArtistico']);
 				$justificativa = addslashes($_POST['justificativa']);
+				$processoMae = addslashes($_POST['processoMae']);
 				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
 				$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
@@ -1144,6 +1145,7 @@
                             `tipoParcela` =  '$tipoParcela',
                             `parecerArtistico` =  '$parecer',
                             `justificativa` =  '$justificativa',
+                            `processoMae` =  '$processoMae',
                             `qtdApresentacoes` =  '$qtdApresentacoes',
                             `dataKitPagamento` = '$dataKitPagamento',
                             `idVerba` =  '$Verba'
@@ -1158,6 +1160,7 @@
                             `tipoParcela` =  '$tipoParcela',
                             `parecerArtistico` =  '$parecer',
                             `justificativa` =  '$justificativa',
+                            `processoMae` =  '$processoMae',
                             `qtdApresentacoes` =  '$qtdApresentacoes',
                             `dataKitPagamento` = '$dataKitPagamento',
                             `idVerba` =  '$Verba'
@@ -1176,6 +1179,7 @@
 						`parecerArtistico` =  '$parecer',
 						`integrantes` = '$integrantes',
 						`justificativa` =  '$justificativa',
+						`processoMae` =  '$processoMae',
 						`qtdApresentacoes` =  '$qtdApresentacoes',
 						`dataKitPagamento` = '$dataKitPagamento',
 						`idVerba` =  '$Verba'
@@ -1489,6 +1493,13 @@
 							<div class="col-md-offset-2 col-md-8"><br/>
 							</div>
 		                </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <label>Número do processo mãe</label>
+                                <input type='text' name="processoMae" id='NumProcesso' class='form-control' value="<?= $pedido['processoMae'] ?>" maxlength="19">
+                            </div>
+                        </div>
 
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>

@@ -30,9 +30,13 @@
   
   $(function(){
 	$( ".processo" ).mask("9999.9999/9999999-9");
-  });  
-    
-</script>
+  });
+
+  $(function(){
+      $( "#NumProcesso" ).mask("9999.9999/9999999-9");
+  });
+
+  </script>
 
 <script type="text/javascript">
   /* Máscaras ER */
