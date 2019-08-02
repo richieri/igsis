@@ -28,6 +28,7 @@ $Local = $pedido["Local"];
 $ValorGlobal = dinheiroParaBr($pedido["ValorGlobal"]);
 $ValorPorExtenso = valorPorExtenso($pedido["ValorGlobal"]);
 $FormaPagamento = $pedido["FormaPagamento"];
+$processoMae = $pedido["processoMae"];
 $Justificativa = $pedido["Justificativa"];
 $Fiscal = $pedido["Fiscal"];
 $rfFiscal = $pedido["RfFiscal"];
@@ -83,6 +84,7 @@ $sei =
 "<p>&nbsp;</p>".
 "<p><strong>Pedido de Contratação nº:</strong> "."$ano-$id_ped"."</p>".
 "<p><strong>Processo SEI nº:</strong> "."$NumeroProcesso"."</p>".
+"<p><strong>Processo SEI de reserva global:</strong> "."$processoMae"."</p>".
 "<p><strong>Setor  solicitante:</strong> "."$setor"."</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Razão Social:</strong> "."$pjRazaoSocial"." <br />".

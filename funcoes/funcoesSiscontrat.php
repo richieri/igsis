@@ -264,6 +264,7 @@
 				"Periodo" => $periodo, 
 				"Duracao" => $duracao." min", 
 				"Verba" => $pedido['idVerba'] ,
+				"processoMae" => $pedido['processoMae'],
 				"Justificativa" => $justificativa,
 				"ParecerTecnico" => $pedido['parecerArtistico'],
 				"DataCadastro" => $evento['dataEnvio'],
