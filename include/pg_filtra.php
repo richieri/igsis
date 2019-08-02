@@ -8,66 +8,67 @@ $displayForm = 'block';
 $displayBotoes = 'none';
 
 if (isset($_POST['filtrar'])) {
-$datainicio = exibirDataMysql($_POST['inicio']);
-$datafim = $_POST['final'] ?? null;
-$instituicao = $_POST['instituicao'] ?? null;
-$local = $_POST['local'] ?? null;
-$usuario = $_POST['inserido'] ?? null;
-$projeto = $_POST['projeto_especial'] ?? null;
+    $datainicio = exibirDataMysql($_POST['inicio']);
+    $datafim = $_POST['final'] ?? null;
+    $instituicao = $_POST['instituicao'] ?? null;
+    $local = $_POST['local'] ?? null;
+    $usuario = $_POST['inserido'] ?? null;
+    $projeto = $_POST['projeto_especial'] ?? null;
 
-if ($datainicio != '') {
-if ($datafim != '') {
-$datafim = exibirDataMysql($_POST['final']);
-$filtro_data = "O.dataInicio BETWEEN '$datainicio' AND '$datafim'";
-} else {
-$filtro_data = "O.dataInicio > '$datainicio'";
-}
-} else {
-$mensagem = "Informe uma data para inicio da consulta";
-$consulta = 0;
-}
+    if ($datainicio != '') {
+        if ($datafim != '') {
+            $datafim = exibirDataMysql($_POST['final']);
+            $filtro_data = "O.dataInicio BETWEEN '$datainicio' AND '$datafim'";
+        } else {
+            $filtro_data = "O.dataInicio > '$datainicio'";
+        }
 
-if ($instituicao != '') {
-$filtro_instituicao = "AND E.idInstituicao = '$instituicao'";
-} else {
-$filtro_instituicao = "";
-/* $mensagem = "Selecione um local para consulta";
-$consulta = 0;*/
-}
+    } else {
+        $mensagem = "Informe uma data para inicio da consulta";
+        $consulta = 0;
+    }
 
-if ($local != '') {
-$filtro_local = "AND O.local = '$local'";
-} else {
-$filtro_local = "";
-/* $mensagem = "Selecione um local para consulta";
-$consulta = 0;*/
-}
+    if ($instituicao != '') {
+        $filtro_instituicao = "AND E.idInstituicao = '$instituicao'";
+    } else {
+        $filtro_instituicao = "";
+        /* $mensagem = "Selecione um local para consulta";
+        $consulta = 0;*/
+    }
 
-if ($usuario != '') {
-$sql_user = "SELECT * FROM ig_usuario WHERE nomeCompleto like '%$usuario%'";
-$query_user = mysqli_query($con, $sql_user);
-if (mysqli_num_rows($query_user) > 0) {
-$user = mysqli_fetch_array($query_user);
-$idUsuario = $user['idUsuario'];
-$nomeUser = $user['nomeCompleto'];
-$filtro_usuario = "AND E.idUsuario = $idUsuario";
-} else {
-$mensagem = "Usuário não possuí nenhum evento enviado!";
-$consulta = 0;
-$filtro_usuario = "";
-}
-} else {
-$filtro_usuario = "";
-}
+    if ($local != '') {
+        $filtro_local = "AND O.local = '$local'";
+    } else {
+        $filtro_local = "";
+        /* $mensagem = "Selecione um local para consulta";
+        $consulta = 0;*/
+    }
 
-if ($projeto != '') {
-$filtro_PE = "AND E.projetoEspecial = $projeto";
-} else {
-$filtro_PE = "";
-}
+    if ($usuario != '') {
+        $sql_user = "SELECT * FROM ig_usuario WHERE nomeCompleto like '%$usuario%'";
+        $query_user = mysqli_query($con, $sql_user);
+        if (mysqli_num_rows($query_user) > 0) {
+            $user = mysqli_fetch_array($query_user);
+            $idUsuario = $user['idUsuario'];
+            $nomeUser = $user['nomeCompleto'];
+            $filtro_usuario = "AND E.idUsuario = $idUsuario";
+        } else {
+            $mensagem = "Usuário não possuí nenhum evento enviado!";
+            $consulta = 0;
+            $filtro_usuario = "";
+        }
+    } else {
+        $filtro_usuario = "";
+    }
+
+    if ($projeto != '') {
+        $filtro_PE = "AND E.projetoEspecial = $projeto";
+    } else {
+        $filtro_PE = "";
+    }
 
 
-$sql = "SELECT
+    $sql = "SELECT
 E.idEvento,
 E.nomeEvento AS 'nome',
 E.espaco_publico AS 'espaco_publico',
@@ -124,7 +125,7 @@ INNER JOIN ig_ocorrencia AS O ON E.idEvento = O.idEvento
 INNER JOIN ig_local AS L ON O.local = L.idLocal
 LEFT JOIN igsis_subprefeitura AS SUB_PRE ON O.subprefeitura_id = SUB_PRE.id
 LEFT JOIN ig_periodo_dia AS DIA_PERI ON O.idPeriodoDia = DIA_PERI.id
-INNER JOIN ig_retirada AS retirada ON O.retiradaIngresso = retirada.idRetirada
+INNER JOIN ig_retirada AS retirada ON O.retiradaIngresso = retirada.idRetirada 
 
 WHERE
 $filtro_data
@@ -136,19 +137,19 @@ E.statusEvento = 'Enviado' AND
 E.publicado = 1
 ORDER BY O.dataInicio";
 
-$query = mysqli_query($con, $sql);
-$num = mysqli_num_rows($query);
+    $query = mysqli_query($con, $sql);
+    $num = mysqli_num_rows($query);
 
-if ($num > 0) {
-$mensagem = "Foram encontrados $num resultados";
-$consulta = 1;
-$displayForm = 'none';
-$displayBotoes = 'block';
+    if ($num > 0) {
+        $mensagem = "Foram encontrados $num resultados";
+        $consulta = 1;
+        $displayForm = 'none';
+        $displayBotoes = 'block';
 
-} else {
-$consulta = 0;
-$mensagem = "Não foram encontrados resultados para esta pesquisa!";
-}
+    } else {
+        $consulta = 0;
+        $mensagem = "Não foram encontrados resultados para esta pesquisa!";
+    }
 }
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -367,7 +368,7 @@ $mensagem = "Não foram encontrados resultados para esta pesquisa!";
                             <td class="list_description"><?= $linha['numero'] ?></td>
                             <td class="list_description"><?= $linha['complemento'] ?></td>
                             <td class="list_description"><?= $linha['bairro'] ?></td>
-                            <td class="list_description"><?= $linha['cidade'] ?> minutos</td>
+                            <td class="list_description"><?= $linha['cidade'] ?></td>
                             <td class="list_description"><?= $linha['estado'] ?></td>
                             <td class="list_description"><?= $linha['cep'] ?></td>
                             <td class="list_description"><?= $linha['subprefeitura'] ?></td>
