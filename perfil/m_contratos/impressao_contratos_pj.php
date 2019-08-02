@@ -55,6 +55,7 @@ $link59 = $http."rlt_pedido_reserva_hiphop_sme_pj.php";
 $link60 = $http."rlt_pedido_reserva_crd.php";
 $link61 = $http."rlt_condicionamento.php?id=$id_ped&tipoPessoa=2";
 $link62 = $http."rlt_pedido_reserva_memoriacirco_pj.php";
+$link63 = $http."rlt_pedido_reserva_global_pj.php";
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -160,6 +161,7 @@ echo "
                         </tr>
                          <tr>
                             <td><a href='$link62?id=$id_ped' target='_blank'><strong>Centro de Memória do Circo</strong></a></td>
+                            <td><a href='$link63?id=$id_ped' target='_blank'><strong>Reserva Global</strong></a></td>
                         </tr>
 
 					</tbody>

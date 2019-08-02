@@ -43,7 +43,7 @@ $link45 = $http."rlt_pedido_reserva_pia_pf.php";
 $link46 = $http."rlt_pedido_reserva_vocacional_sme_pf.php";
 $link48 = $http."rlt_pedido_reserva_oficina_csmb_bma.php";
 $link49 = $http."rlt_pedido_reserva_hiphop_sme_pf.php";
-
+$link51 = $http."rlt_pedido_reserva_global_pf.php";
 
 $link17 = $http."rlt_normas_internas_teatros_pf.php"."?id=".$id_ped;
 $link34 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
@@ -152,21 +152,22 @@ echo "
 						<tr>
 							<!-- <td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td> -->
 							<td><a href='$link41?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
+							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
 						</tr>
 
 						<tr>
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
-							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
+							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
 						</tr>
 
 						<tr>
 							<!-- <td><a href='$link44?id=$id_ped' target='_blank'><strong>Reserva Pessoa Física</strong></a></td> -->
 							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
+							<td><a href='$link51?id=$id_ped' target='_blank'><strong>Reserva Global</strong></a></td>
 						</tr>
 
 						<tr>
 							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
-							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
 						</tr>
                         <tr>
                             <!-- <td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td> -->
