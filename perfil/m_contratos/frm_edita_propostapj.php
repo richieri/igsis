@@ -721,7 +721,13 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 						</div>	
 				<?php 
 					} 
-				?>			  
+				?>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><strong>Número processo mãe:</strong><br/>
+                        <input readonly type="text" class="form-control" value="<?= $ped['processoMae'] ?>">
+                    </div>
+                </div>
+
                 <div class="form-group">
 					<div class="col-md-offset-2 col-md-8"><strong>Justificativa:</strong><br/>
 						<textarea readonly name="Justificativa" cols="40" rows="5"><?php echo $ped['justificativa'];?></textarea>
