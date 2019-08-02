@@ -54,11 +54,14 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue("Z1", "Telefone de contato");
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(30);
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:AH1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->applyFromArray
 (
     array
     (
@@ -157,6 +160,7 @@ while($linha = mysqli_fetch_array($query))
     $x = "X".$cont;
     $y = "Y".$cont;
     $z = "Z".$cont;
+    $aa = "AA".$cont;
 
     $enderecoCompleto = [
         $linha['logradouro'],
@@ -194,7 +198,9 @@ while($linha = mysqli_fetch_array($query))
 
      $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $z)->getAlignment()->setWrapText(true);
      $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $z)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $z)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+     $objPHPExcel->getActiveSheet()->getStyle($a . ":" . $aa)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    $objPHPExcel->getActiveSheet()->getRowDimension($cont)->setRowHeight(25);
 
     $cont++;
 
