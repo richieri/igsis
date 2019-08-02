@@ -76,6 +76,13 @@ $pjEmail = $pj["Email"];
   
 <?php
 
+if($processoMae != NULL){
+    $frase = "<p><strong>Processo SEI de reserva global:</strong> "."$processoMae"."</p>";
+}
+else{
+    $frase = NULL;
+}
+
 $sei = 
 "<p align='center'><strong>PEDIDO DE  CONTRATAÇÃO DE PESSOA JURÍDICA</strong></p>".
 "<p>&nbsp;</p>".
@@ -84,7 +91,7 @@ $sei =
 "<p>&nbsp;</p>".
 "<p><strong>Pedido de Contratação nº:</strong> "."$ano-$id_ped"."</p>".
 "<p><strong>Processo SEI nº:</strong> "."$NumeroProcesso"."</p>".
-"<p><strong>Processo SEI de reserva global:</strong> "."$processoMae"."</p>".
+$frase.
 "<p><strong>Setor  solicitante:</strong> "."$setor"."</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Razão Social:</strong> "."$pjRazaoSocial"." <br />".

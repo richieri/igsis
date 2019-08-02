@@ -32,6 +32,7 @@ $Local = $pedido["Local"];
 $ValorGlobal = dinheiroParaBr($pedido["ValorGlobal"]);
 $ValorPorExtenso = valorPorExtenso($pedido["ValorGlobal"]);
 $FormaPagamento = $pedido["FormaPagamento"];
+$processoMae = $pedido["processoMae"];
 $Justificativa = $pedido["Justificativa"];
 $Fiscal = $pedido["Fiscal"];
 $rfFiscal = $pedido["RfFiscal"];
@@ -85,6 +86,14 @@ $INSS = $pessoa["INSS"];
   
 <?php
 
+if($processoMae != NULL){
+    $frase = "<p><strong>Processo SEI de reserva global:</strong> "."$processoMae"."</p>";
+}
+else{
+    $frase = NULL;
+}
+
+
 $sei = 
 "<p align='center'><strong>PEDIDO DE  CONTRATAÇÃO DE PESSOA FÍSICA</strong></p>".
 "<p>&nbsp;</p>".
@@ -93,6 +102,7 @@ $sei =
 "<p>&nbsp;</p>".
 "<p><strong>Pedido de Contratação nº:</strong> "."$ano-$id_ped"."</p>".
 "<p><strong>Processo SEI nº:</strong> "."$NumeroProcesso"."</p>".
+$frase.
 "<p><strong>Setor  solicitante:</strong> "."$setor"."</p>".
 "<p>&nbsp;</p>".
 "<p><strong>Nome:</strong> "."$Nome"." <br />".
