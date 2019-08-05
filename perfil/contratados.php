@@ -1497,9 +1497,33 @@
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
                                 <label>Número do processo mãe</label>
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#modal-default"><i class="fa fa-info"></i></button>
                                 <input type='text' name="processoMae" id='NumProcesso' class='form-control' value="<?= $pedido['processoMae'] ?>" maxlength="19">
                             </div>
                         </div>
+
+                        <!-- /modal -->
+                        <div class="modal fade" id="modal-default">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p align="justify">Este campo refere-se ao número do processo mãe que contém a reserva global mensal ou de evento específico.
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
 
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
