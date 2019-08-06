@@ -55,6 +55,8 @@ $link59 = $http."rlt_pedido_reserva_hiphop_sme_pj.php";
 $link60 = $http."rlt_pedido_reserva_crd.php";
 $link61 = $http."rlt_condicionamento.php?id=$id_ped&tipoPessoa=2";
 $link62 = $http."rlt_pedido_reserva_memoriacirco_pj.php";
+$link63 = $http."rlt_pedido_reserva_global_pj.php";
+$link64 = $http."rlt_pedido_reserva_jornada_pj.php";
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -158,8 +160,12 @@ echo "
                             <td><a href='$link59?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td>
                             <td><a href='$link60?id=$id_ped' target='_blank'><strong>Reserva CRD</strong></a></td>
                         </tr>
-                         <tr>
+                        <tr>
                             <td><a href='$link62?id=$id_ped' target='_blank'><strong>Centro de Memória do Circo</strong></a></td>
+                            <td><a href='$link63?id=$id_ped' target='_blank'><strong>Reserva Global</strong></a></td>
+                        </tr>
+                        <tr>
+                            <td><a href='$link64?id=$id_ped' target='_blank'><strong>Reserva DPH - Jornada do Patrimônio</strong></a></td>
                         </tr>
 
 					</tbody>

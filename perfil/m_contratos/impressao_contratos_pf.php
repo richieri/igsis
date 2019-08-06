@@ -44,6 +44,7 @@ $link46 = $http."rlt_pedido_reserva_vocacional_sme_pf.php";
 $link48 = $http."rlt_pedido_reserva_oficina_csmb_bma.php";
 $link49 = $http."rlt_pedido_reserva_hiphop_sme_pf.php";
 $link51 = $http."rlt_pedido_reserva_global_pf.php";
+$link52 = $http."rlt_pedido_reserva_jornada_pf.php";
 
 $link17 = $http."rlt_normas_internas_teatros_pf.php"."?id=".$id_ped;
 $link34 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
@@ -168,6 +169,7 @@ echo "
 
 						<tr>
 							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
+							<td><a href='$link52?id=$id_ped' target='_blank'><strong>Reserva DPH - Jornada do Patrimônio</strong></a></td>
 						</tr>
                         <tr>
                             <!-- <td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td> -->
