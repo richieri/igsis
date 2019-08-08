@@ -373,7 +373,16 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 					<div class="col-md-offset-2 col-md-8"><strong>Proponente:</strong><br/>
 						<input type='text' readonly class='form-control' name='nome' id='nome' value='<?php echo $fisico['Nome'];?>'>
 					</div>
-                </div>  
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">
+                        <form class="form-horizontal" role="form" action="?perfil=contratos&p=busca_pf" method="post">
+                            <input type="hidden" name="idPedido" value="<?php echo $id_ped; ?>" />
+                            <input type="submit" class="btn btn-warning btn-med btn-block" value="Alterar proponente">
+                        </form>
+                    </div>
+                </div>
                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
