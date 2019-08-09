@@ -485,7 +485,16 @@ $res02 = siscontratDocs($ped['idRepresentante02'],3);
 					<div class="col-md-offset-2 col-md-8"><strong>Proponente:</strong><br/>
 						<input type='text' readonly class='form-control' name='RazaoSocial' id='RazaoSocial' value="<?php echo $juridico['Nome'];?>">
 					</div>
-                </div>  
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8">
+                        <form class="form-horizontal" role="form" action="?perfil=contratos&p=busca_pj" method="post">
+                            <input type="hidden" name="idPedido" value="<?php echo $id_ped; ?>" />
+                            <input type="submit" class="btn btn-warning btn-med btn-block" value="Alterar proponente">
+                        </form>
+                    </div>
+                </div>
                 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
