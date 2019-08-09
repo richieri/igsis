@@ -84,10 +84,12 @@ if(isset($_POST['insereRepresentante']))
 	if($_POST['numero'] == 1)
 	{
 		$campo = "IdRepresentanteLegal1";
+		$campoPedido = "idRepresentante01";
 	}
 	else
 	{
 		$campo = "IdRepresentanteLegal2";
+        $campoPedido = "idRepresentante02";
 	}
 	$idPedido = $_SESSION['idPedido'];
 	
@@ -96,6 +98,10 @@ if(isset($_POST['insereRepresentante']))
 	$query_atualiza_representante = mysqli_query($con,$sql_atualiza_representante);	
 	if($query_atualiza_representante)
 	{
+        $sqlPedido = "UPDATE igsis_pedido_contratacao SET $campoPedido = '$id_representante' WHERE idPedidoContratacao = '$id_ped'";
+        echo $sqlPedido;
+        mysqli_query($con, $sqlPedido);
+        gravarLog($sqlPedido);
 		$mensagem = "Representante legal inserido com sucesso!";	
 	}
 }
