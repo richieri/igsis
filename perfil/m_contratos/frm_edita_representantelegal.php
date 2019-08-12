@@ -56,11 +56,14 @@ if(isset($_POST['cadastraRepresentante']))
 	if($n == 1)
 	{
 		$campoRepresentante = "IdRepresentanteLegal1";
+		$campoRepresentanteContrato = "idRepresentante01";
 	}
 	else
 	{
-		$campoRepresentante = "IdRepresentanteLegal2";	
-	}
+		$campoRepresentante = "IdRepresentanteLegal2";
+        $campoRepresentanteContrato = "idRepresentante02";
+    }
+
 	$representante = addslashes($_POST['RepresentanteLegal']);
 	$rg = $_POST['RG'];
 	$cpf = $_POST['CPF'];
@@ -74,6 +77,9 @@ if(isset($_POST['cadastraRepresentante']))
 	{
 		$ultimo = recuperaUltimo("sis_representante_legal");
 		$sql_atualiza_representante = "UPDATE sis_pessoa_juridica SET $campoRepresentante = '$ultimo' WHERE Id_PessoaJuridica = '$idPessoaJuridica'";
+		$sqlUpdate = "UPDATE igsis_pedido_contratacao SET $campoRepresentanteContrato = '$ultimo' WHERE idPedidoContratacao = '$id_ped'";
+		$queryUpdate = mysqli_query($con, $sqlUpdate);
+		gravarLog($sqlUpdate);
 		$query_atualiza_representante = mysqli_query($con,$sql_atualiza_representante);
 		if($query_atualiza_representante)
 		{
