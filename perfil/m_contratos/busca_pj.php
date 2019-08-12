@@ -161,7 +161,7 @@ if (isset($_POST['cadastrar'])) {
             <div class="container">
                 <div class="form-group">
                     <h3>CADASTRO DE PESSOA JURÍDICA</h3>
-                    <p style="color: red">Não foram encontradas nenhuma pessoa física com o cnpj:
+                    <p style="color: red">Não foram encontradas nenhuma pessoa jurídica com o cnpj:
                         <strong><?= $cnpj ?></strong></p>
                 </div>
                 <form action="?perfil=contratos&p=busca_pj" method="POST">
