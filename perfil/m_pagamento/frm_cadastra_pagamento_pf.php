@@ -121,7 +121,7 @@ include 'includes/menu.php';
 							<?php
                             /*TODO: Confirmar usuarios no select abaixo*/
 							$ped = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
-							$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 393, 424, 445, 655, 848, 895, 993, 996, 1170) ORDER BY nomeCompleto";
+							$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 393, 424, 445, 655, 993, 1135, 1170) ORDER BY nomeCompleto";
 							$query_operador = mysqli_query($con,$sql_operador);
 							while($user = mysqli_fetch_array($query_operador))
 							{
