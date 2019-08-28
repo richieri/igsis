@@ -193,7 +193,7 @@ $total = mysqli_num_rows($query_busca_dic);
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
 						<h3>Comunicação</h3>								
-						<h6><a href="?perfil=comunicacao&p=filtro">Efetuar outro filtro</a></h6>	
+						<h6><a href="?perfil=comunicacao_smc&p=filtro">Efetuar outro filtro</a></h6>
 					</div>
 				</div>
 			</div>	

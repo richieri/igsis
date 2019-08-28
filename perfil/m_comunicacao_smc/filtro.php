@@ -18,7 +18,7 @@ unset($_SESSION['foto']);
 			</div>
 			<div class="row">
 				<div class="col-md-offset-1 col-md-10">
-					<form method="POST" action="?perfil=comunicacao&p=filtro_resultado" class="form-horizontal" role="form">
+					<form method="POST" action="?perfil=comunicacao_smc&p=filtro_resultado" class="form-horizontal" role="form">
 					<div class="form-group">					
 						<div class="col-md-offset-1 col-md-2" align="left"> 
 							<label>Editado</label> <br/>

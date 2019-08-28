@@ -88,7 +88,7 @@ if(isset($_POST['filtrar']))
                 </div>
             </div>
         </div>
-        <form method="POST" action="?perfil=comunicacao&p=gerar_csv_locais" class="form-horizontal" role="form">
+        <form method="POST" action="?perfil=comunicacao_smc&p=gerar_csv_locais" class="form-horizontal" role="form">
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-3">
                     <label>Data início *</label>
