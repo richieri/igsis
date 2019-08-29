@@ -12,7 +12,6 @@ $link = $http."rlt_comunicacao_fotos.php";
 	<div id="dl-menu" class="dl-menuwrapper">
 		<button class="dl-trigger">Busca</button>
 			<ul class="dl-menu">
-				<li><a href="<?php echo $pasta ?>filtro">Filtrar</a></li>
 				<li><a href="<?php echo $pasta ?>programacao_local">Programação por período</a></li>
 				<li><a href="<?php echo $pasta ?>docs">Em Cartaz</a></li>
 				<li><a href="<?php echo $pasta ?>gerar_csv">Gerar Arquivo .csv</a></li>

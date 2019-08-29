@@ -242,15 +242,6 @@
 						</div>
 					</div>
 				</form>
-				<form method="POST" action="?perfil=comunicacao&p=editar&idCom=<?php echo $_GET['idCom'] ?>" class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-md-offset-4 col-md-4">
-							<input type="hidden" name="apagar" value="<?php echo $campo['idCom'] ?>" />
-							<input type="hidden" name="idCom" value="<?php echo $idCom; ?>" >
-							<input type="submit" class="btn btn-theme btn-lg btn-block" value="Apagar">
-						</div>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>

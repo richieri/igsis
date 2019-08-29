@@ -81,7 +81,7 @@ if(isset($_POST['filtrar']))
     {
         $consulta = 0;
         $mensagem = "Não foram encontrados resultados para esta pesquisa!";
-        echo "<br/>".$sql;
+        echo "<br/>";
     }
 }
 ?>
@@ -145,7 +145,7 @@ if(isset($_POST['filtrar']))
                 <div class="table-responsive list_info">
                     <strong>Legenda status:</strong> | <font color='blue'>[ E ] Editado</font> | <font color='#32CD32'>[ R ] Revisado</font> | <font color='red'>[ S ] Site</font> | <font color='orange'>[ I ] Impresso</font> | <font color='#DA70D6'>[ F ] Foto</font> |
                     <p>&nbsp;</p>
-                    <table class='table table-condensed'>
+                    <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr class='list_menu'>
                             <td>Evento nº</td>
@@ -201,3 +201,20 @@ if(isset($_POST['filtrar']))
         ?>
     </div>
 </section>
+
+<script type="text/javascript" defer src="../visual/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" defer src="../visual/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript" defer>
+    $(function () {
+        $('#example1').DataTable({
+            "language": {
+                "url": 'bower_components/datatables.net/Portuguese-Brasil.json'
+            },
+            "responsive": true,
+            "dom": "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5 text-left'i><'col-sm-7 text-right'p>>",
+        });
+    })
+</script>
