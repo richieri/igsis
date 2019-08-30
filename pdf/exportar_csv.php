@@ -49,6 +49,7 @@ if(isset($_POST['exportar'])) {
                 O.domingo AS 'domingo',
                 L.sala AS 'nome_local',
                 I.sigla AS 'sigla',
+                I.idInstituicao,
                 I.instituicao AS 'equipamento',
                 L.logradouro AS 'logradouro',
                 L.numero AS 'numero',
