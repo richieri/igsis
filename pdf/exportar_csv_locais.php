@@ -55,7 +55,7 @@ if(isset($_POST['exportar'])) {
     $arquivo = fopen("php://output", "w");
     fputcsv($arquivo, array('Nome do Local', 'Logradouro', 'Cidade', 'Estado', 'CEP', 'Pais'));
 
-    $instituicoes = ['13', '5', '6', '9', '29', '35', '34', '8', '24', '25', '10'];
+    $instituicoes = ['4', '5', '6', '8', '9', '10', '13', '24', '25', '29', '34', '35', '45', '68'];
 
     while ($linha = mysqli_fetch_assoc($query)) {
         if (in_array($linha['idInstituicao'], $instituicoes)) {

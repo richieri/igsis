@@ -33,16 +33,6 @@ if(isset($_POST['filtrar']))
         $consulta = 0;
     }
 
-    if($local != '')
-    {
-        $filtro_local = "E.idInstituicao = '$local'";
-    }
-    else
-    {
-        $mensagem = "Selecione um local para consulta";
-        $consulta = 0;
-    }
-
     $sql = "SELECT
                 E.nomeEvento AS 'nome',
                 TE.tipoEvento AS 'categoria',
@@ -57,7 +47,6 @@ if(isset($_POST['filtrar']))
                 INNER JOIN ig_ocorrencia AS O ON E.idEvento = O.idEvento
                 INNER JOIN ig_local AS L ON O.`local` = L.idLocal
             WHERE
-                $filtro_local AND
                 E.publicado = 1 AND
                 E.statusEvento = 'Enviado'
                 $filtro_data
@@ -100,36 +89,9 @@ if(isset($_POST['filtrar']))
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-offset-4 col-md-4">
-                    <label for="local">Local *</label>
-                    <select name="local" class="form-control" id="local" required>
-                        <option value="">Seleciona uma Opção</option>
-                        <?php geraOpcao('ig_instituicao', null, null); ?>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
                     <br />
                     <input type="submit" class="btn btn-theme btn-block" name="filtrar" value="Filtrar">
-                    <br >
-                </div>
-            </div>
-        </form>
-
-        <form method="post" action="../pdf/exportar_csv_locais.php">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <br />
-                    <?php
-                    $datainicio = "2019-07-20";
-                    $datafim = "2019-08-31";
-                    $local = "";
-                    ?>
-                    <input type="hidden" name="dataInicio" value="<?=$datainicio?>">
-                    <input type="hidden" name="dataFim" value="<?=$datafim?>">
-                    <input type="hidden" name="local" value="<?=$local?>">
-                    <input type="submit" class="btn btn-theme btn-block" name="exportar" value="Baixar Arquivo .csv">
                     <br >
                 </div>
             </div>
@@ -138,13 +100,13 @@ if(isset($_POST['filtrar']))
             if ($consulta == 1)
             {
         ?>
-                <form method="post" action="../pdf/exportar_csv.php">
+                <form method="post" action="../pdf/exportar_csv_locais.php">
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
                             <br />
                             <input type="hidden" name="dataInicio" value="<?=$datainicio?>">
                             <input type="hidden" name="dataFim" value="<?=$datafim?>">
-                            <input type="hidden" name="local" value="<?=$local?>">
+                            <input type="hidden" name="local" value="">
                             <input type="submit" class="btn btn-theme btn-block" name="exportar" value="Baixar Arquivo .csv">
                             <br >
                         </div>
