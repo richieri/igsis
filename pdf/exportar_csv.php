@@ -32,8 +32,7 @@ if(isset($_POST['exportar'])) {
                 E.nomeEvento AS 'nome',
                 E.espaco_publico AS 'espaco_publico',
                 E.projetoEspecial AS 'idProjetoEspecial',
-                E.numero_apresentacao AS 'apresentacoes',
-                TE.tipoEvento AS 'categoria',
+                LI.linguagem AS 'categoria',
                 O.idOcorrencia AS 'idOcorrencia',
                 O.horaInicio AS 'horaInicio',
                 O.dataInicio AS 'dataInicio',
@@ -72,9 +71,13 @@ if(isset($_POST['exportar'])) {
                 PE.projetoEspecial,
                 SUB_PRE.subprefeitura AS 'subprefeitura',
                 DIA_PERI.periodo AS 'periodo',
-                retirada.retirada AS 'retirada'
+                retirada.retirada AS 'retirada',
+                RE.representatividade_social AS publico
             FROM ig_evento AS E
-            INNER JOIN ig_tipo_evento AS TE ON E.ig_tipo_evento_idTipoEvento = TE.idTipoEvento
+            LEFT JOIN igsis_evento_representatividade AS ER ON ER.idEvento = E.idEvento
+            LEFT JOIN igsis_representatividade AS RE ON RE.id = ER.idRepresentatividade
+            LEFT JOIN igsis_evento_linguagem AS EL ON E.idEvento = EL.idEvento
+            LEFT JOIN  igsis_linguagem AS LI ON LI.id = EL.idLinguagem
             INNER JOIN ig_ocorrencia AS O ON E.idEvento = O.idEvento
             INNER JOIN ig_local AS L ON O.local = L.idLocal
             INNER JOIN ig_instituicao AS I ON L.idInstituicao = I.idInstituicao
@@ -100,7 +103,6 @@ if(isset($_POST['exportar'])) {
 //    fputcsv($arquivo, array('Nome do Evento', 'Categoria', 'Data de Inicio', 'Horario de Inicio', 'Valor', 'Descrição', 'Local'));
     fputcsv($arquivo, [
         'Nome do Evento',
-        'Apresentações',
         'Categoria',
         'Horario de Início',
         'Data de Início',
@@ -113,13 +115,13 @@ if(isset($_POST['exportar'])) {
         'Projeto Especial',
         'Subprefeitura',
         'Periodo',
+        'Público',
     ]);
 
     $instituicoes = ['4', '5', '6', '8', '9', '10', '13', '24', '25', '29', '34', '35', '45', '68'];
 
     while ($linha = mysqli_fetch_assoc($query)) {
         $registro['Nome do Evento'] = $linha['nome'];
-        $registro['Apresentações'] = $linha['apresentacoes'];
         $registro['Categoria'] = $linha['categoria'];
         $registro['Horario de Início'] = $linha['horaInicio'];
         $registro['Data de Início'] = $linha['dataInicio'];
@@ -138,8 +140,8 @@ if(isset($_POST['exportar'])) {
         $registro['Projeto Especial'] = $linha['projetoEspecial'];
         $registro['Subprefeitura'] = $linha['subprefeitura'];
         $registro['Periodo'] = $linha['periodo'];
-
-
+        $registro['Público'] = $linha['publico'];
+        
 
         fputcsv($arquivo, $registro);
     }
