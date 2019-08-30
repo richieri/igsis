@@ -13,7 +13,6 @@ if(isset($_POST['exportar'])) {
     if ($datainicio != '') {
         if ($datafim != '') {
 
-            //$datafim = $_POST['dataFim'];
             $filtro_data = " AND O.dataInicio BETWEEN '$datainicio' AND '$datafim'";
         } else {
             $filtro_data = " AND O.dataInicio > '$datainicio'";
@@ -29,24 +28,64 @@ if(isset($_POST['exportar'])) {
     }
 
     $sql = "SELECT
-                INST.idInstituicao,
-                INST.instituicao,
+                E.idEvento,
                 E.nomeEvento AS 'nome',
+                E.espaco_publico AS 'espaco_publico',
+                E.projetoEspecial AS 'idProjetoEspecial',
+                E.numero_apresentacao AS 'apresentacoes',
                 TE.tipoEvento AS 'categoria',
-                O.dataInicio AS 'data',
-                DATE_FORMAT(O.horaInicio, '%H:%i') AS 'horario_inicial',
-                O.valorIngresso AS 'valor',
-                E.sinopse AS 'descricao',
-                L.sala AS 'nome_local'
-            FROM
-                ig_evento AS E
-                INNER JOIN ig_tipo_evento AS TE ON E.ig_tipo_evento_idTipoEvento = TE.idTipoEvento
-                INNER JOIN ig_ocorrencia AS O ON E.idEvento = O.idEvento
-                INNER JOIN ig_local AS L ON O.`local` = L.idLocal
-                INNER JOIN ig_instituicao AS INST ON L.idInstituicao = INST.idInstituicao
+                O.idOcorrencia AS 'idOcorrencia',
+                O.horaInicio AS 'horaInicio',
+                O.dataInicio AS 'dataInicio',
+                O.dataFinal AS 'dataFinal',
+                O.duracao AS 'duracao',
+                O.valorIngresso AS 'valorIngresso',
+                O.segunda AS 'segunda',
+                O.terca AS 'terca',
+                O.quarta AS 'quarta',
+                O.quinta AS 'quinta',
+                O.sexta AS 'sexta',
+                O.sabado AS 'sabado',
+                O.domingo AS 'domingo',
+                L.sala AS 'nome_local',
+                I.sigla AS 'sigla',
+                I.instituicao AS 'equipamento',
+                L.logradouro AS 'logradouro',
+                L.numero AS 'numero',
+                L.complemento AS 'complemento',
+                L.bairro AS 'bairro',
+                L.cidade AS 'cidade',
+                L.estado AS 'estado',
+                L.cep AS 'cep',
+                I.telefone AS 'telefone',
+                E.fichaTecnica AS 'artista',
+                CI.faixa AS 'classificacao',
+                E.linksCom AS 'divulgacao',
+                E.sinopse AS 'sinopse',
+                E.fomento AS 'fomento',
+                E.tipo_fomento AS 'tipoFomento',
+                P.nome AS 'produtor_nome',
+                P.email AS 'produtor_email',
+                P.telefone AS 'produtor_fone',
+                U.nomeCompleto AS 'nomeCompleto',
+                PE.projetoEspecial,
+                SUB_PRE.subprefeitura AS 'subprefeitura',
+                DIA_PERI.periodo AS 'periodo',
+                retirada.retirada AS 'retirada'
+            FROM ig_evento AS E
+            INNER JOIN ig_tipo_evento AS TE ON E.ig_tipo_evento_idTipoEvento = TE.idTipoEvento
+            INNER JOIN ig_ocorrencia AS O ON E.idEvento = O.idEvento
+            INNER JOIN ig_local AS L ON O.local = L.idLocal
+            INNER JOIN ig_instituicao AS I ON L.idInstituicao = I.idInstituicao
+            LEFT JOIN ig_etaria AS CI ON E.faixaEtaria = CI.idIdade
+            INNER JOIN ig_produtor AS P ON E.ig_produtor_idProdutor = P.idProdutor
+            INNER JOIN ig_usuario AS U ON E.idUsuario = U.idUsuario
+            LEFT JOIN ig_projeto_especial AS PE ON E.projetoEspecial = PE.idProjetoEspecial
+            LEFT JOIN igsis_subprefeitura AS SUB_PRE ON O.subprefeitura_id = SUB_PRE.id
+            LEFT JOIN ig_periodo_dia AS DIA_PERI ON O.idPeriodoDia = DIA_PERI.id
+            LEFT JOIN ig_retirada AS retirada ON O.retiradaIngresso = retirada.idRetirada 
             WHERE
                 E.publicado = 1 AND
-                $filtro_local
                 E.statusEvento = 'Enviado'
                 $filtro_data
             ORDER BY dataInicio";
@@ -57,20 +96,43 @@ if(isset($_POST['exportar'])) {
     header('Content-Disposition: attachment; filename=eventos.csv');
 
     $arquivo = fopen("php://output", "w");
-    fputcsv($arquivo, array('Nome do Evento', 'Categoria', 'Data de Inicio', 'Horario de Inicio', 'Valor', 'Descrição', 'Local'));
+//    fputcsv($arquivo, array('Nome do Evento', 'Categoria', 'Data de Inicio', 'Horario de Inicio', 'Valor', 'Descrição', 'Local'));
+    fputcsv($arquivo, [
+        'Nome do Evento',
+        'Apresentações',
+        'Categoria',
+        'Horario de Início',
+        'Data de Início',
+        'Duração',
+        'Valor do Ingresso',
+        'Local',
+        'Classificação Indicativa',
+        'Divulgação',
+        'Descrição',
+        'Projeto Especial',
+        'Subprefeitura',
+        'Periodo',
+    ]);
 
-    $instituicoes = ['13', '5', '6', '9', '29', '35', '34', '8', '24', '25', '10'];
+    $instituicoes = ['4', '5', '6', '8', '9', '10', '13', '24', '25', '29', '34', '35', '45', '68'];
 
     while ($linha = mysqli_fetch_assoc($query)) {
         $registro['Nome do Evento'] = $linha['nome'];
+        $registro['Apresentações'] = $linha['apresentacoes'];
         $registro['Categoria'] = $linha['categoria'];
-        $registro['Data de Inicio'] = $linha['data'];
-        $registro['Horario de Inicio'] = $linha['horario_inicial'];
-        $registro['Valor'] = $linha['valor'];
-        $registro['Descrição'] = $linha['descricao'];
+        $registro['Horario de Início'] = $linha['horaInicio'];
+        $registro['Data de Início'] = $linha['dataInicio'];
+        $registro['Duração'] = $linha['duracao'];
+        $registro['Valor do Ingresso'] = $linha['valorIngresso'];
+        $registro['Classificação Indicativa'] = $linha['classificacao'];
+        $registro['Divulgação'] = $linha['divulgacao'];
+        $registro['Descrição'] = $linha['sinopse'];
+        $registro['Projeto Especial'] = $linha['projetoEspecial'];
+        $registro['Subprefeitura'] = $linha['subprefeitura'];
+        $registro['Periodo'] = $linha['periodo'];
 
         if (in_array($linha['idInstituicao'], $instituicoes)) {
-            $registro['Local'] = $linha['instituicao'];
+            $registro['Local'] = $linha['equipamento'];
         } else {
             $registro['Local'] = $linha['nome_local'];
         }
