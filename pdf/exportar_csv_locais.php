@@ -45,6 +45,7 @@ if(isset($_POST['exportar'])) {
                 E.publicado = 1 AND
                 E.statusEvento = 'Enviado'
                 $filtro_data
+            GROUP BY L.sala
             ORDER BY dataInicio";
 
     $query = mysqli_query($con, $sql);
