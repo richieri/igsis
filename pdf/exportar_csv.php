@@ -125,6 +125,13 @@ if(isset($_POST['exportar'])) {
         $registro['Data de Início'] = $linha['dataInicio'];
         $registro['Duração'] = $linha['duracao'];
         $registro['Valor do Ingresso'] = $linha['valorIngresso'];
+
+        if (in_array($linha['idInstituicao'], $instituicoes)) {
+            $registro['Local'] = $linha['equipamento'];
+        } else {
+            $registro['Local'] = $linha['nome_local'];
+        }
+
         $registro['Classificação Indicativa'] = $linha['classificacao'];
         $registro['Divulgação'] = $linha['divulgacao'];
         $registro['Descrição'] = $linha['sinopse'];
@@ -132,11 +139,7 @@ if(isset($_POST['exportar'])) {
         $registro['Subprefeitura'] = $linha['subprefeitura'];
         $registro['Periodo'] = $linha['periodo'];
 
-        if (in_array($linha['idInstituicao'], $instituicoes)) {
-            $registro['Local'] = $linha['equipamento'];
-        } else {
-            $registro['Local'] = $linha['nome_local'];
-        }
+
 
         fputcsv($arquivo, $registro);
     }
