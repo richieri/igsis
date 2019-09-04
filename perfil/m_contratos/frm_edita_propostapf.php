@@ -60,6 +60,7 @@ if(isset($_POST['atualizar']))
     $idEvento = $recupera['idEvento'];
     $evento = recuperaDados('ig_evento', $idEvento, 'idEvento');
     $forma_pagamento = $_POST['FormaPagamento'];
+    $processoMae = $_POST['processoMae'] ?? NULL;
 
 	if ($_POST['parcelas'] <= 12)
     {
@@ -90,7 +91,8 @@ if(isset($_POST['atualizar']))
 			pendenciaDocumento = '$pendenciaDocumento',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
-			NumeroProcesso = '$processo'
+			NumeroProcesso = '$processo',
+            processoMae = '$processoMae'
 			WHERE idPedidoContratacao = '$ped'";
         }
         else
@@ -105,7 +107,8 @@ if(isset($_POST['atualizar']))
                 pendenciaDocumento = '$pendenciaDocumento',
                 parecerArtistico = '$parecer',
                 DataContrato = '$dataAgora',
-                NumeroProcesso = '$processo'
+                NumeroProcesso = '$processo',
+                processoMae = '$processoMae'
                 WHERE idPedidoContratacao = '$ped'";
         }
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
@@ -159,7 +162,8 @@ if(isset($_POST['atualizar']))
 			pendenciaDocumento = '$pendenciaDocumento',
 			parecerArtistico = '$parecer',
 			DataContrato = '$dataAgora',
-			NumeroProcesso = '$processo'
+			NumeroProcesso = '$processo',
+            processoMae = '$processoMae'
 			WHERE idPedidoContratacao = '$ped'";
 		$query_atualiza_pedido = mysqli_query($con,$sql_atualiza_pedido);
 		if($query_atualiza_pedido)
@@ -596,7 +600,7 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 				?>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-8"><strong>Número processo mãe:</strong><br/>
-                        <input readonly type="text" class="form-control" value="<?= $pedido['processoMae'] ?>">
+                        <input type="text" class="form-control" id="NumProcesso" name="processoMae" value="<?= $pedido['processoMae'] ?>">
                     </div>
                 </div>
 
