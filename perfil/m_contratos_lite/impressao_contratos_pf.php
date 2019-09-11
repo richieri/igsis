@@ -169,10 +169,6 @@ echo "
 
 						<tr>
 							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
-							<td><a href='$link52?id=$id_ped' target='_blank'><strong>Reserva DPH - Jornada do Patrimônio</strong></a></td>
-						</tr>
-                        <tr>
-                            <!-- <td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td> -->
                         </tr>
 
 					</tbody>
