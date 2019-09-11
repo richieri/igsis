@@ -36,6 +36,9 @@ $cpf = $linha_tabelas_pessoa["CPF"];
 $setor = $linha_tabelas["Setor"];
 
 $ano=date('Y');
+
+$idVerba = $pedido['Verba'];
+$verba = recuperaDados("sis_verba",$idVerba,"Id_Verba");
   
  ?>
  
@@ -71,8 +74,8 @@ $sei =
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"."("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." apresentações , no período de "."$periodo".".</p>".
-  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6362  – Programação de Atividades Culturais (Pessoa Física) da U.O. 25.10 - Fonte 00.</p>".
+  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ "."$ValorGlobal"." ("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." apresentações , no período de "."$periodo".".</p>".
+  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação ".$verba['DetalhamentoAcao']." (Pessoa Física) da U.O. 25.10 - Fonte 00.</p>".
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/AJ para prosseguimento.</p>".
   "<p>&nbsp;</p>".
