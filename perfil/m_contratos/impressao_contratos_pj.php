@@ -157,15 +157,11 @@ echo "
 						    <td><a href='$link58?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
                         </tr>
                         <tr>
-                            <td><a href='$link59?id=$id_ped' target='_blank'><strong>Reserva Hiphop SME</strong></a></td>
+                           <td><a href='$link62?id=$id_ped' target='_blank'><strong>Centro de Memória do Circo</strong></a></td>
                             <td><a href='$link60?id=$id_ped' target='_blank'><strong>Reserva CRD</strong></a></td>
                         </tr>
-                        <tr>
-                            <td><a href='$link62?id=$id_ped' target='_blank'><strong>Centro de Memória do Circo</strong></a></td>
+                        <tr>                            
                             <td><a href='$link63?id=$id_ped' target='_blank'><strong>Reserva Global</strong></a></td>
-                        </tr>
-                        <tr>
-                            <td><a href='$link64?id=$id_ped' target='_blank'><strong>Reserva DPH - Jornada do Patrimônio</strong></a></td>
                         </tr>
 
 					</tbody>
