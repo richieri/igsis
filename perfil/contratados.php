@@ -1454,16 +1454,17 @@
 			}
 		?>
 						<div class="form-group">
-		<?php 
-			$idverba = $pedido['idVerba'];
-			$recupera_verba = recuperaDados("sis_verba",$pedido['idVerba'],"Id_Verba");
-			$campo_verba = $recupera_verba['Verba'];
+		<?php
+            $idVerba = $pedido['idVerba'];
+            $sql_verifica_verba = "SELECT * FROM sis_verba WHERE publicado = 0 AND Id_Verba = '$idVerba'";
+            $query_verifica_verba = mysqli_query($con,$sql_verifica_verba);
+            $verba = mysqli_fetch_array($query_verifica_verba);
 		?>
 							<div class="col-md-offset-2 col-md-8">
-								<strong>Verba:</strong> <?php echo $campo_verba; ?>  <br/>
-								<select class="form-control" id="verba" name="verba" >
-									<option value="0"></option>
-									<?php geraVerbaUsuario($_SESSION['idUsuario'],$pedido['idVerba']); ?>  
+								<strong>Verba: <span style="color:red"><strike><?= $verba['Verba'] ?></strike></span></strong><br/>
+								<select class="form-control" id="verba" name="verba" required >
+									<option value="">Selecione...</option>
+									<?php geraOpcaoPublicado("sis_verba",$pedido['idVerba'],""); ?>
 								</select>
 							</div>
 						</div>

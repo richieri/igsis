@@ -181,6 +181,11 @@ $ped = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
 $fisico = siscontratDocs($linha_tabelas['IdProponente'],1);		
 $evento = recuperaDados("ig_evento",$linha_tabelas['idEvento'],"idEvento");
 $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoContratacao");
+
+$idVerba = $linha_tabelas['Verba'];
+$sql_verifica_verba = "SELECT * FROM sis_verba WHERE publicado = 0 AND Id_Verba = '$idVerba'";
+$query_verifica_verba = mysqli_query($con,$sql_verifica_verba);
+$verba = mysqli_fetch_array($query_verifica_verba);
 ?>
 
 <section id="contact" class="home-section bg-white">
@@ -421,9 +426,10 @@ $pedido = recuperaDados("igsis_pedido_contratacao",$_GET['id_ped'],"idPedidoCont
 					} 
 				?>
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-8"><strong>Verba:</strong><br/>
+					<div class="col-md-offset-2 col-md-8"><strong>Verba: <span style="color:red"><strike><?= $verba['Verba'] ?></strike></span></strong><br/>
 						<select disabled class="form-control" name="Verba" id="Verba">
-							<?php geraOpcao("sis_verba",$linha_tabelas['Verba'],"") ?>
+                            <option value="">Selecione...</option>
+							<?php geraOpcaoPublicado("sis_verba",$linha_tabelas['Verba'],"") ?>
 						</select>
 					</div>
 				</div>

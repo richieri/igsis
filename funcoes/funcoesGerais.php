@@ -353,7 +353,7 @@
 		}
 		else
 		{
-			$sql = "SELECT * FROM $tabela WHERE publicado = 1";
+			$sql = "SELECT * FROM $tabela WHERE publicado = 1 ORDER BY 2";
 		}
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
