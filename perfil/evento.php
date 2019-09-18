@@ -3409,7 +3409,7 @@
                             else
                             {
                                 $pedido = listaPedidoContratacao($_SESSION['idEvento']);
-                                if($prazo['fora'] == 1) //Não tem pedido e está fora do prazo
+                                if($prazo['fora'] == 1) //Tem pedido e está fora do prazo
                                 {
                                 ?>
                                     <div class="form-group">
@@ -3423,9 +3423,19 @@
                                     </div>
                                 <?php
                                 }
-                                else if($prazo['fora'] == 0) //Não tem pedido e está dentro do prazo
+                                else if($prazo['fora'] == 0) //Tem pedido e está dentro do prazo
                                 {
                                     ?>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <form method='POST' action='?perfil=aprovacao_evento'>
+                                                <input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
+                                                <br />
+                                                <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /* Código comentado devido ao bloqueio de envio direto mesmo dentro do prazo por questão de fechamento do SOF */
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <form method='POST' action='?perfil=evento&p=finalizar'>
@@ -3434,6 +3444,7 @@
                                             </form>
                                         </div>
                                     </div>
+                                    -->
                                     <?php
                                 }
                                 else if($pedido =! null) //Tem pedido
