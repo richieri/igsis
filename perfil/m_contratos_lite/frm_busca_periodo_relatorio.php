@@ -181,7 +181,7 @@ if(isset($_POST['periodo']))
 			<div class="container">
 				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
-						<h5>| Busca por período | <a href="?perfil=contratos_lite&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
+						<h5>| Busca Geral por período | Busca Período por Instituição |<a href="?perfil=contratos_lite&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
 						<div class="section-heading">
 							<h2>Busca por período</h2>
 							<p><?php if(isset($mensagem)){ echo $num; }?></p>
@@ -226,10 +226,10 @@ else
 	<section id="services" class="home-section bg-white">
 		<div class="container">
 			<div class="row">
-				<h5>| Busca por período | <a href="?perfil=contratos_lite&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
+                <h5>| Busca Geral por Período | <a href="?perfil=contratos_lite&p=frm_busca_periodo">Busca Período por Instituição</a> | <a href="?perfil=contratos_lite&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-						<h2>Busca por período</h2>
+						<h2>Busca Geral por Período</h2>
 						<p><?php if(isset($mensagem)){ echo $num; }?></p>
 					</div>
 				</div>
@@ -239,11 +239,11 @@ else
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
 						<label>Data início *</label>
-							<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
+							<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="" required>
 					</div>
 					<div class=" col-md-6">
 						<label>Data encerramento *</label>
-							<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
+							<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="" required>
 					</div>
 				</div>
 				<br />

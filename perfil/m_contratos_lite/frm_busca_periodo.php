@@ -291,10 +291,10 @@ else
 	<section id="services" class="home-section bg-white">
 		<div class="container">
 			<div class="row">
-				<h5>| Busca por período | <a href="?perfil=contratos_lite&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
+				<h5>| <a href="?perfil=contratos_lite&p=frm_busca_periodo_relatorio">Busca Geral por Período</a> | Busca Período por Instituição | <a href="?perfil=contratos_lite&p=frm_busca_periodo&pag=relatorio">Relatório por período</a> | </h5>
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-						<h2>Busca por período</h2>
+						<h2>Busca Período por Instituição</h2>
 						<p><?php if(isset($mensagem)){ echo $num; }?></p>
 					</div>
 				</div>
@@ -304,17 +304,17 @@ else
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6">
 						<label>Data início *</label>
-							<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="">
+							<input type="text" name="inicio" class="form-control" id="datepicker01" placeholder="" required>
 					</div>
 					<div class=" col-md-6">
 						<label>Data encerramento *</label>
-							<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="">
+							<input type="text" name="final" class="form-control" id="datepicker02"  placeholder="" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<label>Instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
-						<select class="form-control" name="instituicao" id="instituicao" >
+						<select class="form-control" name="instituicao" id="instituicao" required>
 							<option value="">Selecione</option>
 							<?php geraOpcao("ig_instituicao","","") ?>
 						</select>
@@ -378,7 +378,7 @@ case 'relatorio':
 	<section id="services" class="home-section bg-white">
 		<div class="container">			
 			<div class="row">
-				<h5>| <a href="?perfil=contratos_lite&p=frm_busca_periodo">Busca por período</a> | Relatório por período | </h5>
+                <h5>| <a href="?perfil=contratos_lite&p=frm_busca_periodo_relatorio">Busca Geral por período</a> | <a href="?perfil=contratos_lite&p=frm_busca_periodo">Busca Período por Instituição</a> | Relatório por período | </h5>
 				<div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
 						<h2>Relatório por período</h2>
