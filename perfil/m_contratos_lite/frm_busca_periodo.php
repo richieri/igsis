@@ -141,7 +141,8 @@ if(isset($_POST['periodo']))
 					$x[$i]['periodo'] = $periodo;
 					$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
 					$x[$i]['status'] = $pedido['estado'];	
-					$x[$i]['operador'] = $operador['nomeCompleto'];		
+					$x[$i]['valor'] = $pedido['valor'];
+					$x[$i]['operador'] = $operador['nomeCompleto'];
 					$i++;
 					}
 				}
@@ -174,6 +175,7 @@ if(isset($_POST['periodo']))
 							<td>Periodo</td>
 							<td>Pendências</td>
 							<td>Status</td>
+							<td>Valor</td>
    							<td>Operador</td>
 						</tr>
 					</thead>
@@ -201,6 +203,7 @@ if(isset($_POST['periodo']))
 							echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['pendencia'].'</td> ';
 							echo '<td class="list_description">'.$status['estado'].'</td> ';
+							echo '<td class="list_description">'.dinheiroParaBr($x[$h]['valor']).'</td>';
 							echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
 
 						}
