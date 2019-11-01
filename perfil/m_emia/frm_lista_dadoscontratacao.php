@@ -16,9 +16,9 @@
 	<div class="container">
 		<div class="sub-title"><br/><br/>
 			<h4>Escolha o ano<br/>
-                | <a href="<?php echo $pasta?>2017">2017</a>
                 | <a href="<?php echo $pasta?>2018">2018</a>
-                | <a href="<?php echo $pasta?>2019">2019</a> |
+                | <a href="<?php echo $pasta?>2019">2019</a>
+                | <a href="<?php echo $pasta?>2020">2020</a> |
 			</h4>
 		</div>
 	</div>
