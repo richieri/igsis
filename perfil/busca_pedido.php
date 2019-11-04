@@ -104,68 +104,64 @@
 				else
 				{
 					$con = bancoMysqli();
-					$sql_existe = "SELECT idPedidoContratacao,
-						idEvento,
-						estado 
-						FROM igsis_pedido_contratacao 
-						WHERE idPedidoContratacao = '$id' 
-						AND publicado = '1' 
-						AND estado IS NOT NULL 
-						ORDER BY idPedidoContratacao DESC";
+					$sql_existe = "SELECT idPedidoContratacao, idEvento, estado FROM igsis_pedido_contratacao WHERE idPedidoContratacao = '$id' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
 					$query_existe = mysqli_query($con, $sql_existe);
 					$num_registro = mysqli_num_rows($query_existe);
-					if($id != "" AND $num_registro > 0)
+					if($id != "")
 					{
-						// Foi inserido o número do pedido
-						$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
-						if($pedido['estado'] != NULL)
-						{
-							$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); //$tabela,$idEvento,$campo
-							$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
-							$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
-							$local = listaLocais($pedido['idEvento']);
-							$periodo = retornaPeriodo($pedido['idEvento']);
-							$duracao = retornaDuracao($pedido['idEvento']);
-							$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
-							$fiscal = recuperaUsuario($evento['idResponsavel']);
-							$suplente = recuperaUsuario($evento['suplente']);
-							$protocolo = ""; //recuperaDados("sis_protocolo",$pedido['idEvento'],"idEvento");		
-							if($pedido['parcelas'] > 1)
-							{
-								$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
-								$formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);	
-							}
-							else
-							{
-								$valorTotal = $pedido['valor'];
-								$formaPagamento = $pedido['formaPagamento'];
-							}
-							$x[0]['id']= $pedido['idPedidoContratacao'];
-							$x[0]['NumeroProcesso'] = $pedido['NumeroProcesso'];
-							$x[0]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-							if($pedido['tipoPessoa'] == 1)
-							{
-								$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-								$x[0]['proponente'] = $pessoa['Nome'];
-								$x[0]['tipo'] = "Física";
-							}
-							else
-							{
-								$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-								$x[0]['proponente'] = $pessoa['RazaoSocial'];
-								$x[0]['tipo'] = "Jurídica";
-							}
-							$x[0]['local'] = substr($local,1);
-							$x[0]['instituicao'] = $instituicao['sigla'];
-							$x[0]['periodo'] = $periodo;
-							$x[0]['valor'] = $pedido['valor'];
-							$x[0]['status'] = $pedido['estado'];	
-							$x['num'] = 1;
-						}
-						else
-						{
-								$x['num'] = 0;
-						}
+						if($num_registro > 0){
+                            // Foi inserido o número do pedido
+                            //$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
+
+                            $sql = "
+                        SELECT ped.idPedidoContratacao, ped.NumeroProcesso, eve.idEvento, st.idEstado, ped.valor, ped.parcelas, ped.idEvento, ped.formaPagamento, eve.nomeEvento, ped.idPessoa, ped.estado, eve.idInstituicao, eve.ig_tipo_evento_idTipoEvento, ped.tipoPessoa
+                            FROM igsis_pedido_contratacao AS ped
+                            INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento
+                            INNER JOIN sis_estado AS st ON ped.estado = st.idEstado
+                            WHERE ped.idPedidoContratacao = '$id'";
+                            $query = mysqli_query($con,$sql);
+
+                            $pedido = mysqli_fetch_array($query);
+                            ;
+                            $instituicao = recuperaDados("ig_instituicao",$pedido['idInstituicao'],"idInstituicao");
+                            $local = listaLocais($pedido['idEvento']);
+                            $periodo = retornaPeriodo($pedido['idEvento']);
+                            if($pedido['parcelas'] > 1)
+                            {
+                                $valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
+                                $formaPagamento = txtParcelas($pedido['idPedidoContratacao'],$pedido['parcelas']);
+                            }
+                            else
+                            {
+                                $valorTotal = $pedido['valor'];
+                                $formaPagamento = $pedido['formaPagamento'];
+                            }
+                            $x[0]['id']= $pedido['idPedidoContratacao'];
+                            $x[0]['NumeroProcesso'] = $pedido['NumeroProcesso'];
+                            $x[0]['objeto'] = retornaTipo($pedido['ig_tipo_evento_idTipoEvento'])." - ".$pedido['nomeEvento'];
+                            if($pedido['tipoPessoa'] == 1)
+                            {
+                                $pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+                                $x[0]['proponente'] = $pessoa['Nome'];
+                                $x[0]['tipo'] = "Física";
+                            }
+                            else
+                            {
+                                $pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+                                $x[0]['proponente'] = $pessoa['RazaoSocial'];
+                                $x[0]['tipo'] = "Jurídica";
+                            }
+                            $x[0]['local'] = substr($local,1);
+                            $x[0]['instituicao'] = $instituicao['sigla'];
+                            $x[0]['periodo'] = $periodo;
+                            $x[0]['valor'] = $pedido['valor'];
+                            $x[0]['status'] = $pedido['estado'];
+                            $x['num'] = 1;
+                        }
+					    else{
+                            $x['num'] = 0;
+                        }
+
 					}
 					else
 					{
