@@ -15,8 +15,9 @@
 <section id="list_items">
 	<div class="container">
 		<div class="sub-title"><br/><br/>
-			<h4>Escolha o ano<br/> 
-				| <a href="<?php echo $pasta?><?php echo $ano;?>"><?php echo $ano; ?></a> 
+			<h4>Escolha o ano<br/>
+                | <a href="<?php echo $pasta?><?php echo $ano + 1; ?>"><?php echo $ano + 1; ?></a>
+                | <a href="<?php echo $pasta?><?php echo $ano;?>"><?php echo $ano; ?></a>
 				| <a href="<?php echo $pasta?><?php echo $ano - 1; ?>"><?php echo $ano - 1; ?></a> |
 			</h4>
 		</div>
@@ -48,8 +49,11 @@
 				break;
 				case $ano - 1:
 					$sql = "SELECT * FROM sis_emia_vigencia WHERE publicado = '1' AND ano = $ano - 1 AND descricao <> ''";
-				break; 
-			} 				
+				break;
+                case $ano + 1:
+                    $sql = "SELECT * FROM sis_emia_vigencia WHERE publicado = '1' AND ano = $ano + 1 AND descricao <> ''";
+                    break;
+            }
 			$query = mysqli_query($con,$sql);
 			while($vigencia = mysqli_fetch_array($query))
 			{
