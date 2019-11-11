@@ -139,7 +139,7 @@ case 'list_cargo':
 						<form action="?perfil=emia&p=administrativo&pag=list_cargo" method="post">
 							<td><?php echo $cargo['Id_Cargo']; ?></td>
 							<td><input type="text" name="cargo" class="form-control" value="<?php echo $cargo['Cargo']; ?>"/></td>							
-							<td><textarea name="justificativa" class="form-control" rows="8"><?php echo $cargo['justificativa']; ?></textarea></td>	<td>
+							<td><textarea name="justificativa" class="form-control" rows="8" required><?php echo $cargo['justificativa']; ?></textarea></td>	<td>
 								<input type="hidden" name="atualizar" value="<?php echo $cargo['Id_Cargo']; ?>" />
 								<input type ='submit' class='btn btn-theme  btn-block' value='atualizar'>
 							</td>
