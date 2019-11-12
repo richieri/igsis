@@ -100,7 +100,7 @@ $_SESSION['id']= $id;
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Ano:</strong>
 						<select class="form-control" name="ano" id="Status">
-                            <option value='2019'<?php if($emia['Ano'] == 2020){echo " selected ";} ?>>2020</option>
+                            <option value='2020'<?php if($emia['Ano'] == 2020){echo " selected ";} ?>>2020</option>
                             <option value='2019'<?php if($emia['Ano'] == 2019){echo " selected ";} ?>>2019</option>
 							<option value='2018'<?php if($emia['Ano'] == 2018){echo " selected ";} ?>>2018</option>
 						</select>
