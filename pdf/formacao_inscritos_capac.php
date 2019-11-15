@@ -26,13 +26,14 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue("C1", "CPF" )
     ->setCellValue("D1", "Data de Nascimento" )
     ->setCellValue("E1", "Função")
-    ->setCellValue("F1", "Linguagem");
+    ->setCellValue("F1", "Linguagem")
+    ->setCellValue("F1", "Etnia");
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFont()->setBold(true);
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:F1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->applyFromArray
 (
     array
     (
@@ -79,11 +80,13 @@ $sql= "SELECT
           tf.descricao,
           fl.linguagem,
           ff.funcao,
+          et.etnia,
           pf.formacao_ano
         FROM pessoa_fisica AS pf
                INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
                INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
                INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
+               INNER JOIN etnias as et ON et.id = pf.etnia_id
                INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
                            WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
                            GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id
@@ -105,13 +108,15 @@ while($pf = mysqli_fetch_array($query))
     $d = "D".$i;
     $e = "E".$i;
     $f = "F".$i;
+    $g = "G".$i;
     $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue($a, $pf['id'])
         ->setCellValue($b, $pf['nome'])
         ->setCellValue($c, $pf['cpf'])
         ->setCellValue($d, exibirDataBr($pf['dataNascimento']))
         ->setCellValue($e, $pf['funcao'])
-        ->setCellValue($f, $pf['linguagem']);
+        ->setCellValue($f, $pf['etnia'])
+        ->setCellValue($g, $pf['linguagem']);
     $i++;
 }
 
