@@ -27,7 +27,7 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue("D1", "Data de Nascimento" )
     ->setCellValue("E1", "Função")
     ->setCellValue("F1", "Linguagem")
-    ->setCellValue("F1", "Etnia");
+    ->setCellValue("G1", "Etnia");
 
 // Definimos o estilo da fonte
 $objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFont()->setBold(true);
@@ -115,8 +115,8 @@ while($pf = mysqli_fetch_array($query))
         ->setCellValue($c, $pf['cpf'])
         ->setCellValue($d, exibirDataBr($pf['dataNascimento']))
         ->setCellValue($e, $pf['funcao'])
-        ->setCellValue($f, $pf['etnia'])
-        ->setCellValue($g, $pf['linguagem']);
+        ->setCellValue($f, $pf['linguagem'])
+        ->setCellValue($g, $pf['etnia']);
     $i++;
 }
 
