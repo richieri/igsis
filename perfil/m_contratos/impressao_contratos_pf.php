@@ -58,6 +58,7 @@ $link40 = $http."rlt_termo_doacao_pf_assinatura_word.php";
 $link60 = $http."rlt_condicionamento.php?id=".$id_ped ."&tipoPessoa=1";
 
 $link50 = $http."rlt_proposta_oficina_convenio_word.php"."?id=".$id_ped."&penal";
+$link62 = $http."rlt_pedido_reserva_centrosculturaisteatros_pf.php";
 
 
 
@@ -143,33 +144,37 @@ echo "
 
 						<tr>
 							<td><a href='$link46?id=$id_ped' target='_blank'><strong>VOCACIONAL/PIÁ - SME</strong></a></td>
-							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais</strong></a></td>
+							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais 6354</strong></a></td>
 						</tr>
+						
+						<tr>
+                            <td><a href='$link62?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais e Teatros 6391</strong></a></td>						
+							<td><a href='$link32?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
+                        </tr>
 
 						<tr>
-							<td><a href='$link32?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
 							<td><a href='$link33?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura</strong></a></td>
+							<td><a href='$link41?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
 						</tr>
 
 						<tr>
 							<!-- <td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td> -->
-							<td><a href='$link41?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
 							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
+							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
 						</tr>
 
 						<tr>
-							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
 							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
+							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
 						</tr>
 
 						<tr>
 							<!-- <td><a href='$link44?id=$id_ped' target='_blank'><strong>Reserva Pessoa Física</strong></a></td> -->
-							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
 							<td><a href='$link51?id=$id_ped' target='_blank'><strong>Reserva Global</strong></a></td>
+							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
 						</tr>
 
 						<tr>
-							<td><a href='$link31?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
 							<td><a href='$link61?id=$id_ped' target='_blank'><strong>Programa VAI</strong></a></td>
                         </tr>
 
