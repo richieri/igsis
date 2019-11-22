@@ -1129,7 +1129,7 @@
 				$justificativa = addslashes($_POST['justificativa']);
 				$processoMae = addslashes($_POST['processoMae']);
 				$qtdApresentacoes = addslashes($_POST['qtdApresentacoes']);
-				$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
+//				$dataKitPagamento = exibirDataMysql($_POST['dataKitPagamento']);
 				$idPedidoContratacao = $_POST['idPedidoContratacao'];
                 $formaPagamento = $_POST['formaPagamento'];
                 $evento = recuperaDados('ig_evento', $_SESSION['idEvento'], 'idEvento');
@@ -1147,7 +1147,6 @@
                             `justificativa` =  '$justificativa',
                             `processoMae` =  '$processoMae',
                             `qtdApresentacoes` =  '$qtdApresentacoes',
-                            `dataKitPagamento` = '$dataKitPagamento',
                             `idVerba` =  '$Verba'
                             WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
                     }
@@ -1162,7 +1161,6 @@
                             `justificativa` =  '$justificativa',
                             `processoMae` =  '$processoMae',
                             `qtdApresentacoes` =  '$qtdApresentacoes',
-                            `dataKitPagamento` = '$dataKitPagamento',
                             `idVerba` =  '$Verba'
                             WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
                     }
@@ -1181,7 +1179,6 @@
 						`justificativa` =  '$justificativa',
 						`processoMae` =  '$processoMae',
 						`qtdApresentacoes` =  '$qtdApresentacoes',
-						`dataKitPagamento` = '$dataKitPagamento',
 						`idVerba` =  '$Verba'
 						WHERE  `idPedidoContratacao` = '$idPedidoContratacao';";
 				}
@@ -1560,12 +1557,13 @@
 						</div>
 						
 						<div class="form-group">
-							<div class="col-md-offset-2 col-md-6"><strong>Quantidade de Apresentações:</strong><br/>
+							<div class="col-md-offset-4 col-md-6"><strong>Quantidade de Apresentações:</strong><br/>
 								<input type='text' name="qtdApresentacoes" id='qtdApresentacoes' class='form-control' value="<?php echo $pedido['qtdApresentacoes'] ?>" >
 							</div>
-							<div class="col-md-6"><strong>Data do Kit de Pagamento:</strong><br/>
-								<input type='text' name="dataKitPagamento" id="datepicker01" class='form-control' value="<?php echo exibirDataBr($pedido['dataKitPagamento']) ?>" >
-							</div>
+<!--                                Solicitada Remoção do Campo Kit de Pagamento no dia 22/11/2019-->
+<!--							<div class="col-md-6"><strong>Data do Kit de Pagamento:</strong><br/>-->
+<!--								<input type='text' name="dataKitPagamento" id="datepicker01" class='form-control' value="--><?php //echo exibirDataBr($pedido['dataKitPagamento']) ?><!--" >-->
+<!--							</div>-->
 						</div>
 						
 						<div class="form-group">
