@@ -20,7 +20,6 @@ if (isset($_GET['erro']))
     $mensagem = "<span style='color: #ef0000'>É necessario ao menos um item na pesquisa. Tente novamente.</span>";
 }
 
-$funcoes = $con->query("SELECT * FROM formacao_funcoes WHERE publicado = '1' ORDER BY 2")->fetch_all(MYSQLI_ASSOC);
 $regioes = $con->query("SELECT * FROM regioes WHERE publicado = '1' ORDER BY 2")->fetch_all(MYSQLI_ASSOC);
 
 include 'includes/menu_administrativo.php';

@@ -7,6 +7,9 @@ if (!(isset($_GET['pagina'])))
     $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
     $_SESSION['programa'] = $programa = $_POST['programa'];
     $_SESSION['ano'] = $ano = $_POST['ano'];
+    $_SESSION['funcao'] = $funcao = $_POST['funcao'];
+    $_SESSION['linguagem'] = $linguagem = $_POST['linguagem'];
+    $_SESSION['regiao'] = $regiao = $_POST['regiao'];
     if (empty($_POST['ano']))
     {
         echo "<script>window.location = '?perfil=formacao&p=frm_capac_importar&erro=1';</script>";
@@ -18,10 +21,21 @@ else
     $proponente = $_SESSION['proponente'];
     $programa = $_SESSION['programa'];
     $ano = $_SESSION['ano'];
+    $funcao = $_SESSION['funcao'];
+    $linguagem = $_SESSION['linguagem'];
+    $regiao = $_SESSION['regiao'];
 }
 
-function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
+function pesquisaProponente($idCapacPf, $proponente, $programa, $ano, $funcao, $linguagem, $regiao)
 {
+    if ($ano > 2019) {
+        $innerRegiao['regiao'] = ",r.regiao";
+        $innerRegiao['innerJoin'] = "INNER JOIN regioes as r on pf.formacao_regiao_preferencial = r.id";
+    } else {
+        $innerRegiao['regiao'] = "";
+        $innerRegiao['innerJoin'] = "";
+    }
+
     $query = "SELECT
                   pf.id,
                   pf.nome,
@@ -29,11 +43,14 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
                   pf.dataNascimento,
                   pf.tipo_formacao_id,
                   pf.formacao_funcao_id,
-                  pf.formacao_linguagem_id
+                  pf.formacao_linguagem_id,
+                  pf.formacao_regiao_preferencial
+                  {$innerRegiao['regiao']}
                 FROM pessoa_fisica AS pf
                        INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
                        INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
                        INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
+                       {$innerRegiao['innerJoin']}
                        INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
                                    WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
                                    GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id";
@@ -56,6 +73,20 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
         $condicoes[] = "pf.formacao_ano = '$ano'";
     }
 
+    if(!(empty($funcao)))
+    {
+        $condicoes[] = "pf.formacao_funcao_id = '$funcao'";
+    }
+
+    if(!(empty($linguagem)))
+    {
+        $condicoes[] = "pf.formacao_linguagem_id = '$linguagem'";
+    }
+
+    if(!(empty($regiao)))
+    {
+        $condicoes[] = "pf.formacao_regiao_preferencial = '$regiao'";
+    }
 
     $sql = $query;
     if (count($condicoes) > 0)
@@ -67,7 +98,7 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
 }
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, , , , , $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
+$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, $ano, $funcao, $linguagem, $regiao)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -83,7 +114,7 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, , , , , $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
+$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, $ano, $funcao, $linguagem, $regiao)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens
@@ -129,6 +160,7 @@ include 'includes/menu.php';
                                 <td>Programa</td>
                                 <td>Função</td>
                                 <td>Linguagem</td>
+                                <td>Região Preferencial</td>
                                 <td width="20%"></td>
                             </tr>
                         </thead>
@@ -148,6 +180,7 @@ include 'includes/menu.php';
                                     <td class="list_description"><?= $formacao['descricao'] ?></td>
                                     <td class="list_description"><?= $funcao['funcao'] ?></td>
                                     <td class="list_description"><?= $linguagem['linguagem'] ?></td>
+                                    <td class="list_description"><?= $linha['regiao'] ?></td>
                                     <td><a class='btn btn-theme btn-md btn-block' target='_blank' href='?perfil=formacao&p=frm_capac_detalhes&id_capac=<?=$linha['id']?>'>CARREGAR</a></td>
                                 </tr>
                             <?php
