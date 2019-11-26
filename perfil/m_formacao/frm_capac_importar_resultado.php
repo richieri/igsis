@@ -67,7 +67,7 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano)
 }
 
 $pagina = (isset($_GET['pagina']))? $_GET['pagina'] : 1;
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
+$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, , , , , $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
 $query_lista = mysqli_query($con, $sql_lista);
 
 //conta o total de itens
@@ -83,7 +83,7 @@ $numPaginas = ceil($total/$registros);
 $inicio = ($registros*$pagina)-$registros;
 
 //seleciona os itens por página
-$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
+$sql_lista = pesquisaProponente($idCapacPf, $proponente, $programa, , , , , $ano)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome` LIMIT $inicio,$registros ";
 $query_lista = mysqli_query($con,$sql_lista);
 
 //conta o total de itens

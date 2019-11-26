@@ -10,6 +10,10 @@ unset($_SESSION['programa']);
 unset($_SESSION['ano']);
 unset($_SESSION['tipoCadastro']);
 unset($_SESSION['pesquisaGeral']);
+unset($_SESSION['programa']);
+unset($_SESSION['funcao']);
+unset($_SESSION['linguagem']);
+unset($_SESSION['regiao']);
 
 if (isset($_GET['erro']))
 {

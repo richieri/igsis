@@ -13,6 +13,10 @@ if (!(isset($_GET['pagina'])))
         $_SESSION['ano'] = $ano = $_POST['ano'];
         $_SESSION['tipoCadastro'] = $tipoCadastro = $_POST['tipoCadastro'];
         $_SESSION['proponente'] = $proponente = addslashes($_POST['proponente']);
+        $_SESSION['programa'] = $programa = $_POST['programa'];
+        $_SESSION['funcao'] = $funcao = $_POST['funcao'];
+        $_SESSION['linguagem'] = $linguagem = $_POST['linguagem'];
+        $_SESSION['regiao'] = $regiao = $_POST['regiao'];
         if (empty($_POST['ano']))
         {
             echo "<script>window.location = '?perfil=formacao&p=frm_adm_capac_importar&erro=1';</script>";
@@ -30,11 +34,22 @@ else
         $ano = $_SESSION['ano'];
         $tipoCadastro = $_SESSION['tipoCadastro'];
         $proponente = $_SESSION['proponente'];
+        $programa = $_SESSION['programa'];
+        $funcao = $_SESSION['funcao'];
+        $linguagem = $_SESSION['linguagem'];
+        $regiao = $_SESSION['regiao'];
     }
 }
 
-function pesquisaProponente($ano, $tipoCadastro, $proponente)
+function pesquisaProponente($ano, $tipoCadastro, $proponente, $programa, $funcao, $linguagem, $regiao)
 {
+    if ($ano > 2019) {
+        $innerRegiao['regiao'] = ",r.regiao";
+        $innerRegiao['innerJoin'] = "INNER JOIN regioes as r on pf.formacao_regiao_preferencial = r.id";
+    } else {
+        $innerRegiao['regiao'] = "";
+        $innerRegiao['innerJoin'] = "";
+    }
     if ($tipoCadastro == 1)
     {
         $innerCadastro = "INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
@@ -54,11 +69,14 @@ function pesquisaProponente($ano, $tipoCadastro, $proponente)
                   pf.tipo_formacao_id,
                   pf.formacao_funcao_id,
                   pf.formacao_linguagem_id,
-                  fl.linguagem
+                  fl.linguagem,
+                  pf.formacao_regiao_preferencial
+                  {$innerRegiao['regiao']}
                 FROM pessoa_fisica AS pf
                        INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
                        INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
                        INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
+                       {$innerRegiao['innerJoin']}
                        $innerCadastro";
     $condicoes = [];
 
@@ -70,6 +88,26 @@ function pesquisaProponente($ano, $tipoCadastro, $proponente)
     if(!(empty($proponente)))
     {
         $condicoes[] = "pf.nome LIKE '%$proponente%'";
+    }
+
+    if(!(empty($programa)))
+    {
+        $condicoes[] = "pf.tipo_formacao_id = '$programa'";
+    }
+
+    if(!(empty($funcao)))
+    {
+        $condicoes[] = "pf.formacao_funcao_id = '$funcao'";
+    }
+
+    if(!(empty($linguagem)))
+    {
+        $condicoes[] = "pf.formacao_linguagem_id = '$linguagem'";
+    }
+
+    if(!(empty($regiao)))
+    {
+        $condicoes[] = "pf.formacao_regiao_preferencial = '$regiao'";
     }
 
     $sql = $query;
@@ -88,7 +126,7 @@ if (isset($_SESSION['pesquisaGeral']))
 }
 else
 {
-    $sql_lista = pesquisaProponente($ano, $tipoCadastro, $proponente)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
+    $sql_lista = pesquisaProponente($ano, $tipoCadastro, $proponente, $programa, $funcao, $linguagem, $regiao)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY `nome`";
 }
 $query_lista = mysqli_query($con, $sql_lista);
 
@@ -111,7 +149,7 @@ if (isset($_SESSION['pesquisaGeral']))
 }
 else
 {
-    $sql_lista = pesquisaProponente($ano, $tipoCadastro, $proponente)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY pf.nome LIMIT $inicio,$registros ";
+    $sql_lista = pesquisaProponente($ano, $tipoCadastro, $proponente, $programa, $funcao, $linguagem, $regiao)." AND pf.tipo_formacao_id IS NOT NULL ORDER BY pf.nome LIMIT $inicio,$registros ";
 
 }
 $query_lista = mysqli_query($con,$sql_lista);
@@ -158,6 +196,7 @@ include 'includes/menu_administrativo.php';
                                 <td>Data de Nascimento</td>
                                 <td>Função</td>
                                 <td>Linguagem</td>
+                                <td>Região Preferencial</td>
                                 <td width="20%"></td>
                             </tr>
                         </thead>
@@ -176,6 +215,7 @@ include 'includes/menu_administrativo.php';
                                     <td class="list_description"><?= exibirDataBr($linha['dataNascimento']) ?></td>
                                     <td class="list_description"><?= $funcao['funcao'] ?></td>
                                     <td class="list_description"><?= $linguagem['linguagem'] ?></td>
+                                    <td class="list_description"><?= $linha['regiao'] ?></td>
                                     <td><a class='btn btn-theme btn-md btn-block' target='_blank' href='?perfil=formacao&p=frm_capac_resumo&id_capac=<?=$linha['id']?>'>Exibir Resumo</a></td>
                                 </tr>
                             <?php
