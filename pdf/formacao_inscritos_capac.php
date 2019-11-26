@@ -27,13 +27,14 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue("D1", "Data de Nascimento" )
     ->setCellValue("E1", "Função")
     ->setCellValue("F1", "Linguagem")
-    ->setCellValue("G1", "Etnia");
+    ->setCellValue("G1", "Etnia")
+    ->setCellValue("H1", "Região Preferencial");
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFont()->setBold(true);
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:G1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->applyFromArray
 (
     array
     (
@@ -81,12 +82,14 @@ $sql= "SELECT
           fl.linguagem,
           ff.funcao,
           et.etnia,
-          pf.formacao_ano
+          pf.formacao_ano,
+          re.regiao
         FROM pessoa_fisica AS pf
                INNER JOIN tipo_formacao as tf ON pf.tipo_formacao_id = tf.id
                INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
                INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
                INNER JOIN etnias as et ON et.id = pf.etnia_id
+               INNER JOIN regioes as re ON re.id = pf.formacao_regiao_preferencial
                INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
                            WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
                            GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id
@@ -109,6 +112,7 @@ while($pf = mysqli_fetch_array($query))
     $e = "E".$i;
     $f = "F".$i;
     $g = "G".$i;
+    $h = "H".$i;
     $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue($a, $pf['id'])
         ->setCellValue($b, $pf['nome'])
@@ -116,7 +120,8 @@ while($pf = mysqli_fetch_array($query))
         ->setCellValue($d, exibirDataBr($pf['dataNascimento']))
         ->setCellValue($e, $pf['funcao'])
         ->setCellValue($f, $pf['linguagem'])
-        ->setCellValue($g, $pf['etnia']);
+        ->setCellValue($g, $pf['etnia'])
+        ->setCellValue($h, $pf['regiao']);
     $i++;
 }
 
