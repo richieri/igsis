@@ -30,7 +30,7 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano, $funcao, $
 {
     if ($ano > 2019) {
         $innerRegiao['regiao'] = ",r.regiao";
-        $innerRegiao['innerJoin'] = "INNER JOIN regioes as r on pf.formacao_regiao_preferencial = r.id";
+        $innerRegiao['innerJoin'] = "LEFT JOIN regioes as r on pf.formacao_regiao_preferencial = r.id";
     } else {
         $innerRegiao['regiao'] = "";
         $innerRegiao['innerJoin'] = "";
@@ -180,7 +180,7 @@ include 'includes/menu.php';
                                     <td class="list_description"><?= $formacao['descricao'] ?></td>
                                     <td class="list_description"><?= $funcao['funcao'] ?></td>
                                     <td class="list_description"><?= $linguagem['linguagem'] ?></td>
-                                    <td class="list_description"><?= $linha['regiao'] ?></td>
+                                    <td class="list_description"><?= $linha['regiao'] == null ? "Não Cadastrado" : $linha['regiao'] ?></td>
                                     <td><a class='btn btn-theme btn-md btn-block' target='_blank' href='?perfil=formacao&p=frm_capac_detalhes&id_capac=<?=$linha['id']?>'>CARREGAR</a></td>
                                 </tr>
                             <?php
