@@ -215,7 +215,7 @@ include 'includes/menu_administrativo.php';
                                     <td class="list_description"><?= exibirDataBr($linha['dataNascimento']) ?></td>
                                     <td class="list_description"><?= $funcao['funcao'] ?></td>
                                     <td class="list_description"><?= $linguagem['linguagem'] ?></td>
-                                    <td class="list_description"><?= $linha['regiao'] == null ? "Não Cadastrado" : $linha['regiao'] ?></td>
+                                    <td class="list_description"><?= !isset($linha['regiao']) || $linha['regiao'] == null ? "Não Cadastrado" : $linha['regiao'] ?></td>
                                     <td><a class='btn btn-theme btn-md btn-block' target='_blank' href='?perfil=formacao&p=frm_capac_resumo&id_capac=<?=$linha['id']?>'>Exibir Resumo</a></td>
                                 </tr>
                             <?php
