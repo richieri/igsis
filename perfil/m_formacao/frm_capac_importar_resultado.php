@@ -51,9 +51,7 @@ function pesquisaProponente($idCapacPf, $proponente, $programa, $ano, $funcao, $
                        INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
                        INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
                        {$innerRegiao['innerJoin']}
-                       INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
-                                   WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
-                                   GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id";
+                       INNER JOIN (SELECT pessoa_fisica_id FROM formacao_validacao WHERE validado = 1) AS fv ON fv.pessoa_fisica_id = pf.id";
     $condicoes = [];
 
     if(!(empty($idCapacPf)))

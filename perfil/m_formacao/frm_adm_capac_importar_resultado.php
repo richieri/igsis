@@ -52,9 +52,7 @@ function pesquisaProponente($ano, $tipoCadastro, $proponente, $programa, $funcao
     }
     if ($tipoCadastro == 1)
     {
-        $innerCadastro = "INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
-                                   WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
-                                   GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id";
+        $innerCadastro = "INNER JOIN (SELECT pessoa_fisica_id FROM formacao_validacao WHERE validado = 1) AS fv ON fv.pessoa_fisica_id = pf.id";
     }
     else
     {

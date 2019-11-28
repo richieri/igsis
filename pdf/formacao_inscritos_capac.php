@@ -89,10 +89,8 @@ $sql= "SELECT
                INNER JOIN formacao_linguagem as fl ON pf.formacao_linguagem_id = fl.id
                INNER JOIN formacao_funcoes as ff ON pf.formacao_funcao_id = ff.id
                INNER JOIN etnias as et ON et.id = pf.etnia_id
-               INNER JOIN regioes as re ON re.id = pf.formacao_regiao_preferencial
-               INNER JOIN (SELECT DISTINCT idPessoa FROM upload_arquivo
-                           WHERE idTipoPessoa = 6 AND publicado = '1' AND idUploadListaDocumento = '141'
-                           GROUP BY idPessoa) AS ua ON ua.idPessoa = pf.id
+               LEFT JOIN regioes as re ON re.id = pf.formacao_regiao_preferencial
+               INNER JOIN (SELECT pessoa_fisica_id FROM formacao_validacao WHERE validado = 1) AS fv ON fv.pessoa_fisica_id = pf.id
         WHERE pf.tipo_formacao_id > 0
           AND pf.formacao_ano = '$ano'
           AND pf.formacao_funcao_id IS NOT NULL
