@@ -5,6 +5,23 @@ require_once("../include/phpexcel/Classes/PHPExcel.php");
 require_once("../funcoes/funcoesConecta.php");
 require_once("../funcoes/funcoesGerais.php");
 
+function funcoesAdicionais($funcao, $id) {
+    $funcoes = [4,8];
+    if (in_array($funcao, $funcoes)) {
+        $outrasFuncoes['funcao2'] = "Não Utilizado";
+        $outrasFuncoes['funcao3'] = "Não Utilizado";
+    } else {
+        $con = bancoMysqliProponente();
+
+        $sql = "SELECT ff1.funcao AS 'funcao2', ff2.funcao AS 'funcao3' FROM formacao_dados_complementares AS fdc
+                INNER JOIN formacao_funcoes AS ff1 ON fdc.area_atuacao_2 = ff1.id
+                INNER JOIN formacao_funcoes AS ff2 ON fdc.area_atuacao_3 = ff2.id
+                WHERE fdc.pessoa_fisica_id = '$id'";
+
+        $outrasFuncoes = $con->query($sql)->fetch_assoc();
+    }
+    return $outrasFuncoes;
+}
 
 // Instanciamos a classe
 $objPHPExcel = new PHPExcel();
@@ -26,15 +43,17 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue("C1", "CPF" )
     ->setCellValue("D1", "Data de Nascimento" )
     ->setCellValue("E1", "Função")
-    ->setCellValue("F1", "Linguagem")
-    ->setCellValue("G1", "Etnia")
-    ->setCellValue("H1", "Região Preferencial");
+    ->setCellValue("F1", "Função (2º Opção)")
+    ->setCellValue("G1", "Função (3º Opção)")
+    ->setCellValue("H1", "Linguagem")
+    ->setCellValue("I1", "Etnia")
+    ->setCellValue("J1", "Região Preferencial");
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:J1')->getFont()->setBold(true);
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:H1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:J1')->applyFromArray
 (
     array
     (
@@ -80,6 +99,7 @@ $sql= "SELECT
           pf.dataNascimento,
           tf.descricao,
           fl.linguagem,
+          pf.formacao_funcao_id,
           ff.funcao,
           et.etnia,
           pf.formacao_ano,
@@ -100,27 +120,33 @@ $sql= "SELECT
 
 $query = (mysqli_query($con,$sql));
 
-$i = 2;
+$x = 2;
 while($pf = mysqli_fetch_array($query))
 {
-    $a = "A".$i;
-    $b = "B".$i;
-    $c = "C".$i;
-    $d = "D".$i;
-    $e = "E".$i;
-    $f = "F".$i;
-    $g = "G".$i;
-    $h = "H".$i;
+    $funcoesAdicionais = funcoesAdicionais($pf['formacao_funcao_id'], $pf['id']);
+
+    $a = "A".$x;
+    $b = "B".$x;
+    $c = "C".$x;
+    $d = "D".$x;
+    $e = "E".$x;
+    $f = "F".$x;
+    $g = "G".$x;
+    $h = "H".$x;
+    $i = "I".$x;
+    $j = "J".$x;
     $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue($a, $pf['id'])
         ->setCellValue($b, $pf['nome'])
         ->setCellValue($c, $pf['cpf'])
         ->setCellValue($d, exibirDataBr($pf['dataNascimento']))
         ->setCellValue($e, $pf['funcao'])
-        ->setCellValue($f, $pf['linguagem'])
-        ->setCellValue($g, $pf['etnia'])
-        ->setCellValue($h, $pf['regiao']);
-    $i++;
+        ->setCellValue($f, $funcoesAdicionais['funcao2'])
+        ->setCellValue($g, $funcoesAdicionais['funcao3'])
+        ->setCellValue($h, $pf['linguagem'])
+        ->setCellValue($i, $pf['etnia'])
+        ->setCellValue($j, $pf['regiao']);
+    $x++;
 }
 
 // Renomeia a guia

@@ -11,11 +11,23 @@ $con = bancoMysqliProponente();
 
 include 'includes/menu.php';
 
-$sql_funcao = "SELECT ff.funcao FROM formacao_funcoes AS ff
-                INNER JOIN pessoa_fisica AS pf ON ff.id = pf.formacao_funcao_id
-                INNER JOIN pessoa_fisica AS p ON ff.tipo_formacao_id = p.tipo_formacao_id
+$sql_funcao = "SELECT ff.id, ff.funcao FROM pessoa_fisica AS pf
+                INNER JOIN formacao_funcoes AS ff ON pf.formacao_funcao_id = ff.id
                 WHERE pf.id = '$idCapac'";
-$funcao = mysqli_fetch_array(mysqli_query($con, $sql_funcao));
+$funcao = mysqli_fetch_assoc(mysqli_query($con, $sql_funcao));
+
+function funcoesAdicionais($id) {
+    $con = bancoMysqliProponente();
+
+    $sql = "SELECT ff1.funcao AS 'funcao2', ff2.funcao AS 'funcao3' FROM formacao_dados_complementares AS fdc
+            INNER JOIN formacao_funcoes AS ff1 ON fdc.area_atuacao_2 = ff1.id
+            INNER JOIN formacao_funcoes AS ff2 ON fdc.area_atuacao_3 = ff2.id
+            WHERE fdc.pessoa_fisica_id = '$id'";
+
+    $outrasFuncoes = $con->query($sql)->fetch_assoc();
+
+    return $outrasFuncoes;
+}
 
 function recuperaDadosCapac($tabela, $campo, $valor)
 {
@@ -125,7 +137,17 @@ $linguagem = recuperaDadosCapac('formacao_linguagem', 'id', $pf['formacao_lingua
                     <p align="justify"><strong>Etnia:</strong> <?= $etnia['etnia']; ?><p>
                     <p align="justify"><strong>Grau de Instrução:</strong> <?= $grauInstrucao['grau_instrucao']; ?><p>
                     <p align="justify"><strong>Linguagem:</strong> <?= $linguagem['linguagem']; ?><p>
-                    <p align="justify"><strong>Função:</strong> <?= $funcao[0]; ?><p>
+                    <p align="justify"><strong>Função:</strong> <?= $funcao['funcao']; ?><p>
+                    <?php
+                    $funcoes = [4,8];
+                    if (!in_array($funcao['id'], $funcoes)) {
+                    $funcoesAdicionais = funcoesAdicionais($idCapac);
+                    ?>
+                        <p align="justify"><strong>Função (2º Opção):</strong> <?= $funcoesAdicionais['funcao2']; ?><p>
+                        <p align="justify"><strong>Função (3º Opção):</strong> <?= $funcoesAdicionais['funcao3']; ?><p>
+                    <?php
+                    }
+                    ?>
                     <p align="justify"><strong>Banco:</strong> <?php echo recuperaBanco($pf['codigoBanco']); ?></p>
                     <p align="justify"><strong>Agência:</strong> <?php echo $pf['agencia']; ?></p>
                     <p align="justify"><strong>Conta:</strong> <?php echo $pf['conta']; ?></p>
