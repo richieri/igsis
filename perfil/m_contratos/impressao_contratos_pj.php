@@ -151,7 +151,7 @@ echo "
 
 						<tr>
 							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
-							<td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
+							<td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva CCSP 6393</strong></a></td>
 						</tr>
 
 						<tr>

@@ -58,6 +58,7 @@ $link62 = $http."rlt_pedido_reserva_memoriacirco_pj.php";
 $link63 = $http."rlt_pedido_reserva_global_pj.php";
 $link64 = $http."rlt_pedido_reserva_jornada_pj.php";
 $link65 = $http."rlt_pedido_reserva_vai.php";
+$link66 = $http."rlt_pedido_reserva_centrosculturaisteatros_pj.php";
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -134,35 +135,39 @@ echo "
 						</tr>
 
 						<tr>
-							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais</strong></a></td>
+							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais 6354</strong></a></td>
 							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
-						</tr>
-
-						<tr>
-							<td><a href='$link46?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
-							<td><a href='$link47?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
-						</tr>
-
-						<tr>
-							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura </strong></a></td>
-							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
-						</tr>
-
-						<tr>
-							<td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva CCSP</strong></a></td>
-							<td><a href='$link53?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
 						</tr>
 						
 						<tr>
+						    <td><a href='$link66?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais e Teatros 6391</strong></a></td>
+						    <td><a href='$link46?id=$id_ped' target='_blank'><strong>Reserva DPH</strong></a></td>
+                        </tr>
+
+						<tr>
+							<td><a href='$link47?id=$id_ped' target='_blank'><strong>Reserva CSMB</strong></a></td>
+							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Casas de Cultura </strong></a></td>
+						</tr>
+
+						<tr>
+							<td><a href='$link11?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
+							<td><a href='$link49?id=$id_ped' target='_blank'><strong>Reserva CCSP 6393</strong></a></td>
+						</tr>
+
+						<tr>
+							<td><a href='$link53?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
 						    <td><a href='$link57?id=$id_ped' target='_blank'><strong>Reserva Oficina</strong></a></td>
+						</tr>
+						
+						<tr>
 						    <td><a href='$link58?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
+                           <td><a href='$link62?id=$id_ped' target='_blank'><strong>Centro de Memória do Circo</strong></a></td>
                         </tr>
                         <tr>
-                           <td><a href='$link62?id=$id_ped' target='_blank'><strong>Centro de Memória do Circo</strong></a></td>
                             <td><a href='$link60?id=$id_ped' target='_blank'><strong>Reserva CRD</strong></a></td>
+                            <td><a href='$link63?id=$id_ped' target='_blank'><strong>Reserva Global</strong></a></td>
                         </tr>
                         <tr>                            
-                            <td><a href='$link63?id=$id_ped' target='_blank'><strong>Reserva Global</strong></a></td>
                             <td><a href='$link65?id=$id_ped' target='_blank'><strong>Programa VAI</strong></a></td>
                         </tr>
 
