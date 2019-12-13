@@ -147,9 +147,9 @@ include 'includes/menu.php';
                         echo '<td>'.$x[$h]['objeto'].'</td> ';
                         echo '<td>'.$x[$h]['local'].'</td> ';
                         echo '<td>'.$x[$h]['instituicao'].'</td> ';
-                        echo '<td>'.$x[$h]['dataInicio'].'</td> ';
-                        echo '<td>'.$x[$h]['periodo'].'</td> ';
-                        echo '<td>'.$x[$h]['valor'].'</td> ';
+                        echo "<td>".exibirDataBr($x[$h]['dataInicio']).'</td> ';
+                        echo '<td>'.preg_replace('/de /', '', $x[$h]['periodo']).'</td> ';
+                        echo '<td>'.dinheiroParaBr($x[$h]['valor']).'</td> ';
                         echo '<td>'.$x[$h]['pendencia'].'</td> ';
                         echo '<td>'.$x[$h]['status'].'</td> ';
                         echo '</tr>';
@@ -180,9 +180,13 @@ include 'includes/menu.php';
 
 <script type="text/javascript" defer src="../visual/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" defer src="../visual/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
+<script type="text/javascript" defer src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript" defer src="//cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
 <script type="text/javascript" defer>
+
     $(function () {
+        $.fn.dataTable.moment( 'DD/M/YYYY' );
+        $.fn.dataTable.moment( 'DD/M/YYYY a D/M/YYYY' );
         $('#example1').DataTable({
             "language": {
                 "url": 'bower_components/datatables.net/Portuguese-Brasil.json'
