@@ -77,7 +77,8 @@ $ValorPorExtenso = valorPorExtenso(dinheiroDeBr($parcelamento[$id_parcela]['valo
 $periodoParcela = $parcelamento[$id_parcela]['periodo']; 
 $dataPagamento = $parcelamento[$id_parcela]['pagamento'];
 
-$ano=date('Y');
+//$ano=date('Y');
+$ano="2020";
 
 
 // GERANDO O PDF:
