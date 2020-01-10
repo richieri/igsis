@@ -158,7 +158,7 @@ echo "
 						</tr>
 
 						<tr>
-							<!-- <td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td> -->
+							<td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
 							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
 							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
 						</tr>
