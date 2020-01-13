@@ -144,7 +144,7 @@ echo "
 
 						<tr>
 							<td><a href='$link46?id=$id_ped' target='_blank'><strong>VOCACIONAL/PIÁ - SME</strong></a></td>
-							<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais 6354</strong></a></td>
+							<!--<td><a href='$link29?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais 6354</strong></a></td>-->
 						</tr>
 						
 						<tr>
@@ -165,7 +165,7 @@ echo "
 
 						<tr>
 							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
-							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
+							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Coord. Programação 6354</strong></a></td>
 						</tr>
 
 						<tr>

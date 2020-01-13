@@ -135,8 +135,8 @@ echo "
 						</tr>
 
 						<tr>
-							<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais 6354</strong></a></td>
-							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva Gabinete</strong></a></td>
+							<!--<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais 6354</strong></a></td>-->
+							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva Coord. Programação 6354</strong></a></td>
 						</tr>
 						
 						<tr>
