@@ -139,7 +139,7 @@ $regiaoPreferencial = recuperaDadosCapac('regioes', 'id', $pf['formacao_regiao_p
                     <p align="justify"><strong>Grau de Instrução:</strong> <?= $grauInstrucao['grau_instrucao']; ?><p>
                     <p align="justify"><strong>Linguagem:</strong> <?= $linguagem['linguagem']; ?><p>
                     <p align="justify"><strong>Função:</strong> <?= $funcao['funcao']; ?><p>
-                    <p align="justify"><strong>Região Preferencial:</strong> <?= $regiaoPreferencial['região']; ?><p>
+                    <p align="justify"><strong>Região Preferencial:</strong> <?= $regiaoPreferencial['regiao']; ?><p>
                     <?php
                     $funcoes = [4,8];
                     if (!in_array($funcao['id'], $funcoes)) {
