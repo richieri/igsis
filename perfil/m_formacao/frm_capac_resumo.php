@@ -94,6 +94,7 @@ $grauInstrucao = recuperaDadosCapac('grau_instrucoes', 'id', $pf['grau_instrucao
 $programa = recuperaDadosCapac('tipo_formacao', 'id', $pf['tipo_formacao_id']);
 $documento = recuperaDadosCapac('tipo_documento', 'id', $pf['idTipoDocumento']);
 $linguagem = recuperaDadosCapac('formacao_linguagem', 'id', $pf['formacao_linguagem_id']);
+$regiaoPreferencial = recuperaDadosCapac('regioes', 'id', $pf['formacao_regiao_preferencial']);
 
 ?>
 <section id="list_items" class="home-section bg-white">
@@ -138,6 +139,7 @@ $linguagem = recuperaDadosCapac('formacao_linguagem', 'id', $pf['formacao_lingua
                     <p align="justify"><strong>Grau de Instrução:</strong> <?= $grauInstrucao['grau_instrucao']; ?><p>
                     <p align="justify"><strong>Linguagem:</strong> <?= $linguagem['linguagem']; ?><p>
                     <p align="justify"><strong>Função:</strong> <?= $funcao['funcao']; ?><p>
+                    <p align="justify"><strong>Região Preferencial:</strong> <?= $regiaoPreferencial['região']; ?><p>
                     <?php
                     $funcoes = [4,8];
                     if (!in_array($funcao['id'], $funcoes)) {
