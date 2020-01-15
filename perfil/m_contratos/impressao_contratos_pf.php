@@ -152,13 +152,17 @@ echo "
 						<tr>
 							<td><a href='$link24?id=$id_ped' target='_blank'><strong>FEPAC</strong></a></td>
 							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva BMA</strong></a></td>
-							<td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>
 						</tr>
+						
+						<tr>
+                            <td><a href='$link42?id=$id_ped' target='_blank'><strong>Oficina</strong></a></td>		
+                            <td><a href='$link63?id=$id_ped' target='_blank'><strong>Reserva Coord. Programação 2397 (Ruas Lazer)</strong></a></td>
+				
+                        </tr>
 
 						<tr>
 							<td><a href='$link48?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA</strong></a></td>
 							<td><a href='$link30?id=$id_ped' target='_blank'><strong>Reserva Coord. Programação 6354</strong></a></td>
-							<td><a href='$link63?id=$id_ped' target='_blank'><strong>Reserva Coord. Programação 2397 (Ruas Lazer)</strong></a></td>
 						</tr>
 
 						<tr>
