@@ -8,25 +8,23 @@ $id = $id_ped;
 $server = "http://".$_SERVER['SERVER_NAME']."/igsis"; //mudar para pasta do igsis
 $http = $server."/pdf/";
 
+
+
 $link0 = $http."rlt_pedido_contratacao_pj.php";
 $link02 = $http."rlt_proposta_padrao_pj.php"."?id=".$id_ped."&penal";
 $link03 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal";
 $link04 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal";
-$link56 = $http."rlt_proposta_reversao_pj.php"."?id=".$id_ped."&penal";
-
-
-$link5 = $http."rlt_fac_pj.php";
-$link6 = $http."rlt_evento_pj.php";
-$link7 = $http."rlt_direitos_conexos.php";
-$link8 = $http."rlt_parecer_pj.php";
-$link9 = $http."rlt_pedido_reserva_nova_pj.php";
+$link05 = $http."rlt_fac_pj.php";
+$link06 = $http."rlt_evento_pj.php";
+$link07 = $http."rlt_direitos_conexos.php";
+$link08 = $http."rlt_parecer_pj.php";
+$link09 = $http."rlt_pedido_reserva_nova_pj.php";
 $link11 = $http."rlt_pedido_reserva_fepac_pj.php";
 $link12 = $http."rlt_pedido_reserva_atividadecultural_pj.php";
 $link13 = $http."rlt_pedido_reserva_atividadecultural_cooperativa_pj.php";
 $link14 = $http."rlt_pedido_reserva_vocacional_pj.php";
 $link17 = $http."rlt_declaracao_iss_pj.php?id=".$id_ped;
 $link19 = $http."rlt_declaracao_exclusividade_grupo_pj.php?id=".$id_ped;
-$link54 = $http."rlt_declaracao_exclusividade_1pessoa_pj.php?id=".$id_ped;
 $link22 = $http."rlt_ordemservico_pj.php";
 $link23 = $http."rlt_ordemservico_pj_word.php";
 $link26 = $http."rlt_termo_doacao_pj.php";
@@ -48,7 +46,9 @@ $link49 = $http."rlt_pedido_reserva_ccsp_pj.php";
 $link50 = $http."rlt_proposta_virada.php"."?id=".$id_ped."&penal=30";
 $link52 = $http."rlt_minuta_acima80k.php";
 $link53 = $http."rlt_pedido_reserva_bma_pj.php";
+$link54 = $http."rlt_declaracao_exclusividade_1pessoa_pj.php?id=".$id_ped;
 $link55 = $http."rlt_pedido_reserva_pia_pj.php";
+$link56 = $http."rlt_proposta_reversao_pj.php"."?id=".$id_ped."&penal";
 $link57 = $http."rlt_pedido_reserva_oficina_pj.php";
 $link58 = $http."rlt_pedido_reserva_oficina_csmb_bma_pj.php";
 $link59 = $http."rlt_pedido_reserva_hiphop_sme_pj.php";
@@ -59,6 +59,7 @@ $link63 = $http."rlt_pedido_reserva_global_pj.php";
 $link64 = $http."rlt_pedido_reserva_jornada_pj.php";
 $link65 = $http."rlt_pedido_reserva_vai.php";
 $link66 = $http."rlt_pedido_reserva_centrosculturaisteatros_pj.php";
+$link67 = $http."rlt_pedido_reserva_ruasdelazer_pj.php";
 
 
 $last_id = mysqli_insert_id($conexao);
@@ -114,8 +115,8 @@ echo "
 						<tr class='list_menu'><td colspan='2'><strong>OUTROS</strong></td></tr>
 
 						<tr>
-							<td><a href='$link5?id=$id_ped' target='_blank'><strong>FACC</strong></a></td>
-							<td><a href='$link8?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
+							<td><a href='$link05?id=$id_ped' target='_blank'><strong>FACC</strong></a></td>
+							<td><a href='$link08?id=$id_ped' target='_blank'><strong>Parecer da Comissão</strong></a></td>
 						</tr>
 
 						<tr>
@@ -137,6 +138,7 @@ echo "
 						<tr>
 							<!--<td><a href='$link39?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais 6354</strong></a></td>-->
 							<td><a href='$link43?id=$id_ped' target='_blank'><strong>Reserva Coord. Programação 6354</strong></a></td>
+							<td><a href='$link67?id=$id_ped' target='_blank'><strong>Reserva Coord. Programação 2397 (Ruas Lazer)</strong></a></td>
 						</tr>
 						
 						<tr>
