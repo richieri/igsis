@@ -19,10 +19,12 @@ $objeto = $pedido["Objeto"];
 $local = $pedido["Local"];
 $justificativa = $pedido["Justificativa"];
 
+$form = recuperaDados("sis_formacao",$id_ped,"idPedidoContratacao");
+$coord = recuperaDados("sis_formacao_coordenadoria",$form['Coordenarias'],"idCoordenadoria");
+
 $pedido_pessoa = siscontratDocs($pedido['IdProponente'],1);
 $nome = $pedido_pessoa["Nome"];
 $cpf = $pedido_pessoa["CPF"];
-
 
 //$horas = retornaCargaHoraria($id_ped,$id_parcela);
 
@@ -30,8 +32,34 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 $periodoParcela = $parcelamento[$id_parcela]['periodo']; 
 $horas = $parcelamento[$id_parcela]['horas'];
 
+
+//datas
+$dia = date('d');
+$mes = date('m');
+$ano = date('Y');
+$semana = date('w');
 $dataAtual = date("d/m/Y");
 $ano=date('Y');
+
+//mês
+ 
+switch ($mes){
+ 
+case 1: $mes = "Janeiro"; break;
+case 2: $mes = "Fevereiro"; break;
+case 3: $mes = "Março"; break;
+case 4: $mes = "Abril"; break;
+case 5: $mes = "Maio"; break;
+case 6: $mes = "Junho"; break;
+case 7: $mes = "Julho"; break;
+case 8: $mes = "Agosto"; break;
+case 9: $mes = "Setembro"; break;
+case 10: $mes = "Outubro"; break;
+case 11: $mes = "Novembro"; break;
+case 12: $mes = "Dezembro"; break;
+
+  
+}
 
   
  ?>
@@ -62,21 +90,28 @@ $ano=date('Y');
 
 $sei = 
   "<p>&nbsp;</p>".
+  "<p><strong>Interessado:</strong> ".$nome."</p>".
+  "<p><strong>Do evento:</strong> ".$objeto."</p>".
+  "<p>&nbsp;</p>".
+  "<p>&nbsp;</p>".
   "<p><strong>SMC - CONTABILIDADE</strong></p>".
   "<p><strong>Sr.(a) Contador(a)</strong></p>".
-  "<p>&nbsp;</p>". 
-  "<p>&nbsp;</p>".
-  "<p><strong>Nome:</strong> ".$nome."</p>".
-  "<p><strong>CPF:</strong> ".$cpf."</p>".
-  "<p><strong>Objeto:</strong> ".$objeto."</p>".
-  "<p><strong>Locais:</strong> ".$local."</p>".
-  "<p><strong>Período:</strong> ".$periodoParcela."</p>". 
-  "<p>&nbsp;</p>".
-  "<p align='justify'>Com base na Confirmação de Serviços (Documento SEI link ), atesto que foi efetivamente cumprido ".$horas." horas de trabalho durante o período supra citado.</p>".
+  "<p align='justify'>Encaminho o presente para providências quanto ao pagamento, uma vez que os serviços foram realizados e confirmados a contento conforme documento link SEI.</p>".
   "<p align='justify'>Em virtude do detalhamento da Ação em 2019, informamos que o pagamento  no valor de R$ 4.194,72 (quatro mil, cento e noventa e quatro reais e setenta e dois centavos) foi gasto na zona sul de São Paulo, rua Volkswagen, s/nº, Jabaquara, SP.</p>".
-  "<p align='justify'>Encaminhamos o presente para as providências necessárias relativas ao pagamento da parcela do referido processo.</p>".
   "<p>&nbsp;</p>".
-  "<p>&nbsp;</p>"
+  "<p>INFORMAÇÕES COMPLEMENTARES</p>".
+  "<hr />".
+  "<p><strong>Nota de Empenho:</strong></p>".
+  "<p><strong>Anexo Nota de Empenho:</strong></p>".
+  "<p><strong>Recibo da Nota de Empenho:</strong></p>".
+  "<p><strong>Pedido de Pagamento:</strong></p>".
+  "<p><strong>Recibo de pagamento:</strong></p>".
+  "<p><strong>Relatório de Horas Trabalhadas:</strong></p>".
+  "<p><strong>NIT/PIS/PASEP:</strong></p>".
+  "<p><strong>Certidões fiscais:</strong></p>".
+  "<p>&nbsp;</p>".
+
+  "<p>São Paulo, ".$dia." de ".$mes." de ".$ano.".</p>";
 
 ?>
 
