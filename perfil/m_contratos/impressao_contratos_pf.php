@@ -55,6 +55,7 @@ $link60 = $http."rlt_condicionamento.php?id=".$id_ped ."&tipoPessoa=1";
 $link61 = $http."rlt_pedido_reserva_vai.php";
 $link62 = $http."rlt_pedido_reserva_centrosculturaisteatros_pf.php";
 $link63 = $http."rlt_pedido_reserva_ruasdelazer_pf.php";
+$link64 = $http."rlt_pedido_reserva_geral.php";
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -173,6 +174,7 @@ echo "
 
 						<tr>
 							<td><a href='$link61?id=$id_ped' target='_blank'><strong>Programa VAI</strong></a></td>
+                            <td><a href='$link64?id=$id_ped' target='_blank'><strong>Mês do Hip Hop</strong></a></td>
                         </tr>
 
 					</tbody>

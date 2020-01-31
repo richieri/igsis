@@ -8,8 +8,6 @@ $id = $id_ped;
 $server = "http://".$_SERVER['SERVER_NAME']."/igsis"; //mudar para pasta do igsis
 $http = $server."/pdf/";
 
-
-
 $link0 = $http."rlt_pedido_contratacao_pj.php";
 $link02 = $http."rlt_proposta_padrao_pj.php"."?id=".$id_ped."&penal";
 $link03 = $http."rlt_proposta_exposicao_edital_word_pj.php"."?id=".$id_ped."&penal";
@@ -60,7 +58,7 @@ $link64 = $http."rlt_pedido_reserva_jornada_pj.php";
 $link65 = $http."rlt_pedido_reserva_vai.php";
 $link66 = $http."rlt_pedido_reserva_centrosculturaisteatros_pj.php";
 $link67 = $http."rlt_pedido_reserva_ruasdelazer_pj.php";
-
+$link68 = $http."rlt_pedido_reserva_geral.php";
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -171,6 +169,7 @@ echo "
                         </tr>
                         <tr>                            
                             <td><a href='$link65?id=$id_ped' target='_blank'><strong>Programa VAI</strong></a></td>
+                            <td><a href='$link68?id=$id_ped' target='_blank'><strong>Mês do Hip Hop</strong></a></td>
                         </tr>
 
 					</tbody>
