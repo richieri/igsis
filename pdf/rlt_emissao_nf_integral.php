@@ -16,10 +16,6 @@ dataPagamento($id_ped);
 
 $pedido = siscontrat($id_ped);
 $pj = siscontratDocs($pedido['IdProponente'],2);
-$ex = siscontratDocs($pedido['IdExecutante'],1);
-$rep01 = siscontratDocs($pj['Representante01'],3);
-$rep02 = siscontratDocs($pj['Representante02'],3);
-$parcelamento = retornaParcelaPagamento($id_ped);
 
 //$id_parcela = $_GET['parcela'];
 
@@ -28,9 +24,7 @@ $ValorPorExtenso = valorPorExtenso($pedido['ValorGlobal']);
 
 $id = $pedido['idEvento'];
 $Objeto = $pedido["Objeto"];
-$Periodo = $pedido["Periodo"];
 $ValorGlobal = dinheiroParaBr($pedido["ValorGlobal"]);
-$FormaPagamento = $pedido["FormaPagamento"];
 $notaFiscal = $pedido["notaFiscal"];
 $descricaoNF = $pedido["descricaoNF"];
 $notaempenho = $pedido["NotaEmpenho"];
@@ -42,32 +36,7 @@ $NumeroProcesso = $pedido['NumeroProcesso'];
 $pjRazaoSocial = $pj["Nome"];
 $pjCNPJ = $pj['CNPJ'];
 
-
-// Executante
-
-$exNome = $ex["Nome"];
-$exRG = $ex["RG"];
-$exCPF = $ex["CPF"];
-
-
-// Representante01
-
-$rep01Nome = $rep01["Nome"];
-$rep01EstadoCivil = $rep01["EstadoCivil"];
-$rep01Nacionalidade = $rep01["Nacionalidade"];
-$rep01RG = $rep01["RG"];
-$rep01CPF = $rep01["CPF"];
-
-
-// Representante02
-
-$rep02Nome = $rep02["Nome"];
-$rep02EstadoCivil = $rep02["EstadoCivil"];
-$rep02Nacionalidade = $rep02["Nacionalidade"];
-$rep02RG = $rep02["RG"];
-$rep02CPF = $rep02["CPF"];
-
-
+$dataAtual = date('d-m-Y');
 // GERANDO O WORD:
 //header("Content-type: application/vnd.ms-word");
 //header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Integral.doc");
@@ -120,7 +89,7 @@ switch($verba)
 <p><strong>Unidade:</strong> Gabinete do Secretário</p>
 <p><strong>CNPJ:</strong> 49.269.244/0001-63</p>
 <p><strong>Endereço:</strong> Av. São João, 473 - 11º andar - Centro - CEP: 01035-000</p>
-<p><strong>Município:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Estado:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>I. Est. Nº</strong>: Isento </p>
+<p><strong>Município:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Estado:</strong> São Paulo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>I. Est. Nº:</strong> Isento </p>
 <p>&nbsp;</p>
 <p><strong>Nota Fiscal:</strong> <?php echo $notaFiscal?></p>
 <p align="justify"><strong>Valor:</strong> R$<?php echo $ValorGlobal?> (<?php echo $ValorPorExtenso?> )</p>
