@@ -38,8 +38,8 @@ $pjCNPJ = $pj['CNPJ'];
 
 $dataAtual = date('d-m-Y');
 // GERANDO O WORD:
-//header("Content-type: application/vnd.ms-word");
-//header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Integral.doc");
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $NumeroProcesso - Integral.doc");
 
 switch($verba)
 {
