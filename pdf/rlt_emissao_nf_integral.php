@@ -21,7 +21,7 @@ $rep01 = siscontratDocs($pj['Representante01'],3);
 $rep02 = siscontratDocs($pj['Representante02'],3);
 $parcelamento = retornaParcelaPagamento($id_ped);
 
-$id_parcela = $_GET['parcela'];
+//$id_parcela = $_GET['parcela'];
 
 $ValorPorExtenso = valorPorExtenso($pedido['ValorGlobal']);
 
