@@ -57,14 +57,9 @@ case 9: $mes = "Setembro"; break;
 case 10: $mes = "Outubro"; break;
 case 11: $mes = "Novembro"; break;
 case 12: $mes = "Dezembro"; break;
-
-  
 }
+?>
 
-  
- ?>
- 
- 
 <html>
 <head> 
 <meta http-equiv=\"Content-Type\" content=\"text/html. charset=Windows-1252\">
@@ -82,10 +77,8 @@ case 12: $mes = "Dezembro"; break;
 </style>
 <script src="include/dist/ZeroClipboard.min.js"></script>
 </head>
+<body>
 
- <body>
-
-  
 <?php
 
 $sei = 
@@ -93,6 +86,7 @@ $sei =
   "<p><strong>Interessado:</strong> ".$nome."</p>".
   "<p><strong>Do evento:</strong> ".$objeto."</p>".
   "<p>&nbsp;</p>".
+  "<p>Atesto o recebimento em ".$dataAtual.", de toda a documentação: recibo link SEI e arquivos consolidados, previstos na Portaria SF 08/16.</p>".
   "<p>&nbsp;</p>".
   "<p><strong>SMC - CONTABILIDADE</strong></p>".
   "<p><strong>Sr.(a) Contador(a)</strong></p>".
