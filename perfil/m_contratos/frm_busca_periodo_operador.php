@@ -107,36 +107,46 @@ if(isset($_POST['periodo']))
 		$dataInicio = strtotime(retornaDataInicio($idEvento));
 		if($dataInicio >= strtotime($inicio) AND $dataInicio <= strtotime($final))
 		{
-			$pedido = recuperaDados("igsis_pedido_contratacao",$evento['idPedidoContratacao'],"idPedidoContratacao");
-			$event = recuperaDados("ig_evento",$evento['idEvento'],"idEvento");
-			$usuario = recuperaDados("ig_usuario",$event['idUsuario'],"idUsuario");
-			$instituicao = recuperaDados("ig_instituicao",$event['idInstituicao'],"idInstituicao");
-			$local = listaLocais($pedido['idEvento']);
-			$periodo = retornaPeriodo($pedido['idEvento']);
-			$operador = recuperaUsuario($pedido['idContratos']);
+			//$pedido = recuperaDados("igsis_pedido_contratacao",$evento['idPedidoContratacao'],"idPedidoContratacao");
+			//$event = recuperaDados("ig_evento",$evento['idEvento'],"idEvento");
+			//$usuario = recuperaDados("ig_usuario",$event['idUsuario'],"idUsuario");
+			//$instituicao = recuperaDados("ig_instituicao",$event['idInstituicao'],"idInstituicao");
+			//$operador = recuperaUsuario($pedido['idContratos']);
 
-			$x[$i]['id']= $pedido['idPedidoContratacao'];
-			$x[$i]['NumeroProcesso']= $pedido['NumeroProcesso'];
-			$x[$i]['objeto'] = retornaTipo($event['ig_tipo_evento_idTipoEvento'])." - ".$event['nomeEvento'];
-			if($pedido['tipoPessoa'] == 1)
+			$lista = $con->query(" SELECT ped.idPedidoContratacao, eve.idEvento, ped.NumeroProcesso, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, ped.tipoPessoa, ped.idPessoa, ii.sigla, ped.valor, ped.pendenciaDocumento, se.estado, iu.nomeCompleto
+                FROM igsis_pedido_contratacao AS ped
+                INNER JOIN ig_evento eve on ped.idEvento = eve.idEvento
+                LEFT JOIN ig_instituicao ii on eve.idInstituicao = ii.idInstituicao
+                LEFT JOIN sis_estado se on ped.estado = se.idEstado    
+                LEFT JOIN ig_usuario iu on ped.idContratos = iu.idUsuario
+                WHERE ped.idPedidoContratacao = '{$evento['idPedidoContratacao']}'
+			")->fetch_assoc();
+            $local = listaLocais($lista['idEvento']);
+            $periodo = retornaPeriodo($lista['idEvento']);
+
+
+			$x[$i]['id'] = $lista['idPedidoContratacao'];
+			$x[$i]['NumeroProcesso'] = $lista['NumeroProcesso'];
+			$x[$i]['objeto'] = retornaTipo($lista['ig_tipo_evento_idTipoEvento'])." - ".$lista['nomeEvento'];
+			if($lista['tipoPessoa'] == 1)
 			{
-				$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
+				$pessoa = recuperaDados("sis_pessoa_fisica",$lista['idPessoa'],"Id_PessoaFisica");
 				$x[$i]['proponente'] = $pessoa['Nome'];
 				$x[$i]['tipo'] = "Física";
 			}
 			else
 			{
-				$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
+				$pessoa = recuperaDados("sis_pessoa_juridica",$lista['idPessoa'],"Id_PessoaJuridica");
 				$x[$i]['proponente'] = $pessoa['RazaoSocial'];
 				$x[$i]['tipo'] = "Jurídica";
 			}
 			$x[$i]['local'] = substr($local,1);
-			$x[$i]['instituicao'] = $instituicao['sigla'];
+			$x[$i]['instituicao'] = $lista['sigla'];
 			$x[$i]['periodo'] = $periodo;
-			$x[$i]['valor']= $pedido['valor'];
-			$x[$i]['pendencia'] = $pedido['pendenciaDocumento'];
-			$x[$i]['status'] = $pedido['estado'];
-			$x[$i]['operador'] = $operador['nomeCompleto'];
+			$x[$i]['valor']= $lista['valor'];
+			$x[$i]['pendencia'] = $lista['pendenciaDocumento'];
+			$x[$i]['status'] = $lista['estado'];
+			$x[$i]['operador'] = $lista['nomeCompleto'];
 			$i++;
 		}
 	}
@@ -176,7 +186,6 @@ if(isset($_POST['periodo']))
 						$data=date('Y');
 						for($h = 0; $h < $x['num']; $h++)
 						{
-							 $status = recuperaDados("sis_estado",$x[$h]['status'],"idEstado");
 							if($x[$h]['tipo'] == 'Física')
 							{
 								echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
@@ -194,7 +203,7 @@ if(isset($_POST['periodo']))
 							echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['valor'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['pendencia'].'</td> ';
-							echo '<td class="list_description">'.$status['estado'].'</td> ';
+							echo '<td class="list_description">'.$x[$h]['status'].'</td> ';
 							echo '<td class="list_description">'.$x[$h]['operador'].'</td> </tr>';
 						}
 					?>
