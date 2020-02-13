@@ -85,7 +85,7 @@ switch ($p) {
                                     }
                                     ?>
                                     <tr>
-                                        <td class="list_description"><a href="<?=$link?>"><?= $lista['idPedidoContratacao'] ?></a><?= $lista['idPedidoContratacao'] ?></td>
+                                        <td class="list_description"><a href="<?= $link.$lista['idPedidoContratacao'] ?>"><?= $lista['idPedidoContratacao'] ?></a></td>
                                         <td class="list_description"><?= $lista['NumeroProcesso'] ?></td>
                                         <td class="list_description"><?= $proponente ?></td>
                                         <td class="list_description"><?= $tipo ?></td>
