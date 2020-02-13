@@ -22,48 +22,23 @@ switch ($p) {
             }
 
             $con = bancoMysqli();
-            $sql_evento = "
-                 SELECT ped.idPedidoContratacao, eve.idEvento, ped.NumeroProcesso, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, ped.tipoPessoa, ped.idPessoa, ii.sigla, ped.valor, ped.pendenciaDocumento, se.estado, iu.nomeCompleto
-                    FROM igsis_agenda AS age
-                    INNER JOIN ig_evento eve on age.idEvento = eve.idEvento
-                    INNER JOIN igsis_pedido_contratacao AS ped on age.idEvento = ped.idEvento 
+            $sql_evento = $con->query("
+                    SELECT ped.idPedidoContratacao, eve.idEvento, ped.NumeroProcesso, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, ped.tipoPessoa, ped.idPessoa, ii.sigla, ped.valor, ped.pendenciaDocumento, se.estado, iu.nomeCompleto, MIN(oco.dataInicio)
+                    FROM ig_ocorrencia AS oco
+                    INNER JOIN ig_evento eve on oco.idEvento = eve.idEvento
+                    INNER JOIN igsis_pedido_contratacao AS ped on oco.idEvento = ped.idEvento 
                     LEFT JOIN ig_instituicao ii on eve.idInstituicao = ii.idInstituicao
                     LEFT JOIN sis_estado se on ped.estado = se.idEstado    
                     LEFT JOIN ig_usuario iu on ped.idContratos = iu.idUsuario
-                    WHERE data BETWEEN '$inicio' AND '$final' $operador
+                    WHERE oco.dataInicio BETWEEN '$inicio' AND '$final' $operador
                     AND ped.estado NOT IN (1, 11, 12)
                     AND eve.dataEnvio IS NOT NULL
                     AND ped.publicado = '1'
                     AND eve.publicado = '1'
-                    GROUP BY age.idEvento, data 
-                    ORDER BY data";
-            $query_evento = mysqli_query($con, $sql_evento);
-            $num = mysqli_num_rows($query_evento);
-
-            $i = 0;
-            while ($lista = mysqli_fetch_array($query_evento)) {
-                $x[$i]['id'] = $lista['idPedidoContratacao'];
-                $x[$i]['NumeroProcesso'] = $lista['NumeroProcesso'];
-                $x[$i]['objeto'] = retornaTipo($lista['ig_tipo_evento_idTipoEvento']) . " - " . $lista['nomeEvento'];
-                if ($lista['tipoPessoa'] == 1) {
-                    $pessoa = recuperaDados("sis_pessoa_fisica", $lista['idPessoa'], "Id_PessoaFisica");
-                    $x[$i]['proponente'] = $pessoa['Nome'];
-                    $x[$i]['tipo'] = "Física";
-                } else {
-                    $pessoa = recuperaDados("sis_pessoa_juridica", $lista['idPessoa'], "Id_PessoaJuridica");
-                    $x[$i]['proponente'] = $pessoa['RazaoSocial'];
-                    $x[$i]['tipo'] = "Jurídica";
-                }
-                $x[$i]['local'] = substr(listaLocais($lista['idEvento']), 1);
-                $x[$i]['instituicao'] = $lista['sigla'];
-                $x[$i]['periodo'] = retornaPeriodo($lista['idEvento']);
-                $x[$i]['valor'] = $lista['valor'];
-                $x[$i]['pendencia'] = $lista['pendenciaDocumento'];
-                $x[$i]['status'] = $lista['estado'];
-                $x[$i]['operador'] = $lista['nomeCompleto'];
-                $i++;
-            }
-            $x['num'] = $i;
+                    GROUP BY oco.idEvento
+                    ORDER BY oco.dataInicio");
+            $query_evento = $sql_evento->fetch_all(MYSQLI_ASSOC);
+            $num = $sql_evento->num_rows;
             if ($num > 0) {
                 ?>
                 <br/>
@@ -71,7 +46,7 @@ switch ($p) {
                 <section id="list_items">
                     <div class="container">
                         <h3>Resultado da busca</3>
-                        <h5>Foram encontrados <?php echo $x['num']; ?> pedidos de contratação.</h5>
+                        <h5>Foram encontrados <?php echo $num; ?> pedidos de contratação.</h5>
                         <h5><a href="?perfil=contratos&p=frm_busca_periodo_operador">Fazer outra busca</a></h5>
                         <div class="table-responsive list_info">
                             <table class="table table-condensed">
@@ -94,24 +69,37 @@ switch ($p) {
                                 <tbody>
 
                                 <?php
-                                $data = date('Y');
-                                for ($h = 0; $h < $x['num']; $h++) {
-                                    if ($x[$h]['tipo'] == 'Física') {
-                                        echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=" . $x[$h]['id'] . "'>" . $x[$h]['id'] . "</a></td>";
+                                $i = 0;
+                                foreach ($query_evento as $lista){
+                                    //var_dump($lista);
+                                    if ($lista['tipoPessoa'] == 1) {
+                                        $pessoa = recuperaDados("sis_pessoa_fisica", $lista['idPessoa'], "Id_PessoaFisica");
+                                        $proponente = $pessoa['Nome'];
+                                        $tipo = "Física";
+                                        $link = "?perfil=contratos&p=frm_edita_propostapf&id_ped=";
                                     } else {
-                                        echo "<tr><td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=" . $x[$h]['id'] . "'>" . $x[$h]['id'] . "</a></td>";
+                                        $pessoa = recuperaDados("sis_pessoa_juridica", $lista['idPessoa'], "Id_PessoaJuridica");
+                                        $proponente = $pessoa['RazaoSocial'];
+                                        $tipo = "Jurídica";
+                                        $link = "?perfil=contratos&p=frm_edita_propostapj&id_ped=";
                                     }
-                                    echo '<td class="list_description">' . $x[$h]['NumeroProcesso'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['proponente'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['tipo'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['objeto'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['local'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['instituicao'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['periodo'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['valor'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['pendencia'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['status'] . '</td> ';
-                                    echo '<td class="list_description">' . $x[$h]['operador'] . '</td> </tr>';
+                                    ?>
+                                    <tr>
+                                        <td class="list_description"><a href="<?=$link?>"><?= $lista['idPedidoContratacao'] ?></a><?= $lista['idPedidoContratacao'] ?></td>
+                                        <td class="list_description"><?= $lista['NumeroProcesso'] ?></td>
+                                        <td class="list_description"><?= $proponente ?></td>
+                                        <td class="list_description"><?= $tipo ?></td>
+                                        <td class="list_description"><?= retornaTipo($lista['ig_tipo_evento_idTipoEvento']) . " - " . $lista['nomeEvento'] ?></td>
+                                        <td class="list_description"><?= substr(listaLocais($lista['idEvento']), 1) ?></td>
+                                        <td class="list_description"><?= $lista['sigla'] ?></td>
+                                        <td class="list_description"><?= retornaPeriodo($lista['idEvento']) ?></td>
+                                        <td class="list_description"><?= $lista['valor'] ?></td>
+                                        <td class="list_description"><?= $lista['pendenciaDocumento'] ?></td>
+                                        <td class="list_description"><?= $lista['estado'] ?></td>
+                                        <td class="list_description"><?= $lista['nomeCompleto'] ?></td>
+                                    </tr>
+                                    <?php
+                                    $i++;
                                 }
                                 ?>
                                 </tbody>
