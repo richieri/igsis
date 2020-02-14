@@ -1,6 +1,7 @@
 <?php
 include 'includes/menu.php';
 $con = bancoMysqli();
+$projeto_especial_id = $_GET['projeto'];
 switch($_GET['atribuido'])
 {
 	case 0:
@@ -36,7 +37,7 @@ switch($_GET['atribuido'])
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND (ped.NumeroProcesso = NULL OR ped.NumeroProcesso = '') AND eve.projetoEspecial IN (69)
+					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND (ped.NumeroProcesso = NULL OR ped.NumeroProcesso = '') AND eve.projetoEspecial IN ($projeto_especial_id)
 					ORDER BY idPedidoContratacao DESC";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
@@ -121,7 +122,7 @@ case 1:
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND (ped.NumeroProcesso != NULL OR ped.NumeroProcesso != '') AND eve.projetoEspecial IN (69)
+					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND (ped.NumeroProcesso != NULL OR ped.NumeroProcesso != '') AND eve.projetoEspecial IN ($projeto_especial_id)
 					ORDER BY idPedidoContratacao DESC";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
@@ -210,7 +211,7 @@ $link01 = $http."relatorio_virada.php";
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
                     INNER JOIN ig_ocorrencia AS oco ON eve.idEvento = oco.idEvento
-					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND idProjetoEspecial = 69 AND oco.dataInicio LIKE '2019%'
+					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND idProjetoEspecial = $projeto_especial_id AND oco.dataInicio LIKE '2019%'
 					ORDER BY idPedidoContratacao DESC";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
