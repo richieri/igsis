@@ -17,6 +17,7 @@ case 'inicial':
 /*POST*/
 if(isset($_POST['periodo']))
 {
+    $projeto_especial_id = $_GET['projeto'];
 	$idContratos = $_POST['operador'];
 
 	if($idContratos == 0)
@@ -34,7 +35,7 @@ if(isset($_POST['periodo']))
 		FROM ig_evento AS eve
 		INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 		INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
-		WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND eve.projetoEspecial IN (69) $operador";
+		WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND eve.projetoEspecial IN ($projeto_especial_id) $operador";
 
 	   $query_evento = mysqli_query($con,$sql_evento);
 	   $num = mysqli_num_rows($query_evento);
