@@ -22,8 +22,7 @@ switch ($p) {
             }
 
             $con = bancoMysqli();
-            $sql_evento = $con->query("
-                    SELECT ped.idPedidoContratacao, eve.idEvento, ped.NumeroProcesso, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, ped.tipoPessoa, ped.idPessoa, ii.sigla, ped.valor, ped.pendenciaDocumento, se.estado, iu.nomeCompleto, MIN(oco.dataInicio)
+            $sql = "SELECT ped.idPedidoContratacao, eve.idEvento, ped.NumeroProcesso, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, ped.tipoPessoa, ped.idPessoa, ii.sigla, ped.valor, ped.pendenciaDocumento, se.estado, iu.nomeCompleto, MIN(oco.dataInicio)
                     FROM ig_ocorrencia AS oco
                     INNER JOIN ig_evento eve on oco.idEvento = eve.idEvento
                     INNER JOIN igsis_pedido_contratacao AS ped on oco.idEvento = ped.idEvento 
@@ -36,9 +35,20 @@ switch ($p) {
                     AND ped.publicado = '1'
                     AND eve.publicado = '1'
                     GROUP BY oco.idEvento
-                    ORDER BY oco.dataInicio");
+                    ORDER BY oco.dataInicio";
+            $sql_evento = $con->query($sql);
             $query_evento = $sql_evento->fetch_all(MYSQLI_ASSOC);
-            $num = $sql_evento->num_rows;
+
+            foreach ($query_evento as $key => $query) {
+                $evento_id = $query['idEvento'];
+                $dataInicio = $con->query("SELECT MIN(dataInicio) AS 'inicio' FROM ig_ocorrencia WHERE idEvento = '$evento_id';")->fetch_assoc()['inicio'];
+                if ($dataInicio < $inicio) {
+                    unset($query_evento[$key]);
+                }
+            }
+
+            $num = count($query_evento);
+
             if ($num > 0) {
                 ?>
                 <br/>
@@ -71,7 +81,6 @@ switch ($p) {
                                 <?php
                                 $i = 0;
                                 foreach ($query_evento as $lista){
-                                    //var_dump($lista);
                                     if ($lista['tipoPessoa'] == 1) {
                                         $pessoa = recuperaDados("sis_pessoa_fisica", $lista['idPessoa'], "Id_PessoaFisica");
                                         $proponente = $pessoa['Nome'];
