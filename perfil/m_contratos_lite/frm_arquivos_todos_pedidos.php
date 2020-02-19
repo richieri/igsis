@@ -142,4 +142,5 @@ readfile($nome_arquivo);
 	
 //ABRINDO O ARQUIVO 
 
+unlink($nome_arquivo); // aqui apaga
 ?>
