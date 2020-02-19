@@ -171,6 +171,9 @@ echo "
                             <td><a href='$link65?id=$id_ped' target='_blank'><strong>Programa VAI</strong></a></td>
                             <td><a href='$link68?id=$id_ped' target='_blank'><strong>Mês do Hip Hop</strong></a></td>
                         </tr>
+                        <tr>
+                            <td><a href='$link68?id=$id_ped' target='_blank'><strong>Emendas</strong></a></td>
+                        </tr>
 
 					</tbody>
 				</table>
