@@ -213,7 +213,7 @@ $link01 = $http."relatorio_virada.php";
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
                     INNER JOIN ig_ocorrencia AS oco ON eve.idEvento = oco.idEvento
 					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND idProjetoEspecial = $projeto_especial_id AND oco.dataInicio LIKE '$ano%'
-					ORDER BY idPedidoContratacao DESC";
+					ORDER BY oco.dataInicio";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
 				{
