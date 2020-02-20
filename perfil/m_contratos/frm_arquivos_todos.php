@@ -64,7 +64,9 @@ if ($criou === true)
 
 	readfile($nome_arquivo);
 	
-	//ABRINDO O ARQUIVO 
+	//ABRINDO O ARQUIVO
+
+    unlink($nome_arquivo); // aqui apaga
 } 
 else 
 {

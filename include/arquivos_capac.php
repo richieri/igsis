@@ -167,4 +167,5 @@ flush();
 
 readfile($nome_arquivo);
 
+unlink($nome_arquivo); // aqui apaga
 ?>
