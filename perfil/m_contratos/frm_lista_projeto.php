@@ -3,6 +3,7 @@ include 'includes/menu.php';
 $con = bancoMysqli();
 $projeto_especial_id = $_GET['projeto'];
 $ano = $projeto_especial_id == 91 ? "2020" : "2019";
+$projeto = $projeto_especial_id == 91 ? "HIP HOP" : "VIRADA CULTURAL";
 switch($_GET['atribuido'])
 {
 	case 0:
@@ -12,7 +13,7 @@ switch($_GET['atribuido'])
 <br /><br /><br />
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6>
+		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO <?= $projeto ?></h6>
 		</div>
 		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 		<div class="table-responsive list_info">
@@ -38,8 +39,9 @@ switch($_GET['atribuido'])
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
+                    INNER JOIN ig_ocorrencia AS oco ON eve.idEvento = oco.idEvento
 					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND (ped.NumeroProcesso = NULL OR ped.NumeroProcesso = '') AND eve.projetoEspecial IN ($projeto_especial_id)
-					ORDER BY idPedidoContratacao DESC";
+                    ORDER BY oco.dataInicio";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
 				{
@@ -96,7 +98,7 @@ case 1:
 <br /><br /><br />
 <section id="list_items">
 	<div class="container">
-		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6>
+		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO <?= $projeto ?></h6>
 		</div>
 		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>
 		<div class="table-responsive list_info">
@@ -123,8 +125,9 @@ case 1:
 					FROM ig_evento AS eve
 					INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento=ped.idEvento
 					INNER JOIN ig_projeto_especial AS proj ON eve.projetoEspecial=proj.idProjetoEspecial
+                    INNER JOIN ig_ocorrencia AS oco ON eve.idEvento = oco.idEvento
 					WHERE eve.publicado=1 AND eve.dataEnvio IS NOT NULL AND ped.publicado=1 AND (ped.NumeroProcesso != NULL OR ped.NumeroProcesso != '') AND eve.projetoEspecial IN ($projeto_especial_id)
-					ORDER BY idPedidoContratacao DESC";
+					ORDER BY oco.dataInicio";
 				$query_enviados = mysqli_query($con,$sql_enviados);
 				while($pedido = mysqli_fetch_array($query_enviados))
 				{
@@ -184,7 +187,7 @@ $link01 = $http."relatorio_virada.php";
 <br /><br /><br />
 <section id="list_items">
 	<div class="container" style="min-width: 1201px; width: 90%;">
-		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO VIRADA CULTURAL</h6> <a href="<?php echo $link01 ?>"><strong>Gerar Excel</strong></a>
+		<div class="sub-title"><h6>PEDIDO DE CONTRATAÇÃO <?= $projeto ?></h6> <a href="<?php echo $link01 ?>"><strong>Gerar Excel</strong></a>
 		</div>
 		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>	
 		<div class="table-responsive list_info">
