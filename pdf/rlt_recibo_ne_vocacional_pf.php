@@ -47,7 +47,7 @@ $dataAtual = date("d/m/Y");
 $notaempenho = $linha_tabelas["NotaEmpenho"];
 $data_entrega_empenho = exibirDataBr($linha_tabelas['EntregaNE']);
 $data_emissao_empenho = exibirDataBr($linha_tabelas['EmissaoNE']);
-$NumeroProcesso = $linha_tabelas["NumeroProcesso"];
+$NumeroProcesso = $linha_tabelas["NumeroProcesso"] == null ? "6025.2020/__________-___" : $linha_tabelas["NumeroProcesso"];
 
 $linha_tabelas_pessoa = siscontratDocs($linha_tabelas['IdProponente'],1);
 
