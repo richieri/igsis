@@ -245,10 +245,12 @@ $(function()
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-6"><strong>Ano:</strong>
 						<select class="form-control" name="ano" id="Status">
-							<option value='2019'<?php if($formacao['Ano'] == 2019){echo " selected ";} ?>>2019</option>
-							<option value='2018'<?php if($formacao['Ano'] == 2018){echo " selected ";} ?>>2018</option>
-							<option value='2017'<?php if($formacao['Ano'] == 2017){echo " selected ";} ?>>2017</option>
-							<option value='2016'<?php if($formacao['Ano'] == 2016){echo " selected ";} ?>>2016</option>
+                            <?php
+                            for($i = date('Y'); $i >= 2016; $i--) {
+                                $selected = $formacao['Ano'] == $i ? "selected" : "";
+                                echo "<option value='$i' $selected>$i</option>";
+                            }
+                            ?>
 						</select><br/>
 					</div>			
 					<div class="col-md-6"><strong>Status do Cadastro:</strong><br/>
@@ -366,24 +368,13 @@ $(function()
 					<div class="col-md-offset-2 col-md-8"><strong>Vigência:</strong><br/>
 						<select class="form-control" name="vigencia" id="local3" >
 						<?php  
-							$sql_vigencia = "SELECT * FROM sis_formacao_vigencia WHERE publicado = '1'";
+							$sql_vigencia = "SELECT * FROM sis_formacao_vigencia WHERE publicado = '1' AND ano = '2020'";
 							$query_vigencia = mysqli_query($con,$sql_vigencia);
-							while($vigencia = mysqli_fetch_array($query_vigencia))
-							{
-								if($vigencia['Id_Vigencia'] == $formacao['IdVigencia'])
-								{
-							?>
-									<option value="<?php echo $vigencia['Id_Vigencia']; ?>" selected><?php echo $vigencia['descricao'] ?></option>
-							<?php 
-								}
-								else
-								{
-							?>
-									<option value="<?php echo $vigencia['Id_Vigencia']; ?>" ><?php echo $vigencia['descricao'] ?></option>
-							<?php 
-								}
-							} 
-							?>
+							while($vigencia = mysqli_fetch_array($query_vigencia)) {
+								$selected = $vigencia['Id_Vigencia'] == $formacao['IdVigencia'] ? "selected" : "";
+                                ?>
+                                <option value="<?= $vigencia['Id_Vigencia'] ?> <?=$selected?>"><?= $vigencia['descricao'] ?></option>
+                            <?php } ?>
 						</select>			
 						<br/>
 					</div>
