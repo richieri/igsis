@@ -178,6 +178,7 @@ echo "
                         </tr>
                         <tr>
                             <td><a href='$link64?id=$id_ped' target='_blank'><strong>Emendas</strong></a></td>
+                            <td><a href='$link64?id=$id_ped' target='_blank'><strong>Museu da Cidade 6405</strong></a></td>
                         </tr>
 
 					</tbody>
