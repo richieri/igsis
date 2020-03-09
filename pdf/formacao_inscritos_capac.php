@@ -41,19 +41,20 @@ $objPHPExcel->setActiveSheetIndex(0)
     ->setCellValue('A1', 'Número Inscrição' )
     ->setCellValue('B1', "Nome" )
     ->setCellValue("C1", "CPF" )
-    ->setCellValue("D1", "Data de Nascimento" )
-    ->setCellValue("E1", "Função")
-    ->setCellValue("F1", "Função (2º Opção)")
-    ->setCellValue("G1", "Função (3º Opção)")
-    ->setCellValue("H1", "Linguagem")
-    ->setCellValue("I1", "Etnia")
-    ->setCellValue("J1", "Região Preferencial");
+    ->setCellValue("D1", "E-mail" )
+    ->setCellValue("E1", "Data de Nascimento" )
+    ->setCellValue("F1", "Função")
+    ->setCellValue("G1", "Função (2º Opção)")
+    ->setCellValue("H1", "Função (3º Opção)")
+    ->setCellValue("I1", "Linguagem")
+    ->setCellValue("J1", "Etnia")
+    ->setCellValue("K1", "Região Preferencial");
 
 // Definimos o estilo da fonte
-$objPHPExcel->getActiveSheet()->getStyle('A1:J1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:K1')->getFont()->setBold(true);
 
 //Colorir a primeira linha
-$objPHPExcel->getActiveSheet()->getStyle('A1:J1')->applyFromArray
+$objPHPExcel->getActiveSheet()->getStyle('A1:K1')->applyFromArray
 (
     array
     (
@@ -95,6 +96,7 @@ $sql= "SELECT
           pf.nome,
           pf.rg,
           pf.cpf,
+          pf.email,
           pf.ccm,
           pf.dataNascimento,
           tf.descricao,
@@ -135,17 +137,19 @@ while($pf = mysqli_fetch_array($query))
     $h = "H".$x;
     $i = "I".$x;
     $j = "J".$x;
+    $k = "K".$x;
     $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue($a, $pf['id'])
         ->setCellValue($b, $pf['nome'])
         ->setCellValue($c, $pf['cpf'])
-        ->setCellValue($d, exibirDataBr($pf['dataNascimento']))
-        ->setCellValue($e, $pf['funcao'])
-        ->setCellValue($f, $funcoesAdicionais['funcao2'])
-        ->setCellValue($g, $funcoesAdicionais['funcao3'])
-        ->setCellValue($h, $pf['linguagem'])
-        ->setCellValue($i, $pf['etnia'])
-        ->setCellValue($j, $pf['regiao']);
+        ->setCellValue($d, $pf['email'])
+        ->setCellValue($e, exibirDataBr($pf['dataNascimento']))
+        ->setCellValue($f, $pf['funcao'])
+        ->setCellValue($g, $funcoesAdicionais['funcao2'])
+        ->setCellValue($h, $funcoesAdicionais['funcao3'])
+        ->setCellValue($i, $pf['linguagem'])
+        ->setCellValue($j, $pf['etnia'])
+        ->setCellValue($k, $pf['regiao']);
     $x++;
 }
 
