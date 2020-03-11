@@ -3,7 +3,7 @@
 			<button class="dl-trigger">Busca</button>
 			<ul class="dl-menu">
 				<li><a>Busca por:</a></li>
-				<li><a href="?perfil=busca&p=eventos" >Eventos</a></li>
+<!--				<li><a href="?perfil=busca&p=eventos" >Eventos</a></li>-->
 				<li><a href="?perfil=busca&p=pessoa" >Pessoa física / Pessoa Jurídica</a></li>                
 				<li><a href="?perfil=busca&p=igsis" >Instituições, usuários e espaços</a></li>				                
 				<li><a href="?perfil=busca_pedido" >Pedidos de contratação</a></li>
