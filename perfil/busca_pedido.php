@@ -354,7 +354,8 @@
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
 				<div class="section-heading">
-					<h2>Busca por pedido</h2>
+					<h3>Busca por pedido</h3>
+                    <p>A busca será realizada onde o usuário que está logado é fiscal, suplente ou quem o criou.</p>
 				</div>
 			</div>
 		</div>
@@ -368,7 +369,7 @@
 						<label>Número do Processo</label>
 						<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira número do processo" ><br />
 						<label>Objeto/Evento</label>
-						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />   
+						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
 						<label>Tipo de evento</label>
 						<select class="form-control" name="tipo" id="inputSubject" >
 							<option value="0"></option>		                
