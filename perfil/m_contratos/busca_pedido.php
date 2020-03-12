@@ -3,7 +3,6 @@
 	require_once("../funcoes/funcoesVerifica.php");
 	require_once("../funcoes/funcoesSiscontrat.php");
 	include "../include/menuBusca.php";
-
 	if(isset($_GET['b']))
 	{
 		$b = $_GET['b'];	
@@ -19,7 +18,7 @@
 			{
 				$id = trim($_POST['id']);
 				$evento = trim($_POST['evento']);
-				$fiscal = $_SESSION['idUsuario'];
+				$fiscal = $_POST['fiscal'];
 				$tipo = $_POST['tipo'];
 				$instituicao = $_POST['instituicao'];
 				$estado = $_POST['estado'];
@@ -27,7 +26,7 @@
 				$processo = $_POST['NumeroProcesso'];
 				$valor_inicial = $_POST['valor_inicial'];
 				$valor_final = $_POST['valor_final'];
-				if($id == "" AND $evento == "" AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $processo == 0 AND $juridico == 0 AND $valor_inicial == 0 AND $valor_final == 0)
+				if($id == "" AND $evento == "" AND $fiscal == 0 AND $tipo == 0 AND $instituicao == 0 AND $estado == 0 AND $processo == 0 AND $juridico == 0 AND $valor_inicial == 0 AND $valor_final == 0)
 				{
 ?>
 <section id="services" class="home-section bg-white">
@@ -50,7 +49,13 @@
 						<label>Número do Processo</label>
 						<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira o número do processo com a devida pontuação"><br />
 						<label>Objeto/Evento</label>
-						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
+						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br /> 
+						<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
+						<select class="form-control" name="fiscal" id="inputSubject" >
+							<option value="0"></option>	
+							<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
+						</select>
+						<br />
 						<label>Tipo de evento</label>
 						<select class="form-control" name="tipo" id="inputSubject" >
 							<option value="0"></option>		                
@@ -99,7 +104,7 @@
 				else
 				{
 					$con = bancoMysqli();
-					$sql_existe = "SELECT idPedidoContratacao, ped.idEvento, estado FROM igsis_pedido_contratacao as ped inner join ig_evento as eve ON ped.idEvento = eve.idEvento WHERE idPedidoContratacao = '$id' AND publicado = '1' AND estado IS NOT NULL  AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' ) ORDER BY idPedidoContratacao DESC";
+					$sql_existe = "SELECT idPedidoContratacao, idEvento, estado FROM igsis_pedido_contratacao WHERE idPedidoContratacao = '$id' AND publicado = '1' AND estado IS NOT NULL ORDER BY idPedidoContratacao DESC";
 					$query_existe = mysqli_query($con, $sql_existe);
 					$num_registro = mysqli_num_rows($query_existe);
 					if($id != "")
@@ -112,7 +117,7 @@
                         SELECT ped.idPedidoContratacao, ped.NumeroProcesso, eve.idEvento, st.idEstado, ped.valor, ped.parcelas, ped.idEvento, ped.formaPagamento, eve.nomeEvento, ped.idPessoa, ped.estado, eve.idInstituicao, eve.ig_tipo_evento_idTipoEvento, ped.tipoPessoa
                             FROM igsis_pedido_contratacao AS ped
                             INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento
-                            INNER JOIN sis_estado AS st ON ped.estado = st.idEstado  AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )
+                            INNER JOIN sis_estado AS st ON ped.estado = st.idEstado
                             WHERE ped.idPedidoContratacao = '$id'";
                             $query = mysqli_query($con,$sql);
 
@@ -169,6 +174,14 @@
 						{
 							$filtro_evento = "";
 						}
+						if($fiscal != 0)
+						{
+							$filtro_fiscal = " AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )";	
+						}
+						else
+						{
+							$filtro_fiscal = "";	
+						}
 						if($tipo != 0)
 						{
 							$filtro_tipo = " AND ig_tipo_evento_idTipoEvento = '$tipo' ";	
@@ -217,8 +230,7 @@
 						{
 							$filtro_valor = "AND igsis_pedido_contratacao.valor BETWEEN '$valor_inicial' AND '$valor_final'";
 						}
-                        $filtro_fiscal = " AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )";
-                        $sql_evento = "SELECT * 
+						$sql_evento = "SELECT * 
 							FROM ig_evento,
 							igsis_pedido_contratacao 
 							WHERE ig_evento.publicado = '1' 
@@ -354,8 +366,7 @@
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8">
 				<div class="section-heading">
-					<h3>Busca por pedido</h3>
-                    <p>A busca será realizada onde o usuário que está logado é fiscal, suplente ou quem o criou.</p>
+					<h2>Busca por pedido</h2>
 				</div>
 			</div>
 		</div>
@@ -369,7 +380,13 @@
 						<label>Número do Processo</label>
 						<input type="text" name="NumeroProcesso" class="form-control" id="palavras" placeholder="Insira número do processo" ><br />
 						<label>Objeto/Evento</label>
-						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />
+						<input type="text" name="evento" class="form-control" id="palavras" placeholder="Insira o objeto" ><br />   
+						<label>Fiscal, suplente ou usuário que cadastrou o evento</label>
+						<select class="form-control" name="fiscal" id="inputSubject" >
+							<option value="0"></option>	
+							<?php echo opcaoUsuario($_SESSION['idInstituicao'],"") ?>
+						</select>
+						<br />
 						<label>Tipo de evento</label>
 						<select class="form-control" name="tipo" id="inputSubject" >
 							<option value="0"></option>		                
