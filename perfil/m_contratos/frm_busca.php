@@ -150,7 +150,7 @@ switch($b)
 	
 			$pedido = recuperaDados("igsis_pedido_contratacao",$id,"idPedidoContratacao");
 
-			if($pedido['estado'] > 1)
+			if($pedido['estado'] >= 0)
 			{
 			  if($num_registro == 0)
 			  {
