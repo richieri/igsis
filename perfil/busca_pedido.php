@@ -115,6 +115,7 @@
                             INNER JOIN sis_estado AS st ON ped.estado = st.idEstado  AND (idResponsavel = '$fiscal' OR suplente = '$fiscal' OR idUsuario = '$fiscal' )
                             WHERE ped.idPedidoContratacao = '$id'";
                             $query = mysqli_query($con,$sql);
+                            gravarLog($sql);
 
                             $pedido = mysqli_fetch_array($query);
                             ;
@@ -234,6 +235,7 @@
 							AND estado IS NOT NULL 
 							ORDER BY idPedidoContratacao DESC";
 						$query_evento = mysqli_query($con,$sql_evento);
+						gravarLog($sql_evento);
 						$i = 0;
 						while($evento = mysqli_fetch_array($query_evento))
 						{

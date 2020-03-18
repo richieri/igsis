@@ -2827,7 +2827,8 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 			break;
 			case 3:
 				$sql_busca_instituicao = "SELECT * FROM ig_instituicao WHERE instituicao LIKE '%$busca%'";
-				$query_busca_instituicao = mysqli_query($con,$sql_busca_instituicao);  
+				$query_busca_instituicao = mysqli_query($con,$sql_busca_instituicao);
+				gravarLog($sql_busca_instituicao);
 				$num_instituicao = mysqli_num_rows($query_busca_instituicao); 
 				if($num_instituicao > 0)
 				{ 
