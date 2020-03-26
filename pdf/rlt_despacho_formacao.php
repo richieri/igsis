@@ -18,7 +18,7 @@ $programa = $con->query("SELECT * FROM sis_formacao_programa WHERE Id_Programa =
 $dotacao = $con->query("SELECT * FROM sis_verba WHERE Id_Verba = '{$programa['verba']}'")->fetch_assoc();
 
 $objeto = $pedido["Objeto"];
-$periodo = "18/04/2019 a 15/12/2019, conforme proposta e cronograma (link SEI).";
+$periodo = $pedido['Periodo'].", conforme proposta e cronograma (link SEI).";
 $local = $pedido["Local"];
 $carga = $pedido["CargaHoraria"];
 $ValorGlobal = $pedido["ValorGlobal"];
