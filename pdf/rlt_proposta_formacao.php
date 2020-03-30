@@ -290,9 +290,11 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
-$pdf->Cell(22,$l,'Regime emergencial:',0,0,'L');
+$pdf->Cell(22,4,'Regime emergencial:',0,1,'L');
+
+$pdf->SetX($x);
 $pdf->SetFont('Arial','', 10);
-$pdf->MultiCell(180,$l,utf8_decode("
+$pdf->MultiCell(180,4,utf8_decode("
 Durante o período em que os equipamentos Culturais e da Educação estiverem fechados, é do intuito da SMC tornar pública e acessível a formação a partir de suas diversas linguagens artísticas, pesquisas, mantendo como destinatário o publico-alvo do Programa.
 Será da atribuição dos Artistas Educadores/Orientadores:
 - A criação de materiais artístico pedagógicos em diversos suportes: vídeo, imagem, som e texto; que podem ser conteúdos ao vivo ou gravados, na forma de aulas, vivências, ações artísticas alinhados aos princípios do Programa.
