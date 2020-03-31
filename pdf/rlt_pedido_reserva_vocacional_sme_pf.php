@@ -70,7 +70,7 @@ $sei =
   "<p>&nbsp;</p>".
   "<p>O presente processo trata de "."$nome".", "."$objeto".", no valor de "."R$ $ValorGlobal"."  "."($ValorPorExtenso)".", conforme solicitação (link da solicitação), foram anexados os documentos necessários exigidos no edital, no período de "."$periodo"." </p>".
   "<p>&nbsp;</p>".
-  "<p>Assim, solicito a reserva de recursos, que deverá onerar os recursos da Nota de Reserva com Transferência da SME nº 22.671/2019 e para o INSS Patronal a Nota de Reserva com Transferência nº 22.711/2019 SEI (link do SEI)</p>".
+  "<p>Assim, solicito a reserva de recursos, que deverá onerar os recursos da Nota de Reserva com Transferência da SME nº 24.042/2020 e para o INSS Patronal a Nota de Reserva com Transferência nº 24.045/2020 SEI (link do SEI)</p>".
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/AJ,  para prosseguimento.</p>".
   "<p>&nbsp;</p>"
