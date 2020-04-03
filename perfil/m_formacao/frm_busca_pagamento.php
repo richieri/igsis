@@ -123,7 +123,8 @@ else
 		}
 		else
 		{
-			$filtro_proponente = " AND sis_pessoa_fisica.Nome LIKE '%$proponente%' AND sis_formacao.Ano = '{date('Y')}' ";
+			$date = date('Y');
+		    $filtro_proponente = " AND sis_pessoa_fisica.Nome LIKE '%$proponente%' AND sis_formacao.Ano = $date";
 		}
 		$sql_evento = "SELECT igsis_pedido_contratacao.NumeroProcesso, igsis_pedido_contratacao.estado, sis_pessoa_fisica.Nome, igsis_pedido_contratacao.idPedidoContratacao FROM sis_formacao,igsis_pedido_contratacao, sis_pessoa_fisica WHERE sis_formacao.publicado = '1' AND igsis_pedido_contratacao.publicado = '1' AND sis_formacao.idPedidoContratacao = igsis_pedido_contratacao.idPedidoContratacao AND igsis_pedido_contratacao.idPessoa = sis_pessoa_fisica.Id_PessoaFisica $filtro_processo $filtro_proponente $filtro_status ORDER BY sis_pessoa_fisica.Nome, sis_formacao.Ano DESC";
 		$query_evento = mysqli_query($con,$sql_evento);
