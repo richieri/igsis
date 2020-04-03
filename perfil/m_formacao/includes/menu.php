@@ -13,6 +13,7 @@ $pasta = "?perfil=formacao&p=";
 					<li><a href="<?php echo $pasta ?>frm_cadastra_pf">Cadastrar</a></li>
                     <li><a href="<?php echo $pasta ?>frm_capac_importar">Importar do CAPAC</a></li>
 					<li><a href="<?php echo $pasta ?>frm_lista_pf">Listar</a></li>
+					<li><a href="<?php echo $pasta ?>lista_proponente">Lista de proponentes</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Dados para Contratação</a>
