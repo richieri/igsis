@@ -14,7 +14,7 @@ $link1 = $http."rlt_pagamento_formacao_pf.php"."?id=".$id_ped;
 $link2 = $http."rlt_recibo_pagamento_formacao_pf.php"."?id=".$id_ped;
 $link3 = $http."rlt_atestado_confirmacao_servicos_pf.php"."?id=".$id_ped;
 $link4 = $http."rlt_flcontabilidade_formacao_pf.php"."?id=".$id_ped;
-$link5 = $http."rlt_relatorio_horas_trabalhadas_formacao.php"."?id=".$id_ped;
+$link5 = $http."rlt_formacao_chefiagab.php"."?id=".$id_ped;
 $link6 = $http."rlt_fac_pf.php"."?id_pf=".$id_pf;
 ?>
 
@@ -65,7 +65,7 @@ if(isset($_POST['inserir'])){ //
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-6"><strong>Pedido de Contratação nº:</strong> <?php echo $id_ped; ?>
 			</div>
-			<div class="col-md-6"><strong>Processo nº:</strong> <?php echo $pedido["NumeroProcesso"]; ?>
+			<div class="col-md-6"><strong>Processo nº:</strong> <?php echo $pedido["NumeroProcesso"]  ?>
 			</div>
 		</div>
 		
@@ -88,11 +88,11 @@ if(isset($_POST['inserir'])){ //
 					</div>
 					
 			<div class="col-md-5">
-				<input type='text' class='form-control processo' name="NumeroProcessoPagamento" value="<?php echo $formacao["NumeroProcessoPagamento"]; ?>">
+				<input type='text' class='form-control processo' name="NumeroProcessoPagamento" value="<?php echo $formacao["NumeroProcessoPagamento"] ?? NULL; ?>">
 			</div>
 				
 			<div class="col-md-2">
-				<input type="hidden" name="inserir" value="<?php echo $id_formacao = $formacao["Id_Formacao"] ?>" />		
+				<input type="hidden" name="inserir" value="<?php echo $id_formacao ?>" />
 				<input type="submit" value="GRAVAR" class="btn btn-theme">
 			</div>
 			</form>	
@@ -133,10 +133,10 @@ for($i = 1; $i < count($parcelamento); $i++)
 	echo '<td class="list_description">'.$parcelamento[$i]['periodo'].'</td> ';
 	echo '<td class="list_description">R$ '.$parcelamento[$i]['valor'].'</td> ';
 	echo '<td class="list_description">'.$parcelamento[$i]['pagamento'].'</td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link1.'&parcela='.$i.'>Pagamento</a></td>';
+	echo '<td class="list_description"><a target="_blank" href='.$link1.'&parcela='.$i.'>Pedido</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link2.'&parcela='.$i.'>Recibo</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link3.'&parcela='.$i.'>Atestado Serviço</a></td>';
-	echo '<td class="list_description"><a target="_blank" href='.$link5.'&parcela='.$i.'>Relatório Horas</a></td>';
+	echo '<td class="list_description"><a target="_blank" href='.$link5.'&parcela='.$i.'>Chefia/Gab</a></td>';
 	echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Contabilidade</a></td></tr>';
 } ?>	
 
