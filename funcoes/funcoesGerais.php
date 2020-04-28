@@ -4870,4 +4870,42 @@ function atualizaRelacionamentoEvento($tabela, $idEvento, $post) {
         }
     }
 }
+
+function verificaIntegrante($idEvento, $cpf) {
+    $con = bancoMysqli();
+    $idEvento = $_SESSION['idEvento'];
+    $projetosEspeciais = [92, 93, 94, 95];
+
+    $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+
+    if (in_array($idProjetoEspecial, $projetosEspeciais)) {
+        $sqlConsultaEventos = "SELECT idEvento FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = 1";
+        $queryEventos = $con->query($sqlConsultaEventos);
+
+        if ($queryEventos->num_rows) {
+            $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
+            foreach ($eventos as $evento) {
+                $queryPedidos = $con->query("SELECT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = {$evento['idEvento']} AND publicado = 1");
+                if ($queryPedidos->num_rows) {
+                    $pedidos = $queryPedidos->fetch_all(MYSQLI_ASSOC);
+                    foreach ($pedidos as $pedido) {
+                        $idPedido = $pedido['idPedidoContratacao'];
+                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'")->num_rows;
+                        if ($integrante > 0) {
+                            $existe = true;
+                        } else {
+                            continue;
+                        }
+                    }
+                } else {
+                    continue;
+                }
+            }
+        } else {
+            $existe = false;
+        }
+    } else {
+        $existe = false;
+    }
+}
 ?>

@@ -1,4 +1,4 @@
-﻿<?php
+﻿ <?php
 	/*
 	Para fazer
 	+ funcao que retornam os locais
