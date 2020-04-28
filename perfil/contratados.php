@@ -1336,7 +1336,30 @@
                     </form>
                 <?php } ?>
 
-				<!-- /Grupo -->
+
+                <!-- Grupo -->
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><br/>
+                    </div>
+                </div>
+                <form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo"  method="post">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
+                            <span class="text-info"><em>Esse campo deve conter a listagem de pessoas envolvidas no espetáculo incluindo o líder do grupo.</em></span>
+                            <textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($pedido['idPedidoContratacao']); ?>
+							</textarea>
+                        </div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>" >
+                            <input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
+                        </div>
+                    </div>
+                </form>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><br /></div>
+                </div>
+                <!-- /Grupo -->
+
 				<form class="form-horizontal" role="form" onsubmit="return valida()" action="?perfil=contratados&p=edicaoPedido" method="post">
 		<?php
 			$multiplo = recuperaDados("sis_verba",$pedido['idVerba'],"Id_Verba");
@@ -1522,14 +1545,7 @@
                             <!-- /.modal-dialog -->
                         </div>
                         <!-- /.modal -->
-
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-								<label>Esse campo deve conter a listagem de pessoas envolvidas no espetáculo <font color='#FF0000'>incluindo o líder do grupo</font>.<br/>Apenas o <font color='#FF0000'>nome civil, RG e CPF</font> de quem irá se apresentar, excluindo técnicos.</i></strong></label>
-								<p align="justify"><font color="gray"><strong><i>Elenco de exemplo:</strong><br/>Ana Cañas RG 00000000-0 CPF 000.000.000-00<br/>Lúcio Maia RG 00000000-0 CPF 000.000.000-00<br/>Fabá Jimenez RG 00000000-0 CPF 000.000.000-00</br>Fabio Sá RG 00000000-0 CPF 000.000.000-00</br>Marco da Costa RG 00000000-0 CPF 000.000.000-00</font></i></p>
-								<textarea name="integrantes" class='form-control' cols="40" rows="5"><?php echo $pedido['integrantes'] ?></textarea>
-							</div>
-						</div>
+                        <input type="hidden" name="integrantes" class='form-control' cols="40" rows="5" value="<?php echo listaGrupo($pedido['idPedidoContratacao']); ?>" />
 						
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
