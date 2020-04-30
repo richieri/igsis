@@ -2461,6 +2461,9 @@
                                     $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
                                     if ($upPedido) {
                                         $mensagem = "Integrante inserido com sucesso!";
+                                        if (integranteCadastrado($cpf)) {
+                                            $alerta = "ATENÇÃO! Este integrante está sendo utilizado em outro pedido";
+                                        }
                                     } else {
                                         $mensagem = "Erro";
                                     }
@@ -2527,6 +2530,7 @@
 					<h2>Grupos</h2>
 					<h4>Integrantes de grupos</h4>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+                    <h5><?php if(isset($alerta)){echo $alerta;} ?></h5>
 				</div>
 			</div>
 		</div>
