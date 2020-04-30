@@ -4871,28 +4871,52 @@ function atualizaRelacionamentoEvento($tabela, $idEvento, $post) {
     }
 }
 
-function verificaIntegrante($idEvento, $cpf) {
+function integranteDisponivel($cpf) {
     $con = bancoMysqli();
+    $participacoes = 0;
+    $mes = new DateTime();
+    $mesAtual = $mes->format('m-Y');
     $idEvento = $_SESSION['idEvento'];
     $projetosEspeciais = [92, 93, 94, 95];
 
+    // Verifica se o projeto que está sendo editado faz parde dos projetos especiais online
     $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
 
     if (in_array($idProjetoEspecial, $projetosEspeciais)) {
-        $sqlConsultaEventos = "SELECT idEvento FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = 1";
+        $disponivel['bol'] = true;
+
+        // Consulta todos os eventos dos projetos especiais online já enviados
+        $sqlConsultaEventos = "SELECT idEvento, dataEnvio FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = '1' AND dataEnvio IS NOT NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
 
         if ($queryEventos->num_rows) {
             $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
+            $dataParticipacoes = [];
+
+            // Pra cada evento encontrado, faz...
             foreach ($eventos as $evento) {
+                // Guarda o mes e o ano de envio
+                $data = new DateTime($evento['dataEnvio']);
+                $dataEnvio = $data->format('m-Y');
+                $dataParticipacoes[] = $dataEnvio;
+
+                // Verifica se o evento tem pedido
                 $queryPedidos = $con->query("SELECT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = {$evento['idEvento']} AND publicado = 1");
                 if ($queryPedidos->num_rows) {
                     $pedidos = $queryPedidos->fetch_all(MYSQLI_ASSOC);
+
+                    // Pra cada pedido encontrado, faz...
                     foreach ($pedidos as $pedido) {
                         $idPedido = $pedido['idPedidoContratacao'];
+
+                        // Verifica se o integrante que está sendo cadastrado, já foi cadastrado em algum outro pedido
                         $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'")->num_rows;
                         if ($integrante > 0) {
-                            $existe = true;
+                            $participacoes++;
+                            if (in_array($mesAtual, $dataParticipacoes)) {
+                                $disponivel['bol'] = false;
+                                $disponivel['msg'] = "Integrante já participou de um projeto online este mês";
+                            }
                         } else {
                             continue;
                         }
@@ -4902,10 +4926,17 @@ function verificaIntegrante($idEvento, $cpf) {
                 }
             }
         } else {
-            $existe = false;
+            $disponivel['bol'] = true;
         }
     } else {
-        $existe = false;
+        $disponivel['bol'] = true;
     }
+
+    if ($participacoes > 6) {
+        $disponivel['bol'] = false;
+        $disponivel['msg'] = "Integrante já participou de 6 projetos online";
+    }
+
+    return $disponivel;
 }
 ?>
