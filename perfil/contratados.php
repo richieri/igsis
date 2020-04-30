@@ -1,4 +1,4 @@
-﻿<?php
+﻿ <?php
 	/*
 	Para fazer
 	+ funcao que retornam os locais
@@ -1336,7 +1336,30 @@
                     </form>
                 <?php } ?>
 
-				<!-- /Grupo -->
+
+                <!-- Grupo -->
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><br/>
+                    </div>
+                </div>
+                <form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo"  method="post">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
+                            <span class="text-info"><em>Esse campo deve conter a listagem de pessoas envolvidas no espetáculo incluindo o líder do grupo.</em></span>
+                            <textarea readonly name="grupo" cols="40" rows="5"><?php echo listaGrupo($pedido['idPedidoContratacao']); ?>
+							</textarea>
+                        </div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="hidden" name="idPedido" value="<?php echo $pedido['idPedidoContratacao']; ?>" >
+                            <input type="submit" class="btn btn-theme btn-med btn-block" value="Editar integrantes do grupo">
+                        </div>
+                    </div>
+                </form>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8"><br /></div>
+                </div>
+                <!-- /Grupo -->
+
 				<form class="form-horizontal" role="form" onsubmit="return valida()" action="?perfil=contratados&p=edicaoPedido" method="post">
 		<?php
 			$multiplo = recuperaDados("sis_verba",$pedido['idVerba'],"Id_Verba");
@@ -1522,15 +1545,9 @@
                             <!-- /.modal-dialog -->
                         </div>
                         <!-- /.modal -->
-
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Integrantes do grupo:</strong><br/>
-								<label>Esse campo deve conter a listagem de pessoas envolvidas no espetáculo <font color='#FF0000'>incluindo o líder do grupo</font>.<br/>Apenas o <font color='#FF0000'>nome civil, RG e CPF</font> de quem irá se apresentar, excluindo técnicos.</i></strong></label>
-								<p align="justify"><font color="gray"><strong><i>Elenco de exemplo:</strong><br/>Ana Cañas RG 00000000-0 CPF 000.000.000-00<br/>Lúcio Maia RG 00000000-0 CPF 000.000.000-00<br/>Fabá Jimenez RG 00000000-0 CPF 000.000.000-00</br>Fabio Sá RG 00000000-0 CPF 000.000.000-00</br>Marco da Costa RG 00000000-0 CPF 000.000.000-00</font></i></p>
-								<textarea name="integrantes" class='form-control' cols="40" rows="5"><?php echo $pedido['integrantes'] ?></textarea>
-							</div>
-						</div>
-						
+                        <!--
+                        <input type="hidden" name="integrantes" class='form-control' cols="40" rows="5" value="<?php /*echo listaGrupo($pedido['idPedidoContratacao']); */?>" />
+						-->
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Justificativa*</label>
@@ -2397,32 +2414,66 @@
 					$idPedido = $_POST['idPedido'];
 					if(isset($_POST['inserir']))
 					{
-						$nome = addslashes($_POST['nome']);
-						$rg = trim($_POST['rg']);
-						$cpf = $_POST['cpf'];
-						$sql_inserir = "INSERT INTO `igsis_grupos` 
-							(`idGrupos`, 
-							`idPedido`, 
-							`nomeCompleto`, 
-							`rg`, 
-							`cpf`, 
-							`publicado`) 
-							VALUES (NULL, 
-							'$idPedido', 
-							'$nome', 
-							'$rg', 
-							'$cpf', 
-							'1')";
-						$query_inserir = mysqli_query($con,$sql_inserir);
-						if($query_inserir)
-						{	
-					 		gravarLog($sql_inserir);
-							$mensagem = "Integrante inserido com sucesso!";	
-						}
-						else
-						{
-							$mensagem = "Erro ao inserir integrante. Tente novamente.";	
-						}	
+                        $validacao = validaCPF($_POST['cpf']);
+                        if($validacao == false)
+                        {
+                            //echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=?perfil=contratados&p=edicaoGrupo&action=inserir'>";
+                            $mensagem = '<span class="text-danger">Erro ao inserir: CPF Inválido!</span>';
+                        }
+                        else {
+                            $nome = addslashes($_POST['nome']);
+                            $rg = trim($_POST['rg']);
+                            $cpf = $_POST['cpf'];
+                            $disponivel = integranteDisponivel($cpf);
+
+                            if ($disponivel['bol']) {
+                                $sql_inserir = "INSERT INTO `igsis_grupos` 
+                                                (`idGrupos`, 
+                                                `idPedido`, 
+                                                `nomeCompleto`, 
+                                                `rg`, 
+                                                `cpf`, 
+                                                `publicado`) 
+                                                VALUES (NULL, 
+                                                '$idPedido', 
+                                                '$nome', 
+                                                '$rg', 
+                                                '$cpf', 
+                                                '1')";
+                                $query_inserir = mysqli_query($con, $sql_inserir);
+                                if ($query_inserir) {
+                                    gravarLog($sql_inserir);
+                                    $sql_grupos = "SELECT * 
+                                        FROM igsis_grupos 
+                                        WHERE idPedido = '$idPedido' 
+                                        AND publicado = '1'";
+                                    $query_grupos = mysqli_query($con, $sql_grupos);
+                                    $num = mysqli_num_rows($query_grupos);
+                                    if ($num > 0) {
+                                        $txt = "";
+                                        while ($grupo = mysqli_fetch_array($query_grupos)) {
+                                            $txt .= $grupo['nomeCompleto'] . " CPF: " . $grupo['cpf'] . " RG: " . $grupo['rg'] . "\n";
+                                        }
+                                    } else {
+                                        $txt = "Não há integrantes de grupo inseridos";
+                                    }
+
+                                    $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
+                                    if ($upPedido) {
+                                        $mensagem = "Integrante inserido com sucesso!";
+                                        if (integranteCadastrado($cpf)) {
+                                            $alerta = "ATENÇÃO! Este integrante está sendo utilizado em outro pedido";
+                                        }
+                                    } else {
+                                        $mensagem = "Erro";
+                                    }
+                                } else {
+                                    $mensagem = "Erro ao inserir integrante. Tente novamente.";
+                                }
+                            } else {
+                                $mensagem = $disponivel['msg'];
+                            }
+                        }
 					}
 					if(isset($_POST['apagar']))
 					{
@@ -2432,7 +2483,32 @@
 						if($query_apagar)
 						{	
 					 		gravarLog($sql_apagar);
-							$mensagem = "Integrante apagado com sucesso!";	
+                            $sql_grupos = "SELECT * 
+                                FROM igsis_grupos 
+                                WHERE idPedido = '$idPedido' 
+                                AND publicado = '1'";
+                            $query_grupos = mysqli_query($con,$sql_grupos);
+                            $num = mysqli_num_rows($query_grupos);
+                            if($num > 0)
+                            {
+                                $txt = "";
+                                while($grupo = mysqli_fetch_array($query_grupos))
+                                {
+                                    $txt .= $grupo['nomeCompleto']." CPF: ".$grupo['cpf']." RG: ".$grupo['rg']."\n";
+                                }
+                            }
+                            else
+                            {
+                                $txt = "Não há integrantes de grupo inseridos";
+                            }
+
+                            $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
+                            if($upPedido){
+                                $mensagem = "Integrante inserido com sucesso!";
+                            }
+                            else{
+                                $mensagem = "Erro";
+                            }
 						}
 						else
 						{
@@ -2454,6 +2530,7 @@
 					<h2>Grupos</h2>
 					<h4>Integrantes de grupos</h4>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+                    <h5><?php if(isset($alerta)){echo $alerta;} ?></h5>
 				</div>
 			</div>
 		</div>
