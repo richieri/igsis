@@ -1,4 +1,4 @@
-﻿<?php
+﻿ <?php
 	/*
 	Para fazer
 	+ funcao que retornam os locais
@@ -2424,45 +2424,54 @@
                             $nome = addslashes($_POST['nome']);
                             $rg = trim($_POST['rg']);
                             $cpf = $_POST['cpf'];
-                            $sql_inserir = "INSERT INTO `igsis_grupos` 
-                                (`idGrupos`, 
-                                `idPedido`, 
-                                `nomeCompleto`, 
-                                `rg`, 
-                                `cpf`, 
-                                `publicado`) 
-                                VALUES (NULL, 
-                                '$idPedido', 
-                                '$nome', 
-                                '$rg', 
-                                '$cpf', 
-                                '1')";
-                            $query_inserir = mysqli_query($con, $sql_inserir);
-                            if ($query_inserir) {
-                                gravarLog($sql_inserir);
-                                $sql_grupos = "SELECT * 
-                                    FROM igsis_grupos 
-                                    WHERE idPedido = '$idPedido' 
-                                    AND publicado = '1'";
-                                $query_grupos = mysqli_query($con, $sql_grupos);
-                                $num = mysqli_num_rows($query_grupos);
-                                if ($num > 0) {
-                                    $txt = "";
-                                    while ($grupo = mysqli_fetch_array($query_grupos)) {
-                                        $txt .= $grupo['nomeCompleto'] . " CPF: " . $grupo['cpf'] . " RG: " . $grupo['rg'] . "\n";
+                            $disponivel = integranteDisponivel($cpf);
+
+                            if ($disponivel['bol']) {
+                                $sql_inserir = "INSERT INTO `igsis_grupos` 
+                                                (`idGrupos`, 
+                                                `idPedido`, 
+                                                `nomeCompleto`, 
+                                                `rg`, 
+                                                `cpf`, 
+                                                `publicado`) 
+                                                VALUES (NULL, 
+                                                '$idPedido', 
+                                                '$nome', 
+                                                '$rg', 
+                                                '$cpf', 
+                                                '1')";
+                                $query_inserir = mysqli_query($con, $sql_inserir);
+                                if ($query_inserir) {
+                                    gravarLog($sql_inserir);
+                                    $sql_grupos = "SELECT * 
+                                        FROM igsis_grupos 
+                                        WHERE idPedido = '$idPedido' 
+                                        AND publicado = '1'";
+                                    $query_grupos = mysqli_query($con, $sql_grupos);
+                                    $num = mysqli_num_rows($query_grupos);
+                                    if ($num > 0) {
+                                        $txt = "";
+                                        while ($grupo = mysqli_fetch_array($query_grupos)) {
+                                            $txt .= $grupo['nomeCompleto'] . " CPF: " . $grupo['cpf'] . " RG: " . $grupo['rg'] . "\n";
+                                        }
+                                    } else {
+                                        $txt = "Não há integrantes de grupo inseridos";
+                                    }
+
+                                    $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
+                                    if ($upPedido) {
+                                        $mensagem = "Integrante inserido com sucesso!";
+                                        if (integranteCadastrado($cpf)) {
+                                            $alerta = "ATENÇÃO! Este integrante está sendo utilizado em outro pedido";
+                                        }
+                                    } else {
+                                        $mensagem = "Erro";
                                     }
                                 } else {
-                                    $txt = "Não há integrantes de grupo inseridos";
-                                }
-
-                                $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
-                                if ($upPedido) {
-                                    $mensagem = "Integrante inserido com sucesso!";
-                                } else {
-                                    $mensagem = "Erro";
+                                    $mensagem = "Erro ao inserir integrante. Tente novamente.";
                                 }
                             } else {
-                                $mensagem = "Erro ao inserir integrante. Tente novamente.";
+                                $mensagem = $disponivel['msg'];
                             }
                         }
 					}
@@ -2521,6 +2530,7 @@
 					<h2>Grupos</h2>
 					<h4>Integrantes de grupos</h4>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+                    <h5><?php if(isset($alerta)){echo $alerta;} ?></h5>
 				</div>
 			</div>
 		</div>
