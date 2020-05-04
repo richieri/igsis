@@ -313,6 +313,44 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetFont('Arial','', 9);
    $pdf->Cell(10,$l,'',0,0,'L');
    $pdf->SetFont('Arial','B', 9);
+   $pdf->Cell(160,5,utf8_decode('NOS CASOS DE CONTRATAÇÕES COM APRESENTAÇÕES EM MODO VIRTUAL (ONLINE)'),0,1,'C');
+
+   $pdf->Ln();
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->MultiCell(180,5,utf8_decode('Declaro Que:'));
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->MultiCell(180,5,utf8_decode('1) Sou responsável por todas as informações contidas no projeto, incluindo conteúdo e direitos autorais relacionados a atividade proposta.'));
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->MultiCell(180,5,utf8_decode('2) Estou ciente e tenho condições de executar a atividade no formato online, em redes sociais, bem como enviar o vídeo da atividade desenvolvida para a Secretaria Municipal de Cultura.'));
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->MultiCell(180,5,utf8_decode('3) Tenho ciência de que a habilitação da atividade não gera automaticamente direito às contratações e que, mesmo habilitado e selecionado para contratação, a Secretaria Municipal de Cultura não tem obrigatoriedade de efetivar a contratação.'));
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->MultiCell(180,5,utf8_decode('4) Me responsabilizo pelo cumprimento da agenda acordada, no tocante ao local, data e horário, para a realização da atividade.'));
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->MultiCell(180,5,utf8_decode('5) Estou ciente de que a contratação não gera vínculo trabalhista entre a municipalidade e o contratado.'));
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->MultiCell(180,5,utf8_decode('6) A apresentação contratada não oferecerá risco à minha saúde e à de terceiros, pois estou ciente que fica vedada qualquer forma de aglomeração ou encontro entre artistas e técnicos que residam em diferentes endereços.'));
+
+   $pdf->Ln();
+
+   $pdf->SetX($x);
+   $pdf->SetFont('Arial','', 9);
+   $pdf->Cell(10,$l,'',0,0,'L');
+   $pdf->SetFont('Arial','B', 9);
    $pdf->Cell(160,5,utf8_decode('RESCISÃO'),0,1,'C');
 
    $pdf->Ln();
