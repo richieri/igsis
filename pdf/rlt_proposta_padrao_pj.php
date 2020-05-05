@@ -394,6 +394,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 	}
 
 $x=15;
+$f=10;
 
 	$pdf->SetX($x);
 	$pdf->Cell(185,5,'','B',1,'C');
@@ -401,104 +402,104 @@ $x=15;
 	$pdf->Ln();
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->Cell(10,$l,'(D)',0,0,'L');
-	$pdf->SetFont('Arial','B', 9);
+	$pdf->SetFont('Arial','B', $f);
 	$pdf->Cell(160,5,utf8_decode('OBSERVAÇÕES'),0,1,'C');
 
 	$pdf->SetX($x);
 	$pdf->PrintChapter('txt/proposta_observacao_padrao.txt');
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->Cell(10,$l,'',0,0,'L');
-	$pdf->SetFont('Arial','B', 9);
+	$pdf->SetFont('Arial','B', $f);
 	$pdf->Cell(160,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 8);
+	$pdf->SetFont('Arial','', 9);
 	$pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
 
 	   $pdf->Ln();
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', $f);
    $pdf->Cell(10,$l,'',0,0,'L');
-   $pdf->SetFont('Arial','B', 9);
+   $pdf->SetFont('Arial','B', $f);
    $pdf->Cell(160,5,utf8_decode('NOS CASOS DE REVERSÃO DE BILHETERIA'),0,1,'C');
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', $f);
    $pdf->MultiCell(185,5,utf8_decode('1) No caso de pagamento do cachê por reversão de bilheteria, fica o valor dos ingressos sujeito ao atendimento no disposto nas Leis Municipais nº 10.973/91, regulamentada pelo Decreto Municipal nº 30.730/91; Leis Municipais 11.113/91; 11.357/93 e 12.975/2000 e Portaria nº 66/SMC/2007; Lei Estadual nº 7844/92, regulamentada pelo Decreto Estadual nº 35.606/92; Lei Estadual nº 10.858/2001, com as alterações da Lei Estadual 14.729/2012 e Lei Federal nº 12.933/2013.'));
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', $f);
    $pdf->MultiCell(185,5,utf8_decode('2) O pagamento do cachê corresponderá à reversão integral da renda obtida na bilheteria a/o ontratada/o, deduzidos os impostos e taxas pertinentes.'));
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(185,5,utf8_decode('3) Os ingressos poderão ser vendidos com preços reduzidos, em face de promoções realizadas pela produção do evento.'));
 
    $pdf->Ln();
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->Cell(10,$l,'',0,0,'L');
-	$pdf->SetFont('Arial','B', 9);
+	$pdf->SetFont('Arial','B', $f);
 	$pdf->Cell(160,5,utf8_decode('NOS CASOS DE CONTRATAÇÕES COM APRESENTAÇÕES EM MODO VIRTUAL (ONLINE)'),0,1,'C');
 
 	$pdf->Ln();
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(185,5,utf8_decode('Declaro Que:'));
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(185,5,utf8_decode('1) Sou responsável por todas as informações contidas no projeto, incluindo conteúdo e direitos autorais relacionados a atividade proposta.'));
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(185,5,utf8_decode('2) Estou ciente e tenho condições de executar a atividade no formato online, em redes sociais, bem como enviar o vídeo da atividade desenvolvida para a Secretaria Municipal de Cultura.'));
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(185,5,utf8_decode('3) Tenho ciência de que a habilitação da atividade não gera automaticamente direito às contratações e que, mesmo habilitado e selecionado para contratação, a Secretaria Municipal de Cultura não tem obrigatoriedade de efetivar a contratação.'));
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(185,5,utf8_decode('4) Me responsabilizo pelo cumprimento da agenda acordada, no tocante ao local, data e horário, para a realização da atividade.'));
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(185,5,utf8_decode('5) Estou ciente de que a contratação não gera vínculo trabalhista entre a municipalidade e o contratado.'));
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
+	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(185,5,utf8_decode('6) A apresentação contratada não oferecerá risco à minha saúde e à de terceiros, pois estou ciente que fica vedada qualquer forma de aglomeração ou encontro entre artistas e técnicos que residam em diferentes endereços.'));
 
    $pdf->Ln();
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', $f);
    $pdf->Cell(10,$l,'',0,0,'L');
-   $pdf->SetFont('Arial','B', 9);
+   $pdf->SetFont('Arial','B', $f);
    $pdf->Cell(160,5,utf8_decode('RESCISÃO'),0,1,'C');
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', $f);
    $pdf->MultiCell(185,5,utf8_decode('Este instrumento poderá ser rescindido, no interesse da administração, devidamente justificado ou em virtude da inexecução total ou parcial do serviço sem prejuízo de multa, nos termos da legislação vigente.'));
 
    $pdf->Ln();
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', $f);
    $pdf->Cell(10,$l,'',0,0,'L');
-   $pdf->SetFont('Arial','B', 9);
+   $pdf->SetFont('Arial','B', $f);
    $pdf->Cell(160,5,utf8_decode('FORO'),0,1,'C');
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', $f);
    $pdf->MultiCell(185,5,utf8_decode('Fica eleito o foro da Fazenda Pública para todo e qualquer procedimento judicial oriundo deste instrumento.'));
 
    $pdf->Ln();
