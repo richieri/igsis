@@ -365,19 +365,11 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetFont('Arial','', 9);
    $pdf->MultiCell(185,5,utf8_decode('Fica eleito o foro da Fazenda Pública para todo e qualquer procedimento judicial oriundo deste instrumento.'));
 
-   $pdf->Ln();
-   $pdf->Ln();
-
+   $pdf->Ln(12);
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 10);
    $pdf->Cell(185,$l,"Data: _________ / _________ / "."$ano".".",0,0,'L');
-
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-   $pdf->Ln();
-
 
 //RODAPÉ PERSONALIZADO
    $pdf->SetXY($x,262);
