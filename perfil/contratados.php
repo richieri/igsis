@@ -1545,9 +1545,7 @@
                             <!-- /.modal-dialog -->
                         </div>
                         <!-- /.modal -->
-                        <!--
-                        <input type="hidden" name="integrantes" class='form-control' cols="40" rows="5" value="<?php /*echo listaGrupo($pedido['idPedidoContratacao']); */?>" />
-						-->
+                     <input type="hidden" name="integrantes" class='form-control' cols="40" rows="5" value="<?= listaGrupo($pedido['idPedidoContratacao']); ?>" />
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Justificativa*</label>
