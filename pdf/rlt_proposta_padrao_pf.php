@@ -293,8 +293,6 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetFont('Arial','B', 9);
    $pdf->Cell(160,5,utf8_decode('NOS CASOS DE REVERSÃO DE BILHETERIA'),0,1,'C');
 
-   $pdf->Ln();
-
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 9);
    $pdf->MultiCell(185,5,utf8_decode('1) No caso de pagamento do cachê por reversão de bilheteria, fica o valor dos ingressos sujeito ao atendimento no disposto nas Leis Municipais nº 10.973/91, regulamentada pelo Decreto Municipal nº 30.730/91; Leis Municipais 11.113/91; 11.357/93 e 12.975/2000 e Portaria nº 66/SMC/2007; Lei Estadual nº 7844/92, regulamentada pelo Decreto Estadual nº 35.606/92; Lei Estadual nº 10.858/2001, com as alterações da Lei Estadual 14.729/2012 e Lei Federal nº 12.933/2013.'));
@@ -314,8 +312,6 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->Cell(10,$l,'',0,0,'L');
    $pdf->SetFont('Arial','B', 9);
    $pdf->Cell(160,5,utf8_decode('NOS CASOS DE CONTRATAÇÕES COM APRESENTAÇÕES EM MODO VIRTUAL (ONLINE)'),0,1,'C');
-
-   $pdf->Ln();
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 9);
@@ -353,8 +349,6 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->SetFont('Arial','B', 9);
    $pdf->Cell(160,5,utf8_decode('RESCISÃO'),0,1,'C');
 
-   $pdf->Ln();
-
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 9);
    $pdf->MultiCell(185,5,utf8_decode('Este instrumento poderá ser rescindido, no interesse da administração, devidamente justificado ou em virtude da inexecução total ou parcial do serviço sem prejuízo de multa, nos termos da legislação vigente.'));
@@ -366,8 +360,6 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->Cell(10,$l,'',0,0,'L');
    $pdf->SetFont('Arial','B', 9);
    $pdf->Cell(160,5,utf8_decode('FORO'),0,1,'C');
-
-   $pdf->Ln();
 
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 9);
