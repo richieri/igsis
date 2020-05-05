@@ -417,8 +417,8 @@ $f=10;
 	$pdf->Cell(160,5,utf8_decode('DECLARAÇÕES'),0,1,'C');
 
 	$pdf->SetX($x);
-	$pdf->SetFont('Arial','', 9);
-	$pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
+	$pdf->SetFont('Arial','', $f);
+	$pdf->MultiCell(0,5,utf8_decode($txtPenalidade),0,'J');
 
 	   $pdf->Ln();
 
