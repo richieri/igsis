@@ -348,7 +348,9 @@ $l=5; //DEFINE A ALTURA DA LINHA
 	$pdf->SetFont('Arial','B', 10);
 	$pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
 	$pdf->SetFont('Arial','', 10);
-	$pdf->Cell(75,$l,utf8_decode($pjTelefones),0,0,'L');
+	$pdf->Cell(75,$l,utf8_decode($pjTelefones),0,1,'L');
+
+	$pdf->SetX($x);
 	$pdf->SetFont('Arial','B', 10);
 	$pdf->Cell(13,$l,utf8_decode('E-mail:'),0,0,'L');
 	$pdf->SetFont('Arial','', 10);
