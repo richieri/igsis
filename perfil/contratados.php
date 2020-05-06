@@ -2427,7 +2427,7 @@
                             if ($disponivel['bol']) {
                                 $integrante = integranteCadastrado($cpf);
                                 if ($integrante) {
-                                    $alerta = "ATENÇÃO! o integrante \"$integrante\" está sendo utilizado em outro pedido";
+                                    $alerta = "ATENÇÃO! Integrante \"$integrante\" está sendo utilizado em outro pedido";
                                 }
 
                                 $sql_inserir = "INSERT INTO `igsis_grupos` 
