@@ -2425,6 +2425,11 @@
                             $disponivel = integranteDisponivel($cpf);
 
                             if ($disponivel['bol']) {
+                                $integrante = integranteCadastrado($cpf);
+                                if ($integrante) {
+                                    $alerta = "ATENÇÃO! o integrante \"$integrante\" está sendo utilizado em outro pedido";
+                                }
+
                                 $sql_inserir = "INSERT INTO `igsis_grupos` 
                                                 (`idGrupos`, 
                                                 `idPedido`, 
@@ -2459,9 +2464,6 @@
                                     $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
                                     if ($upPedido) {
                                         $mensagem = "Integrante inserido com sucesso!";
-                                        if (integranteCadastrado($cpf)) {
-                                            $alerta = "ATENÇÃO! Este integrante está sendo utilizado em outro pedido";
-                                        }
                                     } else {
                                         $mensagem = "Erro";
                                     }
