@@ -4962,7 +4962,7 @@ function integranteCadastrado($cpf) {
                     foreach ($pedidos as $pedido) {
                         $idPedido = $pedido['idPedidoContratacao'];
                         $queryIntegrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'");
-                        $numIntegrante = $queryIntegrante->num_rows/
+                        $numIntegrante = $queryIntegrante->num_rows;
                         $integrante = $queryIntegrante->fetch_assoc();
                         if ($numIntegrante > 0) {
                             $cadastrado = $integrante['nomeCompleto'];
