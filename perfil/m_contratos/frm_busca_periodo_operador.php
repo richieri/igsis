@@ -22,7 +22,7 @@ switch ($p) {
             }
 
             $con = bancoMysqli();
-            $sql = "SELECT ped.idPedidoContratacao, eve.idEvento, ped.NumeroProcesso, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, ped.tipoPessoa, ped.idPessoa, ii.sigla, ped.valor, ped.pendenciaDocumento, se.estado, iu.nomeCompleto, MIN(oco.dataInicio)
+            $sql = "SELECT ped.idPedidoContratacao, eve.idEvento, ped.NumeroProcesso, eve.ig_tipo_evento_idTipoEvento, eve.nomeEvento, ped.tipoPessoa, ped.idPessoa, ii.sigla, ped.valor, ped.pendenciaDocumento, se.estado, iu.nomeCompleto, MIN(oco.dataInicio) as dtInicio
                     FROM ig_ocorrencia AS oco
                     INNER JOIN ig_evento eve on oco.idEvento = eve.idEvento
                     INNER JOIN igsis_pedido_contratacao AS ped on oco.idEvento = ped.idEvento 
@@ -34,6 +34,7 @@ switch ($p) {
                     AND eve.dataEnvio IS NOT NULL
                     AND ped.publicado = '1'
                     AND eve.publicado = '1'
+                    AND oco.publicado = 1
                     GROUP BY oco.idEvento
                     ORDER BY oco.dataInicio";
             $sql_evento = $con->query($sql);
@@ -41,7 +42,7 @@ switch ($p) {
 
             foreach ($query_evento as $key => $query) {
                 $evento_id = $query['idEvento'];
-                $dataInicio = $con->query("SELECT MIN(dataInicio) AS 'inicio' FROM ig_ocorrencia WHERE idEvento = '$evento_id';")->fetch_assoc()['inicio'];
+                $dataInicio = $con->query("SELECT MIN(dataInicio) AS 'inicio' FROM ig_ocorrencia WHERE idEvento = '$evento_id' AND publicado = 1")->fetch_assoc()['inicio'];
                 if ($dataInicio < $inicio) {
                     unset($query_evento[$key]);
                 }
@@ -53,27 +54,28 @@ switch ($p) {
                 ?>
                 <br/>
                 <br/>
-                <section id="list_items">
+                <section id="services" class="home-section bg-white">
                     <div class="container">
                         <h3>Resultado da busca</3>
                         <h5>Foram encontrados <?php echo $num; ?> pedidos de contratação.</h5>
                         <h5><a href="?perfil=contratos&p=frm_busca_periodo_operador">Fazer outra busca</a></h5>
-                        <div class="table-responsive list_info">
-                            <table class="table table-condensed">
+                        <div class="row">
+                            <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr class="list_menu">
-                                    <td>Codigo do Pedido</td>
-                                    <td>Número Processo</td>
-                                    <td>Proponente</td>
-                                    <td>Tipo</td>
-                                    <td>Objeto</td>
-                                    <td width="20%">Local</td>
-                                    <td>Instituição</td>
-                                    <td>Periodo</td>
-                                    <td>Valor</td>
-                                    <td>Pendências</td>
-                                    <td>Status</td>
-                                    <td>Operador</td>
+                                    <th>Codigo do Pedido</th>
+                                    <th>Número Processo</th>
+                                    <th>Proponente</th>
+                                    <th>Tipo</th>
+                                    <th>Objeto</th>
+                                    <th width="20%">Local</th>
+                                    <th>Instituição</th>
+                                    <th>Início</th>
+                                    <th>Periodo</th>
+                                    <th>Valor</th>
+                                    <th>Pendências</th>
+                                    <th>Status</th>
+                                    <th>Operador</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -94,15 +96,16 @@ switch ($p) {
                                     }
                                     ?>
                                     <tr>
-                                        <td class="list_description"><a href="<?= $link.$lista['idPedidoContratacao'] ?>"><?= $lista['idPedidoContratacao'] ?></a></td>
+                                        <td class="list_description"><a href="<?= $link.$lista['idPedidoContratacao'] ?>"><?= substr($lista['idPedidoContratacao'],5,10) ?></a></td>
                                         <td class="list_description"><?= $lista['NumeroProcesso'] ?></td>
                                         <td class="list_description"><?= $proponente ?></td>
-                                        <td class="list_description"><?= $tipo ?></td>
+                                        <td class="list_description"><?= substr($tipo,0,1) ?></td>
                                         <td class="list_description"><?= retornaTipo($lista['ig_tipo_evento_idTipoEvento']) . " - " . $lista['nomeEvento'] ?></td>
                                         <td class="list_description"><?= substr(listaLocais($lista['idEvento']), 1) ?></td>
                                         <td class="list_description"><?= $lista['sigla'] ?></td>
+                                        <td class="list_description"><?= $lista['dtInicio'] ?></td>
                                         <td class="list_description"><?= retornaPeriodo($lista['idEvento']) ?></td>
-                                        <td class="list_description"><?= $lista['valor'] ?></td>
+                                        <td class="list_description"><?= dinheiroParaBr($lista['valor']) ?></td>
                                         <td class="list_description"><?= $lista['pendenciaDocumento'] ?></td>
                                         <td class="list_description"><?= $lista['estado'] ?></td>
                                         <td class="list_description"><?= $lista['nomeCompleto'] ?></td>
@@ -233,3 +236,23 @@ switch ($p) {
 
 } //fim da switch
 ?>
+<script type="text/javascript" defer src="../visual/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" defer src="../visual/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" defer src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript" defer src="//cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
+<script type="text/javascript" defer>
+
+    $(function () {
+        $.fn.dataTable.moment( 'DD/M/YYYY' );
+        $.fn.dataTable.moment( 'DD/M/YYYY a D/M/YYYY' );
+        $('#example1').DataTable({
+            "language": {
+                "url": 'bower_components/datatables.net/Portuguese-Brasil.json'
+            },
+            "responsive": true,
+            "dom": "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5 text-left'i><'col-sm-7 text-right'p>>",
+        });
+    })
+</script>
