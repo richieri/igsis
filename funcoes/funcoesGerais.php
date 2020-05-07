@@ -4940,7 +4940,7 @@ function integranteDisponivel($cpf) {
     return $disponivel;
 }
 
-function integranteCadastrado($cpf) {
+function integranteUtilizado($cpf) {
     $con = bancoMysqli();
     $idEvento = $_SESSION['idEvento'];
     $projetosEspeciais = [92, 93, 94, 95];

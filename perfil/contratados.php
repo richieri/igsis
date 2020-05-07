@@ -2425,7 +2425,7 @@
                             $disponivel = integranteDisponivel($cpf);
 
                             if ($disponivel['bol']) {
-                                $integrante = integranteCadastrado($cpf);
+                                $integrante = integranteUtilizado($cpf);
                                 if ($integrante) {
                                     $alerta = "ATENÇÃO! Integrante \"$integrante\" está sendo utilizado em outro pedido";
                                 }
