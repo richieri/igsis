@@ -4910,7 +4910,7 @@ function integranteDisponivel($cpf) {
                         $idPedido = $pedido['idPedidoContratacao'];
 
                         // Verifica se o integrante que está sendo cadastrado, já foi cadastrado em algum outro pedido
-                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'")->num_rows;
+                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido' AND publicado = '1'")->num_rows;
                         if ($integrante > 0) {
                             $participacoes++;
                             if (in_array($mesAtual, $dataParticipacoes)) {
@@ -4961,7 +4961,7 @@ function integranteCadastrado($cpf) {
                     $pedidos = $queryPedidos->fetch_all(MYSQLI_ASSOC);
                     foreach ($pedidos as $pedido) {
                         $idPedido = $pedido['idPedidoContratacao'];
-                        $queryIntegrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'");
+                        $queryIntegrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido' AND publicado = '1'");
                         $numIntegrante = $queryIntegrante->num_rows;
                         $integrante = $queryIntegrante->fetch_assoc();
                         if ($numIntegrante > 0) {
