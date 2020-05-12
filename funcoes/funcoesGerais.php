@@ -4950,7 +4950,7 @@ function integranteUtilizado($cpf) {
     if (in_array($idProjetoEspecial, $projetosEspeciais)) {
         $cadastrado = false;
 
-        $sqlConsultaEventos = "SELECT idEvento FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = 1 AND dataEnvio IS NULL";
+        $sqlConsultaEventos = "SELECT idEvento, nomeEvento FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = 1 AND dataEnvio IS NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
 
         if ($queryEventos->num_rows) {
@@ -4965,7 +4965,12 @@ function integranteUtilizado($cpf) {
                         $numIntegrante = $queryIntegrante->num_rows;
                         $integrante = $queryIntegrante->fetch_assoc();
                         if ($numIntegrante > 0) {
-                            $cadastrado = $integrante['nomeCompleto'];
+                            //$cadastrado = $integrante['nomeCompleto'];
+                            $cadastrado = array(
+                                "nome" => $integrante['nomeCompleto'],
+                                "evento" => $evento['nomeEvento'],
+                                "idEvento" => $evento['idEvento']
+                            );
                         } else {
                             continue;
                         }
