@@ -4886,7 +4886,7 @@ function integranteDisponivel($cpf) {
         $disponivel['bol'] = true;
 
         // Consulta todos os eventos dos projetos especiais online já enviados
-        $sqlConsultaEventos = "SELECT idEvento, dataEnvio FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = '1' AND dataEnvio IS NOT NULL";
+        $sqlConsultaEventos = "SELECT idEvento, nomeEvento, dataEnvio FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = '1' AND dataEnvio IS NOT NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
 
         if ($queryEventos->num_rows) {
@@ -4915,7 +4915,7 @@ function integranteDisponivel($cpf) {
                             $participacoes++;
                             if (in_array($mesAtual, $dataParticipacoes)) {
                                 $disponivel['bol'] = false;
-                                $disponivel['msg'] = "Integrante já participou de um projeto online este mês";
+                                $disponivel['msg'] = "Integrante já participou do evento {$evento['idEvento']} - {$evento['nomeEvento']} este mês";
                             }
                         } else {
                             continue;
