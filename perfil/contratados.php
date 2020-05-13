@@ -1545,9 +1545,7 @@
                             <!-- /.modal-dialog -->
                         </div>
                         <!-- /.modal -->
-                        <!--
-                        <input type="hidden" name="integrantes" class='form-control' cols="40" rows="5" value="<?php /*echo listaGrupo($pedido['idPedidoContratacao']); */?>" />
-						-->
+                     <input type="hidden" name="integrantes" class='form-control' cols="40" rows="5" value="<?= listaGrupo($pedido['idPedidoContratacao']); ?>" />
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8">
 								<label>Justificativa*</label>
@@ -2427,6 +2425,11 @@
                             $disponivel = integranteDisponivel($cpf);
 
                             if ($disponivel['bol']) {
+                                $integrante = integranteUtilizado($cpf);
+                                if ($integrante) {
+                                    $alerta = "<span class='text-danger'>ATENÇÃO! Integrante \"{$integrante['nome']}\" está sendo utilizado no evento {$integrante['idEvento']} - {$integrante['evento']}</span>";
+                                }
+
                                 $sql_inserir = "INSERT INTO `igsis_grupos` 
                                                 (`idGrupos`, 
                                                 `idPedido`, 
@@ -2461,9 +2464,6 @@
                                     $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
                                     if ($upPedido) {
                                         $mensagem = "Integrante inserido com sucesso!";
-                                        if (integranteCadastrado($cpf)) {
-                                            $alerta = "ATENÇÃO! Este integrante está sendo utilizado em outro pedido";
-                                        }
                                     } else {
                                         $mensagem = "Erro";
                                     }

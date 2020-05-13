@@ -85,7 +85,7 @@ $l=7; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','', 11);
-   $pdf->MultiCell(180,$l,utf8_decode("Recebi, da Secretaria Municipal de Cultura - Contratos Artísticos a:"));
+   $pdf->MultiCell(180,$l,utf8_decode("Recebi, da Secretaria Municipal de Cultura - Supervisão de Formação Cultural a:"));
    
    $pdf->Ln();
    

@@ -4886,7 +4886,7 @@ function integranteDisponivel($cpf) {
         $disponivel['bol'] = true;
 
         // Consulta todos os eventos dos projetos especiais online já enviados
-        $sqlConsultaEventos = "SELECT idEvento, dataEnvio FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = '1' AND dataEnvio IS NOT NULL";
+        $sqlConsultaEventos = "SELECT idEvento, nomeEvento, dataEnvio FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = '1' AND dataEnvio IS NOT NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
 
         if ($queryEventos->num_rows) {
@@ -4910,12 +4910,12 @@ function integranteDisponivel($cpf) {
                         $idPedido = $pedido['idPedidoContratacao'];
 
                         // Verifica se o integrante que está sendo cadastrado, já foi cadastrado em algum outro pedido
-                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'")->num_rows;
+                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido' AND publicado = '1'")->num_rows;
                         if ($integrante > 0) {
                             $participacoes++;
                             if (in_array($mesAtual, $dataParticipacoes)) {
                                 $disponivel['bol'] = false;
-                                $disponivel['msg'] = "Integrante já participou de um projeto online este mês";
+                                $disponivel['msg'] = "Integrante já participou do evento {$evento['idEvento']} - {$evento['nomeEvento']} este mês";
                             }
                         } else {
                             continue;
@@ -4940,7 +4940,7 @@ function integranteDisponivel($cpf) {
     return $disponivel;
 }
 
-function integranteCadastrado($cpf) {
+function integranteUtilizado($cpf) {
     $con = bancoMysqli();
     $idEvento = $_SESSION['idEvento'];
     $projetosEspeciais = [92, 93, 94, 95];
@@ -4950,7 +4950,7 @@ function integranteCadastrado($cpf) {
     if (in_array($idProjetoEspecial, $projetosEspeciais)) {
         $cadastrado = false;
 
-        $sqlConsultaEventos = "SELECT idEvento FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = 1 AND dataEnvio IS NULL";
+        $sqlConsultaEventos = "SELECT idEvento, nomeEvento FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = 1 AND dataEnvio IS NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
 
         if ($queryEventos->num_rows) {
@@ -4961,9 +4961,16 @@ function integranteCadastrado($cpf) {
                     $pedidos = $queryPedidos->fetch_all(MYSQLI_ASSOC);
                     foreach ($pedidos as $pedido) {
                         $idPedido = $pedido['idPedidoContratacao'];
-                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'")->num_rows;
-                        if ($integrante > 0) {
-                            $cadastrado = true;
+                        $queryIntegrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido' AND publicado = '1'");
+                        $numIntegrante = $queryIntegrante->num_rows;
+                        $integrante = $queryIntegrante->fetch_assoc();
+                        if ($numIntegrante > 0) {
+                            //$cadastrado = $integrante['nomeCompleto'];
+                            $cadastrado = array(
+                                "nome" => $integrante['nomeCompleto'],
+                                "evento" => $evento['nomeEvento'],
+                                "idEvento" => $evento['idEvento']
+                            );
                         } else {
                             continue;
                         }
