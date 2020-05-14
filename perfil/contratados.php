@@ -2001,7 +2001,7 @@
 		</div>
 	  	<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">
-				<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapj&id_ped=<?php echo $_SESSION['idPedido'] ?>" method="post">
+				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoPessoa" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Nome *:</strong><br/>
 							<input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" >
@@ -2109,6 +2109,8 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<input type="hidden" name="cadastraExecutante" value="1" />
+							<input type="hidden" name="editaLider" value="1" />
+							<input type="hidden" name="idPedidoContratacao" value="<?=$_SESSION['idPedido']?>" />
 							<input type="hidden" name="Sucesso" id="Sucesso" />
 							<input type="submit" value="GRAVAR" class="btn btn-theme btn-lg btn-block">
 						</div>
@@ -3193,7 +3195,80 @@
 					$mensagem = "Erro ao atualizar! Tente novamente.";
 				}
 			}
-			if($_SESSION['idPessoaJuridica'] != NULL)
+            if(isset($_POST['cadastraExecutante']))
+            {
+                $cpf = $_POST['CPF'];
+                $verificaCPF = verificaExiste("sis_pessoa_fisica","CPF",$cpf,"");
+                if($verificaCPF['numero'] > 0)
+                { //verifica se o cpf já existe
+                    $mensagem = "O CPF já consta no sistema. Faça uma busca e insira diretamente.";
+                }else
+                { // o CPF não existe, inserir.
+                    $Nome = $_POST['Nome'];
+                    $NomeArtistico = $_POST['NomeArtistico'];
+                    $RG = $_POST['RG'];
+                    $CPF = $_POST['CPF'];
+                    $CCM = $_POST['CCM'];
+                    $IdEstadoCivil = $_POST['IdEstadoCivil'];
+                    $DataNascimento = exibirDataMysql($_POST['DataNascimento']);
+                    $Nacionalidade = $_POST['Nacionalidade'];
+                    $CEP = $_POST['CEP'];
+                    $Endereco = $_POST['Endereco'];
+                    $Numero = $_POST['Numero'];
+                    $Complemento = $_POST['Complemento'];
+                    $Bairro = $_POST['Bairro'];
+                    $Cidade = $_POST['Cidade'];
+                    $Telefone1 = $_POST['Telefone1'];
+                    $Telefone2 = $_POST['Telefone2'];
+                    $Telefone3 = $_POST['Telefone3'];
+                    $Email = $_POST['Email'];
+                    $DRT = $_POST['DRT'];
+                    $Funcao = $_POST['Funcao'];
+                    $InscricaoINSS = $_POST['InscricaoINSS'];
+                    $OMB = $_POST['OMB'];
+                    $Observacao = $_POST['Observacao'];
+                    $Pis = 0;
+                    $data = date('Y-m-d');
+                    $idUsuario = $_SESSION['idUsuario'];
+                    $sql_insert_pf = "INSERT INTO `sis_pessoa_fisica` (`Id_PessoaFisica`, `Foto`, `Nome`, `NomeArtistico`, `RG`, `CPF`, `CCM`, `IdEstadoCivil`, `DataNascimento`, `LocalNascimento`, `Nacionalidade`, `CEP`, `Numero`, `Complemento`, `Telefone1`, `Telefone2`, `Telefone3`, `Email`, `DRT`, `Funcao`, `InscricaoINSS`, `Pis`, `OMB`, `DataAtualizacao`, `Observacao`, `IdUsuario`) VALUES (NULL, NULL, '$Nome', '$NomeArtistico', '$RG', '$CPF', '$CCM', '$IdEstadoCivil', '$DataNascimento', NULL, '$Nacionalidade', '$CEP', '$Numero', '$Complemento', '$Telefone1', '$Telefone2', '$Telefone3', '$Email', '$DRT', '$Funcao', '$InscricaoINSS', '$Pis', '$OMB', '$data', '$Observacao', '$idUsuario');";
+                    $query_insert_pf = mysqli_query($con,$sql_insert_pf);
+                    if($query_insert_pf)
+                    {
+                        gravarLog($sql_insert_pf);
+                        $sql_ultimo = "SELECT * FROM sis_pessoa_fisica ORDER BY Id_PessoaFisica DESC LIMIT 0,1"; //recupera ultimo id
+                        $id_evento = mysqli_query($con,$sql_ultimo);
+                        $id = mysqli_fetch_array($id_evento);
+                        $idFisica = $id['Id_PessoaFisica'];
+                        $idPedido = $_SESSION['idPedido'];
+                        $sql_insert_pedido = "UPDATE `igsis_pedido_contratacao` SET `IdExecutante` = '$idFisica' WHERE `idPedidoContratacao` = '$idPedido';";
+                        $query_insert_pedido = mysqli_query($con,$sql_insert_pedido);
+
+                        if($query_insert_pedido)
+                        {
+                            $_POST['editaLider'] = $idFisica;
+                            gravarLog($sql_insert_pedido);
+
+                            $idEvento = $_SESSION['idEvento'];
+                            $projetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+                            $projetosEspeciais = [92, 93, 94, 95];
+
+                            if (in_array($projetoEspecial, $projetosEspeciais)) {
+                                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$CPF')");
+                            }
+                        }
+                        else
+                        {
+                            echo "<h1>Erro ao inserir!</h1>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<h1>Erro ao inserir!</h1>";
+                    }
+                }
+            }
+
+            if($_SESSION['idPessoaJuridica'] != NULL)
 			{
 				$pedido['tipoPessoa'] = 2;
 				$pedido['idPessoa'] = $_SESSION['idPessoaJuridica'];	
