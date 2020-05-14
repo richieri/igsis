@@ -2425,10 +2425,11 @@
                             $disponivel = integranteDisponivel($cpf);
 
                             if ($disponivel['bol']) {
-                                $integrante = integranteUtilizado($cpf);
+                                $integrante = integranteUtilizado($cpf, $nome);
                                 if ($integrante) {
-                                    $alerta = "<span class='text-danger'>ATENÇÃO! Integrante \"{$integrante['nome']}\" está sendo utilizado no evento {$integrante['idEvento']} - {$integrante['evento']}</span>";
+                                    $alerta = "<span class='text-danger'>ATENÇÃO! Integrante \"{$integrante['nome']}\" também está sendo utilizado no evento {$integrante['idEvento']} - {$integrante['evento']}</span>";
                                 }
+                                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('{$_SESSION['idEvento']}', '$idPedido', '$cpf')");
 
                                 $sql_inserir = "INSERT INTO `igsis_grupos` 
                                                 (`idGrupos`, 
@@ -2481,8 +2482,11 @@
 						$sql_apagar = "UPDATE igsis_grupos SET publicado = '0' WHERE idGrupos = '$id'";
 						$query_apagar = mysqli_query($con,$sql_apagar);
 						if($query_apagar)
-						{	
+						{
+						    $cpf = $con->query("SELECT cpf FROM igsis_grupos WHERE idGrupos = '$id'")->fetch_assoc()['cpf'];
 					 		gravarLog($sql_apagar);
+					 		$con->query("DELETE FROM ig_evento_integrante WHERE idPedidoContratacao = '$idPedido' AND idEvento = '{$_SESSION['idEvento']}' AND cpf = '$cpf'");
+
                             $sql_grupos = "SELECT * 
                                 FROM igsis_grupos 
                                 WHERE idPedido = '$idPedido' 
@@ -2504,7 +2508,7 @@
 
                             $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
                             if($upPedido){
-                                $mensagem = "Integrante inserido com sucesso!";
+                                $mensagem = "Integrante removido com sucesso!";
                             }
                             else{
                                 $mensagem = "Erro";

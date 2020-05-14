@@ -4927,7 +4927,7 @@ function integranteDisponivel($cpf) {
     return $disponivel;
 }
 
-function integranteUtilizado($cpf) {
+function integranteUtilizado($cpf, $nomeIntegrante) {
     $con = bancoMysqli();
     $idEvento = $_SESSION['idEvento'];
     $projetosEspeciais = [92, 93, 94, 95];
@@ -4935,37 +4935,19 @@ function integranteUtilizado($cpf) {
     $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
 
     if (in_array($idProjetoEspecial, $projetosEspeciais)) {
-        $cadastrado = false;
-
-        $sqlConsultaEventos = "SELECT idEvento, nomeEvento FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = 1 AND dataEnvio IS NULL";
+        $sqlConsultaEventos = "SELECT ei.*, eve.nomeEvento FROM ig_evento_integrante AS ei
+                                LEFT JOIN ig_evento AS eve ON ei.idEvento = eve.idEvento 
+                                WHERE ei.cpf = '$cpf' AND data_apresentacao IS NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
+        $participacoes = $queryEventos->num_rows;
 
-        if ($queryEventos->num_rows) {
-            $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
-            foreach ($eventos as $evento) {
-                $queryPedidos = $con->query("SELECT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = {$evento['idEvento']} AND publicado = 1");
-                if ($queryPedidos->num_rows) {
-                    $pedidos = $queryPedidos->fetch_all(MYSQLI_ASSOC);
-                    foreach ($pedidos as $pedido) {
-                        $idPedido = $pedido['idPedidoContratacao'];
-                        $queryIntegrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido' AND publicado = '1'");
-                        $numIntegrante = $queryIntegrante->num_rows;
-                        $integrante = $queryIntegrante->fetch_assoc();
-                        if ($numIntegrante > 0) {
-                            //$cadastrado = $integrante['nomeCompleto'];
-                            $cadastrado = array(
-                                "nome" => $integrante['nomeCompleto'],
-                                "evento" => $evento['nomeEvento'],
-                                "idEvento" => $evento['idEvento']
-                            );
-                        } else {
-                            continue;
-                        }
-                    }
-                } else {
-                    continue;
-                }
-            }
+        if ($participacoes) {
+            $evento = $queryEventos->fetch_assoc();
+            $cadastrado = array(
+                "nome" => $nomeIntegrante,
+                "evento" => $evento['nomeEvento'],
+                "idEvento" => $evento['idEvento']
+            );
         } else {
             $cadastrado = false;
         }
