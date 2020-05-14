@@ -4873,7 +4873,7 @@ function atualizaRelacionamentoEvento($tabela, $idEvento, $post) {
 
 function integranteDisponivel($cpf) {
     $con = bancoMysqli();
-    $participacoes = 0;
+
     $mes = new DateTime();
     $mesAtual = $mes->format('m-Y');
     $idEvento = $_SESSION['idEvento'];
@@ -4883,46 +4883,38 @@ function integranteDisponivel($cpf) {
     $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
 
     if (in_array($idProjetoEspecial, $projetosEspeciais)) {
-        $disponivel['bol'] = true;
-
         // Consulta todos os eventos dos projetos especiais online já enviados
-        $sqlConsultaEventos = "SELECT idEvento, nomeEvento, dataEnvio FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = '1' AND dataEnvio IS NOT NULL";
+        $sqlConsultaEventos = "SELECT ei.*, eve.nomeEvento FROM ig_evento_integrante AS ei
+                                LEFT JOIN ig_evento AS eve ON ei.idEvento = eve.idEvento 
+                                WHERE ei.cpf = '$cpf' AND data_apresentacao IS NOT NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
+        $participacoes = $queryEventos->num_rows;
 
-        if ($queryEventos->num_rows) {
-            $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
-            $dataParticipacoes = [];
+        if ($participacoes > 0) {
+            if ($participacoes >= 6) {
+                $disponivel['bol'] = false;
+                $disponivel['msg'] = "Integrante já participou de 6 projetos online";
+            } else {
+                $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
+                $dataApresentacoes = [];
+                $participou = false;
 
-            // Pra cada evento encontrado, faz...
-            foreach ($eventos as $evento) {
-                // Guarda o mes e o ano de envio
-                $data = new DateTime($evento['dataEnvio']);
-                $dataEnvio = $data->format('m-Y');
-                $dataParticipacoes[] = $dataEnvio;
+                // Pra cada evento encontrado, faz...
+                foreach ($eventos as $evento) {
+                    // Guarda o mes e o ano de envio
+                    $data = new DateTime($evento['data_apresentacao']);
+                    $dataApresentacao = $data->format('m-Y');
+                    $dataApresentacoes[] = $dataApresentacao;
 
-                // Verifica se o evento tem pedido
-                $queryPedidos = $con->query("SELECT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = {$evento['idEvento']} AND publicado = 1");
-                if ($queryPedidos->num_rows) {
-                    $pedidos = $queryPedidos->fetch_all(MYSQLI_ASSOC);
-
-                    // Pra cada pedido encontrado, faz...
-                    foreach ($pedidos as $pedido) {
-                        $idPedido = $pedido['idPedidoContratacao'];
-
-                        // Verifica se o integrante que está sendo cadastrado, já foi cadastrado em algum outro pedido
-                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido' AND publicado = '1'")->num_rows;
-                        if ($integrante > 0) {
-                            $participacoes++;
-                            if (in_array($mesAtual, $dataParticipacoes)) {
-                                $disponivel['bol'] = false;
-                                $disponivel['msg'] = "Integrante já participou do evento {$evento['idEvento']} - {$evento['nomeEvento']} este mês";
-                            }
-                        } else {
-                            continue;
-                        }
+                    if (in_array($mesAtual, $dataApresentacoes)) {
+                        $participou = true;
                     }
+                }
+                if ($participou) {
+                    $disponivel['bol'] = false;
+                    $disponivel['msg'] = "Integrante já participou do evento {$evento['idEvento']} - {$evento['nomeEvento']} este mês";
                 } else {
-                    continue;
+                    $disponivel['bol'] = true;
                 }
             }
         } else {
@@ -4930,11 +4922,6 @@ function integranteDisponivel($cpf) {
         }
     } else {
         $disponivel['bol'] = true;
-    }
-
-    if ($participacoes > 6) {
-        $disponivel['bol'] = false;
-        $disponivel['msg'] = "Integrante já participou de 6 projetos online";
     }
 
     return $disponivel;
