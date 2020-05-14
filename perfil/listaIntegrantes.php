@@ -34,8 +34,13 @@ if(isset($_GET['executar'])) {
                         <tr>
                             <th class="text-center">idEvento</th>
                             <th class="text-center">Nome do Evento</th>
+                            <th class="text-center">Numero de ocorrencias</th>
                         </tr>
                         <?php foreach ($eventos as $evento): ?>
+                            <?php
+                                $queryOcorrencias = $con->query("SELECT * FROM ig_ocorrencia WHERE idEvento = '{$evento['idEvento']}' AND publicado = '1'");
+                                $nOcorrencias = $queryOcorrencias->num_rows;
+                            ?>
                             <tr>
                                 <th colspan="2" class="text-center">EVENTO</th>
                             </tr>
@@ -49,7 +54,7 @@ if(isset($_GET['executar'])) {
                                     $pedidos = $queryPedido->fetch_all(MYSQLI_ASSOC);
                             ?>
                                 <tr>
-                                    <th colspan="2" class="text-center">PEDIDOS</th>
+                                    <th colspan="2" class="text-center" bgcolor="#e6e6fa">PEDIDOS</th>
                                 </tr>
                                 <tr>
                                     <th class="text-center">idPedido</th>
@@ -60,6 +65,46 @@ if(isset($_GET['executar'])) {
                                         <td><?=$pedido['idPedidoContratacao']?></td>
                                         <td><?=$pedido['integrantes']?></td>
                                     </tr>
+                                    <?php
+                                        $queryIntegrantes = $con->query("SELECT * FROM igsis_grupos WHERE idPedido = {$pedido['idPedidoContratacao']} AND publicado = 1");
+                                        if ($queryIntegrantes->num_rows > 0):
+                                            $integrantes = $queryIntegrantes->fetch_all(MYSQLI_ASSOC);
+                                        ?>
+                                            <tr>
+                                                <th colspan="2" class="text-center" bgcolor="aqua">INTEGRANTES</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">CPF</th>
+                                                <th class="text-center">Nome do Integrante</th>
+                                            </tr>
+                                            <?php foreach ($integrantes as $integrante): ?>
+                                                <tr>
+                                                    <td><?=$integrante['cpf']?></td>
+                                                    <td><?=$integrante['nomeCompleto']?></td>
+                                                </tr>
+
+                                                <?php
+                                                    if($nOcorrencias) {
+                                                        $ocorrencias = $queryOcorrencias->fetch_all(MYSQLI_ASSOC);
+                                                        foreach ($ocorrencias as $ocorrencia) {
+                                                            if ($ocorrencia['dataInicio'] != '0000-00-00') {
+                                                                $sqlInsert = "INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf, data_apresentacao) VALUES 
+                                                                        ('{$evento['idEvento']}', '{$pedido['idPedidoContratacao']}', '{$integrante['cpf']}', '{$ocorrencia['dataInicio']}')";
+                                                                $con->query($sqlInsert);
+                                                            } else {
+                                                                $sqlInsert = "INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES 
+                                                                        ('{$evento['idEvento']}', '{$pedido['idPedidoContratacao']}', '{$integrante['cpf']}')";
+                                                                $con->query($sqlInsert);
+                                                            }
+                                                        }
+                                                    } else {
+                                                        $sqlInsert = "INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES 
+                                                                        ('{$evento['idEvento']}', '{$pedido['idPedidoContratacao']}', '{$integrante['cpf']}')";
+                                                        $con->query($sqlInsert);
+                                                    }
+                                                ?>
+                                            <?php endforeach ?>
+                                        <?php endif; ?>
                                 <?php endforeach ?>
                             <?php endif ?>
                             <tr>
