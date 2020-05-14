@@ -250,6 +250,15 @@
 					$query_insere_pf = mysqli_query($con,$sql_insere_pf);
 					if($query_insere_pf)
 					{
+                        $idPedido = $con->insert_id;
+                        $projetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+                        $projetosEspeciais = [92, 93, 94, 95];
+
+                        if (in_array($projetoEspecial, $projetosEspeciais)) {
+                            $cpf = $con->query("SELECT CPF FROM sis_pessoa_fisica WHERE Id_PessoaFisica = '$idPessoa'")->fetch_assoc()['CPF'];
+                            $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
+                        }
+
 						gravarLog($query_insere_pf);
 						$mensagem = "Pedido inserido com sucesso!";
 					}
@@ -460,6 +469,13 @@
 				$query_apagar_pedido = mysqli_query($con,$sql_apagar_pedido);
 				if($query_apagar_pedido)
 				{
+				    $idEvento = $_SESSION['idEvento'];
+                    $projetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+                    $projetosEspeciais = [92, 93, 94, 95];
+
+                    if (in_array($projetoEspecial, $projetosEspeciais)) {
+                        $con->query("DELETE FROM ig_evento_integrante WHERE idEvento = '$idEvento' AND idPedidoContratacao = '$idPedidoContratacao'");
+                    }
 					gravarLog($sql_apagar_pedido);
 					$mensagem = "Pedido apagado com sucesso.";
 				}
