@@ -4969,7 +4969,8 @@ function integranteUtilizado($cpf) {
                             $cadastrado = array(
                                 "nome" => $integrante['nomeCompleto'],
                                 "evento" => $evento['nomeEvento'],
-                                "idEvento" => $evento['idEvento']
+                                "idEvento" => $evento['idEvento'],
+                                "idPedido" => $idPedido
                             );
                         } else {
                             continue;

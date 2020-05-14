@@ -2427,7 +2427,7 @@
                             if ($disponivel['bol']) {
                                 $integrante = integranteUtilizado($cpf);
                                 if ($integrante) {
-                                    $alerta = "<span class='text-danger'>ATENÇÃO! Integrante \"{$integrante['nome']}\" está sendo utilizado no evento {$integrante['idEvento']} - {$integrante['evento']}</span>";
+                                    $alerta = "<span class='text-danger'>ATENÇÃO! Integrante \"{$integrante['nome']}\" está sendo utilizado no evento {$integrante['evento']} com o pedido nº {$integrante['idPedido']}</span>";
                                 }
 
                                 $sql_inserir = "INSERT INTO `igsis_grupos` 
