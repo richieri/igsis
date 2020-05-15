@@ -1137,11 +1137,11 @@
                         }
 
 						$mensagem = "Integrante inserido com sucesso!";	
-					}
-					else
-					{
-						$mensagem = "Erro ao inserir integrante. Tente novamente.";	
-					}
+//					}
+//					else
+//					{
+//						$mensagem = "Erro ao inserir integrante. Tente novamente.";
+//					}
 				}
 				else
 				{
