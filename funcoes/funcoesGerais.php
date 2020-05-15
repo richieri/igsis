@@ -4884,7 +4884,7 @@ function integranteDisponivel($cpf) {
 
     if (in_array($idProjetoEspecial, $projetosEspeciais)) {
         // Consulta todos os eventos dos projetos especiais online já enviados
-        $sqlConsultaEventos = "SELECT ei.*, eve.nomeEvento FROM ig_evento_integrante AS ei
+        $sqlConsultaEventos = "SELECT ei.*, eve.nomeEvento, eve.statusEvento FROM ig_evento_integrante AS ei
                                 LEFT JOIN ig_evento AS eve ON ei.idEvento = eve.idEvento 
                                 WHERE ei.cpf = '$cpf' AND data_apresentacao IS NOT NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
@@ -4912,7 +4912,7 @@ function integranteDisponivel($cpf) {
                 }
                 if ($participou) {
                     $disponivel['bol'] = false;
-                    $disponivel['msg'] = "Integrante já participou do evento {$evento['idEvento']} - {$evento['nomeEvento']} este mês";
+                    $disponivel['msg'] = "O CPF {$evento['cpf']} está cadastrado no evento {$evento['nomeEvento']}, pedido nº {$evento['idPedidoContratacao']}, ocorrendo no dia {$evento['data_apresentacao']} e o status do evento consta como {$evento['statusEvento']}.";
                 } else {
                     $disponivel['bol'] = true;
                 }
