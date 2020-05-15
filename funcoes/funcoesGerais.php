@@ -4974,7 +4974,7 @@ function integranteUtilizado($cpf, $nomeIntegrante) {
     return $cadastrado;
 }
 
-function atualizadaDataApresentacao($dataInicio) {
+function atualizadaDataApresentacao($dataInicio, $idOcorrencia, $atualizar = false) {
     $con = bancoMysqli();
     $idEvento = $_SESSION['idEvento'];
 
@@ -4982,20 +4982,39 @@ function atualizadaDataApresentacao($dataInicio) {
     $data_inicio = $data_inicio->format('Y-m-d');
 
     $integrantes = $con->query("SELECT * FROM ig_evento_integrante WHERE idEvento = '$idEvento'")->fetch_all(MYSQLI_ASSOC);
+    $registros = $con->query("SELECT idPedidoContratacao, cpf, COUNT(cpf) AS 'contagem' FROM ig_evento_integrante WHERE idEvento = '$idEvento' GROUP BY cpf")->fetch_all(MYSQLI_ASSOC);
 
-    foreach ($integrantes as $integrante) {
+    if (!$atualizar) {
+        if ($registros[0]['contagem'] < 2) {
+            foreach ($integrantes as $integrante) {
 
-        if ($integrante['data_apresentacao'] == null) {
-            $con->query("UPDATE ig_evento_integrante SET data_apresentacao = '$dataInicio' WHERE id = '{$integrante['id']}'");
+                if ($integrante['data_apresentacao'] == null) {
+                    $con->query("UPDATE ig_evento_integrante SET
+                                        data_apresentacao = '$dataInicio',
+                                        idOcorrencia = '$idOcorrencia'
+                                        WHERE id = '{$integrante['id']}'");
+                } else {
+                    $idPedido = $integrante['idPedidoContratacao'];
+                    $cpf = $integrante['cpf'];
+                    $dataApresentacao = new DateTime($integrante['data_apresentacao']);
+                    $dataApresentacao = $dataApresentacao->format('Y-m-d');
+                    if ($data_inicio != $dataApresentacao) {
+                        $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf, data_apresentacao, idOcorrencia) VALUES ('$idEvento', '$idPedido', '$cpf', '$dataInicio', '$idOcorrencia')");
+                    }
+                }
+            }
         } else {
-            $idPedido = $integrante['idPedidoContratacao'];
-            $cpf = $integrante['cpf'];
-            $dataApresentacao = new DateTime($integrante['data_apresentacao']);
-            $dataApresentacao = $dataApresentacao->format('Y-m-d');
-            if ($data_inicio != $dataApresentacao) {
-                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf, data_apresentacao) VALUES ('$idEvento', '$idPedido', '$cpf', '$dataInicio')");
+            foreach ($registros as $integrante) {
+                $idPedido = $integrante['idPedidoContratacao'];
+                $cpf = $integrante['cpf'];
+
+                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf, data_apresentacao, idOcorrencia) VALUES ('$idEvento', '$idPedido', '$cpf', '$dataInicio', '$idOcorrencia')");
             }
         }
+    } else {
+        $con->query("UPDATE ig_evento_integrante SET
+                            data_apresentacao = '$dataInicio'
+                            WHERE idOcorrencia = '$idOcorrencia'");
     }
 }
 
@@ -5007,9 +5026,9 @@ function apagaDataApresentacao($id) {
 
     $registros = $con->query("SELECT cpf, COUNT(cpf) AS 'contagem' FROM ig_evento_integrante WHERE idEvento = '$idEvento' GROUP BY cpf")->fetch_assoc()['contagem'];
     if ($registros > 1) {
-        $con->query("DELETE FROM ig_evento_integrante WHERE idEvento = '$idEvento' AND data_apresentacao = 'dataInicio'");
+        $con->query("DELETE FROM ig_evento_integrante WHERE idOcorrencia = '$id'");
     } else {
-        $con->query("UPDATE ig_evento_integrante SET data_apresentacao = null WHERE idEvento = '$idEvento'");
+        $con->query("UPDATE ig_evento_integrante SET data_apresentacao = null, idOcorrencia = null WHERE idEvento = '$idEvento'");
     }
 }
 ?>
