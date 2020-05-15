@@ -899,9 +899,13 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
                 $local = "De acordo com a programação do Mês do Hip Hop";
                 $espaco = "De acordo com a programação do Mês do Hip Hop";
             }
-
+			if ($sub != null):
+				$titulo = $sub['titulo'];
+			else:
+				$titulo = '';
+			endif;
 			$ocorrencia = "<div class='left'>$tipo_de_evento $dia_especial ".
-				$sub['titulo']
+				$titulo	 
 				."<br />
 				Data: $data $semana <br />
 				Horário: $hora<br />
@@ -1577,7 +1581,9 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
 		$campo = mysqli_fetch_array($query);
-		return $campo['observacao'];	
+		if($campo != null):
+			return $campo['observacao'];	
+		endif;
 	}
 	function retornaTipoOcorrencia($id)
 	{
@@ -2050,55 +2056,64 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 			$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
 			$query_anterior = mysqli_query($con,$sql_anterior);
 			$data = mysqli_fetch_array($query_anterior);
-			$data_inicio = $data['dataInicio'];
-			$sql_posterior01 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataFinal DESC LIMIT 0,1"; //quando existe data final
-			$sql_posterior02 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
-			$query_anterior01 = mysqli_query($con,$sql_posterior01);
-			$data = mysqli_fetch_array($query_anterior01);
-			$num = mysqli_num_rows($query_anterior01);
-			if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL))
-			{
-				//se existe uma data final e que é diferente de NULO
-				$dataFinal01 = $data['dataFinal'];	
-			}
-			$query_anterior02 = mysqli_query($con,$sql_posterior02); //recupera a data única mais tarde
-			$data = mysqli_fetch_array($query_anterior02);
-			$dataFinal02 = $data['dataInicio'];
-			if(isset($dataFinal01))
-			{
-				//se existe uma temporada, compara com a última data única
-				if($dataFinal01 > $dataFinal02)
+			if ($data != null):
+				$data_inicio = $data['dataInicio'];
+				$sql_posterior01 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataFinal DESC LIMIT 0,1"; //quando existe data final
+				$sql_posterior02 = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$id' AND publicado = '1' ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
+				$query_anterior01 = mysqli_query($con,$sql_posterior01);
+				$data = mysqli_fetch_array($query_anterior01);
+				if($data != null):
+					$num = mysqli_num_rows($query_anterior01);
+					if(($data['dataFinal'] != '0000-00-00') OR ($data['dataFinal'] != NULL))
+					{
+						//se existe uma data final e que é diferente de NULO
+						$dataFinal01 = $data['dataFinal'];	
+					}
+					$query_anterior02 = mysqli_query($con,$sql_posterior02); //recupera a data única mais tarde
+					if ($data != null):
+						$data = mysqli_fetch_array($query_anterior02);
+						if ($data != null):
+							$dataFinal02 = $data['dataInicio'];
+							if(isset($dataFinal01))
+							{
+								//se existe uma temporada, compara com a última data única
+								if($dataFinal01 > $dataFinal02)
+								{
+									$dataFinal = $dataFinal01;
+								}
+								else
+								{
+									$dataFinal = $dataFinal02;
+								}
+							}
+							else
+							{
+								$dataFinal = $dataFinal02;		
+							}
+			
+				$tipo = recuperaDados("ig_evento",$id,"idEvento");
+				if($tipo['projetoEspecial'] == 74){
+					if($data_inicio == $dataFinal)
+					{
+						return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP";
+					}
+					else
+					{
+						return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP";
+					}
+				}
+				if($data_inicio == $dataFinal)
 				{
-					$dataFinal = $dataFinal01;
+					return exibirDataBr($data_inicio);
 				}
 				else
 				{
-					$dataFinal = $dataFinal02;
+					return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal);
 				}
-			}
-			else
-			{
-				$dataFinal = $dataFinal02;		
-			}
-            $tipo = recuperaDados("ig_evento",$id,"idEvento");
-            if($tipo['projetoEspecial'] == 74){
-                if($data_inicio == $dataFinal)
-                {
-                    return exibirDataBr($data_inicio)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP";
-                }
-                else
-                {
-                    return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal)." DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP";
-                }
-            }
-			if($data_inicio == $dataFinal)
-			{
-				return exibirDataBr($data_inicio);
-			}
-			else
-			{
-				return "de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal);
-			}
+						endif;
+					endif;
+				endif;
+			endif;
 		}
 	}
 	function retornaData($id)
@@ -2508,25 +2523,29 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 			ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicial mais antecedente
 		$query_anterior = mysqli_query($con,$sql_anterior);
 		$data = mysqli_fetch_array($query_anterior);
-		$data_inicio = $data['dataInicio'];
-		$sql_posterior = "SELECT * FROM ig_ocorrencia 
-			WHERE idEvento = '$idEvento' 
-			AND publicado = '1' 
-			AND idTipoOcorrencia = '5' 
-			AND idCinema IS NOT NULL 
-			ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
-		$query_anterior = mysqli_query($con,$sql_posterior);
-		$data = mysqli_fetch_array($query_anterior);
-		$dataFinal = $data['dataInicio'];
-		if($data_inicio == $dataFinal)
-		{
-			return exibirDataBr($data_inicio);
-		}
-		else
-		{
-			return "Período da Mostra: <br />
-				de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal);
-		}
+		if($data != null):
+			$data_inicio = $data['dataInicio'];
+			$sql_posterior = "SELECT * FROM ig_ocorrencia 
+				WHERE idEvento = '$idEvento' 
+				AND publicado = '1' 
+				AND idTipoOcorrencia = '5' 
+				AND idCinema IS NOT NULL 
+				ORDER BY dataInicio DESC LIMIT 0,1"; //quando há muitas datas únicas
+			$query_anterior = mysqli_query($con,$sql_posterior);
+			$data = mysqli_fetch_array($query_anterior);
+			if($data != null):
+				$dataFinal = $data['dataInicio'];
+				if($data_inicio == $dataFinal)
+				{
+					return exibirDataBr($data_inicio);
+				}
+				else
+				{
+					return "Período da Mostra: <br />
+						de ".exibirDataBr($data_inicio)." a ".exibirDataBr($dataFinal);
+				}
+			endif;
+		endif;
 	}
 	function retornaTipoPessoa($tipo)
 	{
