@@ -1970,19 +1970,20 @@
                                 (NULL, '$tipoOcorrencia', NULL, '$local', '$idEvento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$dataInicio', '$dataFinal', '$horaInicio', '$horaFinal', '$timezone', '$diaInteiro', '$diaEspecial', '$libras', '$audiodescricao', '$valorIngresso', '$retiradaIngresso', '$localOutros', '$lotacao', '$reservados', '$duracao', '$precoPopular', '$frequencia', '$publicado', '$idSubEvento', '$virada', '$observacao', '$subprefeitura', '$periodo');";
 				if (eventoOnline()) {
 				    if (validaDataIntegrante($dataInicio)){
-                        if(mysqli_query($con,$sql_inserir))
-                        {
-                            $idOcorrencia = $con->insert_id;
-                            atualizadaDataApresentacao($dataInicio, $idOcorrencia);
-                            $mensagem = "Ocorrência inserida com sucesso!";
-                            gravarLog($sql_inserir);
-                        }
-                        else
-                        {
-                            $mensagem = "Erro ao inserir. Tente novamente.";
-                        }
+				        if (!validaPartIntegrantes()['bol']) {
+                            if (mysqli_query($con, $sql_inserir)) {
+                                $idOcorrencia = $con->insert_id;
+                                atualizadaDataApresentacao($dataInicio, $idOcorrencia);
+                                $mensagem = "Ocorrência inserida com sucesso!";
+                                gravarLog($sql_inserir);
+                            } else {
+                                $mensagem = "Erro ao inserir. Tente novamente.";
+                            }
+                        }else{
+                            $mensagem = "Erro número de ocorrências para um integrande excedeu.";
+				        }
                     } else {
-				        $mensagem = "Erro já existe uma ocorrência cadastrada no mesmo periodo   para um dos integrantes.";
+				        $mensagem = "Erro já existe uma ocorrência cadastrada no mesmo periodo para um dos integrantes.";
                     }
 				}else {
                     if(mysqli_query($con,$sql_inserir)) {
