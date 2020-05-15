@@ -1968,19 +1968,33 @@
 				$sql_inserir = "INSERT INTO `ig_ocorrencia` (`idOcorrencia`, `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`,`idSubEvento`, `virada`, `observacao`, `subprefeitura_id`, `idPeriodoDia`) 
                                 VALUES 
                                 (NULL, '$tipoOcorrencia', NULL, '$local', '$idEvento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$dataInicio', '$dataFinal', '$horaInicio', '$horaFinal', '$timezone', '$diaInteiro', '$diaEspecial', '$libras', '$audiodescricao', '$valorIngresso', '$retiradaIngresso', '$localOutros', '$lotacao', '$reservados', '$duracao', '$precoPopular', '$frequencia', '$publicado', '$idSubEvento', '$virada', '$observacao', '$subprefeitura', '$periodo');";
-				if(mysqli_query($con,$sql_inserir))
-				{
-				    if (eventoOnline()) {
-				        $idOcorrencia = $con->insert_id;
-                        atualizadaDataApresentacao($dataInicio, $idOcorrencia);
+				if (eventoOnline()) {
+				    if (validaDataIntegrante($dataInicio)){
+				        if (!validaPartIntegrantes()['bol']) {
+                            if (mysqli_query($con, $sql_inserir)) {
+                                $idOcorrencia = $con->insert_id;
+                                atualizadaDataApresentacao($dataInicio, $idOcorrencia);
+                                $mensagem = "Ocorrência inserida com sucesso!";
+                                gravarLog($sql_inserir);
+                            } else {
+                                $mensagem = "Erro ao inserir. Tente novamente.";
+                            }
+                        }else{
+                            $mensagem = "Erro! O número de ocorrências para o integrante excedeu.";
+				        }
+                    } else {
+				        $mensagem = "Erro já existe uma ocorrência cadastrada no mesmo periodo para um dos integrantes.";
                     }
-					$mensagem = "Ocorrência inserida com sucesso!";	
-					gravarLog($sql_inserir);
-				}
-				else
-				{
-					$mensagem = "Erro ao inserir. Tente novamente.";
-				}
+				}else {
+                    if(mysqli_query($con,$sql_inserir)) {
+                        $idOcorrencia = $con->insert_id;
+                        $mensagem = "Ocorrência inserida com sucesso!";
+                        gravarLog($sql_inserir);
+                    }else
+                    {
+                        $mensagem = "Erro ao inserir. Tente novamente.";
+                    }
+                }
 			}
 			if(isset($_POST['atualizar']))
 			{
@@ -3429,15 +3443,41 @@
                                 else if($prazo['fora'] == 0) //Tem pedido e está dentro do prazo
                                 {
                                     ?>
+                                    <?php
+                                    if (eventoOnline()):
+                                        $participacoes = validaPartIntegrantes();
+                                        ?>
+                                    <?php if ($participacoes['bol']): ?>
+                                        <h6>Os seguintes CPFs já participaram de 6 apresentações</h6>
+                                            <?=$participacoes['msg']?>
+                                    <?php else: ?>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-8">
+                                                <form method='POST' action='?perfil=aprovacao_evento'>
+                                                    <input type='hidden' name='aprovacao_evento' value='".$campo[' idEvento']."'
+                                                    />
+                                                    <br/>
+                                                    <input type='submit' class='btn btn-theme btn-lg btn-block'
+                                                           value='Solicitar Envio'
+                                                           onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    <?php endif ?>
+                                <?php else: ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <form method='POST' action='?perfil=aprovacao_evento'>
-                                                <input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
-                                                <br />
-                                                <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+                                                <input type='hidden' name='aprovacao_evento' value='".$campo[' idEvento']."'
+                                                />
+                                                <br/>
+                                                <input type='submit' class='btn btn-theme btn-lg btn-block'
+                                                       value='Solicitar Envio'
+                                                       onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
                                             </form>
                                         </div>
                                     </div>
+                                <?php endif ?>
                                     <!-- /* Código comentado devido ao bloqueio de envio direto mesmo dentro do prazo por questão de fechamento do SOF */
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
