@@ -3443,15 +3443,43 @@
                                 else if($prazo['fora'] == 0) //Tem pedido e está dentro do prazo
                                 {
                                     ?>
+                                    <?php
+                                    if (eventoOnline()):
+                                        $participacoes = validaPartIntegrantes();
+                                        ?>
+                                    <?php if ($participacoes['bol']): ?>
+                                        <h6>Os seguintes CPFs já participaram de 6 apresentações</h6>
+                                        <?php foreach ($participacoes['cpfs'] as $cpf): ?>
+                                            <p>CPF: <?=$cpf?></p>
+                                        <?php endforeach ?>
+                                    <?php else: ?>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-8">
+                                                <form method='POST' action='?perfil=aprovacao_evento'>
+                                                    <input type='hidden' name='aprovacao_evento' value='".$campo[' idEvento']."'
+                                                    />
+                                                    <br/>
+                                                    <input type='submit' class='btn btn-theme btn-lg btn-block'
+                                                           value='Solicitar Envio'
+                                                           onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    <?php endif ?>
+                                <?php else: ?>
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
                                             <form method='POST' action='?perfil=aprovacao_evento'>
-                                                <input type='hidden' name='aprovacao_evento' value='".$campo['idEvento']."' />
-                                                <br />
-                                                <input type ='submit' class='btn btn-theme btn-lg btn-block' value='Solicitar Envio' onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
+                                                <input type='hidden' name='aprovacao_evento' value='".$campo[' idEvento']."'
+                                                />
+                                                <br/>
+                                                <input type='submit' class='btn btn-theme btn-lg btn-block'
+                                                       value='Solicitar Envio'
+                                                       onclick="this.disabled = true; this.value = 'Enviando…'; this.form.submit();">
                                             </form>
                                         </div>
                                     </div>
+                                <?php endif ?>
                                     <!-- /* Código comentado devido ao bloqueio de envio direto mesmo dentro do prazo por questão de fechamento do SOF */
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-8">
