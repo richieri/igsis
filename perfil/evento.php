@@ -1968,18 +1968,18 @@
 				$sql_inserir = "INSERT INTO `ig_ocorrencia` (`idOcorrencia`, `idTipoOcorrencia`, `ig_comunicao_idCom`, `local`, `idEvento`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`, `dataInicio`, `dataFinal`, `horaInicio`, `horaFinal`, `timezone`, `diaInteiro`, `diaEspecial`, `libras`, `audiodescricao`, `valorIngresso`, `retiradaIngresso`, `localOutros`, `lotacao`, `reservados`, `duracao`, `precoPopular`, `frequencia`, `publicado`,`idSubEvento`, `virada`, `observacao`, `subprefeitura_id`, `idPeriodoDia`) 
                                 VALUES 
                                 (NULL, '$tipoOcorrencia', NULL, '$local', '$idEvento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$dataInicio', '$dataFinal', '$horaInicio', '$horaFinal', '$timezone', '$diaInteiro', '$diaEspecial', '$libras', '$audiodescricao', '$valorIngresso', '$retiradaIngresso', '$localOutros', '$lotacao', '$reservados', '$duracao', '$precoPopular', '$frequencia', '$publicado', '$idSubEvento', '$virada', '$observacao', '$subprefeitura', '$periodo');";
-				if(mysqli_query($con,$sql_inserir))
-				{
-				    if (eventoOnline()) {
-				        $idOcorrencia = $con->insert_id;
-                        atualizadaDataApresentacao($dataInicio, $idOcorrencia);
-                    }
-					$mensagem = "Ocorrência inserida com sucesso!";	
-					gravarLog($sql_inserir);
-				}
-				else
-				{
-					$mensagem = "Erro ao inserir. Tente novamente.";
+				if (eventoOnline() && validaDataIntegrante($dataInicio)) {
+					if(mysqli_query($con,$sql_inserir))
+					{
+						$idOcorrencia = $con->insert_id;
+						atualizadaDataApresentacao($dataInicio, $idOcorrencia);
+						$mensagem = "Ocorrência inserida com sucesso!";	
+						gravarLog($sql_inserir);
+					}
+					else
+					{
+						$mensagem = "Erro ao inserir. Tente novamente.";
+					}
 				}
 			}
 			if(isset($_POST['atualizar']))

@@ -5048,4 +5048,27 @@ function apagaDataApresentacao($id) {
         $con->query("UPDATE ig_evento_integrante SET data_apresentacao = null, idOcorrencia = null WHERE idEvento = '$idEvento'");
     }
 }
+
+function validaDataIntegrante($data){
+	$con = bancoMysqli();
+	$idEvento = $_SESSION['idEvento'];
+	$sqlGenric = "SELECT  id, cpf, data_apresentacao FROM ig_evento_integrante WHERE idEvento= '$idEvento'";
+
+	$integrantesGenerico = $con->query($sqlGenric)->fetch_all(MYSQLI_ASSOC);
+	$cont = 0;
+	$dtOcorrencia = new DateTime($data);
+	$mesAno = $dtOcorrencia->format('m-Y');
+    foreach ($integrantesGenerico as $integ){
+        $intData = new DateTime($data);
+        $inteMesAno = $intData->format('m-Y');
+        if ($mesAno == $inteMesAno){
+            $cont++;
+            break;
+        }
+    }
+    if ($cont){
+        return false;
+    }
+    return true;
+}
 ?>
