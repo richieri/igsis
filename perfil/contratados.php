@@ -2654,7 +2654,7 @@
 				<form class="form-horizontal" role="form" action="?perfil=contratados&p=edicaoGrupo&action=listar" method="post">
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Nome completo: *</strong><br/>
-							<input type="text" class="form-control" id="RepresentanteLegal" name="nome" >
+							<input type="text" class="form-control" id="RepresentanteLegal" name="nome" required>
 						</div>
 					</div>
 					<div class="form-group">
@@ -2662,7 +2662,7 @@
 							<input type="text" class="form-control" id="RG" name="rg" placeholder="RG">
 						</div>
 						<div class="col-md-6"><strong>CPF: *</strong><br/>
-							<input type="text" class="form-control" id="cpf" name="cpf"  placeholder="CPF">
+							<input type="text" class="form-control" id="cpf" name="cpf"  placeholder="CPF" required>
 						</div>
 					</div>
 					<!-- Botão Gravar -->	
