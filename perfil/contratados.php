@@ -1105,7 +1105,7 @@
 		 			gravarLog($sql_atualiza_executante);
 					$mensagem = "Líder do Grupo inserido com sucesso!";	
 					
-					$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
+					/*$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
 					$nome = addslashes($pf['Nome']);
 					$rg = $pf['RG'];
 					$cpf = $pf['CPF'];
@@ -1126,12 +1126,10 @@
 					if($query_inserir)
 					{	
 				 		gravarLog($sql_inserir);
+                        */
 
-                        $idEvento = $_SESSION['idEvento'];
-                        $projetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
-                        $projetosEspeciais = [92, 93, 94, 95];
 
-                        if (in_array($projetoEspecial, $projetosEspeciais)) {
+                        if (eventoOnline()) {
                             $consultaEventoIntegrante = $con->query("SELECT * FROM ig_evento_integrante WHERE idEvento = '$idEvento' AND idPedidoContratacao = '$idPedido' AND cpf = $cpf")->num_rows;
                             if ($consultaEventoIntegrante == 0) {
                                 $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
