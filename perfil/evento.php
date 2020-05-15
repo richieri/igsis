@@ -1971,10 +1971,11 @@
 				if(mysqli_query($con,$sql_inserir))
 				{
 				    if (eventoOnline()) {
-                        atualizadaDataApresentacao($dataInicio);
+				        $idOcorrencia = $con->insert_id;
+                        atualizadaDataApresentacao($dataInicio, $idOcorrencia);
                     }
 					$mensagem = "Ocorrência inserida com sucesso!";	
-					gravarLog($sql_inserir);	
+					gravarLog($sql_inserir);
 				}
 				else
 				{
@@ -2016,6 +2017,9 @@
 				$con = bancoMysqli();
 				if(mysqli_query($con,$sql_atualizar_ocorrencia))
 				{
+                    if (eventoOnline()) {
+                        atualizadaDataApresentacao($dataInicio, $idOc, true);
+                    }
 					$mensagem = "Ocorrência atualizada com sucesso!";
 					gravarLog($sql_atualizar_ocorrencia);	
 				}
