@@ -4929,6 +4929,20 @@ function integranteDisponivel($cpf) {
     return $disponivel;
 }
 
+function eventoOnline() {
+    $con = bancoMysqli();
+    $idEvento = $_SESSION['idEvento'];
+    $projetosEspeciais = [92, 93, 94, 95];
+
+    $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+
+    if (in_array($idProjetoEspecial, $projetosEspeciais)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function integranteUtilizado($cpf, $nomeIntegrante) {
     $con = bancoMysqli();
     $idEvento = $_SESSION['idEvento'];
@@ -4958,5 +4972,44 @@ function integranteUtilizado($cpf, $nomeIntegrante) {
     }
 
     return $cadastrado;
+}
+
+function atualizadaDataApresentacao($dataInicio) {
+    $con = bancoMysqli();
+    $idEvento = $_SESSION['idEvento'];
+
+    $data_inicio = new DateTime($dataInicio);
+    $data_inicio = $data_inicio->format('Y-m-d');
+
+    $integrantes = $con->query("SELECT * FROM ig_evento_integrante WHERE idEvento = '$idEvento'")->fetch_all(MYSQLI_ASSOC);
+
+    foreach ($integrantes as $integrante) {
+
+        if ($integrante['data_apresentacao'] == null) {
+            $con->query("UPDATE ig_evento_integrante SET data_apresentacao = '$dataInicio' WHERE id = '{$integrante['id']}'");
+        } else {
+            $idPedido = $integrante['idPedidoContratacao'];
+            $cpf = $integrante['cpf'];
+            $dataApresentacao = new DateTime($integrante['data_apresentacao']);
+            $dataApresentacao = $dataApresentacao->format('Y-m-d');
+            if ($data_inicio != $dataApresentacao) {
+                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf, data_apresentacao) VALUES ('$idEvento', '$idPedido', '$cpf', '$dataInicio')");
+            }
+        }
+    }
+}
+
+function apagaDataApresentacao($id) {
+    $con = bancoMysqli();
+    $idEvento = $_SESSION['idEvento'];
+
+    $data = $con->query("SELECT dataInicio FROM ig_ocorrencia WHERE idOcorrencia = '$id'")->fetch_assoc()['dataInicio'];
+
+    $registros = $con->query("SELECT cpf, COUNT(cpf) AS 'contagem' FROM ig_evento_integrante WHERE idEvento = '$idEvento' GROUP BY cpf")->fetch_assoc()['contagem'];
+    if ($registros > 1) {
+        $con->query("DELETE FROM ig_evento_integrante WHERE idEvento = '$idEvento' AND data_apresentacao = 'dataInicio'");
+    } else {
+        $con->query("UPDATE ig_evento_integrante SET data_apresentacao = null WHERE idEvento = '$idEvento'");
+    }
 }
 ?>
