@@ -1132,7 +1132,10 @@
                         $projetosEspeciais = [92, 93, 94, 95];
 
                         if (in_array($projetoEspecial, $projetosEspeciais)) {
-                            $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
+                            $consultaEventoIntegrante = $con->query("SELECT * FROM ig_evento_integrante WHERE idEvento = '$idEvento' AND idPedidoContratacao = '$idPedido' AND cpf = $cpf")->num_rows;
+                            if ($consultaEventoIntegrante == 0) {
+                                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
+                            }
                         }
 
 						$mensagem = "Integrante inserido com sucesso!";	
@@ -2569,7 +2572,7 @@
 					<h2>Grupos</h2>
 					<h4>Integrantes de grupos</h4>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-                    <h5><?php if(isset($alerta)){echo $alerta;} ?></h5>
+                    <p><?php if(isset($alerta)){echo $alerta;} ?></p>
 				</div>
 			</div>
 		</div>
