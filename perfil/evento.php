@@ -3449,9 +3449,7 @@
                                         ?>
                                     <?php if ($participacoes['bol']): ?>
                                         <h6>Os seguintes CPFs já participaram de 6 apresentações</h6>
-                                        <?php foreach ($participacoes['cpfs'] as $cpf): ?>
-                                            <p>CPF: <?=$cpf?></p>
-                                        <?php endforeach ?>
+                                            <?=$participacoes['msg']?>
                                     <?php else: ?>
                                         <div class="form-group">
                                             <div class="col-md-offset-2 col-md-8">

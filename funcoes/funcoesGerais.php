@@ -5077,18 +5077,37 @@ function validaPartIntegrantes() {
     $idEvento = $_SESSION['idEvento'];
     $integrantes = $con->query("SELECT cpf FROM ig_evento_integrante WHERE idEvento= '$idEvento' GROUP BY cpf")->fetch_all(MYSQLI_ASSOC);
 
-    $excedido = [
-        'bol' => false,
-        'cpfs' => ""
-    ];
+    $excedido['bol'] = false;
+    $excedido['msg'] = "<table class=\"table table-condensed\">
+                                        <thead>
+                                            <tr class='list_menu'>
+                                                <th class='text-center'>CPF</th>
+                                                <th class='text-center'>Evento</th>
+                                                <th class='text-center'>Pedido</th>
+                                                <th class='text-center'>Data</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>";
 
     foreach ($integrantes as $integrante) {
-        $participacoes = $con->query("SELECT id FROM ig_evento_integrante WHERE cpf = '{$integrante['cpf']}' AND data_apresentacao IS NOT NULL")->num_rows;
-        if ($participacoes > 6) {
+        $participacoes = $con->query("SELECT ei.*, eve.nomeEvento FROM ig_evento_integrante AS ei LEFT JOIN ig_evento AS eve on ei.idEvento = eve.idEvento WHERE ei.cpf = '{$integrante['cpf']}' AND ei.data_apresentacao IS NOT NULL");
+        if ($participacoes->num_rows > 6) {
             $excedido['bol'] = true;
-            $excedido['cpfs'] .= $integrante['cpf'];
+            $apresentacoes = $participacoes->fetch_all(MYSQLI_ASSOC);
+            foreach ($apresentacoes as $apresentacao) {
+                $dataApresentacao = exibirDataBr($apresentacao['data_apresentacao']);
+                $excedido['msg'] .= "<tr>
+                                        <td>{$apresentacao['cpf']}</td>
+                                        <td>{$apresentacao['nomeEvento']}</td>
+                                        <td>{$apresentacao['idPedidoContratacao']}</td>
+                                        <td>$dataApresentacao</td>
+                                    </tr>";
+            }
         }
     }
+
+    $excedido['msg'] .= "</tbody>
+                        </table>";
 
     return $excedido;
 }
