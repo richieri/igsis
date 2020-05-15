@@ -1,4 +1,4 @@
-﻿<?php
+﻿ <?php
 	$con = bancoMysqli();	
 	if(isset($_GET['p']))
 	{
@@ -1970,6 +1970,9 @@
                                 (NULL, '$tipoOcorrencia', NULL, '$local', '$idEvento', '$segunda', '$terca', '$quarta', '$quinta', '$sexta', '$sabado', '$domingo', '$dataInicio', '$dataFinal', '$horaInicio', '$horaFinal', '$timezone', '$diaInteiro', '$diaEspecial', '$libras', '$audiodescricao', '$valorIngresso', '$retiradaIngresso', '$localOutros', '$lotacao', '$reservados', '$duracao', '$precoPopular', '$frequencia', '$publicado', '$idSubEvento', '$virada', '$observacao', '$subprefeitura', '$periodo');";
 				if(mysqli_query($con,$sql_inserir))
 				{
+				    if (eventoOnline()) {
+                        atualizadaDataApresentacao($dataInicio);
+                    }
 					$mensagem = "Ocorrência inserida com sucesso!";	
 					gravarLog($sql_inserir);	
 				}
@@ -2042,7 +2045,10 @@
 				$sql_apagar_ocorrencia = "UPDATE ig_ocorrencia SET publicado = '0' WHERE idOcorrencia = $idOc";
 				if(mysqli_query($con,$sql_apagar_ocorrencia))
 				{
-					$mensagem = "Ocorrência apagada com sucesso!";
+                    if (eventoOnline()) {
+                        apagaDataApresentacao($idOc);
+                    }
+                    $mensagem = "Ocorrência apagada com sucesso!";
 					gravarLog($sql_apagar_ocorrencia);	
 				}
 				else

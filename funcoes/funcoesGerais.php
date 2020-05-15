@@ -4873,7 +4873,7 @@ function atualizaRelacionamentoEvento($tabela, $idEvento, $post) {
 
 function integranteDisponivel($cpf) {
     $con = bancoMysqli();
-    $participacoes = 0;
+
     $mes = new DateTime();
     $mesAtual = $mes->format('m-Y');
     $idEvento = $_SESSION['idEvento'];
@@ -4883,48 +4883,42 @@ function integranteDisponivel($cpf) {
     $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
 
     if (in_array($idProjetoEspecial, $projetosEspeciais)) {
-        $disponivel['bol'] = true;
-
         // Consulta todos os eventos dos projetos especiais online já enviados
-        $sqlConsultaEventos = "SELECT idEvento, dataEnvio FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = '1' AND dataEnvio IS NOT NULL";
+        $sqlConsultaEventos = "SELECT ei.*, eve.nomeEvento, eve.statusEvento FROM ig_evento_integrante AS ei
+                                LEFT JOIN ig_evento AS eve ON ei.idEvento = eve.idEvento 
+                                WHERE ei.cpf = '$cpf'";
         $queryEventos = $con->query($sqlConsultaEventos);
+        $participacoes = $queryEventos->num_rows;
 
-        if ($queryEventos->num_rows) {
+        if ($participacoes > 0) {
+            $disponivel['bol'] = false;
             $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
-            $dataParticipacoes = [];
+            $dataApresentacoes = [];
+
+            $disponivel['msg'] = "<p>O CPF $cpf está cadastrado nos seguintes eventos:</p>";
+            $disponivel['msg'] .= "<table class=\"table table-condensed\">
+                                        <thead>
+                                            <tr class='list_menu'>
+                                                <th>Evento</th>
+                                                <th>Pedido</th>
+                                                <th>Data</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>";
 
             // Pra cada evento encontrado, faz...
             foreach ($eventos as $evento) {
-                // Guarda o mes e o ano de envio
-                $data = new DateTime($evento['dataEnvio']);
-                $dataEnvio = $data->format('m-Y');
-                $dataParticipacoes[] = $dataEnvio;
-
-                // Verifica se o evento tem pedido
-                $queryPedidos = $con->query("SELECT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = {$evento['idEvento']} AND publicado = 1");
-                if ($queryPedidos->num_rows) {
-                    $pedidos = $queryPedidos->fetch_all(MYSQLI_ASSOC);
-
-                    // Pra cada pedido encontrado, faz...
-                    foreach ($pedidos as $pedido) {
-                        $idPedido = $pedido['idPedidoContratacao'];
-
-                        // Verifica se o integrante que está sendo cadastrado, já foi cadastrado em algum outro pedido
-                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'")->num_rows;
-                        if ($integrante > 0) {
-                            $participacoes++;
-                            if (in_array($mesAtual, $dataParticipacoes)) {
-                                $disponivel['bol'] = false;
-                                $disponivel['msg'] = "Integrante já participou de um projeto online este mês";
-                            }
-                        } else {
-                            continue;
-                        }
-                    }
-                } else {
-                    continue;
-                }
+                $dataApresentacao = $evento['data_apresentacao'] == null ? "Não Possui" : exibirDataBr($evento['data_apresentacao']);
+                $disponivel['msg'] .= "<tr>
+                                            <td>{$evento['nomeEvento']}</td>
+                                            <td>{$evento['idPedidoContratacao']}</td>
+                                            <td>$dataApresentacao</td>
+                                            <td>{$evento['statusEvento']}</td>
+                                        </tr>";
             }
+            $disponivel['msg'] .= "</tbody>
+                                </table>";
         } else {
             $disponivel['bol'] = true;
         }
@@ -4932,15 +4926,10 @@ function integranteDisponivel($cpf) {
         $disponivel['bol'] = true;
     }
 
-    if ($participacoes > 6) {
-        $disponivel['bol'] = false;
-        $disponivel['msg'] = "Integrante já participou de 6 projetos online";
-    }
-
     return $disponivel;
 }
 
-function integranteCadastrado($cpf) {
+function eventoOnline() {
     $con = bancoMysqli();
     $idEvento = $_SESSION['idEvento'];
     $projetosEspeciais = [92, 93, 94, 95];
@@ -4948,30 +4937,33 @@ function integranteCadastrado($cpf) {
     $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
 
     if (in_array($idProjetoEspecial, $projetosEspeciais)) {
-        $cadastrado = false;
+        return true;
+    } else {
+        return false;
+    }
+}
 
-        $sqlConsultaEventos = "SELECT idEvento FROM ig_evento WHERE projetoEspecial IN (".implode(', ', $projetosEspeciais).") AND publicado = 1 AND dataEnvio IS NULL";
+function integranteUtilizado($cpf, $nomeIntegrante) {
+    $con = bancoMysqli();
+    $idEvento = $_SESSION['idEvento'];
+    $projetosEspeciais = [92, 93, 94, 95];
+
+    $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+
+    if (in_array($idProjetoEspecial, $projetosEspeciais)) {
+        $sqlConsultaEventos = "SELECT ei.*, eve.nomeEvento FROM ig_evento_integrante AS ei
+                                LEFT JOIN ig_evento AS eve ON ei.idEvento = eve.idEvento 
+                                WHERE ei.cpf = '$cpf' AND data_apresentacao IS NULL";
         $queryEventos = $con->query($sqlConsultaEventos);
+        $participacoes = $queryEventos->num_rows;
 
-        if ($queryEventos->num_rows) {
-            $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
-            foreach ($eventos as $evento) {
-                $queryPedidos = $con->query("SELECT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = {$evento['idEvento']} AND publicado = 1");
-                if ($queryPedidos->num_rows) {
-                    $pedidos = $queryPedidos->fetch_all(MYSQLI_ASSOC);
-                    foreach ($pedidos as $pedido) {
-                        $idPedido = $pedido['idPedidoContratacao'];
-                        $integrante = $con->query("SELECT * FROM igsis_grupos WHERE cpf = '$cpf' AND idPedido = '$idPedido'")->num_rows;
-                        if ($integrante > 0) {
-                            $cadastrado = true;
-                        } else {
-                            continue;
-                        }
-                    }
-                } else {
-                    continue;
-                }
-            }
+        if ($participacoes) {
+            $evento = $queryEventos->fetch_assoc();
+            $cadastrado = array(
+                "nome" => $nomeIntegrante,
+                "evento" => $evento['nomeEvento'],
+                "idEvento" => $evento['idEvento']
+            );
         } else {
             $cadastrado = false;
         }
@@ -4980,5 +4972,44 @@ function integranteCadastrado($cpf) {
     }
 
     return $cadastrado;
+}
+
+function atualizadaDataApresentacao($dataInicio) {
+    $con = bancoMysqli();
+    $idEvento = $_SESSION['idEvento'];
+
+    $data_inicio = new DateTime($dataInicio);
+    $data_inicio = $data_inicio->format('Y-m-d');
+
+    $integrantes = $con->query("SELECT * FROM ig_evento_integrante WHERE idEvento = '$idEvento'")->fetch_all(MYSQLI_ASSOC);
+
+    foreach ($integrantes as $integrante) {
+
+        if ($integrante['data_apresentacao'] == null) {
+            $con->query("UPDATE ig_evento_integrante SET data_apresentacao = '$dataInicio' WHERE id = '{$integrante['id']}'");
+        } else {
+            $idPedido = $integrante['idPedidoContratacao'];
+            $cpf = $integrante['cpf'];
+            $dataApresentacao = new DateTime($integrante['data_apresentacao']);
+            $dataApresentacao = $dataApresentacao->format('Y-m-d');
+            if ($data_inicio != $dataApresentacao) {
+                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf, data_apresentacao) VALUES ('$idEvento', '$idPedido', '$cpf', '$dataInicio')");
+            }
+        }
+    }
+}
+
+function apagaDataApresentacao($id) {
+    $con = bancoMysqli();
+    $idEvento = $_SESSION['idEvento'];
+
+    $data = $con->query("SELECT dataInicio FROM ig_ocorrencia WHERE idOcorrencia = '$id'")->fetch_assoc()['dataInicio'];
+
+    $registros = $con->query("SELECT cpf, COUNT(cpf) AS 'contagem' FROM ig_evento_integrante WHERE idEvento = '$idEvento' GROUP BY cpf")->fetch_assoc()['contagem'];
+    if ($registros > 1) {
+        $con->query("DELETE FROM ig_evento_integrante WHERE idEvento = '$idEvento' AND data_apresentacao = 'dataInicio'");
+    } else {
+        $con->query("UPDATE ig_evento_integrante SET data_apresentacao = null WHERE idEvento = '$idEvento'");
+    }
 }
 ?>

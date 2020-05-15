@@ -16,6 +16,7 @@
 							<li><a href="?perfil=admin&p=scripts&empenho=1">Atualizar status N.E.</a></li>
 							<li><a href="?perfil=admin&p=scripts&formacao=1">Importar Base PF Formação</a></li>
 							<li><a href="?perfil=admin&p=scripts&contabilidade=1">Verificar tabela contabilidade</a></li>
+							<li><a href="?perfil=listaIntegrantes">Insere Integrantes na tabela</a></li>
 							<li><a href="<?=$relatorioProponentes?>">Relatório Fontana</a></li>
 							<li><a href="?perfil=admin&p=sof"> SOF </a></li>
 						</ul>
