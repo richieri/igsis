@@ -1981,6 +1981,8 @@
                         {
                             $mensagem = "Erro ao inserir. Tente novamente.";
                         }
+                    } else {
+				        $mensagem = "Erro já existe uma ocorrência cadastrada no mesmo periodo   para um dos integrantes.";
                     }
 				}else {
                     if(mysqli_query($con,$sql_inserir)) {
