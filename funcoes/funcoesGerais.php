@@ -4911,8 +4911,9 @@ function integranteDisponivel($cpf) {
                     }
                 }
                 if ($participou) {
+                    $dt = exibirDataBr($evento['data_apresentacao']);
                     $disponivel['bol'] = false;
-                    $disponivel['msg'] = "O CPF {$evento['cpf']} está cadastrado no evento {$evento['nomeEvento']}, pedido nº {$evento['idPedidoContratacao']}, ocorrendo no dia {$evento['data_apresentacao']} e o status do evento consta como {$evento['statusEvento']}.";
+                    $disponivel['msg'] = "O CPF {$evento['cpf']} está cadastrado no evento {$evento['nomeEvento']}, pedido nº {$evento['idPedidoContratacao']}, ocorrendo no dia $dt e o status do evento consta como {$evento['statusEvento']}.";
                 } else {
                     $disponivel['bol'] = true;
                 }
