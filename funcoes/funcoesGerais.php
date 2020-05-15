@@ -5071,4 +5071,25 @@ function validaDataIntegrante($data){
     }
     return true;
 }
+
+function validaPartIntegrantes() {
+    $con = bancoMysqli();
+    $idEvento = $_SESSION['idEvento'];
+    $integrantes = $con->query("SELECT cpf FROM ig_evento_integrante WHERE idEvento= '$idEvento' GROUP BY cpf")->fetch_all(MYSQLI_ASSOC);
+
+    $excedido = [
+        'bol' => false,
+        'cpfs' => ""
+    ];
+
+    foreach ($integrantes as $integrante) {
+        $participacoes = $con->query("SELECT id FROM ig_evento_integrante WHERE cpf = '{$integrante['cpf']}' AND data_apresentacao IS NOT NULL")->num_rows;
+        if ($participacoes >= 6) {
+            $excedido['bol'] = true;
+            $excedido['cpfs'] .= $integrante['cpf'];
+        }
+    }
+
+    return $excedido;
+}
 ?>
