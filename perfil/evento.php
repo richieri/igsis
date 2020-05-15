@@ -1980,7 +1980,7 @@
                                 $mensagem = "Erro ao inserir. Tente novamente.";
                             }
                         }else{
-                            $mensagem = "Erro número de ocorrências para um integrande excedeu.";
+                            $mensagem = "Erro! O número de ocorrências para o integrante excedeu.";
 				        }
                     } else {
 				        $mensagem = "Erro já existe uma ocorrência cadastrada no mesmo periodo para um dos integrantes.";
