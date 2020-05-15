@@ -5084,7 +5084,7 @@ function validaPartIntegrantes() {
 
     foreach ($integrantes as $integrante) {
         $participacoes = $con->query("SELECT id FROM ig_evento_integrante WHERE cpf = '{$integrante['cpf']}' AND data_apresentacao IS NOT NULL")->num_rows;
-        if ($participacoes >= 6) {
+        if ($participacoes > 6) {
             $excedido['bol'] = true;
             $excedido['cpfs'] .= $integrante['cpf'];
         }
