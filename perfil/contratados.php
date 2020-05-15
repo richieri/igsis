@@ -1105,7 +1105,7 @@
 		 			gravarLog($sql_atualiza_executante);
 					$mensagem = "Líder do Grupo inserido com sucesso!";	
 					
-					$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
+					/*$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
 					$nome = addslashes($pf['Nome']);
 					$rg = $pf['RG'];
 					$cpf = $pf['CPF'];
@@ -1126,26 +1126,21 @@
 					if($query_inserir)
 					{	
 				 		gravarLog($sql_inserir);
+                        */
+                    $idEvento = $_SESSION['idEvento'];
+                    $projetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+                    $projetosEspeciais = [92, 93, 94, 95];
 
-                        $idEvento = $_SESSION['idEvento'];
-                        $projetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
-                        $projetosEspeciais = [92, 93, 94, 95];
+                    if (in_array($projetoEspecial, $projetosEspeciais)) {
+                        $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
+                    }
 
-                        if (in_array($projetoEspecial, $projetosEspeciais)) {
-                            $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
-                        }
-
-						$mensagem = "Integrante inserido com sucesso!";	
-					}
-					else
-					{
-						$mensagem = "Erro ao inserir integrante. Tente novamente.";	
-					}
-				}
-				else
-				{
-					$mensagem = "Erro ao inserir Líder do Grupo. Tente novamente!";
-				}
+                    $mensagem = "Integrante inserido com sucesso!";
+                }
+                else
+                {
+                    $mensagem = "Erro ao inserir integrante. Tente novamente.";
+                }
 			}
 			if(isset($_POST['atualizar']))
 			{
@@ -2569,7 +2564,7 @@
 					<h2>Grupos</h2>
 					<h4>Integrantes de grupos</h4>
                     <h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
-                    <h5><?php if(isset($alerta)){echo $alerta;} ?></h5>
+                    <p><?php if(isset($alerta)){echo $alerta;} ?></p>
 				</div>
 			</div>
 		</div>
