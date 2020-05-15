@@ -1122,6 +1122,15 @@
 					if($query_inserir)
 					{	
 				 		gravarLog($sql_inserir);
+
+                        $idEvento = $_SESSION['idEvento'];
+                        $projetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+                        $projetosEspeciais = [92, 93, 94, 95];
+
+                        if (in_array($projetoEspecial, $projetosEspeciais)) {
+                            $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
+                        }
+
 						$mensagem = "Integrante inserido com sucesso!";	
 					}
 					else
