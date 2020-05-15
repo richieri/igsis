@@ -5041,8 +5041,6 @@ function apagaDataApresentacao($id) {
     $con = bancoMysqli();
     $idEvento = $_SESSION['idEvento'];
 
-    $data = $con->query("SELECT dataInicio FROM ig_ocorrencia WHERE idOcorrencia = '$id'")->fetch_assoc()['dataInicio'];
-
     $registros = $con->query("SELECT cpf, COUNT(cpf) AS 'contagem' FROM ig_evento_integrante WHERE idEvento = '$idEvento' GROUP BY cpf")->fetch_assoc()['contagem'];
     if ($registros > 1) {
         $con->query("DELETE FROM ig_evento_integrante WHERE idOcorrencia = '$id'");
