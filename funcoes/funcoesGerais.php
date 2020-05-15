@@ -4886,38 +4886,39 @@ function integranteDisponivel($cpf) {
         // Consulta todos os eventos dos projetos especiais online já enviados
         $sqlConsultaEventos = "SELECT ei.*, eve.nomeEvento, eve.statusEvento FROM ig_evento_integrante AS ei
                                 LEFT JOIN ig_evento AS eve ON ei.idEvento = eve.idEvento 
-                                WHERE ei.cpf = '$cpf' AND data_apresentacao IS NOT NULL";
+                                WHERE ei.cpf = '$cpf'";
         $queryEventos = $con->query($sqlConsultaEventos);
         $participacoes = $queryEventos->num_rows;
 
         if ($participacoes > 0) {
-            if ($participacoes >= 6) {
-                $disponivel['bol'] = false;
-                $disponivel['msg'] = "Integrante já participou de 6 projetos online";
-            } else {
-                $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
-                $dataApresentacoes = [];
-                $participou = false;
+            $disponivel['bol'] = false;
+            $eventos = $queryEventos->fetch_all(MYSQLI_ASSOC);
+            $dataApresentacoes = [];
 
-                // Pra cada evento encontrado, faz...
-                foreach ($eventos as $evento) {
-                    // Guarda o mes e o ano de envio
-                    $data = new DateTime($evento['data_apresentacao']);
-                    $dataApresentacao = $data->format('m-Y');
-                    $dataApresentacoes[] = $dataApresentacao;
+            $disponivel['msg'] = "<p>O CPF $cpf está cadastrado nos seguintes eventos:</p>";
+            $disponivel['msg'] .= "<table class=\"table table-condensed\">
+                                        <thead>
+                                            <tr class='list_menu'>
+                                                <th>Evento</th>
+                                                <th>Pedido</th>
+                                                <th>Data</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>";
 
-                    if (in_array($mesAtual, $dataApresentacoes)) {
-                        $participou = true;
-                    }
-                }
-                if ($participou) {
-                    $dt = exibirDataBr($evento['data_apresentacao']);
-                    $disponivel['bol'] = false;
-                    $disponivel['msg'] = "O CPF {$evento['cpf']} está cadastrado no evento {$evento['nomeEvento']}, pedido nº {$evento['idPedidoContratacao']}, ocorrendo no dia $dt e o status do evento consta como {$evento['statusEvento']}.";
-                } else {
-                    $disponivel['bol'] = true;
-                }
+            // Pra cada evento encontrado, faz...
+            foreach ($eventos as $evento) {
+                $dataApresentacao = $evento['data_apresentacao'] == null ? "Não Possui" : exibirDataBr($evento['data_apresentacao']);
+                $disponivel['msg'] .= "<tr>
+                                            <td>{$evento['nomeEvento']}</td>
+                                            <td>{$evento['idPedidoContratacao']}</td>
+                                            <td>$dataApresentacao</td>
+                                            <td>{$evento['statusEvento']}</td>
+                                        </tr>";
             }
+            $disponivel['msg'] .= "</tbody>
+                                </table>";
         } else {
             $disponivel['bol'] = true;
         }

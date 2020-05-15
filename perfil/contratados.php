@@ -199,57 +199,62 @@
 				}
 				else
 				{
-					$idEvento = $_SESSION['idEvento'];
-					$con2 = bancoMysqliProponente();
-					//retorna uma array com os dados de qualquer tabela do CAPAC. Serve apenas para 1 registro.
-					function recuperaDadosProp($tabela,$campo,$variavelCampo)
-					{
-						$con2 = bancoMysqliProponente();
-						$sql = "SELECT * FROM $tabela WHERE ".$campo." = '$variavelCampo' LIMIT 0,1";
-						$query = mysqli_query($con2,$sql);
-						$campo = mysqli_fetch_array($query);
-						return $campo;
-					}
-					$sql_evento = "SELECT * FROM igsis_capac WHERE idEventoIgsis = '$idEvento'";
-					$query_evento = mysqli_query($con,$sql_evento);
-					$array_evento = mysqli_fetch_array($query_evento);
+                    //retorna uma array com os dados de qualquer tabela do CAPAC. Serve apenas para 1 registro.
+                    function recuperaDadosProp($tabela,$campo,$variavelCampo)
+                    {
+                        $con2 = bancoMysqliProponente();
+                        $sql = "SELECT * FROM $tabela WHERE ".$campo." = '$variavelCampo' LIMIT 0,1";
+                        $query = mysqli_query($con2,$sql);
+                        $campo = mysqli_fetch_array($query);
+                        return $campo;
+                    }
 
-					$idEventoCapac = $array_evento['idEventoCapac'];
-					$eventoCapac = recuperaDadosProp("evento","id",$idEventoCapac);
-					$integrantes = $eventoCapac['integrantes'];
-					
-					$sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1"; //a data final 
-					$query_anterior = mysqli_query($con,$sql_anterior);
-					$data = mysqli_fetch_array($query_anterior);
-					$data_final = $data['dataFinal'];
-						if ($data_final != '0000-00-00')
-						{
-						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_final)));
-						}else{
-						$sql_unica = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicio 
-						$query_unica = mysqli_query($con,$sql_unica);
-						$data = mysqli_fetch_array($query_unica);
-						$data_inicio = $data['dataInicio'];	
-						$dataKitPagamento = date('Y/m/d', strtotime("+1 day",strtotime($data_inicio)));
-						}
-						$sql_insere_pf = "INSERT INTO igsis_pedido_contratacao 
-						(idPessoa,
-						tipoPessoa,
-						integrantes,
-						publicado,
-						idEvento,
-						instituicao,
-						dataKitPagamento)
-						VALUES ('$idPessoa',
-						'1',
-						'$integrantes',
-						'1',
-						'$idEvento',
-						'$idInstituicao',
-						'$dataKitPagamento')";
-					$query_insere_pf = mysqli_query($con,$sql_insere_pf);
-					if($query_insere_pf)
-					{
+				    $pessoa = $con->query("SELECT CPF, Nome FROM sis_pessoa_fisica WHERE Id_PessoaFisica = '$idPessoa'")->fetch_assoc();
+                    $cpf = $pessoa['CPF'];
+                    $nome = $pessoa['Nome'];
+                    $disponivel = integranteDisponivel($cpf);
+
+                    if (!$disponivel['bol']) {
+                        $alerta = $disponivel['msg'];
+                    }
+                    $idEvento = $_SESSION['idEvento'];
+                    $con2 = bancoMysqliProponente();
+                    $sql_evento = "SELECT * FROM igsis_capac WHERE idEventoIgsis = '$idEvento'";
+                    $query_evento = mysqli_query($con, $sql_evento);
+                    $array_evento = mysqli_fetch_array($query_evento);
+                    $idEventoCapac = $array_evento['idEventoCapac'];
+                    $eventoCapac = recuperaDadosProp("evento", "id", $idEventoCapac);
+                    $integrantes = $eventoCapac['integrantes'];
+                    $sql_anterior = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataFinal ASC LIMIT 0,1";//a data final
+                    $query_anterior = mysqli_query($con, $sql_anterior);
+                    $data = mysqli_fetch_array($query_anterior);
+                    $data_final = $data['dataFinal'];
+                    if ($data_final != '0000-00-00') {
+                        $dataKitPagamento = date('Y/m/d', strtotime("+1 day", strtotime($data_final)));
+                    } else {
+                        $sql_unica = "SELECT * FROM ig_ocorrencia WHERE idEvento = '$idEvento' AND publicado = '1' ORDER BY dataInicio ASC LIMIT 0,1"; //a data inicio
+                        $query_unica = mysqli_query($con, $sql_unica);
+                        $data = mysqli_fetch_array($query_unica);
+                        $data_inicio = $data['dataInicio'];
+                        $dataKitPagamento = date('Y/m/d', strtotime("+1 day", strtotime($data_inicio)));
+                    }
+                    $sql_insere_pf = "INSERT INTO igsis_pedido_contratacao 
+                            (idPessoa,
+                            tipoPessoa,
+                            integrantes,
+                            publicado,
+                            idEvento,
+                            instituicao,
+                            dataKitPagamento)
+                            VALUES ('$idPessoa',
+                            '1',
+                            '$integrantes',
+                            '1',
+                            '$idEvento',
+                            '$idInstituicao',
+                            '$dataKitPagamento')";
+                    $query_insere_pf = mysqli_query($con, $sql_insere_pf);
+                    if ($query_insere_pf) {
                         $idPedido = $con->insert_id;
                         $projetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
                         $projetosEspeciais = [92, 93, 94, 95];
@@ -259,14 +264,12 @@
                             $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
                         }
 
-						gravarLog($query_insere_pf);
-						$mensagem = "Pedido inserido com sucesso!";
-					}
-					else
-					{
-						$mensagem = "Erro ao criar pedido. Tente novamente.";
-					}
-				}
+                        gravarLog($query_insere_pf);
+                        $mensagem = "Pedido inserido com sucesso!";
+                    } else {
+                        $mensagem = "Erro ao criar pedido. Tente novamente.";
+                    }
+                }
 			}
 			if(isset($_POST['cadastrarJuridica']))
 			{
@@ -493,6 +496,7 @@
 					<h2>Contratados</h2>
                     <p>Você está inserindo pessoas físicas ou jurídicas para serem contratadas para o evento <strong><?php  echo $nomeEvento['nomeEvento']; ?></strong></p>
                     <p><?php if(isset($mensagem)){ echo $mensagem; } ?></p>
+                    <p><?php if(isset($alerta)){ echo $alerta; } ?></p>
 					<p></p>
 				</div>
 			</div>
@@ -2183,6 +2187,7 @@
 		<div class="form-group">
 			<h3>CADASTRO DE LÍDER DO GRUPO (PESSOA FÍSICA)</h3>
 			<h5><?php if(isset($mensagem)){echo $mensagem;} ?></h5>
+			<p><?php if(isset($alerta)){echo $alerta;} ?></p>
         </div>
 	  	<div class="row">
 	  		<div class="col-md-offset-1 col-md-10">
@@ -2459,14 +2464,12 @@
                             $cpf = $_POST['cpf'];
                             $disponivel = integranteDisponivel($cpf);
 
-                            if ($disponivel['bol']) {
-                                $integrante = integranteUtilizado($cpf, $nome);
-                                if ($integrante) {
-                                    $alerta = "<span class='text-danger'>ATENÇÃO! Integrante \"{$integrante['nome']}\" também está sendo utilizado no evento {$integrante['idEvento']} - {$integrante['evento']}</span>";
-                                }
-                                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('{$_SESSION['idEvento']}', '$idPedido', '$cpf')");
+                            if (!$disponivel['bol']) {
+                                $alerta = $disponivel['msg'];
+                            }
+                            $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('{$_SESSION['idEvento']}', '$idPedido', '$cpf')");
 
-                                $sql_inserir = "INSERT INTO `igsis_grupos` 
+                            $sql_inserir = "INSERT INTO `igsis_grupos` 
                                                 (`idGrupos`, 
                                                 `idPedido`, 
                                                 `nomeCompleto`, 
@@ -2479,35 +2482,32 @@
                                                 '$rg', 
                                                 '$cpf', 
                                                 '1')";
-                                $query_inserir = mysqli_query($con, $sql_inserir);
-                                if ($query_inserir) {
-                                    gravarLog($sql_inserir);
-                                    $sql_grupos = "SELECT * 
+                            $query_inserir = mysqli_query($con, $sql_inserir);
+                            if ($query_inserir) {
+                                gravarLog($sql_inserir);
+                                $sql_grupos = "SELECT * 
                                         FROM igsis_grupos 
                                         WHERE idPedido = '$idPedido' 
                                         AND publicado = '1'";
-                                    $query_grupos = mysqli_query($con, $sql_grupos);
-                                    $num = mysqli_num_rows($query_grupos);
-                                    if ($num > 0) {
-                                        $txt = "";
-                                        while ($grupo = mysqli_fetch_array($query_grupos)) {
-                                            $txt .= $grupo['nomeCompleto'] . " CPF: " . $grupo['cpf'] . " RG: " . $grupo['rg'] . "\n";
-                                        }
-                                    } else {
-                                        $txt = "Não há integrantes de grupo inseridos";
-                                    }
-
-                                    $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
-                                    if ($upPedido) {
-                                        $mensagem = "Integrante inserido com sucesso!";
-                                    } else {
-                                        $mensagem = "Erro";
+                                $query_grupos = mysqli_query($con, $sql_grupos);
+                                $num = mysqli_num_rows($query_grupos);
+                                if ($num > 0) {
+                                    $txt = "";
+                                    while ($grupo = mysqli_fetch_array($query_grupos)) {
+                                        $txt .= $grupo['nomeCompleto'] . " CPF: " . $grupo['cpf'] . " RG: " . $grupo['rg'] . "\n";
                                     }
                                 } else {
-                                    $mensagem = "Erro ao inserir integrante. Tente novamente.";
+                                    $txt = "Não há integrantes de grupo inseridos";
+                                }
+
+                                $upPedido = $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
+                                if ($upPedido) {
+                                    $mensagem = "Integrante inserido com sucesso!";
+                                } else {
+                                    $mensagem = "Erro";
                                 }
                             } else {
-                                $mensagem = $disponivel['msg'];
+                                $mensagem = "Erro ao inserir integrante. Tente novamente.";
                             }
                         }
 					}
