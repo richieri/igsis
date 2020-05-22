@@ -1105,11 +1105,11 @@
 		 			gravarLog($sql_atualiza_executante);
 					$mensagem = "Líder do Grupo inserido com sucesso!";	
 					
-					/*$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
+					$pf = recuperaDados("sis_pessoa_fisica",$id_executante,"Id_PessoaFisica");
 					$nome = addslashes($pf['Nome']);
 					$rg = $pf['RG'];
 					$cpf = $pf['CPF'];
-					$sql_inserir = "INSERT INTO `igsis_grupos` 
+					/*$sql_inserir = "INSERT INTO `igsis_grupos`
 						(`idGrupos`, 
 						`idPedido`, 
 						`nomeCompleto`, 
@@ -1130,9 +1130,11 @@
 
 
                         if (eventoOnline()) {
-                            $consultaEventoIntegrante = $con->query("SELECT * FROM ig_evento_integrante WHERE idEvento = '$idEvento' AND idPedidoContratacao = '$idPedido' AND cpf = $cpf")->num_rows;
+                            $idEvento = $_SESSION['idEvento'];
+                            $consultaEventoIntegrante = $con->query("SELECT * FROM ig_evento_integrante WHERE idEvento = '$idEvento' AND idPedidoContratacao = '$idPedido' AND cpf = '$cpf'")->num_rows;
                             if ($consultaEventoIntegrante == 0) {
-                                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
+                                insereIntegranteLider($idPedido, $nome, $cpf, $rg);
+//                                $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('$idEvento', '$idPedido', '$cpf')");
                             }
                         }
 

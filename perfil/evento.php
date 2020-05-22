@@ -1983,7 +1983,7 @@
                             $mensagem = "Erro! O número de ocorrências para o integrante excedeu.";
 				        }
                     } else {
-				        $mensagem = "Erro já existe uma ocorrência cadastrada no mesmo periodo para um dos integrantes.";
+				        $mensagem = "Erro! Já existe uma ocorrência cadastrada no mesmo período para um dos integrantes.";
                     }
 				}else {
                     if(mysqli_query($con,$sql_inserir)) {

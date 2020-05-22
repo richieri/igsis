@@ -4962,35 +4962,31 @@ function eventoOnline() {
     }
 }
 
-function integranteUtilizado($cpf, $nomeIntegrante) {
+function insereIntegranteLider($idPedido, $nome, $cpf, $rg) {
     $con = bancoMysqli();
-    $idEvento = $_SESSION['idEvento'];
-    $projetosEspeciais = [92, 93, 94, 95];
 
-    $idProjetoEspecial = $con->query("SELECT projetoEspecial FROM ig_evento WHERE idEvento = '$idEvento'")->fetch_assoc()['projetoEspecial'];
+    $con->query("INSERT INTO ig_evento_integrante (idEvento, idPedidoContratacao, cpf) VALUES ('{$_SESSION['idEvento']}', '$idPedido', '$cpf')");
 
-    if (in_array($idProjetoEspecial, $projetosEspeciais)) {
-        $sqlConsultaEventos = "SELECT ei.*, eve.nomeEvento FROM ig_evento_integrante AS ei
-                                LEFT JOIN ig_evento AS eve ON ei.idEvento = eve.idEvento 
-                                WHERE ei.cpf = '$cpf' AND data_apresentacao IS NULL";
-        $queryEventos = $con->query($sqlConsultaEventos);
-        $participacoes = $queryEventos->num_rows;
+    $sql_inserir = "INSERT INTO `igsis_grupos` (`idGrupos`, `idPedido`, `nomeCompleto`, `rg`, `cpf`, `publicado`) 
+                    VALUES (NULL, '$idPedido', '$nome', '$rg', '$cpf', '1')";
+    $query_inserir = mysqli_query($con, $sql_inserir);
 
-        if ($participacoes) {
-            $evento = $queryEventos->fetch_assoc();
-            $cadastrado = array(
-                "nome" => $nomeIntegrante,
-                "evento" => $evento['nomeEvento'],
-                "idEvento" => $evento['idEvento']
-            );
+    if ($query_inserir) {
+        gravarLog($sql_inserir);
+        $sql_grupos = "SELECT * FROM igsis_grupos WHERE idPedido = '$idPedido' AND publicado = '1'";
+        $query_grupos = mysqli_query($con, $sql_grupos);
+        $num = mysqli_num_rows($query_grupos);
+        if ($num > 0) {
+            $txt = "";
+            while ($grupo = mysqli_fetch_array($query_grupos)) {
+                $txt .= $grupo['nomeCompleto'] . " CPF: " . $grupo['cpf'] . " RG: " . $grupo['rg'] . "\n";
+            }
         } else {
-            $cadastrado = false;
+            $txt = "Não há integrantes de grupo inseridos";
         }
-    } else {
-        $cadastrado = false;
-    }
 
-    return $cadastrado;
+        $con->query("UPDATE igsis_pedido_contratacao SET integrantes = '$txt' WHERE idPedidoContratacao = '$idPedido'");
+    }
 }
 
 function atualizadaDataApresentacao($dataInicio, $idOcorrencia, $atualizar = false) {
@@ -5059,11 +5055,13 @@ function validaDataIntegrante($data){
 	$dtOcorrencia = new DateTime($data);
 	$mesAno = $dtOcorrencia->format('m-Y');
     foreach ($integrantesGenerico as $integ){
-        $intData = new DateTime($data);
-        $inteMesAno = $intData->format('m-Y');
-        if ($mesAno == $inteMesAno){
-            $cont++;
-            break;
+        if ($integ['data_apresentacao'] != null) {
+            $intData = new DateTime($integ['data_apresentacao']);
+            $inteMesAno = $intData->format('m-Y');
+            if ($mesAno == $inteMesAno) {
+                $cont++;
+                break;
+            }
         }
     }
     if ($cont){
