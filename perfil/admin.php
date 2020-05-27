@@ -1,7 +1,7 @@
 <?php
 $server = "http://".$_SERVER['SERVER_NAME']."/igsis/"; //mudar para pasta do igsis
 $http = $server."/pdf/";
-$relatorioProponentes = $http."relatorio_fontana.php";
+$relatorioProponentes = $http."relatorio_luisa.php";
 	if(isset($_GET['p']))
 	{
 		$p = $_GET['p'];	
