@@ -25,6 +25,7 @@
 					<li><a href="?perfil=admin&p=contratos">Contratos</a></li>
 					<li><a href="?perfil=admin&p=importar_evento">Importar eventos</a></li>
 					<li><a href="?perfil=admin&p=lista_importados">Listar importados</a></li>
+                    <li><a href="?perfil=detalhe_pedido&id_ped=0209">Pesquisa por pedido</a></li>
 					<li><a href="?perfil=admin&p=anomalias">Relatório anomalias</a></li>
 				</ul>
 			</li>
