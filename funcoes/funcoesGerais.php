@@ -500,7 +500,7 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 	function geraOpcaoTipoChamado($select)
 	{
 		//gera os options de um select
-		$sql = "SELECT * FROM igsis_tipo_chamado WHERE tipo='1'";
+		$sql = "SELECT * FROM igsis_tipo_chamado WHERE tipo='1' AND publicado = '1'";
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
 		while($option = mysqli_fetch_row($query))
