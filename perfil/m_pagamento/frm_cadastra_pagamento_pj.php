@@ -252,6 +252,25 @@ include 'includes/menu.php';
 		<div class="container">
 			<div class="col-md-offset-1 col-md-10">
 				<div class="table-responsive list_info">
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr class="list_menu">
+                            <td colspan="5">Modelo de email empresa</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <?php
+                            echo "
+                            <td style='vertical-align: middle' class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=empresas' target='_blank'>Empresas</a></td>
+                            <td style='vertical-align: middle' class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=cooperativas' target='_blank'>Cooperativas</a></td>
+                            <td style='vertical-align: middle' class='list_description' colspan='2'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=associacoes' target='_blank'>Associações e institutos</a></td>
+                            <td class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."' target='_blank'>Empresas com Minuta de Contrato</a></td>
+                            ";
+                            ?>
+                        </tr>
+                        </tbody>
+                    </table>
 					<table class="table table-condensed">
 						<thead>
 							<tr class="list_menu">

@@ -28,8 +28,27 @@ switch ($modeloEmail) {
 $pedido = siscontrat($id_ped);
 $pj = siscontratDocs($pedido['IdProponente'],2);
 $rep01 = siscontratDocs($pj['Representante01'],3);
-$pj = siscontratDocs($pedido['IdProponente'],2);
 $usuario = $conexao->query("SELECT nomeCompleto,email FROM ig_usuario WHERE idUsuario = '$idUsuario'")->fetch_assoc();
+
+switch ($idUsuario){
+    case "1389":
+        $email = "andersonpagamentosartisticos@gmail.com";
+        break;
+    case "1125":
+        $mail = "tomcontratos@gmail.com";
+        break;
+    case "1393":
+        $email = "brunamotacontratos@gmail.com";
+        break;
+    case "1392":
+        $email = "danielbarbosacontratos@gmail.com";
+        break;
+    case "1391":
+        $email = "marianaoliveiracontratos@gmail.com";
+        break;
+    default:
+        $email = "smc.pagamentosartisticos@gmail.com";
+}
 
 dataPagamento($id_ped);
 
@@ -37,16 +56,9 @@ $id = $pedido['idEvento'];
 $Objeto = $pedido["Objeto"];
 $Periodo = $pedido["Periodo"];
 $NumeroProcesso = $pedido["NumeroProcesso"];
-
-
-$ano=date('Y');
-
-$codPed = "";
-
 $dataAtual = date('d/m/Y');
 
 // Representante01
-
 $rep01Nome = $rep01["Nome"];
 
 
@@ -68,7 +80,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p style="text-align:justify">c) Instruções para Emissão da Nota Fiscal Eletrônica;</p>
 <p style="text-align:justify">d) <?=$item4?></p>
 <p style="text-align:justify">Para fins de arquivamento da empresa, segue também o Anexo e a Nota de Empenho da referida contratação.  </p>
-<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada, <strong>somente através do e-mail <?= $usuario['email'] ?>, em até 48 horas, impreterivelmente.</strong></p>
+<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada, <strong>somente através do e-mail <?= $email ?>, em até 48 horas, impreterivelmente.</strong></p>
 <p>&nbsp;</p>
 <p style="text-align:justify">Atenciosamente,</p>
 <p>&nbsp;</p>
