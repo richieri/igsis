@@ -700,7 +700,7 @@ $verba = mysqli_fetch_array($query_verifica_verba);
 				
 				<!-- reabrir -->
                 <?php
-                if($coord['contratos'] ==  3) {
+                if($coord['contratos'] ==  3 || $coord['contratos'] ==  1) {
                 ?>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">

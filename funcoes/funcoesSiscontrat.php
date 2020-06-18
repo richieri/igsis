@@ -1087,8 +1087,7 @@ function txtParcelasFormacao($idPedido,$numero)
 		$sql = "SELECT * 
 			FROM ig_usuario 
 			WHERE publicado = '1' 
-			AND (contratos = '1' 
-			OR contratos = '2' 
+			AND (contratos = '2' 
 			OR contratos = '3' ) 
 			ORDER BY nomeCompleto";
 		$query = mysqli_query($con,$sql);
