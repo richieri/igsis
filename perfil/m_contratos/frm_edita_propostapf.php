@@ -327,7 +327,7 @@ $verba = mysqli_fetch_array($query_verifica_verba);
 				
 			<?php 
 				}
-				elseif ($coord['contratos'] == 2)
+				elseif ($coord['contratos'] == 2 || $coord['contratos'] ==  1)
 				{ 
 			?>	
 					<form class="form-horizontal" role="form" action="?perfil=contratos&p=frm_edita_propostapf&id_ped=<?php echo $id_ped; ?>" method="post">
