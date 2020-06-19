@@ -9,6 +9,7 @@ $link3=$http."rlt_recibo_pagamento_pf.php?id=".$id_ped."";
 $link4=$http."rlt_recibo_pagamento_parcelado_pf.php?id=".$id_ped."";
 $link5=$http."rlt_recibo_documentacao_pf.php?id=".$id_ped."";
 $link6=$http."rlt_ateste_confirmacao_pf.php?id=".$id_ped."";
+$link7=$http."rlt_email_pf.php?id=".$id_ped."&idUsuario=".$_SESSION['idUsuario'];
 
 
 $data = date('Y-m-d H:i:s');
@@ -79,8 +80,11 @@ if(isset($_POST['atualizar']))// atualiza o pedido
 			</div>
 
 			<div class='form-group'>
-				<div class='col-md-offset-4 col-md-6'>
+				<div class='col-md-offset-2 col-md-6'>
 					<a href='$link6?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Confirmação de Serviço</a>
+				</div>
+				<div class='col-md-6'>
+					<a href='$link7' class='btn btn-theme btn-md btn-block' target='_blank'>Modelo E-mail</a><br/>
 				</div>
 			</div>
 
@@ -191,6 +195,12 @@ include 'includes/menu.php';
 	{ 
 	?> 		  
 		<div class="container">
+			<div class="col-md-offset-1 col-md-10">
+                <div class='form-group'>
+                    <div class='col-md-offset-4 col-md-6'>
+                        <a href='<?= $link7 ?>' class='btn btn-theme btn-md btn-block' target='_blank'>Modelo de e-mail</a></div>
+                </div>
+            </div>
 			<div class="col-md-offset-1 col-md-10">
 				<div class="table-responsive list_info">
 					<table class="table table-condensed">
