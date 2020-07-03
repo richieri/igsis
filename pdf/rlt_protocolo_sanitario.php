@@ -4,6 +4,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
 require_once("../include/lib/fpdf/fpdf.php");
+//require_once("../include/lib/merge_pdf/fpdf_merge.php");
 require_once("../funcoes/funcoesConecta.php");
 require_once("../funcoes/funcoesGerais.php");
 require_once("../funcoes/funcoesSiscontrat.php");
@@ -110,4 +111,8 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', $f);
 $pdf->Cell(120,$l,utf8_decode("CPF: {$rep01['CPF']}"),0,1,'L');
 
-$pdf->Output();
+$merge =  new FPDF_Merge();
+$merge->add($pdf);
+$merge->add('protocolo_sanitarios.pdf');
+
+$merge->Output();
