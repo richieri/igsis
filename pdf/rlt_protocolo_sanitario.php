@@ -4,7 +4,6 @@ date_default_timezone_set('America/Sao_Paulo');
 
 // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
 require_once("../include/lib/fpdf/fpdf.php");
-require_once("../include/lib/fpdf/fpdf_merge.php");
 require_once("../funcoes/funcoesConecta.php");
 require_once("../funcoes/funcoesGerais.php");
 require_once("../funcoes/funcoesSiscontrat.php");
