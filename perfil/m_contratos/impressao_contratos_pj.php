@@ -59,6 +59,7 @@ $link65 = $http."rlt_pedido_reserva_vai.php";
 $link66 = $http."rlt_pedido_reserva_centrosculturaisteatros_pj.php";
 $link67 = $http."rlt_pedido_reserva_ruasdelazer_pj.php";
 $link68 = $http."rlt_pedido_reserva_geral.php";
+$link69 = $http."rlt_protocolo_sanitario.php?id=".$id_ped;
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -104,9 +105,11 @@ echo "
 
 						<tr>
 							<td><a href='$link40' target='_blank'><strong>Convênio 500</strong></a></td>
-							<td><a href='$link61' target='_blank'><strong>Condicionamento</strong></a></td>
-							
+							<td><a href='$link61' target='_blank'><strong>Condicionamento</strong></a></td>							
 						</tr>
+						<tr>
+						    <td colspan='2'><a href='$link69' target='_blank'><strong>Protocolo sanitário</strong></a></td>
+                        </tr>
 						
 						<tr><td class='list_description'><br/></td></tr>
 
