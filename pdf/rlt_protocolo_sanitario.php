@@ -1,7 +1,10 @@
 <?php
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
 
 // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
 require_once("../include/lib/fpdf/fpdf.php");
+require_once("../include/lib/fpdf/fpdf_merge.php");
 require_once("../funcoes/funcoesConecta.php");
 require_once("../funcoes/funcoesGerais.php");
 require_once("../funcoes/funcoesSiscontrat.php");
@@ -13,9 +16,18 @@ class PDF extends FPDF
     // Page header
     function Header()
     {
-        // Move to the right
-        $this->Cell(80);
-        $this->Image('../visual/img/logo_smc.jpg',170,10);
+        // Logo
+        $this->Image('../visual/img/logo_smc.jpg',20,10);
+        $this->SetFont('Arial','B',11);
+        $this->Cell(90);// Move to the right
+        $this->Cell(30,6,utf8_decode('PREFEITURA DE SÃO PAULO'),0,1,'C');
+        $this->Cell(90);
+        $this->Cell(30,6,utf8_decode('SECRETARIA MUNICIPAL DE CULTURA'),0,1,'C');
+        $this->Cell(90);
+        $this->Cell(30,6,utf8_decode('COORDENADORIA DE PROGRAMAÇÃO CULTURAL'),0,1,'C');
+        $this->Cell(90);
+        $this->SetFont('Arial','',8);
+        $this->Cell(30,6,utf8_decode('Rua Líbero Badaró, 340/346 - 7º andar - Centro - São Paulo - CEP: 01008-950'),0,1,'C');
         // Line break
         $this->Ln(20);
     }
@@ -39,7 +51,7 @@ $pdf->AddPage();
 $x=20;
 $l=6; //DEFINE A ALTURA DA LINHA
 $f=11; //TAMANHO DA FONTE
-$pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
+$pdf->SetXY( $x , 50 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 12);
@@ -54,38 +66,28 @@ $pdf->MultiCell(170,$l,utf8_decode("Eu {$rep01['Nome']}, portador do CPF número
 $pdf->Ln();
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial', 12);
-$pdf->Cell(170,5,utf8_decode('As diretrizes supracitadas referem-se a:'));
+$pdf->SetFont('Arial','', $f);
+$pdf->Cell(170,$l,utf8_decode('As diretrizes supracitadas referem-se a:'),0,1,'L');
 
-$pdf->Ln();
+$pdf->SetX(30);
+$pdf->SetFont('Arial','', $f);
+$pdf->Cell(170,$l,utf8_decode('1. Distanciamento social;'),0,1,'L');
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial', 12);
-$pdf->Cell(170,6,utf8_decode('1. Distanciamento social'));
+$pdf->SetX(30);
+$pdf->SetFont('Arial','', $f);
+$pdf->Cell(170,$l,utf8_decode('2. Higiene pessoal;'),0,1,'L');
 
-$pdf->Ln();
+$pdf->SetX(30);
+$pdf->SetFont('Arial','', $f);
+$pdf->Cell(170,$l,utf8_decode('3. Limpeza e higienização de ambientes, equipamentos e materiais;'),0,1,'L');
 
-$pdf->SetX($x);
-$pdf->SetFont('Arial', 12);
-$pdf->Cell(170,5,utf8_decode('2. Higiene pessoal'));
+$pdf->SetX(30);
+$pdf->SetFont('Arial','', $f);
+$pdf->Cell(170,$l,utf8_decode('4. Comunicação;'),0,1,'L');
 
-$pdf->Ln();
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial', 12);
-$pdf->Cell(170,5,utf8_decode('3. Limpeza e higienização de ambientes, equipamentos e materiais'));
-
-$pdf->Ln();
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial', 12);
-$pdf->Cell(170,5,utf8_decode('4. Comunicação '));
-
-$pdf->Ln();
-
-$pdf->SetX($x);
-$pdf->SetFont('Arial', 12);
-$pdf->Cell(170,5,utf8_decode('5. Monitoramento das condições de saúde'));
+$pdf->SetX(30);
+$pdf->SetFont('Arial','', $f);
+$pdf->Cell(170,$l,utf8_decode('5. Monitoramento das condições de saúde.'),0,1,'L');
 
 $pdf->Ln();
 
@@ -93,24 +95,20 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','', $f);
 $pdf->MultiCell(170,$l,utf8_decode("Outrossim, dou ciência das necessidades de emissão de Atestados de Responsabilidade Técnica (ART) para estruturas, bem como uso de Equipamentos de Proteção Individual (EPI) de segurança para trabalhos em altura."));
 
-$pdf->Ln();
-$pdf->Ln();
+$pdf->Ln(20);
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial', 12);
-$pdf->Cell(170,5,utf8_decode('São Paulo, ___ de _______ de 2020'));
+$pdf->SetFont('Arial','', $f);
+$pdf->Cell(170,$l,utf8_decode(strftime('São Paulo, %d de %B de %Y.', strtotime('today'))),0,1,'L');
 
-$pdf->Ln();
+$pdf->Ln(20);
 
 $pdf->SetX($x);
-$pdf->SetFont('Arial','B', 12);
-$pdf->Cell(200,5,utf8_decode('_____________________________________'));
-$pdf->Cell(200,5,utf8_decode("Responsável Legal: {$rep01['nome']}"));
-$pdf->Cell(200,5,utf8_decode("CPF: {$rep01['CPF']}"));
+$pdf->SetFont('Arial','B', $f);
+$pdf->Cell(120,$l,utf8_decode("Responsável Legal: {$rep01['Nome']}"),'T',1,'L');
 
-
-
-
-
+$pdf->SetX($x);
+$pdf->SetFont('Arial','B', $f);
+$pdf->Cell(120,$l,utf8_decode("CPF: {$rep01['CPF']}"),0,1,'L');
 
 $pdf->Output();
