@@ -92,12 +92,18 @@ if(isset($_POST['usuario']))
 
 					<br /><br />
 
+                    <div class="well">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Para solicitar cadastro de novo usuário</h5>
+                                <a href="https://goo.gl/lHLdnI" target="_blank" class="btn btn-primary">Clique aqui</a>
+                            </div>
+                        </div>
+                    </div>
 
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
-							<h4><p>Não possui cadastro?<strong><a href="https://goo.gl/lHLdnI" target="_blank"> CLIQUE AQUI!</strong></a></p></h4>
-							<p>&nbsp;</p>
-							<p>Dúvidas? Envie e-mail para: <strong>sistema.igsis@gmail.com</strong></p>
+							<p>Chamados somente através do e-mail <strong>sistema.igsis@gmail.com</strong></p>
 						</div>
 					</div>
 
@@ -110,7 +116,7 @@ if(isset($_POST['usuario']))
 					<table width="100%">
 						<tr>
 							<td width="20%"><img src="visual/images/logo_cultura_q.png" align="left"/></td>
-							<td align="center"><font color="#ccc">2017 @ IGSIS - Sistema de Contratação Artística<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
+							<td align="center"><font color="#ccc">2015 @ IGSIS - Sistema de Contratação Artística<br/>Secretaria Municipal de Cultura<br/>Prefeitura de São Paulo</font></td>
 							<td width="20%"><img src="visual/images/logo_igsis_azul.png" align="right"/></td>
 						</tr>
 					</table>
