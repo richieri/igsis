@@ -111,8 +111,64 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', $f);
 $pdf->Cell(120,$l,utf8_decode("CPF: {$rep01['CPF']}"),0,1,'L');
 
-$merge =  new FPDF_Merge();
-$merge->add($pdf);
-$merge->add('protocolo_sanitarios.pdf');
+$wImg = 210;
 
-$merge->Output();
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/1.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/2.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/3.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/4.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/5.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/6.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/7.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/8.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/9.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/10.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/11.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/12.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/13.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/14.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/15.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/16.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/17.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/18.jpg',0,0,$wImg);
+
+$pdf->addPage();
+$pdf->image('img/protocolo_saneamento/19.jpg',0,0,$wImg);
+
+
+$pdf->Output();
