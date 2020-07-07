@@ -60,6 +60,7 @@ $link66 = $http."rlt_pedido_reserva_centrosculturaisteatros_pj.php";
 $link67 = $http."rlt_pedido_reserva_ruasdelazer_pj.php";
 $link68 = $http."rlt_pedido_reserva_geral.php";
 $link69 = $http."rlt_protocolo_sanitario.php?id=".$id_ped;
+$link70 = $http."rlt_sem_cadastro_fgts.php?id=".$id_ped;
 
 $last_id = mysqli_insert_id($conexao);
 
@@ -108,7 +109,8 @@ echo "
 							<td><a href='$link61' target='_blank'><strong>Condicionamento</strong></a></td>							
 						</tr>
 						<tr>
-						    <td colspan='2'><a href='$link69' target='_blank'><strong>Protocolo sanitário</strong></a></td>
+						    <td><a href='$link69' target='_blank'><strong>Protocolo sanitário</strong></a></td>
+						    <td><a href='$link70' target='_blank'><strong>Sem cadastro no FGTS</strong></a></td>
                         </tr>
 						
 						<tr><td class='list_description'><br/></td></tr>
