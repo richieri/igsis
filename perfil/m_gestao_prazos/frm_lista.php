@@ -24,8 +24,8 @@ $sql_lista = "
 	SELECT ped.idEvento, ped.idPedidoContratacao, ped.tipoPessoa, ped.idPessoa, ped.instituicao, uope.nomeCompleto AS operador, uresp.nomeCompleto AS fiscal, tipo.tipoEvento, eve.nomeGrupo, eve.nomeEvento, eve.dataEnvio 
 	FROM igsis_pedido_contratacao AS ped 
 	INNER JOIN ig_evento AS eve ON ped.idEvento = eve.idEvento
-    INNER JOIN ig_tipo_evento AS tipo ON tipo.idTipoEvento = eve.ig_tipo_evento_idTipoEvento
-    INNER JOIN ig_usuario AS uresp ON uresp.idUsuario = eve.idResponsavel
+    LEFT JOIN ig_tipo_evento AS tipo ON tipo.idTipoEvento = eve.ig_tipo_evento_idTipoEvento
+    LEFT JOIN ig_usuario AS uresp ON uresp.idUsuario = eve.idResponsavel
 	LEFT JOIN  ig_usuario AS uope ON uope.idUsuario = ped.idContratos
 	WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND eve.statusEvento = 'Aguardando' 
 	GROUP BY eve.idEvento ORDER BY eve.idEvento DESC
