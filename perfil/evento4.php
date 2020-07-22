@@ -501,7 +501,10 @@ if(isset($_POST['atualizar'])){
 		if(mysqli_query($con,$sql_inserir_produtor)){		
 			$mensagem = "Produtor inserido com sucesso! ";	
 			$idProdutor = recuperaUltimo("ig_produtor"); //recupera o idProdutor inserido
-			mysqli_query($con,"UPDATE ig_evento SET ig_produtor_idProdutor = '$idProdutor' WHERE idEvento = $idEvento");
+            $sql_atualiza_evento = "UPDATE ig_evento SET ig_produtor_idProdutor = '$idProdutor' WHERE idEvento = $idEvento";
+			if (mysqli_query($con,$sql_atualiza_evento)){
+			   gravarLog($sql_atualiza_evento);
+            }
 			gravarLog($sql_inserir_produtor); //grava log
 		}else{
 			$mensagem = "Erro ao atualizar!";

@@ -232,6 +232,7 @@ if(isset($_POST['atualizar']))
 			$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
 			if($query_atualiza_evento)
 			{
+			    gravarLog($sql_atualiza_evento);
 				$mensagem = "Pedido atualizado com sucesso. <br/> <br>
 					<div class='row'>
 						<div class='col-md-offset-1 col-md-10'>	
@@ -285,6 +286,7 @@ if(isset($_POST['atualizar']))
 			$query_atualiza_evento = mysqli_query($con,$sql_atualiza_evento);
 			if($query_atualiza_evento)
 			{
+			    gravarLog($sql_atualiza_evento);
 				$mensagem = "Pedido atualizado com sucesso. <br/> <br>
 					<div class='row'>
 						<div class='col-md-offset-1 col-md-10'>	

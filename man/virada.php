@@ -243,6 +243,7 @@ if($tableExists == 0){
 								WHERE idEvento = '$id'";
 							$query_update_evento = mysqli_query($con,$sql_update_evento);
 							if($query_update_evento){
+							    gravarLog($sql_update_evento);
 								echo "<p>Evento $nomeEspetaculo inserido corretamente</p>";
 								
 								// atualiza o pedido de contratação

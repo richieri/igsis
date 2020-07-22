@@ -366,6 +366,7 @@ $relatorioProponentes = $http."relatorio_luisa.php";
 				$query_reabrir = mysqli_query($con,$sql_reabrir);
 				if($query_reabrir)
 				{
+				    gravarLog($sql_reabrir);
 					$sql_pedido = "UPDATE igsis_pedido_contratacao SET publicado = '0' WHERE idEvento = '$idEvento'";
 					$query_pedido = mysqli_query($con,$sql_pedido);
 					if($query_pedido)
@@ -383,6 +384,7 @@ $relatorioProponentes = $http."relatorio_luisa.php";
 				$query_reabrir = mysqli_query($con,$sql_reabrir);
 				if($query_reabrir)
 				{
+				    gravarLog($sql_reabrir);
 					$evento = recuperaDados("ig_evento",$idEvento,"idEvento");
 					$mensagem = $mensagem."O evento ".$evento['nomeEvento']." foi reaberto.<br />";
 					$sql_pedido = "UPDATE igsis_pedido_contratacao SET estado = NULL WHERE idEvento = '$idEvento'";
@@ -2663,6 +2665,7 @@ if($tableExists == 0){
 							$query_update_evento = mysqli_query($con,$sql_update_evento);
 							if($query_update_evento)
 							{
+							    gravarLog($sql_update_evento);
 								echo "<p>Evento $nomeEspetaculo inserido corretamente</p>";
 								// insere ocorrencia
 								$sql_insere_ocorrencia = "INSERT INTO ig_ocorrencia (idEvento, idTipoOcorrencia, sabado, domingo, dataInicio, dataFinal, timezone, duracao, publicado, virada) VALUES ('$id', '4', '1', '1', '2017-05-20', '2017-05-21', '-3', '$duracao', '1', '1')";

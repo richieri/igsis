@@ -213,6 +213,7 @@ else
 		$query_reabrir = mysqli_query($con,$sql_reabrir);
 		if($query_reabrir)
 		{
+		    gravarLog($sql_reabrir);
 			$evento = recuperaDados("ig_evento",$id,"idEvento");
 			$mensagem = $mensagem."O evento ".$evento['nomeEvento']." foi reaberto.<br /><br/>";
 		}

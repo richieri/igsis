@@ -187,6 +187,7 @@ if($tableExists == 0){
 							$query_update_evento = mysqli_query($con,$sql_update_evento);
 							if($query_update_evento)
 							{
+							    gravarLog($sql_update_evento);
 								echo "<p>Evento $nomeEspetaculo inserido corretamente</p>";
 								// insere ocorrencia
 								$sql_insere_ocorrencia = "INSERT INTO ig_ocorrencia (idEvento, idTipoOcorrencia, sabado, domingo, dataInicio, dataFinal, timezone, duracao, publicado, virada) VALUES ('$id', '4', '1', '1', '2017-05-20', '2017-05-21', '-3', '$duracao', '1', '1')";

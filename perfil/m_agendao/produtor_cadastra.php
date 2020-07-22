@@ -21,6 +21,7 @@ if (isset($_POST['cadastra'])) {
         if($con->query($sql_evento)){
             $mensagem =  "Cadastrado com sucesso!";
             gravarLog($sql);
+            gravarLog($sql_evento);
         }
         else{
             $mensagem = "Erro ao gravar! Tente novamente.";
