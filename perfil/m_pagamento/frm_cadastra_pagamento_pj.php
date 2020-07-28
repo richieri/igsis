@@ -295,7 +295,7 @@ include 'includes/menu.php';
 										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a><br/>
 										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a><br />
 										<a target="_blank" href='.$link14.'?id='.$id_ped.'&idUsuario='.$_SESSION['idUsuario'].'&parcela='.$i.'&modelo=empresas>Email Kit</a><br />
-										<a target="_blank" href='.$link15.'?id='.$id_ped.'&parcela='.$i.'>Email NE</a></td>';
+										<a target="_blank" href='.$link15.'?id='.$id_ped.'&parcela='.$i.'>Minuta 176 mil</a></td>';
 
 								echo '<td class="list_description">
 										<a target="_blank" href='.$link4.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>

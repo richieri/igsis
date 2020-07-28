@@ -193,13 +193,13 @@ $n_parcela = mysqli_num_rows($query_parcela);
 
 <p>&nbsp;</p>
 
-<p align='center'>São Paulo, _________ de ________________________________ de 2017.</p>
+<p align='center'>São Paulo, _________ de ________________________________ de <?= date('Y')?>.</p>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <p align='center'><strong>____________________________________<br/>
-CARLA MINGOLLA<br/>
+TAÍS LARA<br/>
 Chefe de Gabinete<br/>
 Secretaria Municipal de Cultura
 </strong></p>
