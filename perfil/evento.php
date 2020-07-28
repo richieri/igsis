@@ -375,8 +375,8 @@
 						<p>O responsável e suplente devem estar cadastrados como usuários do sistema.</p>
 						<div class="col-md-offset-2 col-md-8">
 							<label>Primeiro responsável (Fiscal)</label>
-							<select class="form-control" name="nomeResponsavel" id="inputSubject" >
-								<option value="1"></option>	
+							<select class="form-control" name="nomeResponsavel" id="inputSubject" required>
+								<option value="">Selecione...</option>
 								<?php echo opcaoUsuario($_SESSION['idInstituicao'],$campo['idResponsavel']) ?>
 							</select>	                
 						</div>
@@ -384,8 +384,8 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Segundo responsável (Suplente)</label>
-							<select class="form-control" name="suplente" id="inputSubject" >
-								<option value="1"></option>
+							<select class="form-control" name="suplente" id="inputSubject" required>
+								<option value="">Selecione...</option>
 								<?php echo opcaoUsuario($_SESSION['idInstituicao'],$campo['suplente']) ?>
 							</select>	
 						</div>
