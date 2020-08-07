@@ -32,10 +32,10 @@ $usuario = $conexao->query("SELECT nomeCompleto,email FROM ig_usuario WHERE idUs
 
 switch ($idUsuario){
     case "1081":
-        $mail = "casponcontratos@gmail.com";
+        $email = "casponcontratos@gmail.com";
         break;
     case "1125":
-        $mail = "tomcontratos@gmail.com";
+        $email = "tomcontratos@gmail.com";
         break;
     case "1256":
         $email = "yankacontratos@gmail.com";
