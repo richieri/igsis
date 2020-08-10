@@ -17,7 +17,7 @@
 							<li><a href="?perfil=admin&p=scripts&formacao=1">Importar Base PF Formação</a></li>
 							<li><a href="?perfil=admin&p=scripts&contabilidade=1">Verificar tabela contabilidade</a></li>
 							<li><a href="?perfil=listaIntegrantes">Insere Integrantes na tabela</a></li>
-							<li><a href="<?=$relatorioProponentes?>">Relatório Luisa</a></li>
+							<li><a href="<?=$relatorioProponentes?>">Relatório Ligia</a></li>
 							<li><a href="http://<?=$_SERVER['SERVER_NAME']?>/igsis/pdf/relatorio_modelo_gab.php">Relatório Modelo</a></li>
 							<li><a href="?perfil=admin&p=sof"> SOF </a></li>
 						</ul>
