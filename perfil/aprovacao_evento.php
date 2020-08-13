@@ -20,7 +20,7 @@
 			$justificativa = "Solicitação de aprovação de evento fora do prazo.";
 			$data = date('Y-m-d H:i:s');
 
-			$sql_inserir_chamado = "INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', '1', '13', '$event', '$justificativa')";
+			$sql_inserir_chamado = "INSERT INTO `igsis_chamado` (`idChamado`, `titulo`, `descricao`, `data`, `idUsuario`, `estado`, `tipo`, `idEvento`, `justificativa`) VALUES (NULL, '$titulo', '$descricao', '$data', '$idUsuario', '1', '18', '$event', '$justificativa')";
 			$query_inserir_chamado = mysqli_query($con,$sql_inserir_chamado);
 
 		}
