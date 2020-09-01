@@ -648,11 +648,14 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 	{
 		//retorna uma array com os dados da tabela igsis_argumento
 		$con = bancoMysqli();
-		$sql = "SELECT * FROM igsis_argumento WHERE idEvento = '$idEvento' LIMIT 0,1";
+		$sql = "SELECT ia.*, iu.nomeCompleto FROM igsis_argumento AS ia INNER JOIN ig_usuario iu ON ia.idContratos = iu.idUsuario WHERE idEvento = '$idEvento' ORDER BY data DESC";
 		$query = mysqli_query($con,$sql);
-		$campo = mysqli_fetch_array($query);
-		echo "<b>Argumento da não aprovação anterior:</b> ".$campo['argumento']."<br />";
-		
+		if (mysqli_num_rows($query) > 0){
+            echo "<b>Argumento(s) para a não aprovação:</b><br>";
+            while ($campo = mysqli_fetch_array($query)){
+                echo "<b>".exibirDataHoraBr($campo['data'])."</b> por <b>".$campo['nomeCompleto'].":</b> ".$campo['argumento']."<br />";
+            }
+        }
 	}
 	function recuperaDados($tabela,$idEvento,$campo)
 	{
