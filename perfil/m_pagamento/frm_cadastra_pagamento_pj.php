@@ -1,4 +1,5 @@
 <?php
+include 'includes/menu.php';
 
 $id_ped = $_GET['id_ped'];
 $server = "http://".$_SERVER['SERVER_NAME']."/igsis/";
@@ -159,8 +160,6 @@ $linha_tabelas = siscontrat($id_ped);
 $pedido = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
 $pj = siscontratDocs($linha_tabelas['IdProponente'],2);
 $parcelamento = retornaParcelaPagamento($id_ped);
-
-include 'includes/menu.php';
 ?>
 
 <section id="list_items" class="home-section bg-white">
@@ -179,7 +178,6 @@ include 'includes/menu.php';
 							<option value='655'></option>
 							<?php
 							$ped = recuperaDados("igsis_pedido_contratacao",$id_ped,"idPedidoContratacao");
-                            $sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 393, 424, 445, 655, 993, 1010, 1135, 1170, 1256, 1257, 1295, 872, 1296, 1297, 1126, 147, 1081, 986, 895, 1389, 1125, 1391) ORDER BY nomeCompleto";
 							$query_operador = mysqli_query($con,$sql_operador);
 							while($user = mysqli_fetch_array($query_operador))
 							{
