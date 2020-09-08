@@ -23,8 +23,6 @@ $periodo = $linha_tabelas["Periodo"];
 $duracao = $linha_tabelas["Duracao"];
 $dataAtual = date("d/m/Y");
 $NumeroProcesso = $linha_tabelas["NumeroProcesso"];
-$assinatura = $linha_tabelas["Assinatura"];
-$cargo = $linha_tabelas["Cargo"];
 $qtdApresentacoes = $pedido["qtdApresentacoes"];
 $qtdApresentacoesPorExtenso = qtdApresentacoesPorExtenso ($pedido["qtdApresentacoes"]);
 
