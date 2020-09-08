@@ -34,8 +34,17 @@ $cpf = $linha_tabelas_pessoa["CPF"];
 $setor = $linha_tabelas["Setor"];
 
 $ano=date('Y');
-  
- ?>
+
+$verba = $_GET['verba'] ?? "";
+if ($verba == "6357") {
+    $texto = "Assim, solicito a reserva de recursos que deverá onerar a ação 6357 - Políticas de Promoção Cultural nas Bibliotecas Públicas da U.O. 25.10 - Fonte 00.";
+} elseif ($verba == "6356") {
+    $texto = "Assim, solicito a reserva de recursos que deverá onerar a ação 6356 - Programação de Atividades Culturais nas Bibliotecas Públicas da U.O. 25.10 - Fonte 00.";
+} else {
+    $texto = "";
+}
+
+?>
  
  
 <html>
@@ -70,7 +79,7 @@ $sei =
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
   "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ ".dinheiroParaBr($ValorGlobal)." ("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentações, no período de "."$periodo".".</p>".
-  "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6357 - Politicas de Promoção Cultural nas Bibliotecas Públicas da U.O. 25.10 - Fonte 00.</p>".
+  "<p>".$texto."</p>".
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/AJ para prosseguimento.</p>".
   "<p>&nbsp;</p>".
