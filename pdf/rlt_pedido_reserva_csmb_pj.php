@@ -70,7 +70,7 @@ $sei =
   "<p><strong>SMC/CAF/SCO</strong></p>".
   "<p><strong>Senhor Supervisor</strong></p>".
   "<p>&nbsp;</p>".
-  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ ".dinheiroDeBr($ValorGlobal)." ("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentações, no período de "."$Periodo".".</p>".
+  "<p>O presente processo trata da contratação de "."$objeto".", no valor de R$ ".dinheiroParaBr($ValorGlobal)." ("."$ValorPorExtenso"."), concernente a "."$qtdApresentacoes"." ("."$qtdApresentacoesPorExtenso".") apresentações, no período de "."$Periodo".".</p>".
   "<p>Assim, solicito a reserva de recursos que deverá onerar a ação 6357 - Politicas de Promoção Cultural nas Bibliotecas Públicas da U.O. 25.10 - Fonte 00.</p>".
   "<p>&nbsp;</p>".
   "<p>Após, enviar para SMC/AJ para prosseguimento.</p>".
