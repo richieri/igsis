@@ -142,7 +142,7 @@ echo "
 						
 						<tr>
                             <td><a href='$link62?id=$id_ped' target='_blank'><strong>Reserva Centros Culturais e Teatros 6391</strong></a></td>						
-							<td><a href='$link32?id=$id_ped' target='_blank'><strong>Reserva CSMB 6356</strong></a></td>
+							<td><a href='$link32?id=$id_ped' target='_blank'><strong>Reserva CSMB 6357</strong></a></td>
                         </tr>
 
 						<tr>
