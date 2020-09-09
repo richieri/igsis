@@ -478,6 +478,10 @@ $f=10;
 	$pdf->SetFont('Arial','', $f);
 	$pdf->MultiCell(182,5,utf8_decode('6) A apresentação contratada não oferecerá risco à minha saúde e à de terceiros, pois estou ciente que fica vedada qualquer forma de aglomeração ou encontro entre artistas e técnicos que residam em diferentes endereços.'));
 
+	$pdf->SetX($x);
+	$pdf->SetFont('Arial','', 9);
+	$pdf->MultiCell(185,5,utf8_decode('7) Fica vedada a veiculação de publicidade não oficial no âmbito das atividades on line contratadas e na plataforma digital onde a atividade será transmitida ou divulgada, bem como referências a membros dos três Poderes ou quaisquer outras que possam implicar em violação ao princípio da impessoalidade ou demais princípios de Direito Público, ressalvada a possibilidade de identificação do evento como promovido pela Prefeitura de São Paulo, sob pena de aplicação da sanção de suspensão do direito de contratar com a Administração, prevista no artigo 87, inciso III, da Lei nº 8.666/93.'));
+
    $pdf->Ln();
 
    $pdf->SetX($x);
