@@ -130,6 +130,7 @@
 			FROM ig_evento 
 			WHERE idUsuario = $idUsuario 
 			AND publicado = 1 
+            AND ocupacao IS NOT NULL
 			AND dataEnvio IS NULL";
 		$query = mysqli_query($con,$sql);
 		echo "
