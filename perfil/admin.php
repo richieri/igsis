@@ -1251,19 +1251,20 @@ $relatorioProponentes = $http."relatorio_ligia.php";
 								<label>igsis2015</label>
 							</div> 	<!-- // Departamento !-->
 							<div class="col-md-offset-2 col-md-8">	
-								<label>telefone:</label>
+								<label>Telefone:</label>
 								<input type="text" name="telefone" class="form-control"id="departamento" />
 							</div>  <!-- // ig_instituicao Puxada pela SESSION do "CRIADOR" - Admin Local !-->
 							<!-- // Perfil de Usuario !-->
 							<div class="col-md-offset-2 col-md-8">
 								<label>Instituição:</label>
-								<select name="instituicao" class="form-control"  >
+								<select name="instituicao" class="form-control"  id="instituicao" >
+                                    <option value="">Selecione...</option>
 									<?php acessoInstituicao("ig_instituicao","",""); ?>
 								</select>
 							</div>
 							<div class="col-md-offset-2 col-md-8">
 								<label>Local:</label>
-								<select name="local" class="form-control"  >
+								<select name="local" class="form-control" id="local" >
 									<?php acessoLocal("ig_local","",""); ?>
 								</select>
 							</div>
@@ -1396,18 +1397,19 @@ $relatorioProponentes = $http."relatorio_ligia.php";
 							</div>  <!-- // SENHA !-->
 							<!-- // Departamento !-->
 							<div class="col-md-offset-2 col-md-8">	
-								<label>telefone:</label>
+								<label>Telefone:</label>
 								<input type="text" name="telefone" class="form-control" id="departamento" value="<?php echo $recuperaUsuario['telefone'] ?>" />
 							</div>  <!-- // Perfil de Usuario !-->
 							<div class="col-md-offset-2 col-md-8">
 								<label>Instituição:</label>
-								<select name="ig_instituicao_idInstituicao" class="form-control"  >
+								<select name="ig_instituicao_idInstituicao" class="form-control" id="instituicao" >
+                                    <option value="">Selecione...</option>
 									<?php instituicaoLocal("ig_instituicao", $recuperaUsuario['idInstituicao'],""); ?>
 								</select>
 							</div>  <!-- // Perfil de Usuario !-->
 							<div class="col-md-offset-2 col-md-8">
 								<label>Local:</label>
-								<select name="local" class="form-control"  >
+								<select name="local" class="form-control" id="local" >
 									<?php acessoLocal("ig_local", $recuperaUsuario['local'],""); ?>
 								</select>
 							</div>
@@ -3044,3 +3046,30 @@ echo "<br /><br /> Importação executada em $tempo segundos";
 		break;
 	}
 ?>
+<script type="application/javascript">
+    $(function()
+    {
+        $('#instituicao').change(function()
+        {
+            if( $(this).val() )
+            {
+                $('#local').hide();
+                $('.carregando').show();
+                $.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
+                {
+                    var options = '<option value=""></option>';
+                    for (var i = 0; i < j.length; i++)
+                    {
+                        options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
+                    }
+                    $('#local').html(options).show();
+                    $('.carregando').hide();
+                });
+            }
+            else
+            {
+                $('#local').html('<option value="">-- Escolha uma instituição --</option>');
+            }
+        });
+    });
+</script>
