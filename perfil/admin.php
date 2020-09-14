@@ -1265,7 +1265,8 @@ $relatorioProponentes = $http."relatorio_ligia.php";
 							<div class="col-md-offset-2 col-md-8">
 								<label>Local:</label>
 								<select name="local" class="form-control" id="local" >
-									<?php acessoLocal("ig_local","",""); ?>
+                                    <option value="">-- Escolha uma instituição --</option>
+<!--									--><?php //acessoLocal("ig_local","",""); ?>
 								</select>
 							</div>
 							<div class="col-md-offset-2 col-md-8">
@@ -3057,7 +3058,7 @@ echo "<br /><br /> Importação executada em $tempo segundos";
                 $('.carregando').show();
                 $.getJSON('local.ajax.php?instituicao=',{instituicao: $(this).val(), ajax: 'true'}, function(j)
                 {
-                    var options = '<option value=""></option>';
+                    var options = '<option value="">Selecione...</option>';
                     for (var i = 0; i < j.length; i++)
                     {
                         options += '<option value="' + j[i].idEspaco + '">' + j[i].espaco + '</option>';
