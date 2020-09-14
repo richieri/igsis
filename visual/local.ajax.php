@@ -19,7 +19,7 @@ $res = mysqli_query($con,$sql);
 while ( $row = mysqli_fetch_array( $res ) ) {
 	$cidades[] = array(
 		'idEspaco'	=> $row['idLocal'],
-		'espaco'			=> (utf8_encode($row['sala'])),
+		'espaco'			=> $row['sala'],
 	);
 }
 
