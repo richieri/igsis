@@ -2790,9 +2790,9 @@
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8">
 							<label>Local / instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
-                            <button class='btn btn-default' type='button' data-toggle='modal'
+                            <!--<button class='btn btn-default' type='button' data-toggle='modal'
                                     data-target='#adicionaInstituicao' style="border-radius: 30px;">
-                                <i class="fa fa-plus-circle"></i></button>
+                                <i class="fa fa-plus-circle"></i></button>-->
 							<select class="form-control" name="instituicao" id="instituicao" >
 								<option>Selecione</option>
 								<?php
