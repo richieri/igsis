@@ -1503,7 +1503,7 @@ $relatorioProponentes = $http."relatorio_ligia.php";
 				}
 				else
 				{
-					$sqlverificar = "SELECT sala FROM ig_local WHERE idInstituicao = $instituicao AND sala LIKE '$espaco'";
+					$sqlverificar = "SELECT sala FROM ig_local WHERE idInstituicao = $instituicao AND sala AND publicado = 1 LIKE '$espaco'";
 					$queryverificar = mysqli_query($con,$sqlverificar);
 					$existe = mysqli_num_rows ($queryverificar);
 					if ($existe == 0) // caso não esteja vazio
@@ -1702,7 +1702,7 @@ $relatorioProponentes = $http."relatorio_ligia.php";
 			{
 				$con = bancoMysqli();
 				$idApagar = $_POST['apagar'];
-				$sql_apagar_registro = "UPDATE ig_local SET publicado = 2 WHERE idLocal = $idApagar";
+				$sql_apagar_registro = "UPDATE ig_local SET publicado = 0 WHERE idLocal = $idApagar";
 				if(mysqli_query($con,$sql_apagar_registro))
 				{	
 					$mensagem = "Espaço apagado com sucesso!";

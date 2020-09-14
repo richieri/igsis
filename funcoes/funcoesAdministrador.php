@@ -15,11 +15,11 @@
 		$con = bancoMysqli();
 		if($instituicao != "")
 		{
-			$sql = "SELECT * FROM $tabela WHERE idInstituicao = $instituicao OR idInstituicao = 999 ORDER BY 2";
+			$sql = "SELECT * FROM $tabela WHERE idInstituicao = $instituicao OR idInstituicao = 999 AND publicado = 1 ORDER BY 2";
 		}
 		else
 		{
-			 $sql = "SELECT * FROM ig_instituicao ORDER BY instituicao"; // $sql = "SELECT * FROM ig_papelusuario WHERE idPapelUsuario";
+			 $sql = "SELECT * FROM ig_instituicao WHERE publicado = 1 ORDER BY instituicao"; // $sql = "SELECT * FROM ig_papelusuario WHERE idPapelUsuario";
 		}
 		$query = mysqli_query($con,$sql);
 		while($option = mysqli_fetch_row($query))
@@ -65,11 +65,11 @@
 		$con = bancoMysqli();
 		if($local != "")
 		{
-			$sql = "SELECT * FROM $tabela WHERE idLocal = $local OR idLocal = 999  ORDER BY sala ASC";
+			$sql = "SELECT * FROM $tabela WHERE idLocal = $local OR idLocal = 999 AND publicado = 1 ORDER BY sala ASC";
 		}
 		else
 		{
-			 $sql = "SELECT * FROM ig_local ORDER BY sala ASC "; // $sql = "SELECT * FROM ig_papelusuario WHERE idPapelUsuario";
+			 $sql = "SELECT * FROM ig_local WHERE publicado = 1 ORDER BY sala ASC "; // $sql = "SELECT * FROM ig_papelusuario WHERE idPapelUsuario";
 		}
 		$query = mysqli_query($con,$sql);
 		while($option = mysqli_fetch_row($query))
@@ -126,11 +126,11 @@
 		$con = bancoMysqli();
 		if($instituicao != "")
 		{
-			$sql = "SELECT * FROM $tabela WHERE idInstituicao = $instituicao OR idInstituicao = 999 ORDER BY 2";
+			$sql = "SELECT * FROM $tabela WHERE idInstituicao = $instituicao OR idInstituicao = 999 AND publicado = 1 ORDER BY 2";
 		}
 		else
 		{
-			$sql = "SELECT * FROM ig_instituicao WHERE idInstituicao ORDER BY instituicao";   // editar para só adicionar instituicao do LOCAL
+			$sql = "SELECT * FROM ig_instituicao WHERE idInstituicao AND publicado = 1 ORDER BY instituicao";   // editar para só adicionar instituicao do LOCAL
 		}
 		$query = mysqli_query($con,$sql);
 		while($option = mysqli_fetch_row($query))

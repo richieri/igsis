@@ -349,7 +349,7 @@
 		//gera os options de um select
 		if($instituicao != "")
 		{
-			$sql = "SELECT * FROM $tabela WHERE publicado = 0 AND idInstituicao = $instituicao OR idInstituicao = 999  ";
+			$sql = "SELECT * FROM $tabela WHERE publicado = 1 AND idInstituicao = $instituicao OR idInstituicao = 999 ORDER BY 2";
 		}
 		else
 		{

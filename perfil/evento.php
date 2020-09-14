@@ -2370,7 +2370,7 @@
 							<label>Local / instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
 							<select class="form-control" name="instituicao" id="instituicao" >
 								<option>Selecione</option>
-								<?php geraOpcao("ig_instituicao","","") ?>
+								<?php geraOpcaoPublicado("ig_instituicao","","") ?>
 							</select>
 						</div>
 					</div>
@@ -2465,7 +2465,7 @@
                                 <option value="">Selecione...</option>
                                 <?php
                                 $inst = retornaInstituicao($ocorrencia['local']);
-                                geraOpcao("ig_instituicao", $inst, "")
+                                geraOpcaoPublicado("ig_instituicao", $inst, "")
                                 ?>
                             </select>
                         </div>
@@ -2797,7 +2797,7 @@
 								<option>Selecione</option>
 								<?php
 								$inst = retornaInstituicao($ocor['local']);
-								geraOpcao("ig_instituicao",$inst,"") 
+								geraOpcaoPublicado("ig_instituicao",$inst,"")
 								?>
 							</select>
 						</div>
@@ -2809,7 +2809,7 @@
                                     data-target='#adicionaLocal' style="border-radius: 30px;">
                                 <i class="fa fa-plus-circle"></i></button>
 							<select class="form-control" name="local" id="local" >
-								<?php geraOpcao("ig_local",$ocor['local'],$inst); ?>
+								<?php geraOpcaoPublicado("ig_local",$ocor['local'],$inst); ?>
 							</select>
 						</div>
 					</div>	
@@ -3028,7 +3028,7 @@
 								<label>Local / instituição *</label><img src="images/loading.gif" class="loading" style="display:none" />
 								<select class="form-control" name="instituicao" id="instituicao" >
 									<option>Selecione</option>
-									<?php geraOpcao("ig_instituicao","","") ?>
+									<?php geraOpcaoPublicado("ig_instituicao","","") ?>
 								</select>
 							</div>
 						</div>
