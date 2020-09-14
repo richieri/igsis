@@ -238,7 +238,8 @@ $pdf->SetXY( $x , 35 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 	$pdf->SetFont('Arial','B', 10);
 	$pdf->Cell(27,$l,utf8_decode('Data / Período:'),0,0,'L');
 	$pdf->SetFont('Arial','', 10);
-	$pdf->MultiCell(153,$l,utf8_decode("$Periodo"." - conforme cronograma."));
+//	$pdf->MultiCell(153,$l,utf8_decode("$Periodo"." - conforme cronograma."));
+	$pdf->MultiCell(153,$l,utf8_decode($Periodo));
 
 	$pdf->SetX($x);
 	$pdf->SetFont('Arial','B', 10);
