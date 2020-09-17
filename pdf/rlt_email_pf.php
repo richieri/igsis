@@ -31,9 +31,11 @@ switch ($idUsuario){
     case "1391":
         $email = "marianaoliveiracontratos@gmail.com";
         break;
-
     case "1429":
         $email = "coracontratos@gmail.com";
+        break;
+    case "1296":
+        $email = "fernandagcontratos@gmail.com";
         break;
     default:
         $email = "smc.pagamentosartisticos@gmail.com";
