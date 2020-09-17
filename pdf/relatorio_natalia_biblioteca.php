@@ -35,11 +35,9 @@ $sql = "SELECT
 
 $query = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
 
-$i = 1;
-
-//header ("Pragma: no-cache");
-//header ("Content-type: application/x-msexcel");
-//header ("Content-Disposition: attachment; filename=".$dataAtual."_eventos_bibliotecas.xls" );
+header ("Pragma: no-cache");
+header ("Content-type: application/x-msexcel");
+header ("Content-Disposition: attachment; filename=".$dataAtual."_eventos_bibliotecas.xls" );
 
 ?>
 <html>
@@ -48,12 +46,11 @@ $i = 1;
 <table class="table table-condensed" border="1">
     <thead>
     <tr>
-        <th colspan="15">Dados do Evento</th>
+        <th colspan="14">Dados do Evento</th>
         <th colspan="6">Dados do Pedido</th>
         <th colspan="4">Dados da Ocorrencia</th>
     </tr>
     <tr class="list_menu">
-        <th>Nº</th>
         <th>ID do Evento</th>
         <th>Nome do Evento</th>
         <th>Tipo de relação jurídica</th>
@@ -107,7 +104,6 @@ $i = 1;
         $ocorrencias = $queryOcorrencias->fetch_all(MYSQLI_ASSOC);
     ?>
         <tr>
-            <td <?=$numOcorrencias != 0 ? "rowspan='$numOcorrencias'" : ""?>><?=$i?></td>
             <?php foreach ($dados as $dado): ?>
                 <td <?=$numOcorrencias != 0 ? "rowspan='$numOcorrencias'" : ""?>>
                     <?= $dado ?>
