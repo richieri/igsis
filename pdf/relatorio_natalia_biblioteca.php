@@ -159,7 +159,6 @@ header ("Content-Disposition: attachment; filename=".$dataAtual."_eventos_biblio
             <?php endforeach; ?>
         <?php endif; ?>
     <?php
-    $i++;
     endforeach; ?>
     </tbody>
 </table>
