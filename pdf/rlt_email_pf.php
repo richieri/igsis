@@ -37,6 +37,9 @@ switch ($idUsuario){
     case "1296":
         $email = "fernandagcontratos@gmail.com";
         break;
+    case "1333":
+        $email = "dcerescontratos@gmail.com";
+        break;
     default:
         $email = "smc.pagamentosartisticos@gmail.com";
 }
@@ -65,8 +68,9 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p style="text-align:justify">a) Recibo da nota de empenho (para ser assinado);</p>
 <p style="text-align:justify">b) Pedido de pagamento (para ser assinado);</p>
 <p style="text-align:justify">c) Recibo de pagamento (para ser assinado).</p>
+<p style="text-align:justify">d) Certidões Atualizadas (CTM, CADIN, CND PGFN e CRF FGTS)</p>
 <p style="text-align:justify">Para fins de arquivamento, segue também o Anexo e a Nota de Empenho da referida contratação.  </p>
-<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada, <strong>somente através do e-mail <?= $email ?>, em até 48 horas, impreterivelmente.</strong></p>
+<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, <strong>somente através do e-mail <?= $email ?>, em até 48 horas, impreterivelmente.</strong></p>
 <p>&nbsp;</p>
 <p style="text-align:justify">Atenciosamente,</p>
 <p>&nbsp;</p>
