@@ -107,7 +107,7 @@ switch($verba)
 				$lugar = $ocor[$i]['espaco'];
 
 				echo "<p align='justify'><strong>Tipo:</strong> ".$tipo."</p>";
-				echo "<p align='justify'><strong>Data/Perído:</strong> ".$dia."</p>";
+				echo "<p align='justify'><strong>Data/Período:</strong> ".$dia."</p>";
 				echo "<p align='justify'><strong>Horário:</strong> ".$hour."</p>";
 				echo "<p align='justify'><strong>Local:</strong> ".$lugar."</p>";
 				echo "<p>&nbsp;</p>";

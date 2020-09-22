@@ -343,7 +343,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
    
    $pdf->SetX($x);
    $pdf->SetFont('Arial','B', 10);
-   $pdf->Cell(22,$l,utf8_decode('Data/Perído:'),0,0,'L');
+   $pdf->Cell(22,$l,utf8_decode('Data/Período:'),0,0,'L');
    $pdf->SetFont('Arial','', 10);
    $pdf->MultiCell(148,$l,utf8_decode($dia));
    
