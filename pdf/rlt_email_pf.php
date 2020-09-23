@@ -65,12 +65,13 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p style="text-align:justify">Prezado(a) Senhor(a) <?= $pf['Nome']?>,</p>
 <p>&nbsp;</p>
 <p style="text-align:justify">Tendo em vista a apresentação <?= $Objeto?>, na data/período de <?= $Periodo?>, <?= $pf['Email'] ?>, encaminho em anexo, para fins de pagamento, os itens abaixo relacionados:</p>
-<p style="text-align:justify">a) Recibo da nota de empenho (para ser assinado);</p>
-<p style="text-align:justify">b) Pedido de pagamento (para ser assinado);</p>
-<p style="text-align:justify">c) Recibo de pagamento (para ser assinado).</p>
-<p style="text-align:justify">d) Certidões Atualizadas (CTM, CADIN, CND PGFN e CRF FGTS)</p>
-<p style="text-align:justify">Para fins de arquivamento, segue também o Anexo e a Nota de Empenho da referida contratação.  </p>
-<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, <strong>somente através do e-mail <?= $email ?>, em até 48 horas, impreterivelmente.</strong></p>
+<p style="text-align:justify">a) Recibo da nota de empenho (para ser assinado pelo(a) contratado(a));</p>
+<p style="text-align:justify">b) Pedido de pagamento (para ser assinado pelo(a) contratado(a));</p>
+<p style="text-align:justify">c) Recibo de pagamento (para ser assinado pelo(a) contratado(a));</p>
+<p>&nbsp;</p>
+<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, juntamente com as certidões fiscais de Pessoa Jurídica ( CTM, CADIN, CND, CNDT e CCM ) atualizadas, <strong>somente através do e-mail <?= $email ?>, , em até 48 horas, impreterivelmente.</strong></p>
+<p>&nbsp;</p>
+<p style="text-align:justify">Para fins de arquivo, segue também o Anexo e a Nota de Empenho da referida contratação.</p>
 <p>&nbsp;</p>
 <p style="text-align:justify">Atenciosamente,</p>
 <p>&nbsp;</p>
