@@ -33,14 +33,11 @@ $rfFiscal = $pedido["RfFiscal"];
 $rfSuplente = $pedido["RfSuplente"];
 
 
+
 $dataAtual = date("d/m/Y");
 $ano=date('Y');
 $dataFinal = $parcelamento[$id_parcela]['vigencia_final'];
 
-  
- ?>
- 
- <?
 //datas
 $dia = date('d');
 $mes = date('m');
@@ -94,34 +91,43 @@ case 12: $mes = "Dezembro"; break;
 <?php
 
 $sei = 
-  "<p><strong><u><center>ATESTADO DE CONFIRMAÇÃO DE SERVIÇOS</strong></p></u></center>".
+  "<p><strong><u><center>Anexo I da Portaria SF nº 170, de 31 agosto de 2020</strong></p></u></center>".
+  "<p><center>Modelo de recebimento da documentação e ateste total/parcial de nota fiscal dentro/fora do prazo</center></p>".
   "<p>&nbsp;</p>".
-  "<p>Informamos que os serviços prestados por: ".$nome."</p>".
-  "<p><strong>PROCESSO: </strong> ".$NumeroProcesso." </p>".
-  "<p><strong>EVENTO: </strong> ".$objeto." </p>".
-  "<P><strong>PERÍODO: </strong>".$periodoParcela."</p>".
-  "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS</p>".
-  "<p>( X ) FORAM REALIZADOS A CONTENTO</p>".
-  "<p>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) NÃO FORAM REALIZADOS A CONTENTO, PELO SEGUINTE MOTIVO:</p>".
+  "<p><strong>Recebimento da Documentação </strong></p>".
   "<p>&nbsp;</p>".
-  "<p><strong>DADOS DO SERVIDOR (A) QUE ESTÁ CONFIRMANDO OU NÃO A REALIZAÇÃO DOS SERVIÇOS:</strong></p>".
-  "<p><strong>FISCAL:</strong> ".$fiscal."</p>".
-  "<p><strong>RF:</strong> ".$rfFiscal."</p>".
-  "<p><strong>SUPLENTE:</strong> ".$suplente."</p>".
-  "<p><strong>RF:</strong> ".$rfSuplente."</p>".
+  "<p>Atesto:</p>".
+  "<p>( ) o recebimento em ___/___/____ de toda a documentação [INSERIR NÚMERO SEI DA NOTA FISCAL E ARQUIVOS
+CONSOLIDADOS] prevista na Portaria SF nº 170/2020.</p>".
+  "<p>( ) o recebimento em __/__ /____ da documentação [INSERIR NÚMERO SEI DA NOTA FISCAL E ARQUIVOS CONSOLIDADOS]
+prevista na Portaria SF nº 170/2020, ressalvado (s) [RELACIONAR OS DOCUMENTOS IRREGULARES].</p>".
   "<p>&nbsp;</p>".
-  "<p>Atesto que os serviços prestados discriminados no documento: link SEI, foram executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no(s) dia(s): ".$dataFinal.", dentro do prazo previsto.</p>".
-  "<p>O prazo contratual é do dia ".$periodoParcela.". <p>".
+  "<p><strong>Recebimento de material e/ou serviços: </strong></p>".
   "<p>&nbsp;</p>".
-  "<p>À área gestora de liquidação e pagamento encaminho para prosseguimento.</p>" 
+  "<p>Atesto:</p>".
+  "<p>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ]
+foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento
+equivalente) no dia _____/____/____, dentro do prazo previsto.<br>O prazo contratual é do dia ___/___/__ até o dia ___/___/___.</p>".
+  "<p>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ]
+foram entregues e/ou executados parcialmente, nos termos previstos no instrumento contratual (ou documento
+equivalente), do dia ___/___/___, dentro do prazo previsto.<br>O prazo contratual é do dia ___/___/__ até o dia ___/___/___. </p>".
+  "<p>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL]
+foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento
+equivalente) no dia _____/____/____, com atraso de ____dias.<br>O prazo contratual é do dia ___/___/___ até o dia ___/___/___. </p>".
+  "<p>&nbsp;</p>".
+  "<p>INFORMAÇÕES COMPLEMENTARES </p>".
+  "<p>____________________________________________________________________________________________________________________________________</p>".
+  "<p>____________________________________________________________________________________________________________________________________</p>".
+  "<p>À área gestora / de liquidação e pagamento. </p>".
+  "<p>&nbsp;</p>".
+  "<p>Encaminho para prosseguimento </p>".
+  "<p>São Paulo/SP, {$dia} de {$mes} de {$ano} </p>"
 
 ?>
 
 <div align="center">
  <div id="texto" class="texto"><?php echo $sei; ?></div>
-</div> 
-
- <p>&nbsp;</p>
+</div>
  
  <div align="center"><button id="botao-copiar" data-clipboard-target="texto"><img src="img/copy-icon.jpg"> CLIQUE AQUI PARA COPIAR O TEXTO</button>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
