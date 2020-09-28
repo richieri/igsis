@@ -81,7 +81,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p align="justify">b) Pedido de pagamento (para ser assinado pelo(a) representante legal);</p>
 <p align="justify">c) Instruções para Emissão da Nota Fiscal Eletrônica;</p>
 <p align="justify">d) Declaração do Simples Nacional (para ser assinada pelo(a) representante legal, somente em caso de Empresa optante pelo Simples Nacional).</p>
-<p align="justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, juntamente com as certidões fiscais de Pessoa Jurídica ( CTM, CADIN, CND, CNDT, CCM e FGTS ) atualizadas,<strong> somente através do e-mail <?=$email?>, em até 48 horas, impreterivelmente.</strong></p>
+<p align="justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, juntamente com as certidões fiscais de Pessoa Física ( CTM, CADIN, CND, CNDT, CCM e FGTS ) atualizadas,<strong> somente através do e-mail <?=$email?>, em até 48 horas, impreterivelmente.</strong></p>
 <p align="justify">Para fins de arquivo da empresa, segue também o Anexo e a Nota de Empenho da referida contratação.</p>
 <p>&nbsp;</p>
 <p align="justify">Atenciosamente,</p>
