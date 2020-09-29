@@ -69,7 +69,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p style="text-align:justify">b) Pedido de pagamento (para ser assinado pelo(a) contratado(a));</p>
 <p style="text-align:justify">c) Recibo de pagamento (para ser assinado pelo(a) contratado(a));</p>
 <p>&nbsp;</p>
-<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, juntamente com as certidões fiscais de Pessoa Jurídica ( CTM, CADIN, CND, CNDT e CCM ) atualizadas, <strong>somente através do e-mail <?= $email ?>, , em até 48 horas, impreterivelmente.</strong></p>
+<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, juntamente com as certidões fiscais de Pessoa Física ( CTM, CADIN, CND, CNDT e CCM ) atualizadas, <strong>somente através do e-mail <?= $usuario['email'] ?>, , em até 48 horas, impreterivelmente.</strong></p>
 <p>&nbsp;</p>
 <p style="text-align:justify">Para fins de arquivo, segue também o Anexo e a Nota de Empenho da referida contratação.</p>
 <p>&nbsp;</p>
