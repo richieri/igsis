@@ -31,6 +31,7 @@ $fiscal = $pedido["Fiscal"];
 $suplente = $pedido["Suplente"];
 $rfFiscal = $pedido["RfFiscal"];
 $rfSuplente = $pedido["RfSuplente"];
+$perioado = explode(" a ",$pedido['Periodo']);
 
 
 
@@ -89,31 +90,28 @@ switch ($mes){
 
 
 <?php
-
 $sei =
     "<p><strong><u><center>Anexo I da Portaria SF nº 170, de 31 agosto de 2020</strong></p></u></center>".
-    "<p><center>Modelo de recebimento da documentação e ateste total/parcial de nota fiscal dentro/fora do prazo</center></p>".
     "<p>&nbsp;</p>".
     "<p><strong>Recebimento da Documentação </strong></p>".
     "<p>&nbsp;</p>".
     "<p>Atesto:</p>".
-    "<p>( ) o recebimento em ___/___/____ de toda a documentação [INSERIR NÚMERO SEI DA NOTA FISCAL E ARQUIVOS
+    "<p>( X ) o recebimento em {$dataAtual} de toda a documentação [INSERIR NÚMERO SEI DA NOTA FISCAL E ARQUIVOS
 CONSOLIDADOS] prevista na Portaria SF nº 170/2020.</p>".
-    "<p>( ) o recebimento em __/__ /____ da documentação [INSERIR NÚMERO SEI DA NOTA FISCAL E ARQUIVOS CONSOLIDADOS]
+    "<p>( &nbsp;&nbsp; ) o recebimento em {$dataAtual} da documentação [INSERIR NÚMERO SEI DA NOTA FISCAL E ARQUIVOS CONSOLIDADOS]
 prevista na Portaria SF nº 170/2020, ressalvado (s) [RELACIONAR OS DOCUMENTOS IRREGULARES].</p>".
     "<p>&nbsp;</p>".
     "<p><strong>Recebimento de material e/ou serviços: </strong></p>".
-    "<p>&nbsp;</p>".
     "<p>Atesto:</p>".
-    "<p>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ]
+    "<p>( X ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ]
 foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento
-equivalente) no dia _____/____/____, dentro do prazo previsto.<br>O prazo contratual é do dia ___/___/__ até o dia ___/___/___.</p>".
-    "<p>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ]
+equivalente) no dia {$perioado[1]}, dentro do prazo previsto.<br>O prazo contratual é do dia {$perioado[0]} até o dia {$perioado[1]}.</p>".
+    "<p>( &nbsp;&nbsp; ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ]
 foram entregues e/ou executados parcialmente, nos termos previstos no instrumento contratual (ou documento
-equivalente), do dia ___/___/___, dentro do prazo previsto.<br>O prazo contratual é do dia ___/___/__ até o dia ___/___/___. </p>".
-    "<p>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL]
+equivalente), do dia {$perioado[1]}, dentro do prazo previsto.<br>O prazo contratual é do dia {$perioado[0]} até o dia {$perioado[1]}. </p>".
+    "<p>( &nbsp;&nbsp; ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL]
 foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento
-equivalente) no dia _____/____/____, com atraso de ____dias.<br>O prazo contratual é do dia ___/___/___ até o dia ___/___/___. </p>".
+equivalente) no dia {$perioado[1]}, com atraso de ____dias.<br>O prazo contratual é do dia {$perioado[0]} até o dia {$perioado[1]}. </p>".
     "<p>&nbsp;</p>".
     "<p>INFORMAÇÕES COMPLEMENTARES </p>".
     "<p>____________________________________________________________________________________________________________________________________</p>".
