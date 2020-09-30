@@ -20,6 +20,7 @@ $link13=$http."rlt_emissao_nf_parcelado.php";
 $link14=$http."rlt_email_empresas.php";
 $link15=$http."rlt_minuta_acima80k.php";
 $link16=$http."rlt_declaracao_semFinsLucrativos.php";
+$link17=$http."rlt_ateste_servico.php";
 
 
 $data = date('Y-m-d H:i:s');
@@ -90,7 +91,7 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 		<table class='table table-condensed table-striped text-center'>
 		<tr class='text-center'>	
             <td colspan='2' class='list_description'><a href='$link11?id=$id_ped' target='_blank'>Confirmação de Serviço</a></td>
-            <td class='list_description' align='right'><a href='$link10?id=$id_ped' target='_blank'>Ateste (documentação)</a></td>		
+            <td class='list_description' align='right'><a href='$link17?id=$id_ped' target='_blank'>Ateste</a></td>		
             <td colspan='2' class='list_description' ><a href='$link15?id=$id_ped' target='_blank'>Minuta acima de R$ 176 mil</a></td>            
             
 		</tr>
@@ -289,8 +290,7 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 								echo '<td class="list_description">
 										<a target="_blank" href='.$link3.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
-										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
-										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a><br/>
+										<a target="_blank" href='.$link17.'?id='.$id_ped.'>Ateste</a><br/>
 										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a><br />
 										<a target="_blank" href='.$link14.'?id='.$id_ped.'&idUsuario='.$_SESSION['idUsuario'].'&parcela='.$i.'&modelo=empresas>Email Kit</a><br />
 										<a target="_blank" href='.$link15.'?id='.$id_ped.'&parcela='.$i.'>Minuta 176 mil</a></td>';
@@ -298,8 +298,7 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 								echo '<td class="list_description">
 										<a target="_blank" href='.$link4.'?id='.$id_ped.'&parcela='.$i.'>Pagamento</a><br/>
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
-										<a target="_blank" href='.$link10.'?id='.$id_ped.'>Documentação</a><br/>
-										<a target="_blank" href='.$link11.'?id='.$id_ped.'>Ateste</a><br/>
+										<a target="_blank" href='.$link17.'?id='.$id_ped.'>Ateste</a><br/>
 										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a></td>';						}
 						?>
 						</tbody>

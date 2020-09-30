@@ -11,6 +11,7 @@ $link4=$http."rlt_recibo_pagamento_parcelado_pf.php?id=".$id_ped."";
 $link5=$http."rlt_recibo_documentacao_pf.php?id=".$id_ped."";
 $link6=$http."rlt_ateste_confirmacao_pf.php?id=".$id_ped."";
 $link7=$http."rlt_email_pf.php?id=".$id_ped."&idUsuario=".$_SESSION['idUsuario'];
+$link8=$http."rlt_ateste_servico.php?id=".$id_ped;
 
 
 $data = date('Y-m-d H:i:s');
@@ -76,7 +77,7 @@ if(isset($_POST['atualizar']))// atualiza o pedido
 					<a href='$link3?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Recibo de Pagamento Integral</a>
 				</div>
 				<div class='col-md-6'>
-					<a href='$link5?id=$id_ped' class='btn btn-theme btn-md btn-block' target='_blank'>Ateste (documentação)</a><br/>
+					<a href='$link8' class='btn btn-theme btn-md btn-block' target='_blank'>Ateste</a><br/>
 				</div>
 			</div>
 
@@ -222,7 +223,7 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 								echo '<td class="list_description">'.$parcelamento[$i]['pagamento'].'</td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link2.'&parcela='.$i.'>Pagamento</a></td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link4.'&parcela='.$i.'>Recibo</a></td>';
-								echo '<td class="list_description"><a target="_blank" href='.$link5.'?id='.$id_ped.' >Ateste (Documentação)</a></td>';
+								echo '<td class="list_description"><a target="_blank" href='.$link8.'>Ateste</a></td>';
 								echo '<td class="list_description"><a target="_blank" href='.$link6.'?id='.$id_ped.' >Confirmação de Serviço</a></td>';
 							}
 						?>
