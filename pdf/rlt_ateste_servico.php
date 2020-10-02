@@ -22,16 +22,49 @@ if ($pedido['TipoPessoa'] == 2){
     $cnpj = $pedido_pessoa["CPF"];
 }
 if ($pedido['parcelas'] == 1 ){ //integral
-    $texto = "
+    $texto_parcela = "
         <p style='text-align:justify'>( X ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ] foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia _____/____/____, dentro do prazo previsto.<br>O prazo contratual é de data/período {$pedido['Periodo']} .</p>
         <p style='text-align:justify'>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ] foram entregues e/ou executados parcialmente, nos termos previstos no instrumento contratual (ou documento equivalente), do prazo contratual do dia ___/___/__ até o dia ___/___/___.</p>  
     ";
 } else{ //parcelado ou outros
-    $texto = "
+    $texto_parcela = "
         <p style='text-align:justify'>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ] foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia _____/____/____, dentro do prazo previsto.<br>O prazo contratual é do dia ___/___/__ até o dia ___/___/___.</p>
         <p style='text-align:justify'>( X ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ] foram entregues e/ou executados parcialmente, nos termos previstos no instrumento contratual (ou documento equivalente), do prazo contratual do dia ___/___/__ até o dia ___/___/___.</p>      
     ";
-    }
+}
+$regiao = valorPorRegiao($id_ped);
+$norte = dinheiroParaBr($regiao['norte']);
+$sul =  dinheiroParaBr($regiao['sul']);
+$leste =  dinheiroParaBr($regiao['leste']);
+$oeste =  dinheiroParaBr($regiao['oeste']);
+$centro =  dinheiroParaBr($regiao['centro']);
+
+$valores= "";
+$texto_regiao = "";
+
+if($norte != "0,00"){
+    $valores = "a região norte no valor de R$ ".$norte." (".valorPorExtenso($regiao['norte'])." )";
+}
+
+if($sul != "0,00"){
+    $valores .= ", a região sul no valor de R$ ".$sul." (".valorPorExtenso($regiao['sul'])." )";
+}
+
+if($leste != "0,00"){
+    $valores .= ", a região leste no valor de R$ ".$leste." (".valorPorExtenso($regiao['leste'])." )";
+}
+
+if($oeste != "0,00"){
+    $valores .= ", a região oeste no valor de R$ ".$oeste." (".valorPorExtenso($regiao['oeste'])." )";
+}
+
+if($centro != "0,00"){
+    $valores .= ", a região centro no valor de R$ ".$centro." (".valorPorExtenso($regiao['centro'])." )";
+}
+
+if($norte != "0,00" || $sul != "0,00" || $leste != "0,00" || $oeste != "0,00" || $centro != "0,00"){
+    $texto_regiao = "<p style='text-align:justify'>Em atendimento ao item referente a regionalização e georreferenciamento das despesas municipais com a implantação do detalhamento da ação, informo que a despesa aqui tratada se refere(m) ".$valores.".</p>";
+}
 
 $dataAtual = date("d/m/Y");
 $ano=date('Y');
@@ -74,17 +107,17 @@ $sei =
     "<p style='text-align:justify'>&nbsp;</p>".
     "<p style='text-align:center'><b>Recebimento de material e/ou serviços</b></p>".
     "<p style='text-align:justify'></p>".
-    $texto.
+    $texto_parcela.
     "<p style='text-align:justify'>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL] foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia _____/____/____, com atraso de ____dias.<br>O prazo contratual é do dia ___/___/___ até o dia ___/___/___.</p>".
     "<p style='text-align:justify'>&nbsp;</p>".
     "<p style='text-align:center'><b>INFORMAÇÕES COMPLEMENTARES</b></p>".
-    "<p style='text-align:justify'>DADOS DO SERVIDOR (A) QUE ESTÁ CONFIRMANDO OU NÃO A REALIZAÇÃO DOS SERVIÇOS:</p>".
-    "<p style='text-align:justify'><b>FISCAL:</b> {$pedido['Fiscal']} - <b>RF:</b> {$pedido['RfFiscal']}<br>".
-    "<b>SUPLENTE:</b> {$pedido['Suplente']} - <b>RF:</b> {$pedido['RfSuplente']}</p>".
-    "<p style='text-align:justify'><b>Nota e Anexo de Empenho:</b> {$pedido["NotaEmpenho"]}<br>".
-    "<b>Kit de Pagamento Assinado:</b> <br>".
+    "<p style='text-align:left'><b>Nota e Anexo de Empenho:</b> {$pedido["NotaEmpenho"]}<br>".
     "<b>Certidões Fiscais:</b> <br>".
     "<b>FACC:</b> </p>".
+    "<p style='text-align:left'>Dados do servidor(a) que está confirmando ou não a realização dos serviços:<br>".
+    "<b>FISCAL:</b> {$pedido['Fiscal']} - <b>RF:</b> {$pedido['RfFiscal']}<br>".
+    "<b>SUPLENTE:</b> {$pedido['Suplente']} - <b>RF:</b> {$pedido['RfSuplente']}</p>".
+    $texto_regiao.
     "<p style='text-align:justify'>&nbsp;</p>".
     "<p style='text-align:justify'>À SMC/CAF/SCO</p>".
     "<p style='text-align:justify'>Encaminho para prosseguimento.</p>".
