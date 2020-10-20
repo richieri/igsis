@@ -132,7 +132,7 @@ if(isset($_POST['atualizar'])) // atualiza o pedido
 				<td style='vertical-align: middle' class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=empresas' target='_blank'>Empresas</a></td>
 				<td style='vertical-align: middle' class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=cooperativas' target='_blank'>Cooperativas</a></td>
 				<td style='vertical-align: middle' class='list_description' colspan='2'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=associacoes' target='_blank'>Associações e institutos</a></td>
-				<td class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."' target='_blank'>Empresas com Minuta de Contrato</a></td>
+				<td class='list_description'><a href='$link14?id=$id_ped&idUsuario=".$_SESSION['idUsuario']."&modelo=minuta' target='_blank'>Empresas com Minuta de Contrato</a></td>
 				
 				
 				
@@ -292,7 +292,6 @@ $parcelamento = retornaParcelaPagamento($id_ped);
 										<a target="_blank" href='.$link7.'?id='.$id_ped.'&parcela='.$i.'>Declaração</a><br/>
 										<a target="_blank" href='.$link17.'?id='.$id_ped.'>Ateste</a><br/>
 										<a target="_blank" href='.$link13.'?id='.$id_ped.'&parcela='.$i.'>Nota Fiscal</a><br />
-										<a target="_blank" href='.$link14.'?id='.$id_ped.'&idUsuario='.$_SESSION['idUsuario'].'&parcela='.$i.'&modelo=empresas>Email Kit</a><br />
 										<a target="_blank" href='.$link15.'?id='.$id_ped.'&parcela='.$i.'>Minuta 176 mil</a></td>';
 
 								echo '<td class="list_description">

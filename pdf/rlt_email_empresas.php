@@ -18,10 +18,13 @@ switch ($modeloEmail) {
         $item4 = "Declaração do Simples Nacional (para ser assinada pelo(a) representante legal, somente em caso de Empresa optante pelo Simples Nacional).";
         break;
     case 'cooperativas':
-        $item4 = "Documento comprobatório quanto a isenção ou imunidade de impostos.";
+        $item4 = "Modelos de declarações comprobatórias quanto a isenção ou imunidade de impostos (para ser preenchida e assinada pelo(a) representante legal).";
         break;
     case 'associacoes':
-        $item4 = "Declaração de Associação sem fins lucrativos.";
+        $item4 = "Declaração de Instituições de Caráter Filantrópico, Recreativo, Cultural, Científico e às Associações Civis (para ser preenchida e assinada pelo(a) representante legal).";
+        break;
+    case 'minuta':
+        $item4 = "Declaração do Simples Nacional (para ser assinada pelo(a) representante legal, somente em caso de Empresa optante pelo Simples Nacional);";
         break;
 }
 
@@ -97,9 +100,11 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p style="text-align:justify">b) Pedido de pagamento (para ser assinado pelo(a) representante legal);</p>
 <p style="text-align:justify">c) Instruções para Emissão da Nota Fiscal Eletrônica;</p>
 <p style="text-align:justify">d) <?=$item4?></p>
-<p style="text-align:justify">e) Certidões Atualizadas de Pessoa Jurídica (CTM, CADIN, CND, CNDT e FGTS).</p>
-<p style="text-align:justify">Para fins de arquivamento da empresa, segue também o Anexo e a Nota de Empenho da referida contratação.</p>
-<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, <strong>somente através do e-mail <?= $usuario['email'] ?>, em até 48 horas, impreterivelmente.</strong></p>
+<?php if ($modeloEmail == 'minuta'): ?>
+<p style="text-align:justify">e) Termo de Contrato nº  (para ser assinado pelo(a) representante legal e uma testemunha) Rubrica nas primeiras folhas e assinatura na última folha.</p>
+<?php endif; ?>
+<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, juntamente com as certidões fiscais de Pessoa Jurídica ( CTM, CADIN, CND, CNDT, CCM e FGTS ) atualizadas,<strong> somente através do e-mail <?= $email ?> , em até 48 horas, impreterivelmente. </strong> </p>
+<p style="text-align:justify">Para fins de arquivo da empresa, segue também o Anexo e a Nota de Empenho da referida contratação.</p>
 <p>&nbsp;</p>
 <p style="text-align:justify">Atenciosamente,</p>
 <p>&nbsp;</p>

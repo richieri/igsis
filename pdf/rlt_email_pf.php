@@ -62,9 +62,9 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
 <body>
 
-<p style="text-align:justify">Prezado(a) Senhor(a) <?= $pf['Nome']?>,</p>
+<p style="text-align:justify">Prezado(a) Senhor(a) <?= $pf['Nome'] ?>,</p>
 <p>&nbsp;</p>
-<p style="text-align:justify">Tendo em vista a apresentação <?= $Objeto?>, na data/período de <?= $Periodo?>, <?= $pf['Email'] ?>, encaminho em anexo, para fins de pagamento, os itens abaixo relacionados:</p>
+<p style="text-align:justify">Tendo em vista a apresentação <?= $Objeto?>, na data/período de <?= $Periodo?>, encaminho em anexo, para fins de pagamento, os itens abaixo relacionados:</p>
 <p style="text-align:justify">a) Recibo da nota de empenho (para ser assinado pelo(a) contratado(a));</p>
 <p style="text-align:justify">b) Pedido de pagamento (para ser assinado pelo(a) contratado(a));</p>
 <p style="text-align:justify">c) Recibo de pagamento (para ser assinado pelo(a) contratado(a));</p>
@@ -75,7 +75,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p>&nbsp;</p>
 <p style="text-align:justify">Atenciosamente,</p>
 <p>&nbsp;</p>
-<p><?=$usuario['nomeCompleto']?><br>
+<p><?= $usuario['nomeCompleto'] ?><br>
 SMC / Pagamentos Artísticos</p>
 <!--<p>Tel: (11) 3397-0191</p>-->
 <p>&nbsp;</p>
