@@ -16,29 +16,38 @@ $pf = siscontratDocs($pedido['IdProponente'],1);
 $usuario = $conexao->query("SELECT nomeCompleto, email FROM ig_usuario WHERE idUsuario = '$idUsuario'")->fetch_assoc();
 
 switch ($idUsuario){
-    case "1389":
-        $email = "andersonpagamentosartisticos@gmail.com";
+    case "1081":
+        $email = "casponcontratos@gmail.com";
+        break;
+    case "1121":
+        $email = "caiobaudocumentos@gmail.com";
         break;
     case "1125":
-        $mail = "tomcontratos@gmail.com";
+        $email = "tomcontratos@gmail.com";
         break;
-    case "1393":
-        $email = "brunamotacontratos@gmail.com";
-        break;
-    case "1392":
-        $email = "danielbarbosacontratos@gmail.com";
-        break;
-    case "1391":
-        $email = "marianaoliveiracontratos@gmail.com";
-        break;
-    case "1429":
-        $email = "coracontratos@gmail.com";
+    case "1256":
+        $email = "yankacontratos@gmail.com";
         break;
     case "1296":
         $email = "fernandagcontratos@gmail.com";
         break;
     case "1333":
         $email = "dcerescontratos@gmail.com";
+        break;
+    case "1389":
+        $email = "andersonpagamentosartisticos@gmail.com";
+        break;
+    case "1391":
+        $email = "marianaoliveiracontratos@gmail.com";
+        break;
+    case "1392":
+        $email = "danielbarbosacontratos@gmail.com";
+        break;
+    case "1393":
+        $email = "brunamotacontratos@gmail.com";
+        break;
+    case "1429":
+        $email = "coracontratos@gmail.com";
         break;
     default:
         $email = "smc.pagamentosartisticos@gmail.com";
@@ -69,7 +78,7 @@ header("Content-Disposition: attachment;Filename=$dataAtual - Processo SEI $Nume
 <p style="text-align:justify">b) Pedido de pagamento (para ser assinado pelo(a) contratado(a));</p>
 <p style="text-align:justify">c) Recibo de pagamento (para ser assinado pelo(a) contratado(a));</p>
 <p>&nbsp;</p>
-<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, juntamente com as certidões fiscais de Pessoa Física ( CTM, CADIN, CND, CNDT e CCM ) atualizadas, <strong>somente através do e-mail <?= $usuario['email'] ?>, , em até 48 horas, impreterivelmente.</strong></p>
+<p style="text-align:justify">Informo que a documentação acima citada deverá ser devolvida digitalizada em PDF, juntamente com as certidões fiscais de Pessoa Física ( CTM, CADIN, CND, CNDT e CCM ) atualizadas, <strong>somente através do e-mail <?= $email ?>, em até 48 horas, impreterivelmente.</strong></p>
 <p>&nbsp;</p>
 <p style="text-align:justify">Para fins de arquivo, segue também o Anexo e a Nota de Empenho da referida contratação.</p>
 <p>&nbsp;</p>
