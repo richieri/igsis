@@ -2526,7 +2526,12 @@
             if (document.getElementById('virada').checked) {
                 selectInstituicao.val('124');
 
-                selectLocal.append('<option value="1740" selected>De acordo com programação do evento no período da Virada Cultural</option>')
+                selectLocal.find('option')
+                    .remove()
+                    .end()
+                    .append('<option value="1740">De acordo com programação do evento no período da Virada Cultural</option>')
+                    .val('1740');
+
             }
         })
     })
@@ -2954,20 +2959,25 @@
         </div>
     </div>
 </section>
-<script type="text/javascript">
-    $(document).ready(function () {
-        let selectInstituicao = $('#instituicao');
-        let selectLocal = $('#local');
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            let selectInstituicao = $('#instituicao');
+                            let selectLocal = $('#local');
 
-        $('#virada').on('change', function () {
-            if (document.getElementById('virada').checked) {
-                selectInstituicao.val('124');
+                            $('#virada').on('change', function () {
+                                if (document.getElementById('virada').checked) {
+                                    selectInstituicao.val('124');
 
-                selectLocal.append('<option value="1740" selected>De acordo com programação do evento no período da Virada Cultural</option>')
-            }
-        })
-    })
-</script>
+                                    selectLocal.find('option')
+                                        .remove()
+                                        .end()
+                                        .append('<option value="1740">De acordo com programação do evento no período da Virada Cultural</option>')
+                                        .val('1740');
+
+                                }
+                            })
+                        })
+                    </script>
 			<?php
 				break;
 				case "inserirsub":
