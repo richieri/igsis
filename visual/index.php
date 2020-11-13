@@ -18,12 +18,12 @@ require "cabecalho.php";
 if(isset($_GET['perfil'])){ 
 	include "../perfil/".$_GET['perfil'].".php";
 
-//	if(!isset($_SESSION['alert'])){
-//		$_SESSION['alert'] = "ok";
-//		?>
-<!--		<script>alert("ATENÇÃO! O sistema entrará em manutenção das 22h às 23h59 no dia de hoje para implantação da nova função de cadastro de integrantes")</script>-->
-<!--		--><?php
-//	}
+if(!isset($_SESSION['alert'])){
+	$_SESSION['alert'] = "ok";
+?>
+	<script>alert("ATENÇÃO! O sistema entrará em manutenção das 22h às 23h59 no dia de hoje.")</script>
+<?php
+}
 
 }else{
 	include "../perfil/inicio.php";
