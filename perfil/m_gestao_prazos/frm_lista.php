@@ -11,7 +11,7 @@ $query_lista = mysqli_query($con,$sql_lista);
 $total_geral = mysqli_num_rows($query_lista);
 
 //seta a quantidade de itens por página
-$registros = 25;
+$registros = 50;
 
 //calcula o número de páginas arredondando o resultado para cima
 $numPaginas = ceil($total_geral/$registros);
