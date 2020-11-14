@@ -658,6 +658,12 @@ input[type=checkbox].css-checkbox {
 	}
 }
 
+select[readonly] {
+	background: #eee;
+	pointer-events: none;
+	touch-action: none;
+}
+
 input[type=checkbox].css-checkbox {
 							position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
 						}
