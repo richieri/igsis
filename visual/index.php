@@ -21,7 +21,7 @@ if(isset($_GET['perfil'])){
 if(!isset($_SESSION['alert'])){
 	$_SESSION['alert'] = "ok";
 ?>
-	<script>alert("ATENÇÃO! O sistema entrará em manutenção das 22h às 23h59 no dia de hoje.")</script>
+	<script>alert("ATENÇÃO! O sistema entrará em manutenção das 21h10 às 23h59 no dia de hoje.")</script>
 <?php
 }
 
