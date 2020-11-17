@@ -67,7 +67,7 @@ switch ($p) {
                     <div class="container">
                         <h3>Resultado da busca</3>
                         <h5>Foram encontrados <?php echo $num; ?> pedidos de contratação.</h5>
-                        <h5><a href="?perfil=contratos&p=frm_busca_periodo_operador">Fazer outra busca</a></h5>
+                        <h5><a href="?perfil=contratos&p=frm_busca_periodo_operador_lite">Fazer outra busca</a></h5>
                         <div class="row">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -141,7 +141,7 @@ switch ($p) {
                             </div>
                         </div>
                         <div class="row">
-                            <form method="POST" action="?perfil=contratos&p=frm_busca_periodo_operador"
+                            <form method="POST" action="?perfil=contratos&p=frm_busca_periodo_operador_lite"
                                   class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-8">
@@ -198,7 +198,7 @@ switch ($p) {
                         </div>
                     </div>
                     <div class="row">
-                        <form method="POST" action="?perfil=contratos&p=frm_busca_periodo_operador"
+                        <form method="POST" action="?perfil=contratos&p=frm_busca_periodo_operador_lite"
                               class="form-horizontal" role="form">
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-6">
