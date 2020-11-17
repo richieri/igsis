@@ -34,38 +34,32 @@ $rep01 = siscontratDocs($pj['Representante01'],3);
 $usuario = $conexao->query("SELECT nomeCompleto,email FROM ig_usuario WHERE idUsuario = '$idUsuario'")->fetch_assoc();
 
 switch ($idUsuario){
-    case "1081":
-        $email = "casponcontratos@gmail.com";
-        break;
     case "1121":
         $email = "caiobaudocumentos@gmail.com";
-        break;
-    case "1125":
-        $email = "tomcontratos@gmail.com";
         break;
     case "1256":
         $email = "yankacontratos@gmail.com";
         break;
-    case "1296":
-        $email = "fernandagcontratos@gmail.com";
-        break;
-    case "1333":
-        $email = "dcerescontratos@gmail.com";
-        break;
-    case "1389":
-        $email = "andersonpagamentosartisticos@gmail.com";
-        break;
-    case "1391":
-        $email = "marianaoliveiracontratos@gmail.com";
-        break;
-    case "1392":
-        $email = "danielbarbosacontratos@gmail.com";
-        break;
-    case "1393":
-        $email = "brunamotacontratos@gmail.com";
-        break;
     case "1429":
         $email = "coracontratos@gmail.com";
+        break;
+    case "1440":
+        $email = "laiscontratos@gmail.com";
+        break;
+    case "1462":
+        $email = "alinegrisacontratos@gmail.com";
+        break;
+    case "1463":
+        $email = "lucasperozzicontratos@gmail.com";
+        break;
+    case "1465":
+        $email = "adrianocontratos@gmail.com";
+        break;
+    case "1466":
+        $email = "pricontratos@gmail.com";
+        break;
+    case "1467":
+        $email = "leticiamartinscontratos@gmail.com";
         break;
     default:
         $email = "smc.pagamentosartisticos@gmail.com";
