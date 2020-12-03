@@ -668,10 +668,13 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 	}
 	function opcaoUsuario($idInstituicao,$idUsuario)
 	{
-		//cria as options com usuários de uma instituicao
+		if ($idUsuario){
+		    $filtro = "OR ig_usuario.idUsuario = '$idUsuario'";
+        }
+	    //cria as options com usuários de uma instituicao
 		$sql = "SELECT DISTINCT * FROM ig_usuario,ig_papelusuario 
 			WHERE ig_usuario.ig_papelusuario_idPapelUsuario = ig_papelusuario.idPapelUsuario 
-			AND ig_papelusuario.evento = 1 AND ig_usuario.publicado = 1
+			AND ig_papelusuario.evento = 1 AND ig_usuario.publicado = 1 $filtro
 			ORDER BY nomeCompleto";
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
