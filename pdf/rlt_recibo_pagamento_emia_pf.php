@@ -76,7 +76,7 @@ $periodoParcela = $parcelamento[$id_parcela]['periodo'];
 $dataPagamento = $parcelamento[$id_parcela]['pagamento'];
 
 //$ano=date('Y');
-$ano="2020";
+$ano="2021";
 
 
 // GERANDO O PDF:
