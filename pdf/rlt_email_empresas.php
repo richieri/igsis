@@ -55,6 +55,9 @@ switch ($idUsuario) {
     case "1295":
         $email = "menezesadriana2011@gmail.com";
         break;
+    case "1320":
+        $email = "gabrielalemoscontratos@gmail.com";
+        break;
     case "1333":
         $email = "dcerescontratos@gmail.com";
         break;
