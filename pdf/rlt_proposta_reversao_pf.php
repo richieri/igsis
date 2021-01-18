@@ -29,9 +29,9 @@ class PDF extends FPDF
        // Read text file
        $txt = file_get_contents($file);
        // Arial 10
-       $this->SetFont('Arial','',8);
-       // Output justified text
-       $this->MultiCell(0,4,$txt);
+      $this->SetFont('Arial','',8);
+      // Output justified text
+      $this->MultiCell(0,3,utf8_decode($txt));
        // Line break
        $this->Ln();
    }

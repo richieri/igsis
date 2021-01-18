@@ -31,7 +31,7 @@ class PDF extends FPDF
        // Arial 10
        $this->SetFont('Arial','',8);
        // Output justified text
-       $this->MultiCell(0,4,$txt);
+       $this->MultiCell(0,3,utf8_decode($txt));
        // Line break
        $this->Ln();
    }
@@ -282,7 +282,7 @@ $pdf->SetXY( $x , 30 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
    $pdf->Cell(160,$l,utf8_decode('DECLARAÇÕES'),0,1,'C');
 
    $pdf->SetX($x);
-   $pdf->SetFont('Arial','', 9);
+   $pdf->SetFont('Arial','', 8);
    $pdf->MultiCell(0,4,utf8_decode($txtPenalidade),0,'J');
 
    $pdf->Ln();

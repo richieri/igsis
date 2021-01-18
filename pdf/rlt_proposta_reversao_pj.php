@@ -31,7 +31,7 @@ class PDF extends FPDF
        // Arial 10
        $this->SetFont('Arial','',8);
        // Output justified text
-       $this->MultiCell(0,4,$txt);
+       $this->MultiCell(0,4,utf8_decode($txt));
        // Line break
        $this->Ln();
    }
