@@ -541,28 +541,19 @@ $verba = mysqli_fetch_array($query_verifica_verba);
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-8"><strong>Parcelas (antes de editar as parcelas, é preciso salvar o pedido)</strong><br/>
                             <select class="form-control" id="parcelas" name="parcelas">
-                                <?php if ($evento['ig_tipo_evento_idTipoEvento'] == 4) { /*Caso seja evento tipo OFICINA*/?>
-                                    <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
-                                    <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única Oficinas de Curta Duração (1 mês)</option>
-                                    <option value="21" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 1)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração I (3 meses)</option>
-                                    <option value="22" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 2)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração II (4 meses) </option>
-                                    <option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas Oficina Estendida I (6 meses)</option>
-                                    <option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas Oficina Estendida II  (10 meses)</option>
-                                <?php } else { ?>
-                                    <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
-                                    <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
-                                    <option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
-                                    <option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
-                                    <option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
-                                    <option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
-                                    <option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
-                                    <option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
-                                    <option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
-                                    <option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
-                                    <option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
-                                    <option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
-                                    <option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
-                                <?php } ?>
+                                <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
+                                <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
+                                <option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
+                                <option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
+                                <option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
+                                <option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
+                                <option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
+                                <option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
+                                <option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
+                                <option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
+                                <option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
+                                <option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
+                                <option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
                             </select>
 						</div>	
                     </div>

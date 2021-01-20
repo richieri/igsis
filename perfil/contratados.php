@@ -1466,14 +1466,6 @@
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Parcelas (antes de editar as parcelas, é preciso salvar o pedido)</strong><br/>
                                 <select class="form-control" id="parcelas" name="parcelas">
-                                <?php if ($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4) { /*Caso seja evento tipo OFICINA*/?>
-									<option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
-									<option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única Oficinas de Curta Duração (1 mês)</option>
-									<option value="21" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 1)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração I (3 meses)</option>
-									<option value="22" <?php if(($pedido['parcelas'] == '2') && ($pedido['tipoParcela'] == 2)){ echo "selected"; } ?> >2 parcelas Oficinas de Média Duração II (4 meses) </option>
-									<option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas Oficina Estendida I (6 meses)</option>
-									<option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas Oficina Estendida II  (10 meses)</option>
-                                <?php } else { ?>
                                     <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
                                     <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
                                     <option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
@@ -1487,7 +1479,6 @@
                                     <option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
                                     <option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
                                     <option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
-                                <?php } ?>
 								</select>
 							</div>	
 						</div>
