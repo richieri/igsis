@@ -48,6 +48,33 @@ $cst = $dbObj->sqlSimples("
     "ig")->fetchAll(PDO::FETCH_OBJ);
 
 foreach ($cst as $pfs){
+    /* Telefone */
+    $dbObj->killConn();
+    $verificaTelefone = $dbObj->sqlSimples("
+        SELECT Id_PessoaFisica, CPF, Telefone1, Telefone2, Telefone3 FROM sis_pessoa_fisica AS igsis_pf 
+        WHERE Id_PessoaFisica = {$pfs->ig_idPf}
+    ", "ig")->fetchAll(PDO::FETCH_OBJ);
+
+    $dbObj->killConn();
+    foreach ($verificaTelefone as $dado){
+        if ($dado->Telefone1 != ""){
+            $insert = $dbObj->sqlSimples("
+            INSERT IGNORE INTO pf_telefones (pessoa_fisica_id, telefone, publicado) 
+            VALUES ('{$pfs->sis_idPf}', '{$dado->Telefone1}', 1)","sis");
+        }
+        if ($dado->Telefone2 != ""){
+            $insert = $dbObj->sqlSimples("
+            INSERT IGNORE INTO pf_telefones (pessoa_fisica_id, telefone, publicado) 
+            VALUES ('{$pfs->sis_idPf}', '{$dado->Telefone2}', 1)","sis");
+        }
+        if ($dado->Telefone3 != ""){
+            $insert = $dbObj->sqlSimples("
+            INSERT IGNORE INTO pf_telefones (pessoa_fisica_id, telefone, publicado) 
+            VALUES ('{$pfs->sis_idPf}', '{$dado->Telefone3}', 1)","sis");
+        }
+    }
+    /* ./Telefone */
+
     /* Endereço */
     $erroCep = [];
 
@@ -83,10 +110,8 @@ foreach ($cst as $pfs){
             $dbObj->killConn();
 
             $insert = $dbObj->sqlSimples("
-                INSERT INTO pf_enderecos (pessoa_fisica_id, logradouro, numero, complemento, bairro, cidade, uf, cep) 
-                VALUES ('{$pfs->sis_idPf}', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$cep') 
-                ON DUPLICATE KEY UPDATE
-                logradouro = '$logradouro', numero = '$numero', complemento = '$complemento', bairro = '$bairro', cidade = '$cidade', uf = '$uf', cep = '$cep'","sis");
+                INSERT IGNORE INTO pf_enderecos (pessoa_fisica_id, logradouro, numero, complemento, bairro, cidade, uf, cep) 
+                VALUES ('{$pfs->sis_idPf}', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$cep')","sis");
         }
     }
     /* ./Endereço */
@@ -101,9 +126,8 @@ foreach ($cst as $pfs){
     $dbObj->killConn();
     foreach ($verificaDRT as $dado){
         $insert = $dbObj->sqlSimples("
-            INSERT INTO drts (pessoa_fisica_id, drt, publicado) 
-            VALUES ('{$pfs->sis_idPf}', '{$dado->DRT}', 1) 
-            ON DUPLICATE KEY UPDATE drt = '{$dado->DRT}'","sis");
+            INSERT IGNORE INTO drts (pessoa_fisica_id, drt, publicado) 
+            VALUES ('{$pfs->sis_idPf}', '{$dado->DRT}', 1)","sis");
     }
     /* ./DRT */
 
@@ -117,9 +141,8 @@ foreach ($cst as $pfs){
     $dbObj->killConn();
     foreach ($verificaNIT as $dado){
         $insert = $dbObj->sqlSimples("
-            INSERT INTO nits (pessoa_fisica_id, nit, publicado) 
-            VALUES ('{$pfs->sis_idPf}', '{$dado->InscricaoINSS}', 1) 
-            ON DUPLICATE KEY UPDATE nit = '{$dado->InscricaoINSS}'","sis");
+            INSERT IGNORE INTO nits (pessoa_fisica_id, nit, publicado) 
+            VALUES ('{$pfs->sis_idPf}', '{$dado->InscricaoINSS}', 1) ","sis");
     }
     /* ./INSS */
 
@@ -133,9 +156,8 @@ foreach ($cst as $pfs){
     $dbObj->killConn();
     foreach ($verificaOMB as $dado){
         $insert = $dbObj->sqlSimples("
-            INSERT INTO ombs (pessoa_fisica_id, omb, publicado) 
-            VALUES ('{$pfs->sis_idPf}', '{$dado->OMB}', 1) 
-            ON DUPLICATE KEY UPDATE omb = '{$dado->OMB}'","sis");
+            INSERT IGNORE INTO ombs (pessoa_fisica_id, omb, publicado) 
+            VALUES ('{$pfs->sis_idPf}', '{$dado->OMB}', 1) ","sis");
     }
     /* ./OMB */
 
@@ -149,9 +171,8 @@ foreach ($cst as $pfs){
     $dbObj->killConn();
     foreach ($verificaBanco as $dado){
         $insert = $dbObj->sqlSimples("
-            INSERT INTO pf_bancos (pessoa_fisica_id, banco_id, agencia, conta, publicado) 
-            VALUES ('{$pfs->sis_idPf}', '{$dado->codBanco}', '{$dado->agencia}', '{$dado->conta}', 1) 
-            ON DUPLICATE KEY UPDATE banco_id = '{$dado->codBanco}', agencia = '{$dado->agencia}', conta ='{$dado->conta}'","sis");
+            INSERT IGNORE INTO pf_bancos (pessoa_fisica_id, banco_id, agencia, conta, publicado) 
+            VALUES ('{$pfs->sis_idPf}', '{$dado->codBanco}', '{$dado->agencia}', '{$dado->conta}', 1)","sis");
     }
     /* ./BANCO */
 }
