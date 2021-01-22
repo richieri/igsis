@@ -76,14 +76,21 @@ foreach ($verificaPf as $dado){
 /* Verifica as Pessoas Físicas que existem IGSIS e no SisContrat */
 $dbObj->killConn();
 $pfComumSisIg = $dbObj->sqlSimples("
-    SELECT igsis_pf.Id_PessoaFisica as ig_idPf, sis_pf.id as sis_idPf
+    SELECT 
+           igsis_pf.Id_PessoaFisica as ig_idPf,
+           sis_pf.id as sis_idPf,
+           sis_pf.nome
     FROM sis_pessoa_fisica AS igsis_pf
     INNER JOIN siscontrat.pessoa_fisicas AS sis_pf ON sis_pf.cpf = igsis_pf.CPF
     WHERE igsis_pf.Id_PessoaFisica <= 1000",
     "ig")->fetchAll(PDO::FETCH_OBJ);
 /* ./Verifica as Pessoas Físicas que existem IGSIS e no SisContrat */
 
+echo "<strong>COMEÇANDO A ATUALIZAÇÃO DOS REGISTROS DO SISCONTRAT</strong>";
+
 foreach ($pfComumSisIg as $pfs){
+    $igId = $pfs->ig_idPf;
+    $nome = $pfs->nome;
     /* Telefone */
     $dbObj->killConn();
     $verificaTelefone = $dbObj->sqlSimples("
@@ -122,6 +129,7 @@ foreach ($pfComumSisIg as $pfs){
     /* ./Telefone */
 
     /* Endereço */
+
     $erroCep = [];
 
     $dbObj->killConn();
@@ -166,6 +174,7 @@ foreach ($pfComumSisIg as $pfs){
             echo "<br>";
         }
     }
+    
     /* ./Endereço */
 
     /* DRT */
