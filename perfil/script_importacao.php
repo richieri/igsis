@@ -38,6 +38,9 @@ class DbController
         return $statement;
     }
 }
+
+
+
 $dbObj = new DbController();
 
 /*
@@ -54,6 +57,8 @@ $verificaPf = $dbObj->sqlSimples("
         WHERE sis_pf.id IS NULL
     ", "ig")->fetchAll(PDO::FETCH_OBJ);
 foreach ($verificaPf as $dado){
+    $dado->NomeArtistico = addslashes($dado->NomeArtistico);
+
     $dbObj->killConn();
     $insert = $dbObj->sqlSimples("
         INSERT IGNORE INTO pessoa_fisicas(nome, nome_artistico, cpf, rg, data_nascimento, email, ultima_atualizacao, nacionalidade_id) 
@@ -129,11 +134,11 @@ foreach ($pfComumSisIg as $pfs){
             var_dump($erroCep);
             //$erroCep[]['idPf'] = $pfs->ig_idPf;
         } else {
-            $logradouro = $json->logradouro;
+            $logradouro = addslashes($json->logradouro);
             $numero = $dado->Numero;
             $complemento = $dado->Complemento;
-            $bairro = $json->bairro;
-            $cidade = $json->localidade;
+            $bairro = addslashes($json->bairro);
+            $cidade = addslashes($json->localidade);
             $uf = $json->uf;
             $cep = $json->cep;
             $dbObj->killConn();
