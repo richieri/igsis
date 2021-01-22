@@ -53,10 +53,14 @@ $dbObj->killConn();
 $verificaPf = $dbObj->sqlSimples("
     SELECT igsis_pf.Id_PessoaFisica as ig_idPf, sis_pf.id as sis_idPf, igsis_pf.Nome, igsis_pf.NomeArtistico, igsis_pf.CPF, igsis_pf.RG, igsis_pf.DataNascimento, igsis_pf.Email, igsis_pf.DataAtualizacao
         FROM sis_pessoa_fisica AS igsis_pf
-        LEFT outer JOIN siscontrat.pessoa_fisicas AS sis_pf ON sis_pf.cpf = igsis_pf.CPF
+        LEFT OUTER JOIN siscontrat.pessoa_fisicas AS sis_pf ON sis_pf.cpf = igsis_pf.CPF
         WHERE sis_pf.id IS NULL
     ", "ig")->fetchAll(PDO::FETCH_OBJ);
 foreach ($verificaPf as $dado){
+    $igId = $dado->ig_idPf;
+    $nome = $dado->Nome;
+    echo "Inserindo ID $igId - $nome... <br>";
+    $dado->Nome = addslashes($dado->Nome);
     $dado->NomeArtistico = addslashes($dado->NomeArtistico);
 
     $dbObj->killConn();
@@ -64,12 +68,10 @@ foreach ($verificaPf as $dado){
         INSERT IGNORE INTO pessoa_fisicas(nome, nome_artistico, cpf, rg, data_nascimento, email, ultima_atualizacao, nacionalidade_id) 
         VALUES ('{$dado->Nome}','{$dado->NomeArtistico}', '{$dado->CPF}', '{$dado->RG}', '{$dado->DataNascimento}', '{$dado->Email}', '{$dado->DataAtualizacao}', 1)
     ","sis");
+    echo "ID $igId - $nome não existia no SIS e foi Inserido <br>";
+    echo "<br>";
 }
 /* ./Inserir Pessoa Física do IGSIS que não existe no SisContrat */
-
-
-// Pausa o script por 10 segundos:
-sleep(10);
 
 /* Verifica as Pessoas Físicas que existem IGSIS e no SisContrat */
 $dbObj->killConn();
@@ -91,20 +93,30 @@ foreach ($pfComumSisIg as $pfs){
 
     $dbObj->killConn();
     foreach ($verificaTelefone as $dado){
+
         if ($dado->Telefone1 != ""){
+            echo "Inserindo Telefone #1 do ID $igId - $nome... <br>";
             $insert = $dbObj->sqlSimples("
             INSERT IGNORE INTO pf_telefones (pessoa_fisica_id, telefone, publicado) 
             VALUES ('{$pfs->sis_idPf}', '{$dado->Telefone1}', 1)","sis");
+            echo "Telefone #1 do ID $igId - $nome Inserido <br>";
+            echo "<br>";
         }
         if ($dado->Telefone2 != ""){
+            echo "Inserindo Telefone #2 do ID $igId - $nome... <br>";
             $insert = $dbObj->sqlSimples("
             INSERT IGNORE INTO pf_telefones (pessoa_fisica_id, telefone, publicado) 
             VALUES ('{$pfs->sis_idPf}', '{$dado->Telefone2}', 1)","sis");
+            echo "Telefone #2 do ID $igId - $nome Inserido <br>";
+            echo "<br>";
         }
         if ($dado->Telefone3 != ""){
+            echo "Inserindo Telefone #3 do ID $igId - $nome... <br>";
             $insert = $dbObj->sqlSimples("
             INSERT IGNORE INTO pf_telefones (pessoa_fisica_id, telefone, publicado) 
             VALUES ('{$pfs->sis_idPf}', '{$dado->Telefone3}', 1)","sis");
+            echo "Telefone #3 do ID $igId - $nome Inserido <br>";
+            echo "<br>";
         }
     }
     /* ./Telefone */
@@ -119,6 +131,7 @@ foreach ($pfComumSisIg as $pfs){
     ", "ig")->fetchAll(PDO::FETCH_OBJ);
 
     foreach ($verificaCEP as $dado) {
+        echo "Consultando CEP do ID $igId - $nome... <br>";
         $cep = $dado->CEP;
         $cep = str_replace("-", "", $cep);
 
@@ -130,6 +143,8 @@ foreach ($pfComumSisIg as $pfs){
         //var_dump($json);
 
         if (isset($json->erro)) {
+            echo "CEP $cep do ID $igId - $nome inválido <br>";
+            echo "<br>";
             array_push($erroCep,  $cep);
             var_dump($erroCep);
             //$erroCep[]['idPf'] = $pfs->ig_idPf;
@@ -143,9 +158,12 @@ foreach ($pfComumSisIg as $pfs){
             $cep = $json->cep;
             $dbObj->killConn();
 
+            echo "Inserindo ENDEREÇO do ID $igId - $nome... <br>";
             $insert = $dbObj->sqlSimples("
                 INSERT IGNORE INTO pf_enderecos (pessoa_fisica_id, logradouro, numero, complemento, bairro, cidade, uf, cep) 
                 VALUES ('{$pfs->sis_idPf}', '$logradouro', '$numero', '$complemento', '$bairro', '$cidade', '$uf', '$cep')","sis");
+            echo "ENDEREÇO do ID $igId - $nome Inserido <br>";
+            echo "<br>";
         }
     }
     /* ./Endereço */
@@ -159,9 +177,12 @@ foreach ($pfComumSisIg as $pfs){
 
     $dbObj->killConn();
     foreach ($verificaDRT as $dado){
+        echo "Inserindo DRT do ID $igId - $nome... <br>";
         $insert = $dbObj->sqlSimples("
             INSERT IGNORE INTO drts (pessoa_fisica_id, drt, publicado) 
             VALUES ('{$pfs->sis_idPf}', '{$dado->DRT}', 1)","sis");
+        echo "DRT do ID $igId - $nome Inserido <br>";
+        echo "<br>";
     }
     /* ./DRT */
 
@@ -174,9 +195,12 @@ foreach ($pfComumSisIg as $pfs){
 
     $dbObj->killConn();
     foreach ($verificaNIT as $dado){
+        echo "Inserindo NIT do ID $igId - $nome... <br>";
         $insert = $dbObj->sqlSimples("
             INSERT IGNORE INTO nits (pessoa_fisica_id, nit, publicado) 
             VALUES ('{$pfs->sis_idPf}', '{$dado->InscricaoINSS}', 1) ","sis");
+        echo "NIT do ID $igId - $nome Inserido <br>";
+        echo "<br>";
     }
     /* ./INSS */
 
@@ -189,9 +213,12 @@ foreach ($pfComumSisIg as $pfs){
 
     $dbObj->killConn();
     foreach ($verificaOMB as $dado){
+        echo "Inserindo OBM do ID $igId - $nome... <br>";
         $insert = $dbObj->sqlSimples("
             INSERT IGNORE INTO ombs (pessoa_fisica_id, omb, publicado) 
             VALUES ('{$pfs->sis_idPf}', '{$dado->OMB}', 1) ","sis");
+        echo "OMB do ID $igId - $nome Inserido <br>";
+        echo "<br>";
     }
     /* ./OMB */
 
@@ -204,9 +231,15 @@ foreach ($pfComumSisIg as $pfs){
 
     $dbObj->killConn();
     foreach ($verificaBanco as $dado){
+        echo "Inserindo DADOS BANCÁRIOS do ID $igId - $nome... <br>";
         $insert = $dbObj->sqlSimples("
             INSERT IGNORE INTO pf_bancos (pessoa_fisica_id, banco_id, agencia, conta, publicado) 
             VALUES ('{$pfs->sis_idPf}', '{$dado->codBanco}', '{$dado->agencia}', '{$dado->conta}', 1)","sis");
+        echo "DADOS BANCÁRIOS do ID $igId - $nome Inserido <br>";
+        echo "<br>";
     }
     /* ./BANCO */
+    echo "REGISTROS do ID $igId - $nome INSERIDOS COM SUCESSO <br>";
+    echo "<br>";
+    echo "<br>";
 }
