@@ -40,14 +40,43 @@ class DbController
 }
 $dbObj = new DbController();
 
-$cst = $dbObj->sqlSimples("
+/*
+ * ids de PF da EMIA
+ * (160,404,727,735,766,770,789,801,837,891,962,974,994,1002,1006,1145,1157,1361,1363,1364,2247,2264,2765,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3146,3343,4240,5473,5745,6938,8734,8826,9689,9910,10008)
+ * */
+
+/* Inserir Pessoa Física do IGSIS que não existe no SisContrat */
+$dbObj->killConn();
+$verificaPf = $dbObj->sqlSimples("
+    SELECT igsis_pf.Id_PessoaFisica as ig_idPf, sis_pf.id as sis_idPf, igsis_pf.Nome, igsis_pf.NomeArtistico, igsis_pf.CPF, igsis_pf.RG, igsis_pf.DataNascimento, igsis_pf.Email, igsis_pf.DataAtualizacao
+        FROM sis_pessoa_fisica AS igsis_pf
+        LEFT outer JOIN siscontrat.pessoa_fisicas AS sis_pf ON sis_pf.cpf = igsis_pf.CPF
+        WHERE sis_pf.id IS NULL
+    ", "ig")->fetchAll(PDO::FETCH_OBJ);
+foreach ($verificaPf as $dado){
+    $dbObj->killConn();
+    $insert = $dbObj->sqlSimples("
+        INSERT IGNORE INTO pessoa_fisicas(nome, nome_artistico, cpf, rg, data_nascimento, email, ultima_atualizacao, nacionalidade_id) 
+        VALUES ('{$dado->Nome}','{$dado->NomeArtistico}', '{$dado->CPF}', '{$dado->RG}', '{$dado->DataNascimento}', '{$dado->Email}', '{$dado->DataAtualizacao}', 1)
+    ","sis");
+}
+/* ./Inserir Pessoa Física do IGSIS que não existe no SisContrat */
+
+
+// Pausa o script por 10 segundos:
+sleep(10);
+
+/* Verifica as Pessoas Físicas que existem IGSIS e no SisContrat */
+$dbObj->killConn();
+$pfComumSisIg = $dbObj->sqlSimples("
     SELECT igsis_pf.Id_PessoaFisica as ig_idPf, sis_pf.id as sis_idPf
     FROM sis_pessoa_fisica AS igsis_pf
     INNER JOIN siscontrat.pessoa_fisicas AS sis_pf ON sis_pf.cpf = igsis_pf.CPF
-    WHERE igsis_pf.Id_PessoaFisica IN (45,160,404,727,735,766,770,789,801,837,891,962,974,994,1002,1006,1145,1157,1361,1363,1364,2247,2264,2765,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3146,3343,4240,5473,5745,6938,8734,8826,9689,9910,10008)",
+    WHERE igsis_pf.Id_PessoaFisica <= 1000",
     "ig")->fetchAll(PDO::FETCH_OBJ);
+/* ./Verifica as Pessoas Físicas que existem IGSIS e no SisContrat */
 
-foreach ($cst as $pfs){
+foreach ($pfComumSisIg as $pfs){
     /* Telefone */
     $dbObj->killConn();
     $verificaTelefone = $dbObj->sqlSimples("
