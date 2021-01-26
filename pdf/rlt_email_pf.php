@@ -16,8 +16,29 @@ $pf = siscontratDocs($pedido['IdProponente'],1);
 $usuario = $conexao->query("SELECT nomeCompleto, email FROM ig_usuario WHERE idUsuario = '$idUsuario'")->fetch_assoc();
 
 switch ($idUsuario){
+    case "274":
+        $email = "mariasoniapagamentos@gmail.com";
+        break;
+    case "275":
+        $email = "myviapagamentos@gmail.com";
+        break;
+    case "393":
+        $email = "caiogpagamentos@gmail.com";
+        break;
+    case "424":
+        $email = "silviarpagamentos@gmail.com";
+        break;
+    case "445":
+        $email = "andrearpagamentos@gmail.com";
+        break;
+    case "993":
+        $email = "ivanilsonpagamentos@gmail.com";
+        break;
     case "1121":
         $email = "caiobaudocumentos@gmail.com";
+        break;
+    case "1135":
+        $email = "eltonbpagamentos@gmail.com";
         break;
     case "1256":
         $email = "yankacontratos@gmail.com";
