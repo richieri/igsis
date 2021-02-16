@@ -1423,65 +1423,40 @@
 			}
 		?>
 						</div>
-		<?php
-			if($pedido['parcelas'] > 0)
-			{
-                if ($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4)
-                {
-		?>
-                    <!--TODO: Adaptar texto das parcelas para Oficinas-->
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-                            <textarea  readonly name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?>
-                            </textarea>
-                            <p></p>
-                        </div>
-                    </div>
-		<?php
-                }
-                else
-                {
-        ?>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-                                <textarea  readonly name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
+		<?php if($pedido['parcelas'] > 0) { ?>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
+                    <textarea  readonly name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
                                     </textarea>
-                                <p></p>
-                            </div>
-                        </div>
-        <?php
-                }
-			}
-			else
-			{
-		?>				
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-								<textarea name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo $pedido['formaPagamento'] ?></textarea>
-							</div>
-						</div>
-		<?php
-			}
-		?>   				  
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Parcelas (antes de editar as parcelas, é preciso salvar o pedido)</strong><br/>
-                                <select class="form-control" id="parcelas" name="parcelas">
-                                    <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
-                                    <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
-                                    <option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
-                                    <option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
-                                    <option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
-                                    <option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
-                                    <option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
-                                    <option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
-                                    <option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
-                                    <option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
-                                    <option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
-                                    <option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
-                                    <option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
-								</select>
-							</div>	
-						</div>
+                    <p></p>
+                </div>
+            </div>
+        <?php } else { ?>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
+                    <textarea name="formaPagamento" class="form-control" cols="40" rows="5"><?php echo $pedido['formaPagamento'] ?></textarea>
+                </div>
+            </div>
+		<?php } ?>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8"><strong>Parcelas (antes de editar as parcelas, é preciso salvar o pedido)</strong><br/>
+                    <select class="form-control" id="parcelas" name="parcelas">
+                        <option value="0" <?php if($pedido['parcelas'] == '0'){ echo "selected"; } ?> >Outros</option>
+                        <option value="1" <?php if($pedido['parcelas'] == '1'){ echo "selected"; } ?> >Parcela única</option>
+                        <option value="2" <?php if($pedido['parcelas'] == '2'){ echo "selected"; } ?> >2 parcelas</option>
+                        <option value="3" <?php if($pedido['parcelas'] == '3'){ echo "selected"; } ?> >3 parcelas</option>
+                        <option value="4" <?php if($pedido['parcelas'] == '4'){ echo "selected"; } ?> >4 parcelas</option>
+                        <option value="5" <?php if($pedido['parcelas'] == '5'){ echo "selected"; } ?> >5 parcelas</option>
+                        <option value="6" <?php if($pedido['parcelas'] == '6'){ echo "selected"; } ?> >6 parcelas</option>
+                        <option value="7" <?php if($pedido['parcelas'] == '7'){ echo "selected"; } ?> >7 parcelas</option>
+                        <option value="8" <?php if($pedido['parcelas'] == '8'){ echo "selected"; } ?> >8 parcelas</option>
+                        <option value="9" <?php if($pedido['parcelas'] == '9'){ echo "selected"; } ?> >9 parcelas</option>
+                        <option value="10" <?php if($pedido['parcelas'] == '10'){ echo "selected"; } ?> >10 parcelas</option>
+                        <option value="11" <?php if($pedido['parcelas'] == '11'){ echo "selected"; } ?> >11 parcelas</option>
+                        <option value="12" <?php if($pedido['parcelas'] == '12'){ echo "selected"; } ?> >12 parcelas</option>
+                    </select>
+                </div>
+            </div>
         <?php
 			if(($pedido['parcelas'] > 1) || (($nomeEvento['ig_tipo_evento_idTipoEvento'] == 4) && $pedido['parcelas'] != 0))
 			{ //libera a edição de parcelas
