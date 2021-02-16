@@ -498,37 +498,18 @@ $verba = mysqli_fetch_array($query_verifica_verba);
 								<input type='text' name="Valor" id='valor' class='form-control' value="<?php echo dinheiroParaBr($pedido['valor']) ?>" >
 							</div>
 						</div>							
-				<?php 
-					}
-					if($pedido['parcelas'] > 0)
-					{
-                        if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
-                        {
-                ?>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-                                    <textarea name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$pedido['parcelas'],$pedido['tipoParcela']); ?></textarea>
-                                    <p>&nbsp;</p>
-                                </div>
-                            </div>
-                <?php
-                        }
-                        else
-                        {
-                ?>
-						<div class="form-group">
-							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
-								<textarea name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
-								</textarea>
-							<p>&nbsp;</p>
-							</div>
-						</div>
 				<?php
-                        }
 					}
-					else
-					{ 
-				?>				
+					if($pedido['parcelas'] > 0) {
+                ?>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
+                                <textarea name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$pedido['parcelas']); ?>
+								</textarea>
+                                <p>&nbsp;</p>
+                            </div>
+                        </div>
+				<?php } else { ?>
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação do serviço:</strong><br/>
 								<textarea name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo $pedido['formaPagamento'] ?></textarea>

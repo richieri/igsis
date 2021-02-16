@@ -639,34 +639,16 @@ $verba = mysqli_fetch_array($query_verifica_verba);
 						</div>						
 				<?php 
 					} 
-					if($ped['parcelas'] > 0)
-					{
-                        if ($evento['ig_tipo_evento_idTipoEvento'] == 4)
-                        {
-                        ?>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação de Serviço:</strong><br/>
-                                    <textarea name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelasOficinas($_SESSION['idPedido'],$ped['parcelas'],$pedido['tipoParcela']); ?></textarea>
-                                    <p>&nbsp;</p>
-                                </div>
-                            </div>
-                        <?php
-                        }
-                        else
-                        {
-                        ?>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
-                                    <textarea readonly name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$ped['parcelas']); ?>
+					if($ped['parcelas'] > 0) {
+                    ?>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento:</strong><br/>
+                                <textarea readonly name="FormaPagamento" class="form-control" cols="40" rows="5"><?php echo txtParcelas($_SESSION['idPedido'],$ped['parcelas']); ?>
                                     </textarea>
-                                    <p>&nbsp;</p>
-                                </div>
+                                <p>&nbsp;</p>
                             </div>
-				<?php
-                        }
-					}
-					else
-					{ 
+                        </div>
+					<?php } else {
 				?>				               
 						<div class="form-group">
 							<div class="col-md-offset-2 col-md-8"><strong>Forma de Pagamento / Valor da Prestação do serviço:</strong><br/>
