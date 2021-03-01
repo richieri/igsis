@@ -2,7 +2,7 @@
 //geram o insert pro framework da igsis
 $pasta = "?perfil=pagamento&p=";
 
-$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 393, 424, 445, 655, 993, 1081, 1135, 1256, 1293, 1429, 1440, 1468) ORDER BY nomeCompleto";
+$sql_operador = "SELECT * FROM ig_usuario WHERE idUsuario IN (270, 274, 275, 393, 424, 445, 655, 993, 1081, 1135, 1256, 1293, 1429, 1440, 1468, 1516) ORDER BY nomeCompleto";
  ?>
 
 <div class="menu-area">
