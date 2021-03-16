@@ -170,7 +170,7 @@ echo "
 						</tr>
 						
 						<tr>
-						    <td><a href='$link58?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA 6357</strong></a></td>
+						    <td><a href='$link58?id=$id_ped' target='_blank'><strong>Reserva Oficinas CSMB e BMA 6356</strong></a></td>
                            <td><a href='$link62?id=$id_ped' target='_blank'><strong>Centro de Memória do Circo</strong></a></td>
                         </tr>
                         <tr>
