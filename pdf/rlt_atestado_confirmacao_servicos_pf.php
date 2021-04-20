@@ -109,8 +109,7 @@ CONSOLIDADOS] prevista na Portaria SF nº 170/2020.</p>".
 prevista na Portaria SF nº 170/2020, ressalvado (s) [RELACIONAR OS DOCUMENTOS IRREGULARES].</p>".
     "<p><strong>Recebimento de material e/ou serviços: </strong></p>".
     "<p>Atesto:</p>".
-    "<p>( X ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ]
-foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia {$vigenciaFinal}, dentro do prazo previsto.<br>O prazo contratual é do dia {$periodoParcela}.</p>".
+    "<p>( X ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL] foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia {$vigenciaFinal}, dentro do prazo previsto.<br>O prazo contratual é do dia {$periodoParcela}.</p>".
     "<p>( &nbsp; ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ]
 foram entregues e/ou executados parcialmente, nos termos previstos no instrumento contratual (ou documento
 equivalente), do dia {$vigenciaFinal}, dentro do prazo previsto.<br>O prazo contratual é do dia {$periodoParcela}. </p>".
