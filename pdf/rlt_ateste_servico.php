@@ -28,8 +28,8 @@ if ($pedido['parcelas'] == 1 ){ //integral
     ";
 } else{ //parcelado ou outros
     $texto_parcela = "
-        <p style='text-align:justify'>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ] foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia _____/____/____, dentro do prazo previsto.<br>O prazo contratual é do dia ___/___/__ até o dia ___/___/___.</p>
-        <p style='text-align:justify'>( X ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ] foram entregues e/ou executados parcialmente, nos termos previstos no instrumento contratual (ou documento equivalente), do prazo contratual do dia ___/___/__ até o dia ___/___/___.</p>      
+        <p style='text-align:justify'>( X ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ] foram entregues e/ou executados a contento nos termos previstos no instrumento contratual (ou documento equivalente) no dia _____/____/____, dentro do prazo previsto.<br>O prazo contratual é do dia ___/___/__ até o dia ___/___/___.</p>
+        <p style='text-align:justify'>( ) que os materiais/serviços prestados discriminados no documento fiscal [INSERIR NÚMERO SEI DA NOTA FISCAL ] foram entregues e/ou executados parcialmente, nos termos previstos no instrumento contratual (ou documento equivalente), do prazo contratual do dia ___/___/__ até o dia ___/___/___.</p>      
     ";
 }
 $regiao = valorPorRegiao($id_ped);
