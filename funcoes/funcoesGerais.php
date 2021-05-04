@@ -755,6 +755,7 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 				<thead>
 					<tr class='list_menu'>
 						<td width='5%'>ID evento</td>
+						<td width='5%'>ID pedido</td>
 						<td>Nome do evento</td>
 						<td>Tipo de evento</td>
 						<td>Data/Período</td>
@@ -767,8 +768,15 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 		while($campo = mysqli_fetch_array($query))
 		{
 				$chamado = recuperaAlteracoesEvento($campo['idEvento']);
+                $relacionados = $con->query("SELECT idPedidoContratacao FROM igsis_pedido_contratacao WHERE idEvento = '{$campo['idEvento']}' AND publicado = '1'")->fetch_all(MYSQLI_ASSOC);
+            $arrayRelacionados = [];
+                foreach ($relacionados as $relacionado){
+                    $arrayRelacionados[] = $relacionado['idPedidoContratacao'];
+                }
+            $idPedidosRel = implode(" ", array_filter($arrayRelacionados));
 				echo "<tr>";
 				echo "<td class='list_description'>".$campo['idEvento']."</td>";
+				echo "<td class='list_description'>".$idPedidosRel."</td>";
 				echo "<td class='list_description'>".$campo['nomeEvento']." <a href='?perfil=chamado&p=evento&id=".$campo['idEvento']."' target='_blank'>[".$chamado['numero']."]</a></td>";
 				echo "<td class='list_description'>".retornaTipo($campo['ig_tipo_evento_idTipoEvento'])."</td>";
 				echo "<td class='list_description'>".retornaPeriodo($campo['idEvento'])."</td>";
