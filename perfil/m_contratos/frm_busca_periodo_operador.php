@@ -30,7 +30,7 @@ switch ($p) {
                     LEFT JOIN sis_estado se on ped.estado = se.idEstado    
                     LEFT JOIN ig_usuario iu on ped.idContratos = iu.idUsuario
                     WHERE oco.dataInicio BETWEEN '$inicio' AND '$final' $operador
-                    AND ped.estado NOT IN (1, 11, 12)
+                    AND ped.estado NOT IN (1, 11, 12, 15)
                     AND eve.dataEnvio IS NOT NULL
                     AND ped.publicado = '1'
                     AND eve.publicado = '1'
