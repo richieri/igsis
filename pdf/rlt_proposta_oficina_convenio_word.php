@@ -160,11 +160,13 @@ for($i = 0; $i < $ocor['numero']; $i++)
    $dia = $ocor[$i]['data'];
    $hour = $ocor[$i]['hora'];
    $lugar = $ocor[$i]['espaco'];
+   $observacao = $ocor[$i]['observacao'];
 
    echo "<p><strong>Tipo:</strong> ".$tipo."</p>";
    echo "<p><strong>Data/Período:</strong> ".$dia."</p>";
    echo "<p><strong>Horário:</strong> ".$hour."</p>";
    echo "<p><strong>Local:</strong> ".$lugar."</p>";
+   echo "<p><strong>Observação:</strong> ".$observacao."</p>";
    echo "<p>&nbsp;</p>";
 
 }
