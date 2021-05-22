@@ -578,6 +578,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 		$dia = $ocor[$i]['data'];
 		$hour = $ocor[$i]['hora'];
 		$lugar = $ocor[$i]['espaco'];
+		$observacao = $ocor[$i]['observacao'];
 
 		$pdf->SetX($x);
 		$pdf->SetFont('Arial','B', 10);
@@ -602,6 +603,12 @@ $l=5; //DEFINE A ALTURA DA LINHA
 		$pdf->Cell(12,$l,utf8_decode('Local:'),0,0,'L');
 		$pdf->SetFont('Arial','', 10);
 		$pdf->MultiCell(158,$l,utf8_decode($lugar));
+
+		$pdf->SetX($x);
+		$pdf->SetFont('Arial','B', 10);
+		$pdf->Cell(12,$l,utf8_decode('Observação:'),0,0,'L');
+		$pdf->SetFont('Arial','', 10);
+		$pdf->MultiCell(158,$l,utf8_decode($observacao));
 
 		$pdf->Ln();
 		$pdf->Ln();
