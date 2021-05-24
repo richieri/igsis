@@ -3694,6 +3694,7 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
                     $x[$i]['hora'] = "";
                     $x[$i]['espaco'] = $local['sala']." (".$instituicao.") DE ACORDO COM PROGRAMAÇÃO DO MÊS DO HIP HOP.";
                 }
+				$x[$i]['observacao'] = $campo['observacao'] ?? null;
 				$i++;
 			}
 		}
