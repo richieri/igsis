@@ -608,7 +608,7 @@ $l=5; //DEFINE A ALTURA DA LINHA
 		$pdf->SetFont('Arial','B', 10);
 		$pdf->Cell(12,$l,utf8_decode('Observação:'),0,0,'L');
 		$pdf->SetFont('Arial','', 10);
-		$pdf->MultiCell(158,$l,utf8_decode($observacao));
+		$pdf->MultiCell(158,$l,utf8_decode($observacao ?? null));
 
 		$pdf->Ln();
 		$pdf->Ln();
