@@ -3681,7 +3681,7 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 					$x[$i]['data'] = $data." ".trim($semana);
 				}
 				$x[$i]['hora'] = $hora;
-				$x[$i]['espaco'] = "(".$instituicao.") " . $local['sala'] . " - Localizado em  ". $local['logradouro'] . ", ". $local['numero'] ." - ". $local['bairro'] ." - " . $local['cidade'] . "/" . $local['estado'] . "CEP: " . $local['cep'];
+				$x[$i]['espaco'] = "(".$instituicao.") " . $local['sala'] . " - Localizado em  ". $local['logradouro'] . ", ". $local['numero'] ." - ". $local['bairro'] ." - " . $local['cidade'] . "/" . $local['estado'] . " CEP: " . $local['cep'];
 				if($campo['virada'] == 1)
 				{
 					$x[$i]['data'] = $data." ".trim($semana);
