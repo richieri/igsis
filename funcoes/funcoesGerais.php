@@ -3668,7 +3668,7 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 				$local = recuperaDados("ig_local",$campo['local'],"idLocal");
 				$espaco = $local['sala'];
 				$inst = recuperaDados("ig_instituicao",$local['idInstituicao'],"idInstituicao");
-				$instituicao = $inst['instituicao'];
+				$instituicao = $inst['sigla'];
 				$id = $campo['idOcorrencia'];
 				$y1 = $tipo_de_evento." ".$dia_especial." ".$sub['titulo'];
 				$x[$i]['tipo'] = $y1;
@@ -3681,7 +3681,7 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 					$x[$i]['data'] = $data." ".trim($semana);
 				}
 				$x[$i]['hora'] = $hora;
-				$x[$i]['espaco'] = $local['sala']." (".$instituicao.")";
+				$x[$i]['espaco'] = "(".$instituicao.")" . $local['sala'] . " - Localizado em  ". $local['rua'] . " - " . $local['cidade'] . "/" . $local['estado'] . "CEP: " . $local['cep'];
 				if($campo['virada'] == 1)
 				{
 					$x[$i]['data'] = $data." ".trim($semana);
