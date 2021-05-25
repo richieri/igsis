@@ -3668,7 +3668,7 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 				$local = recuperaDados("ig_local",$campo['local'],"idLocal");
 				$espaco = $local['sala'];
 				$inst = recuperaDados("ig_instituicao",$local['idInstituicao'],"idInstituicao");
-				$instituicao = $inst['sigla'];
+				$instituicao = $inst['idInstituicao'] != 18 ? $inst['sigla'] : $inst['instituicao'];
 				$id = $campo['idOcorrencia'];
 				$y1 = $tipo_de_evento." ".$dia_especial." ".$sub['titulo'];
 				$x[$i]['tipo'] = $y1;
@@ -3681,7 +3681,7 @@ function listaOcorrencias($idEvento, $actionEdita = "?perfil=evento&p=ocorrencia
 					$x[$i]['data'] = $data." ".trim($semana);
 				}
 				$x[$i]['hora'] = $hora;
-				$x[$i]['espaco'] = "(".$instituicao.")" . $local['sala'] . " - Localizado em  ". $local['logradouro'] . ", ". $local['numero'] ." - ". $local['bairro'] ." - " . $local['cidade'] . "/" . $local['estado'] . "CEP: " . $local['cep'];
+				$x[$i]['espaco'] = "(".$instituicao.") " . $local['sala'] . " - Localizado em  ". $local['logradouro'] . ", ". $local['numero'] ." - ". $local['bairro'] ." - " . $local['cidade'] . "/" . $local['estado'] . "CEP: " . $local['cep'];
 				if($campo['virada'] == 1)
 				{
 					$x[$i]['data'] = $data." ".trim($semana);
