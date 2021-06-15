@@ -96,7 +96,7 @@
 			if($data_final >= $hoje)
 			{
 				$prazo = substr($y[1], 1);
-				$mensagem .= "<h5> Você está dentro do prazo de contratos.</h5>";
+				$mensagem .= "<h5> Solicitação enviada para a Supervisão de Contratos. Aguarde aprovação.</h5>";
 				$mensagem .= "Hoje é ".exibirDataBr($hoje).".";
 				$mensagem .= "
 					O seu evento se inicia em ".exibirDataBr($data['dataInicio'])." .<br />
@@ -107,7 +107,7 @@
 			else
 			{
 				$prazo = substr($y[1], 1);
-				$mensagem .= "<h5> Você está fora do prazo de contratos.</h5>";
+				$mensagem .= "<h5> Solicitação enviada para a Supervisão de Contratos. Aguarde aprovação.</h5>";
 				$mensagem .= "Hoje é ".exibirDataBr($hoje).".";
 				$mensagem .= "
 					O seu evento se inicia em ".exibirDataBr($data['dataInicio'])." .<br />
