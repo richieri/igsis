@@ -674,7 +674,7 @@ function geraCheckboxEvento($tabela, $name, $tabelaRelacionamento, $idEvento = n
 	    //cria as options com usuários de uma instituicao
 		$sql = "SELECT DISTINCT * FROM ig_usuario,ig_papelusuario 
 			WHERE ig_usuario.ig_papelusuario_idPapelUsuario = ig_papelusuario.idPapelUsuario 
-			AND ig_papelusuario.evento = 1 AND ig_usuario.publicado = 1 $filtro
+			AND ig_papelusuario.evento = 1 AND ig_usuario.publicado = 1
 			ORDER BY nomeCompleto";
 		$con = bancoMysqli();
 		$query = mysqli_query($con,$sql);
