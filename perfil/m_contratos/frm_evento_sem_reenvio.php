@@ -1,93 +1,23 @@
 <?php 
 include 'includes/menu.php';
-
 	
 $con = bancoMysqli();
 
-$sql = "SELECT DISTINCT ped.idPedidoContratacao FROM  ig_evento AS eve		
-		INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento = ped.idEvento
-		INNER JOIN  ig_log_reabertura AS reab ON ped.idPedidoContratacao = reab.idPedido
-		WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 ORDER BY eve.idEvento DESC";
-$query = mysqli_query($con,$sql);
-
-$i = 0;
-
-while($lista = mysqli_fetch_array($query))
-{
-	$pedido = recuperaDados("igsis_pedido_contratacao",$lista['idPedidoContratacao'],"idPedidoContratacao");
-	$evento = recuperaDados("ig_evento",$pedido['idEvento'],"idEvento"); 
-	$usuario = recuperaDados("ig_usuario",$evento['idUsuario'],"idUsuario");
-	$instituicao = recuperaDados("ig_instituicao",$evento['idInstituicao'],"idInstituicao");
-	$loc = listaLocais($pedido['idEvento']);
-	$local = substr($loc,1); //retira a vírgula no começo do texto
-	$periodo = retornaPeriodo($pedido['idEvento']);
-	$pessoa = recuperaPessoa($pedido['idPessoa'],$pedido['tipoPessoa']);
-	
-	$recuperaOperador = recuperaUsuario($pedido['idContratos']);
-	$operadorNome = explode(" ",$recuperaOperador['nomeCompleto']);
-	$operador = $operadorNome[0];
-	
-	$reabertura = recuperaDados("ig_log_reabertura",$pedido['idPedidoContratacao'],"idPedido");
-	$reaberturaUsuario = recuperaUsuario($reabertura['idUsuario']);
-	$reabertoNome = explode(" ",$reaberturaUsuario['nomeCompleto']);
-	$reabertoPor = $reabertoNome[0];
-	
-	$dataPrazo = date('d/m/Y', strtotime('-5 days', strtotime(retornaPrazo($pedido['idEvento']))));
-	
-	$dataInicial = retornaPrazo($pedido['idEvento']);
-	$dataFinal = exibirDataMysql($dataPrazo);
-	
-	$hoje = date('d/m/y');
-	$today = exibirDataMysql($hoje);
-	
-	// Calcula a diferença em segundos entre as datas
-	$diferenca = strtotime($dataFinal) - strtotime($today);
-
-	//Calcula a diferença em dias
-	$dias = floor($diferenca / (60 * 60 * 24));
-	
-	if($pedido['parcelas'] > 1)
-	{
-		$valorTotal = somaParcela($pedido['idPedidoContratacao'],$pedido['parcelas']);
-	}
-	else
-	{
-		$valorTotal = $pedido['valor'];
-	}		
-	$x[$i]['id']= $pedido['idPedidoContratacao'];
-	$x[$i]['objeto'] = retornaTipo($evento['ig_tipo_evento_idTipoEvento'])." - ".$evento['nomeEvento'];
-	if($pedido['tipoPessoa'] == 1)
-	{
-		$pessoa = recuperaDados("sis_pessoa_fisica",$pedido['idPessoa'],"Id_PessoaFisica");
-		$x[$i]['proponente'] = $pessoa['Nome'];
-		$x[$i]['tipo'] = "Física";
-	}
-	else
-	{
-		$pessoa = recuperaDados("sis_pessoa_juridica",$pedido['idPessoa'],"Id_PessoaJuridica");
-		$x[$i]['proponente'] = $pessoa['RazaoSocial'];
-		$x[$i]['tipo'] = "Jurídica";
-	}
-	$x[$i]['valor'] = $pedido['valor'];
-	$x[$i]['dataReabertura'] = exibirDataBr($reabertura['data']);
-	$x[$i]['reabertoPor'] = $reabertoPor;
-	$x[$i]['instituicao'] = $instituicao['sigla'];
-	$x[$i]['periodo'] = $periodo;
-	$x[$i]['local'] = $local;
-	$x[$i]['operador'] = $operador;
-	$x[$i]['dias'] = $dias;
-	$i++;	
-}
-$x['num'] = $i;
-
-$mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
+$sql = "SELECT ped.idPedidoContratacao, eve.idEvento, ig_tipo_evento_idTipoEvento, nomeEvento, ped.tipoPessoa, ped.idPessoa, ped.parcelas, ped.valor, reab.data, iu.nomeCompleto as reabertoPor, ii.sigla, iuo.nomeCompleto as operador
+FROM  ig_evento AS eve
+INNER JOIN igsis_pedido_contratacao AS ped ON eve.idEvento = ped.idEvento
+INNER JOIN  ig_log_reabertura AS reab ON ped.idPedidoContratacao = reab.idPedido
+LEFT JOIN ig_usuario iu on reab.idUsuario = iu.idUsuario
+LEFT JOIN ig_usuario iuo on ped.idContratos = iuo.idUsuario
+LEFT JOIN ig_instituicao ii on eve.idInstituicao = ii.idInstituicao
+WHERE eve.dataEnvio IS NULL AND eve.publicado = 1 AND ped.publicado = 1 AND reab.data > '2021-01-01' GROUP BY idPedidoContratacao ORDER BY idPedidoContratacao DESC";
+$listas = $con->query($sql);
 ?>
 
 <section id="list_items">
 	<h1>&nbsp;</h1>
 	<div class="container">
 		<div class="sub-title"><h2>EVENTOS REABERTOS E SEM REENVIO</h2></div>
-		<p><?php if(isset($mensagem)){ echo $mensagem; }?></p>	
 		<div class="table-responsive list_info">
 			<table class="table table-condensed">
 				<thead>
@@ -107,32 +37,30 @@ $mensagem = "Foram encontradas ".$x['num']." pedido(s) de contratação.";
 				</thead>
 				<tbody>		
 				<?php
-					
-					for($h = 0; $h < $x['num']; $h++)
-					{
-						echo '<tr>';
-						/* REMOÇÃO DO LINK PARA EDIÇÃO
-						if($x[$h]['tipo'] == 'Física')
-						{
-							echo "<td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapf&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
-						}
-						else
-						{
-							echo "<td class='lista'> <a href='?perfil=contratos&p=frm_edita_propostapj&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";	
-						}
-						*/
-						echo "<td class='lista'> <a target='_blank' href='?perfil=detalhe_pedido&id_ped=".$x[$h]['id']."'>".$x[$h]['id']."</a></td>";
-						echo '<td class="list_description">'.$x[$h]['proponente'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['objeto'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['valor'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['local'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['periodo'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['dataReabertura'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['reabertoPor'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['dias'].'</td> ';
-						echo '<td class="list_description">'.$x[$h]['operador'].'</td> ';
-						echo '</tr>';
-					}
+                foreach ($listas as $lista){
+                    if ($lista['tipoPessoa'] == 1){
+                        $proponente_sql = $con->query("SELECT Nome FROM sis_pessoa_fisica WHERE Id_PessoaFisica = '{$lista['idPessoa']}'")->fetch_assoc();
+                        $proponente = $proponente_sql['Nome'] ?? null;
+                    } else{
+                        $proponente_sql = $con->query("SELECT RazaoSocial FROM sis_pessoa_juridica WHERE Id_PessoaJuridica = '{$lista['idPessoa']}'")->fetch_assoc();
+                        $proponente = $proponente_sql['RazaoSocial'] ?? null;
+                    }
+                    ?>
+                    <tr>
+                        <td class="list_description"><?= $lista['idPedidoContratacao'] ?></td>
+                        <td class="list_description"><?= $proponente ?></td>
+                        <td class="list_description"><?=retornaTipo($lista['ig_tipo_evento_idTipoEvento'])." - ".$lista['nomeEvento']?></td>
+                        <td class="list_description"><?= $lista['valor']?></td>
+                        <td class="list_description"><?= substr(listaLocais($lista['idEvento']), 1) ?></td>
+                        <td class="list_description"><?= retornaPeriodo($lista['idEvento']) ?></td>
+                        <td class="list_description"><?= exibirDataBr($lista['data'])?></td>
+                        <td class="list_description"><?= $lista['reabertoPor']?></td>
+                        <td class="list_description">dias</td>
+                        <td class="list_description"><?= $lista['operador']?></td>
+                    </tr>
+                <?php
+                }
+
 				?>
 				</tbody>
 			</table>
