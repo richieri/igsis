@@ -37,6 +37,7 @@ $listas = $con->query($sql);
 				</thead>
 				<tbody>		
 				<?php
+                $i=0;
                 foreach ($listas as $lista){
                     if ($lista['tipoPessoa'] == 1){
                         $proponente_sql = $con->query("SELECT Nome FROM sis_pessoa_fisica WHERE Id_PessoaFisica = '{$lista['idPessoa']}'")->fetch_assoc();
@@ -45,6 +46,15 @@ $listas = $con->query($sql);
                         $proponente_sql = $con->query("SELECT RazaoSocial FROM sis_pessoa_juridica WHERE Id_PessoaJuridica = '{$lista['idPessoa']}'")->fetch_assoc();
                         $proponente = $proponente_sql['RazaoSocial'] ?? null;
                     }
+
+                    $dataPrazo = date('d/m/Y', strtotime('-5 days', strtotime(retornaPrazo($lista['idEvento']))));
+
+                    $dataInicial = retornaPrazo($lista['idEvento']);
+                    $dataFinal = exibirDataMysql($dataPrazo);
+
+                    $diferenca = strtotime($dataFinal) - strtotime(date('Y-m-d'));
+
+                    $dias = floor($diferenca / (60 * 30 * 24));
                     ?>
                     <tr>
                         <td class="list_description"><?= $lista['idPedidoContratacao'] ?></td>
@@ -55,15 +65,17 @@ $listas = $con->query($sql);
                         <td class="list_description"><?= retornaPeriodo($lista['idEvento']) ?></td>
                         <td class="list_description"><?= exibirDataBr($lista['data'])?></td>
                         <td class="list_description"><?= $lista['reabertoPor']?></td>
-                        <td class="list_description">dias</td>
+                        <td class="list_description"><?= $dias ?></td>
                         <td class="list_description"><?= $lista['operador']?></td>
                     </tr>
                 <?php
+                    $i++;
                 }
 
 				?>
 				</tbody>
 			</table>
 		</div>
+        <p>Foram encontrados <?= $i ?> registros</p>
 	</div>
 </section>
