@@ -57,7 +57,7 @@ $listas = $con->query($sql);
                     $dias = floor($diferenca / (60 * 30 * 24));
                     ?>
                     <tr>
-                        <td class="list_description"><?= $lista['idPedidoContratacao'] ?></td>
+                        <td class="list_description"><a target='_blank' href='?perfil=detalhe_pedido&id_ped=<?= $lista['idPedidoContratacao'] ?>'><?= $lista['idPedidoContratacao'] ?></a></td>
                         <td class="list_description"><?= $proponente ?></td>
                         <td class="list_description"><?=retornaTipo($lista['ig_tipo_evento_idTipoEvento'])." - ".$lista['nomeEvento']?></td>
                         <td class="list_description"><?= $lista['valor']?></td>
